@@ -18,4 +18,3 @@ function NpcVehicleStateBroken:on_enter()
 		self._unit:damage():run_sequence_simple(VehicleDrivingExt.SEQUENCE_FULL_DAMAGED)
 	end
 end
-

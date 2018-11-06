@@ -12,7 +12,7 @@ end
 
 function CoreCutsceneManager:replace_cutscene_actor_unit_type(original_unit_type, replacement_unit_type)
 	assert(DB:has("unit", original_unit_type), string.format("Unrecognized Unit \"%s\".", original_unit_type:t()))
-	assert(replacement_unit_type == nil or DB:has("unit", replacement_unit_type), string.format("Unrecognized Unit \"%s\".", (replacement_unit_type or ""):t()))
+	assert(replacement_unit_type == nil or DB:has("unit", replacement_unit_type), string.format("Unrecognized Unit \"%s\".", replacement_unit_type or "":t()))
 
 	Global.__CutsceneManager__replaced_actor_unit_types = Global.__CutsceneManager__replaced_actor_unit_types or {}
 
@@ -26,7 +26,9 @@ function CoreCutsceneManager:replace_cutscene_actor_unit_type(original_unit_type
 end
 
 function CoreCutsceneManager:init()
-	managers.listener:add_set("cutscene", {"cutscene"})
+	managers.listener:add_set("cutscene", {
+		"cutscene"
+	})
 
 	self._timer = TimerManager:game_animation()
 	self._actor_database = core_or_local("CutsceneActorDatabase")
@@ -624,4 +626,3 @@ end
 function CoreCutsceneManager:evaluate_current_frame()
 	error("CoreCutsceneManager:evaluate_current_frame() is deprecated. The playhead state is kept in CoreCutscenePlayer, but is not exposed here.")
 end
-

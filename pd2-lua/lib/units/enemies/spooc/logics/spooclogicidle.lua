@@ -99,4 +99,3 @@ function SpoocLogicIdle._chk_exit_hiding(data)
 		end
 	end
 end
-

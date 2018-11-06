@@ -129,6 +129,7 @@ end
 function EnvironmentAreaManager:remove_block()
 	self._blocks = self._blocks - 1
 end
+
 EnvironmentArea = EnvironmentArea or class(CoreShapeManager.ShapeBox)
 
 function EnvironmentArea:init(params)
@@ -156,7 +157,7 @@ function EnvironmentArea:_generate_id()
 		end
 	end
 
-	self._id = (self._properties.environment .. filter_list_id):key()
+	self._id = self._properties.environment .. filter_list_id:key()
 end
 
 function EnvironmentArea:save_level_data()
@@ -245,4 +246,3 @@ function EnvironmentArea:is_higher_prio(min_prio)
 		return true
 	end
 end
-

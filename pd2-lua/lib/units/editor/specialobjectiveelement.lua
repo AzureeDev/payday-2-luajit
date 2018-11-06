@@ -1,8 +1,10 @@
 SpecialObjectiveUnitElement = SpecialObjectiveUnitElement or class(MissionElement)
-SpecialObjectiveUnitElement.INSTANCE_VAR_NAMES = {{
-	value = "so_action",
-	type = "special_objective_action"
-}}
+SpecialObjectiveUnitElement.INSTANCE_VAR_NAMES = {
+	{
+		value = "so_action",
+		type = "special_objective_action"
+	}
+}
 SpecialObjectiveUnitElement._AI_SO_types = {
 	"AI_defend",
 	"AI_security",
@@ -165,7 +167,9 @@ function SpecialObjectiveUnitElement:test_element()
 	t.values.followup_elements = nil
 	t.values.trigger_on = "none"
 	t.values.spawn_instigator_ids = nil
-	self._script = MissionScript:new({elements = {}})
+	self._script = MissionScript:new({
+		elements = {}
+	})
 	self._so_class = ElementSpecialObjective:new(self._script, t)
 	self._so_class._values.align_position = nil
 	self._so_class._values.align_rotation = nil
@@ -242,7 +246,13 @@ function SpecialObjectiveUnitElement:_highlight_if_outside_the_nav_field(t)
 			local t1 = t % 0.5
 			local t2 = t % 1
 			local alpha = nil
-			alpha = t2 > 0.5 and t1 or 0.5 - t1
+
+			if t2 > 0.5 then
+				alpha = t1
+			else
+				alpha = 0.5 - t1
+			end
+
 			alpha = math.lerp(0.1, 0.5, alpha)
 			local nav_color = Color(alpha, 1, 0, 0)
 
@@ -433,7 +443,9 @@ function SpecialObjectiveUnitElement:selected()
 		self._hed.patrol_path = "none"
 	end
 
-	CoreEws.update_combobox_options(self._patrol_path_params, table.list_add({"none"}, managers.ai_data:patrol_path_names()))
+	CoreEws.update_combobox_options(self._patrol_path_params, table.list_add({
+		"none"
+	}, managers.ai_data:patrol_path_names()))
 	CoreEws.change_combobox_value(self._patrol_path_params, self._hed.patrol_path)
 end
 
@@ -522,7 +534,9 @@ function SpecialObjectiveUnitElement:_build_panel(panel, panel_sizer)
 	}
 	local filter_preset = CoreEWS.combobox(filter_preset_params)
 
-	filter_preset:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_apply_preset"), {ctrlr = filter_preset})
+	filter_preset:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_apply_preset"), {
+		ctrlr = filter_preset
+	})
 
 	local filter_sizer = EWS:BoxSizer("HORIZONTAL")
 	local opt1_sizer = EWS:BoxSizer("VERTICAL")
@@ -557,7 +571,9 @@ function SpecialObjectiveUnitElement:_build_panel(panel, panel_sizer)
 	filter_sizer:add(opt3_sizer, 1, 0, "EXPAND")
 	opt_sizer:add(filter_sizer, 1, 0, "EXPAND")
 	panel_sizer:add(opt_sizer, 0, 0, "EXPAND")
-	self:_build_value_combobox(panel, panel_sizer, "ai_group", table.list_add({"none"}, clone(ElementSpecialObjective._AI_GROUPS)), "Select an ai group.")
+	self:_build_value_combobox(panel, panel_sizer, "ai_group", table.list_add({
+		"none"
+	}, clone(ElementSpecialObjective._AI_GROUPS)), "Select an ai group.")
 	self:_build_value_checkbox(panel, panel_sizer, "is_navigation_link", "Navigation link", "Navigation link")
 	self:_build_value_checkbox(panel, panel_sizer, "align_rotation", "Align rotation")
 	self:_build_value_checkbox(panel, panel_sizer, "align_position", "Align position")
@@ -574,22 +590,40 @@ function SpecialObjectiveUnitElement:_build_panel(panel, panel_sizer)
 		min = 0
 	}, "Used to specify the distance to use when searching for an AI")
 
-	local options = table.list_add({"none"}, clone(CopActionAct._act_redirects.SO))
+	local options = table.list_add({
+		"none"
+	}, clone(CopActionAct._act_redirects.SO))
 	options = table.list_add(options, self._AI_SO_types)
 
 	table.sort(options)
 	self:_build_value_combobox(panel, panel_sizer, "so_action", options, "Select a action that the unit should start with.")
 
-	local ctrlr, params = self:_build_value_combobox(panel, panel_sizer, "patrol_path", table.list_add({"none"}, managers.ai_data:patrol_path_names()), "Select a patrol path to use from the spawn point. Different objectives and behaviors will interpet the path different.")
+	local ctrlr, params = self:_build_value_combobox(panel, panel_sizer, "patrol_path", table.list_add({
+		"none"
+	}, managers.ai_data:patrol_path_names()), "Select a patrol path to use from the spawn point. Different objectives and behaviors will interpet the path different.")
 	self._patrol_path_params = params
 
-	self:_build_value_combobox(panel, panel_sizer, "path_style", table.list_add({"none"}, ElementSpecialObjective._PATHING_STYLES), "Specifies how the patrol path should be used.")
-	self:_build_value_combobox(panel, panel_sizer, "path_haste", table.list_add({"none"}, ElementSpecialObjective._HASTES), "Select path haste to use.")
-	self:_build_value_combobox(panel, panel_sizer, "path_stance", table.list_add({"none"}, ElementSpecialObjective._STANCES), "Select path stance to use.")
-	self:_build_value_combobox(panel, panel_sizer, "pose", table.list_add({"none"}, ElementSpecialObjective._POSES), "Select pose to use.")
-	self:_build_value_combobox(panel, panel_sizer, "attitude", table.list_add({"none"}, ElementSpecialObjective._ATTITUDES), "Select combat attitude.")
-	self:_build_value_combobox(panel, panel_sizer, "trigger_on", table.list_add({"none"}, ElementSpecialObjective._TRIGGER_ON), "Select when to trigger objective.")
-	self:_build_value_combobox(panel, panel_sizer, "interaction_voice", table.list_add({"none"}, ElementSpecialObjective._INTERACTION_VOICES), "Select what voice to use when interacting with the character.")
+	self:_build_value_combobox(panel, panel_sizer, "path_style", table.list_add({
+		"none"
+	}, ElementSpecialObjective._PATHING_STYLES), "Specifies how the patrol path should be used.")
+	self:_build_value_combobox(panel, panel_sizer, "path_haste", table.list_add({
+		"none"
+	}, ElementSpecialObjective._HASTES), "Select path haste to use.")
+	self:_build_value_combobox(panel, panel_sizer, "path_stance", table.list_add({
+		"none"
+	}, ElementSpecialObjective._STANCES), "Select path stance to use.")
+	self:_build_value_combobox(panel, panel_sizer, "pose", table.list_add({
+		"none"
+	}, ElementSpecialObjective._POSES), "Select pose to use.")
+	self:_build_value_combobox(panel, panel_sizer, "attitude", table.list_add({
+		"none"
+	}, ElementSpecialObjective._ATTITUDES), "Select combat attitude.")
+	self:_build_value_combobox(panel, panel_sizer, "trigger_on", table.list_add({
+		"none"
+	}, ElementSpecialObjective._TRIGGER_ON), "Select when to trigger objective.")
+	self:_build_value_combobox(panel, panel_sizer, "interaction_voice", table.list_add({
+		"none"
+	}, ElementSpecialObjective._INTERACTION_VOICES), "Select what voice to use when interacting with the character.")
 	self:_build_value_number(panel, panel_sizer, "interrupt_dis", {
 		floats = 1,
 		min = -1
@@ -629,4 +663,3 @@ end
 
 function SpecialObjectiveUnitElement:add_to_mission_package()
 end
-

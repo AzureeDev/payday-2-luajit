@@ -40,4 +40,3 @@ function ElementSetOutline:on_executed(instigator)
 
 	ElementSetOutline.super.on_executed(self, instigator)
 end
-

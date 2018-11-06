@@ -14,4 +14,3 @@ function ModifierShieldReflect:modify_value(id, value, hit_unit, unit)
 
 	return value
 end
-

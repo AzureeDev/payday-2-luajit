@@ -123,6 +123,7 @@ function NewRaycastWeaponBase:_update_materials()
 		self._materials = nil
 	end
 end
+
 local material_defaults = {
 	diffuse_layer1_texture = Idstring("units/payday2_cash/safes/default/base_gradient/base_default_df"),
 	diffuse_layer2_texture = Idstring("units/payday2_cash/safes/default/pattern_gradient/gradient_default_df"),
@@ -187,11 +188,16 @@ function NewRaycastWeaponBase:_apply_cosmetics(async_clbk)
 
 				if mat_texture or type_texture or base_texture then
 					texture_key = mat_texture and mat_texture:key() or type_texture and type_texture:key() or base_texture and base_texture:key()
-					textures[texture_key] = textures[texture_key] or {
-						applied = false,
-						ready = false,
-						name = mat_texture or type_texture or base_texture
-					}
+
+					if not textures[texture_key] then
+						slot30 = {
+							applied = false,
+							ready = false,
+							name = mat_texture or type_texture or base_texture
+						}
+					end
+
+					textures[texture_key] = slot30
 
 					if type(textures[texture_key].name) == "string" then
 						textures[texture_key].name = Idstring(textures[texture_key].name)
@@ -393,6 +399,7 @@ function NewRaycastWeaponBase:spawn_magazine_unit(pos, rot, hide_bullets)
 
 	return mag_unit
 end
+
 NewRaycastWeaponBase.magazine_collisions = {
 	small = {
 		Idstring("units/payday2/weapons/box_collision/box_collision_small_pistol"),
@@ -476,4 +483,3 @@ function NewRaycastWeaponBase:drop_magazine_object()
 		end
 	end
 end
-

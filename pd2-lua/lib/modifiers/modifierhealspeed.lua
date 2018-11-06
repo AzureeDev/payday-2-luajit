@@ -16,4 +16,3 @@ function ModifierHealSpeed:modify_value(id, value)
 
 	return value
 end
-

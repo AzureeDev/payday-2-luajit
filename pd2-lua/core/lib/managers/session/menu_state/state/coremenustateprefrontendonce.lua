@@ -18,4 +18,3 @@ function PreFrontEndOnce:transition()
 		return CoreMenuStatePreFrontEnd.PreFrontEnd
 	end
 end
-

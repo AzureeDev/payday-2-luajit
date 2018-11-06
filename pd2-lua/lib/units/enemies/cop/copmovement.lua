@@ -47,68 +47,160 @@ CopMovement._gadgets = {
 		hand_r = Idstring("a_weapon_right_front"),
 		head = Idstring("Head")
 	},
-	cigarette = {Idstring("units/world/props/cigarette/cigarette")},
-	briefcase = {Idstring("units/equipment/escort_suitcase/escort_suitcase_contour")},
-	briefcase2 = {Idstring("units/equipment/escort_suitcase/escort_suitcase")},
-	iphone = {Idstring("units/world/props/iphone/iphone")},
-	baton = {Idstring("units/payday2/characters/ene_acc_baton/ene_acc_baton")},
-	needle = {Idstring("units/payday2/characters/npc_acc_syringe/npc_acc_syringe")},
-	pencil = {Idstring("units/world/brushes/desk_pencil/desk_pencil")},
-	bbq_fork = {Idstring("units/world/props/barbecue/bbq_fork")},
-	loot_bag = {Idstring("units/pd2_dlc_man/props/man_static_loot_bag/man_static_loot_bag")},
-	money_bag = {Idstring("units/world/architecture/secret_stash/luggage_bag/secret_stash_luggage_bag")},
-	newspaper = {Idstring("units/world/props/suburbia_newspaper/suburbia_newspaper")},
-	vail = {Idstring("units/world/props/hospital_veil_interaction/hospital_veil_full")},
-	ivstand = {Idstring("units/world/architecture/hospital/props/iv_pole/iv_pole")},
-	brush = {Idstring("units/payday2/props/gen_prop_scrubbing_brush/gen_prop_scrubbing_brush")},
-	puke = {Idstring("units/pd2_dlc_pines/characters/gen_civ_acc_puking_effect/gen_civ_acc_puking_effect")},
-	bottle = {Idstring("units/payday2/props/com_prop_store_wines/com_prop_store_wines_red2")},
-	rag = {Idstring("units/payday2/characters/civ_acc_janitor_rag_1/civ_acc_janitor_rag_1")},
-	clipboard_paper = {Idstring("units/world/architecture/hospital/props/clipboard01/clipboard_paper")},
-	wine_glass = {Idstring("units/pd2_dlc_casino/props/cas_prop_int_dinning_set/cas_prop_int_dinning_set_table_glass_02_anim")},
-	blowtorch = {Idstring("units/pd2_dlc_dark/character/ene_acc_dark_blowtorch/ene_acc_dark_blowtorch")},
-	blowtorch_off = {Idstring("units/pd2_dlc_dark/pickups/drk_pku_blowtorch/drk_prop_blowtorch")},
-	weapon_wick = {Idstring("units/pd2_dlc_chill/characters/npc_acc_weapon_wick/npc_acc_weapon_wick")},
-	hockey_puck = {Idstring("units/pd2_dlc_chill/characters/npc_acc_hockey_gear_puck/npc_acc_hockey_gear_puck")},
-	hockey_stick = {Idstring("units/pd2_dlc_chill/characters/npc_acc_hockey_gear_stick/npc_acc_hockey_gear_stick")},
-	sake_cup = {Idstring("units/pd2_dlc_chill/characters/npc_acc_sake_cup/npc_acc_sake_cup")},
-	chips_stack = {Idstring("units/pd2_dlc_chill/characters/npc_acc_gambling_chips_stack/npc_acc_gambling_chips_stack")},
-	whiskey_glass = {Idstring("units/pd2_dlc_chill/characters/npc_acc_whiskey_glass/npc_acc_whiskey_glass")},
-	surf_wax = {Idstring("units/pd2_dlc_chill/characters/npc_acc_wax_cube/npc_acc_wax_cube")},
-	lmg_m249 = {Idstring("units/pd2_dlc_chill/characters/npc_acc_lmg_m249/npc_acc_lmg_m249")},
-	sandpaper_block = {Idstring("units/pd2_dlc_chill/characters/npc_acc_sandpaper_block/npc_acc_sandpaper_block")},
-	muzzle_flash = {Idstring("units/pd2_dlc_chill/characters/npc_acc_muzzle_flash/muzzle_flash")},
-	contraband_gun = {Idstring("units/pd2_dlc_chico/weapons/gen_prop_contraband/gen_prop_contraband")},
-	cigar = {Idstring("units/pd2_dlc_friend/props/sfm_prop_cigar/sfm_prop_cigar")},
-	camera = {Idstring("units/pd2_dlc_fish/characters/ene_acc_prop_camera/civ_acc_prop_camera")},
-	microphone = {Idstring("units/pd2_dlc_arena/weapons/wpn_third_mel_microphone/wpn_third_mel_microphone")},
-	vodka_bottle = {Idstring("units/pd2_dlc_slu/props/slu_prop_vodka_bottle/slu_prop_vodka_bottle")},
-	machete = {Idstring("units/pd2_dlc_max/characters/npc_acc_machete/npc_acc_machete")},
-	beer = {Idstring("units/pd2_dlc_max/props/max_prop_dos_calveras/max_sicario_beer_a")},
-	tequila = {Idstring("units/pd2_dlc_max/props/max_prop_tequila_bottle/max_prop_tequila_bottle")},
-	barrista_cup = {Idstring("units/pd2_dlc_rvd/characters/civ_acc_barista_cup_medium/civ_acc_barista_cup_medium")},
-	blood_splatter = {Idstring("units/pd2_dlc_rvd/characters/civ_acc_blood_splatter/civ_acc_blood_splatter")},
-	chimichanga = {Idstring("units/pd2_dlc_tag/characters/ene_acc_chimichanga/ene_acc_chimichanga")},
-	umbrella = {Idstring("units/pd2_dlc_sah/props/sah_prop_umbrella/sah_prop_umbrella")},
-	umbrella_female = {Idstring("units/pd2_dlc_sah/props/sah_prop_umbrella/sah_prop_umbrella_female")},
-	knife = {Idstring("units/payday2/characters/ene_acc_knife_1/ene_acc_knife_1")}
+	cigarette = {
+		Idstring("units/world/props/cigarette/cigarette")
+	},
+	briefcase = {
+		Idstring("units/equipment/escort_suitcase/escort_suitcase_contour")
+	},
+	briefcase2 = {
+		Idstring("units/equipment/escort_suitcase/escort_suitcase")
+	},
+	iphone = {
+		Idstring("units/world/props/iphone/iphone")
+	},
+	baton = {
+		Idstring("units/payday2/characters/ene_acc_baton/ene_acc_baton")
+	},
+	needle = {
+		Idstring("units/payday2/characters/npc_acc_syringe/npc_acc_syringe")
+	},
+	pencil = {
+		Idstring("units/world/brushes/desk_pencil/desk_pencil")
+	},
+	bbq_fork = {
+		Idstring("units/world/props/barbecue/bbq_fork")
+	},
+	loot_bag = {
+		Idstring("units/pd2_dlc_man/props/man_static_loot_bag/man_static_loot_bag")
+	},
+	money_bag = {
+		Idstring("units/world/architecture/secret_stash/luggage_bag/secret_stash_luggage_bag")
+	},
+	newspaper = {
+		Idstring("units/world/props/suburbia_newspaper/suburbia_newspaper")
+	},
+	vail = {
+		Idstring("units/world/props/hospital_veil_interaction/hospital_veil_full")
+	},
+	ivstand = {
+		Idstring("units/world/architecture/hospital/props/iv_pole/iv_pole")
+	},
+	brush = {
+		Idstring("units/payday2/props/gen_prop_scrubbing_brush/gen_prop_scrubbing_brush")
+	},
+	puke = {
+		Idstring("units/pd2_dlc_pines/characters/gen_civ_acc_puking_effect/gen_civ_acc_puking_effect")
+	},
+	bottle = {
+		Idstring("units/payday2/props/com_prop_store_wines/com_prop_store_wines_red2")
+	},
+	rag = {
+		Idstring("units/payday2/characters/civ_acc_janitor_rag_1/civ_acc_janitor_rag_1")
+	},
+	clipboard_paper = {
+		Idstring("units/world/architecture/hospital/props/clipboard01/clipboard_paper")
+	},
+	wine_glass = {
+		Idstring("units/pd2_dlc_casino/props/cas_prop_int_dinning_set/cas_prop_int_dinning_set_table_glass_02_anim")
+	},
+	blowtorch = {
+		Idstring("units/pd2_dlc_dark/character/ene_acc_dark_blowtorch/ene_acc_dark_blowtorch")
+	},
+	blowtorch_off = {
+		Idstring("units/pd2_dlc_dark/pickups/drk_pku_blowtorch/drk_prop_blowtorch")
+	},
+	weapon_wick = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_weapon_wick/npc_acc_weapon_wick")
+	},
+	hockey_puck = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_hockey_gear_puck/npc_acc_hockey_gear_puck")
+	},
+	hockey_stick = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_hockey_gear_stick/npc_acc_hockey_gear_stick")
+	},
+	sake_cup = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_sake_cup/npc_acc_sake_cup")
+	},
+	chips_stack = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_gambling_chips_stack/npc_acc_gambling_chips_stack")
+	},
+	whiskey_glass = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_whiskey_glass/npc_acc_whiskey_glass")
+	},
+	surf_wax = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_wax_cube/npc_acc_wax_cube")
+	},
+	lmg_m249 = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_lmg_m249/npc_acc_lmg_m249")
+	},
+	sandpaper_block = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_sandpaper_block/npc_acc_sandpaper_block")
+	},
+	muzzle_flash = {
+		Idstring("units/pd2_dlc_chill/characters/npc_acc_muzzle_flash/muzzle_flash")
+	},
+	contraband_gun = {
+		Idstring("units/pd2_dlc_chico/weapons/gen_prop_contraband/gen_prop_contraband")
+	},
+	cigar = {
+		Idstring("units/pd2_dlc_friend/props/sfm_prop_cigar/sfm_prop_cigar")
+	},
+	camera = {
+		Idstring("units/pd2_dlc_fish/characters/ene_acc_prop_camera/civ_acc_prop_camera")
+	},
+	microphone = {
+		Idstring("units/pd2_dlc_arena/weapons/wpn_third_mel_microphone/wpn_third_mel_microphone")
+	},
+	vodka_bottle = {
+		Idstring("units/pd2_dlc_slu/props/slu_prop_vodka_bottle/slu_prop_vodka_bottle")
+	},
+	machete = {
+		Idstring("units/pd2_dlc_max/characters/npc_acc_machete/npc_acc_machete")
+	},
+	beer = {
+		Idstring("units/pd2_dlc_max/props/max_prop_dos_calveras/max_sicario_beer_a")
+	},
+	tequila = {
+		Idstring("units/pd2_dlc_max/props/max_prop_tequila_bottle/max_prop_tequila_bottle")
+	},
+	barrista_cup = {
+		Idstring("units/pd2_dlc_rvd/characters/civ_acc_barista_cup_medium/civ_acc_barista_cup_medium")
+	},
+	blood_splatter = {
+		Idstring("units/pd2_dlc_rvd/characters/civ_acc_blood_splatter/civ_acc_blood_splatter")
+	},
+	chimichanga = {
+		Idstring("units/pd2_dlc_tag/characters/ene_acc_chimichanga/ene_acc_chimichanga")
+	},
+	umbrella = {
+		Idstring("units/pd2_dlc_sah/props/sah_prop_umbrella/sah_prop_umbrella")
+	},
+	umbrella_female = {
+		Idstring("units/pd2_dlc_sah/props/sah_prop_umbrella/sah_prop_umbrella_female")
+	},
+	knife = {
+		Idstring("units/payday2/characters/ene_acc_knife_1/ene_acc_knife_1")
+	}
 }
-local action_variants = {security = {
-	idle = CopActionIdle,
-	act = CopActionAct,
-	walk = CopActionWalk,
-	turn = CopActionTurn,
-	hurt = CopActionHurt,
-	stand = CopActionStand,
-	crouch = CopActionCrouch,
-	shoot = CopActionShoot,
-	reload = CopActionReload,
-	spooc = ActionSpooc,
-	tase = CopActionTase,
-	dodge = CopActionDodge,
-	warp = CopActionWarp,
-	healed = CopActionHealed
-}}
+local action_variants = {
+	security = {
+		idle = CopActionIdle,
+		act = CopActionAct,
+		walk = CopActionWalk,
+		turn = CopActionTurn,
+		hurt = CopActionHurt,
+		stand = CopActionStand,
+		crouch = CopActionCrouch,
+		shoot = CopActionShoot,
+		reload = CopActionReload,
+		spooc = ActionSpooc,
+		tase = CopActionTase,
+		dodge = CopActionDodge,
+		warp = CopActionWarp,
+		healed = CopActionHealed
+	}
+}
 local security_variant = action_variants.security
 action_variants.gensec = security_variant
 action_variants.cop = security_variant
@@ -158,6 +250,7 @@ action_variants.tank_medic.heal = action_variants.medic.heal
 action_variants.tank_mini = action_variants.tank
 action_variants.heavy_swat_sniper = action_variants.heavy_swat
 action_variants.captain = security_variant
+action_variants.shadow_spooc = security_variant
 action_variants.civilian = {
 	idle = CopActionIdle,
 	act = CopActionAct,
@@ -192,18 +285,19 @@ action_variants.russian = action_variants.team_ai
 security_variant = nil
 CopMovement._action_variants = action_variants
 action_variants = nil
-CopMovement._stance = {}
-CopMovement._stance.names = {
-	"ntl",
-	"hos",
-	"cbt",
-	"wnd"
-}
-CopMovement._stance.blend = {
-	0.8,
-	0.5,
-	0.3,
-	0.4
+CopMovement._stance = {
+	names = {
+		"ntl",
+		"hos",
+		"cbt",
+		"wnd"
+	},
+	blend = {
+		0.8,
+		0.5,
+		0.3,
+		0.4
+	}
 }
 
 function CopMovement:init(unit)
@@ -237,7 +331,9 @@ function CopMovement:init(unit)
 	}
 	self._need_upd = true
 	self._cool = true
-	self._suppression = {value = 0}
+	self._suppression = {
+		value = 0
+	}
 end
 
 function CopMovement:post_init()
@@ -908,13 +1004,15 @@ function CopMovement:_change_stance(stance_code, instant)
 					end_values[i] = value
 				end
 			end
-		else
-			end_values = stance.transition and {
+		elseif stance.transition then
+			end_values = {
 				0,
 				0,
 				0,
 				stance.transition.end_values[4]
-			} or {
+			}
+		else
+			end_values = {
 				0,
 				0,
 				0,
@@ -1039,7 +1137,11 @@ function CopMovement:_chk_play_equip_weapon()
 end
 
 function CopMovement:set_cool(state, giveaway)
-	state = state and true or false
+	if state then
+		state = true
+	else
+		state = false
+	end
 
 	if not state and not managers.groupai:state():enemy_weapons_hot() then
 		self._coolness_giveaway = managers.groupai:state():fetch_highest_giveaway(self._coolness_giveaway, giveaway)
@@ -1343,7 +1445,6 @@ function CopMovement:on_suppressed(state)
 
 				self:action_request(action_desc)
 			else
-
 				local function debug_fumble(result, from, to)
 				end
 
@@ -1356,7 +1457,9 @@ function CopMovement:on_suppressed(state)
 					pos_from = vec_from,
 					pos_to = vec_to
 				}
-				local allowed_fumbles = {"e_so_sup_fumble_inplace_3"}
+				local allowed_fumbles = {
+					"e_so_sup_fumble_inplace_3"
+				}
 				local allow = nil
 
 				mvec3_set(vec_from, self:m_pos())
@@ -1412,17 +1515,19 @@ function CopMovement:on_suppressed(state)
 					self:action_request(action_desc)
 				end
 			end
-		elseif self._ext_anim.idle and (not self._active_actions[2] or self._active_actions[2]:type() == "idle") then
+		elseif self._ext_anim.idle and (not self._active_actions[2] or self._active_actions[2]:type() == "idle") and not self:chk_action_forbidden("act") then
 			local action_desc = {
 				clamp_to_graph = true,
 				type = "act",
 				body_part = 1,
 				variant = "suppressed_reaction",
-				blocks = {walk = -1}
+				blocks = {
+					walk = -1
+				}
 			}
 
 			self:action_request(action_desc)
-		elseif not self._ext_anim.crouch and self._tweak_data.crouch_move and (not self._tweak_data.allowed_poses or self._tweak_data.allowed_poses.crouch) then
+		elseif not self._ext_anim.crouch and self._tweak_data.crouch_move and (not self._tweak_data.allowed_poses or self._tweak_data.allowed_poses.crouch) and not self:chk_action_forbidden("crouch") then
 			local action_desc = {
 				body_part = 4,
 				type = "crouch"
@@ -1526,7 +1631,14 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 		end
 	end
 
-	block_type = damage_info.variant == "tase" and "bleedout" or (hurt_type == "expl_hurt" or hurt_type == "fire_hurt" or hurt_type == "poison_hurt" or hurt_type == "taser_tased") and "heavy_hurt" or hurt_type
+	if damage_info.variant == "tase" then
+		block_type = "bleedout"
+	elseif hurt_type == "expl_hurt" or hurt_type == "fire_hurt" or hurt_type == "poison_hurt" or hurt_type == "taser_tased" then
+		block_type = "heavy_hurt"
+	else
+		block_type = hurt_type
+	end
+
 	local client_interrupt = nil
 
 	if Network:is_client() and (hurt_type == "light_hurt" or hurt_type == "hurt" and damage_info.variant ~= "tase" or hurt_type == "heavy_hurt" or hurt_type == "expl_hurt" or hurt_type == "shield_knock" or hurt_type == "counter_tased" or hurt_type == "taser_tased" or hurt_type == "counter_spooc" or hurt_type == "death" or hurt_type == "hurt_sick" or hurt_type == "fire_hurt" or hurt_type == "poison_hurt" or hurt_type == "concussion") then
@@ -1688,7 +1800,11 @@ function CopMovement:anim_clbk_melee_strike(unit)
 end
 
 function CopMovement:anim_clbk_set_visibility(unit, state)
-	state = state == true and true or false
+	if state == true then
+		state = true
+	else
+		state = false
+	end
 
 	self._unit:set_visible(state)
 end
@@ -2029,7 +2145,9 @@ function CopMovement:save(save_data)
 			my_save_data.attention = self._attention
 		elseif self._attention.unit:id() == -1 then
 			local attention_pos = self._attention.handler and self._attention.handler:get_detection_m_pos() or self._attention.unit:movement() and self._attention.unit:movement():m_com() or self._unit:position()
-			my_save_data.attention = {pos = attention_pos}
+			my_save_data.attention = {
+				pos = attention_pos
+			}
 		else
 			managers.enemy:add_delayed_clbk("clbk_sync_attention" .. tostring(self._unit:key()), callback(self, self, "clbk_sync_attention", self._attention), TimerManager:game():time() + 0.1)
 		end
@@ -2115,7 +2233,9 @@ function CopMovement:load(load_data)
 
 	self._team = managers.groupai:state():team_data(my_load_data.team_id)
 
-	managers.groupai:state():add_listener("CopMovement_team_def_" .. tostring(self._unit:key()), {"team_def"}, callback(self, self, "clbk_team_def"))
+	managers.groupai:state():add_listener("CopMovement_team_def_" .. tostring(self._unit:key()), {
+		"team_def"
+	}, callback(self, self, "clbk_team_def"))
 
 	if my_load_data.actions then
 		for _, action_load_data in ipairs(my_load_data.actions) do
@@ -2272,12 +2392,11 @@ function CopMovement:sync_action_walk_nav_link(pos, rot, anim_index, from_idle)
 	local walk_action, is_queued = self:_get_latest_walk_action()
 
 	if is_queued then
-
-		nav_link.element.value = function (element, name)
+		function nav_link.element.value(element, name)
 			return element[name]
 		end
 
-		nav_link.element.nav_link_wants_align_pos = function (element)
+		function nav_link.element.nav_link_wants_align_pos(element)
 			return element.from_idle
 		end
 
@@ -2524,7 +2643,7 @@ function CopMovement:sync_action_hurt_end()
 					walk = -1
 				}
 			}
-			local res = CopMovement.action_request(self, action_data)
+			slot4 = CopMovement.action_request(self, action_data)
 		else
 			self:_chk_start_queued_action()
 			self._ext_brain:action_complete_clbk(action)
@@ -2666,6 +2785,7 @@ function CopMovement:in_smoke()
 
 	return false
 end
+
 IgnoreAlertsMovement = IgnoreAlertsMovement or class(CopMovement)
 
 function IgnoreAlertsMovement:set_cool(state, giveaway)
@@ -2698,6 +2818,7 @@ function CopMovement:_equipped_weapon_tweak_data()
 		return tweak_data.weapon[weapon_id]
 	end
 end
+
 CopMovement.magazine_collisions = {
 	small = {
 		Idstring("units/payday2/weapons/box_collision/box_collision_small_pistol"),
@@ -2745,7 +2866,11 @@ function CopMovement:_material_config_name(part_id, unit_name, use_cc_material_c
 	end
 
 	local cc_string = use_cc_material_config and "_cc" or ""
-	local thq_string = "_thq" or ""
+	slot6 = "_thq"
+
+	if "_thq" then
+		local thq_string = ""
+	end
 
 	return Idstring(unit_name .. cc_string .. thq_string)
 end
@@ -2753,6 +2878,7 @@ end
 function CopMovement:allow_dropped_magazines()
 	return managers.weapon_factory:use_thq_weapon_parts()
 end
+
 local material_defaults = {
 	diffuse_layer1_texture = Idstring("units/payday2_cash/safes/default/base_gradient/base_default_df"),
 	diffuse_layer2_texture = Idstring("units/payday2_cash/safes/default/pattern_gradient/gradient_default_df"),
@@ -3053,4 +3179,3 @@ function CopMovement:_play_weapon_reload_animation_sfx(unit, event)
 		end
 	end
 end
-

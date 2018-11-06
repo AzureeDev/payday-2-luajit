@@ -66,7 +66,9 @@ function MenuSceneManagerVR:_setup_bg()
 end
 
 function MenuSceneManagerVR:_set_up_environments()
-	self._environments = {standard = {}}
+	self._environments = {
+		standard = {}
+	}
 	self._environments.standard.environment = "environments/pd2_menu_vr/pd2_menu_vr"
 	self._environments.standard.color_grading = "color_off"
 	self._environments.standard.angle = 0
@@ -87,7 +89,9 @@ function MenuSceneManagerVR:_set_up_templates()
 	local c_ref = self._bg_unit:get_object(Idstring("a_reference"))
 	local target_pos = Vector3(0, 0, ref:position().z)
 	local offset = Vector3(ref:position().x, ref:position().y, 0)
-	self._scene_templates = {standard = {}}
+	self._scene_templates = {
+		standard = {}
+	}
 	self._scene_templates.standard.use_character_grab = false
 	self._scene_templates.standard.character_visible = true
 	self._scene_templates.standard.camera_pos = ref:position()
@@ -124,7 +128,8 @@ function MenuSceneManagerVR:_set_up_templates()
 		"blackmarket_screenshot",
 		"crime_spree_lobby",
 		"crew_management",
-		"blackmarket_item"
+		"blackmarket_item",
+		"movie_theater"
 	}
 
 	for _, template in ipairs(cloned_templates) do
@@ -146,6 +151,7 @@ function MenuSceneManagerVR:_set_up_templates()
 		self._scene_templates[template].allow_item = true
 	end
 end
+
 local __set_lobby_character_out_fit = MenuSceneManager.set_lobby_character_out_fit
 
 function MenuSceneManagerVR:set_lobby_character_out_fit(i, outfit_string, rank)
@@ -158,13 +164,16 @@ function MenuSceneManagerVR:set_lobby_character_out_fit(i, outfit_string, rank)
 	unit:set_position(pos)
 	unit:set_rotation(Rotation:look_at(Vector3(0, 100, 0) - pos, math.UP))
 end
+
 local __set_item_unit = MenuSceneManager._set_item_unit
 
 function MenuSceneManagerVR:_set_item_unit(unit, oobb_object, max_mod, type, second_unit, custom_data)
 	__set_item_unit(self, unit, oobb_object, max_mod, type, second_unit, custom_data)
 
 	local player = managers.menu:player()
-	local hand_unit = player:hand(3 - (player:primary_hand_index() or 1)):unit()
+	slot8 = player.hand
+	slot10 = player:primary_hand_index() or 1
+	local hand_unit = player:hand(3 - slot10):unit()
 
 	hand_unit:link(Idstring("g_glove"), unit, unit:orientation_object():name())
 
@@ -186,22 +195,33 @@ function MenuSceneManagerVR:_set_item_unit(unit, oobb_object, max_mod, type, sec
 
 	hand_unit:set_visible(false)
 end
+
 local __remove_item = MenuSceneManager.remove_item
 
 function MenuSceneManagerVR:remove_item()
 	__remove_item(self)
 
 	local player = managers.menu:player()
-	local hand_unit = player:hand(3 - (player:primary_hand_index() or 1)):unit()
+	slot3 = player
+	slot2 = player.hand
+
+	if not player:primary_hand_index() then
+		slot4 = 1
+	end
+
+	local hand_unit = slot2(slot3, 3 - slot4):unit()
 
 	hand_unit:set_visible(true)
 end
+
 local __set_scene_template = MenuSceneManager.set_scene_template
 
 function MenuSceneManagerVR:set_scene_template(template, data, custom_name, skip_transition)
 	__set_scene_template(self, template, data, custom_name, skip_transition)
 
-	local template_data = data or self._scene_templates[template]
+	if not data then
+		local template_data = self._scene_templates[template]
+	end
 
 	if not template_data.allow_item then
 		self:remove_item()
@@ -219,7 +239,11 @@ function MenuSceneManagerVR:get_henchmen_positioning(index)
 end
 
 function MenuSceneManagerVR:create_character_text_panel(peer_id)
-	self._character_text_ws = self._character_text_ws or {}
+	if not self._character_text_ws then
+		slot2 = {}
+	end
+
+	self._character_text_ws = slot2
 	local character = self._lobby_characters[peer_id]
 
 	if not alive(character) then
@@ -262,6 +286,7 @@ function MenuSceneManagerVR:_create_economy_safe_scene()
 
 	self:_start_safe_drill_sequence()
 end
+
 local __load_safe_result_content = MenuSceneManager.load_safe_result_content
 
 function MenuSceneManagerVR:load_safe_result_content(...)
@@ -271,4 +296,3 @@ function MenuSceneManagerVR:load_safe_result_content(...)
 		self._economy_character:set_position(Vector3(-40, 320, 0))
 	end
 end
-

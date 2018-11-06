@@ -58,4 +58,3 @@ function CoreObjectVisibleCutsceneKey:is_valid_object_name(object_name)
 		return object and object.set_visibility ~= nil
 	end
 end
-

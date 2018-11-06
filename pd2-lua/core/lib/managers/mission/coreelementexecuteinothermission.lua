@@ -18,4 +18,3 @@ function ElementExecuteInOtherMission:get_mission_element(id)
 		end
 	end
 end
-

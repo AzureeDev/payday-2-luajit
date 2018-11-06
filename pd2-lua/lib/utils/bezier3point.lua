@@ -18,7 +18,7 @@ local function hypot(a, b)
 	b = min(a, b)
 	a = max(a, b)
 
-	return a * sqrt(1 + (b / a) ^ 2)
+	return a * sqrt(1 + (b / a)^2)
 end
 
 local function distance(x1, y1, x2, y2)
@@ -26,7 +26,7 @@ local function distance(x1, y1, x2, y2)
 end
 
 local function distance2(x1, y1, x2, y2)
-	return (x2 - x1) ^ 2 + (y2 - y1) ^ 2
+	return (x2 - x1)^2 + (y2 - y1)^2
 end
 
 local function point_around(cx, cy, r, angle)
@@ -46,7 +46,7 @@ local function rotate_point(x, y, cx, cy, angle)
 	local c = cos(angle)
 	local s = sin(angle)
 
-	return (cx + x * c) - y * s, cy + y * c + x * s
+	return cx + x * c - y * s, cy + y * c + x * s
 end
 
 local function point_angle(x, y, cx, cy)

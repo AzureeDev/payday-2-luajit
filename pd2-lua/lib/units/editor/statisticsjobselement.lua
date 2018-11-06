@@ -59,4 +59,3 @@ function StatisticsJobsElement:_build_panel(panel, panel_sizer)
 		min = 1
 	}, "Type the required amount that is needed.")
 end
-

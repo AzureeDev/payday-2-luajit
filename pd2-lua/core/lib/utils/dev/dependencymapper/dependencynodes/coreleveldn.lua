@@ -7,7 +7,9 @@ UNIT = CoreDependencyNode.UNIT
 LEVEL_BASE = "./data/levels/"
 LEVEL_FILE = "./data/levels/%s/world.xml"
 MISSION_FILE = "./data/levels/%s/mission.xml"
-LEVEL_CONVERT = {player_start = "player"}
+LEVEL_CONVERT = {
+	player_start = "player"
+}
 LEVEL_SKIP = {
 	unit_sequence = true,
 	hub = true,
@@ -84,4 +86,3 @@ function LevelDependencyNode:_walkxml2dependencies(xmlnode, deps)
 		end
 	end
 end
-

@@ -4,15 +4,16 @@ ZipLine.TYPES = {
 	"person",
 	"bag"
 }
-ZipLine.NET_EVENTS = {}
-ZipLine.NET_EVENTS.request_access = 1
-ZipLine.NET_EVENTS.access_denied = 2
-ZipLine.NET_EVENTS.access_granted = 3
-ZipLine.NET_EVENTS.set_user = 4
-ZipLine.NET_EVENTS.remove_user = 5
-ZipLine.NET_EVENTS.request_attach_bag = 6
-ZipLine.NET_EVENTS.attach_bag_denied = 7
-ZipLine.NET_EVENTS.attach_bag_granted = 8
+ZipLine.NET_EVENTS = {
+	request_access = 1,
+	access_denied = 2,
+	access_granted = 3,
+	set_user = 4,
+	remove_user = 5,
+	request_attach_bag = 6,
+	attach_bag_denied = 7,
+	attach_bag_granted = 8
+}
 local ids_rope_obj = Idstring("rope")
 
 function ZipLine:init(unit)
@@ -62,6 +63,7 @@ function ZipLine:update(unit, t, dt)
 		self:debug_draw(t, dt)
 	end
 end
+
 local mvec1 = Vector3()
 local mvec2 = Vector3()
 
@@ -128,7 +130,9 @@ end
 
 function ZipLine:_update_sounds(t, dt)
 	if self._current_time ~= 0 and not self._running then
-		self._sound_data = {last_pos = mvector3.copy(self._sled_data.pos)}
+		self._sound_data = {
+			last_pos = mvector3.copy(self._sled_data.pos)
+		}
 
 		self._sound_source:post_event("zipline_hook")
 		self._sound_source:post_event("zipline_start")
@@ -375,7 +379,7 @@ function ZipLine:total_time()
 end
 
 function ZipLine:_update_total_time()
-	self:set_total_time((self:start_pos() - self:end_pos()):length() / self._speed)
+	self:set_total_time(self:start_pos() - self:end_pos():length() / self._speed)
 end
 
 function ZipLine:start_pos()
@@ -415,8 +419,8 @@ function ZipLine:_update_pos_data()
 	self._line_data.start_pos = self._start_pos + self._line_data.offset
 	self._line_data.end_pos = self._end_pos + self._line_data.offset
 	self._line_data.dir = self._line_data.end_pos - self._start_pos
-	self._line_data.dir_s = ((self:pos_at_time(0.5) + self._line_data.offset) - self._line_data.start_pos):normalized()
-	self._line_data.dir_e = (self._line_data.end_pos - (self:pos_at_time(0.5) + self._line_data.offset)):normalized()
+	self._line_data.dir_s = self:pos_at_time(0.5) + self._line_data.offset - self._line_data.start_pos:normalized()
+	self._line_data.dir_e = self._line_data.end_pos - (self:pos_at_time(0.5) + self._line_data.offset):normalized()
 
 	mvector3.set_z(self._line_data.dir, 0)
 	mvector3.normalize(self._line_data.dir)
@@ -485,6 +489,7 @@ end
 function ZipLine:update_and_get_pos_at_time_linear(time)
 	return self:_update_and_get_pos_at_time(time, self.pos_at_time_linear)
 end
+
 local ease_bezier_points = {
 	0,
 	0,
@@ -646,7 +651,9 @@ end
 
 function ZipLine:run_sequence(sequence_name, user_unit)
 	if self._unit:damage():has_sequence(sequence_name) then
-		self._unit:damage():run_sequence_simple(sequence_name, {unit = user_unit})
+		self._unit:damage():run_sequence_simple(sequence_name, {
+			unit = user_unit
+		})
 	end
 end
 
@@ -702,4 +709,3 @@ function ZipLine:load(data)
 
 	managers.worlddefinition:use_me(self._unit)
 end
-

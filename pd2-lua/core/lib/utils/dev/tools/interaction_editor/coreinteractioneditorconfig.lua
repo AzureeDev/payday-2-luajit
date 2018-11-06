@@ -28,4 +28,3 @@ NODE_TYPES = {
 	"string",
 	"vector"
 }
-

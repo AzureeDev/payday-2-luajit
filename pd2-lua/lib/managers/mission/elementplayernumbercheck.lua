@@ -23,4 +23,3 @@ function ElementPlayerNumberCheck:on_executed(instigator)
 
 	ElementPlayerNumberCheck.super.on_executed(self, instigator)
 end
-

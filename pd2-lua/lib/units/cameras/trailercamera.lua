@@ -159,10 +159,18 @@ function TrailerCamera:create_ews()
 	}
 
 	CoreEws.slider_and_number_controller(slider_params)
-	slider_params.slider_ctrlr:connect("EVT_SCROLL_THUMBTRACK", callback(self, self, "update_slider_time"), {slider_params = slider_params})
-	slider_params.slider_ctrlr:connect("EVT_SCROLL_CHANGED", callback(self, self, "update_slider_time"), {slider_params = slider_params})
-	slider_params.number_ctrlr:connect("EVT_COMMAND_TEXT_ENTER", callback(self, self, "update_slider_time"), {slider_params = slider_params})
-	slider_params.number_ctrlr:connect("EVT_KILL_FOCUS", callback(self, self, "update_slider_time"), {slider_params = slider_params})
+	slider_params.slider_ctrlr:connect("EVT_SCROLL_THUMBTRACK", callback(self, self, "update_slider_time"), {
+		slider_params = slider_params
+	})
+	slider_params.slider_ctrlr:connect("EVT_SCROLL_CHANGED", callback(self, self, "update_slider_time"), {
+		slider_params = slider_params
+	})
+	slider_params.number_ctrlr:connect("EVT_COMMAND_TEXT_ENTER", callback(self, self, "update_slider_time"), {
+		slider_params = slider_params
+	})
+	slider_params.number_ctrlr:connect("EVT_KILL_FOCUS", callback(self, self, "update_slider_time"), {
+		slider_params = slider_params
+	})
 
 	self._time_slider = slider_params
 	local slider_sizer = EWS:StaticBoxSizer(self._main_panel, "VERTICAL", "")
@@ -182,10 +190,18 @@ function TrailerCamera:create_ews()
 	}
 
 	CoreEws.slider_and_number_controller(slider_params)
-	slider_params.slider_ctrlr:connect("EVT_SCROLL_THUMBTRACK", callback(self, self, "update_slider_speed"), {slider_params = slider_params})
-	slider_params.slider_ctrlr:connect("EVT_SCROLL_CHANGED", callback(self, self, "update_slider_speed"), {slider_params = slider_params})
-	slider_params.number_ctrlr:connect("EVT_COMMAND_TEXT_ENTER", callback(self, self, "update_slider_speed"), {slider_params = slider_params})
-	slider_params.number_ctrlr:connect("EVT_KILL_FOCUS", callback(self, self, "update_slider_speed"), {slider_params = slider_params})
+	slider_params.slider_ctrlr:connect("EVT_SCROLL_THUMBTRACK", callback(self, self, "update_slider_speed"), {
+		slider_params = slider_params
+	})
+	slider_params.slider_ctrlr:connect("EVT_SCROLL_CHANGED", callback(self, self, "update_slider_speed"), {
+		slider_params = slider_params
+	})
+	slider_params.number_ctrlr:connect("EVT_COMMAND_TEXT_ENTER", callback(self, self, "update_slider_speed"), {
+		slider_params = slider_params
+	})
+	slider_params.number_ctrlr:connect("EVT_KILL_FOCUS", callback(self, self, "update_slider_speed"), {
+		slider_params = slider_params
+	})
 
 	self._speed_slider = slider_params
 
@@ -260,6 +276,7 @@ function TrailerCamera:destroy()
 
 	self:close_ews()
 end
+
 TrailerCameraAction = TrailerCameraAction or class()
 
 function TrailerCameraAction:init()
@@ -267,6 +284,7 @@ end
 
 function TrailerCameraAction:execute()
 end
+
 TrailerCameraElementAction = TrailerCameraElementAction or class(TrailerCameraAction)
 
 function TrailerCameraElementAction:init(name)
@@ -277,4 +295,3 @@ function TrailerCameraElementAction:execute()
 	print("TrailerCameraElementAction:execute()", self._name)
 	managers.mission:debug_execute_mission_element_by_name(self._name)
 end
-

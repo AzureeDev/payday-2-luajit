@@ -97,7 +97,9 @@ end
 function MoneyWrapBase:save(data)
 	MoneyWrapBase.super.save(self, data)
 
-	local state = {money_amount = self._money_amount}
+	local state = {
+		money_amount = self._money_amount
+	}
 	data.MoneyWrapBase = state
 end
 
@@ -110,4 +112,3 @@ end
 
 function MoneyWrapBase:destroy()
 end
-

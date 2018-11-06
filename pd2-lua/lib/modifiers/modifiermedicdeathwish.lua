@@ -22,4 +22,3 @@ function ModifierMedicDeathwish:OnEnemyDied(unit, damage_info)
 		end
 	end
 end
-

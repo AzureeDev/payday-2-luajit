@@ -49,4 +49,3 @@ function ElementExplosion:on_executed(instigator)
 
 	ElementExplosion.super.on_executed(self, instigator)
 end
-

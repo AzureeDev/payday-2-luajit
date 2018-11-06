@@ -99,7 +99,9 @@ function AkimboWeaponBase:fire(...)
 		if alive(self._second_gun) then
 			table.insert(self._fire_callbacks, {
 				t = self:get_fire_time(),
-				callback = callback(self, self, "_fire_second", {...})
+				callback = callback(self, self, "_fire_second", {
+					...
+				})
 			})
 		end
 
@@ -158,7 +160,12 @@ function AkimboWeaponBase:_do_update_bullet_objects(weapon_base, ammo_func, is_s
 			for _, object in ipairs(objects) do
 				local ammo_base = weapon_base:ammo_base()
 				local ammo = ammo_base[ammo_func](ammo_base) / 2
-				ammo = is_second_gun and math.ceil(ammo) or math.floor(ammo)
+
+				if is_second_gun then
+					ammo = math.ceil(ammo)
+				else
+					ammo = math.floor(ammo)
+				end
 
 				object[1]:set_visibility(i <= ammo)
 			end
@@ -299,6 +306,7 @@ function AkimboWeaponBase:_sound_singleshot()
 
 	AkimboWeaponBase.super._sound_singleshot(self)
 end
+
 NPCAkimboWeaponBase = NPCAkimboWeaponBase or class(NewNPCRaycastWeaponBase)
 NPCAkimboWeaponBase.AKIMBO = true
 
@@ -342,7 +350,9 @@ function NPCAkimboWeaponBase:fire_blank(...)
 				return
 			end
 
-			managers.enemy:add_delayed_clbk("NPCAkimboWeaponBase", callback(self, self, "_fire_blank_second", {...}), TimerManager:game():time() + self:get_fire_time())
+			managers.enemy:add_delayed_clbk("NPCAkimboWeaponBase", callback(self, self, "_fire_blank_second", {
+				...
+			}), TimerManager:game():time() + self:get_fire_time())
 		end
 	elseif self._fire_second_gun_next then
 		if alive(self._second_gun) and alive(self._setup.user_unit) then
@@ -518,6 +528,7 @@ function NPCAkimboWeaponBase:_sound_singleshot()
 
 	NPCAkimboWeaponBase.super._sound_singleshot(self)
 end
+
 EnemyAkimboWeaponBase = EnemyAkimboWeaponBase or class(NPCRaycastWeaponBase)
 EnemyAkimboWeaponBase.AKIMBO = true
 
@@ -631,4 +642,3 @@ function EnemyAkimboWeaponBase:_sound_singleshot()
 
 	EnemyAkimboWeaponBase.super._sound_singleshot(self)
 end
-

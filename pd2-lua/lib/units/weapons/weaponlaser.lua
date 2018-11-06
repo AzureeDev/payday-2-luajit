@@ -82,6 +82,7 @@ end
 function WeaponLaser:set_rotation(rot)
 	self._custom_rotation = rot
 end
+
 local mvec1 = Vector3()
 local mvec2 = Vector3()
 local mvec_l_dir = Vector3()
@@ -213,4 +214,3 @@ function WeaponLaser:add_ray_ignore_unit(unit)
 
 	table.insert(self._ray_ignore_units, unit)
 end
-

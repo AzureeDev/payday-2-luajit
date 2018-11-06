@@ -34,4 +34,3 @@ end
 function NpcVehicleStateManeuver:is_maneuvering()
 	return true
 end
-

@@ -66,7 +66,9 @@ function type_name(value)
 end
 
 function mixin(res, ...)
-	for _, t in ipairs({...}) do
+	for _, t in ipairs({
+		...
+	}) do
 		for k, v in pairs(t) do
 			if k ~= "new" and k ~= "__index" then
 				rawset(res, k, v)
@@ -82,7 +84,9 @@ function mix(...)
 end
 
 function mixin_add(res, ...)
-	for _, t in ipairs({...}) do
+	for _, t in ipairs({
+		...
+	}) do
 		for k, v in pairs(t) do
 			table.insert(res, v)
 		end
@@ -133,12 +137,16 @@ __frozen__newindex = __frozen__newindex or function (self, key, value)
 end
 
 function freeze(...)
-	for _, instance in ipairs({...}) do
+	for _, instance in ipairs({
+		...
+	}) do
 		if not is_frozen(instance) then
 			local metatable = getmetatable(instance)
 
 			if metatable == nil then
-				setmetatable(instance, {__newindex = __frozen__newindex})
+				setmetatable(instance, {
+					__newindex = __frozen__newindex
+				})
 			else
 				setmetatable(instance, {
 					__index = metatable.__index,
@@ -172,15 +180,19 @@ function frozen_class(...)
 end
 
 function responder(...)
-	local response = {...}
+	local response = {
+		...
+	}
 
 	local function responder_function()
 		return unpack(response)
 	end
 
-	return setmetatable({}, {__index = function ()
-		return responder_function
-	end})
+	return setmetatable({}, {
+		__index = function ()
+			return responder_function
+		end
+	})
 end
 
 function responder_map(response_table)
@@ -188,13 +200,14 @@ function responder_map(response_table)
 
 	for key, value in pairs(response_table) do
 		if key == "default" then
-			setmetatable(responder, {__index = function ()
-				return function ()
-					return value
+			setmetatable(responder, {
+				__index = function ()
+					return function ()
+						return value
+					end
 				end
-			end})
+			})
 		else
-
 			responder[key] = function ()
 				return value
 			end
@@ -219,4 +232,3 @@ function GetSet:init(t)
 		end
 	end
 end
-

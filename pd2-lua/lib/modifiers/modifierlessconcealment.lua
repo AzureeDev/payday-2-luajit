@@ -13,4 +13,3 @@ function ModifierLessConcealment:modify_value(id, value)
 
 	return value
 end
-

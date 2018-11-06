@@ -47,7 +47,9 @@ function MenuManager:on_enter_lobby()
 end
 
 function MenuManager:on_leave_active_job()
-	managers.statistics:stop_session({quit = true})
+	managers.statistics:stop_session({
+		quit = true
+	})
 	managers.savefile:save_progress()
 	managers.job:deactivate_current_job()
 	managers.gage_assignment:deactivate_assignments()
@@ -321,7 +323,9 @@ end
 function MenuCallbackHandler:test_clicked_weapon(item)
 	if not item:parameter("customize") then
 		managers.menu_scene:clicked_blackmarket_item()
-		managers.menu_component:create_weapon_box(item:parameter("weapon_id"), {condition = math.round(item:parameter("condition") / item:_max_condition() * 100)})
+		managers.menu_component:create_weapon_box(item:parameter("weapon_id"), {
+			condition = math.round(item:parameter("condition") / item:_max_condition() * 100)
+		})
 	end
 end
 
@@ -333,7 +337,9 @@ function MenuCallbackHandler:buy_weapon(item)
 		cost = cost
 	})
 
-	managers.menu:show_buy_weapon({yes_func = yes_func}, name, "$" .. cost)
+	managers.menu:show_buy_weapon({
+		yes_func = yes_func
+	}, name, "$" .. cost)
 end
 
 function MenuCallbackHandler:on_buy_weapon_yes(params)
@@ -366,7 +372,9 @@ function MenuCallbackHandler:repair_weapon(item)
 		cost = cost
 	})
 
-	managers.menu:show_repair_weapon({yes_func = yes_func}, name, "$" .. cost)
+	managers.menu:show_repair_weapon({
+		yes_func = yes_func
+	}, name, "$" .. cost)
 end
 
 function MenuCallbackHandler:on_repair_yes(params)
@@ -488,7 +496,9 @@ function MenuCallbackHandler:buy_mask(item)
 		cost = cost
 	})
 
-	managers.menu:show_buy_weapon({yes_func = yes_func}, name, "$" .. cost)
+	managers.menu:show_buy_weapon({
+		yes_func = yes_func
+	}, name, "$" .. cost)
 end
 
 function MenuCallbackHandler:_on_buy_mask_yes(params)
@@ -538,7 +548,9 @@ function MenuCallbackHandler:buy_character(item)
 		cost = cost
 	})
 
-	managers.menu:show_buy_weapon({yes_func = yes_func}, name, "$" .. cost)
+	managers.menu:show_buy_weapon({
+		yes_func = yes_func
+	}, name, "$" .. cost)
 end
 
 function MenuCallbackHandler:_on_buy_character_yes(params)
@@ -573,7 +585,9 @@ function MenuCallbackHandler:buy_armor(item)
 		cost = cost
 	})
 
-	managers.menu:show_buy_weapon({yes_func = yes_func}, name, "$" .. cost)
+	managers.menu:show_buy_weapon({
+		yes_func = yes_func
+	}, name, "$" .. cost)
 end
 
 function MenuCallbackHandler:_on_buy_armor_yes(params)
@@ -612,7 +626,9 @@ function MenuCallbackHandler:repair_armor(item)
 		cost = cost
 	})
 
-	managers.menu:show_repair_weapon({yes_func = yes_func}, name, "$" .. cost)
+	managers.menu:show_repair_weapon({
+		yes_func = yes_func
+	}, name, "$" .. cost)
 end
 
 function MenuCallbackHandler:on_repair_armor_yes(params)
@@ -682,6 +698,7 @@ end
 function MenuCallbackHandler:is_cash_safe_back_visible()
 	return managers.menu:cash_safe_scene_done()
 end
+
 MenuComponentInitiator = MenuComponentInitiator or class()
 
 function MenuComponentInitiator:modify_node(original_node, data)
@@ -695,6 +712,7 @@ function MenuComponentInitiator:modify_node(original_node, data)
 
 	return node
 end
+
 MenuLoadoutInitiator = MenuLoadoutInitiator or class()
 
 function MenuLoadoutInitiator:modify_node(original_node, data)
@@ -704,6 +722,7 @@ function MenuLoadoutInitiator:modify_node(original_node, data)
 
 	return node
 end
+
 MenuCrimeNetInitiator = MenuCrimeNetInitiator or class()
 
 function MenuCrimeNetInitiator:modify_node(node)
@@ -744,7 +763,9 @@ function MenuCrimeNetInitiator:refresh_node(node)
 			name = "online",
 			type = "MenuItemDivider"
 		}
-		local new_item = node:create_item({type = "MenuItemDivider"}, params)
+		local new_item = node:create_item({
+			type = "MenuItemDivider"
+		}, params)
 
 		node:add_item(new_item)
 	end
@@ -775,7 +796,9 @@ function MenuCrimeNetInitiator:refresh_node(node)
 			name = "offline",
 			type = "MenuItemDivider"
 		}
-		local new_item = node:create_item({type = "MenuItemDivider"}, params)
+		local new_item = node:create_item({
+			type = "MenuItemDivider"
+		}, params)
 
 		node:add_item(new_item)
 	end
@@ -815,7 +838,9 @@ function MenuManager:show_repair_weapon(params, weapon, cost)
 		text = managers.localization:text("dialog_yes"),
 		callback_func = params.yes_func
 	}
-	local no_button = {text = managers.localization:text("dialog_no")}
+	local no_button = {
+		text = managers.localization:text("dialog_no")
+	}
 	dialog_data.button_list = {
 		yes_button,
 		no_button
@@ -836,7 +861,9 @@ function MenuManager:show_buy_weapon(params, weapon, cost)
 		text = managers.localization:text("dialog_yes"),
 		callback_func = params.yes_func
 	}
-	local no_button = {text = managers.localization:text("dialog_no")}
+	local no_button = {
+		text = managers.localization:text("dialog_no")
+	}
 	dialog_data.button_list = {
 		yes_button,
 		no_button
@@ -884,6 +911,7 @@ function MenuCallbackHandler:on_visit_fbi_files_suspect(item)
 		end
 	end
 end
+
 FbiFilesInitiator = FbiFilesInitiator or class()
 
 function FbiFilesInitiator:modify_node(node, up)
@@ -940,6 +968,7 @@ end
 function FbiFilesInitiator:refresh_node(node)
 	return self:modify_node(node)
 end
+
 PlayerListInitiator = PlayerListInitiator or class(MenuInitiatorBase)
 
 function PlayerListInitiator:get_peer_name(peer)
@@ -1003,9 +1032,12 @@ end
 
 function MenuCallbackHandler:on_player_list_inspect_peer(item, node)
 	if item then
-		managers.menu:open_node("inspect_player", {item:parameters().peer})
+		managers.menu:open_node("inspect_player", {
+			item:parameters().peer
+		})
 	end
 end
+
 InspectPlayerInitiator = InspectPlayerInitiator or class(MenuInitiatorBase)
 
 function InspectPlayerInitiator:modify_node(node, inspect_peer)
@@ -1024,7 +1056,9 @@ function InspectPlayerInitiator:modify_node(node, inspect_peer)
 		text_id = PlayerListInitiator.get_peer_name(self, inspect_peer),
 		color = tweak_data.screen_colors.text
 	}
-	local data_node = {type = "MenuItemDivider"}
+	local data_node = {
+		type = "MenuItemDivider"
+	}
 	local new_item = node:create_item(data_node, params)
 
 	node:add_item(new_item)
@@ -1097,7 +1131,9 @@ function InspectPlayerInitiator:modify_node(node, inspect_peer)
 			size = 8,
 			color = tweak_data.screen_colors.text
 		}
-		local data_node = {type = "MenuItemDivider"}
+		local data_node = {
+			type = "MenuItemDivider"
+		}
 		local new_item = node:create_item(data_node, params)
 
 		node:add_item(new_item)
@@ -1133,7 +1169,9 @@ end
 function MenuCallbackHandler:kick_ban_player(item)
 	local dialog_data = {
 		title = managers.localization:text("dialog_sure_to_ban_title"),
-		text = managers.localization:text("dialog_sure_to_kick_ban_body", {USER = item:parameters().name})
+		text = managers.localization:text("dialog_sure_to_kick_ban_body", {
+			USER = item:parameters().name
+		})
 	}
 	local yes_button = {
 		text = managers.localization:text("dialog_yes"),
@@ -1164,6 +1202,7 @@ function MenuCallbackHandler:_kick_ban_player_confirm(item)
 		managers.network:session():on_peer_kicked(peer, peer:id(), message_id)
 	end
 end
+
 MenuChooseWeaponCosmeticInitiator = MenuChooseWeaponCosmeticInitiator or class(MenuInitiatorBase)
 
 function MenuChooseWeaponCosmeticInitiator:modify_node(original_node, data)
@@ -1221,6 +1260,7 @@ function MenuChooseWeaponCosmeticInitiator:add_back_button(node)
 
 	return new_item
 end
+
 MenuOpenContainerInitiator = MenuOpenContainerInitiator or class(MenuInitiatorBase)
 
 function MenuOpenContainerInitiator:modify_node(original_node, data)
@@ -1307,7 +1347,9 @@ function MenuCallbackHandler:steam_buy_drill(item, data)
 	if not MenuCallbackHandler:is_overlay_enabled() then
 		managers.menu:show_enable_steam_overlay_tradable_item()
 	elseif def_id then
-		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {"overlay_close"}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
+		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {
+			"overlay_close"
+		}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
 		Steam:overlay_activate("url", tweak_data.economy:create_buy_tradable_url(def_id, quantity))
 		managers.menu:show_buying_tradable_item_dialog()
 	end
@@ -1328,7 +1370,9 @@ function MenuCallbackHandler:steam_buy_safe_from_community(item, data)
 	if not MenuCallbackHandler:is_overlay_enabled() then
 		managers.menu:show_enable_steam_overlay_tradable_item()
 	elseif safe then
-		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {"overlay_close"}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
+		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {
+			"overlay_close"
+		}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
 		Steam:overlay_activate("url", tweak_data.economy:create_market_link_url("safes", safe))
 		managers.menu:show_buying_tradable_item_dialog()
 	end
@@ -1349,11 +1393,15 @@ function MenuCallbackHandler:steam_find_item_from_community(item, data)
 	if not MenuCallbackHandler:is_overlay_enabled() then
 		managers.menu:show_enable_steam_overlay_tradable_item()
 	elseif cosmetic_id and weapon_id then
-		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {"overlay_close"}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
+		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {
+			"overlay_close"
+		}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
 		Steam:overlay_activate("url", tweak_data.economy:create_weapon_skin_market_search_url(weapon_id, cosmetic_id))
 		managers.menu:show_buying_tradable_item_dialog()
 	elseif cosmetic_id and data.armor then
-		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {"overlay_close"}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
+		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {
+			"overlay_close"
+		}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
 		Steam:overlay_activate("url", tweak_data.economy:create_armor_skin_market_search_url(data.cosmetic_id))
 		managers.menu:show_buying_tradable_item_dialog()
 	end
@@ -1367,7 +1415,9 @@ function MenuCallbackHandler:steam_sell_item(item)
 		managers.menu:show_enable_steam_overlay_tradable_item()
 	elseif steam_id and instance_id then
 		print("selling item", "steam_id", steam_id, "instance_id", instance_id)
-		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {"overlay_close"}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
+		managers.network.account:add_overlay_listener("steam_transaction_tradable_item", {
+			"overlay_close"
+		}, callback(MenuCallbackHandler, MenuCallbackHandler, "on_steam_transaction_over"))
 		Steam:overlay_activate("url", tweak_data.economy:create_sell_tradable_url(steam_id, instance_id))
 	end
 end
@@ -1398,7 +1448,9 @@ function MenuCallbackHandler:steam_open_container(item)
 		managers.menu:back()
 		managers.system_menu:force_close_all()
 		managers.menu_component:set_blackmarket_enabled(false)
-		managers.menu:open_node("open_steam_safe", {data.content})
+		managers.menu:open_node("open_steam_safe", {
+			data.content
+		})
 	end
 
 	managers.menu_component:set_blackmarket_disable_fetching(true)
@@ -1424,6 +1476,7 @@ function MenuCallbackHandler:_safe_result_recieved(error, items_new, items_remov
 		managers.menu_scene:store_safe_result(error, items_new, items_removed)
 	end
 end
+
 MenuEconomySafeInitiator = MenuEconomySafeInitiator or class()
 
 function MenuEconomySafeInitiator:modify_node(node, safe_entry)
@@ -1431,6 +1484,7 @@ function MenuEconomySafeInitiator:modify_node(node, safe_entry)
 
 	return node
 end
+
 MenuBanListInitiator = MenuBanListInitiator or class(MenuInitiatorBase)
 
 function MenuBanListInitiator:modify_node(node)
@@ -1510,7 +1564,9 @@ function MenuCallbackHandler:ban_player(item, force)
 		if not force then
 			local dialog_data = {
 				title = managers.localization:text("dialog_sure_to_ban_title"),
-				text = managers.localization:text("dialog_sure_to_ban_body", {USER = item:parameters().name})
+				text = managers.localization:text("dialog_sure_to_ban_body", {
+					USER = item:parameters().name
+				})
 			}
 			local yes_button = {
 				text = managers.localization:text("dialog_yes"),
@@ -1543,7 +1599,9 @@ function MenuCallbackHandler:unban_player(item, force)
 		if not force then
 			local dialog_data = {
 				title = managers.localization:text("dialog_sure_to_unban_title"),
-				text = managers.localization:text("dialog_sure_to_unban_body", {USER = item:parameters().name})
+				text = managers.localization:text("dialog_sure_to_unban_body", {
+					USER = item:parameters().name
+				})
 			}
 			local yes_button = {
 				text = managers.localization:text("dialog_yes"),
@@ -1574,6 +1632,7 @@ end
 function MenuCallbackHandler:start_quickplay_game(item)
 	managers.crimenet:join_quick_play_game()
 end
+
 MenuQuickplaySettingsInitiator = MenuQuickplaySettingsInitiator or class(MenuInitiatorBase)
 
 function MenuQuickplaySettingsInitiator:modify_node(node)
@@ -1599,11 +1658,13 @@ function MenuQuickplaySettingsInitiator:modify_node(node)
 	local difficulty_item = node:item("quickplay_settings_difficulty")
 
 	if not difficulty_item then
-		local options = {{
-			value = "any",
-			text_id = "menu_any",
-			_meta = "option"
-		}}
+		local options = {
+			{
+				value = "any",
+				text_id = "menu_any",
+				_meta = "option"
+			}
+		}
 
 		for _, difficulty in ipairs(tweak_data.difficulties) do
 			if difficulty ~= "easy" then
@@ -1698,6 +1759,7 @@ function MenuCallbackHandler:set_default_quickplay_options()
 
 	managers.menu:show_default_option_dialog(params)
 end
+
 MenuMutatorsInitiator = MenuMutatorsInitiator or class(MenuInitiatorBase)
 
 function MenuMutatorsInitiator:modify_node(node)
@@ -1742,7 +1804,9 @@ function MenuMutatorsInitiator:populate_mutators_list(node)
 		both_column = true,
 		no_text = true
 	}
-	local data_node = {type = "MenuItemDivider"}
+	local data_node = {
+		type = "MenuItemDivider"
+	}
 	local new_item = node:create_item(data_node, params)
 
 	node:add_item(new_item)
@@ -1793,7 +1857,9 @@ function MenuMutatorsInitiator:refresh_node(node)
 end
 
 function MenuCallbackHandler:_open_mutator_options(item)
-	managers.menu:open_node("mutators_options", {item:parameters().mutator})
+	managers.menu:open_node("mutators_options", {
+		item:parameters().mutator
+	})
 end
 
 function MenuCallbackHandler:_update_mutator_value(item)
@@ -1801,6 +1867,7 @@ function MenuCallbackHandler:_update_mutator_value(item)
 		item:parameters().update_callback(item)
 	end
 end
+
 MenuSkinEditorInitiator = MenuSkinEditorInitiator or class(MenuInitiatorBase)
 
 function MenuSkinEditorInitiator:modify_node(node, data)
@@ -1888,7 +1955,11 @@ function MenuSkinEditorInitiator:modify_node(node, data)
 				next_node = "skin_editor_materials",
 				name = part_id,
 				text_id = (tweak_data.weapon.factory.parts[part_id] and managers.localization:text("bm_menu_" .. tweak_data.weapon.factory.parts[part_id].type) .. " - ") .. part_id,
-				next_node_parameters = {{part_id = part_id}}
+				next_node_parameters = {
+					{
+						part_id = part_id
+					}
+				}
 			})
 
 			default_item = default_item or part_id
@@ -1919,7 +1990,11 @@ function MenuSkinEditorInitiator:modify_node(node, data)
 				next_node = "skin_editor_base",
 				name = mod_type,
 				text_id = managers.localization:text("bm_menu_" .. mod_type),
-				next_node_parameters = {{mod_type = mod_type}}
+				next_node_parameters = {
+					{
+						mod_type = mod_type
+					}
+				}
 			})
 
 			default_item = default_item or mod_type
@@ -1942,10 +2017,12 @@ function MenuSkinEditorInitiator:modify_node(node, data)
 					next_node = "skin_editor_base",
 					name = material:name():key(),
 					text_id = "Subpart " .. index,
-					next_node_parameters = {{
-						part_id = data.part_id,
-						material_name = material:name()
-					}}
+					next_node_parameters = {
+						{
+							part_id = data.part_id,
+							material_name = material:name()
+						}
+					}
 				})
 
 				index = index + 1
@@ -1983,11 +2060,13 @@ function MenuSkinEditorInitiator:modify_node(node, data)
 			skin_editor:reload_current_skin()
 
 			local base_gradient_textures = skin_editor:get_texture_list_by_type(skin, "base_gradient")
-			local multichoice_list = {{
-				text_id = "DEFAULT",
-				localize = false,
-				_meta = "option"
-			}}
+			local multichoice_list = {
+				{
+					text_id = "DEFAULT",
+					localize = false,
+					_meta = "option"
+				}
+			}
 
 			for id, texture in ipairs(base_gradient_textures) do
 				table.insert(multichoice_list, {
@@ -2011,11 +2090,13 @@ function MenuSkinEditorInitiator:modify_node(node, data)
 			base_gradient_item:set_value(cdata.base_gradient_name)
 
 			local pattern_gradient_textures = skin_editor:get_texture_list_by_type(skin, "pattern_gradient")
-			multichoice_list = {{
-				text_id = "DEFAULT",
-				localize = false,
-				_meta = "option"
-			}}
+			multichoice_list = {
+				{
+					text_id = "DEFAULT",
+					localize = false,
+					_meta = "option"
+				}
+			}
 
 			for id, texture in ipairs(pattern_gradient_textures) do
 				table.insert(multichoice_list, {
@@ -2039,11 +2120,13 @@ function MenuSkinEditorInitiator:modify_node(node, data)
 			pattern_gradient_item:set_value(cdata.pattern_gradient_name)
 
 			local pattern_textures = skin_editor:get_texture_list_by_type(skin, "pattern")
-			multichoice_list = {{
-				text_id = "DEFAULT",
-				localize = false,
-				_meta = "option"
-			}}
+			multichoice_list = {
+				{
+					text_id = "DEFAULT",
+					localize = false,
+					_meta = "option"
+				}
+			}
 
 			for id, texture in ipairs(pattern_textures) do
 				table.insert(multichoice_list, {
@@ -2206,11 +2289,13 @@ function MenuSkinEditorInitiator:modify_node(node, data)
 			self:create_divider(node, "sticker2")
 
 			local sticker_textures = skin_editor:get_texture_list_by_type(skin, "sticker")
-			multichoice_list = {{
-				text_id = "DEFAULT",
-				localize = false,
-				_meta = "option"
-			}}
+			multichoice_list = {
+				{
+					text_id = "DEFAULT",
+					localize = false,
+					_meta = "option"
+				}
+			}
 
 			for id, texture in ipairs(sticker_textures) do
 				table.insert(multichoice_list, {
@@ -2449,11 +2534,13 @@ function MenuSkinEditorInitiator:modify_node(node, data)
 			node:delete_item("screenshot")
 		end
 
-		local multichoice_list = {{
-			text_id = "NONE",
-			localize = false,
-			_meta = "option"
-		}}
+		local multichoice_list = {
+			{
+				text_id = "NONE",
+				localize = false,
+				_meta = "option"
+			}
+		}
 
 		if skin_editor:has_screenshots(skin_editor:get_current_skin()) then
 			local screenshots = skin_editor:get_screenshot_list()
@@ -2662,7 +2749,9 @@ function MenuCallbackHandler:publish_weapon_skin(item)
 			text = managers.localization:text("dialog_ok"),
 			callback_func = callback(self, self, "_dialog_ok")
 		}
-		dialog_data.button_list = {ok_button}
+		dialog_data.button_list = {
+			ok_button
+		}
 
 		managers.system_menu:show(dialog_data)
 
@@ -2676,7 +2765,6 @@ function MenuCallbackHandler:_dialog_ok()
 end
 
 function MenuCallbackHandler:take_screenshot_skin(item)
-
 	local function screenshot_done(success)
 		managers.mouse_pointer:enable()
 		managers.menu:active_menu().renderer:show()
@@ -2711,7 +2799,9 @@ function MenuCallbackHandler:new_weapon_skin(item)
 		return
 	end
 
-	local data = {weapon_id = managers.blackmarket:get_crafted_category_slot(managers.blackmarket:skin_editor():category_slot()).weapon_id}
+	local data = {
+		weapon_id = managers.blackmarket:get_crafted_category_slot(managers.blackmarket:skin_editor():category_slot()).weapon_id
+	}
 
 	skin_editor:select_skin(skin_editor:create_new_skin(data))
 end
@@ -2762,7 +2852,6 @@ function MenuCallbackHandler:select_weapon_skin(item)
 end
 
 function MenuCallbackHandler:cleanup_weapon_skin_data(copy_data, skip_base)
-
 	local function remove_empty_func(data)
 		local remove = {}
 
@@ -3015,6 +3104,27 @@ end
 function MenuCallbackHandler:toggle_vr_descs(item)
 	managers.user:set_setting("show_vr_descs", item:value() == "on")
 end
+
+function MenuCallbackHandler:enable_movie_theater()
+	return managers.achievment:get_info("vit_1").awarded
+end
+
+function MenuCallbackHandler:only_one_movie()
+	if tweak_data.movies then
+		return #tweak_data.movies == 1
+	end
+
+	return false
+end
+
+function MenuCallbackHandler:more_than_one_movie()
+	if tweak_data.movies then
+		return #tweak_data.movies > 1
+	end
+
+	return false
+end
+
 MenuArmorSkinEditorInitiator = MenuArmorSkinEditorInitiator or class(MenuInitiatorBase)
 
 function MenuArmorSkinEditorInitiator:modify_node(node, data)
@@ -3096,11 +3206,13 @@ function MenuArmorSkinEditorInitiator:modify_node(node, data)
 
 			local armor_level = MenuCallbackHandler:editor_get_armor_level()
 			local base_gradient_textures = editor:get_texture_list_by_type(skin, "base_gradient")
-			local multichoice_list = {{
-				text_id = "DEFAULT",
-				localize = false,
-				_meta = "option"
-			}}
+			local multichoice_list = {
+				{
+					text_id = "DEFAULT",
+					localize = false,
+					_meta = "option"
+				}
+			}
 
 			for id, texture in ipairs(base_gradient_textures) do
 				table.insert(multichoice_list, {
@@ -3124,11 +3236,13 @@ function MenuArmorSkinEditorInitiator:modify_node(node, data)
 			base_gradient_item:set_value(tweak_data.economy:get_armor_based_value(cdata.base_gradient_name or cdata.base_gradient, armor_level))
 
 			local pattern_gradient_textures = editor:get_texture_list_by_type(skin, "pattern_gradient")
-			multichoice_list = {{
-				text_id = "DEFAULT",
-				localize = false,
-				_meta = "option"
-			}}
+			multichoice_list = {
+				{
+					text_id = "DEFAULT",
+					localize = false,
+					_meta = "option"
+				}
+			}
 
 			for id, texture in ipairs(pattern_gradient_textures) do
 				table.insert(multichoice_list, {
@@ -3152,11 +3266,13 @@ function MenuArmorSkinEditorInitiator:modify_node(node, data)
 			pattern_gradient_item:set_value(tweak_data.economy:get_armor_based_value(cdata.pattern_gradient_name or cdata.pattern_gradient, armor_level))
 
 			local pattern_textures = editor:get_texture_list_by_type(skin, "pattern")
-			multichoice_list = {{
-				text_id = "DEFAULT",
-				localize = false,
-				_meta = "option"
-			}}
+			multichoice_list = {
+				{
+					text_id = "DEFAULT",
+					localize = false,
+					_meta = "option"
+				}
+			}
 
 			for id, texture in ipairs(pattern_textures) do
 				table.insert(multichoice_list, {
@@ -3307,11 +3423,13 @@ function MenuArmorSkinEditorInitiator:modify_node(node, data)
 			self:create_divider(node, "sticker2")
 
 			local sticker_textures = editor:get_texture_list_by_type(skin, "sticker")
-			multichoice_list = {{
-				text_id = "DEFAULT",
-				localize = false,
-				_meta = "option"
-			}}
+			multichoice_list = {
+				{
+					text_id = "DEFAULT",
+					localize = false,
+					_meta = "option"
+				}
+			}
 
 			for id, texture in ipairs(sticker_textures) do
 				table.insert(multichoice_list, {
@@ -3603,11 +3721,13 @@ function MenuArmorSkinEditorInitiator:modify_node(node, data)
 			node:delete_item("screenshot")
 		end
 
-		local multichoice_list = {{
-			text_id = "NONE",
-			localize = false,
-			_meta = "option"
-		}}
+		local multichoice_list = {
+			{
+				text_id = "NONE",
+				localize = false,
+				_meta = "option"
+			}
+		}
 
 		if editor:has_screenshots(editor:get_current_skin()) then
 			local screenshots = editor:get_screenshot_list()
@@ -3982,7 +4102,9 @@ function MenuCallbackHandler:publish_armor_skin(item)
 			text = managers.localization:text("dialog_ok"),
 			callback_func = callback(self, self, "_dialog_ok")
 		}
-		dialog_data.button_list = {ok_button}
+		dialog_data.button_list = {
+			ok_button
+		}
 
 		managers.system_menu:show(dialog_data)
 
@@ -4107,4 +4229,3 @@ end
 function MenuCallbackHandler:select_armor_skin_pose(item)
 	managers.menu_scene:_set_character_unit_pose(item:name(), managers.menu_scene._character_unit)
 end
-

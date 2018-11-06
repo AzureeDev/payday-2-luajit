@@ -6,6 +6,7 @@ function AkimboWeaponBaseVR:fire(from_pos, direction, ...)
 
 	return AkimboWeaponBaseVR.super.fire(self, from_pos, direction, ...)
 end
+
 local __check_auto_aim = AkimboWeaponBase.check_auto_aim
 
 function AkimboWeaponBaseVR:check_auto_aim(from_pos, direction, ...)
@@ -14,6 +15,7 @@ function AkimboWeaponBaseVR:check_auto_aim(from_pos, direction, ...)
 
 	return __check_auto_aim(self, from_pos, direction, ...)
 end
+
 local __start_reload = AkimboWeaponBase.start_reload
 
 function AkimboWeaponBaseVR:start_reload(...)
@@ -23,6 +25,7 @@ function AkimboWeaponBaseVR:start_reload(...)
 
 	__start_reload(self, ...)
 end
+
 local __on_reload = AkimboWeaponBase.on_reload
 
 function AkimboWeaponBaseVR:on_reload(...)
@@ -32,6 +35,7 @@ function AkimboWeaponBaseVR:on_reload(...)
 
 	__on_reload(self, ...)
 end
+
 local __update_reloading = NewRaycastWeaponBase.update_reloading
 
 function AkimboWeaponBaseVR:update_reloading(...)
@@ -41,6 +45,7 @@ function AkimboWeaponBaseVR:update_reloading(...)
 
 	__update_reloading(self, ...)
 end
+
 local __update_reload_finish = NewRaycastWeaponBase.update_reload_finish
 
 function AkimboWeaponBaseVR:update_reload_finish(...)
@@ -50,6 +55,7 @@ function AkimboWeaponBaseVR:update_reload_finish(...)
 
 	__update_reload_finish(self, ...)
 end
+
 local __tweak_data_anim_play = AkimboWeaponBase.tweak_data_anim_play
 
 function AkimboWeaponBaseVR:tweak_data_anim_play(anim, ...)
@@ -75,4 +81,3 @@ end
 function AkimboWeaponBaseVR:set_gadget_on(...)
 	AkimboWeaponBaseVR.super.set_gadget_on(self, ...)
 end
-

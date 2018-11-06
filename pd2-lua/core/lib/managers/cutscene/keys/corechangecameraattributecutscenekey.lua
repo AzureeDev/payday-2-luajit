@@ -27,7 +27,6 @@ function CoreChangeCameraAttributeCutsceneKey:is_valid()
 end
 
 function CoreChangeCameraAttributeCutsceneKey:evaluate(player, fast_forward)
-
 	local function set_attribute_if_valid(attribute_name)
 		local value = self:attribute_value(attribute_name)
 
@@ -46,6 +45,5 @@ function CoreChangeCameraAttributeCutsceneKey:is_valid_near_range(value)
 end
 
 function CoreChangeCameraAttributeCutsceneKey:is_valid_far_range(value)
-	return value == nil or (self:near_range() or 0) < value
+	return value == nil or value > (self:near_range() or 0)
 end
-

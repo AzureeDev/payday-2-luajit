@@ -174,13 +174,12 @@ function ChangeVanSkinUnitElement:add_triggers(vc)
 end
 
 function ChangeVanSkinUnitElement:can_select_unit(unit)
-	local default_sequence = (tweak_data.van.skins[tweak_data.van.default_skin_id] or {}).sequence_name
+	local default_sequence = tweak_data.van.skins[tweak_data.van.default_skin_id] or {}.sequence_name
 
 	return unit and unit.damage and unit:damage() and unit:damage():has_sequence(default_sequence)
 end
 
 function ChangeVanSkinUnitElement:add_unit_list_btn()
-
 	local function f(unit)
 		if self._units[unit:unit_data().unit_id] then
 			return false
@@ -199,7 +198,6 @@ function ChangeVanSkinUnitElement:add_unit_list_btn()
 end
 
 function ChangeVanSkinUnitElement:remove_unit_list_btn()
-
 	local function f(unit)
 		return self._units[unit:unit_data().unit_id]
 	end
@@ -212,4 +210,3 @@ function ChangeVanSkinUnitElement:remove_unit_list_btn()
 		end
 	end
 end
-

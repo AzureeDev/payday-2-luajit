@@ -43,4 +43,3 @@ function ElementCharacterSequence:on_executed(instigator)
 
 	ElementCharacterSequence.super.on_executed(self, instigator)
 end
-

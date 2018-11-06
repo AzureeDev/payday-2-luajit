@@ -31,4 +31,3 @@ function WeightedSelector:clear()
 	self._values = {}
 	self._total_weight = 0
 end
-

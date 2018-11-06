@@ -16,9 +16,15 @@ function CoreShaderLibCompiler:compile(file, dest, force_recompile, force_skip)
 		dest:skip_update("render_template_database", file.name, file.properties)
 
 		if target() == "win32" then
-			dest:skip_update("shaders", "core/temp/" .. self.SHADER_NAME, {"d3d9"})
-			dest:skip_update("shaders", "core/temp/" .. self.SHADER_NAME, {"d3d11"})
-			dest:skip_update("shaders", "core/temp/" .. self.SHADER_NAME, {"ogl"})
+			dest:skip_update("shaders", "core/temp/" .. self.SHADER_NAME, {
+				"d3d9"
+			})
+			dest:skip_update("shaders", "core/temp/" .. self.SHADER_NAME, {
+				"d3d11"
+			})
+			dest:skip_update("shaders", "core/temp/" .. self.SHADER_NAME, {
+				"ogl"
+			})
 		elseif target() == "ps3" then
 			dest:skip_update("shaders", "core/temp/" .. self.SHADER_NAME, {})
 		elseif target() == "ps4" then
@@ -43,9 +49,15 @@ function CoreShaderLibCompiler:compile(file, dest, force_recompile, force_skip)
 	self:run_compiler()
 
 	if target() == "win32" then
-		self:copy_file(self:base_path() .. self.TEMP_PATH .. self.SHADER_NAME .. ".d3d9.win32.shaders", "core/temp/" .. self.SHADER_NAME, {"d3d9"}, dest)
-		self:copy_file(self:base_path() .. self.TEMP_PATH .. self.SHADER_NAME .. ".d3d11.win32.shaders", "core/temp/" .. self.SHADER_NAME, {"d3d11"}, dest)
-		self:copy_file(self:base_path() .. self.TEMP_PATH .. self.SHADER_NAME .. ".ogl.win32.shaders", "core/temp/" .. self.SHADER_NAME, {"ogl"}, dest)
+		self:copy_file(self:base_path() .. self.TEMP_PATH .. self.SHADER_NAME .. ".d3d9.win32.shaders", "core/temp/" .. self.SHADER_NAME, {
+			"d3d9"
+		}, dest)
+		self:copy_file(self:base_path() .. self.TEMP_PATH .. self.SHADER_NAME .. ".d3d11.win32.shaders", "core/temp/" .. self.SHADER_NAME, {
+			"d3d11"
+		}, dest)
+		self:copy_file(self:base_path() .. self.TEMP_PATH .. self.SHADER_NAME .. ".ogl.win32.shaders", "core/temp/" .. self.SHADER_NAME, {
+			"ogl"
+		}, dest)
 	elseif target() == "ps3" then
 		self:copy_file(self:base_path() .. self.TEMP_PATH .. self.SHADER_NAME .. ".ps3.shaders", "core/temp/" .. self.SHADER_NAME, {}, dest)
 	elseif target() == "xb1" then
@@ -228,4 +240,3 @@ function CoreShaderLibCompiler:get_make_params()
 
 	return make_params
 end
-

@@ -100,12 +100,16 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 			font = tweak_data.menu.pd2_large_font,
 			font_size = tweak_data.menu.pd2_small_font_size
 		})
-		BoxGuiObject:new(self._image_panel:panel({layer = 100}), {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(self._image_panel:panel({
+			layer = 100
+		}), {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 	end
 
 	local job_name = self._panel:text({
@@ -174,7 +178,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		})
 
 		make_fine_text(new_name)
-		new_name:set_left((dlc_name:text() ~= "" and dlc_name or contact_name):right() + 5)
+		new_name:set_left(dlc_name:text() ~= "" and dlc_name or contact_name:right() + 5)
 		new_name:set_bottom(job_name:top())
 	end
 
@@ -295,28 +299,42 @@ function ContractBrokerHeistItem:get_last_played_text()
 	local time_str = managers.localization:to_upper_text("menu_time_never")
 
 	if last_played_date then
-		local diff = (current_date - last_played_date):value()
+		local diff = current_date - last_played_date:value()
 
 		if diff == 0 then
 			time_str = managers.localization:to_upper_text("menu_time_today")
 		elseif diff == 1 then
-			time_str = managers.localization:to_upper_text("menu_time_day_ago", {time = diff})
+			time_str = managers.localization:to_upper_text("menu_time_day_ago", {
+				time = diff
+			})
 		elseif diff < DateTime.days_per_week then
-			time_str = managers.localization:to_upper_text("menu_time_days_ago", {time = diff})
+			time_str = managers.localization:to_upper_text("menu_time_days_ago", {
+				time = diff
+			})
 		elseif diff < DateTime.days_per_week * 2 then
-			time_str = managers.localization:to_upper_text("menu_time_week_ago", {time = math.floor(diff / DateTime.days_per_week)})
+			time_str = managers.localization:to_upper_text("menu_time_week_ago", {
+				time = math.floor(diff / DateTime.days_per_week)
+			})
 		elseif diff < DateTime.days_per_month then
-			time_str = managers.localization:to_upper_text("menu_time_weeks_ago", {time = math.floor(diff / DateTime.days_per_week)})
+			time_str = managers.localization:to_upper_text("menu_time_weeks_ago", {
+				time = math.floor(diff / DateTime.days_per_week)
+			})
 		elseif diff < DateTime.days_per_month * 2 then
-			time_str = managers.localization:to_upper_text("menu_time_month_ago", {time = math.floor(diff / DateTime.days_per_month)})
+			time_str = managers.localization:to_upper_text("menu_time_month_ago", {
+				time = math.floor(diff / DateTime.days_per_month)
+			})
 		elseif diff < DateTime.days_per_month * DateTime.months_per_year then
-			time_str = managers.localization:to_upper_text("menu_time_months_ago", {time = math.floor(diff / DateTime.days_per_month)})
-		elseif DateTime.days_per_month * DateTime.months_per_year <= diff then
+			time_str = managers.localization:to_upper_text("menu_time_months_ago", {
+				time = math.floor(diff / DateTime.days_per_month)
+			})
+		elseif diff >= DateTime.days_per_month * DateTime.months_per_year then
 			time_str = managers.localization:to_upper_text("menu_time_year_over")
 		end
 	end
 
-	return managers.localization:to_upper_text("menu_broker_last_played", {time = time_str})
+	return managers.localization:to_upper_text("menu_broker_last_played", {
+		time = time_str
+	})
 end
 
 function ContractBrokerHeistItem:get_dlc_name_and_color(job_tweak)
@@ -379,9 +397,13 @@ function ContractBrokerHeistItem:get_heist_day_text()
 	local days = self:_job_num_days()
 
 	if days == 1 then
-		return managers.localization:to_upper_text("menu_broker_day", {days = days})
+		return managers.localization:to_upper_text("menu_broker_day", {
+			days = days
+		})
 	else
-		return managers.localization:to_upper_text("menu_broker_days", {days = days})
+		return managers.localization:to_upper_text("menu_broker_days", {
+			days = days
+		})
 	end
 end
 
@@ -487,15 +509,17 @@ function ContractBrokerHeistItem:trigger()
 	local is_professional = job_tweak and job_tweak.professional or false
 	local is_competitive = job_tweak and job_tweak.competitive or false
 
-	managers.menu:open_node(Global.game_settings.single_player and "crimenet_contract_singleplayer" or "crimenet_contract_host", {{
-		customize_contract = true,
-		job_id = self._job_data.job_id,
-		difficulty = is_professional and "hard" or "normal",
-		difficulty_id = is_professional and 3 or 2,
-		professional = is_professional,
-		competitive = is_competitive,
-		contract_visuals = job_tweak.contract_visuals
-	}})
+	managers.menu:open_node(Global.game_settings.single_player and "crimenet_contract_singleplayer" or "crimenet_contract_host", {
+		{
+			customize_contract = true,
+			job_id = self._job_data.job_id,
+			difficulty = is_professional and "hard" or "normal",
+			difficulty_id = is_professional and 3 or 2,
+			professional = is_professional,
+			competitive = is_competitive,
+			contract_visuals = job_tweak.contract_visuals
+		}
+	})
 end
 
 function ContractBrokerHeistItem:toggle_favourite()
@@ -505,4 +529,3 @@ function ContractBrokerHeistItem:toggle_favourite()
 	managers.menu:post_event("menu_enter")
 	self:refresh()
 end
-

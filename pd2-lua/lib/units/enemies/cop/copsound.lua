@@ -42,7 +42,12 @@ function CopSound:_play(sound_name, source_name, clbk)
 	end
 
 	local event = nil
-	event = clbk and self._unit:sound_source(source):post_event(sound_name, clbk, nil, "end_of_event") or self._unit:sound_source(source):post_event(sound_name)
+
+	if clbk then
+		event = self._unit:sound_source(source):post_event(sound_name, clbk, nil, "end_of_event")
+	else
+		event = self._unit:sound_source(source):post_event(sound_name)
+	end
 
 	return event
 end
@@ -111,7 +116,13 @@ function CopSound:say(sound_name, sync, skip_prefix, important, callback)
 	end
 
 	local full_sound = nil
-	full_sound = skip_prefix and sound_name or self._prefix .. sound_name
+
+	if skip_prefix then
+		full_sound = sound_name
+	else
+		full_sound = self._prefix .. sound_name
+	end
+
 	local event_id = nil
 
 	if type(full_sound) == "number" then
@@ -159,4 +170,3 @@ function CopSound:anim_clbk_stop_sound(unit, source_name)
 
 	self:stop(source_name)
 end
-

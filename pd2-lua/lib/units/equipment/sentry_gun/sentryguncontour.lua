@@ -3,7 +3,9 @@ SentryGunContour = SentryGunContour or class()
 function SentryGunContour:init(unit)
 	self._unit = unit
 
-	unit:event_listener():add("SentryGunContour_on_setup_event", {"on_setup"}, callback(self, self, "_on_setup_event"))
+	unit:event_listener():add("SentryGunContour_on_setup_event", {
+		"on_setup"
+	}, callback(self, self, "_on_setup_event"))
 end
 
 function SentryGunContour:_on_setup_event(is_owner)
@@ -13,9 +15,15 @@ function SentryGunContour:_on_setup_event(is_owner)
 		self._current_contour_id = self:standard_contour_id()
 
 		self:_set_contour(self._current_contour_id)
-		event_listener:add("SentryGunContour_on_switch_fire_mode_event", {"on_switch_fire_mode"}, callback(self, self, "_on_switch_fire_mode_event"))
-		event_listener:add("SentryGunContour_on_out_of_ammo_event", {"on_out_of_ammo"}, callback(self, self, "_on_out_of_ammo_event"))
-		event_listener:add("SentryGunContour_on_death_event", {"on_death"}, callback(self, self, "_on_death_event"))
+		event_listener:add("SentryGunContour_on_switch_fire_mode_event", {
+			"on_switch_fire_mode"
+		}, callback(self, self, "_on_switch_fire_mode_event"))
+		event_listener:add("SentryGunContour_on_out_of_ammo_event", {
+			"on_out_of_ammo"
+		}, callback(self, self, "_on_out_of_ammo_event"))
+		event_listener:add("SentryGunContour_on_death_event", {
+			"on_death"
+		}, callback(self, self, "_on_death_event"))
 	end
 
 	event_listener:remove("SentryGunContour_on_setup_event")
@@ -72,4 +80,3 @@ function SentryGunContour:_remove_contour()
 		self._current_contour_id = nil
 	end
 end
-

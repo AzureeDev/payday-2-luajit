@@ -3,7 +3,9 @@ HUDInteractionVR = HUDInteraction
 function HUDInteractionVR:init(hud, child_name)
 	self._watch_prompt_panel = managers.hud:watch_prompt_panel()
 	hud.old_panel = hud.panel
-	hud.panel = self._watch_prompt_panel:panel({name = child_name or "interact"})
+	hud.panel = self._watch_prompt_panel:panel({
+		name = child_name or "interact"
+	})
 	self._hud_panel = hud.panel
 	self._circle_radius = 40
 	self._sides = self._circle_radius
@@ -25,13 +27,17 @@ function HUDInteractionVR:init(hud, child_name)
 		h = self._circle_radius * 2
 	})
 
-	interact_text_bg:rect({color = Color(0.3, 0, 0, 0)})
-	BoxGuiObject:new(interact_text_bg, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	interact_text_bg:rect({
+		color = Color(0.3, 0, 0, 0)
+	})
+	BoxGuiObject:new(interact_text_bg, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local interact_text = self._hud_panel:text({
 		vertical = "center",
@@ -68,10 +74,15 @@ function HUDInteractionVR:init(hud, child_name)
 	hud.panel = hud.old_panel
 	hud.old_panel = nil
 end
+
 HUDInteractionVR.default_show_interact = HUDInteraction.show_interact
 
 function HUDInteractionVR:show_interact(data)
-	data = data or {text = self._last_interaction_text or ""}
+	if not data then
+		data = {
+			text = self._last_interaction_text or ""
+		}
+	end
 
 	self:default_show_interact(data)
 	self._hud_panel:child(self._child_name_text .. "_bg"):set_visible(true)
@@ -198,4 +209,3 @@ function HUDInteractionVR:_animate_interaction_complete(bitmap, circle)
 	bitmap:parent():remove(bitmap)
 	circle:remove()
 end
-

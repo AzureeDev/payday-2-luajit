@@ -56,6 +56,7 @@ function TrackBehaviour:_invoke_on_delegate(method_name, ...)
 		end
 	end
 end
+
 EditableTrackBehaviour.CLIP_EDGE_HANDLE_WIDTH = 6
 
 function EditableTrackBehaviour:init()
@@ -136,6 +137,7 @@ function EditableTrackBehaviour:_drag_mode(clip, position)
 		return "CLIP"
 	end
 end
+
 ClipDragTrackBehaviour.SNAP_RADIUS = 10
 
 function ClipDragTrackBehaviour:init(clip, drag_start, mode)
@@ -212,11 +214,11 @@ function ClipDragTrackBehaviour:_time_displacement(track, event)
 		local unsnapped_time = self._drag_start.x + time_displacement
 		local snap_radius = track:pixels_to_units(ClipDragTrackBehaviour.SNAP_RADIUS)
 
-		if math.abs((self._drag_start.x + snapped_to_playhead) - unsnapped_time) < snap_radius then
+		if math.abs(self._drag_start.x + snapped_to_playhead - unsnapped_time) < snap_radius then
 			return snapped_to_playhead
-		elseif math.abs((self._drag_start.x + snapped_to_clips) - unsnapped_time) < snap_radius then
+		elseif math.abs(self._drag_start.x + snapped_to_clips - unsnapped_time) < snap_radius then
 			return snapped_to_clips
-		elseif math.abs((self._drag_start.x + snapped_to_grid) - unsnapped_time) < snap_radius then
+		elseif math.abs(self._drag_start.x + snapped_to_grid - unsnapped_time) < snap_radius then
 			return snapped_to_grid
 		else
 			return time_displacement
@@ -317,4 +319,3 @@ function BoxSelectionTrackBehaviour:on_mouse_left_up(sender, track, event)
 		self:restore_default_behaviour()
 	end
 end
-

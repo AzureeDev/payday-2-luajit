@@ -49,7 +49,9 @@ function BrushLayer:save(save_params)
 	local t = {
 		single_data_block = true,
 		entry = self._save_name,
-		data = {file = file_name}
+		data = {
+			file = file_name
+		}
 	}
 
 	self:_add_project_save_data(t.data)
@@ -83,12 +85,14 @@ function BrushLayer:reposition_all()
 			local dynamic_unit = false
 			local index = 0
 
-			while index < unit:num_bodies() and not dynamic_unit do
-				if unit:body_by_index(index):dynamic() then
-					dynamic_unit = true
-				end
+			if index < unit:num_bodies() then
+				while index < unit.num_bodies() and not dynamic_unit do
+					if unit:body_by_index(index):dynamic() then
+						dynamic_unit = true
+					end
 
-				index = index + 1
+					index = index + 1
+				end
 			end
 
 			World:delete_unit(unit)
@@ -116,7 +120,7 @@ function BrushLayer:reposition_all()
 							local brush_header = self:add_brush_header(name)
 							local correct_pos = brush_header:spawn_brush(ray.position, rotations[counter])
 							self._amount_dirty = true
-							local nudge_length = (ray.position - correct_pos):length()
+							local nudge_length = ray.position - correct_pos:length()
 
 							if nudge_length > 0.05 then
 								nudged_units = nudged_units + 1
@@ -254,12 +258,12 @@ function BrushLayer:update(time, rel_time)
 		Application:draw_circle(ray.position + ray.normal * 0.1, self._brush_size, 0, 0.7, 0, ray.normal)
 		Application:draw_circle(ray.position + ray.normal * 0.1 + ray.normal * self._offset, self._brush_size, 0, 1, 0, ray.normal)
 
-		base = (ray.position - ray.normal * 40) - ray.normal * self._offset
+		base = ray.position - ray.normal * 40 - ray.normal * self._offset
 		tip = ray.position + ray.normal * self._brush_height + ray.normal * self._offset
 
 		Application:draw_circle(tip, self._brush_size, 0, 0.7, 0, ray.normal)
 	else
-		local ray_normal = (to - from):normalized()
+		local ray_normal = to - from:normalized()
 		base = from + ray_normal * 1000
 		tip = from + ray_normal * 10000
 		local tunnel = 9000
@@ -281,15 +285,17 @@ function BrushLayer:update(time, rel_time)
 		if self._spraying then
 			local created = 0
 
-			while created < self._brush_pressure and density <= self._brush_density do
-				local nudge_amount = 1 - math.rand(self._brush_size * self._brush_size) / (self._brush_size * self._brush_size)
-				local rand_nudge = ray.normal:random_orthogonal() * self._brush_size * nudge_amount
-				local place_ray = managers.editor:select_unit_by_raycast(self._place_slot_mask, ray_type, tip + rand_nudge, base + rand_nudge)
+			if created < self._brush_pressure then
+				while created < self._brush_pressure and density <= self._brush_density do
+					local nudge_amount = 1 - math.rand(self._brush_size * self._brush_size) / (self._brush_size * self._brush_size)
+					local rand_nudge = ray.normal:random_orthogonal() * self._brush_size * nudge_amount
+					local place_ray = managers.editor:select_unit_by_raycast(self._place_slot_mask, ray_type, tip + rand_nudge, base + rand_nudge)
 
-				self:create_brush(place_ray)
+					self:create_brush(place_ray)
 
-				created = created + 1
-				density = (#units + created) / area
+					created = created + 1
+					density = (#units + created) / area
+				end
 			end
 
 			if self._brush_density == 0 then
@@ -299,26 +305,30 @@ function BrushLayer:update(time, rel_time)
 			if self._erase_with_pressure and ray then
 				local removed = 0
 
-				while removed < self._brush_pressure and removed < #units do
-					removed = removed + 1
-					local found = true
+				if removed < self._brush_pressure then
+					while removed < self._brush_pressure and removed < #units do
+						removed = removed + 1
+						local found = true
 
-					if self._erase_with_units then
-						found = false
+						if self._erase_with_units then
+							found = false
 
-						while not found and removed <= #units do
-							if table.contains(self._brush_names, units[removed]:name():s()) then
-								found = true
-							else
-								removed = removed + 1
+							if not found then
+								while not found and removed <= #units do
+									if table.contains(self._brush_names, units[removed]:name():s()) then
+										found = true
+									else
+										removed = removed + 1
+									end
+								end
 							end
 						end
-					end
 
-					if found then
-						World:delete_unit(units[removed])
+						if found then
+							World:delete_unit(units[removed])
 
-						self._amount_dirty = true
+							self._amount_dirty = true
+						end
 					end
 				end
 
@@ -520,7 +530,9 @@ function BrushLayer:build_panel(notebook)
 
 	local units_params = {
 		style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING",
-		unit_events = {"EVT_COMMAND_LIST_ITEM_DESELECTED"}
+		unit_events = {
+			"EVT_COMMAND_LIST_ITEM_DESELECTED"
+		}
 	}
 
 	self._sizer:add(self:build_units(units_params), 1, 0, "EXPAND")
@@ -548,8 +560,12 @@ function BrushLayer:build_panel(notebook)
 
 	self._brushes_ctrlr = brushes
 
-	brushes:connect("EVT_COMMAND_LISTBOX_SELECTED", callback(self, self, "select_brush"), {brushes = brushes})
-	create_brush_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "show_create_brush"), {brushes = brushes})
+	brushes:connect("EVT_COMMAND_LISTBOX_SELECTED", callback(self, self, "select_brush"), {
+		brushes = brushes
+	})
+	create_brush_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "show_create_brush"), {
+		brushes = brushes
+	})
 	remove_brush_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "remove_brush"), brushes)
 
 	return self._ews_panel
@@ -786,6 +802,7 @@ end
 function BrushLayer:get_layer_name()
 	return "Props brush"
 end
+
 BrushHeader = BrushHeader or class()
 
 function BrushHeader:init()
@@ -828,4 +845,3 @@ function BrushHeader:spawn_brush(position, rotation)
 
 	return position
 end
-

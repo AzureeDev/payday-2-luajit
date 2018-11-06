@@ -31,7 +31,9 @@ function HintUnitElement:_build_panel(panel, panel_sizer)
 	panel_sizer = panel_sizer or self._panel_sizer
 
 	self:_build_value_checkbox(panel, panel_sizer, "instigator_only", "Only show the hint on the instigator unit")
-	self:_build_value_combobox(panel, panel_sizer, "hint_id", table.list_add({"none"}, managers.hint:ids()), "Select a text id from the combobox")
+	self:_build_value_combobox(panel, panel_sizer, "hint_id", table.list_add({
+		"none"
+	}, managers.hint:ids()), "Select a text id from the combobox")
 
 	local text_sizer = EWS:BoxSizer("HORIZONTAL")
 
@@ -43,4 +45,3 @@ function HintUnitElement:_build_panel(panel, panel_sizer)
 	self:_set_text()
 	panel_sizer:add(text_sizer, 1, 0, "EXPAND")
 end
-

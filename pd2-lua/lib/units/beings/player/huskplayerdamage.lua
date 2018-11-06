@@ -106,4 +106,3 @@ function HuskPlayerDamage:_send_damage_to_owner(attack_data)
 
 	managers.job:set_memory("trophy_flawless", true, false)
 end
-

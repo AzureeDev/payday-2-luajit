@@ -57,4 +57,3 @@ end
 function ElementMotionpathMarker:motion_operation_set_rotation(operator_id)
 	managers.motion_path:operation_set_unit_target_rotation(self._id, operator_id)
 end
-

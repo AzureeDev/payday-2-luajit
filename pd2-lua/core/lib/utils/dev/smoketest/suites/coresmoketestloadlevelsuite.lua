@@ -17,4 +17,3 @@ function LoadLevelSuite:load_level()
 	self._session_state:player_slots():primary_slot():request_debug_local_user_binding()
 	self._session_state:join_standard_session()
 end
-

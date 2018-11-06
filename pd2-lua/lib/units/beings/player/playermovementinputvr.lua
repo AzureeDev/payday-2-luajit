@@ -10,8 +10,12 @@ function TouchMovementInputStateMachine:init(default_controls)
 	self._warp_in_dead_zone = true
 	self._default_controls = default_controls
 	self._states = {
-		[TouchMovementInputStateMachine.STATE_WARP_ZONE] = {update = callback(self, self, "_update_warp_zone")},
-		[TouchMovementInputStateMachine.STATE_DEAD_ZONE] = {update = callback(self, self, "_update_dead_zone")},
+		[TouchMovementInputStateMachine.STATE_WARP_ZONE] = {
+			update = callback(self, self, "_update_warp_zone")
+		},
+		[TouchMovementInputStateMachine.STATE_DEAD_ZONE] = {
+			update = callback(self, self, "_update_dead_zone")
+		},
 		[TouchMovementInputStateMachine.STATE_LOCAL_WARP_ZONE] = {
 			enter = callback(self, self, "_enter_warp_zone_local"),
 			update = callback(self, self, "_update_warp_zone_local")
@@ -38,7 +42,7 @@ function TouchMovementInputStateMachine:set_warp_in_dead_zone(value)
 end
 
 function TouchMovementInputStateMachine:change_state(state, ...)
-	if state < 1 or #self._states < state then
+	if state < 1 or state > #self._states then
 		return
 	end
 
@@ -110,7 +114,10 @@ end
 
 function TouchMovementInputStateMachine:_enter_warp_zone_local(move_length)
 	self._warp_zone_local = math.max(self._dead_zone, move_length) + self._dead_zone_local_th
-	self._warp_zone_local = self._default_controls and math.min(self._warp_zone_local, self._warp_zone + 0.025)
+
+	if self._default_controls then
+		self._warp_zone_local = math.min(self._warp_zone_local, self._warp_zone + 0.025)
+	end
 end
 
 function TouchMovementInputStateMachine:_update_warp_zone_local(move_length)
@@ -126,6 +133,7 @@ end
 function TouchMovementInputStateMachine:_update_dead_zone_none()
 	return false
 end
+
 PlayerMovementInputVR = PlayerMovementInputVR or class()
 
 function PlayerMovementInputVR:init(controller)
@@ -215,7 +223,7 @@ function PlayerMovementInputVR:update(t, dt, hand_rotation)
 		self._state.move_length = m
 		local unscaled_edge = self._default_controls and 0.25 or 0.3
 
-		if raw_move_length - dz < unscaled_edge then
+		if unscaled_edge > raw_move_length - dz then
 			local edge = unscaled_edge / (1 - dz)
 			local x = m / (2 * edge)
 			x = x * x * (3 - 2 * x)
@@ -286,4 +294,3 @@ function PlayerMovementInputVR:_dead_zone_size_changed(setting, old, new)
 
 	self._input:set_dead_zone(self._dead_zone)
 end
-

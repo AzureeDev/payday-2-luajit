@@ -70,4 +70,3 @@ function NetworkAccountXBL:_translate_signin_state(xbl_state)
 
 	return "not signed in"
 end
-

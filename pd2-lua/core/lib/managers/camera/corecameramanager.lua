@@ -49,6 +49,7 @@ end
 function CameraBase:nodes()
 	return self._nodes
 end
+
 CameraManager = CameraManager or CoreClass.class()
 
 function CameraManager:init(templates)
@@ -116,7 +117,12 @@ end
 
 function CameraManager:stop_layer(layer_name)
 	local mixer = nil
-	mixer = layer_name and self._name_to_layer[layer_name] or self._layers[1]
+
+	if layer_name then
+		mixer = self._name_to_layer[layer_name]
+	else
+		mixer = self._layers[1]
+	end
 
 	mixer:stop()
 end
@@ -257,6 +263,7 @@ function CameraManager:print_cameras()
 		end
 	end
 end
+
 CameraTemplateManager = CameraTemplateManager or CoreClass.class()
 CameraTemplateManager.camera_db_type = "camera"
 CameraTemplateManager.camera_db_path = "cameras/cameras"
@@ -374,7 +381,9 @@ function CameraTemplateManager:parse_camera(xml_node, space)
 	camera_setups[name] = setup
 
 	local function parse_node(xml_node)
-		local node = {_node_name = xml_node:parameter("node_name")}
+		local node = {
+			_node_name = xml_node:parameter("node_name")
+		}
 
 		assert(node._node_name)
 
@@ -429,7 +438,6 @@ function CameraTemplateManager:parse_camera(xml_node, space)
 end
 
 function CameraTemplateManager:parse_camera_node(xml_node, space)
-
 	local function split_string(str)
 		local strings = {}
 
@@ -486,4 +494,3 @@ function CameraTemplateManager:update(t, dt)
 		cam_man:update(t, dt)
 	end
 end
-

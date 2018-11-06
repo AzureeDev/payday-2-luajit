@@ -445,8 +445,9 @@ end
 
 function NetworkAccountSTEAM:_save_globals()
 	Global.steam = Global.steam or {}
-	Global.steam.account = {}
-	Global.steam.account.outfit_signature = self._outfit_signature and Application:create_luabuffer(self._outfit_signature)
+	Global.steam.account = {
+		outfit_signature = self._outfit_signature and Application:create_luabuffer(self._outfit_signature)
+	}
 end
 
 function NetworkAccountSTEAM:is_ready_to_close()
@@ -773,4 +774,3 @@ function NetworkAccountSTEAM.output_global_stats(file)
 		file_handle:puts(lines[i == 1 and 1 or #lines - i + 2])
 	end
 end
-

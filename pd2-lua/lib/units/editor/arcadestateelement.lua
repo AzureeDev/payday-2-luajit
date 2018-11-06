@@ -13,4 +13,3 @@ function ArcadeStateUnitElement:_build_panel(panel, panel_sizer)
 
 	self:_build_value_combobox(panel, panel_sizer, "state", JobManager.arcade_states, "Select a state from the combobox")
 end
-

@@ -279,4 +279,3 @@ function NetworkFriendsPSN:_count_online(friends)
 
 	return true
 end
-

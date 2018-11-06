@@ -7,7 +7,7 @@ function IngameContractGuiSkirmish:init(ws, node)
 		h = math.round(ws:panel():h() * 1)
 	})
 
-	self._panel:set_y((CoreMenuRenderer.Renderer.border_height + tweak_data.menu.pd2_large_font_size) - 5)
+	self._panel:set_y(CoreMenuRenderer.Renderer.border_height + tweak_data.menu.pd2_large_font_size - 5)
 	self._panel:grow(0, -(self._panel:y() + tweak_data.menu.pd2_medium_font_size))
 
 	self._node = node
@@ -85,7 +85,9 @@ function IngameContractGuiSkirmish:init(ws, node)
 	local current_ransom = managers.skirmish:current_ransom_amount()
 	local ransom_string = managers.experience:cash_string(math.round(current_ransom))
 	local ransom_text = FineText:new(text_panel, {
-		text = managers.localization:to_upper_text("menu_skirmish_ransom", {money = ransom_string}),
+		text = managers.localization:to_upper_text("menu_skirmish_ransom", {
+			money = ransom_string
+		}),
 		font = tweak_data.menu.pd2_large_font,
 		font_size = tweak_data.menu.pd2_large_font_size,
 		color = tweak_data.screen_colors.text
@@ -103,10 +105,10 @@ function IngameContractGuiSkirmish:init(ws, node)
 			y = briefing_description:bottom() + padding
 		})
 		self._modifier_list = SkirmishModifierList:new(text_panel, {
-			modifiers = managers.skirmish:active_weekly().modifiers,
+			modifiers = managers.skirmish:weekly_modifiers(),
 			y = modifiers_title:bottom(),
 			w = self._panel:width() - padding * 2,
-			h = (ransom_text:top() - modifiers_title:bottom()) - padding
+			h = ransom_text:top() - modifiers_title:bottom() - padding
 		})
 	end
 
@@ -114,12 +116,14 @@ function IngameContractGuiSkirmish:init(ws, node)
 
 	self:_rec_round_object(self._panel)
 
-	self._sides = BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._sides = BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 end
 
 function IngameContractGuiSkirmish:_rec_round_object(object)
@@ -161,4 +165,3 @@ function IngameContractGuiSkirmish:mouse_wheel_down(x, y)
 
 	self._modifier_list:scroll(x, y, -1)
 end
-

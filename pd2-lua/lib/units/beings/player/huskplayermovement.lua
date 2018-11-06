@@ -16,7 +16,9 @@ local tmp_rot1 = Rotation()
 local tmp_rot2 = Rotation()
 local tmp_rot3 = Rotation()
 local cbt_stance_code = 3
-local sync_action_force = {force = true}
+local sync_action_force = {
+	force = true
+}
 local sync_action_force_and_execute = {
 	force = true,
 	execute = true
@@ -36,19 +38,33 @@ HuskPlayerMovement.friendly_fire = PlayerMovement.friendly_fire
 HuskPlayerMovement.action_prerequisites = {
 	land = {
 		target_action = "land",
-		current_type = {"ground"},
-		last_type = {"air"}
+		current_type = {
+			"ground"
+		},
+		last_type = {
+			"air"
+		}
 	},
 	fall = {
 		target_action = "fall",
-		current_type = {"air"},
-		last_type = {"ground"},
-		not_last_type = {"air"},
-		not_last_action = {"jump"}
+		current_type = {
+			"air"
+		},
+		last_type = {
+			"ground"
+		},
+		not_last_type = {
+			"air"
+		},
+		not_last_action = {
+			"jump"
+		}
 	},
 	zipline_start = {
 		target_action = "zipline_start",
-		current_type = {"zipline"},
+		current_type = {
+			"zipline"
+		},
 		last_type = {
 			"ground",
 			"air"
@@ -60,7 +76,9 @@ HuskPlayerMovement.action_prerequisites = {
 			"ground",
 			"air"
 		},
-		last_type = {"zipline"}
+		last_type = {
+			"zipline"
+		}
 	}
 }
 HuskPlayerMovement._walk_anim_velocities = {
@@ -104,20 +122,22 @@ HuskPlayerMovement._walk_anim_velocities = {
 			}
 		}
 	},
-	crouch = {cbt = {
-		walk = {
-			bwd = 163.74,
-			l = 152.14,
-			fwd = 174.45,
-			r = 162.85
-		},
-		run = {
-			bwd = 268.68,
-			l = 282.93,
-			fwd = 312.25,
-			r = 282.93
+	crouch = {
+		cbt = {
+			walk = {
+				bwd = 163.74,
+				l = 152.14,
+				fwd = 174.45,
+				r = 162.85
+			},
+			run = {
+				bwd = 268.68,
+				l = 282.93,
+				fwd = 312.25,
+				r = 282.93
+			}
 		}
-	}}
+	}
 }
 HuskPlayerMovement._walk_anim_velocities.stand.hos = HuskPlayerMovement._walk_anim_velocities.stand.cbt
 HuskPlayerMovement._walk_anim_velocities.crouch.hos = HuskPlayerMovement._walk_anim_velocities.crouch.cbt
@@ -175,57 +195,65 @@ HuskPlayerMovement._walk_anim_lengths = {
 			}
 		}
 	},
-	crouch = {cbt = {
-		walk = {
-			bwd = 31,
-			l = 27,
-			fwd = 31,
-			r = 28
-		},
-		run = {
-			bwd = 20,
-			l = 19,
-			fwd = 21,
-			r = 19
-		},
-		run_start = {
-			bwd = 16,
-			l = 30,
-			fwd = 31,
-			r = 22
-		},
-		run_start_turn = {
-			bwd = 28,
-			l = 21,
-			r = 21
-		},
-		run_stop = {
-			bwd = 25,
-			l = 28,
-			fwd = 27,
-			r = 26
+	crouch = {
+		cbt = {
+			walk = {
+				bwd = 31,
+				l = 27,
+				fwd = 31,
+				r = 28
+			},
+			run = {
+				bwd = 20,
+				l = 19,
+				fwd = 21,
+				r = 19
+			},
+			run_start = {
+				bwd = 16,
+				l = 30,
+				fwd = 31,
+				r = 22
+			},
+			run_start_turn = {
+				bwd = 28,
+				l = 21,
+				r = 21
+			},
+			run_stop = {
+				bwd = 25,
+				l = 28,
+				fwd = 27,
+				r = 26
+			}
 		}
-	}},
-	wounded = {cbt = {
-		walk = {
-			bwd = 29,
-			l = 29,
-			fwd = 28,
-			r = 29
-		},
-		run = {
-			bwd = 18,
-			l = 19,
-			fwd = 19,
-			r = 19
+	},
+	wounded = {
+		cbt = {
+			walk = {
+				bwd = 29,
+				l = 29,
+				fwd = 28,
+				r = 29
+			},
+			run = {
+				bwd = 18,
+				l = 19,
+				fwd = 19,
+				r = 19
+			}
 		}
-	}},
-	panic = {ntl = {run = {
-		bwd = 15,
-		l = 15,
-		fwd = 15,
-		r = 16
-	}}}
+	},
+	panic = {
+		ntl = {
+			run = {
+				bwd = 15,
+				l = 15,
+				fwd = 15,
+				r = 16
+			}
+		}
+	}
 }
 
 for pose, stances in pairs(HuskPlayerMovement._walk_anim_lengths) do
@@ -241,10 +269,18 @@ end
 HuskPlayerMovement._walk_anim_lengths.stand.hos = HuskPlayerMovement._walk_anim_lengths.stand.cbt
 HuskPlayerMovement._walk_anim_lengths.crouch.hos = HuskPlayerMovement._walk_anim_lengths.crouch.cbt
 HuskPlayerMovement._matching_walk_anims = {
-	fwd = {bwd = true},
-	bwd = {fwd = true},
-	l = {r = true},
-	r = {l = true}
+	fwd = {
+		bwd = true
+	},
+	bwd = {
+		fwd = true
+	},
+	l = {
+		r = true
+	},
+	r = {
+		l = true
+	}
 }
 HuskPlayerMovement._stance_names = {
 	"ntl",
@@ -332,7 +368,9 @@ end
 function HuskPlayerMovement:post_init()
 	self._ext_anim = self._unit:anim_data()
 
-	self._unit:inventory():add_listener("HuskPlayerMovement", {"equip"}, callback(self, self, "clbk_inventory_event"))
+	self._unit:inventory():add_listener("HuskPlayerMovement", {
+		"equip"
+	}, callback(self, self, "clbk_inventory_event"))
 
 	if managers.navigation:is_data_ready() then
 		self._nav_tracker = managers.navigation:create_nav_tracker(self._unit:position())
@@ -350,7 +388,9 @@ function HuskPlayerMovement:post_init()
 
 	self._enemy_weapons_hot_listen_id = "PlayerMovement" .. tostring(self._unit:key())
 
-	managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {"enemy_weapons_hot"}, callback(self, PlayerMovement, "clbk_enemy_weapons_hot"))
+	managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {
+		"enemy_weapons_hot"
+	}, callback(self, PlayerMovement, "clbk_enemy_weapons_hot"))
 end
 
 function HuskPlayerMovement:set_character_anim_variables()
@@ -544,45 +584,41 @@ function HuskPlayerMovement:update(unit, t, dt)
 		end
 	end
 
-	if self._ext_anim and self._ext_anim.reload then
-		if not alive(self._left_hand_obj) then
-			self._left_hand_obj = self._unit:get_object(Idstring("LeftHandMiddle1"))
-		end
+	if self._ext_anim and self._ext_anim.reload and not alive(self._left_hand_obj) then
+		self._left_hand_obj = self._unit:get_object(Idstring("LeftHandMiddle1"))
 
-		if alive(self._left_hand_obj) then
-			if self._left_hand_pos then
-				self._left_hand_direction = self._left_hand_direction or Vector3()
+		if alive(self._left_hand_obj) and self._left_hand_pos then
+			self._left_hand_direction = self._left_hand_direction or Vector3()
 
-				mvec3_set(self._left_hand_direction, self._left_hand_pos)
-				mvec3_sub(self._left_hand_direction, self._left_hand_obj:position())
+			mvec3_set(self._left_hand_direction, self._left_hand_pos)
+			mvec3_sub(self._left_hand_direction, self._left_hand_obj:position())
 
-				self._left_hand_velocity = mvec3_len(self._left_hand_direction)
+			self._left_hand_velocity = mvec3_len(self._left_hand_direction)
 
-				mvec3_norm(self._left_hand_direction)
-			end
+			mvec3_norm(self._left_hand_direction)
 
 			self._left_hand_pos = self._left_hand_pos or Vector3()
 
 			mvec3_set(self._left_hand_pos, self._left_hand_obj:position())
-		end
-	end
 
-	if self._delayed_redirects then
-		for i, redirect in ipairs(self._delayed_redirects) do
-			redirect.t = redirect.t - dt
+			if self._delayed_redirects then
+				for i, redirect in ipairs(self._delayed_redirects) do
+					redirect.t = redirect.t - dt
 
-			if redirect.t <= 0 then
-				self:play_redirect(unpack(redirect.args))
-				table.remove(self._delayed_redirects, i)
+					if redirect.t <= 0 then
+						self:play_redirect(unpack(redirect.args))
+						table.remove(self._delayed_redirects, i)
+					end
+				end
 			end
-		end
-	end
 
-	if self._retry_sync_movement_state_driving then
-		self._retry_sync_movement_state_driving = nil
+			if self._retry_sync_movement_state_driving then
+				self._retry_sync_movement_state_driving = nil
 
-		if self._state == "driving" then
-			self:_sync_movement_state_driving()
+				if self._state == "driving" then
+					self:_sync_movement_state_driving()
+				end
+			end
 		end
 	end
 end
@@ -708,7 +744,16 @@ end
 
 function HuskPlayerMovement:play_redirect(redirect_name, at_time)
 	local result = self._unit:play_redirect(Idstring(redirect_name), at_time)
-	result = result ~= Idstring("") and false
+
+	if result ~= Idstring("") then
+		-- Nothing
+	else
+		result = false
+
+		if false then
+			result = true
+		end
+	end
 
 	if result then
 		return result
@@ -736,7 +781,16 @@ end
 
 function HuskPlayerMovement:play_redirect_idstr(redirect_name, at_time)
 	local result = self._unit:play_redirect(redirect_name, at_time)
-	result = result ~= Idstring("") and false
+
+	if result ~= Idstring("") then
+		-- Nothing
+	else
+		result = false
+
+		if false then
+			result = true
+		end
+	end
 
 	if result then
 		return result
@@ -748,7 +802,16 @@ end
 
 function HuskPlayerMovement:play_state(state_name, at_time)
 	local result = self._unit:play_state(Idstring(state_name), at_time)
-	result = result ~= Idstring("") and false
+
+	if result ~= Idstring("") then
+		-- Nothing
+	else
+		result = false
+
+		if false then
+			result = true
+		end
+	end
 
 	if result then
 		return result
@@ -760,7 +823,16 @@ end
 
 function HuskPlayerMovement:play_state_idstr(state_name, at_time)
 	local result = self._unit:play_state(state_name, at_time)
-	result = result ~= Idstring("") and false
+
+	if result ~= Idstring("") then
+		-- Nothing
+	else
+		result = false
+
+		if false then
+			result = true
+		end
+	end
 
 	if result then
 		return result
@@ -915,12 +987,9 @@ function HuskPlayerMovement:_register_revive_SO()
 	}
 	local objective = {
 		type = "revive",
-		interrupt_suppression = true,
 		called = true,
-		interrupt_health = 0.25,
 		scan = true,
 		destroy_clbk_key = false,
-		interrupt_dis = 300,
 		follow_unit = self._unit,
 		nav_seg = self._unit:movement():nav_tracker():nav_segment(),
 		fail_clbk = callback(self, self, "on_revive_SO_failed"),
@@ -1288,14 +1357,14 @@ function HuskPlayerMovement:_upd_attention_zipline(t, dt)
 
 		local yaw_diff = look_yaw_relative - old_look_yaw_relative
 		local pitch_diff = mrotation.pitch(look_rot) - mrotation.pitch(old_look_rot)
-		local yaw_step = math.lerp(40, 400, (math.min(math.abs(yaw_diff), 20) / 20) ^ 2) * dt
+		local yaw_step = math.lerp(40, 400, (math.min(math.abs(yaw_diff), 20) / 20)^2) * dt
 		yaw_step = math.sign(yaw_diff) * math.min(yaw_step, math.abs(yaw_diff))
-		local pitch_step = math.lerp(30, 250, (math.min(math.abs(pitch_diff), 20) / 20) ^ 2) * dt
+		local pitch_step = math.lerp(30, 250, (math.min(math.abs(pitch_diff), 20) / 20)^2) * dt
 		pitch_step = math.sign(pitch_diff) * math.min(pitch_step, math.abs(pitch_diff))
 		local new_yaw = old_look_yaw + yaw_step
 		local out_of_bounds = nil
 
-		if max_yaw_from_rp < new_yaw - root_yaw or new_yaw - root_yaw < min_yaw_from_rp then
+		if max_yaw_from_rp < new_yaw - root_yaw or min_yaw_from_rp > new_yaw - root_yaw then
 			new_yaw = math.clamp(new_yaw, min_yaw_from_rp, max_yaw_from_rp)
 		end
 
@@ -1422,10 +1491,10 @@ function HuskPlayerMovement:_upd_attention_driving(t, dt)
 		local l, r = nil
 
 		if aim_spin > 0 then
-			r = (1 - fwd) - bwd
+			r = 1 - fwd - bwd
 			l = 0
 		else
-			l = (1 - fwd) - bwd
+			l = 1 - fwd - bwd
 			r = 0
 		end
 
@@ -1656,7 +1725,9 @@ function HuskPlayerMovement:_override_last_node_action(new_action, add)
 			if add then
 				self:add_action(node, new_action)
 			else
-				node.action = {new_action}
+				node.action = {
+					new_action
+				}
 			end
 		end
 	end
@@ -1672,7 +1743,7 @@ end
 function HuskPlayerMovement:_upd_displacement_post_move(t, dt)
 	mvector3.subtract(self._m_start_pos, self._m_pos)
 
-	local _t = not self._moving and self._moving_t and 1 / tweak_data.network.player_tick_rate * 2 < self._moving_t - t and 250 or 25
+	local _t = not self._moving and self._moving_t and self._moving_t - t > 1 / tweak_data.network.player_tick_rate * 2 and 250 or 25
 
 	mvector3.step(self._m_displacement, self._m_displacement, self._m_start_pos, dt * _t)
 end
@@ -1738,20 +1809,23 @@ function HuskPlayerMovement:_update_zipline_sled(t, dt)
 
 		if zipline then
 			local closest_pos = math.point_on_line(zipline:start_pos(), zipline:end_pos(), self:m_pos())
-			local distance = (zipline:start_pos() - closest_pos):length()
-			local length = (zipline:start_pos() - zipline:end_pos()):length()
+			local distance = zipline:start_pos() - closest_pos:length()
+			local length = zipline:start_pos() - zipline:end_pos():length()
 			local t = distance / length
 
 			zipline:update_and_get_pos_at_time_linear(math.clamp(t, 0, 1))
 		end
 	end
 end
-HuskPlayerMovement._catchup_actions = {bleedout = {
-	action_negative = "_perform_catchup_bleedout_exit",
-	action_positive = "_perform_catchup_bleedout_enter",
-	decrement = "exit_bleedout",
-	increment = "enter_bleedout"
-}}
+
+HuskPlayerMovement._catchup_actions = {
+	bleedout = {
+		action_negative = "_perform_catchup_bleedout_exit",
+		action_positive = "_perform_catchup_bleedout_enter",
+		decrement = "exit_bleedout",
+		increment = "enter_bleedout"
+	}
+}
 
 function HuskPlayerMovement:_perform_path_catchup()
 	for id, catchup in pairs(self._catchup_actions) do
@@ -2072,14 +2146,20 @@ function HuskPlayerMovement:_update_rotation_standard(t, dt)
 	local sign_waist_twist = math.sign(waist_twist)
 	local leg_max_angle_adj = math.min(abs_waist_twist, 120 * dt)
 	local waist_twist_new = waist_twist - sign_waist_twist * leg_max_angle_adj
-	waist_twist_new = waist_twist_max < math.abs(waist_twist_new) and sign_waist_twist * waist_twist_max or waist_twist - sign_waist_twist * leg_max_angle_adj
+
+	if waist_twist_max < math.abs(waist_twist_new) then
+		waist_twist_new = sign_waist_twist * waist_twist_max
+	else
+		waist_twist_new = waist_twist - sign_waist_twist * leg_max_angle_adj
+	end
+
 	local ik_rotation_forbidden = self._moving or self._turning or self._bleedout or self._in_air or self._zipline and self._zipline.attached
 
 	if not ik_rotation_forbidden then
 		local min_twist = -65
 		local max_twist = 65
 
-		if max_twist < waist_twist or waist_twist < min_twist then
+		if waist_twist > max_twist or waist_twist < min_twist then
 			local angle = waist_twist
 			local dir_str = angle > 0 and "l" or "r"
 			local redir_name = "turn_" .. dir_str
@@ -2107,6 +2187,9 @@ function HuskPlayerMovement:_update_rotation_standard(t, dt)
 
 				self._unit:set_driving("animation")
 				self._machine:set_root_blending(false)
+
+				if "ljd_decompile_error_something_goes_here_fadklsdfajsdlkjf" then
+				end
 			end
 		end
 	else
@@ -2180,13 +2263,54 @@ function HuskPlayerMovement:_get_animation_move_speed(dt)
 		local right_dot = walk_dir_flat:dot(right_new)
 
 		if math.abs(right_dot) < math.abs(fwd_dot) then
-			anim_side = fwd_dot > 0 and "fwd" or "bwd"
+			if fwd_dot > 0 then
+				anim_side = "fwd"
+			else
+				anim_side = "bwd"
+			end
+		elseif right_dot > 0 then
+			anim_side = "r"
 		else
-			anim_side = right_dot > 0 and "r" or "l"
+			anim_side = "l"
 		end
 
 		vel_len = self._displacement_len / dt
-		anim_velocity = self._stance.name == "ntl" and (self._ext_anim.run and (vel_len > 250 and "run" or "walk") or vel_len > 300 and "run" or "walk") or self._ext_anim.sprint and (vel_len > 450 and self._pose_code == 1 and "sprint" or vel_len > 250 and "run" or "walk") or self._ext_anim.run and (vel_len > 500 and self._pose_code == 1 and "sprint" or vel_len > 250 and "run" or "walk") or vel_len > 500 and self._pose_code == 1 and "sprint" or vel_len > 300 and "run" or "walk"
+
+		if self._stance.name == "ntl" then
+			if self._ext_anim.run then
+				if vel_len > 250 then
+					anim_velocity = "run"
+				else
+					anim_velocity = "walk"
+				end
+			elseif vel_len > 300 then
+				anim_velocity = "run"
+			else
+				anim_velocity = "walk"
+			end
+		elseif self._ext_anim.sprint then
+			if vel_len > 450 and self._pose_code == 1 then
+				anim_velocity = "sprint"
+			elseif vel_len > 250 then
+				anim_velocity = "run"
+			else
+				anim_velocity = "walk"
+			end
+		elseif self._ext_anim.run then
+			if vel_len > 500 and self._pose_code == 1 then
+				anim_velocity = "sprint"
+			elseif vel_len > 250 then
+				anim_velocity = "run"
+			else
+				anim_velocity = "walk"
+			end
+		elseif vel_len > 500 and self._pose_code == 1 then
+			anim_velocity = "sprint"
+		elseif vel_len > 300 then
+			anim_velocity = "run"
+		else
+			anim_velocity = "walk"
+		end
 	end
 
 	return vel_len, anim_velocity, anim_side
@@ -2302,7 +2426,7 @@ function HuskPlayerMovement:sync_action_walk_nav_point(pos, speed, action, param
 	self._movement_path = self._movement_path or {}
 	self._movement_history = self._movement_history or {}
 	local path_len = #self._movement_path
-	pos = pos or path_len > 0 and self._movement_path[path_len].pos or mvector3.copy(self:m_pos())
+	pos = pos or (path_len <= 0 or self._movement_path[path_len].pos) and mvector3.copy(self:m_pos())
 
 	if Network:is_server() then
 		if not self._pos_reservation then
@@ -2366,7 +2490,9 @@ function HuskPlayerMovement:sync_action_walk_nav_point(pos, speed, action, param
 			pos = pos,
 			speed = speed,
 			type = type,
-			action = {action}
+			action = {
+				action
+			}
 		}
 
 		table.insert(self._movement_path, node)
@@ -2476,7 +2602,7 @@ function HuskPlayerMovement:_start_movement(path)
 	local path_len = 0
 	local i = 1
 
-	while i < nr_nodes do
+	while nr_nodes > i do
 		mvector3.set(tmp_vec1, path[i + 1])
 		mvector3.subtract(tmp_vec1, path[i])
 
@@ -2570,7 +2696,7 @@ function HuskPlayerMovement:_upd_move_bipod(t, dt)
 
 	local husk_original_look_direction = Vector3(self._look_dir.x, self._look_dir.y, 0)
 	local target_angle = self._sync_look_dir:angle(self._look_dir)
-	local rotate_direction = math.sign((self._sync_look_dir - self._look_dir):to_polar_with_reference(self._look_dir, math.UP).spin)
+	local rotate_direction = math.sign(self._sync_look_dir - self._look_dir:to_polar_with_reference(self._look_dir, math.UP).spin)
 	local rotate_angle = target_angle * rotate_direction
 	rotate_angle = math.lerp(self._bipod_last_angle, rotate_angle, dt * 2)
 
@@ -2905,7 +3031,6 @@ function HuskPlayerMovement:sync_shot_blank(impact)
 
 		self._aim_up_expire_t = TimerManager:game():time() + 2
 	else
-
 		function f(impact)
 			self:_shoot_blank(impact)
 		end
@@ -3043,6 +3168,7 @@ function HuskPlayerMovement:_equipped_weapon_tweak_data()
 		return tweak_data.weapon[weapon_id]
 	end
 end
+
 HuskPlayerMovement.reload_time_fps = 30
 HuskPlayerMovement.reload_times = {
 	default = 2,
@@ -3107,7 +3233,12 @@ function HuskPlayerMovement:sync_reload_weapon(empty_reload, reload_speed_multip
 		if looped_reload then
 			anim_redirect = "reload_looped_start"
 		else
-			reload_time = empty_reload == 1 and timers.reload_empty or timers.reload_not_empty
+			if empty_reload == 1 then
+				reload_time = timers.reload_empty
+			else
+				reload_time = timers.reload_not_empty
+			end
+
 			reload_time = (reload_time or 1) / (reload_speed_multiplier or 1)
 			anim_multiplier = reload_anim_time / reload_time
 		end
@@ -3191,6 +3322,7 @@ function HuskPlayerMovement:sync_reload_weapon_interupt()
 		self._magazine_unit = nil
 	end
 end
+
 HuskPlayerMovement.magazine_collisions = {
 	small = {
 		Idstring("units/payday2/weapons/box_collision/box_collision_small_pistol"),
@@ -3238,7 +3370,11 @@ function HuskPlayerMovement:_material_config_name(part_id, unit_name, use_cc_mat
 	end
 
 	local cc_string = use_cc_material_config and "_cc" or ""
-	local thq_string = "_thq" or ""
+	slot6 = "_thq"
+
+	if "_thq" then
+		local thq_string = ""
+	end
 
 	return Idstring(unit_name .. cc_string .. thq_string)
 end
@@ -3246,6 +3382,7 @@ end
 function HuskPlayerMovement:allow_dropped_magazines()
 	return managers.weapon_factory:use_thq_weapon_parts()
 end
+
 local material_defaults = {
 	diffuse_layer1_texture = Idstring("units/payday2_cash/safes/default/base_gradient/base_default_df"),
 	diffuse_layer2_texture = Idstring("units/payday2_cash/safes/default/pattern_gradient/gradient_default_df"),
@@ -3548,10 +3685,13 @@ function HuskPlayerMovement:_play_weapon_reload_animation_sfx(unit, event)
 		end
 	end
 end
-HuskPlayerMovement.switch_weapon_times = {cbt = {
-	equip = 0.8,
-	unequip = 0.4666666666666667
-}}
+
+HuskPlayerMovement.switch_weapon_times = {
+	cbt = {
+		equip = 0.8,
+		unequip = 0.4666666666666667
+	}
+}
 
 function HuskPlayerMovement:_can_play_weapon_switch_anim()
 	local blocked_by_vehicle = self._vehicle and not self._vehicle_allows_shooting
@@ -3757,8 +3897,9 @@ function HuskPlayerMovement:_sync_movement_state_standard(event_descriptor)
 	managers.groupai:state():on_criminal_recovered(self._unit)
 
 	local previous_state = event_descriptor.previous_state
+	local is_clean = self.clean_states[self._state]
 
-	if self.clean_states[previous_state] and not self.clean_states[self._state] then
+	if self.clean_states[previous_state] and not is_clean then
 		local redir_res = self:play_redirect("equip")
 
 		if redir_res then
@@ -3781,6 +3922,8 @@ function HuskPlayerMovement:_sync_movement_state_standard(event_descriptor)
 			end
 		end
 	end
+
+	self._unit:inventory():set_visibility_state(not is_clean)
 
 	if not self._ext_anim.stand then
 		local redir_res = self:play_redirect("stand")
@@ -4145,7 +4288,7 @@ function HuskPlayerMovement:_post_load(unit, t, dt)
 		end
 
 		peer:set_outfit_string(my_data.outfit, my_data.outfit_version)
-		UnitNetworkHandler:set_unit(unit, my_data.character_name, my_data.outfit, my_data.outfit_version, my_data.peer_id)
+		UnitNetworkHandler.set_unit(UnitNetworkHandler, unit, my_data.character_name, my_data.outfit, my_data.outfit_version, my_data.peer_id)
 
 		if managers.network:session():peer_by_unit(unit) == nil then
 			Application:error("[HuskPlayerBase:_post_load] A player husk who appears to not have an owning member was detached.")
@@ -4248,7 +4391,9 @@ function HuskPlayerMovement:_apply_attention_setting_modifications(setting)
 end
 
 function HuskPlayerMovement:sync_call_civilian(civilian_unit)
-	if not self._sympathy_civ and civilian_unit:brain():is_available_for_assignment({type = "revive"}) then
+	if not self._sympathy_civ and civilian_unit:brain():is_available_for_assignment({
+		type = "revive"
+	}) then
 		local followup_objective = {
 			interrupt_health = 1,
 			interrupt_dis = -1,
@@ -4346,7 +4491,16 @@ end
 
 function HuskPlayerMovement:_chk_change_stance()
 	local wanted_stance_code = nil
-	wanted_stance_code = self.clean_states[self._state] and self._stance.owner_stance_code or self._is_weapon_gadget_on and 3 or self._aim_up_expire_t and 3 or self._stance.owner_stance_code
+
+	if self.clean_states[self._state] then
+		wanted_stance_code = self._stance.owner_stance_code
+	elseif self._is_weapon_gadget_on then
+		wanted_stance_code = 3
+	elseif self._aim_up_expire_t then
+		wanted_stance_code = 3
+	else
+		wanted_stance_code = self._stance.owner_stance_code
+	end
 
 	if wanted_stance_code ~= self._stance.code then
 		self:_change_stance(wanted_stance_code)
@@ -4384,14 +4538,7 @@ end
 function HuskPlayerMovement:_get_max_move_speed(run)
 	local my_tweak = tweak_data.player.movement_state.standard
 	local move_speed = nil
-
-	if self._pose_code == 2 then
-		move_speed = my_tweak.movement.speed.CROUCHING_MAX * (self._unit:base():upgrade_value("player", "crouch_speed_multiplier") or 1)
-	elseif run then
-		move_speed = my_tweak.movement.speed.RUNNING_MAX * (self._unit:base():upgrade_value("player", "run_speed_multiplier") or 1)
-	else
-		move_speed = my_tweak.movement.speed.STANDARD_MAX * (self._unit:base():upgrade_value("player", "walk_speed_multiplier") or 1)
-	end
+	move_speed = self._pose_code == 2 and my_tweak.movement.speed.CROUCHING_MAX * (self._unit:base():upgrade_value("player", "crouch_speed_multiplier") or 1) or run and my_tweak.movement.speed.RUNNING_MAX * (self._unit:base():upgrade_value("player", "run_speed_multiplier") or 1) or my_tweak.movement.speed.STANDARD_MAX * (self._unit:base():upgrade_value("player", "walk_speed_multiplier") or 1)
 
 	if self._synced_max_speed then
 		move_speed = self._synced_max_speed
@@ -4399,7 +4546,7 @@ function HuskPlayerMovement:_get_max_move_speed(run)
 
 	if self._in_air then
 		local t = self._air_time or 0
-		local air_speed = math.exp((t * self:gravity()) / self:terminal_velocity())
+		local air_speed = math.exp(t * self:gravity() / self:terminal_velocity())
 		air_speed = air_speed * self:gravity()
 		air_speed = math.abs(air_speed)
 		move_speed = math.max(move_speed, air_speed)
@@ -4639,13 +4786,16 @@ function HuskPlayerMovement:sync_interaction_anim_end()
 
 	self._interaction_tweak = nil
 end
+
 HuskPlayerMovement._gadgets = {
 	aligns = {
 		hand_l = Idstring("a_weapon_left_front"),
 		hand_r = Idstring("a_weapon_right_front"),
 		head = Idstring("Head")
 	},
-	needle = {Idstring("units/payday2/characters/npc_acc_syringe/npc_acc_syringe")}
+	needle = {
+		Idstring("units/payday2/characters/npc_acc_syringe/npc_acc_syringe")
+	}
 }
 
 function HuskPlayerMovement:spawn_wanted_items()
@@ -4727,4 +4877,3 @@ end
 function HuskPlayerMovement:set_is_vr()
 	self._is_vr = true
 end
-

@@ -95,7 +95,9 @@ function PlayerHandStateBelt:update(t, dt)
 					prev_state = self._prev_state,
 					prompt = {
 						text_id = "hud_instruct_throw_bag",
-						btn_macros = {BTN_USE_ITEM = "use_item_vr"}
+						btn_macros = {
+							BTN_USE_ITEM = "use_item_vr"
+						}
 					}
 				})
 			elseif self._belt_state == "deployable" or self._belt_state == "deployable_secondary" then
@@ -114,7 +116,9 @@ function PlayerHandStateBelt:update(t, dt)
 					prev_state = self._prev_state
 				})
 			elseif self._belt_state == "melee" then
-				self._hsm:change_state_by_name("melee", {prev_state = self._prev_state})
+				self._hsm:change_state_by_name("melee", {
+					prev_state = self._prev_state
+				})
 			elseif self._belt_state == "reload" and self._hsm:default_state_name() ~= "weapon" then
 				local weap_base = player:inventory():equipped_unit():base()
 
@@ -158,4 +162,3 @@ function PlayerHandStateBelt:update(t, dt)
 		end
 	end
 end
-

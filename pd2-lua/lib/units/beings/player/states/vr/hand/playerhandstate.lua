@@ -34,4 +34,3 @@ end
 
 function PlayerHandState:set_controller_enabled(enabled)
 end
-

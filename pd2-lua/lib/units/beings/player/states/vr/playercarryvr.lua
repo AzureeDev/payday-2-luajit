@@ -15,6 +15,7 @@ function PlayerCarryVR:exit(...)
 
 	return __exit(self, ...)
 end
+
 local __update = PlayerCarry.update
 
 function PlayerCarryVR:update(t, dt)
@@ -53,6 +54,7 @@ function PlayerCarryVR:_can_run()
 
 	return false
 end
+
 local __get_input = PlayerCarry._get_input
 
 function PlayerCarryVR:_get_input(...)
@@ -64,4 +66,3 @@ function PlayerCarryVR:_get_input(...)
 
 	return input
 end
-

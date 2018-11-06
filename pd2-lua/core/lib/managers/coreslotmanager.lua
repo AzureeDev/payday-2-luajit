@@ -36,7 +36,9 @@ end
 
 function SlotManager:get_mask(...)
 	local mask = nil
-	local arg_list = {...}
+	local arg_list = {
+		...
+	}
 
 	for _, name in pairs(arg_list) do
 		local next_mask = self._masks[name]
@@ -66,4 +68,3 @@ end
 function SlotManager:get_mask_map()
 	return self._masks
 end
-

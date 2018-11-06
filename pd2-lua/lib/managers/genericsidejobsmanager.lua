@@ -11,7 +11,9 @@ function GenericSideJobsManager:register(manager)
 		return
 	end
 
-	table.insert(self._side_jobs, {manager = manager})
+	table.insert(self._side_jobs, {
+		manager = manager
+	})
 end
 
 function GenericSideJobsManager:side_jobs()
@@ -65,4 +67,3 @@ function GenericSideJobsManager:reset()
 		side_job_dlc.manager:reset()
 	end
 end
-

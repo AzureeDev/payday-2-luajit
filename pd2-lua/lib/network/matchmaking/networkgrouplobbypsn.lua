@@ -270,7 +270,9 @@ function NetworkGroupLobbyPSN:send_group_lobby_invite(network_friend)
 	if friends then
 		for k, v in pairs(friends) do
 			if tostring(v.friend) == tostring(network_friend) and v.status == 2 and v.info and v.info == managers.platform:presence() then
-				local msg = {join_invite = true}
+				local msg = {
+					join_invite = true
+				}
 
 				if not Global.psn_invite_id then
 					Global.psn_invite_id = 1
@@ -471,14 +473,15 @@ function NetworkGroupLobbyPSN:_save_global()
 		Global.psn = {}
 	end
 
-	Global.psn.group = {}
-	Global.psn.group.room_id = self._room_id
-	Global.psn.group.inlobby = self._inlobby
-	Global.psn.group.is_server = self._is_server_var
-	Global.psn.group.is_client = self._is_client_var
-	Global.psn.group.players = self._players
-	Global.psn.group.server_rpc = self._server_rpc
-	Global.psn.group._returned_players = self._returned_players
+	Global.psn.group = {
+		room_id = self._room_id,
+		inlobby = self._inlobby,
+		is_server = self._is_server_var,
+		is_client = self._is_client_var,
+		players = self._players,
+		server_rpc = self._server_rpc,
+		_returned_players = self._returned_players
+	}
 end
 
 function NetworkGroupLobbyPSN:_call_callback(name, ...)
@@ -552,7 +555,6 @@ function NetworkGroupLobbyPSN:_created_group_lobby(room_id)
 end
 
 function NetworkGroupLobbyPSN:_clear_psn_callback(cb)
-
 	local function f()
 	end
 
@@ -715,4 +717,3 @@ function NetworkGroupLobbyPSN:leaving_game()
 		self:leave_group_lobby(true)
 	end
 end
-

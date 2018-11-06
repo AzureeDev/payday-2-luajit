@@ -37,7 +37,7 @@ function ItemToggle:toggle()
 
 	self.selected = self.selected + 1
 
-	if #self.options < self.selected then
+	if self.selected > #self.options then
 		self.selected = 1
 	end
 
@@ -86,7 +86,9 @@ function ItemToggle:set_value(value)
 end
 
 function ItemToggle:setup_gui(node, row_item)
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.gui_text = node:_text_item_part(row_item, row_item.gui_panel, node:_right_align())
 
 	row_item.gui_text:set_text(row_item.to_upper and utf8.to_upper(row_item.text) or row_item.text)
@@ -140,6 +142,7 @@ function ItemToggle:setup_gui(node, row_item)
 
 	return true
 end
+
 local xl_pad = 64
 
 function ItemToggle:reload(row_item, node)
@@ -304,4 +307,3 @@ function ItemToggle:fade_row_item(node, row_item)
 
 	return true
 end
-

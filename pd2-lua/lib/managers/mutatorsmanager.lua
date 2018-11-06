@@ -57,7 +57,9 @@ function MutatorsManager:init()
 			local mutator = self:get_mutator_from_id(id)
 
 			if mutator then
-				table.insert(self:active_mutators(), {mutator = mutator})
+				table.insert(self:active_mutators(), {
+					mutator = mutator
+				})
 				cat_print("jamwil", "[Mutators] Activated mutator: ", id)
 			else
 				cat_print("jamwil", "[Mutators] No mutator with id: ", id)
@@ -108,7 +110,9 @@ function MutatorsManager:save(data)
 		values[mutator:id()] = mutator_values
 	end
 
-	local state = {save_values = values}
+	local state = {
+		save_values = values
+	}
 	data.Mutators = state
 end
 
@@ -516,25 +520,32 @@ function MutatorsManager:matchmake_unpack_string(str_dat)
 	local mutators_list = {}
 	local limit = 0
 
-	while #str_dat > 0 and limit < 50 do
-		local mutator_index = string.byte(str_dat, 1) - string.byte("a")
-		local mutator = self:mutators()[mutator_index]
-		str_dat = #str_dat > 1 and string.sub(str_dat, -(#str_dat - 1)) or ""
+	if #str_dat > 0 then
+		while #str_dat > 0 and limit < 50 do
+			local mutator_index = string.byte(str_dat, 1) - string.byte("a")
+			local mutator = self:mutators()[mutator_index]
 
-		if mutator then
-			local mutator_data, new_str_dat = mutator:uncompress_data(str_dat)
+			if #str_dat > 1 then
+				str_dat = string.sub(str_dat, -(#str_dat - 1))
+			else
+				str_dat = ""
+			end
 
-			if mutator_data == nil then
+			if mutator then
+				local mutator_data, new_str_dat = mutator:uncompress_data(str_dat)
+
+				if mutator_data == nil then
+					return mutators_list
+				end
+
+				mutators_list[mutator:id()] = mutator_data
+				str_dat = new_str_dat
+			else
 				return mutators_list
 			end
 
-			mutators_list[mutator:id()] = mutator_data
-			str_dat = new_str_dat
-		else
-			return mutators_list
+			limit = limit + 1
 		end
-
-		limit = limit + 1
 	end
 
 	return mutators_list
@@ -544,25 +555,32 @@ function MutatorsManager:matchmake_partial_unpack_string(str_dat)
 	local mutators = {}
 	local count = 0
 
-	while #str_dat > 0 and count < 50 do
-		local mutator_index = string.byte(str_dat, 1) - string.byte("a")
-		local mutator = self:mutators()[mutator_index]
-		str_dat = #str_dat > 1 and string.sub(str_dat, -(#str_dat - 1)) or ""
+	if #str_dat > 0 then
+		while #str_dat > 0 and count < 50 do
+			local mutator_index = string.byte(str_dat, 1) - string.byte("a")
+			local mutator = self:mutators()[mutator_index]
 
-		if mutator then
-			local mutator_data, new_str_dat = mutator:partial_uncompress_data(str_dat)
+			if #str_dat > 1 then
+				str_dat = string.sub(str_dat, -(#str_dat - 1))
+			else
+				str_dat = ""
+			end
 
-			if mutator_data == nil then
+			if mutator then
+				local mutator_data, new_str_dat = mutator:partial_uncompress_data(str_dat)
+
+				if mutator_data == nil then
+					return mutators
+				end
+
+				mutators["mutator_" .. tostring(count + 1)] = mutator_data
+				str_dat = new_str_dat
+			else
 				return mutators
 			end
 
-			mutators["mutator_" .. tostring(count + 1)] = mutator_data
-			str_dat = new_str_dat
-		else
-			return mutators
+			count = count + 1
 		end
-
-		count = count + 1
 	end
 
 	if count > 0 then
@@ -647,7 +665,9 @@ end
 function MutatorsManager:_parse_mutator_strings(...)
 	local mutators_list = {}
 
-	for i, str in ipairs({...}) do
+	for i, str in ipairs({
+		...
+	}) do
 		local splits = string.split(str, "[ ]")
 
 		if splits then
@@ -844,4 +864,3 @@ function MutatorsManager:check_achievements(achievement_data)
 		return #required_mutators == 0
 	end
 end
-

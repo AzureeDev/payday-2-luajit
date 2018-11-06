@@ -63,4 +63,3 @@ function CubeMapCreator:create_cube_map()
 	self:set_camera_rot(Rotation(Vector3(0, 0, -1), Vector3(1, 0, 0)))
 	Application:render("World", self._vp, zneg)
 end
-

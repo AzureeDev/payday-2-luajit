@@ -52,6 +52,7 @@ function ElementMoney:on_executed(instigator)
 
 	ElementMoney.super.on_executed(self, instigator)
 end
+
 ElementMoneyFilter = ElementMoneyFilter or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementMoneyFilter:init(...)
@@ -107,4 +108,3 @@ function ElementMoneyFilter:_check_value(account_amt)
 
 	return false
 end
-

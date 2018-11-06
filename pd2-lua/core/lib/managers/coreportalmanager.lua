@@ -77,7 +77,11 @@ function PortalManager:add_unit(unit)
 			local i = 0
 
 			if not portal:is_inside() then
-				i = inverse and 1 or -1
+				if inverse then
+					i = 1
+				else
+					i = -1
+				end
 			end
 
 			self:change_visibility(unit, i, inverse)
@@ -224,7 +228,7 @@ function PortalManager:debug_draw_border(polygon, min, max)
 	for x = 2, #tbl, 1 do
 		local length = 0
 
-		while length < time do
+		while time > length do
 			if min and max then
 				local start = Vector3(tbl[x - 1].x, tbl[x - 1].y, max)
 				local stop = Vector3(tbl[x].x, tbl[x].y, max)
@@ -365,6 +369,7 @@ function PortalManager:save_level_data()
 
 	return t
 end
+
 PortalShape = PortalShape or class()
 
 function PortalShape:init(polygon_tbl, min, max)
@@ -468,6 +473,7 @@ function PortalShape:_change_visibility(unit)
 		managers.portal:change_visibility(unit, i, inverse)
 	end
 end
+
 PortalUnitGroup = PortalUnitGroup or class()
 
 function PortalUnitGroup:init(name)
@@ -542,8 +548,7 @@ function PortalUnitGroup:remove_unit_id(unit)
 end
 
 function PortalUnitGroup:lock_units()
-	for _, unit in ipairs(self._units) do
-		-- Nothing
+	for slot4, slot5 in ipairs(self._units) do
 	end
 end
 
@@ -631,6 +636,7 @@ function PortalUnitGroup:draw(t, dt, mul, skip_shapes, skip_units)
 		end
 	end
 end
+
 PortalUnitGroupShape = PortalUnitGroupShape or class(CoreShapeManager.ShapeBox)
 
 function PortalUnitGroupShape:init(params)
@@ -646,4 +652,3 @@ function PortalUnitGroupShape:draw(t, dt, r, g, b)
 		Application:draw(self._unit, r, g, b)
 	end
 end
-

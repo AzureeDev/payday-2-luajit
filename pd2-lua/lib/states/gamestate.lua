@@ -31,4 +31,3 @@ function GameState:on_server_left()
 end
 
 CoreClass.override_class(CoreInternalGameState.GameState, GameState)
-

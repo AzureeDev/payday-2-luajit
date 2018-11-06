@@ -72,7 +72,7 @@ end
 function VRLoadingEnvironment:change_state(state, ...)
 	print("[VRLoadingEnvironment] Change state ", state)
 
-	if state < 1 or #self._states < state then
+	if state < 1 or state > #self._states then
 		print("[VRLoadingEnvironment] State ", state, " does not exist")
 
 		return
@@ -154,7 +154,9 @@ function VRLoadingEnvironment:_start_enter(start_type)
 end
 
 function VRLoadingEnvironment:_start_exit()
-	VRManager:set_skybox_override({Idstring("guis/dlcs/vr/textures/loading/loading_bg")})
+	VRManager:set_skybox_override({
+		Idstring("guis/dlcs/vr/textures/loading/loading_bg")
+	})
 	VRManager:suspend_rendering(true)
 end
 
@@ -242,7 +244,7 @@ function VRLoadingEnvironment:_update_progress(t, dt)
 	self._loading_spin.t = self._loading_spin.t ~= nil and self._loading_spin.t + dt or 0
 	local overlay = self._loading_spin.overlay
 
-	overlay:set_transform_linked(self._loading_spin.parent, Vector3(0, 0, 0), Rotation(0, 0, (self._loading_spin.t * 360) % 360))
+	overlay:set_transform_linked(self._loading_spin.parent, Vector3(0, 0, 0), Rotation(0, 0, self._loading_spin.t * 360 % 360))
 end
 
 function VRLoadingEnvironment:_show_loading_screen(name)
@@ -334,4 +336,3 @@ function VRLoadingEnvironment:_create_overlay(path, name, config, parent)
 
 	return overlay
 end
-

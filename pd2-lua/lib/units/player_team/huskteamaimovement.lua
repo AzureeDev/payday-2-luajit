@@ -37,4 +37,3 @@ end
 function HuskTeamAIMovement:chk_action_forbidden(action_desc)
 	return HuskCopMovement.chk_action_forbidden(self, action_desc)
 end
-

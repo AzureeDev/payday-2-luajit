@@ -1,7 +1,9 @@
 core:import("CoreShapeManager")
 
 CoreAreaTriggerUnitElement = CoreAreaTriggerUnitElement or class(MissionElement)
-CoreAreaTriggerUnitElement.LINK_ELEMENTS = {"spawn_unit_elements"}
+CoreAreaTriggerUnitElement.LINK_ELEMENTS = {
+	"spawn_unit_elements"
+}
 AreaTriggerUnitElement = AreaTriggerUnitElement or class(CoreAreaTriggerUnitElement)
 
 function AreaTriggerUnitElement:init(...)
@@ -272,8 +274,26 @@ function CoreAreaTriggerUnitElement:_set_shape_type()
 	local is_box = self._hed.shape_type == "box"
 	local is_cylinder = self._hed.shape_type == "cylinder"
 	local uses_external = self._hed.use_shape_element_ids
-	is_box = not uses_external and false
-	is_cylinder = not uses_external and false
+
+	if not uses_external then
+		-- Nothing
+	else
+		is_box = false
+
+		if false then
+			is_box = true
+		end
+	end
+
+	if not uses_external then
+		-- Nothing
+	else
+		is_cylinder = false
+
+		if false then
+			is_cylinder = true
+		end
+	end
 
 	self._depth_params.number_ctrlr:set_enabled(is_box)
 	self._width_params.number_ctrlr:set_enabled(is_box)
@@ -500,7 +520,7 @@ function CoreAreaTriggerUnitElement:scale_slider(panel, sizer, number_ctrlr_para
 end
 
 function CoreAreaTriggerUnitElement:set_size(params)
-	local value = (self._hed[params.value] * params.ctrlr:get_value()) / 100
+	local value = self._hed[params.value] * params.ctrlr:get_value() / 100
 
 	self._shape:set_property(params.value, value)
 	self._cylinder_shape:set_property(params.value, value)
@@ -517,10 +537,13 @@ function CoreAreaTriggerUnitElement:clone_data(...)
 	CoreAreaTriggerUnitElement.super.clone_data(self, ...)
 	self:_recreate_shapes()
 end
+
 CoreAreaOperatorUnitElement = CoreAreaOperatorUnitElement or class(MissionElement)
 CoreAreaOperatorUnitElement.SAVE_UNIT_POSITION = false
 CoreAreaOperatorUnitElement.SAVE_UNIT_ROTATION = false
-CoreAreaOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+CoreAreaOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 AreaOperatorUnitElement = AreaOperatorUnitElement or class(CoreAreaOperatorUnitElement)
 
 function AreaOperatorUnitElement:init(...)
@@ -603,7 +626,9 @@ function CoreAreaOperatorUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local exact_names = {"core/units/mission_elements/trigger_area/trigger_area"}
+	local exact_names = {
+		"core/units/mission_elements/trigger_area/trigger_area"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, nil, exact_names)
 	CoreAreaTriggerUnitElement.create_values_ctrlrs(self, panel, panel_sizer, {
@@ -625,6 +650,7 @@ function CoreAreaOperatorUnitElement:_build_panel(panel, panel_sizer)
 
 	self:_add_help_text("This element can modify trigger_area element. Select areas to modify using insert and clicking on the elements.")
 end
+
 CoreAreaReportTriggerUnitElement = CoreAreaReportTriggerUnitElement or class(CoreAreaTriggerUnitElement)
 CoreAreaReportTriggerUnitElement.ON_EXECUTED_ALTERNATIVES = {
 	"enter",
@@ -644,6 +670,7 @@ function AreaReportTriggerUnitElement:init(...)
 end
 
 function AreaReportTriggerUnitElement:_build_panel(panel, panel_sizer)
-	AreaReportTriggerUnitElement.super._build_panel(self, panel, panel_sizer, {trigger_type = true})
+	AreaReportTriggerUnitElement.super._build_panel(self, panel, panel_sizer, {
+		trigger_type = true
+	})
 end
-

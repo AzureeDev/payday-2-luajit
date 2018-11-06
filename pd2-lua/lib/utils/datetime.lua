@@ -69,4 +69,3 @@ end
 function DateTime:date()
 	return self._date_table
 end
-

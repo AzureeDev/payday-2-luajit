@@ -50,8 +50,12 @@ function TeamAIBrain:post_init()
 		"fatal",
 		"none"
 	}, callback(self, self, "clbk_damage"))
-	self._unit:character_damage():add_listener("TeamAIBrain_death" .. my_key, {"death"}, callback(self, self, "clbk_death"))
-	managers.groupai:state():add_listener("TeamAIBrain" .. my_key, {"enemy_weapons_hot"}, callback(self, self, "clbk_heat"))
+	self._unit:character_damage():add_listener("TeamAIBrain_death" .. my_key, {
+		"death"
+	}, callback(self, self, "clbk_death"))
+	managers.groupai:state():add_listener("TeamAIBrain" .. my_key, {
+		"enemy_weapons_hot"
+	}, callback(self, self, "clbk_heat"))
 
 	if not self._current_logic then
 		self:set_init_logic("idle")
@@ -149,7 +153,16 @@ function TeamAIBrain:on_cool_state_changed(state)
 	end
 
 	local att_settings = nil
-	att_settings = state and {"team_team_idle"} or {"team_enemy_cbt"}
+
+	if state then
+		att_settings = {
+			"team_team_idle"
+		}
+	else
+		att_settings = {
+			"team_enemy_cbt"
+		}
+	end
 
 	PlayerMovement.set_attention_settings(self, att_settings, "team_AI")
 end
@@ -160,4 +173,3 @@ end
 function TeamAIBrain:_chk_enable_bodybag_interaction()
 	self._unit:interaction():set_tweak_data("dead")
 end
-

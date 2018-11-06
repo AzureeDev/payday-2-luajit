@@ -57,4 +57,3 @@ end
 function ColorPickerPanel:_on_color_changed(sender, color)
 	self:_send_event("EVT_COLOR_CHANGED", color)
 end
-

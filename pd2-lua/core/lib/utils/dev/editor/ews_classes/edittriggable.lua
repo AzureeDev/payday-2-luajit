@@ -4,7 +4,7 @@ core:import("CoreEws")
 EditUnitTriggable = EditUnitTriggable or class(EditUnitBase)
 
 function EditUnitTriggable:init(editor)
-	local panel, sizer = (editor or managers.editor):add_unit_edit_page({
+	local panel, sizer = editor or managers.editor:add_unit_edit_page({
 		name = "Sequences",
 		class = self
 	})
@@ -72,7 +72,9 @@ function EditUnitTriggable:build_element_gui(data)
 		name = data.notify_unit:unit_data().name_id
 	end
 
-	local sequences = {"none"}
+	local sequences = {
+		"none"
+	}
 
 	if #managers.sequence:get_triggable_sequence_list(unit_name) > 0 then
 		sequences = managers.sequence:get_triggable_sequence_list(unit_name)
@@ -162,7 +164,6 @@ function EditUnitTriggable:add_unit_btn()
 end
 
 function EditUnitTriggable:add_unit_list_btn()
-
 	local function f(unit)
 		return #managers.sequence:get_triggable_sequence_list(unit:name()) > 0
 	end
@@ -259,4 +260,3 @@ function EditUnitTriggable:dialog_closed()
 	self._btn_toolbar:set_tool_state("ADD_UNIT", false)
 	self:add_unit_btn()
 end
-

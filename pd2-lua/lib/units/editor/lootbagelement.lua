@@ -97,13 +97,18 @@ function LootBagUnitElement:_build_panel(panel, panel_sizer)
 		floats = 1,
 		min = 0
 	}, "Use this to add a velocity to a physic push on the spawned unit")
-	self:_build_value_combobox(panel, panel_sizer, "carry_id", table.list_add({"none"}, tweak_data.carry:get_carry_ids()), "Select a carry_id to be created.")
+	self:_build_value_combobox(panel, panel_sizer, "carry_id", table.list_add({
+		"none"
+	}, tweak_data.carry:get_carry_ids()), "Select a carry_id to be created.")
 	self:_build_value_checkbox(panel, panel_sizer, "from_respawn")
 end
+
 LootBagTriggerUnitElement = LootBagTriggerUnitElement or class(MissionElement)
 LootBagTriggerUnitElement.SAVE_UNIT_POSITION = false
 LootBagTriggerUnitElement.SAVE_UNIT_ROTATION = false
-LootBagTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+LootBagTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function LootBagTriggerUnitElement:init(unit)
 	LootBagTriggerUnitElement.super.init(self, unit)
@@ -163,7 +168,9 @@ function LootBagTriggerUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"point_loot_bag/point_loot_bag"}
+	local names = {
+		"point_loot_bag/point_loot_bag"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "trigger_type", {
@@ -172,4 +179,3 @@ function LootBagTriggerUnitElement:_build_panel(panel, panel_sizer)
 	}, "Select a trigger type for the selected elements")
 	self:_add_help_text("This element is a trigger to point_loot_bag element.")
 end
-

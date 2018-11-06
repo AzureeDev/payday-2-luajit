@@ -24,5 +24,5 @@ end
 function AkimboShotgunBase:_update_stats_values()
 	ShotgunBase._update_stats_values(self)
 end
-NPCAkimboShotgunBase = NPCAkimboShotgunBase or class(NPCAkimboWeaponBase)
 
+NPCAkimboShotgunBase = NPCAkimboShotgunBase or class(NPCAkimboWeaponBase)

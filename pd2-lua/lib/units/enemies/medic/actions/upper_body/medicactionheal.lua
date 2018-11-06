@@ -96,4 +96,3 @@ function MedicActionHeal:check_achievements()
 		end
 	end
 end
-

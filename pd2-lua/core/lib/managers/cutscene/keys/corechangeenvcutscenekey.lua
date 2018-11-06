@@ -43,6 +43,7 @@ end
 function CoreChangeEnvCutsceneKey:is_valid_transition_time(value)
 	return value and value >= 0
 end
+
 CoreChangeEnvCutsceneKey.control_for_name = CoreCutsceneKeyBase.standard_combo_box_control
 
 function CoreChangeEnvCutsceneKey:refresh_control_for_name(control)
@@ -61,4 +62,3 @@ function CoreChangeEnvCutsceneKey:refresh_control_for_name(control)
 
 	control:thaw()
 end
-

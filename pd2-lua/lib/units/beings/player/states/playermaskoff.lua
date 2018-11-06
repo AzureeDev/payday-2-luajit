@@ -20,6 +20,13 @@ function PlayerMaskOff:enter(state_data, enter_data)
 end
 
 function PlayerMaskOff:_enter(enter_data)
+	local equipped_weapon = self._unit:inventory():equipped_unit()
+
+	if equipped_weapon then
+		equipped_weapon:base():set_gadget_on(0, false)
+		self._unit:network():send("set_weapon_gadget_state", 0)
+	end
+
 	local equipped_selection = self._unit:inventory():equipped_selection()
 
 	if equipped_selection ~= 1 then
@@ -39,7 +46,9 @@ function PlayerMaskOff:_enter(enter_data)
 	if not managers.groupai:state():enemy_weapons_hot() then
 		self._enemy_weapons_hot_listen_id = "PlayerMaskOff" .. tostring(self._unit:key())
 
-		managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {"enemy_weapons_hot"}, callback(self, self, "clbk_enemy_weapons_hot"))
+		managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {
+			"enemy_weapons_hot"
+		}, callback(self, self, "clbk_enemy_weapons_hot"))
 	end
 
 	MenuCallbackHandler:_update_outfit_information()
@@ -68,6 +77,10 @@ function PlayerMaskOff:exit(state_data, new_state_name)
 	end
 
 	self:_interupt_action_start_standard()
+
+	return {
+		was_unarmed = true
+	}
 end
 
 function PlayerMaskOff:update(t, dt)
@@ -226,9 +239,13 @@ function PlayerMaskOff:_start_action_use_item(t)
 
 	managers.hud:show_progress_timer_bar(0, deploy_timer)
 
-	local text = managers.player:selected_equipment_deploying_text() or managers.localization:text("hud_deploying_equipment", {EQUIPMENT = managers.player:selected_equipment_name()})
+	local text = managers.player:selected_equipment_deploying_text() or managers.localization:text("hud_deploying_equipment", {
+		EQUIPMENT = managers.player:selected_equipment_name()
+	})
 
-	managers.hud:show_progress_timer({text = text})
+	managers.hud:show_progress_timer({
+		text = text
+	})
 
 	local equipment_id = managers.player:selected_equipment_id()
 
@@ -268,7 +285,9 @@ function PlayerMaskOff:_start_action_state_standard(t)
 	self._start_standard_expire_t = t + tweak_data.player.put_on_mask_time
 
 	managers.hud:show_progress_timer_bar(0, tweak_data.player.put_on_mask_time)
-	managers.hud:show_progress_timer({text = managers.localization:text("hud_starting_heist")})
+	managers.hud:show_progress_timer({
+		text = managers.localization:text("hud_starting_heist")
+	})
 	managers.network:session():send_to_peers_synched("sync_teammate_progress", 3, true, "mask_on_action", tweak_data.player.put_on_mask_time, false)
 end
 
@@ -297,7 +316,12 @@ function PlayerMaskOff:mark_units(line, t, no_gesture, skip_alert)
 
 	if voice_type == "mark_cop" or voice_type == "mark_cop_quiet" then
 		interact_type = "cmd_point"
-		sound_name = voice_type == "mark_cop_quiet" and tweak_data.character[prime_target.unit:base()._tweak_table].silent_priority_shout .. "_any" or tweak_data.character[prime_target.unit:base()._tweak_table].priority_shout .. "x_any"
+
+		if voice_type == "mark_cop_quiet" then
+			sound_name = tweak_data.character[prime_target.unit:base()._tweak_table].silent_priority_shout .. "_any"
+		else
+			sound_name = tweak_data.character[prime_target.unit:base()._tweak_table].priority_shout .. "x_any"
+		end
 
 		if managers.player:has_category_upgrade("player", "special_enemy_highlight") then
 			prime_target.unit:contour():add(managers.player:get_contour_for_marked_enemy(), true, managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1))
@@ -353,4 +377,3 @@ end
 function PlayerMaskOff:_get_walk_headbob()
 	return 0.0125
 end
-

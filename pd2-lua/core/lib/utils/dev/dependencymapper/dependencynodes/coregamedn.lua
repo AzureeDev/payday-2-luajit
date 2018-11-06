@@ -17,7 +17,9 @@ function GameDependencyNode:_parse()
 
 	f:close()
 
-	return {xmlnode}
+	return {
+		xmlnode
+	}
 end
 
 function GameDependencyNode:_walkxml2dependencies(xmlnode, deps)
@@ -38,4 +40,3 @@ function GameDependencyNode:_walkxml2dependencies(xmlnode, deps)
 		end
 	end
 end
-

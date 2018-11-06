@@ -7,4 +7,3 @@ StartSimulation = StartSimulation or class(CoreGameStateLoadingGame.LoadingGame)
 function StartSimulation:transition()
 	return CoregameStateInEditorSimulation.Simulation
 end
-

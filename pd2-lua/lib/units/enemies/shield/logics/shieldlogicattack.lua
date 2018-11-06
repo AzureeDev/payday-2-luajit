@@ -2,7 +2,9 @@ ShieldLogicAttack = class(TankCopLogicAttack)
 
 function ShieldLogicAttack.enter(data, new_logic_name, enter_params)
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	my_data.detection = data.char_tweak.detection.combat
 	my_data.tmp_vec1 = Vector3()
@@ -34,7 +36,9 @@ function ShieldLogicAttack.enter(data, new_logic_name, enter_params)
 		return
 	end
 
-	data.unit:brain():set_attention_settings({cbt = true})
+	data.unit:brain():set_attention_settings({
+		cbt = true
+	})
 
 	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
 	my_data.update_queue_id = "ShieldLogicAttack.queued_update" .. key_str
@@ -151,7 +155,9 @@ function ShieldLogicAttack.queued_update(data)
 				if do_move then
 					my_data.pathing_to_optimal_pos = true
 					my_data.optimal_path_search_id = tostring(unit:key()) .. "optimal"
-					local reservation = managers.navigation:reserve_pos(nil, nil, to_pos, callback(ShieldLogicAttack, ShieldLogicAttack, "_reserve_pos_step_clbk", {unit_pos = data.m_pos}), 70, data.pos_rsrv_id)
+					local reservation = managers.navigation:reserve_pos(nil, nil, to_pos, callback(ShieldLogicAttack, ShieldLogicAttack, "_reserve_pos_step_clbk", {
+						unit_pos = data.m_pos
+					}), 70, data.pos_rsrv_id)
 
 					if reservation then
 						to_pos = reservation.position
@@ -552,7 +558,9 @@ function ShieldLogicAttack.is_advancing(data)
 end
 
 function ShieldLogicAttack._get_all_paths(data)
-	return {optimal_path = data.internal_data.optimal_path}
+	return {
+		optimal_path = data.internal_data.optimal_path
+	}
 end
 
 function ShieldLogicAttack._set_verified_paths(data, verified_paths)
@@ -615,4 +623,3 @@ function ShieldLogicAttack.chk_wall_distance(data, my_data, pos, second_pass)
 		return bump2 and walk_to_pos2 or walk_to_pos, true
 	end
 end
-

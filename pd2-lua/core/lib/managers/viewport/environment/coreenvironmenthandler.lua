@@ -1,8 +1,10 @@
 core:module("CoreEnvironmentHandler")
 core:import("CoreClass")
 
-local dummy_material = {set_variable = function ()
-end}
+local dummy_material = {
+	set_variable = function ()
+	end
+}
 EnvironmentHandler = EnvironmentHandler or CoreClass.class()
 EnvironmentHandler.AREAS_PER_FRAME = 1
 
@@ -423,4 +425,3 @@ function EnvironmentHandler:_add_apply_feeder(feeder)
 		self._apply_feeder_map[feeder.APPLY_GROUP_ID] = feeder
 	end
 end
-

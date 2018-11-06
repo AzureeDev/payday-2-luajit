@@ -12,8 +12,12 @@ function ElementPlayerCharacterTrigger:on_script_activated()
 	local is_host = Network:is_server() or Global.game_settings.single_player
 
 	if is_host then
-		managers.criminals:add_listener(string.format("add_criminal_event_%s", tostring(self._id)), {"on_criminal_added"}, callback(self, self, "on_criminal_added"))
-		managers.criminals:add_listener(string.format("rmv_criminal_event_%s", tostring(self._id)), {"on_criminal_removed"}, callback(self, self, "on_criminal_removed"))
+		managers.criminals:add_listener(string.format("add_criminal_event_%s", tostring(self._id)), {
+			"on_criminal_added"
+		}, callback(self, self, "on_criminal_added"))
+		managers.criminals:add_listener(string.format("rmv_criminal_event_%s", tostring(self._id)), {
+			"on_criminal_removed"
+		}, callback(self, self, "on_criminal_removed"))
 	end
 end
 
@@ -38,6 +42,7 @@ function ElementPlayerCharacterTrigger:on_executed(instigator)
 
 	ElementPlayerStateTrigger.super.on_executed(self, self._unit or instigator)
 end
+
 ElementPlayerCharacterFilter = ElementPlayerCharacterFilter or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementPlayerCharacterFilter:init(...)
@@ -74,4 +79,3 @@ function ElementPlayerCharacterFilter:is_character_taken(instigator)
 		return managers.criminals:is_taken(self:value("character"))
 	end
 end
-

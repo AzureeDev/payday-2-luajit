@@ -26,4 +26,3 @@ end
 function LayerDescription:priority()
 	return self._priority
 end
-

@@ -212,12 +212,14 @@ function LevelLoadingScreenGuiScript:_make_loading_hint(parent, tip)
 	hint_index_text:set_rightbottom(hint_box:width() - 16, hint_box:height() - 16)
 	hint_title:set_leftbottom(hint_text:left(), hint_box:top())
 	hint_image:set_center_y(hint_box:center_y())
-	BoxGuiObject:new(hint_box, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(hint_box, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	shrinkwrap(container)
 	container:set_center_x(parent:width() * 0.5 - 20)
 	container:set_bottom(parent:height() - 50)
@@ -231,18 +233,20 @@ function LevelLoadingScreenGuiScript:_make_controller_hint(parent, coords)
 	local font_size = arg.load_level_data.coords_font_size or 24
 
 	if not arg.load_level_data.controller_shapes then
-		local controller_shapes = {{
-			position = {
-				cy = 0.5,
-				cx = 0.5
-			},
-			texture_rect = {
-				0,
-				0,
-				512,
-				256
+		local controller_shapes = {
+			{
+				position = {
+					cy = 0.5,
+					cx = 0.5
+				},
+				texture_rect = {
+					0,
+					0,
+					512,
+					256
+				}
 			}
-		}}
+		}
 	end
 
 	local controllers = {}
@@ -355,4 +359,3 @@ function LevelLoadingScreenGuiScript:set_visible(visible)
 		self._ws:hide()
 	end
 end
-

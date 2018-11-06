@@ -1,4 +1,3 @@
-
 function MenuManager:show_retrieving_servers_dialog()
 	local dialog_data = {
 		title = managers.localization:text("dialog_retrieving_servers_title"),
@@ -20,7 +19,9 @@ function MenuManager:show_get_world_list_dialog(params)
 		text = managers.localization:text("dialog_cancel"),
 		callback_func = params.cancel_func
 	}
-	dialog_data.button_list = {cancel_button}
+	dialog_data.button_list = {
+		cancel_button
+	}
 	dialog_data.indicator = true
 
 	managers.system_menu:show(dialog_data)
@@ -31,8 +32,12 @@ function MenuManager:show_game_permission_changed_dialog()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_game_permission_changed")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -42,8 +47,12 @@ function MenuManager:show_too_low_level()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_too_low_level")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -53,8 +62,12 @@ function MenuManager:show_too_low_level_ovk145()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_too_low_level_ovk145")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -64,8 +77,12 @@ function MenuManager:show_does_not_own_heist()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_does_not_own_heist")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -78,8 +95,12 @@ function MenuManager:show_does_not_own_heist_info(heist, player)
 			PLAYER = string.upper(player)
 		})
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -89,8 +110,12 @@ function MenuManager:show_failed_joining_dialog()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_err_failed_joining_lobby")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -100,8 +125,12 @@ function MenuManager:show_smartmatch_contract_not_found_dialog()
 		title = managers.localization:text("menu_smm_contract_not_found_title"),
 		text = managers.localization:text("menu_smm_contract_not_found_body")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -109,7 +138,9 @@ end
 function MenuManager:show_smartmatch_inexact_match_dialog(params)
 	local dialog_data = {
 		id = "confirm_inexact_match",
-		title = managers.localization:text("menu_smm_contract_inexact_match_title", {timeout = params.timeout}),
+		title = managers.localization:text("menu_smm_contract_inexact_match_title", {
+			timeout = params.timeout
+		}),
 		text = managers.localization:text("menu_smm_contract_inexact_match_body", {
 			host = params.host_name,
 			job_name = params.job_name,
@@ -142,7 +173,9 @@ function MenuManager:show_smartmatch_inexact_match_dialog(params)
 				local dlg = managers.system_menu:get_dialog(dialog_data.id)
 
 				if dlg then
-					dlg:set_title(utf8.to_upper(managers.localization:text("menu_smm_contract_inexact_match_title", {timeout = count})))
+					dlg:set_title(utf8.to_upper(managers.localization:text("menu_smm_contract_inexact_match_title", {
+						timeout = count
+					})))
 				end
 			end
 		end
@@ -156,8 +189,12 @@ function MenuManager:show_cant_join_from_game_dialog()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_err_cant_join_from_game")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -167,8 +204,12 @@ function MenuManager:show_game_started_dialog()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_game_started")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -195,7 +236,9 @@ function MenuManager:show_searching_match_dialog(params)
 		title = managers.localization:text("menu_smm_searching_for_contract"),
 		text = managers.localization:text("dialog_wait"),
 		id = "search_match",
-		button_list = {cancel_button},
+		button_list = {
+			cancel_button
+		},
 		indicator = true
 	}
 
@@ -213,7 +256,9 @@ function MenuManager:show_fetching_status_dialog(params)
 		text = managers.localization:text("dialog_cancel"),
 		callback_func = params.cancel_func
 	}
-	dialog_data.button_list = {cancel_button}
+	dialog_data.button_list = {
+		cancel_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -223,15 +268,21 @@ function MenuManager:show_no_connection_to_game_servers_dialog()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_no_connection_to_game_servers")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
 
 function MenuManager:show_person_joining(id, nick)
 	local dialog_data = {
-		title = managers.localization:text("dialog_dropin_title", {USER = string.upper(nick)}),
+		title = managers.localization:text("dialog_dropin_title", {
+			USER = string.upper(nick)
+		}),
 		text = managers.localization:text("dialog_wait") .. " 0%",
 		id = "user_dropin" .. id,
 		no_buttons = true
@@ -245,8 +296,12 @@ function MenuManager:show_corrupt_dlc()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_fail_load_dlc_corrupt")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -276,7 +331,9 @@ function MenuManager:show_peer_kicked_dialog(params)
 		text = managers.localization:text("dialog_ok"),
 		callback_func = params and params.ok_func
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 
@@ -293,7 +350,9 @@ function MenuManager:show_peer_banned_dialog(params)
 		text = managers.localization:text("dialog_ok"),
 		callback_func = params and params.ok_func
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 
@@ -310,7 +369,9 @@ function MenuManager:show_mods_disallowed_dialog(params)
 		text = managers.localization:text("dialog_ok"),
 		callback_func = params and params.ok_func
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 
@@ -350,7 +411,9 @@ function MenuManager:show_err_not_signed_in_dialog()
 			self._showing_disconnect_message = nil
 		end
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -365,7 +428,9 @@ function MenuManager:show_mp_disconnected_internet_dialog(params)
 		text = managers.localization:text("dialog_ok"),
 		callback_func = params.ok_func
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -376,8 +441,12 @@ function MenuManager:show_internet_connection_required()
 		text = managers.localization:text("dialog_internet_connection_required"),
 		no_upper = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -391,8 +460,12 @@ function MenuManager:show_err_no_chat_parental_control()
 			text = managers.localization:text("dialog_no_chat_parental_control"),
 			no_upper = true
 		}
-		local ok_button = {text = managers.localization:text("dialog_ok")}
-		dialog_data.button_list = {ok_button}
+		local ok_button = {
+			text = managers.localization:text("dialog_ok")
+		}
+		dialog_data.button_list = {
+			ok_button
+		}
 
 		managers.system_menu:show(dialog_data)
 	end
@@ -404,8 +477,12 @@ function MenuManager:show_err_under_age()
 		text = managers.localization:text("dialog_age_restriction"),
 		no_upper = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -416,8 +493,12 @@ function MenuManager:show_err_new_patch()
 		text = managers.localization:text("dialog_new_patch"),
 		no_upper = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -433,7 +514,9 @@ function MenuManager:show_waiting_for_server_response(params)
 		text = managers.localization:text("dialog_cancel"),
 		callback_func = params.cancel_func
 	}
-	dialog_data.button_list = {cancel_button}
+	dialog_data.button_list = {
+		cancel_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -443,8 +526,12 @@ function MenuManager:show_request_timed_out_dialog()
 		title = managers.localization:text("dialog_request_timed_out_title"),
 		text = managers.localization:text("dialog_request_timed_out_message")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -475,8 +562,12 @@ function MenuManager:show_no_invites_message()
 		title = managers.localization:text("dialog_information_title"),
 		text = managers.localization:text("dialog_mp_no_invites_message")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -486,8 +577,12 @@ function MenuManager:show_invite_wrong_version_message()
 		title = managers.localization:text("dialog_information_title"),
 		text = managers.localization:text("dialog_mp_invite_wrong_version_message")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -497,8 +592,12 @@ function MenuManager:show_invite_wrong_room_message()
 		title = managers.localization:text("dialog_information_title"),
 		text = managers.localization:text("dialog_mp_invite_wrong_room_message")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -513,7 +612,9 @@ function MenuManager:show_invite_join_message(params)
 		text = managers.localization:text("dialog_ok"),
 		callback_func = params.ok_func
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -528,7 +629,9 @@ function MenuManager:show_pending_invite_message(params)
 		text = managers.localization:text("dialog_ok"),
 		callback_func = params.ok_func
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -539,8 +642,12 @@ function MenuManager:show_game_is_installing()
 		text = managers.localization:text("dialog_game_is_installing"),
 		no_upper = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -551,8 +658,12 @@ function MenuManager:show_game_is_installing_menu()
 		text = managers.localization:text("dialog_game_is_installing_menu"),
 		no_upper = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -563,8 +674,12 @@ function MenuManager:show_NPCommerce_open_fail(params)
 		text = managers.localization:text("dialog_npcommerce_fail_open"),
 		no_upper = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -574,8 +689,12 @@ function MenuManager:show_NPCommerce_checkout_fail(params)
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_npcommerce_checkout_fail")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -599,8 +718,12 @@ function MenuManager:show_NPCommerce_browse_fail()
 		text = managers.localization:text("dialog_npcommerce_browse_fail"),
 		no_upper = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -610,8 +733,12 @@ function MenuManager:show_NPCommerce_browse_success()
 		title = managers.localization:text("dialog_transaction_successful"),
 		text = managers.localization:text("dialog_npcommerce_need_install")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -623,8 +750,12 @@ function MenuManager:show_dlc_require_restart()
 			title = managers.localization:text("dialog_dlc_require_restart"),
 			text = managers.localization:text("dialog_dlc_require_restart_desc")
 		}
-		local ok_button = {text = managers.localization:text("dialog_ok")}
-		dialog_data.button_list = {ok_button}
+		local ok_button = {
+			text = managers.localization:text("dialog_ok")
+		}
+		dialog_data.button_list = {
+			ok_button
+		}
 
 		managers.system_menu:show(dialog_data)
 	end
@@ -642,8 +773,12 @@ function MenuManager:show_video_message_dialog(params)
 		dialog_data.button_list = params.button_list
 		dialog_data.focus_button = params.focus_button or #dialog_data.button_list
 	else
-		local ok_button = {text = managers.localization:text("dialog_ok")}
-		dialog_data.button_list = {ok_button}
+		local ok_button = {
+			text = managers.localization:text("dialog_ok")
+		}
+		dialog_data.button_list = {
+			ok_button
+		}
 	end
 
 	dialog_data.texture = params.texture == nil and "guis/textures/pd2/feature_crimenet_heat" or params.texture
@@ -680,8 +815,12 @@ function MenuManager:show_new_message_dialog(params)
 		dialog_data.button_list = params.button_list
 		dialog_data.focus_button = params.focus_button or #dialog_data.button_list
 	else
-		local ok_button = {text = managers.localization:text("dialog_ok")}
-		dialog_data.button_list = {ok_button}
+		local ok_button = {
+			text = managers.localization:text("dialog_ok")
+		}
+		dialog_data.button_list = {
+			ok_button
+		}
 	end
 
 	dialog_data.texture = params.texture == nil and "guis/textures/pd2/feature_crimenet_heat" or params.texture
@@ -708,10 +847,16 @@ end
 function MenuManager:show_announce_crimenet_heat()
 	local dialog_data = {
 		title = managers.localization:text("menu_feature_heat_title"),
-		text = managers.localization:text("menu_feature_heat_desc", {player = tostring(managers.network.account:username() or managers.blackmarket:get_preferred_character_real_name())})
+		text = managers.localization:text("menu_feature_heat_desc", {
+			player = tostring(managers.network.account:username() or managers.blackmarket:get_preferred_character_real_name())
+		})
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 	dialog_data.texture = "guis/textures/pd2/feature_crimenet_heat"
 	dialog_data.text_blend_mode = "add"
 	dialog_data.use_text_formating = true
@@ -732,7 +877,9 @@ function MenuManager:show_accept_gfx_settings_dialog(func)
 	local count = 10
 	local dialog_data = {
 		title = managers.localization:text("dialog_accept_changes_title"),
-		text = managers.localization:text("dialog_accept_changes", {TIME = count}),
+		text = managers.localization:text("dialog_accept_changes", {
+			TIME = count
+		}),
 		id = "accept_changes"
 	}
 	local cancel_button = {
@@ -740,7 +887,9 @@ function MenuManager:show_accept_gfx_settings_dialog(func)
 		callback_func = func,
 		cancel_button = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
 	dialog_data.button_list = {
 		ok_button,
 		cancel_button
@@ -757,7 +906,9 @@ function MenuManager:show_accept_gfx_settings_dialog(func)
 				local dlg = managers.system_menu:get_dialog(dialog_data.id)
 
 				if dlg then
-					dlg:set_text(managers.localization:text("dialog_accept_changes", {TIME = count}), true)
+					dlg:set_text(managers.localization:text("dialog_accept_changes", {
+						TIME = count
+					}), true)
 				end
 			end
 		end
@@ -771,8 +922,12 @@ function MenuManager:show_key_binding_collision(params)
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_key_binding_collision", params)
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -782,8 +937,12 @@ function MenuManager:show_key_binding_forbidden(params)
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_key_binding_forbidden", params)
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -793,8 +952,12 @@ function MenuManager:show_preplanning_help()
 		title = managers.localization:text("dialog_information_title"),
 		text = managers.localization:text("dialog_preplanning_help") .. (MenuCallbackHandler.is_win32() and managers.localization:text("dialog_preplanning_help_controller") or "")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 	dialog_data.w = 620
 	dialog_data.h = 532
 
@@ -806,8 +969,12 @@ function MenuManager:show_new_item_gained(params)
 		title = managers.localization:text("dialog_new_unlock_title"),
 		text = managers.localization:text("dialog_new_unlock_" .. params.category, params)
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 	local texture, render_template, shapes = nil
 	local guis_catalog = "guis/"
 	local category = params.data[1]
@@ -884,8 +1051,12 @@ function MenuManager:show_no_safe_for_this_drill(params)
 		title = managers.localization:text("dialog_no_safe_for_this_drill_title"),
 		text = managers.localization:text("dialog_no_safe_for_this_drill")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -893,10 +1064,16 @@ end
 function MenuManager:show_and_more_tradable_item_received(params)
 	local dialog_data = {
 		title = managers.localization:text("dialog_and_more_tradable_item_title"),
-		text = managers.localization:text("dialog_and_more_tradable_item", {amount = tostring(params.amount_more)})
+		text = managers.localization:text("dialog_and_more_tradable_item", {
+			amount = tostring(params.amount_more)
+		})
 	}
-	local ok_button = {text = managers.localization:text("dialog_new_tradable_item_accept")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_new_tradable_item_accept")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -916,7 +1093,9 @@ function MenuManager:show_new_tradable_item_received(params)
 	}
 	local rarity_color, rarity_bg_texture = nil
 	local item = params.item
-	dialog_data.button_list = {accept_button}
+	dialog_data.button_list = {
+		accept_button
+	}
 
 	if item.category == "safes" then
 		dialog_data.text = managers.localization:to_upper_text("dialog_new_tradable_item", {
@@ -928,7 +1107,9 @@ function MenuManager:show_new_tradable_item_received(params)
 			text = managers.localization:text("dialog_new_tradable_item_open_container"),
 			callback_func = function ()
 				managers.system_menu:force_close_all()
-				managers.menu:open_node("inventory_tradable_container", {data})
+				managers.menu:open_node("inventory_tradable_container", {
+					data
+				})
 			end
 		}
 
@@ -946,13 +1127,17 @@ function MenuManager:show_new_tradable_item_received(params)
 			})
 		end
 
-		local entry_data = (tweak_data.economy[item.category] or tweak_data.blackmarket[item.category])[item.entry]
+		local entry_data = tweak_data.economy[item.category] or tweak_data.blackmarket[item.category][item.entry]
 
 		if item.bonus and entry_data.bonus then
 			local bonus_tweak = tweak_data.economy.bonuses[entry_data.bonus]
 			local name_id = bonus_tweak.name_id
 			local bonus_value = bonus_tweak.exp_multiplier and bonus_tweak.exp_multiplier * 100 - 100 .. "%" or bonus_tweak.money_multiplier and bonus_tweak.money_multiplier * 100 - 100 .. "%"
-			local bonus_text = managers.localization:to_upper_text("dialog_new_tradable_item_bonus", {bonus = managers.localization:text(name_id, {team_bonus = bonus_value})})
+			local bonus_text = managers.localization:to_upper_text("dialog_new_tradable_item_bonus", {
+				bonus = managers.localization:text(name_id, {
+					team_bonus = bonus_value
+				})
+			})
 			dialog_data.text = dialog_data.text .. "\n" .. bonus_text
 		end
 
@@ -962,7 +1147,9 @@ function MenuManager:show_new_tradable_item_received(params)
 
 	if params.amount_more > 1 then
 		local accept_all_button = {
-			text = managers.localization:text("dialog_new_tradable_item_accept_all", {amount = tostring(params.amount_more)}),
+			text = managers.localization:text("dialog_new_tradable_item_accept_all", {
+				amount = tostring(params.amount_more)
+			}),
 			callback_func = function ()
 				managers.system_menu:force_close_all()
 			end
@@ -993,7 +1180,9 @@ function MenuManager:show_new_tradable_item_received(params)
 			texture
 		}
 	else
-		dialog_data.textures = {texture}
+		dialog_data.textures = {
+			texture
+		}
 	end
 
 	dialog_data.render_template = render_template
@@ -1010,8 +1199,12 @@ function MenuManager:show_mask_mods_available(params)
 		title = "",
 		text = params.text_block
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 	dialog_data.text_blend_mode = "add"
 	dialog_data.use_text_formating = true
 	dialog_data.text_formating_color = Color.white
@@ -1025,8 +1218,12 @@ function MenuManager:show_weapon_mods_available(params)
 		title = managers.localization:text("bm_menu_available_mods"),
 		text = params.text_block
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 	local weapon_id = params.weapon_id
 	dialog_data.texture = managers.blackmarket:get_weapon_icon_path(weapon_id, nil)
 	dialog_data.text_blend_mode = "add"
@@ -1069,7 +1266,9 @@ function MenuManager:show_confirm_respec_skilltree(params)
 	local tree_name = managers.localization:text(tweak_data.skilltree.skilltree[params.tree].name_id)
 	local dialog_data = {
 		title = managers.localization:text("dialog_skills_respec_title"),
-		text = managers.localization:text("dialog_respec_skilltree", {tree = tree_name}),
+		text = managers.localization:text("dialog_respec_skilltree", {
+			tree = tree_name
+		}),
 		focus_button = 2
 	}
 	local yes_button = {
@@ -1119,8 +1318,12 @@ function MenuManager:show_skilltree_reseted()
 		title = managers.localization:text("dialog_skills_reseted_title"),
 		text = managers.localization:text("dialog_skilltree_reseted")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1157,8 +1360,12 @@ function MenuManager:show_infamytree_reseted()
 		title = managers.localization:text("dialog_infamy_reseted_title"),
 		text = managers.localization:text("dialog_infamytree_reseted")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1168,8 +1375,12 @@ function MenuManager:show_enable_steam_overlay()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_requires_steam_overlay")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1179,8 +1390,12 @@ function MenuManager:show_requires_big_picture()
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_requires_big_picture")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1197,7 +1412,9 @@ function MenuManager:show_buying_tradable_item_dialog()
 			MenuCallbackHandler:on_steam_transaction_over(true)
 		end
 	}
-	dialog_data.button_list = {cancel_button}
+	dialog_data.button_list = {
+		cancel_button
+	}
 	dialog_data.indicator = true
 
 	managers.system_menu:show(dialog_data)
@@ -1208,8 +1425,12 @@ function MenuManager:show_canceled_tradable_item_dialog()
 		title = managers.localization:text("dialog_tradable_item_store_title"),
 		text = managers.localization:text("dialog_tradable_item_canceled")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1219,8 +1440,12 @@ function MenuManager:show_success_tradable_item_dialog()
 		title = managers.localization:text("dialog_tradable_item_store_title"),
 		text = managers.localization:text("dialog_tradable_item_success")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1230,8 +1455,12 @@ function MenuManager:show_enable_steam_overlay_tradable_item()
 		title = managers.localization:text("dialog_tradable_item_store_title"),
 		text = managers.localization:text("dialog_requires_steam_overlay_tradable_item")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1241,8 +1470,12 @@ function MenuManager:show_error_tradable_item_dialog()
 		title = managers.localization:text("dialog_tradable_item_store_title"),
 		text = managers.localization:text("dialog_tradable_item_error")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1252,8 +1485,12 @@ function MenuManager:show_failed_tradable_item_dialog()
 		title = managers.localization:text("dialog_tradable_item_store_title"),
 		text = managers.localization:text("dialog_tradable_item_failed")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1261,7 +1498,11 @@ end
 function MenuManager:show_confirm_blackmarket_sell_no_slot(params)
 	local dialog_data = {
 		title = managers.localization:text("dialog_bm_mask_sell_title"),
-		text = managers.localization:text("dialog_blackmarket_item", {item = params.name}) .. "\n\n" .. managers.localization:text("dialog_blackmarket_slot_item_sell", {money = params.money}),
+		text = managers.localization:text("dialog_blackmarket_item", {
+			item = params.name
+		}) .. "\n\n" .. managers.localization:text("dialog_blackmarket_slot_item_sell", {
+			money = params.money
+		}),
 		focus_button = 2
 	}
 	local yes_button = {
@@ -1287,14 +1528,20 @@ function MenuManager:show_confirm_blackmarket_mask_remove(params)
 		text = managers.localization:text("dialog_blackmarket_slot_item", {
 			slot = params.slot,
 			item = params.name
-		}) .. "\n\n" .. managers.localization:text("dialog_blackmarket_slot_mask_remove", {suffix = params.skip_money and "" or " " .. managers.localization:text("dialog_blackmarket_slot_mask_remove_suffix", {money = params.money})})
+		}) .. "\n\n" .. managers.localization:text("dialog_blackmarket_slot_mask_remove", {
+			suffix = params.skip_money and "" or " " .. managers.localization:text("dialog_blackmarket_slot_mask_remove_suffix", {
+				money = params.money
+			})
+		})
 	}
 
 	if params.mods_readded and #params.mods_readded > 0 then
 		dialog_data.text = dialog_data.text .. "\n"
 
 		for _, mod_id in ipairs(params.mods_readded) do
-			dialog_data.text = dialog_data.text .. "\n" .. managers.localization:text("dialog_blackmarket_mask_sell_mod_readded", {mod = mod_id})
+			dialog_data.text = dialog_data.text .. "\n" .. managers.localization:text("dialog_blackmarket_mask_sell_mod_readded", {
+				mod = mod_id
+			})
 		end
 	end
 
@@ -1322,14 +1569,18 @@ function MenuManager:show_confirm_blackmarket_mask_sell(params)
 		text = managers.localization:text("dialog_blackmarket_slot_item", {
 			slot = params.slot,
 			item = params.name
-		}) .. "\n\n" .. managers.localization:text("dialog_blackmarket_slot_item_sell", {money = params.money})
+		}) .. "\n\n" .. managers.localization:text("dialog_blackmarket_slot_item_sell", {
+			money = params.money
+		})
 	}
 
 	if params.mods_readded and #params.mods_readded > 0 then
 		dialog_data.text = dialog_data.text .. "\n"
 
 		for _, mod_id in ipairs(params.mods_readded) do
-			dialog_data.text = dialog_data.text .. "\n" .. managers.localization:text("dialog_blackmarket_mask_sell_mod_readded", {mod = mod_id})
+			dialog_data.text = dialog_data.text .. "\n" .. managers.localization:text("dialog_blackmarket_mask_sell_mod_readded", {
+				mod = mod_id
+			})
 		end
 	end
 
@@ -1357,7 +1608,9 @@ function MenuManager:show_confirm_blackmarket_sell(params)
 		text = managers.localization:text("dialog_blackmarket_slot_item", {
 			slot = params.slot,
 			item = params.name
-		}) .. "\n\n" .. managers.localization:text("dialog_blackmarket_slot_item_sell", {money = params.money}),
+		}) .. "\n\n" .. managers.localization:text("dialog_blackmarket_slot_item_sell", {
+			money = params.money
+		}),
 		focus_button = 2
 	}
 	local yes_button = {
@@ -1380,7 +1633,9 @@ end
 function MenuManager:show_confirm_blackmarket_buy_weapon_slot(params)
 	local dialog_data = {
 		title = managers.localization:text("dialog_bm_weapon_buy_title"),
-		text = managers.localization:text("dialog_blackmarket_buy_weapon_slot", {money = params.money}),
+		text = managers.localization:text("dialog_blackmarket_buy_weapon_slot", {
+			money = params.money
+		}),
 		focus_button = 2
 	}
 	local yes_button = {
@@ -1403,7 +1658,9 @@ end
 function MenuManager:show_confirm_blackmarket_buy_mask_slot(params)
 	local dialog_data = {
 		title = managers.localization:text("dialog_bm_weapon_buy_title"),
-		text = managers.localization:text("dialog_blackmarket_buy_mask_slot", {money = params.money}),
+		text = managers.localization:text("dialog_blackmarket_buy_mask_slot", {
+			money = params.money
+		}),
 		focus_button = 2
 	}
 	local yes_button = {
@@ -1468,12 +1725,16 @@ function MenuManager:show_confirm_blackmarket_mod(params)
 		text = l_local:text("dialog_blackmarket_slot_item", {
 			slot = params.slot,
 			item = params.weapon_name
-		}) .. "\n\n" .. l_local:text("dialog_blackmarket_mod_" .. (params.add and "add" or "remove"), {mod = params.name}) .. "\n"
+		}) .. "\n\n" .. l_local:text("dialog_blackmarket_mod_" .. (params.add and "add" or "remove"), {
+			mod = params.name
+		}) .. "\n"
 	}
 	local warn_lost_mods = false
 
 	if params.add and params.replaces and #params.replaces > 0 then
-		dialog_data.text = dialog_data.text .. l_local:text("dialog_blackmarket_mod_replace", {mod = managers.weapon_factory:get_part_name_by_part_id(params.replaces[1])}) .. "\n"
+		dialog_data.text = dialog_data.text .. l_local:text("dialog_blackmarket_mod_replace", {
+			mod = managers.weapon_factory:get_part_name_by_part_id(params.replaces[1])
+		}) .. "\n"
 		warn_lost_mods = true
 	end
 
@@ -1488,7 +1749,9 @@ function MenuManager:show_confirm_blackmarket_mod(params)
 			mods = mods .. "\n" .. managers.weapon_factory:get_part_name_by_part_id(mod_name)
 		end
 
-		dialog_data.text = dialog_data.text .. "\n" .. l_local:text("dialog_blackmarket_mod_conflict", {mods = mods}) .. "\n"
+		dialog_data.text = dialog_data.text .. "\n" .. l_local:text("dialog_blackmarket_mod_conflict", {
+			mods = mods
+		}) .. "\n"
 		warn_lost_mods = true
 	end
 
@@ -1497,7 +1760,9 @@ function MenuManager:show_confirm_blackmarket_mod(params)
 	end
 
 	if params.add and params.money then
-		dialog_data.text = dialog_data.text .. "\n" .. l_local:text("dialog_blackmarket_mod_cost", {money = params.money})
+		dialog_data.text = dialog_data.text .. "\n" .. l_local:text("dialog_blackmarket_mod_cost", {
+			money = params.money
+		})
 	end
 
 	local yes_button = {
@@ -1526,11 +1791,15 @@ function MenuManager:show_confirm_weapon_cosmetics(params)
 		text = l_local:text("dialog_blackmarket_slot_item", {
 			slot = params.slot,
 			item = params.weapon_name
-		}) .. "\n\n" .. l_local:text("dialog_weapon_cosmetics_" .. (params.item_has_cosmetic and "add" or "remove"), {cosmetic = params.name})
+		}) .. "\n\n" .. l_local:text("dialog_weapon_cosmetics_" .. (params.item_has_cosmetic and "add" or "remove"), {
+			cosmetic = params.name
+		})
 	}
 
 	if params.item_has_cosmetic and params.crafted_has_cosmetic then
-		dialog_data.text = dialog_data.text .. "\n" .. l_local:text("dialog_weapon_cosmetics_replace", {cosmetic = params.crafted_name})
+		dialog_data.text = dialog_data.text .. "\n" .. l_local:text("dialog_weapon_cosmetics_replace", {
+			cosmetic = params.crafted_name
+		})
 	end
 
 	if params.crafted_has_default_blueprint and not params.item_has_default_blueprint then
@@ -1654,7 +1923,9 @@ function MenuManager:show_confirm_blackmarket_weapon_mod_purchase(params)
 		text = managers.localization:text("dialog_bm_purchase_mod", {
 			slot = params.slot,
 			item = params.name
-		}) .. "\n\n" .. managers.localization:text("dialog_bm_purchase_coins", {money = params.money}),
+		}) .. "\n\n" .. managers.localization:text("dialog_bm_purchase_coins", {
+			money = params.money
+		}),
 		focus_button = 2
 	}
 	local yes_button = {
@@ -1782,8 +2053,12 @@ function MenuManager:show_storage_removed_dialog(params)
 		text = managers.localization:text("dialog_storage_removed_warning_X360"),
 		force = true
 	}
-	local ok_button = {text = managers.localization:text("dialog_continue")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_continue")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show_platform(dialog_data)
 end
@@ -1793,8 +2068,12 @@ function MenuManager:show_game_is_full(params)
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_err_room_is_full")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1804,8 +2083,12 @@ function MenuManager:show_game_no_longer_exists(params)
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_err_room_no_longer_exists")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1815,8 +2098,12 @@ function MenuManager:show_game_is_full(params)
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_err_room_is_full")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1826,8 +2113,12 @@ function MenuManager:show_wrong_version_message()
 		title = managers.localization:text("dialog_information_title"),
 		text = managers.localization:text("dialog_err_wrong_version_message")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1842,7 +2133,9 @@ function MenuManager:show_inactive_user_accepted_invite(params)
 		text = managers.localization:text("dialog_ok"),
 		callback_func = params.ok_func
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1857,7 +2150,9 @@ function MenuManager:show_question_start_tutorial(params)
 		text = managers.localization:text("dialog_yes"),
 		callback_func = params.yes_func
 	}
-	local no_button = {text = managers.localization:text("dialog_no")}
+	local no_button = {
+		text = managers.localization:text("dialog_no")
+	}
 	dialog_data.button_list = {
 		yes_button,
 		no_button
@@ -1876,7 +2171,9 @@ function MenuManager:show_question_new_safehouse(params)
 		text = managers.localization:text("dialog_yes"),
 		callback_func = params.yes_func
 	}
-	local no_button = {text = managers.localization:text("dialog_no")}
+	local no_button = {
+		text = managers.localization:text("dialog_no")
+	}
 	dialog_data.button_list = {
 		yes_button,
 		no_button
@@ -1896,7 +2193,9 @@ function MenuManager:show_question_new_safehouse_new_player(params)
 		text = managers.localization:text("dialog_yes"),
 		callback_func = params.yes_func
 	}
-	local no_button = {text = managers.localization:text("dialog_no")}
+	local no_button = {
+		text = managers.localization:text("dialog_no")
+	}
 	dialog_data.button_list = {
 		yes_button,
 		no_button
@@ -1937,7 +2236,9 @@ function MenuManager:show_leave_safehouse_dialog(params)
 		text = managers.localization:text("dialog_yes"),
 		callback_func = params.yes_func
 	}
-	local no_button = {text = managers.localization:text("dialog_no")}
+	local no_button = {
+		text = managers.localization:text("dialog_no")
+	}
 	dialog_data.button_list = {
 		yes_button,
 		no_button
@@ -1951,8 +2252,12 @@ function MenuManager:show_save_settings_failed(params)
 		title = managers.localization:text("dialog_error_title"),
 		text = managers.localization:text("dialog_save_settings_failed")
 	}
-	local ok_button = {text = managers.localization:text("dialog_continue")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_continue")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -1985,8 +2290,12 @@ function MenuManager:show_savefile_wrong_version(params)
 		text = managers.localization:text(params.error_msg),
 		id = "wrong_version"
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:add_init_show(dialog_data)
 end
@@ -1997,8 +2306,12 @@ function MenuManager:show_savefile_wrong_user(params)
 		text = managers.localization:text("dialog_load_wrong_user"),
 		id = "wrong_user"
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:add_init_show(dialog_data)
 end
@@ -2054,13 +2367,17 @@ function MenuManager:show_safe_error_dialog(params)
 		text = managers.localization:text("dialog_ok"),
 		callback_func = params.ok_button
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
 
 function MenuManager:show_confirm_become_infamous(params)
-	local dialog_data = {title = managers.localization:text("dialog_become_infamous")}
+	local dialog_data = {
+		title = managers.localization:text("dialog_become_infamous")
+	}
 	local no_button = {
 		callback_func = params.no_func,
 		cancel_button = true
@@ -2106,9 +2423,13 @@ function MenuManager:show_confirm_become_infamous(params)
 		end
 	else
 		no_button.text = managers.localization:text("dialog_ok")
-		dialog_data.text = managers.localization:text("menu_dialog_become_infamous_no_cash", {cash = params.cost})
+		dialog_data.text = managers.localization:text("menu_dialog_become_infamous_no_cash", {
+			cash = params.cost
+		})
 		dialog_data.focus_button = 1
-		dialog_data.button_list = {no_button}
+		dialog_data.button_list = {
+			no_button
+		}
 	end
 
 	dialog_data.w = 620
@@ -2128,20 +2449,26 @@ function MenuManager:show_specialization_xp_convert(xp_present, points_present)
 		text = managers.localization:text("dialog_ok")
 	}
 	dialog_data.focus_button = 1
-	dialog_data.button_list = {no_button}
+	dialog_data.button_list = {
+		no_button
+	}
 
 	managers.system_menu:show_specialization_convert(dialog_data)
 end
 
 function MenuManager:show_infamous_message(can_become_infamous)
-	local dialog_data = {title = managers.localization:text("dialog_infamous_info_title")}
+	local dialog_data = {
+		title = managers.localization:text("dialog_infamous_info_title")
+	}
 	local no_button = {
 		cancel_button = true,
 		text = managers.localization:text("dialog_ok")
 	}
 
 	if can_become_infamous then
-		dialog_data.text = managers.localization:text("dialog_can_become_infamous_desc", {become_infamous_menu_item = managers.localization:to_upper_text("menu_become_infamous")})
+		dialog_data.text = managers.localization:text("dialog_can_become_infamous_desc", {
+			become_infamous_menu_item = managers.localization:to_upper_text("menu_become_infamous")
+		})
 	else
 		dialog_data.text = managers.localization:text("dialog_infamous_info_desc", {
 			level = 100,
@@ -2150,7 +2477,9 @@ function MenuManager:show_infamous_message(can_become_infamous)
 	end
 
 	dialog_data.focus_button = 1
-	dialog_data.button_list = {no_button}
+	dialog_data.button_list = {
+		no_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -2166,8 +2495,12 @@ function MenuManager:dialog_gage_assignment_completed(params)
 		title = managers.localization:text("dialog_gage_assignment_completed_title"),
 		text = managers.localization:text("dialog_gage_assignment_completed", params)
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 	dialog_data.texture = "guis/textures/pd2/feature_crimenet_heat"
 	dialog_data.text_blend_mode = "add"
 	dialog_data.use_text_formating = true
@@ -2187,7 +2520,9 @@ end
 function MenuManager:show_challenge_warn_choose_reward(params)
 	local dialog_data = {
 		title = managers.localization:text("dialog_challenge_warn_choose_reward_title"),
-		text = managers.localization:text("dialog_challenge_warn_choose_reward", {reward = params.reward})
+		text = managers.localization:text("dialog_challenge_warn_choose_reward", {
+			reward = params.reward
+		})
 	}
 	local yes_button = {
 		text = managers.localization:text("dialog_yes"),
@@ -2260,7 +2595,9 @@ function MenuManager:show_challenge_reward(reward)
 			MenuCallbackHandler:refresh_node()
 		end
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 	local texture_path = "guis/textures/pd2/endscreen/what_is_this"
 	local guis_catalog = "guis/"
 	local bundle_folder = td.texture_bundle_folder
@@ -2310,8 +2647,12 @@ function MenuManager:show_inventory_load_fail_dialog()
 		title = managers.localization:text("dialog_inventory_load_fail_title"),
 		text = managers.localization:text("dialog_inventory_load_fail_text")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -2321,8 +2662,12 @@ function MenuManager:show_crime_spree_cleared_dialog()
 		title = managers.localization:text("dialog_crime_spree_cleared_title"),
 		text = managers.localization:text("dialog_crime_spree_cleared_text")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -2337,7 +2682,9 @@ function MenuManager:show_vr_settings_dialog(params)
 		text = managers.localization:text("dialog_vr_calibrate"),
 		callback_func = params and params.ok_func
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -2347,9 +2694,44 @@ function MenuManager:show_heist_is_locked_dialog()
 		title = managers.localization:text("dialog_heist_locked_title"),
 		text = managers.localization:text("dialog_heist_locked_text")
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
 
+function MenuManager:show_crime_spree_locked_dialog()
+	local dialog_data = {
+		title = managers.localization:text("dialog_crime_spree_locked_title"),
+		text = managers.localization:text("dialog_crime_spree_locked_text", {
+			level_lock = tweak_data.crime_spree.unlock_level
+		})
+	}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
+
+	managers.system_menu:show(dialog_data)
+end
+
+function MenuManager:show_movie_theater_unlocked_dialog()
+	local dialog_data = {
+		title = managers.localization:text("dialog_ending_unlocked_title"),
+		text = managers.localization:text("dialog_ending_unlocked_text")
+	}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
+
+	managers.system_menu:show(dialog_data)
+end

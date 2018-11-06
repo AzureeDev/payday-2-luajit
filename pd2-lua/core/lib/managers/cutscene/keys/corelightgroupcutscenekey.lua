@@ -25,7 +25,9 @@ function CoreLightGroupCutsceneKey:evaluate()
 end
 
 function CoreLightGroupCutsceneKey:revert()
-	local prev_key = self:preceeding_key({group = self:group()})
+	local prev_key = self:preceeding_key({
+		group = self:group()
+	})
 
 	if prev_key then
 		prev_key:evaluate()
@@ -106,7 +108,9 @@ function CoreLightGroupCutsceneKey:_build_group_cache()
 end
 
 function CoreLightGroupCutsceneKey:_eval_prev_group()
-	local prev_key = self:preceeding_key({group = self:group()})
+	local prev_key = self:preceeding_key({
+		group = self:group()
+	})
 
 	if prev_key then
 		prev_key:evaluate()
@@ -144,6 +148,6 @@ end
 function CoreLightGroupCutsceneKey:refresh_control_for_enable(control)
 	control:set_value(self:enable())
 end
+
 CoreLightGroupCutsceneKey.control_for_group = CoreCutsceneKeyBase.standard_combo_box_control
 CoreLightGroupCutsceneKey.control_for_enable = CoreLightGroupCutsceneKey.check_box_control
-

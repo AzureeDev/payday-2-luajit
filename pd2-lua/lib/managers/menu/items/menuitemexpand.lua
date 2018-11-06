@@ -86,8 +86,7 @@ function MenuItemExpand:get_item(name)
 end
 
 function MenuItemExpand:visible_items()
-	for _, item in ipairs(self._items) do
-		-- Nothing
+	for slot4, slot5 in ipairs(self._items) do
 	end
 
 	return self._items
@@ -193,7 +192,7 @@ function MenuItemExpand:_create_indicator(row_item, node)
 	})
 
 	row_item.expanded_indicator:set_w(row_item.gui_panel:w() + node:align_line_padding())
-	row_item.expanded_indicator:set_height((64 * row_item.gui_panel:height()) / 32)
+	row_item.expanded_indicator:set_height(64 * row_item.gui_panel:height() / 32)
 end
 
 function MenuItemExpand:reload(row_item, node)
@@ -338,6 +337,7 @@ function MenuItemExpand:is_parent_to_item(child_item)
 
 	return false
 end
+
 MenuItemExpandAction = MenuItemExpandAction or class(CoreMenuItem.Item)
 
 function MenuItemExpandAction:init(data_node, parameters)
@@ -346,7 +346,9 @@ end
 
 function MenuItemExpandAction:setup_gui(node, row_item)
 	local scaled_size = managers.gui_data:scaled_size()
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.action_name = node:_text_item_part(row_item, row_item.gui_panel, node:align_line_padding())
 
 	row_item.action_name:set_font_size(22)
@@ -374,7 +376,7 @@ function MenuItemExpandAction:setup_gui(node, row_item)
 	row_item.action_icon:set_center(h / 2, h / 2)
 
 	if row_item.align == "right" then
-		row_item.action_name:set_right((row_item.gui_panel:w() - 10) - self._parameters.expand_value)
+		row_item.action_name:set_right(row_item.gui_panel:w() - 10 - self._parameters.expand_value)
 	else
 		row_item.action_name:set_left(h + 4)
 	end
@@ -469,4 +471,3 @@ end
 function MenuItemExpandAction:_repair_circle_color(...)
 	return self:parameters().parent_item:_repair_circle_color(...)
 end
-

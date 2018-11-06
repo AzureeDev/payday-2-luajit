@@ -11,4 +11,3 @@ function ModifierCloakerKick:OnPlayerCloakerKicked(cloaker_unit)
 		effect_func(self, cloaker_unit)
 	end
 end
-

@@ -247,7 +247,6 @@ function NavObstacleElement:add_triggers(vc)
 end
 
 function NavObstacleElement:select_unit_list_btn()
-
 	local function f(unit)
 		if not managers.editor:layer("Statics"):category_map()[unit:type():s()] then
 			return false
@@ -341,7 +340,7 @@ function NavObstacleElement._get_indented_obj_name(obj, parent, obj_name)
 		obj = parent:get_object(obj_name) or obj
 	end
 
-	local obj_name = (obj_name or obj:name()):s()
+	local obj_name = obj_name or obj:name():s()
 
 	while obj:parent() do
 		obj = obj:parent()
@@ -350,4 +349,3 @@ function NavObstacleElement._get_indented_obj_name(obj, parent, obj_name)
 
 	return obj_name
 end
-

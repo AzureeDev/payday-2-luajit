@@ -178,7 +178,9 @@ function ElementSpawnEnemyDummy:_create_spawn_AI_parametric(stance, objective, s
 		init_state = "idle",
 		stance = stance,
 		objective = objective,
-		params = {scan = true}
+		params = {
+			scan = true
+		}
 	}
 end
 
@@ -236,4 +238,3 @@ end
 function ElementSpawnEnemyDummy:accessibility()
 	return self.ACCESSIBILITIES[self._values.accessibility]
 end
-

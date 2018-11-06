@@ -144,7 +144,6 @@ function UnitDamageTriggerUnitElement:add_triggers(vc)
 end
 
 function UnitDamageTriggerUnitElement:add_unit_list_btn()
-
 	local function f(unit)
 		if self._units[unit:unit_data().unit_id] then
 			return false
@@ -163,7 +162,6 @@ function UnitDamageTriggerUnitElement:add_unit_list_btn()
 end
 
 function UnitDamageTriggerUnitElement:remove_unit_list_btn()
-
 	local function f(unit)
 		return self._units[unit:unit_data().unit_id]
 	end
@@ -213,4 +211,3 @@ function UnitDamageTriggerUnitElement:_build_panel(panel, panel_sizer)
 		sizer = panel_sizer
 	})
 end
-

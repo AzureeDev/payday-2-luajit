@@ -1,7 +1,9 @@
 CoreOperatorUnitElement = CoreOperatorUnitElement or class(MissionElement)
 CoreOperatorUnitElement.SAVE_UNIT_POSITION = false
 CoreOperatorUnitElement.SAVE_UNIT_ROTATION = false
-CoreOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+CoreOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 OperatorUnitElement = OperatorUnitElement or class(CoreOperatorUnitElement)
 
 function OperatorUnitElement:init(...)
@@ -86,4 +88,3 @@ function CoreOperatorUnitElement:_build_panel(panel, panel_sizer)
 	}, "Select an operation for the selected elements")
 	self:_add_help_text("Choose an operation to perform on the selected elements. An element might not have the selected operation implemented and will then generate error when executed.")
 end
-

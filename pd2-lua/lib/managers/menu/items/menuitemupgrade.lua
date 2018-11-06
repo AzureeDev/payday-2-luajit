@@ -13,7 +13,9 @@ end
 
 function MenuItemUpgrade:setup_gui(node, row_item)
 	local upgrade_id = self:parameters().upgrade_id
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.upgrade_name = node:_text_item_part(row_item, row_item.gui_panel, node:_right_align())
 
 	row_item.upgrade_name:set_font_size(tweak_data.menu.upgrades_font_size)
@@ -139,7 +141,16 @@ function MenuItemUpgrade:reload(row_item, node)
 
 	if row_item.toggle_text then
 		local text = nil
-		text = not managers.upgrades:visual_weapon_upgrade_active(upgrade_id) and managers.localization:text("menu_show_upgrade_info", {UPGRADE = managers.localization:text("menu_" .. upgrade_id .. "_info")}) or managers.localization:text("menu_hide_upgrade_info", {UPGRADE = managers.localization:text("menu_" .. upgrade_id .. "_info")})
+
+		if not managers.upgrades:visual_weapon_upgrade_active(upgrade_id) then
+			text = managers.localization:text("menu_show_upgrade_info", {
+				UPGRADE = managers.localization:text("menu_" .. upgrade_id .. "_info")
+			})
+		else
+			text = managers.localization:text("menu_hide_upgrade_info", {
+				UPGRADE = managers.localization:text("menu_" .. upgrade_id .. "_info")
+			})
+		end
 
 		row_item.toggle_text:set_text(string.upper(text))
 	end
@@ -192,6 +203,7 @@ function MenuItemUpgrade:fade_row_item(node, row_item)
 
 	return true
 end
+
 local xl_pad = 64
 
 function MenuItemUpgrade:_layout(node, row_item)
@@ -252,4 +264,3 @@ function MenuItemUpgrade:_layout(node, row_item)
 		end
 	end
 end
-

@@ -41,7 +41,7 @@ function PlayerProfileGuiObject:init(ws)
 	})
 
 	self:_make_fine_text(level_text)
-	level_text:set_font_size(level_text:font_size() * math.min((font_size * 2) / level_text:w(), 1))
+	level_text:set_font_size(level_text:font_size() * math.min(font_size * 2 / level_text:w(), 1))
 	level_text:set_center(exp_ring:center())
 
 	max_left_len = math.max(max_left_len, level_text:w())
@@ -58,7 +58,9 @@ function PlayerProfileGuiObject:init(ws)
 
 	max_left_len = math.max(max_left_len, player_text:w())
 	local money_text = panel:text({
-		text = self:get_text("menu_cash", {money = managers.money:total_string()}),
+		text = self:get_text("menu_cash", {
+			money = managers.money:total_string()
+		}),
 		font_size = font_size,
 		font = font,
 		color = tweak_data.screen_colors.text
@@ -87,7 +89,9 @@ function PlayerProfileGuiObject:init(ws)
 	if skillpoints > 0 then
 		skill_text = panel:text({
 			layer = 1,
-			text = self:get_text("menu_spendable_skill_points", {points = tostring(skillpoints)}),
+			text = self:get_text("menu_spendable_skill_points", {
+				points = tostring(skillpoints)
+			}),
 			font_size = font_size,
 			font = font,
 			color = tweak_data.screen_colors.text
@@ -210,12 +214,14 @@ function PlayerProfileGuiObject:init(ws)
 
 	self._panel:set_size(exp_ring:w() + max_left_len + 15 + max_right_len + 10, math.max(skill_text and skill_text:bottom() or total_money_text:bottom(), hoxton_text:bottom()) + 8)
 	self._panel:set_bottom(self._panel:parent():h() - 60)
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	mastermind_text:set_right(self._panel:w() - 10)
 	enforcer_text:set_right(self._panel:w() - 10)
 	technician_text:set_right(self._panel:w() - 10)
@@ -226,7 +232,6 @@ function PlayerProfileGuiObject:init(ws)
 	level_text:set_center(exp_ring:center())
 
 	if skill_glow then
-
 		local function animate_new_skillpoints(o)
 			while true do
 				over(1, function (p)
@@ -273,4 +278,3 @@ function PlayerProfileGuiObject:close()
 		self._panel = nil
 	end
 end
-

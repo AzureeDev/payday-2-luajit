@@ -5,6 +5,7 @@ function ProjectileWeaponBase:init(...)
 
 	self._projectile_type = self:weapon_tweak_data().projectile_type
 end
+
 local mvec_spread_direction = Vector3()
 
 function ProjectileWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul, shoot_through_data)
@@ -79,4 +80,3 @@ end
 function ProjectileWeaponBase:_get_spawn_offset()
 	return 0
 end
-

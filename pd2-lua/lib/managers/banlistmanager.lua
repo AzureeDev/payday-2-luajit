@@ -56,4 +56,3 @@ function BanListManager:load(data)
 		self._global = Global.ban_list
 	end
 end
-

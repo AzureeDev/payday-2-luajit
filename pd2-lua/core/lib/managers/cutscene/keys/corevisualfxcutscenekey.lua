@@ -132,4 +132,3 @@ function CoreVisualFXCutsceneKey:stop()
 		self._effect_abort_func = nil
 	end
 end
-

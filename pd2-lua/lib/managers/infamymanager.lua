@@ -7,10 +7,11 @@ end
 
 function InfamyManager:_setup(reset)
 	if not Global.infamy_manager or reset then
-		Global.infamy_manager = {}
-		Global.infamy_manager.points = Application:digest_value(0, true)
-		Global.infamy_manager.VERSION = InfamyManager.VERSION
-		Global.infamy_manager.reset_message = false
+		Global.infamy_manager = {
+			points = Application:digest_value(0, true),
+			VERSION = InfamyManager.VERSION,
+			reset_message = false
+		}
 		self._global = Global.infamy_manager
 		self._global.unlocks = {}
 
@@ -228,4 +229,3 @@ function InfamyManager:reset()
 
 	self:_setup()
 end
-

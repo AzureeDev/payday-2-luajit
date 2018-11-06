@@ -67,4 +67,3 @@ function InteractionEditorSystemEvents:on_disconnect_node(data, event)
 	self._desc:transition_remove(md_src, output, md_dest, input)
 	event:skip()
 end
-

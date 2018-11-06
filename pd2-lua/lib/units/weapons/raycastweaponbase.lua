@@ -94,7 +94,9 @@ function RaycastWeaponBase:categories()
 end
 
 function RaycastWeaponBase:is_category(...)
-	local arg = {...}
+	local arg = {
+		...
+	}
 	local categories = self:categories()
 
 	if not categories then
@@ -158,12 +160,18 @@ function RaycastWeaponBase:_create_use_setups()
 	local player_setup = {}
 	use_data.player = player_setup
 	player_setup.selection_index = sel_index
-	player_setup.equip = {align_place = align_place}
-	player_setup.unequip = {align_place = "back"}
+	player_setup.equip = {
+		align_place = align_place
+	}
+	player_setup.unequip = {
+		align_place = "back"
+	}
 	local npc_setup = {}
 	use_data.npc = npc_setup
 	npc_setup.selection_index = sel_index
-	npc_setup.equip = {align_place = align_place}
+	npc_setup.equip = {
+		align_place = align_place
+	}
 	npc_setup.unequip = {}
 end
 
@@ -503,7 +511,13 @@ function RaycastWeaponBase:_collect_hits(from, to)
 	local shield_mask = managers.slot:get_mask("enemy_shield_check")
 	local ai_vision_ids = Idstring("ai_vision")
 	local bulletproof_ids = Idstring("bulletproof")
-	ray_hits = self._can_shoot_through_wall and World:raycast_wall("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask) or World:raycast_all("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+
+	if self._can_shoot_through_wall then
+		ray_hits = World:raycast_wall("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
+	else
+		ray_hits = World:raycast_all("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+	end
+
 	local units_hit = {}
 	local unique_hits = {}
 
@@ -528,6 +542,7 @@ function RaycastWeaponBase:_collect_hits(from, to)
 
 	return unique_hits, hit_enemy
 end
+
 local mvec_to = Vector3()
 local mvec_spread_direction = Vector3()
 local mvec1 = Vector3()
@@ -853,6 +868,7 @@ function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_
 
 	return closest_ray, suppression_enemies
 end
+
 local mvec_from_pos = Vector3()
 
 function RaycastWeaponBase:_check_alert(rays, fire_pos, direction, user_unit)
@@ -1444,7 +1460,6 @@ function RaycastWeaponBase:set_ammo(ammo)
 end
 
 function RaycastWeaponBase:ammo_full()
-
 	local function is_full(ammo_base)
 		return ammo_base:get_ammo_total() == ammo_base:get_ammo_max()
 	end
@@ -1544,7 +1559,6 @@ function RaycastWeaponBase:can_reload()
 end
 
 function RaycastWeaponBase:add_ammo_in_bullets(bullets)
-
 	local function add_ammo(ammo_base, bullets)
 		local ammo_max = ammo_base:get_ammo_max()
 		local ammo_total = ammo_base:get_ammo_total()
@@ -1565,7 +1579,6 @@ function RaycastWeaponBase:add_ammo_in_bullets(bullets)
 end
 
 function RaycastWeaponBase:add_ammo(ratio, add_amount_override)
-
 	local function _add_ammo(ammo_base, ratio, add_amount_override)
 		if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
 			return false, 0
@@ -1629,7 +1642,6 @@ function RaycastWeaponBase:add_ammo(ratio, add_amount_override)
 end
 
 function RaycastWeaponBase:add_ammo_ratio(ammo_ratio_increase)
-
 	local function _add_ammo(ammo_base, ammo_ratio_increase)
 		if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
 			return
@@ -1653,7 +1665,6 @@ function RaycastWeaponBase:add_ammo_ratio(ammo_ratio_increase)
 end
 
 function RaycastWeaponBase:add_ammo_from_bag(available)
-
 	local function process_ammo(ammo_base, amount_available)
 		if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
 			return 0
@@ -1829,7 +1840,9 @@ end
 
 function RaycastWeaponBase:set_objects_visible(unit, objects, visible)
 	if type(objects) == "string" then
-		objects = {objects}
+		objects = {
+			objects
+		}
 	end
 
 	for _, object_name in ipairs(objects) do
@@ -1862,6 +1875,7 @@ end
 function RaycastWeaponBase:weapon_range()
 	return self._weapon_range or 20000
 end
+
 InstantBulletBase = InstantBulletBase or class()
 InstantBulletBase.id = "instant"
 
@@ -2030,13 +2044,14 @@ function InstantBulletBase._get_vector_sync_yaw_pitch(dir, yaw_resolution, pitch
 
 	local packed_yaw = mrotation.yaw(tmp_rot1)
 	packed_yaw = packed_yaw + 180
-	packed_yaw = math.clamp(math.floor(((yaw_resolution - 1) * packed_yaw) / 360), 0, yaw_resolution - 1)
+	packed_yaw = math.clamp(math.floor((yaw_resolution - 1) * packed_yaw / 360), 0, yaw_resolution - 1)
 	local packed_pitch = mrotation.pitch(tmp_rot1)
 	packed_pitch = packed_pitch + 90
-	packed_pitch = math.clamp(math.floor(((pitch_resolution - 1) * packed_pitch) / 180), 0, pitch_resolution - 1)
+	packed_pitch = math.clamp(math.floor((pitch_resolution - 1) * packed_pitch / 180), 0, pitch_resolution - 1)
 
 	return packed_yaw, packed_pitch
 end
+
 InstantExplosiveBulletBase = InstantExplosiveBulletBase or class(InstantBulletBase)
 InstantExplosiveBulletBase.id = "explosive"
 InstantExplosiveBulletBase.CURVE_POW = tweak_data.upgrades.explosive_bullet.curve_pow
@@ -2191,6 +2206,7 @@ function InstantExplosiveBulletBase:on_collision_client(position, normal, damage
 	managers.explosion:give_local_player_dmg(position, self.RANGE, damage * self.PLAYER_DMG_MUL)
 	managers.explosion:explode_on_client(position, normal, user_unit, damage, self.RANGE, self.CURVE_POW, self.EFFECT_PARAMS)
 end
+
 FlameBulletBase = FlameBulletBase or class(InstantExplosiveBulletBase)
 FlameBulletBase.id = "flame"
 FlameBulletBase.EFFECT_PARAMS = {
@@ -2319,6 +2335,7 @@ end
 
 function FlameBulletBase:play_impact_sound_and_effects(weapon_unit, col_ray, no_sound)
 end
+
 DragonBreathBulletBase = DragonBreathBulletBase or class(InstantBulletBase)
 DragonBreathBulletBase.id = "dragons_breath"
 
@@ -2371,7 +2388,9 @@ function DragonBreathBulletBase:on_collision(col_ray, weapon_unit, user_unit, da
 	end
 
 	if play_impact_flesh then
-		managers.game_play_central:play_impact_flesh({col_ray = col_ray})
+		managers.game_play_central:play_impact_flesh({
+			col_ray = col_ray
+		})
 		self:play_impact_sound_and_effects(weapon_unit, col_ray)
 	end
 
@@ -2392,6 +2411,7 @@ function DragonBreathBulletBase:give_impact_damage(col_ray, weapon_unit, user_un
 
 	return defense_data
 end
+
 DOTBulletBase = DOTBulletBase or class(InstantBulletBase)
 DOTBulletBase.DOT_DATA = {
 	hurt_animation_chance = 1,
@@ -2450,6 +2470,7 @@ function DOTBulletBase:give_damage_dot(col_ray, weapon_unit, attacker_unit, dama
 
 	return defense_data
 end
+
 PoisonBulletBase = PoisonBulletBase or class(DOTBulletBase)
 PoisonBulletBase.VARIANT = "poison"
 ProjectilesPoisonBulletBase = ProjectilesPoisonBulletBase or class(PoisonBulletBase)
@@ -2480,4 +2501,3 @@ function ProjectilesPoisonBulletBase:on_collision(col_ray, weapon_unit, user_uni
 
 	return result
 end
-

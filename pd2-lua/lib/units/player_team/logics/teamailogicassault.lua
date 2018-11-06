@@ -17,7 +17,9 @@ function TeamAILogicAssault.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	my_data.detection = data.char_tweak.detection.combat
 	my_data.cover_chk_t = data.t + TeamAILogicAssault._COVER_CHK_INTERVAL
@@ -317,4 +319,3 @@ function TeamAILogicAssault._chk_exit_attack_logic(data, new_reaction)
 		end
 	end
 end
-

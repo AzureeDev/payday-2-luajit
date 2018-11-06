@@ -35,4 +35,3 @@ function MenuNodeServerList:_setup_columns()
 		text = string.upper("")
 	})
 end
-

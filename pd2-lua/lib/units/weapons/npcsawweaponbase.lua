@@ -34,6 +34,7 @@ function NPCSawWeaponBase:change_fire_object(new_obj)
 
 	self._active_effect_table.parent = new_obj
 end
+
 local mto = Vector3()
 local mfrom = Vector3()
 
@@ -42,7 +43,9 @@ function NPCSawWeaponBase:fire_blank(direction, impact)
 		self:play_tweak_data_sound("fire")
 	end
 
-	self._check_shooting_expired = {check_t = Application:time() + 0.5}
+	self._check_shooting_expired = {
+		check_t = Application:time() + 0.5
+	}
 
 	self._unit:set_extension_update_enabled(Idstring("base"), true)
 	self._obj_fire:m_position(mfrom)
@@ -86,4 +89,3 @@ function NPCSawWeaponBase:destroy(...)
 	NPCSawWeaponBase.super.destroy(self, ...)
 	SawWeaponBase._stop_sawing_effect(self)
 end
-

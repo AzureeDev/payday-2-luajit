@@ -106,3 +106,10 @@ function TeamAIInventory:pre_destroy(unit)
 	self:_unload_mask()
 end
 
+function TeamAIInventory:set_visibility_state(state)
+	if state and self._unit:movement():cool() then
+		return
+	end
+
+	TeamAIInventory.super.set_visibility_state(self, state)
+end

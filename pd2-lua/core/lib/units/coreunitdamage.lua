@@ -1,5 +1,4 @@
 core:import("CoreSequenceManager")
-core:import("CoreCode")
 
 CoreUnitDamage = CoreUnitDamage or class()
 CoreUnitDamage.ALL_TRIGGERS = "*"
@@ -25,9 +24,9 @@ function CoreUnitDamage:init(unit, default_body_extension_class, body_extension_
 			interval = element:get_interval(),
 			quick = element:is_quick(),
 			is_within = element:get_start_within(),
-			slotmask = element:get_slotmask()
+			slotmask = element:get_slotmask(),
+			last_check_time = TimerManager:game():time() + math.rand(math.min(data.interval, 0))
 		}
-		data.last_check_time = TimerManager:game():time() + math.rand(math.min(data.interval, 0))
 
 		self:populate_proximity_range_data(data, "within_data", element:get_within_element())
 		self:populate_proximity_range_data(data, "outside_data", element:get_outside_element())
@@ -59,7 +58,7 @@ function CoreUnitDamage:init(unit, default_body_extension_class, body_extension_
 		if body then
 			body:set_extension(body:extension() or {})
 
-			local body_ext = (body_extension_class_map[body_element._name] or default_body_extension_class):new(self._unit, self, body, body_element)
+			local body_ext = body_extension_class_map[body_element._name] or default_body_extension_class:new(self._unit, self, body, body_element)
 			body:extension().damage = body_ext
 			local body_key = nil
 
@@ -67,7 +66,9 @@ function CoreUnitDamage:init(unit, default_body_extension_class, body_extension_
 				if inflict_updator_damage_type_map[damage_type] then
 					body_key = body_key or body:key()
 					self._added_inflict_updator_damage_type_map = self._added_inflict_updator_damage_type_map or {}
-					self._added_inflict_updator_damage_type_map[damage_type] = {[body_key] = body_ext}
+					self._added_inflict_updator_damage_type_map[damage_type] = {
+						[body_key] = body_ext
+					}
 
 					managers.sequence:add_inflict_updator_body(damage_type, unit_key, body_key, body_ext)
 				end
@@ -237,7 +238,7 @@ end
 function CoreUnitDamage:update_proximity_list(unit, t, dt)
 	if managers.sequence:is_proximity_enabled() then
 		for name, data in pairs(self._proximity_map) do
-			if data.enabled and data.last_check_time + data.interval <= t then
+			if data.enabled and t >= data.last_check_time + data.interval then
 				local range_data, reversed, range_data_string = nil
 
 				if data.is_within then
@@ -266,7 +267,7 @@ function CoreUnitDamage:update_proximity_list(unit, t, dt)
 
 				data.last_check_time = t
 
-				if self:check_proximity_activation_count(data) and range_data.last_check_time + range_data.delay <= t and self:update_proximity(unit, t, dt, data, range_data) ~= reversed then
+				if self:check_proximity_activation_count(data) and t >= range_data.last_check_time + range_data.delay and self:update_proximity(unit, t, dt, data, range_data) ~= reversed then
 					range_data.last_check_time = t
 					data.is_within = not data.is_within
 
@@ -320,7 +321,13 @@ end
 
 function CoreUnitDamage:update_proximity(unit, t, dt, data, range_data)
 	local pos = nil
-	pos = data.ref_object and data.ref_object:position() or self._unit:position()
+
+	if data.ref_object then
+		pos = data.ref_object:position()
+	else
+		pos = self._unit:position()
+	end
+
 	local unit_list = {}
 	local units = self._unit:find_units_quick("all", data.slotmask)
 
@@ -544,7 +551,9 @@ function CoreUnitDamage:water_check_enter(name, water_check, src_unit, body, nor
 	local element = self._water_check_element_map[name]
 
 	if element then
-		local env = CoreSequenceManager.SequenceEnvironment:new("water", src_unit, self._unit, body, normal, position, direction, damage, velocity, {water_depth = water_depth}, self._unit_element)
+		local env = CoreSequenceManager.SequenceEnvironment:new("water", src_unit, self._unit, body, normal, position, direction, damage, velocity, {
+			water_depth = water_depth
+		}, self._unit_element)
 
 		element:activate_enter(env)
 	end
@@ -554,7 +563,9 @@ function CoreUnitDamage:water_check_exit(name, water_check, src_unit, body, norm
 	local element = self._water_check_element_map[name]
 
 	if element then
-		local env = CoreSequenceManager.SequenceEnvironment:new("water", src_unit, self._unit, body, normal, position, direction, damage, velocity, {water_depth = water_depth}, self._unit_element)
+		local env = CoreSequenceManager.SequenceEnvironment:new("water", src_unit, self._unit, body, normal, position, direction, damage, velocity, {
+			water_depth = water_depth
+		}, self._unit_element)
 
 		element:activate_exit(env)
 	end
@@ -1156,11 +1167,6 @@ function CoreUnitDamage:run_sequence_simple3(name, endurance_type, source_unit, 
 end
 
 function CoreUnitDamage:run_sequence(name, endurance_type, source_unit, dest_body, normal, position, direction, damage, velocity, params)
-	if name == "explode" then
-		print("[Debug] CoreUnitDamage:run_sequence: explode")
-		CoreCode.tag_print("Debug", Application:stack())
-	end
-
 	self._unit_element:run_sequence(name, endurance_type, source_unit, self._unit, dest_body, normal, position, direction, damage, velocity, params)
 end
 
@@ -1440,12 +1446,12 @@ function CoreUnitDamage:add_angular_velocity(position, direction, body, other_bo
 
 	if alive(body) then
 		local body_ang_vel = body:angular_velocity()
-		angular_velocity_addition = (direction * 200 * body_ang_vel:length() * (1 + math.abs(math.dot(body_ang_vel:normalized(), direction)))) / (10 * math.pi)
+		angular_velocity_addition = direction * 200 * body_ang_vel:length() * (1 + math.abs(math.dot(body_ang_vel:normalized(), direction))) / (10 * math.pi)
 	end
 
 	if alive(other_body) then
 		local other_body_ang_vel = other_body:angular_velocity()
-		angular_velocity_addition = angular_velocity_addition + (direction * 200 * other_body_ang_vel:length() * (1 + math.abs(math.dot(other_body_ang_vel:normalized(), direction)))) / (10 * math.pi)
+		angular_velocity_addition = angular_velocity_addition + direction * 200 * other_body_ang_vel:length() * (1 + math.abs(math.dot(other_body_ang_vel:normalized(), direction))) / (10 * math.pi)
 		angular_velocity_addition = direction * math.clamp(angular_velocity_addition:length(), 0, 200)
 	end
 
@@ -1670,7 +1676,11 @@ function CoreUnitDamage:set_variable(key, val)
 end
 
 function CoreUnitDamage:anim_clbk_set_sequence_block_state(unit, state)
-	state = state == "true" and true or false
+	if state == "true" then
+		state = true
+	else
+		state = false
+	end
 
 	self:set_sequence_block_state(state)
 end
@@ -1688,10 +1698,12 @@ function CoreUnitDamage:_process_sequence_queue()
 		return
 	end
 
-	while not self._sequence_block_state and self._queued_sequences and next(self._queued_sequences) do
-		local front_seq = table.remove(self._queued_sequences, 1)
+	if not self._sequence_block_state and self._queued_sequences then
+		while not self._sequence_block_state and self._queued_sequences and next(self._queued_sequences) do
+			local front_seq = table.remove(self._queued_sequences, 1)
 
-		self:run_sequence_simple(front_seq.name, front_seq.params)
+			self:run_sequence_simple(front_seq.name, front_seq.params)
+		end
 	end
 
 	if not next(self._queued_sequences) then
@@ -1714,6 +1726,7 @@ function CoreUnitDamage:add_queued_sequence(name, params)
 
 	table.insert(self._queued_sequences, new_entry)
 end
+
 CoreBodyDamage = CoreBodyDamage or class()
 
 function CoreBodyDamage:init(unit, unit_extension, body, body_element)
@@ -1783,8 +1796,10 @@ function CoreBodyDamage:set_damage(damage_type, damage)
 	self._damage[damage_type] = damage
 	local element = self._body_element._first_endurance[damage_type]
 
-	while element and element._endurance[damage_type] <= self._damage[damage_type] do
-		element = element._next[damage_type]
+	if element then
+		while element and element._endurance[damage_type] <= self._damage[damage_type] do
+			element = element._next[damage_type]
+		end
 	end
 
 	self._endurance[damage_type] = element
@@ -2119,6 +2134,7 @@ function CoreBodyDamage:load(data)
 		end
 	end
 end
+
 CoreAfroBodyDamage = CoreAfroBodyDamage or class(CoreBodyDamage)
 
 function CoreAfroBodyDamage:init(unit, unit_extension, body, body_element)
@@ -2154,6 +2170,7 @@ function CoreAfroBodyDamage:damage(endurance_type, attack_unit, normal, position
 
 	return false, 0
 end
+
 CoreDamageWaterCheck = CoreDamageWaterCheck or class()
 CoreDamageWaterCheck.MIN_INTERVAL = 0.2
 CoreDamageWaterCheck.DEFAULT_PHYSIC_EFFECT = "water_box"
@@ -2200,7 +2217,12 @@ end
 
 function CoreDamageWaterCheck:get_env_variables(enter_water)
 	local normal, position, velocity, water_depth = nil
-	normal = enter_water and Vector3(0, 0, 1) or Vector3(0, 0, -1)
+
+	if enter_water then
+		normal = Vector3(0, 0, 1)
+	else
+		normal = Vector3(0, 0, -1)
+	end
 
 	if self._ref_object then
 		position = self._ref_object:position()
@@ -2215,7 +2237,12 @@ function CoreDamageWaterCheck:get_env_variables(enter_water)
 	else
 		velocity = self._unit:velocity()
 		water_depth = 0
-		position = alive(self._ref_body) and self._ref_body:position() or self._unit:position()
+
+		if alive(self._ref_body) then
+			position = self._ref_body:position()
+		else
+			position = self._unit:position()
+		end
 	end
 
 	return self._unit, self._ref_body, normal, position, velocity:normalized(), 0, velocity, water_depth
@@ -2348,6 +2375,7 @@ end
 function CoreDamageWaterCheck:to_string()
 	return string.format("[Unit: %s, Name: %s, Enabled: %s, Interval: %g, Object: %s, Body: %s, Body depth: %g]", self._unit:name(), self._name, tostring(self._damage_ext:is_water_check_active(self._name)), self._interval, tostring(alive(self._ref_object) and self._ref_object:name() or nil), tostring(alive(self._ref_body) and self._ref_body:name() or nil), self._body_depth)
 end
+
 CoreInflictUpdator = CoreInflictUpdator or class()
 CoreInflictUpdator.INFLICT_UPDATOR_DAMAGE_TYPE_MAP = CoreInflictUpdator.INFLICT_UPDATOR_DAMAGE_TYPE_MAP or {}
 CoreInflictUpdator.MIN_INTERVAL = 0.2
@@ -2518,6 +2546,7 @@ function CoreInflictUpdator:get_attribute(attribute)
 
 	return nil
 end
+
 CoreInflictFireUpdator = CoreInflictFireUpdator or class(CoreInflictUpdator)
 CoreInflictUpdator.INFLICT_UPDATOR_DAMAGE_TYPE_MAP.fire = CoreInflictFireUpdator
 CoreInflictFireUpdator.SPHERE_CHECK_SLOTMASK = "fire_damage"
@@ -2549,19 +2578,19 @@ function CoreInflictFireUpdator:init(unit, body, body_damage_ext, inflict_elemen
 	self._set_attribute_func_map.velocity = callback(self, self, "set_velocity")
 	self._set_attribute_func_map.falloff = callback(self, self, "set_falloff")
 
-	self._get_attribute_func_map.fire_object = function ()
+	function self._get_attribute_func_map.fire_object()
 		return self._fire_object
 	end
 
-	self._get_attribute_func_map.fire_height = function ()
+	function self._get_attribute_func_map.fire_height()
 		return self._fire_height
 	end
 
-	self._get_attribute_func_map.velocity = function ()
+	function self._get_attribute_func_map.velocity()
 		return self._velocity
 	end
 
-	self._get_attribute_func_map.falloff = function ()
+	function self._get_attribute_func_map.falloff()
 		return self._falloff
 	end
 end
@@ -2591,7 +2620,7 @@ end
 
 function CoreInflictFireUpdator:set_fire_height(height)
 	self._fire_height = height
-	self._sphere_check_range = (self._fire_object:oobb():size() / 2):length() + self._fire_height + self.SPHERE_CHECK_PADDING
+	self._sphere_check_range = self._fire_object:oobb():size() / 2:length() + self._fire_height + self.SPHERE_CHECK_PADDING
 end
 
 function CoreInflictFireUpdator:set_velocity(velocity)
@@ -2651,6 +2680,7 @@ function CoreInflictFireUpdator:load(data)
 		self._falloff = state.falloff or self._falloff
 	end
 end
+
 local mvec1 = Vector3()
 local mvec2 = Vector3()
 local mvec3 = Vector3()
@@ -2718,7 +2748,9 @@ function CoreInflictFireUpdator:check_damage(t, dt)
 								self._is_inflicting = true
 
 								if self._enter_element_func then
-									local env = CoreSequenceManager.SequenceEnvironment:new(self.DAMAGE_TYPE, unit, self._unit, self._body, normal, position, direction, damage, self._velocity, {distance = distance}, self._unit_element)
+									local env = CoreSequenceManager.SequenceEnvironment:new(self.DAMAGE_TYPE, unit, self._unit, self._body, normal, position, direction, damage, self._velocity, {
+										distance = distance
+									}, self._unit_element)
 
 									self._enter_element_func(env)
 								end
@@ -2726,7 +2758,9 @@ function CoreInflictFireUpdator:check_damage(t, dt)
 
 							if was_inflicting or self._instant then
 								if self._damage_element_func then
-									local env = CoreSequenceManager.SequenceEnvironment:new(self.DAMAGE_TYPE, unit, self._unit, self._body, normal, position, direction, damage, self._velocity, {distance = distance}, self._unit_element)
+									local env = CoreSequenceManager.SequenceEnvironment:new(self.DAMAGE_TYPE, unit, self._unit, self._body, normal, position, direction, damage, self._velocity, {
+										distance = distance
+									}, self._unit_element)
 
 									self._damage_element_func(env)
 								end
@@ -2738,7 +2772,9 @@ function CoreInflictFireUpdator:check_damage(t, dt)
 								end
 							end
 						elseif self._exit_element_func and not exit_inflict_env then
-							exit_inflict_env = CoreSequenceManager.SequenceEnvironment:new(self.DAMAGE_TYPE, unit, self._unit, self._body, -direction, body_center, direction, damage, self._velocity, {distance = distance}, self._unit_element)
+							exit_inflict_env = CoreSequenceManager.SequenceEnvironment:new(self.DAMAGE_TYPE, unit, self._unit, self._body, -direction, body_center, direction, damage, self._velocity, {
+								distance = distance
+							}, self._unit_element)
 						end
 					else
 						managers.sequence:remove_inflict_updator_body(self.DAMAGE_TYPE, unit_key, body_key)
@@ -2756,4 +2792,3 @@ function CoreInflictFireUpdator:check_damage(t, dt)
 		end
 	end
 end
-

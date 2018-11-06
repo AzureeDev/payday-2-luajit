@@ -21,4 +21,3 @@ function NPCSniperRifleBase:_spawn_trail_effect(direction, col_ray)
 		World:effect_manager():set_simulator_var_vector2(trail, idstr_trail, idstr_simulator_length, idstr_size, self._trail_length)
 	end
 end
-

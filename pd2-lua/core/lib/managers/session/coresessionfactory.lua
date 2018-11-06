@@ -22,4 +22,3 @@ end
 
 function Factory:create_local_user_handler()
 end
-

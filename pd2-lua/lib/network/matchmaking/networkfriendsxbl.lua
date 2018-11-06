@@ -72,4 +72,3 @@ end
 function NetworkFriendsXBL:num_pending_friend_requests()
 	return 0
 end
-

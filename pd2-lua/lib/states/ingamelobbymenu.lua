@@ -140,8 +140,12 @@ function IngameLobbyMenuState:at_enter()
 
 		local max_pc = managers.experience:level_to_stars()
 		local disable_weapon_mods = not managers.lootdrop:can_drop_weapon_mods() and true or nil
-		local card_left_pc = managers.lootdrop:new_fake_loot_pc(nil, {weapon_mods = disable_weapon_mods})
-		local card_right_pc = managers.lootdrop:new_fake_loot_pc(nil, {weapon_mods = disable_weapon_mods})
+		local card_left_pc = managers.lootdrop:new_fake_loot_pc(nil, {
+			weapon_mods = disable_weapon_mods
+		})
+		local card_right_pc = managers.lootdrop:new_fake_loot_pc(nil, {
+			weapon_mods = disable_weapon_mods
+		})
 
 		managers.hud:make_cards_hud(managers.network:session() and managers.network:session():local_peer(), max_pc, card_left_pc, card_right_pc)
 
@@ -229,13 +233,22 @@ function IngameLobbyMenuState:set_lootdrop(drop_category, drop_item_id)
 		item_category = self._lootdrop_data.type_items
 		item_id = self._lootdrop_data.item_entry
 		max_pc = self._lootdrop_data.total_stars
-		item_pc = self._lootdrop_data.joker and 0 or math.ceil(self._lootdrop_data.item_payclass / 10)
+
+		if self._lootdrop_data.joker then
+			item_pc = 0
+		else
+			item_pc = math.ceil(self._lootdrop_data.item_payclass / 10)
+		end
 	end
 
 	local peer = managers.network:session() and managers.network:session():local_peer() or false
 	local disable_weapon_mods = not managers.lootdrop:can_drop_weapon_mods() and true or nil
-	local card_left_pc = managers.lootdrop:new_fake_loot_pc(nil, {weapon_mods = disable_weapon_mods})
-	local card_right_pc = managers.lootdrop:new_fake_loot_pc(nil, {weapon_mods = disable_weapon_mods})
+	local card_left_pc = managers.lootdrop:new_fake_loot_pc(nil, {
+		weapon_mods = disable_weapon_mods
+	})
+	local card_right_pc = managers.lootdrop:new_fake_loot_pc(nil, {
+		weapon_mods = disable_weapon_mods
+	})
 	local lootdrop_data = {
 		peer,
 		global_value,
@@ -282,4 +295,3 @@ function IngameLobbyMenuState:on_disconnected()
 	Application:debug("IngameLobbyMenuState:on_disconnected()")
 	managers.menu_component:set_lootdrop_state("on_disconnected")
 end
-

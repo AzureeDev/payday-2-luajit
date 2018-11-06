@@ -173,6 +173,7 @@ function SpringCameraNode:debug_render(t, dt)
 
 	line_pen2:line(self:position(), self:position() + self._force:rotate_with(self:rotation()))
 end
+
 SpringCameraForce = SpringCameraForce or CoreClass.class()
 
 function SpringCameraForce:init()
@@ -183,6 +184,7 @@ end
 
 function SpringCameraForce:reset()
 end
+
 SpringCameraPosition = SpringCameraPosition or CoreClass.class(SpringCameraForce)
 
 function SpringCameraPosition:init()
@@ -208,6 +210,7 @@ function SpringCameraPosition:reset()
 	self._reset = true
 	self._previous_parent_position = Vector3(0, 0, 0)
 end
+
 SpringCameraVelocity = SpringCameraVelocity or CoreClass.class(SpringCameraForce)
 
 function SpringCameraVelocity:init()
@@ -241,6 +244,7 @@ function SpringCameraVelocity:reset()
 	self._velocity = Vector3(0, 0, 0)
 	self._previous_parent_position = Vector3(0, 0, 0)
 end
+
 SpringCameraAcceleration = SpringCameraAcceleration or CoreClass.class(SpringCameraForce)
 
 function SpringCameraAcceleration:init()
@@ -275,4 +279,3 @@ function SpringCameraAcceleration:reset()
 	self._velocity = Vector3(0, 0, 0)
 	self._previous_parent_position = Vector3(0, 0, 0)
 end
-

@@ -32,7 +32,9 @@ function MoneyUnitElement:_build_panel(panel, panel_sizer)
 	panel_sizer = panel_sizer or self._panel_sizer
 
 	self:_build_value_combobox(panel, panel_sizer, "action", MoneyUnitElement.actions, "Action")
-	self:_build_value_number(panel, panel_sizer, "amount", {floats = false}, nil, "Amount")
+	self:_build_value_number(panel, panel_sizer, "amount", {
+		floats = false
+	}, nil, "Amount")
 
 	self._toggle_local = EWS:CheckBox(panel, "Execute only if local player is instigator")
 
@@ -49,6 +51,7 @@ function MoneyUnitElement:_build_panel(panel, panel_sizer)
 
 	self:add_help_text(help)
 end
+
 FilterMoneyUnitElement = FilterMoneyUnitElement or class(MissionElement)
 
 function FilterMoneyUnitElement:init(unit)
@@ -71,7 +74,9 @@ function FilterMoneyUnitElement:_build_panel(panel, panel_sizer)
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
 
-	self:_build_value_number(panel, panel_sizer, "value", {floats = 0}, "Specify cash value to trigger on.")
+	self:_build_value_number(panel, panel_sizer, "value", {
+		floats = 0
+	}, "Specify cash value to trigger on.")
 	self:_build_value_combobox(panel, panel_sizer, "account", {
 		"offshore",
 		"spending"
@@ -86,4 +91,3 @@ function FilterMoneyUnitElement:_build_panel(panel, panel_sizer)
 	self:_build_value_checkbox(panel, panel_sizer, "only_local_player", "Only run if the local player is the instigator")
 	self:_add_help_text("Checks that the player has the required amount of cash in their spending or offshore accounts.")
 end
-

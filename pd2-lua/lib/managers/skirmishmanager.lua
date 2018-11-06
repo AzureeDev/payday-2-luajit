@@ -84,6 +84,10 @@ function SkirmishManager:current_wave_number()
 end
 
 function SkirmishManager:sync_start_assault(wave_number)
+	if not self:is_skirmish() then
+		return
+	end
+
 	for i = (self._synced_wave_number or 0) + 1, wave_number, 1 do
 		self:_apply_modifiers_for_wave(i)
 	end
@@ -114,7 +118,9 @@ function SkirmishManager:set_ransom_amount(amount)
 	managers.hud:loot_value_updated()
 	managers.hud:present_mid_text({
 		time = 2,
-		text = managers.localization:to_upper_text("hud_skirmish_ransom_popup", {money = managers.experience:cash_string(math.round(amount))})
+		text = managers.localization:to_upper_text("hud_skirmish_ransom_popup", {
+			money = managers.experience:cash_string(math.round(amount))
+		})
 	})
 end
 
@@ -166,7 +172,9 @@ function SkirmishManager:update()
 end
 
 function SkirmishManager:sync_save(data)
-	local state = {wave_number = self:current_wave_number()}
+	local state = {
+		wave_number = self:current_wave_number()
+	}
 	data.SkirmishManager = state
 end
 
@@ -182,6 +190,10 @@ function SkirmishManager:apply_matchmake_attributes(lobby_attributes)
 	if self:is_skirmish() then
 		lobby_attributes.skirmish = self:is_weekly_skirmish() and SkirmishManager.LOBBY_WEEKLY or SkirmishManager.LOBBY_NORMAL
 		lobby_attributes.skirmish_wave = math.max(self:current_wave_number() or 0, 1)
+
+		if self:is_weekly_skirmish() then
+			lobby_attributes.skirmish_weekly_modifiers = string.join(";", self._global.active_weekly.modifiers)
+		end
 	end
 end
 
@@ -279,6 +291,16 @@ function SkirmishManager:active_weekly()
 	return self._global.active_weekly
 end
 
+function SkirmishManager:weekly_modifiers()
+	if self:is_weekly_skirmish() and Network:is_client() then
+		local modifiers_string = managers.network.matchmake.lobby_handler:get_lobby_data("skirmish_weekly_modifiers")
+
+		return string.split(modifiers_string, ";")
+	end
+
+	return self._global.active_weekly.modifiers
+end
+
 function SkirmishManager:weekly_time_left_params()
 	local diff = math.max(self:active_weekly().end_timestamp - os.time(), 0)
 
@@ -373,4 +395,3 @@ end
 function SkirmishManager:claimed_reward_by_id(id)
 	return self._global.weekly_rewards and self._global.weekly_rewards[id]
 end
-

@@ -247,4 +247,3 @@ function ControllerWrapperDebug:set_connection_enabled(...)
 		controller_wrapper:set_connection_enabled(...)
 	end
 end
-

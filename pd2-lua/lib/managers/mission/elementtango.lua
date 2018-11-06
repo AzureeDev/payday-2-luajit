@@ -19,11 +19,15 @@ function ElementTangoAward:on_executed(instigator)
 		local local_player = managers.player:local_player()
 		award_trophy = alive(local_player) and local_player == instigator
 
-		if not award_trophy and instigator:vehicle_driving() then
-			local seat = instigator:vehicle_driving():find_seat_for_player(local_player)
+		if not award_trophy then
+			if instigator:vehicle_driving() then
+				local seat = instigator:vehicle_driving():find_seat_for_player(local_player)
 
-			if seat and seat.driving then
-				award_trophy = true
+				if seat and seat.driving then
+					award_trophy = true
+				end
+			elseif false then
+				-- Nothing
 			end
 		end
 	end
@@ -38,6 +42,7 @@ function ElementTangoAward:on_executed(instigator)
 
 	ElementTangoAward.super.on_executed(self, self._unit or instigator)
 end
+
 ElementTangoFilter = ElementTangoFilter or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementTangoFilter:on_script_activated()
@@ -83,4 +88,3 @@ function ElementTangoFilter:on_executed(instigator)
 		ElementTangoFilter.super.on_executed(self, self._unit or instigator)
 	end
 end
-

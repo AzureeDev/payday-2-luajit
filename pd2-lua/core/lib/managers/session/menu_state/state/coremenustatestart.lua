@@ -23,8 +23,7 @@ function Start:transition()
 	local current_time = TimerManager:game():time()
 	local time_until_attract = 15
 
-	if self._start_time + time_until_attract <= current_time then
+	if current_time >= self._start_time + time_until_attract then
 		return CoreMenuStateAttract.Attract
 	end
 end
-

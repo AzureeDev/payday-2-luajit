@@ -27,4 +27,3 @@ function ModifierShieldPhalanx:modify_value(id, value, unit)
 
 	return "f31x_any"
 end
-

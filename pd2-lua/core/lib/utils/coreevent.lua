@@ -56,46 +56,43 @@ function update_tickets()
 	end
 end
 
-BasicEventHandling = {}
+BasicEventHandling = {
+	connect = function (self, event_name, callback_func, data)
+		self._event_callbacks = self._event_callbacks or {}
+		self._event_callbacks[event_name] = self._event_callbacks[event_name] or {}
 
-function BasicEventHandling:connect(event_name, callback_func, data)
-	self._event_callbacks = self._event_callbacks or {}
-	self._event_callbacks[event_name] = self._event_callbacks[event_name] or {}
+		local function wrapped_func(...)
+			callback_func(data, ...)
+		end
 
-	local function wrapped_func(...)
-		callback_func(data, ...)
-	end
+		table.insert(self._event_callbacks[event_name], wrapped_func)
 
-	table.insert(self._event_callbacks[event_name], wrapped_func)
+		return wrapped_func
+	end,
+	disconnect = function (self, event_name, wrapped_func)
+		if self._event_callbacks and self._event_callbacks[event_name] then
+			table.delete(self._event_callbacks[event_name], wrapped_func)
 
-	return wrapped_func
-end
+			if table.empty(self._event_callbacks[event_name]) then
+				self._event_callbacks[event_name] = nil
 
-function BasicEventHandling:disconnect(event_name, wrapped_func)
-	if self._event_callbacks and self._event_callbacks[event_name] then
-		table.delete(self._event_callbacks[event_name], wrapped_func)
-
-		if table.empty(self._event_callbacks[event_name]) then
-			self._event_callbacks[event_name] = nil
-
-			if table.empty(self._event_callbacks) then
-				self._event_callbacks = nil
+				if table.empty(self._event_callbacks) then
+					self._event_callbacks = nil
+				end
+			end
+		end
+	end,
+	_has_callbacks_for_event = function (self, event_name)
+		return self._event_callbacks ~= nil and self._event_callbacks[event_name] ~= nil
+	end,
+	_send_event = function (self, event_name, ...)
+		if self._event_callbacks then
+			for _, wrapped_func in ipairs(self._event_callbacks[event_name] or {}) do
+				wrapped_func(...)
 			end
 		end
 	end
-end
-
-function BasicEventHandling:_has_callbacks_for_event(event_name)
-	return self._event_callbacks ~= nil and self._event_callbacks[event_name] ~= nil
-end
-
-function BasicEventHandling:_send_event(event_name, ...)
-	if self._event_callbacks then
-		for _, wrapped_func in ipairs(self._event_callbacks[event_name] or {}) do
-			wrapped_func(...)
-		end
-	end
-end
+}
 CallbackHandler = CallbackHandler or class()
 
 function CallbackHandler:init()
@@ -110,8 +107,13 @@ end
 function CallbackHandler:__insert_sorted(cb)
 	local i = 1
 
-	while self._sorted[i] and (self._sorted[i].next == nil or self._sorted[i].next < cb.next) do
-		i = i + 1
+	if self._sorted[i] then
+		if self._sorted[i].next ~= nil then
+		end
+
+		while self._sorted[i] and (self._sorted[i].next == nil or self._sorted[i].next < cb.next) do
+			i = i + 1
+		end
 	end
 
 	table.insert(self._sorted, i, cb)
@@ -169,6 +171,7 @@ function CallbackHandler:update(dt)
 		end
 	end
 end
+
 CallbackEventHandler = CallbackEventHandler or class()
 
 function CallbackEventHandler:init()
@@ -264,9 +267,8 @@ end
 function wait(seconds, fixed_dt)
 	local t = 0
 
-	while t < seconds do
+	while seconds > t do
 		local dt = coroutine.yield()
 		t = t + (fixed_dt and 0.03333333333333333 or dt)
 	end
 end
-

@@ -26,4 +26,3 @@ end
 
 function ChristmasPresentBase:destroy()
 end
-

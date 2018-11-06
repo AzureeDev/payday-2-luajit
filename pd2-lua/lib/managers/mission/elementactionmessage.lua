@@ -25,4 +25,3 @@ function ElementActionMessage:on_executed(instigator)
 
 	ElementActionMessage.super.on_executed(self, instigator)
 end
-

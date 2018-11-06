@@ -77,7 +77,15 @@ function CoreDepthOfFieldCutsceneKey:update(player, time)
 	local transition_time = self:transition_time()
 	local t = transition_time > 0 and math.min(time / transition_time, 1) or 1
 	local alpha = nil
-	alpha = self:_is_editing_initial_values() and 0 or self:_is_editing_target_values() and 1 or self:_calc_interpolation(t)
+
+	if self:_is_editing_initial_values() then
+		alpha = 0
+	elseif self:_is_editing_target_values() then
+		alpha = 1
+	else
+		alpha = self:_calc_interpolation(t)
+	end
+
 	local start_near = self:_final_near_distance(player)
 	local end_near = transition_time == 0 and start_near or self:_final_target_near_distance(player)
 	local near = start_near + (end_near - start_near) * alpha
@@ -259,7 +267,7 @@ function CoreDepthOfFieldCutsceneKey:_final_near_distance(player)
 	local hyperfocal_distance = self:_hyperfocal_distance()
 
 	if distance and hyperfocal_distance then
-		return distance < hyperfocal_distance and (hyperfocal_distance * distance) / (hyperfocal_distance + distance) or hyperfocal_distance / 2
+		return distance < hyperfocal_distance and hyperfocal_distance * distance / (hyperfocal_distance + distance) or hyperfocal_distance / 2
 	else
 		return self:near_distance()
 	end
@@ -270,7 +278,7 @@ function CoreDepthOfFieldCutsceneKey:_final_far_distance(player)
 	local hyperfocal_distance = self:_hyperfocal_distance()
 
 	if distance and hyperfocal_distance then
-		return distance < hyperfocal_distance and (hyperfocal_distance * distance) / (hyperfocal_distance - distance) or distance
+		return distance < hyperfocal_distance and hyperfocal_distance * distance / (hyperfocal_distance - distance) or distance
 	else
 		return self:far_distance()
 	end
@@ -281,7 +289,7 @@ function CoreDepthOfFieldCutsceneKey:_final_target_near_distance(player)
 	local hyperfocal_distance = self:_hyperfocal_distance()
 
 	if distance and hyperfocal_distance then
-		return distance < hyperfocal_distance and (hyperfocal_distance * distance) / (hyperfocal_distance + distance) or hyperfocal_distance / 2
+		return distance < hyperfocal_distance and hyperfocal_distance * distance / (hyperfocal_distance + distance) or hyperfocal_distance / 2
 	else
 		return self:target_near_distance()
 	end
@@ -292,7 +300,7 @@ function CoreDepthOfFieldCutsceneKey:_final_target_far_distance(player)
 	local hyperfocal_distance = self:_hyperfocal_distance()
 
 	if distance and hyperfocal_distance then
-		return distance < hyperfocal_distance and (hyperfocal_distance * distance) / (hyperfocal_distance - distance) or distance
+		return distance < hyperfocal_distance and hyperfocal_distance * distance / (hyperfocal_distance - distance) or distance
 	else
 		return self:target_far_distance()
 	end
@@ -303,6 +311,5 @@ function CoreDepthOfFieldCutsceneKey:_hyperfocal_distance()
 end
 
 function CoreDepthOfFieldCutsceneKey:_calc_interpolation(t)
-	return 3 * t ^ 2 - 2 * t ^ 3
+	return 3 * t^2 - 2 * t^3
 end
-

@@ -53,7 +53,9 @@ function CopLogicGuard.enter(data, new_logic_name, enter_params)
 		return
 	end
 
-	data.unit:brain():set_attention_settings({cbt = true})
+	data.unit:brain():set_attention_settings({
+		cbt = true
+	})
 end
 
 function CopLogicGuard.update(data)
@@ -117,4 +119,3 @@ function CopLogicGuard.on_area_safety(data, nav_seg, safe, event)
 		CopLogicBase._exit(data.unit, "attack")
 	end
 end
-

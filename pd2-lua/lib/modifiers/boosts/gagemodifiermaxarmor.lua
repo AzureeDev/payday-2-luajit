@@ -21,4 +21,3 @@ function GageModifierMaxArmor:modify_value(id, value)
 
 	return value
 end
-

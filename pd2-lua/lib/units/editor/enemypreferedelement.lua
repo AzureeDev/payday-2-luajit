@@ -18,7 +18,6 @@ function EnemyPreferedAddUnitElement:draw_links(t, dt, selected_unit, all_units)
 end
 
 function EnemyPreferedAddUnitElement:_private_draw_links(t, dt, selected_unit, all_units)
-
 	local function _draw_func(element_ids)
 		if not element_ids then
 			return
@@ -154,7 +153,6 @@ function EnemyPreferedAddUnitElement:add_unit_list_btn()
 end
 
 function EnemyPreferedAddUnitElement:remove_unit_list_btn()
-
 	local function f(unit)
 		return self._hed.spawn_groups and table.contains(self._hed.spawn_groups, unit:unit_data().unit_id) or self._hed.spawn_points and table.contains(self._hed.spawn_points, unit:unit_data().unit_id)
 	end
@@ -183,10 +181,13 @@ function EnemyPreferedAddUnitElement:_build_panel(panel, panel_sizer)
 	toolbar:realize()
 	panel_sizer:add(toolbar, 0, 1, "EXPAND,LEFT")
 end
+
 EnemyPreferedRemoveUnitElement = EnemyPreferedRemoveUnitElement or class(MissionElement)
 EnemyPreferedRemoveUnitElement.SAVE_UNIT_POSITION = false
 EnemyPreferedRemoveUnitElement.SAVE_UNIT_ROTATION = false
-EnemyPreferedRemoveUnitElement.LINK_ELEMENTS = {"elements"}
+EnemyPreferedRemoveUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function EnemyPreferedRemoveUnitElement:init(unit)
 	EnemyPreferedRemoveUnitElement.super.init(self, unit)
@@ -252,8 +253,9 @@ function EnemyPreferedRemoveUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"ai_enemy_prefered_add"}
+	local names = {
+		"ai_enemy_prefered_add"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 end
-

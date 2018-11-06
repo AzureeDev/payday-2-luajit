@@ -27,4 +27,3 @@ function HUDManager:_animate_ammo_test(panel)
 
 	panel:set_alpha(0)
 end
-

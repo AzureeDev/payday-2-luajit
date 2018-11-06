@@ -92,7 +92,9 @@ function SequenceManager:init(area_damage_mask, target_world_mask, beings_mask)
 	self._current_retry_callback_index = 0
 	self._callback_map = {}
 	self._last_callback_id = 0
-	self._inflict_updator_damage_type_map = {fire = true}
+	self._inflict_updator_damage_type_map = {
+		fire = true
+	}
 	self._inflict_updator_body_map = {}
 	self._inflict_updator_body_count = {}
 
@@ -283,7 +285,12 @@ function SequenceManager:get_keys_as_string(key_value_list, none_string, dot_at_
 	for key, value in pairs(key_value_list) do
 		local last_func = func
 		local append_string = nil
-		append_string = only_values and value or key
+
+		if only_values then
+			append_string = value
+		else
+			append_string = key
+		end
 
 		function func(count, first)
 			if count == 1 then
@@ -390,11 +397,11 @@ function SequenceManager:_add_start_time_callback(element_id, env, delay, repeat
 		id = self._last_start_time_callback_id,
 		element_id = element_id,
 		env = env,
-		delay = tonumber(delay) or 0
+		delay = tonumber(delay) or 0,
+		start_time = time_callback.delay,
+		repeat_nr = tonumber(repeat_nr) or 1,
+		sequence_name = sequence_name
 	}
-	time_callback.start_time = time_callback.delay
-	time_callback.repeat_nr = tonumber(repeat_nr) or 1
-	time_callback.sequence_name = sequence_name
 
 	table.insert(self._start_time_callback_list, time_callback)
 
@@ -569,7 +576,7 @@ function SequenceManager:update_retry_callbacks()
 
 				self._retry_callback_indices[callback_type] = self._retry_callback_indices[callback_type] + 1
 
-				if #self._retry_callback_list[callback_type] < self._retry_callback_indices[callback_type] then
+				if self._retry_callback_indices[callback_type] > #self._retry_callback_list[callback_type] then
 					self._retry_callback_indices[callback_type] = 1
 				end
 			end
@@ -888,7 +895,9 @@ end
 
 function SequenceManager:save_global_save_data(data)
 	if next(SequenceEnvironment.g_save_data) then
-		local state = {g_save_data = table.map_copy(SequenceEnvironment.g_save_data)}
+		local state = {
+			g_save_data = table.map_copy(SequenceEnvironment.g_save_data)
+		}
 		data.SequenceEnvironment = state
 
 		return true
@@ -1117,10 +1126,17 @@ function SequenceManager:do_area_damage(damage_type, attack_unit, pos, range, co
 
 			if body_extension then
 				local hit_pos = body:center_of_mass()
-				local dir = (hit_pos - pos):normalized()
+				local dir = hit_pos - pos:normalized()
 				local unit_extension = unit:damage()
 				local body_damage = nil
-				body_damage = get_damage_func and get_damage_func(unit, body, dir, hit_pos, damage_type, attack_unit, pos, range, constant_damage, damage, velocity, ignore_unit, direct_attack_unit, ignore_mask) or constant_damage and damage or damage * (1 - math.clamp(get_distance_to_body(body, pos) / range, 0, 1))
+
+				if get_damage_func then
+					body_damage = get_damage_func(unit, body, dir, hit_pos, damage_type, attack_unit, pos, range, constant_damage, damage, velocity, ignore_unit, direct_attack_unit, ignore_mask)
+				elseif constant_damage then
+					body_damage = damage
+				else
+					body_damage = damage * (1 - math.clamp(get_distance_to_body(body, pos) / range, 0, 1))
+				end
 
 				self:do_area_damage_on_body(unit, body, body_extension, damage_type, attack_unit, -dir, pos, dir, body_damage, velocity, ignore_unit, direct_attack_unit)
 
@@ -1156,9 +1172,17 @@ function SequenceManager:do_area_damage(damage_type, attack_unit, pos, range, co
 			local hit, hit_pos = self:is_hit_by_area_damage(unit, pos, ray_caller, ignore_unit)
 
 			if hit then
-				local dir = (unit:position() - pos):normalized()
+				local dir = unit:position() - pos:normalized()
 				local unit_damage = nil
-				unit_damage = get_damage_func and get_damage_func(unit, nil, dir, hit_pos, damage_type, attack_unit, pos, range, constant_damage, damage, velocity, ignore_unit, direct_attack_unit, ignore_mask) or constant_damage and damage or damage * (1 - math.clamp((hit_pos - pos):length() / range, 0, 1))
+
+				if get_damage_func then
+					unit_damage = get_damage_func(unit, nil, dir, hit_pos, damage_type, attack_unit, pos, range, constant_damage, damage, velocity, ignore_unit, direct_attack_unit, ignore_mask)
+				elseif constant_damage then
+					unit_damage = damage
+				else
+					unit_damage = damage * (1 - math.clamp(hit_pos - pos:length() / range, 0, 1))
+				end
+
 				local dead, damage = self:do_area_damage_on_unit(unit, nil, unit_extension, damage_type, attack_unit, -dir, pos, dir, unit_damage, velocity, ignore_unit, direct_attack_unit)
 				hit_being_map[unit_key] = unit
 
@@ -1199,7 +1223,9 @@ end
 function SequenceManager:do_area_damage_on_unit(unit, body, unit_extension, damage_type, attack_unit, normal, pos, dir, body_damage, velocity, ignore_unit, direct_attack_unit)
 	unit_extension:set_direct_attack_unit(direct_attack_unit)
 
-	local return_param_list = {unit_extension:damage_by_area(damage_type, attack_unit, body, normal, pos, dir, body_damage, velocity or Vector3())}
+	local return_param_list = {
+		unit_extension:damage_by_area(damage_type, attack_unit, body, normal, pos, dir, body_damage, velocity or Vector3())
+	}
 
 	unit_extension:set_direct_attack_unit(nil)
 
@@ -1275,7 +1301,11 @@ function SequenceManager:get_sequence_list(unit_name, property_name, property_va
 	local unit_element = self:get(unit_name, true)
 
 	if unit_element then
-		sequence_list = property_name and unit_element:get_parameter_sequence_name_list(property_name, property_value) or unit_element:get_sequence_name_list()
+		if property_name then
+			sequence_list = unit_element:get_parameter_sequence_name_list(property_name, property_value)
+		else
+			sequence_list = unit_element:get_sequence_name_list()
+		end
 	end
 
 	return sequence_list
@@ -1316,6 +1346,7 @@ function SequenceManager.set_effect_spawner_enabled(effect_spawner, enabled)
 
 	return true
 end
+
 SequenceEnvironment = SequenceEnvironment or class()
 SequenceEnvironment.self = SequenceEnvironment.self or {}
 SequenceEnvironment.g_save_data = SequenceEnvironment.g_save_data or {}
@@ -1559,13 +1590,17 @@ function SequenceEnvironment.Z()
 end
 
 function SequenceEnvironment.pick(...)
-	local pick_list = {...}
+	local pick_list = {
+		...
+	}
 
 	return pick_list[math.random(1, #pick_list)]
 end
 
 function SequenceEnvironment.rot_sum(...)
-	local rot_list = {...}
+	local rot_list = {
+		...
+	}
 	local rot_sum = Rotation()
 
 	for _, rot in ipairs(rot_list) do
@@ -1676,7 +1711,7 @@ function SequenceEnvironment.angle(v1, v2, up)
 end
 
 function SequenceEnvironment.pos_side(obj, pos)
-	local dir = (pos - obj:position()):normalized()
+	local dir = pos - obj:position():normalized()
 
 	return SequenceEnvironment.dir_side(obj, dir)
 end
@@ -1804,6 +1839,7 @@ function SequenceEnvironment.get_camera_rot(index)
 		return Rotation()
 	end
 end
+
 BaseElement = BaseElement or class()
 BaseElement.BASE_ATTRIBUTE_MAP = BaseElement.BASE_ATTRIBUTE_MAP or {
 	repeat_nr = true,
@@ -1853,7 +1889,6 @@ function BaseElement:init(node, unit_element)
 	end
 
 	if __filter_name ~= nil and unit_element then
-
 		function self:_is_allowed_func(env)
 			local filter_name = self:run_parsed_func(env, __filter_name)
 			local filter = filter_name and unit_element:get_filter(filter_name)
@@ -1867,7 +1902,6 @@ function BaseElement:init(node, unit_element)
 	end
 
 	if __delayed_filter_name ~= nil and unit_element then
-
 		function self:_delayed_is_allowed_func(env)
 			local filter_name = self:run_parsed_func(env, __delayed_filter_name)
 			local filter = unit_element:get_filter(filter_name)
@@ -2070,6 +2104,7 @@ function BaseElement:get_xml_origin(node)
 
 	return "File: \"" .. tostring(file or "N/A") .. "\" (Line: " .. tostring(line or "N/A, remove .xmb file") .. ")\nUnit: \"" .. tostring(self._unit_element and self._unit_element:get_name():t() or "[None]") .. "\"\nElement: " .. self:get_xml_element_string(node)
 end
+
 local is_win32 = SystemInfo:platform() == Idstring("WIN32")
 
 function BaseElement:get_model_xml_file()
@@ -2095,6 +2130,7 @@ function BaseElement:get_xml_element_string(node)
 
 	return str .. "/>"
 end
+
 UnitElement = UnitElement or class(BaseElement)
 
 function UnitElement:init(node, name, is_global)
@@ -2162,14 +2198,20 @@ function UnitElement:init(node, name, is_global)
 					local name = v_data._meta
 					self._set_variables = self._set_variables or {}
 					self._set_variables[name] = self:get_static("value", v_data.value, nil, data)
-					self._set_variables[name] = self._set_variables[name] and self._set_variables[name](SequenceEnvironment)
+
+					if self._set_variables[name] then
+						self._set_variables[name] = self._set_variables[name](SequenceEnvironment)
+					end
 				end
 			elseif element_name == "global_variables" then
 				for _, v_data in ipairs(data) do
 					local name = v_data._meta
 					self._global_vars = self._global_vars or {}
 					self._global_vars[name] = self:get_static("value", v_data.value, nil, data)
-					self._global_vars[name] = self._global_vars[name] and self._global_vars[name](SequenceEnvironment)
+
+					if self._global_vars[name] then
+						self._global_vars[name] = self._global_vars[name](SequenceEnvironment)
+					end
 				end
 			end
 		end
@@ -2494,25 +2536,33 @@ function UnitElement:load(data)
 		self._global_vars = table.map_copy(state.global_vars)
 	end
 end
+
 TriggerDeclarationElement = TriggerDeclarationElement or class(BaseElement)
 
 function TriggerDeclarationElement:init(node, unit_element)
 	BaseElement.init(self, node, unit_element)
 
 	self._name = self:get("name")
-	self._name = self._name and self._name(SequenceEnvironment)
+
+	if self._name then
+		self._name = self._name(SequenceEnvironment)
+	end
 
 	if self._name == nil then
 		Application:throw_exception("Unit \"" .. tostring(unit_element._name) .. "\" has an invalid trigger element name \"" .. tostring(self._parameters.name) .. "\".")
 	end
 end
+
 FilterElement = FilterElement or class(BaseElement)
 
 function FilterElement:init(node, unit_element)
 	BaseElement.init(self, node, unit_element)
 
 	self._name = self:get("name")
-	self._name = self._name and self._name(SequenceEnvironment)
+
+	if self._name then
+		self._name = self._name(SequenceEnvironment)
+	end
 
 	if self._name == nil then
 		Application:throw_exception("Unit \"" .. tostring(unit_element._name) .. "\" has an invalid filter element name \"" .. tostring(self._parameters.name) .. "\".")
@@ -2553,6 +2603,7 @@ function FilterElement:is_allowed(env)
 
 	return allowed
 end
+
 CheckFilterElement = CheckFilterElement or class(BaseElement)
 CheckFilterElement.NAME = "check"
 
@@ -2569,6 +2620,7 @@ end
 function CheckFilterElement:is_allowed(env)
 	return self:run_parsed_func(env, self._value) == true
 end
+
 SideFilterElement = SideFilterElement or class(BaseElement)
 SideFilterElement.NAME = "side"
 
@@ -2576,7 +2628,10 @@ function SideFilterElement:init(node, unit_element)
 	BaseElement.init(self, node, unit_element)
 
 	self._axis = self:get("axis")
-	self._axis = self._axis and self._axis(SequenceEnvironment)
+
+	if self._axis then
+		self._axis = self._axis(SequenceEnvironment)
+	end
 
 	if self._axis == nil then
 		self._axis = "y"
@@ -2606,6 +2661,7 @@ function SideFilterElement:is_allowed(env)
 		return false
 	end
 end
+
 ZoneFilterElement = ZoneFilterElement or class(BaseElement)
 ZoneFilterElement.NAME = "zone"
 
@@ -2630,10 +2686,15 @@ function ZoneFilterElement:init(node, unit_element)
 			negative = true
 		elseif __chr == "x" or __chr == "y" or __chr == "z" then
 			local func = nil
-			func = negative and function (zone_vector)
-				return zone_vector[__chr] < 0
-			end or function (zone_vector)
-				return zone_vector[__chr] >= 0
+
+			if negative then
+				function func(zone_vector)
+					return zone_vector[__chr] < 0
+				end
+			else
+				function func(zone_vector)
+					return zone_vector[__chr] >= 0
+				end
 			end
 
 			table.insert(self._func_list, func)
@@ -2652,7 +2713,7 @@ function ZoneFilterElement:is_allowed(env)
 	local obj = obj_name and env.dest_unit:get_object(obj_name:id())
 
 	if obj then
-		local zone_vector = (env.pos - obj:position()):rotate_with(obj:rotation():inverse())
+		local zone_vector = env.pos - obj:position():rotate_with(obj:rotation():inverse())
 		local allowed = true
 
 		for _, func in ipairs(self._func_list) do
@@ -2670,6 +2731,7 @@ function ZoneFilterElement:is_allowed(env)
 		return false
 	end
 end
+
 SequenceElement = SequenceElement or class(BaseElement)
 
 function SequenceElement:init(node, unit_element)
@@ -2722,6 +2784,7 @@ function SequenceElement:activate_callback(env)
 		end
 	end
 end
+
 ProximityElement = ProximityElement or class(BaseElement)
 
 function ProximityElement:init(node, unit_element)
@@ -2744,6 +2807,7 @@ end
 function ProximityElement:get_proximity_element_map()
 	return self._element_map
 end
+
 ProximityTypeElement = ProximityTypeElement or class(BaseElement)
 ProximityTypeElement.MIN_INTERVAL = 0.2
 
@@ -2852,6 +2916,7 @@ end
 function ProximityTypeElement:get_outside_element()
 	return self._outside_element
 end
+
 ProximityRangeElement = ProximityRangeElement or class(BaseElement)
 
 function ProximityRangeElement:init(node, unit_element, within)
@@ -2908,6 +2973,7 @@ function ProximityRangeElement:activate_elements(env)
 		element:activate(env)
 	end
 end
+
 WaterElement = WaterElement or class(BaseElement)
 
 function WaterElement:init(node, unit_element)
@@ -3010,6 +3076,7 @@ function WaterElement:activate_exit(env)
 		self._exit_element:activate(env)
 	end
 end
+
 SequenceContainerElement = SequenceContainerElement or class(BaseElement)
 
 function SequenceContainerElement:init(node, unit_element)
@@ -3027,7 +3094,9 @@ function SequenceContainerElement:init(node, unit_element)
 				table.insert(self._sequence_list, element)
 			end
 		else
-			self:check_invalid_node(child_node, {"run_sequence"})
+			self:check_invalid_node(child_node, {
+				"run_sequence"
+			})
 		end
 	end
 end
@@ -3041,6 +3110,7 @@ function SequenceContainerElement:activate_callback(env)
 		element:activate(env)
 	end
 end
+
 EnterWaterElement = EnterWaterElement or class(SequenceContainerElement)
 ExitWaterElement = ExitWaterElement or class(SequenceContainerElement)
 RootBodyElement = RootBodyElement or class(BaseElement)
@@ -3089,8 +3159,10 @@ function RootBodyElement:init(node, unit_element)
 				else
 					local next_element = self._first_endurance[k]
 
-					while next_element._next[k] and next_element._next[k]._endurance[k] <= v do
-						next_element = next_element._next[k]
+					if next_element._next[k] then
+						while next_element._next[k] and next_element._next[k]._endurance[k] <= v do
+							next_element = next_element._next[k]
+						end
 					end
 
 					element._next[k] = next_element._next[k]
@@ -3110,7 +3182,10 @@ function RootBodyElement:init(node, unit_element)
 	for param_name, _ in pairs(self._parameters) do
 		if param_name ~= "name" and param_name ~= "damage_multiplier" then
 			self._body_params[param_name] = self:get(param_name)
-			self._body_params[param_name] = self._body_params[param_name] and self._body_params[param_name](SequenceEnvironment)
+
+			if self._body_params[param_name] then
+				self._body_params[param_name] = self._body_params[param_name](SequenceEnvironment)
+			end
 		end
 	end
 end
@@ -3148,6 +3223,7 @@ function RootBodyElement:get_inflict_element_list()
 		return self._inflict_element:get_element_list()
 	end
 end
+
 RootInflictElement = RootInflictElement or class(BaseElement)
 
 function RootInflictElement:init(node, unit_element)
@@ -3183,6 +3259,7 @@ end
 function RootInflictElement:get_element_list()
 	return self._element_list
 end
+
 InflictElement = InflictElement or class(BaseElement)
 
 function InflictElement:init(node, unit_element)
@@ -3302,6 +3379,7 @@ function InflictElement:exit_sequence_count()
 		return 0
 	end
 end
+
 InflictElectricityElement = InflictElectricityElement or class(InflictElement)
 InflictElectricityElement.NAME = "electricity"
 InflictFireElement = InflictFireElement or class(InflictElement)
@@ -3335,6 +3413,7 @@ end
 function InflictFireElement:get_falloff()
 	return self._falloff
 end
+
 EnterInflictElement = EnterInflictElement or class(SequenceContainerElement)
 DamageInflictElement = DamageInflictElement or class(SequenceContainerElement)
 ExitInflictElement = ExitInflictElement or class(SequenceContainerElement)
@@ -3353,7 +3432,10 @@ function EnduranceElement:init(node, unit_element)
 	for k, v in pairs(self._parameters) do
 		if k ~= "can_skip" and k ~= "players_only" and string.sub(k, -4) ~= "_abs" then
 			self._endurance[k] = self:get(k)
-			self._endurance[k] = self._endurance[k] and self._endurance[k](SequenceEnvironment)
+
+			if self._endurance[k] then
+				self._endurance[k] = self._endurance[k](SequenceEnvironment)
+			end
 
 			if self._endurance[k] then
 				self._abs[k] = self:get(k .. "_abs")
@@ -3379,7 +3461,9 @@ function EnduranceElement:init(node, unit_element)
 				table.insert(self._elements, element)
 			end
 		else
-			self:check_invalid_node(data, {"run_sequence"})
+			self:check_invalid_node(data, {
+				"run_sequence"
+			})
 		end
 	end
 end
@@ -3439,6 +3523,7 @@ function EnduranceElement:activate_elements(env)
 		element:activate(env)
 	end
 end
+
 AnimationGroupElement = AnimationGroupElement or class(BaseElement)
 AnimationGroupElement.NAME = "animation_group"
 
@@ -3490,7 +3575,13 @@ function AnimationGroupElement:play(env, name)
 
 		if loop then
 			local start_loop_time = self:run_parsed_func(env, self._start_loop_time) or env.dest_unit:anim_time(ids_name)
-			end_time = duration and start_loop_time + duration or self:run_parsed_func(env, self._end_time)
+
+			if duration then
+				end_time = start_loop_time + duration
+			else
+				end_time = self:run_parsed_func(env, self._end_time)
+			end
+
 			end_time = end_time or env.dest_unit:anim_length(ids_name)
 
 			env.dest_unit:anim_play_loop(ids_name, start_loop_time, end_time, speed)
@@ -3504,7 +3595,11 @@ function AnimationGroupElement:play(env, name)
 				})
 			end
 		else
-			end_time = duration and env.dest_unit:anim_time(name) + duration or self:run_parsed_func(env, self._end_time)
+			if duration then
+				end_time = env.dest_unit:anim_time(name) + duration
+			else
+				end_time = self:run_parsed_func(env, self._end_time)
+			end
 
 			if end_time then
 				env.dest_unit:anim_play_to(ids_name, end_time, speed)
@@ -3534,7 +3629,9 @@ function AnimationGroupElement:stop(env, name)
 	env.dest_unit:anim_stop(Idstring(name))
 
 	if self.SAVE_STATE then
-		self:set_cat_state(env.dest_unit, name, {"anim_stop"})
+		self:set_cat_state(env.dest_unit, name, {
+			"anim_stop"
+		})
 	end
 end
 
@@ -3551,6 +3648,7 @@ function AnimationGroupElement.load(unit, data)
 		unit[cat_data[1]](unit, Idstring(name), cat_data[2], cat_data[3], cat_data[4])
 	end
 end
+
 AnimationRedirectElement = AnimationRedirectElement or class(BaseElement)
 AnimationRedirectElement.NAME = "animation_redirect"
 
@@ -3566,6 +3664,7 @@ function AnimationRedirectElement:activate_callback(env)
 
 	env.dest_unit:play_redirect(Idstring(name))
 end
+
 AreaDamageElement = AreaDamageElement or class(BaseElement)
 AreaDamageElement.NAME = "area_damage"
 
@@ -3595,7 +3694,9 @@ function AreaDamageElement:init(node, unit_element)
 
 			table.insert(self._key_list, key)
 		else
-			self:check_invalid_node(child_node, {"key"})
+			self:check_invalid_node(child_node, {
+				"key"
+			})
 		end
 	end
 end
@@ -3714,12 +3815,13 @@ end
 function AreaDamageElement:get_falloff_preset1_damage(params, unit, body, dir, hit_pos, damage_type, attack_unit, pos, range, constant_damage, damage, velocity, ignore_unit, direct_attack_unit, ignore_mask)
 	local distance = self:get_distance(body, hit_pos, pos)
 
-	return (1 - (distance / range) ^ 2) * damage
+	return (1 - (distance / range)^2) * damage
 end
 
 function AreaDamageElement:get_distance(body, hit_pos, pos)
-	return body and get_distance_to_body(body, pos) or (hit_pos - pos):length()
+	return body and get_distance_to_body(body, pos) or hit_pos - pos:length()
 end
+
 AreaDamageKeyElement = AreaDamageKeyElement or class(BaseElement)
 
 function AreaDamageKeyElement:init(node, unit_element)
@@ -3730,7 +3832,9 @@ function AreaDamageKeyElement:init(node, unit_element)
 	self._falloff_type = self:get("falloff")
 	self._physic_effect = self:get("physic_effect")
 	self._mass = self:get("mass")
-	self._falloff_func_map = {linear = self.get_linear_damage}
+	self._falloff_func_map = {
+		linear = self.get_linear_damage
+	}
 end
 
 function AreaDamageKeyElement:get_parsed_key(env)
@@ -3779,10 +3883,16 @@ end
 function AreaDamageKeyElement:get_linear_damage(distance, range, damage, prev_key_range, prev_key_damage)
 	local diff = range - prev_key_range
 	local offset = nil
-	offset = diff > 0 and math.clamp(distance - prev_key_range, 0, diff) / diff or 0
+
+	if diff > 0 then
+		offset = math.clamp(distance - prev_key_range, 0, diff) / diff
+	else
+		offset = 0
+	end
 
 	return math.lerp(prev_key_damage, damage, offset)
 end
+
 ParsedKeyElement = ParsedKeyElement or class()
 
 function ParsedKeyElement:init(key_element, variable_map)
@@ -3801,6 +3911,7 @@ end
 function ParsedKeyElement:set_variable(name, value)
 	self._variable_map[name] = value
 end
+
 BodyElement = BodyElement or class(BaseElement)
 BodyElement.NAME = "body"
 BodyElement.VALID_MOTION_MAP = BodyElement.VALID_MOTION_MAP or {
@@ -3872,7 +3983,9 @@ function BodyElement:set_motion(env, motion, body)
 		body[func_name](body)
 
 		if self.SAVE_STATE then
-			self:set_cat_state2(body:unit(), body:unit():get_body_index(body:name()), "motion", {func_name})
+			self:set_cat_state2(body:unit(), body:unit():get_body_index(body:name()), "motion", {
+				func_name
+			})
 		end
 	else
 		local supported_values = SequenceManager:get_keys_as_string(self.VALID_MOTION_MAP, "", true, true)
@@ -3999,6 +4112,7 @@ function BodyElement.load(unit, data)
 		end
 	end
 end
+
 ConstraintElement = ConstraintElement or class(BaseElement)
 ConstraintElement.NAME = "constraint"
 
@@ -4046,6 +4160,7 @@ function ConstraintElement.load(unit, data)
 		unit[func_name](unit, Idstring(constraint_name))
 	end
 end
+
 DebugElement = DebugElement or class(BaseElement)
 DebugElement.NAME = "debug"
 
@@ -4060,6 +4175,7 @@ function DebugElement:activate_callback(env)
 
 	cat_debug("sequence", "[SequenceManager] " .. tostring(text))
 end
+
 AlertElement = AlertElement or class(BaseElement)
 AlertElement.NAME = "alert"
 
@@ -4081,6 +4197,7 @@ function AlertElement:activate_callback(env)
 
 	managers.groupai:state():propagate_alert(new_alert)
 end
+
 AttentionElement = AttentionElement or class(BaseElement)
 AttentionElement.NAME = "attention"
 
@@ -4116,6 +4233,7 @@ function AttentionElement:activate_callback(env)
 		_G.debug_pause_unit(env.dest_unit, "AttentionElement:activate_callback: operation not 'add' nor 'remove'", operation, env.dest_unit)
 	end
 end
+
 DecalMeshElement = DecalMeshElement or class(BaseElement)
 DecalMeshElement.NAME = "decal_mesh"
 
@@ -4178,6 +4296,7 @@ function DecalMeshElement.load(unit, data)
 		end
 	end
 end
+
 EffectElement = EffectElement or class(BaseElement)
 EffectElement.NAME = "effect"
 
@@ -4275,6 +4394,7 @@ function EffectElement:activate_callback(env)
 		Application:error("THIS WILL CRASH SOON, SO FIX IT!\n")
 	end
 end
+
 EffectSpawnerElement = EffectSpawnerElement or class(BaseElement)
 EffectSpawnerElement.NAME = "effect_spawner"
 
@@ -4329,6 +4449,7 @@ function EffectSpawnerElement.load(unit, data)
 		end
 	end
 end
+
 EnemyKilledElement = EnemyKilledElement or class(BaseElement)
 EnemyKilledElement.NAME = "enemy_killed"
 
@@ -4345,6 +4466,7 @@ function EnemyKilledElement:activate_callback(env)
 		end
 	end
 end
+
 FunctionElement = FunctionElement or class(BaseElement)
 FunctionElement.NAME = "function"
 
@@ -4464,6 +4586,7 @@ function FunctionElement:function5(env, target, func)
 
 	func(target, param1, param2, param3, param4, param5)
 end
+
 GraphicGroupElement = GraphicGroupElement or class(BaseElement)
 GraphicGroupElement.NAME = "graphic_group"
 
@@ -4484,7 +4607,9 @@ function GraphicGroupElement:activate_callback(env)
 		env.dest_unit:activate_graphic_group(Idstring(name))
 
 		if self.SAVE_STATE then
-			self:set_cat_state(env.dest_unit, name, {"activate_graphic_group"})
+			self:set_cat_state(env.dest_unit, name, {
+				"activate_graphic_group"
+			})
 		end
 	end
 
@@ -4505,6 +4630,7 @@ function GraphicGroupElement.load(unit, data)
 		unit[sub_data[1]](unit, Idstring(name), sub_data[2])
 	end
 end
+
 LightElement = LightElement or class(BaseElement)
 LightElement.NAME = "light"
 
@@ -4647,6 +4773,7 @@ function LightElement.load(unit, data)
 		obj[sub_data[1]](obj, sub_data[2])
 	end
 end
+
 MaterialConfigElement = MaterialConfigElement or class(BaseElement)
 MaterialConfigElement.NAME = "material_config"
 
@@ -4673,6 +4800,7 @@ end
 function MaterialConfigElement.load(unit, data)
 	managers.dyn_resource:change_material_config(data.material, unit)
 end
+
 MaterialElement = MaterialElement or class(BaseElement)
 MaterialElement.NAME = "material"
 MaterialElement.MATERIAL_ATTRIBUTE_MAP = MaterialElement.MATERIAL_ATTRIBUTE_MAP or {
@@ -4779,6 +4907,7 @@ function MaterialElement:set_material_state(env, state, material)
 		self:print_attribute_error("state", state, supported_values, true, env, nil)
 	end
 end
+
 MorphExpressionElement = MorphExpressionElement or class(BaseElement)
 MorphExpressionElement.NAME = "morph_expression"
 
@@ -4814,6 +4943,7 @@ function MorphExpressionElement:activate_callback(env)
 		self:print_attribute_error("model", model, nil, true, env)
 	end
 end
+
 MorphExpressionMovieElement = MorphExpressionMovieElement or class(BaseElement)
 MorphExpressionMovieElement.NAME = "morph_expression_movie"
 
@@ -4839,6 +4969,7 @@ function MorphExpressionMovieElement:activate_callback(env)
 		managers.expression:play(env.dest_unit, model, movie, loop)
 	end
 end
+
 ObjectElement = ObjectElement or class(BaseElement)
 ObjectElement.NAME = "object"
 
@@ -4872,7 +5003,9 @@ function ObjectElement:activate_callback(env)
 	local name = self:run_parsed_func(env, self._name)
 
 	if name then
-		local object_list = {env.dest_unit:get_object(Idstring(name))}
+		local object_list = {
+			env.dest_unit:get_object(Idstring(name))
+		}
 		local local_scope = self:run_parsed_func(env, self._local_scope)
 
 		for _, func in ipairs(self._set_function_list) do
@@ -4889,14 +5022,24 @@ end
 
 function ObjectElement:set_position(env, position, object_list, local_scope)
 	local func_name = nil
-	func_name = local_scope and "set_local_position" or "set_position"
+
+	if local_scope then
+		func_name = "set_local_position"
+	else
+		func_name = "set_position"
+	end
 
 	self:set_object(env.dest_unit, object_list, func_name, position)
 end
 
 function ObjectElement:set_rotation(env, rotation, object_list, local_scope)
 	local func_name = nil
-	func_name = local_scope and "set_local_rotation" or "set_rotation"
+
+	if local_scope then
+		func_name = "set_local_rotation"
+	else
+		func_name = "set_rotation"
+	end
 
 	self:set_object(env.dest_unit, object_list, func_name, rotation)
 end
@@ -4923,6 +5066,7 @@ function ObjectElement.load(unit, data)
 		end
 	end
 end
+
 PhantomElement = PhantomElement or class(BaseElement)
 PhantomElement.NAME = "phantom"
 
@@ -4957,6 +5101,7 @@ function PhantomElement.load(unit, data)
 		phantom:set_enabled(enabled)
 	end
 end
+
 PhysicEffectElement = PhysicEffectElement or class(BaseElement)
 PhysicEffectElement.NAME = "physic_effect"
 
@@ -4984,6 +5129,7 @@ function PhysicEffectElement:activate_callback(env)
 	local store_id_var = self:run_parsed_func(env, self._store_id_var) or "last_physic_effect_id"
 	env.vars[store_id_var] = World:play_physic_effect(Idstring(name), target, unpack(param_list))
 end
+
 ProjectDecalElement = ProjectDecalElement or class(BaseElement)
 ProjectDecalElement.NAME = "project_decal"
 
@@ -5028,7 +5174,7 @@ function ProjectDecalElement:activate_callback(env)
 		end
 
 		if ray_distance then
-			local ray = (ignore_unit or World):raycast("ray", position, position + direction * ray_distance, "slot_mask", slotmask)
+			local ray = ignore_unit or World:raycast("ray", position, position + direction * ray_distance, "slot_mask", slotmask)
 
 			if ray then
 				position = ray.position
@@ -5056,6 +5202,7 @@ function ProjectDecalElement:activate_callback(env)
 		end
 	end
 end
+
 RemoveStartTimeElement = RemoveStartTimeElement or class(BaseElement)
 RemoveStartTimeElement.NAME = "remove_start_time"
 
@@ -5072,8 +5219,11 @@ function RemoveStartTimeElement:activate_callback(env)
 		managers.sequence:_remove_start_time_callback(id)
 	end
 end
+
 RunSequenceElement = RunSequenceElement or class(BaseElement)
-RunSequenceElement.RUN_SEQUENCE_ATTRIBUTE_MAP = RunSequenceElement.RUN_SEQUENCE_ATTRIBUTE_MAP or {name = true}
+RunSequenceElement.RUN_SEQUENCE_ATTRIBUTE_MAP = RunSequenceElement.RUN_SEQUENCE_ATTRIBUTE_MAP or {
+	name = true
+}
 RunSequenceElement.NAME = "run_sequence"
 
 function RunSequenceElement:init(node, unit_element)
@@ -5115,6 +5265,7 @@ function RunSequenceElement:activate_callback(env)
 		end
 	end
 end
+
 RunSpawnSystemSequenceElement = RunSpawnSystemSequenceElement or class(BaseElement)
 RunSpawnSystemSequenceElement.NAME = "run_spawn_system_sequence"
 
@@ -5157,6 +5308,7 @@ function RunSpawnSystemSequenceElement:activate_callback(env)
 		end
 	end
 end
+
 SetDamageElement = SetDamageElement or class(BaseElement)
 SetDamageElement.NAME = "set_damage"
 
@@ -5190,6 +5342,7 @@ function SetDamageElement:set_damage(env, damage, damage_type)
 
 	extension:set_damage(damage_type, damage)
 end
+
 SetExtensionVarElement = SetExtensionVarElement or class(BaseElement)
 SetExtensionVarElement.NAME = "set_extension_var"
 
@@ -5220,6 +5373,7 @@ function SetExtensionVarElement:activate_callback(env)
 		end
 	end
 end
+
 SetGlobalVariableElement = SetGlobalVariableElement or class(BaseElement)
 SetGlobalVariableElement.NAME = "set_global_variable"
 
@@ -5246,6 +5400,7 @@ function SetGlobalVariableElement:set_variable(env, name, value)
 	env.g_vars[name] = value
 	self._unit_element._global_vars[name] = value
 end
+
 SetGlobalVariablesElement = SetGlobalVariablesElement or class(BaseElement)
 SetGlobalVariablesElement.NAME = "set_global_variables"
 
@@ -5271,6 +5426,7 @@ function SetGlobalVariablesElement:set_variable(env, name, value)
 	env.g_vars[name] = value
 	self._unit_element._global_vars[name] = value
 end
+
 SetInflictElement = SetInflictElement or class(BaseElement)
 SetInflictElement.NAME = "set_inflict"
 
@@ -5316,6 +5472,7 @@ function SetInflictElement:activate_callback(env)
 		self:print_attribute_error("body", body_name, nil, true, env)
 	end
 end
+
 SetPhysicEffectElement = SetPhysicEffectElement or class(BaseElement)
 SetPhysicEffectElement.NAME = "set_physic_effect"
 
@@ -5364,6 +5521,7 @@ function SetPhysicEffectElement:activate_callback(env)
 		end
 	end
 end
+
 SetProximityElement = SetProximityElement or class(BaseElement)
 SetProximityElement.NAME = "set_proximity"
 
@@ -5555,9 +5713,12 @@ end
 function SetProximityElement:set_outside_count(env, count, name)
 	env.dest_unit:damage():set_proximity_outside_count(name, tonumber(count) or -1)
 end
+
 SetSaveDataElement = SetSaveDataElement or class(BaseElement)
 SetSaveDataElement.NAME = "set_save_data"
-SetSaveDataElement.SET_SAVE_DATA_ATTRIBUTE_MAP = SetSaveDataElement.SET_SAVE_DATA_ATTRIBUTE_MAP or {unique = true}
+SetSaveDataElement.SET_SAVE_DATA_ATTRIBUTE_MAP = SetSaveDataElement.SET_SAVE_DATA_ATTRIBUTE_MAP or {
+	unique = true
+}
 
 function SetSaveDataElement:init(node, unit_element)
 	BaseElement.init(self, node, unit_element)
@@ -5585,6 +5746,7 @@ function SetSaveDataElement:activate_callback(env)
 		end
 	end
 end
+
 SpawnSystemUnitEnabledElement = SpawnSystemUnitEnabledElement or class(BaseElement)
 SpawnSystemUnitEnabledElement.NAME = "set_spawn_system_unit_enabled"
 
@@ -5609,24 +5771,27 @@ function SpawnSystemUnitEnabledElement:activate_callback(env)
 		local spawn_system_ext = env.dest_unit:spawn_system()
 
 		if spawn_system_ext then
-			local unit = spawn_system_ext:set_unit_enabled(socket_name, unit_name, enabled)
+			slot6 = spawn_system_ext:set_unit_enabled(socket_name, unit_name, enabled)
 		else
 			self:print_error("No spawn_system extension found on unit \"" .. tostring(env.dest_unit) .. "\".", true, env)
 		end
 	end
 end
+
 SetVariableElement = SetVariableElement or class(SetGlobalVariableElement)
 SetVariableElement.NAME = "set_variable"
 
 function SetVariableElement:set_variable(env, name, value)
 	env.vars = env.dest_unit:damage():set_variable(name, value)
 end
+
 SetVariablesElement = SetVariablesElement or class(SetGlobalVariablesElement)
 SetVariablesElement.NAME = "set_variables"
 
 function SetVariablesElement:set_variable(env, name, value)
 	env.vars = env.dest_unit:damage():set_variable(name, value)
 end
+
 SetWaterElement = SetWaterElement or class(BaseElement)
 SetWaterElement.NAME = "set_water"
 
@@ -5653,7 +5818,7 @@ function SetWaterElement:activate_callback(env)
 		local ref_body_name = self:run_parsed_func(env, self._ref_body_name)
 		local body_depth = tonumber(self:run_parsed_func(env, self._body_depth)) or 0
 		local physic_effect = self:run_parsed_func(env, self._physic_effect)
-		enabled = self._enabled and self:run_parsed_func(env, self._enabled) or damage_ext:is_water_check_active(name) or not damage_ext:exists_water_check(name)
+		enabled = (not self._enabled or self:run_parsed_func(env, self._enabled)) and (damage_ext:is_water_check_active(name) or not damage_ext:exists_water_check(name))
 
 		damage_ext:set_water_check(name, enabled, interval, ref_object_name, ref_body_name, body_depth, physic_effect)
 	else
@@ -5662,6 +5827,7 @@ function SetWaterElement:activate_callback(env)
 		self:print_attribute_error("name", name, supported_values, true, env)
 	end
 end
+
 ShakeCameraElement = ShakeCameraElement or class(BaseElement)
 ShakeCameraElement.NAME = "shake_camera"
 
@@ -5685,6 +5851,7 @@ function ShakeCameraElement:activate_callback(env)
 		managers.viewport:get_current_shaker():play(shaker_name, amplitude, frequency, offset)
 	end
 end
+
 SlotElement = SlotElement or class(BaseElement)
 SlotElement.NAME = "slot"
 
@@ -5727,9 +5894,11 @@ function SlotElement:activate_callback(env)
 		if self.SAVE_STATE then
 			self:set_state(env.dest_unit, tonumber(self:run_parsed_func(env, self._slot)))
 		end
-	else
-		self:activate_element(env)
+
+		return
 	end
+
+	self:activate_element(env)
 end
 
 function SlotElement:activate_element(env)
@@ -5771,7 +5940,7 @@ function SlotElement:check_frustum_delay(frustum_close_radius, frustum_extension
 		data._body_index = data._body_index + 1
 	end
 
-	if #data._bodies < data._body_index then
+	if data._body_index > #data._bodies then
 		data._body_index = 1
 	end
 
@@ -5785,6 +5954,7 @@ function SlotElement:hide_objects(obj)
 		self:hide_objects(child_obj)
 	end
 end
+
 WwiseElement = WwiseElement or class(BaseElement)
 WwiseElement.NAME = "sound"
 
@@ -5903,7 +6073,11 @@ function WwiseElement:_get_sound_source(env)
 	local sound_source = nil
 
 	if source then
-		sound_source = source == "" and env.dest_unit:sound_source() or env.dest_unit:sound_source(Idstring(source))
+		if source == "" then
+			sound_source = env.dest_unit:sound_source()
+		else
+			sound_source = env.dest_unit:sound_source(Idstring(source))
+		end
 
 		if not sound_source then
 			self:print_attribute_error("source", source, nil, true, env, nil)
@@ -5926,6 +6100,7 @@ function WwiseElement.load(unit, data)
 		sound_source[sub_data[1]](sound_source, sub_data[2])
 	end
 end
+
 SoundElement = SoundElement or class(BaseElement)
 SoundElement.NAME = "sound"
 
@@ -5985,6 +6160,7 @@ function SoundElement:stop(env)
 		self:print_attribute_error("cue", cue, nil, true, env, nil)
 	end
 end
+
 SpawnUnitElement = SpawnUnitElement or class(BaseElement)
 SpawnUnitElement.NAME = "spawn_unit"
 SpawnUnitElement.SPAWN_UNIT_ATTRIBUTE_MAP = SpawnUnitElement.SPAWN_UNIT_ATTRIBUTE_MAP or {
@@ -6092,7 +6268,17 @@ function SpawnUnitElement:activate_callback(env)
 				self:print_error("Spawned mass unit must be enabled to be able to transfer velocity \"" .. tostring(transfer_velocity) .. "\".", false, env)
 			else
 				local velocity = nil
-				velocity = getmetatable(transfer_velocity) == Vector3 and transfer_velocity or env.damage_type == "collision" and env.velocity or alive(env.dest_body) and env.dest_body:velocity() or env.dest_unit:velocity()
+
+				if getmetatable(transfer_velocity) == Vector3 then
+					velocity = transfer_velocity
+				elseif env.damage_type == "collision" then
+					velocity = env.velocity
+				elseif alive(env.dest_body) then
+					velocity = env.dest_body:velocity()
+				else
+					velocity = env.dest_unit:velocity()
+				end
+
 				local ang_velocity = self:run_parsed_func(env, self._transfer_ang_velocity)
 				local physic_effect_name = nil
 
@@ -6227,6 +6413,7 @@ function SpawnUnitElement:get_params(env)
 
 	return params
 end
+
 StopPhysicEffectElement = StopPhysicEffectElement or class(BaseElement)
 StopPhysicEffectElement.NAME = "stop_physic_effect"
 
@@ -6245,6 +6432,7 @@ function StopPhysicEffectElement:activate_callback(env)
 		World:stop_physic_effect(id)
 	end
 end
+
 StopEffectElement = StopEffectElement or class(BaseElement)
 StopEffectElement.NAME = "stop_effect"
 
@@ -6284,6 +6472,7 @@ function StopEffectElement:activate_callback(env)
 		end
 	end
 end
+
 TriggerElement = TriggerElement or class(BaseElement)
 TriggerElement.NAME = "trigger"
 
@@ -6319,4 +6508,3 @@ function TriggerElement:activate_callback(env)
 		end
 	end
 end
-

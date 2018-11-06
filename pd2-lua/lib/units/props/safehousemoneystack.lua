@@ -2,7 +2,7 @@ SafehouseMoneyStack = SafehouseMoneyStack or class(UnitBase)
 SafehouseMoneyStack.SMALL_MAX_SUM = 1000000
 SafehouseMoneyStack.STEPS = 743
 SafehouseMoneyStack.SMALL_STEPS = 85
-SafehouseMoneyStack.MAX_SUM = (SafehouseMoneyStack.SMALL_MAX_SUM * (SafehouseMoneyStack.STEPS + 1) + SafehouseMoneyStack.SMALL_MAX_SUM) - 20
+SafehouseMoneyStack.MAX_SUM = SafehouseMoneyStack.SMALL_MAX_SUM * (SafehouseMoneyStack.STEPS + 1) + SafehouseMoneyStack.SMALL_MAX_SUM - 20
 
 function SafehouseMoneyStack:init(unit)
 	UnitBase.init(self, unit, false)
@@ -93,4 +93,3 @@ end
 
 function SafehouseMoneyStack:destroy()
 end
-

@@ -53,7 +53,9 @@ end
 function DatabaseManager:recompile(...)
 	local files = {}
 
-	for _, v in pairs({...}) do
+	for _, v in pairs({
+		...
+	}) do
 		table.insert(files, self:entry_relative_path(v))
 	end
 
@@ -259,4 +261,3 @@ function DatabaseManager:_parse_entries_in_index(index)
 		return string.split(contents, "[\r\n]")
 	end
 end
-

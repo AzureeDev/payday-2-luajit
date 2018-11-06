@@ -109,4 +109,3 @@ end
 function CoreXMLTextCtrl:_set_tc_color(color)
 	self._text_ctrl:set_default_style_colour(self._syntax_colors[color])
 end
-

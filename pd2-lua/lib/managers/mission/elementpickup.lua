@@ -31,4 +31,3 @@ function ElementPickup:on_executed(instigator)
 
 	ElementPickup.super.on_executed(self, instigator)
 end
-

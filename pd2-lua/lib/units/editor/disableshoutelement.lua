@@ -1,5 +1,7 @@
 DisableShoutElement = DisableShoutElement or class(MissionElement)
-DisableShoutElement.LINK_ELEMENTS = {"elements"}
+DisableShoutElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function DisableShoutElement:init(unit)
 	DisableShoutElement.super.init(self, unit)
@@ -73,4 +75,3 @@ end
 function DisableShoutElement:add_triggers(vc)
 	vc:add_trigger(Idstring("lmb"), callback(self, self, "add_element"))
 end
-

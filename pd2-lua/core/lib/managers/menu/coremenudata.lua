@@ -85,4 +85,3 @@ function Data:set_callback_handler(callback_handler)
 		node:set_callback_handler(callback_handler)
 	end
 end
-

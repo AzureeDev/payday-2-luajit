@@ -56,7 +56,7 @@ function MenuNodeDoubleColumnGui:_set_item_positions()
 
 			row_item.gui_panel:set_y(row_item.position.y)
 			row_item.menu_unselected:set_left(item_left)
-			row_item.menu_unselected:set_h((64 * row_item.gui_panel:h()) / 32)
+			row_item.menu_unselected:set_h(64 * row_item.gui_panel:h() / 32)
 			row_item.menu_unselected:set_center_y(row_item.gui_panel:center_y())
 			row_item.menu_unselected:set_width(item_width)
 			row_item.gui_panel:set_right(row_item.menu_unselected:right())
@@ -98,7 +98,7 @@ function MenuNodeDoubleColumnGui:_set_item_positions()
 
 			row_item.gui_panel:set_y(row_item.position.y)
 			row_item.menu_unselected:set_left(item_left)
-			row_item.menu_unselected:set_h((64 * row_item.gui_panel:h()) / 32)
+			row_item.menu_unselected:set_h(64 * row_item.gui_panel:h() / 32)
 			row_item.menu_unselected:set_center_y(row_item.gui_panel:center_y())
 			row_item.menu_unselected:set_width(item_width)
 			row_item.gui_panel:set_right(row_item.menu_unselected:right())
@@ -186,11 +186,19 @@ function MenuNodeDoubleColumnGui:_setup_item_rows(node)
 			local params = item:parameters()
 
 			if params.text_id then
-				item_text = self.localize_strings and params.localize ~= false and params.localize ~= "false" and managers.localization:text(params.text_id) or params.text_id
+				if self.localize_strings and params.localize ~= false and params.localize ~= "false" then
+					item_text = managers.localization:text(params.text_id)
+				else
+					item_text = params.text_id
+				end
 			end
 
 			if params.help_id then
-				help_text = self.localize_strings and params.localize_help ~= false and params.localize_help ~= "false" and managers.localization:text(params.help_id) or params.help_id
+				if self.localize_strings and params.localize_help ~= false and params.localize_help ~= "false" then
+					help_text = managers.localization:text(params.help_id)
+				else
+					help_text = params.help_id
+				end
 			end
 
 			local row_item = {}
@@ -503,4 +511,3 @@ function MenuNodeDoubleColumnGui:get_item_index(item)
 
 	Application:error("[MenuNodeDoubleColumnGui:get_item_index] Item index could not be found!")
 end
-

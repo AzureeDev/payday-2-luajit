@@ -36,4 +36,3 @@ function DangerZoneUnitElement:_build_panel(panel, panel_sizer)
 		ctrlr = level
 	})
 end
-

@@ -60,6 +60,7 @@ function JobValueUnitElement:_build_panel(panel, panel_sizer)
 	})
 	self:_build_value_checkbox(panel, panel_sizer, "save")
 end
+
 JobValueFilterUnitElement = JobValueFilterUnitElement or class(MissionElement)
 JobValueFilterUnitElement.SAVE_UNIT_POSITION = false
 JobValueFilterUnitElement.SAVE_UNIT_ROTATION = false
@@ -102,10 +103,13 @@ function JobValueFilterUnitElement:_build_panel(panel, panel_sizer)
 
 	self:add_help_text(help)
 end
+
 ApplyJobValueUnitElement = ApplyJobValueUnitElement or class(MissionElement)
 ApplyJobValueUnitElement.SAVE_UNIT_POSITION = false
 ApplyJobValueUnitElement.SAVE_UNIT_ROTATION = false
-ApplyJobValueUnitElement.LINK_ELEMENTS = {"elements"}
+ApplyJobValueUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function ApplyJobValueUnitElement:init(unit)
 	ApplyJobValueUnitElement.super.init(self, unit)
@@ -200,4 +204,3 @@ function ApplyJobValueUnitElement:_build_panel(panel, panel_sizer)
 	})
 	panel_sizer:add(save, 0, 0, "EXPAND")
 end
-

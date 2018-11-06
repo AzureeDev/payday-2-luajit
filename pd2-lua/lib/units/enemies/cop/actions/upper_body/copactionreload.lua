@@ -32,12 +32,22 @@ function CopActionReload:init(action_desc, common_data)
 		self._body_part = action_desc.body_part
 		self._modifier_name = Idstring("action_upper_body")
 		self._modifier = self._machine:get_modifier(self._modifier_name)
-		self._blocks = {light_hurt = -1}
+		self._blocks = {
+			light_hurt = -1
+		}
 
 		if self._attention then
 			self._modifier_on = true
 			local target_pos = nil
-			target_pos = self._attention.handler and self._attention.handler:get_attention_m_pos() or self._attention.unit and self._attention.unit:movement():m_head_pos() or self._attention.pos
+
+			if self._attention.handler then
+				target_pos = self._attention.handler:get_attention_m_pos()
+			elseif self._attention.unit then
+				target_pos = self._attention.unit:movement():m_head_pos()
+			else
+				target_pos = self._attention.pos
+			end
+
 			local shoot_from_pos = common_data.pos + math.UP * 160
 			local target_vec = target_pos - shoot_from_pos
 
@@ -62,7 +72,15 @@ end
 function CopActionReload:update(t)
 	if self._modifier_on then
 		local target_pos = nil
-		target_pos = self._attention.handler and self._attention.handler:get_attention_m_pos() or self._attention.unit and self._attention.unit:movement():m_head_pos() or self._attention.pos
+
+		if self._attention.handler then
+			target_pos = self._attention.handler:get_attention_m_pos()
+		elseif self._attention.unit then
+			target_pos = self._attention.unit:movement():m_head_pos()
+		else
+			target_pos = self._attention.pos
+		end
+
 		local shoot_from_pos = math.UP * 130
 
 		mvector3.add(shoot_from_pos, self._common_data.pos)
@@ -128,4 +146,3 @@ end
 function CopActionReload:need_upd()
 	return true
 end
-

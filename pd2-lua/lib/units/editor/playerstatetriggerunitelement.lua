@@ -18,4 +18,3 @@ function PlayerStateTriggerUnitElement:_build_panel(panel, panel_sizer)
 	self:_build_value_combobox(panel, panel_sizer, "state", managers.player:player_states(), "Select a state from the combobox")
 	self:_add_help_text("Set the player state the element should trigger on.")
 end
-

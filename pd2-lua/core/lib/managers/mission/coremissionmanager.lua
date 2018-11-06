@@ -185,10 +185,16 @@ function MissionManager:add_runned_unit_sequence_trigger(id, sequence, callback)
 		if self._runned_unit_sequences_callbacks[id][sequence] then
 			table.insert(self._runned_unit_sequences_callbacks[id][sequence], callback)
 		else
-			self._runned_unit_sequences_callbacks[id][sequence] = {callback}
+			self._runned_unit_sequences_callbacks[id][sequence] = {
+				callback
+			}
 		end
 	else
-		local t = {[sequence] = {callback}}
+		local t = {
+			[sequence] = {
+				callback
+			}
+		}
 		self._runned_unit_sequences_callbacks[id] = t
 	end
 end
@@ -281,24 +287,28 @@ function MissionManager:add_fading_debug_output(debug, color, as_subtitle)
 			" /"
 		}
 		self._fade_index = (self._fade_index or 0) + 1
-		self._fade_index = #stuff < self._fade_index and self._fade_index and 1 or self._fade_index
+		self._fade_index = self._fade_index > #stuff and self._fade_index and 1 or self._fade_index
 
 		self._fading_debug_output:script().log(stuff[self._fade_index] .. " " .. debug, color, nil)
 	end
 end
 
 function MissionManager:_show_debug_subtitle(debug, color)
-	self._debug_subtitle_text = self._debug_subtitle_text or self._workspace:panel():text({
-		font_size = 20,
-		wrap = true,
-		word_wrap = true,
-		align = "center",
-		font = "core/fonts/diesel",
-		halign = "center",
-		valign = "center",
-		text = debug,
-		color = color or Color.white
-	})
+	if not self._debug_subtitle_text then
+		slot3 = self._workspace:panel():text({
+			font_size = 20,
+			wrap = true,
+			word_wrap = true,
+			align = "center",
+			font = "core/fonts/diesel",
+			halign = "center",
+			valign = "center",
+			text = debug,
+			color = color or Color.white
+		})
+	end
+
+	self._debug_subtitle_text = slot3
 
 	self._debug_subtitle_text:set_w(self._workspace:panel():w() / 2)
 	self._debug_subtitle_text:set_text(debug)
@@ -377,6 +387,7 @@ function MissionManager:destroy()
 		script:destroy()
 	end
 end
+
 MissionScript = MissionScript or CoreClass.class(CoreEvent.CallbackHandler)
 MissionScript.imported_modules = MissionScript.imported_modules or {}
 
@@ -651,4 +662,3 @@ function MissionScript:destroy(...)
 
 	MissionScript.super.clear(self)
 end
-

@@ -15,4 +15,3 @@ function iff(t, a, b)
 		return b
 	end
 end
-

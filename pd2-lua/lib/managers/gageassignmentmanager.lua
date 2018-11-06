@@ -13,8 +13,9 @@ function GageAssignmentManager:_setup()
 	self._tweak_data = tweak_data.gage_assignment
 
 	if not Global.gage_assignment then
-		Global.gage_assignment = {}
-		Global.gage_assignment.visited_gage_crimenet = false
+		Global.gage_assignment = {
+			visited_gage_crimenet = false
+		}
 
 		self:_setup_assignments()
 	end
@@ -185,7 +186,9 @@ function GageAssignmentManager:on_mission_completed()
 end
 
 function GageAssignmentManager:debug_test_dialog_params(show_items)
-	self._global.dialog_params = {assignments = {}}
+	self._global.dialog_params = {
+		assignments = {}
+	}
 
 	for assignemnt, data in pairs(self._tweak_data:get_assignments()) do
 		self._global.dialog_params.assignments[assignemnt] = math.random(10) - 5
@@ -665,4 +668,3 @@ end
 
 function GageAssignmentManager:debug_show_units(persistance)
 end
-

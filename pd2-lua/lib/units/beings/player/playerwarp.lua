@@ -54,13 +54,14 @@ function WarpTargetMarker:set_orientation(position, rotation)
 	self._unit:set_rotation(rotation)
 	self._unit:set_moving(2)
 end
+
 PlayerWarp = PlayerWarp or class()
 local MAX_MOVEMENT_DISTANCE = 500
 local MAX_JUMP_DISTANCE = 450
 local MAX_TARGET_TO_RAY_DISTANCE = 600
 local MAX_JUMP_HEIGHT_THRESHOLD = 120
 local MIN_JUMP_TARGET_TO_WARP_THRESHOLD = 25
-local MAX_JUMP_HEIGHT = (tweak_data.player.movement_state.standard.movement.jump_velocity.z * tweak_data.player.movement_state.standard.movement.jump_velocity.z) / 1964
+local MAX_JUMP_HEIGHT = tweak_data.player.movement_state.standard.movement.jump_velocity.z * tweak_data.player.movement_state.standard.movement.jump_velocity.z / 1964
 PlayerWarp.TARGET_TYPE = 0
 
 function PlayerWarp:init(hand_unit)
@@ -98,7 +99,7 @@ function PlayerWarp:init(hand_unit)
 	self._range = MAX_MOVEMENT_DISTANCE
 	self._max_range = MAX_MOVEMENT_DISTANCE
 	self._max_jump_distance = MAX_JUMP_DISTANCE
-	self._jump_move_speed = MAX_JUMP_DISTANCE / ((2 * tweak_data.player.movement_state.standard.movement.jump_velocity.z) / 982)
+	self._jump_move_speed = MAX_JUMP_DISTANCE / (2 * tweak_data.player.movement_state.standard.movement.jump_velocity.z / 982)
 	self._enable_jump = false
 	self._dynamic_geometries = {
 		move = hand_unit:get_object(Idstring("g_dyn_move")),
@@ -117,7 +118,7 @@ end
 function PlayerWarp:show_ladder_marker(key, active)
 	local ladder_data = self._ladders[key]
 
-	if ladder_data.active and (self._active_ladder_key == key) == active then
+	if ladder_data.active and self._active_ladder_key == key == active then
 		return
 	end
 
@@ -170,7 +171,9 @@ function PlayerWarp:hide_markers()
 end
 
 function PlayerWarp:show_markers(...)
-	local args = {...}
+	local args = {
+		...
+	}
 	local nr_args = #args
 
 	for i = 1, #self._warp_markers, 1 do
@@ -201,7 +204,9 @@ function PlayerWarp:update_ladder_targeting()
 				local ladder_pos = going_down and ladder:ladder():top() or ladder:ladder():bottom()
 				local dis = mvector3.distance_sq(self._unit:position(), ladder_pos)
 				local ray = self._unit:raycast("ray", self._unit:position(), ladder_pos, "slot_mask", self._slotmask, "ray_type", "body walk")
-				self._ladders[ladder:key()] = self._ladders[ladder:key()] or {ladder = ladder}
+				self._ladders[ladder:key()] = self._ladders[ladder:key()] or {
+					ladder = ladder
+				}
 
 				if (not ray or mvector3.distance_sq(ray.position, ladder_pos) < 400) and (going_down or mvector3.dot(self._unit:rotation():y(), ladder:ladder():normal()) < 0) then
 					self._ladders[ladder:key()].going_down = going_down
@@ -268,7 +273,9 @@ local function brush_debug_print(brush, position, ysize, text_data)
 	local t = text_data
 
 	if type(t) == "string" then
-		t = {text_data}
+		t = {
+			text_data
+		}
 	end
 
 	for _, text in ipairs(t) do
@@ -311,7 +318,7 @@ function PlayerWarp:update(unit, t, dt)
 				local ladder_pos = ladder_data.going_down and ladder:top() or ladder:bottom()
 				local dis = mvector3.distance_sq(pos, ladder_pos)
 
-				if mvector3.dot(forward, (ladder_pos - pos):normalized()) > 0.95 then
+				if mvector3.dot(forward, ladder_pos - pos:normalized()) > 0.95 then
 					if not closest_ladder_data or dis < closest_ladder_data.dis then
 						closest_ladder_data = {
 							dis = dis,
@@ -370,8 +377,8 @@ function PlayerWarp:update(unit, t, dt)
 				"Max range: " .. tostring(math.round(self._max_range, 0.01)),
 				"Max jump: " .. tostring(math.round(self._max_jump_distance, 0.01)),
 				"Warp type: " .. tostring(warp_type),
-				"Distance: " .. tostring(math.round((self._target.position - ppos):length(), 0.01)),
-				"Elevation: " .. tostring(math.round((self._target.position - ppos).z, 0.01))
+				"Distance: " .. tostring(math.round(self._target.position - ppos:length(), 0.01)),
+				"Elevation: " .. tostring(math.round(self._target.position - ppos.z, 0.01))
 			}
 			local dir = self._target.position - ppos
 
@@ -382,7 +389,7 @@ function PlayerWarp:update(unit, t, dt)
 
 			mvector3.cross(right, dir, math.UP)
 
-			local text_pos = (ppos + dir * math.min(distance, 200)) - right * 10 + dir * 30
+			local text_pos = ppos + dir * math.min(distance, 200) - right * 10 + dir * 30
 
 			mvector3.set_z(text_pos, self._target.position.z + 50)
 			brush_debug_print(self._brush_text, text_pos - right * 10, 5, info)
@@ -475,7 +482,7 @@ function PlayerWarp:_draw(brush, geo, unit_pos)
 		geo:set_local_rotation(Rotation(dir, Vector3(0, 0, 1)))
 		geo:bezier_cylinder(Vector3(0, 0, 0), math.Y, math.Z, Vector3(length, 0, 0), Vector3(length * 0.5, 0, 0), Vector3(length * 0.5, 0, 0), Vector3(0, 0, 0), 1, 10, Color(1, 1, 1, 1))
 	elseif PlayerWarp.TARGET_TYPE == 1 and self._target.position then
-		self:_draw_bezier(brush, unit_pos, self._target.position, (self._aim_position - unit_pos):normalized())
+		self:_draw_bezier(brush, unit_pos, self._target.position, self._aim_position - unit_pos:normalized())
 	elseif PlayerWarp.TARGET_TYPE == 2 and self._target.position then
 		local v = (self._target.position - self._player_unit:position()) * 0.5 + Vector3(0, 0, 50)
 
@@ -681,4 +688,3 @@ function PlayerWarp:_check_snap_point(position, forward, sp)
 
 	return false
 end
-

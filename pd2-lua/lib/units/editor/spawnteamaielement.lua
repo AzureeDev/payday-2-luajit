@@ -19,7 +19,8 @@ function SpawnTeamAIUnitElement:_build_panel(panel, panel_sizer)
 		table.insert(characters, data.name)
 	end
 
-	self:_build_value_combobox(panel, panel_sizer, "character", table.list_add({"any"}, characters))
+	self:_build_value_combobox(panel, panel_sizer, "character", table.list_add({
+		"any"
+	}, characters))
 	self:_add_help_text("Spawns a team AI if possible. NOTE: If a character is provided and it's not available it will not be spawned at all!")
 end
-

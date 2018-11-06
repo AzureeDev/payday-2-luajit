@@ -330,7 +330,12 @@ function HUDChat:update_caret()
 	local x, y, w, h = text:selection_rect()
 
 	if s == 0 and e == 0 then
-		x = text:align() == "center" and text:world_x() + text:w() / 2 or text:world_x()
+		if text:align() == "center" then
+			x = text:world_x() + text:w() / 2
+		else
+			x = text:world_x()
+		end
+
 		y = text:world_y()
 	end
 
@@ -613,14 +618,14 @@ function HUDChat:_animate_fade_output()
 	local fade_t = 1
 	local t = 0
 
-	while t < wait_t do
+	while wait_t > t do
 		local dt = coroutine.yield()
 		t = t + dt
 	end
 
 	local t = 0
 
-	while t < fade_t do
+	while fade_t > t do
 		local dt = coroutine.yield()
 		t = t + dt
 
@@ -649,7 +654,7 @@ function HUDChat:_animate_hide_input(input_panel)
 	local TOTAL_T = 0.25
 	local t = 0
 
-	while t < TOTAL_T do
+	while TOTAL_T > t do
 		local dt = coroutine.yield()
 		t = t + dt
 
@@ -685,4 +690,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDChatVR")
 end
-

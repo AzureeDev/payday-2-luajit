@@ -36,7 +36,7 @@ function StoryMissionsGui:init(ws, fullscreen_ws, node)
 		x = padding,
 		y = y,
 		w = self:w() - padding * 2,
-		h = (self:h() - y) - massive_font_size
+		h = self:h() - y - massive_font_size
 	})
 
 	if not managers.menu:is_pc_controller() then
@@ -51,7 +51,9 @@ function StoryMissionsGui:init(ws, fullscreen_ws, node)
 			{
 				id = "select",
 				enabled = false,
-				text = managers.localization:to_upper_text("menu_legend_claim_reward", {BTN_Y = managers.localization:key_to_btn_text("a", true)})
+				text = managers.localization:to_upper_text("menu_legend_claim_reward", {
+					BTN_Y = managers.localization:key_to_btn_text("a", true)
+				})
 			},
 			{
 				enabled = false,
@@ -70,26 +72,36 @@ function StoryMissionsGui:init(ws, fullscreen_ws, node)
 		w = self._main_panel:w() * 0.25
 	})
 
-	BoxGuiObject:new(ExtendedPanel:new(self._side_scroll, {layer = 100}), {sides = {
-		1,
-		1,
-		2,
-		2
-	}})
+	BoxGuiObject:new(ExtendedPanel:new(self._side_scroll, {
+		layer = 100
+	}), {
+		sides = {
+			1,
+			1,
+			2,
+			2
+		}
+	})
 
 	self._info_scroll = ScrollableList:new(self._main_panel, {
 		padding = 5,
 		input = true,
 		x = self._side_scroll:right() + padding,
-		w = (self._main_panel:w() - self._side_scroll:w()) - padding
-	}, {padding_y = 10})
+		w = self._main_panel:w() - self._side_scroll:w() - padding
+	}, {
+		padding_y = 10
+	})
 
-	BoxGuiObject:new(ExtendedPanel:new(self._info_scroll, {layer = 100}), {sides = {
-		1,
-		1,
-		2,
-		2
-	}})
+	BoxGuiObject:new(ExtendedPanel:new(self._info_scroll, {
+		layer = 100
+	}), {
+		sides = {
+			1,
+			1,
+			2,
+			2
+		}
+	})
 	self:_add_title()
 	self:_add_back_button()
 	self:_update_side()
@@ -270,12 +282,14 @@ function StoryMissionsGui:_update_info(mission)
 			h = h
 		})
 
-		BoxGuiObject:new(self._voice.panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(self._voice.panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 
 		self._voice.text = self._voice.panel:text({
 			x = pad,
@@ -290,7 +304,9 @@ function StoryMissionsGui:_update_info(mission)
 			x = pad,
 			font = small_font,
 			font_size = small_font_size,
-			text = managers.localization:to_upper_text("menu_stop_sound", {BTN_X = managers.localization:btn_macro("menu_toggle_voice_message")})
+			text = managers.localization:to_upper_text("menu_stop_sound", {
+				BTN_X = managers.localization:btn_macro("menu_toggle_voice_message")
+			})
 		}, callback(self, self, "toggle_voice_message", mission.voice_line))
 
 		self._voice.button:set_bottom(self._voice.panel:h() - pad)
@@ -387,13 +403,16 @@ function StoryMissionsGui:_update_info(mission)
 						font_size = small_font_size,
 						color = text_col
 					}, objective.progress), nil, 0)
-					local box = BoxGuiObject:new(progress, {sides = {
-						1,
-						1,
-						1,
-						1
-					}})
+					slot20 = BoxGuiObject:new(progress, {
+						sides = {
+							1,
+							1,
+							1,
+							1
+						}
+					})
 				else
+					local texture = "guis/textures/menu_tickbox"
 					local texture_rect = {
 						objective.completed and 24 or 0,
 						0,
@@ -401,7 +420,7 @@ function StoryMissionsGui:_update_info(mission)
 						24
 					}
 					local checkbox = canvas:bitmap({
-						texture = "guis/textures/menu_tickbox",
+						texture = texture,
 						texture_rect = texture_rect
 					})
 
@@ -439,7 +458,9 @@ function StoryMissionsGui:_update_info(mission)
 			font_size = small_font_size,
 			color = tweak_data.screen_colors.challenge_title
 		}))
-		local r_panel = GrowPanel:new(canvas, {input = true})
+		local r_panel = GrowPanel:new(canvas, {
+			input = true
+		})
 		local r_placer = r_panel:placer()
 
 		for i, reward in ipairs(mission.rewards) do
@@ -452,12 +473,14 @@ function StoryMissionsGui:_update_info(mission)
 			end
 		end
 
-		BoxGuiObject:new(r_panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(r_panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 		placer:add_row(r_panel, nil, 0)
 		r_panel:set_right(canvas:w())
 
@@ -494,7 +517,9 @@ function StoryMissionsGui:_update_info(mission)
 						self:_update()
 					end
 				}
-				dialog_data.button_list = {ok_button}
+				dialog_data.button_list = {
+					ok_button
+				}
 
 				managers.system_menu:show(dialog_data)
 			end))
@@ -531,7 +556,9 @@ function StoryMissionsGui:toggle_voice_message(message)
 	if managers.briefing:event_playing() then
 		managers.briefing:stop_event()
 		self._voice.text:set_text(managers.localization:to_upper_text("menu_cn_message_stopped"))
-		self._voice.button:set_text(managers.localization:to_upper_text("menu_play_sound", {BTN_X = managers.localization:btn_macro("menu_toggle_voice_message")}))
+		self._voice.button:set_text(managers.localization:to_upper_text("menu_play_sound", {
+			BTN_X = managers.localization:btn_macro("menu_toggle_voice_message")
+		}))
 	elseif message then
 		managers.briefing:post_event(message, {
 			show_subtitle = false,
@@ -542,7 +569,9 @@ function StoryMissionsGui:toggle_voice_message(message)
 			}
 		})
 		self._voice.text:set_text(managers.localization:to_upper_text("menu_cn_message_playing"))
-		self._voice.button:set_text(managers.localization:to_upper_text("menu_stop_sound", {BTN_X = managers.localization:btn_macro("menu_toggle_voice_message")}))
+		self._voice.button:set_text(managers.localization:to_upper_text("menu_stop_sound", {
+			BTN_X = managers.localization:btn_macro("menu_toggle_voice_message")
+		}))
 	end
 end
 
@@ -553,7 +582,9 @@ function StoryMissionsGui:sound_event_callback(event_type, duration)
 
 	if event_type == "end_of_event" then
 		self._voice.text:set_text(managers.localization:to_upper_text("menu_cn_message_stopped"))
-		self._voice.button:set_text(managers.localization:to_upper_text("menu_play_sound", {BTN_X = managers.localization:btn_macro("menu_toggle_voice_message")}))
+		self._voice.button:set_text(managers.localization:to_upper_text("menu_play_sound", {
+			BTN_X = managers.localization:btn_macro("menu_toggle_voice_message")
+		}))
 	end
 end
 
@@ -590,7 +621,12 @@ function StoryMissionsGui:_change_selected_level(axis)
 			return
 		end
 
-		index = axis < 0 and index - 1 or index + 1
+		if axis < 0 then
+			index = index - 1
+		else
+			index = index + 1
+		end
+
 		index = index % #self._level_btns + 1
 
 		self._selected_level_btn:_hover_changed(false)
@@ -626,6 +662,7 @@ end
 function StoryMissionsGui:input_focus()
 	return alive(self._panel) and self._panel:visible() and 1
 end
+
 StoryMissionsGuiSidebarItem = StoryMissionsGuiSidebarItem or class(ExtendedPanel)
 
 function StoryMissionsGuiSidebarItem:init(panel, parameters)
@@ -701,7 +738,9 @@ function StoryMissionGuiRewardItem:init(panel, reward_data, config)
 
 	if reward_data[1] == "safehouse_coins" then
 		texture_path = "guis/dlcs/chill/textures/pd2/safehouse/continental_coins_drop"
-		reward_string = managers.localization:text("menu_es_safehouse_reward_coins", {amount = managers.experience:cash_string(reward_data[2], "")})
+		reward_string = managers.localization:text("menu_es_safehouse_reward_coins", {
+			amount = managers.experience:cash_string(reward_data[2], "")
+		})
 	elseif reward_data.choose_weapon_reward then
 		texture_path = "guis/textures/pd2/icon_modbox_df"
 		reward_string = managers.localization:text("menu_challenge_choose_weapon_mod")
@@ -787,4 +826,3 @@ end
 function StoryMissionGuiRewardItem:mouse_moved(button, x, y)
 	self._text:set_visible(self:inside(x, y))
 end
-

@@ -35,7 +35,9 @@ function CrimeSpreeDetailsMenuComponent:_setup(is_start_page, component_data)
 
 	CrimeSpreeDetailsMenuComponent.super._setup(self, is_start_page, component_data)
 
-	self._safe_panel = self._ws:panel():panel({layer = self._init_layer})
+	self._safe_panel = self._ws:panel():panel({
+		layer = self._init_layer
+	})
 	local is_host = Network:is_server() or Global.game_settings.single_player
 
 	if not is_host and managers.crime_spree:in_progress() then
@@ -62,7 +64,9 @@ end
 function CrimeSpreeDetailsMenuComponent:_start_page_data()
 	local data = {}
 	local topic_id = "cn_crime_spree_level"
-	local topic_params = {level = managers.experience:cash_string(tonumber(managers.crime_spree:server_spree_level() or 0), "")}
+	local topic_params = {
+		level = managers.experience:cash_string(tonumber(managers.crime_spree:server_spree_level() or 0), "")
+	}
 
 	if not managers.crime_spree:in_progress() then
 		topic_id = "cn_crime_spree"
@@ -76,7 +80,9 @@ function CrimeSpreeDetailsMenuComponent:_start_page_data()
 		color = tweak_data.screen_colors.crime_spree_risk
 	}
 	data.subtopic_id = "cn_crime_spree_my_level"
-	data.subtopic_params = {level = managers.experience:cash_string(managers.crime_spree:spree_level(), "")}
+	data.subtopic_params = {
+		level = managers.experience:cash_string(managers.crime_spree:spree_level(), "")
+	}
 	data.subtopic_range_color = {
 		from = utf8.len(managers.localization:text("cn_crime_spree_my_level_no_num")),
 		to = utf8.len(managers.localization:text(data.subtopic_id, data.subtopic_params)),
@@ -281,12 +287,14 @@ function CrimeSpreeDetailsMenuComponent:show_new_modifier(modifier_id)
 		halign = "scale",
 		color = Color.black
 	})
-	BoxGuiObject:new(self._modifier_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._modifier_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local title = self._modifier_panel:text({
 		name = "title",
@@ -326,7 +334,7 @@ function CrimeSpreeDetailsMenuComponent:show_new_modifier(modifier_id)
 		font_size = tweak_data.menu.pd2_small_font_size,
 		font = tweak_data.menu.pd2_small_font,
 		color = tweak_data.screen_colors.text,
-		w = (self._modifier_panel:w() - padding * 3) - image:w()
+		w = self._modifier_panel:w() - padding * 3 - image:w()
 	})
 
 	self:make_fine_text(desc)
@@ -362,6 +370,7 @@ function CrimeSpreeDetailsMenuComponent:fade_out_modifier(o)
 		o:set_y(math.lerp(start_y, end_y, p))
 	end)
 end
+
 CrimeSpreeDetailsPage = CrimeSpreeDetailsPage or class(CustomSafehouseGuiPage)
 
 function CrimeSpreeDetailsPage:init(...)
@@ -379,4 +388,3 @@ end
 
 function CrimeSpreeDetailsPage:perform_update()
 end
-

@@ -37,4 +37,3 @@ function ElementInvulnerable:make_unit_invulnerable(unit)
 		unit:character_damage():set_immortal(self._values.immortal)
 	end
 end
-

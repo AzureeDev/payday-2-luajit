@@ -60,6 +60,7 @@ local function hide_static_engine_method(engine_class_name, method_name, message
 	method_table[method_name] = function ()
 		error(string.format("%s:%s(...) has been hidden by core. %s", engine_class_name, method_name, message or "You should not call it directly."))
 	end
+
 	local class_table = assert(get_class_table(engine_class_name))
 
 	return function (...)
@@ -77,4 +78,3 @@ if not __required then
 	_editor_reload_node = hide_static_engine_method("PackageManager", "editor_reload_node")
 	_editor_unit_data = hide_static_engine_method("PackageManager", "editor_unit_data")
 end
-

@@ -12,4 +12,3 @@ end
 
 function None:transition()
 end
-

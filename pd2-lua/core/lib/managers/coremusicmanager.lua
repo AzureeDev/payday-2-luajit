@@ -2,9 +2,10 @@ CoreMusicManager = CoreMusicManager or class()
 
 function CoreMusicManager:init()
 	if not Global.music_manager then
-		Global.music_manager = {}
-		Global.music_manager.source = SoundDevice:create_source("music")
-		Global.music_manager.volume = 0
+		Global.music_manager = {
+			source = SoundDevice:create_source("music"),
+			volume = 0
+		}
 
 		self:init_globals()
 	end
@@ -162,4 +163,3 @@ function CoreMusicManager:load(data)
 
 	Global.music_manager.synced_track = state.track
 end
-

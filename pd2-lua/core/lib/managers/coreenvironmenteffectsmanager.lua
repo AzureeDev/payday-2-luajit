@@ -175,7 +175,9 @@ function EnvironmentEffectsManager:_kill_mission_effect(name, type)
 end
 
 function EnvironmentEffectsManager:save(data)
-	local state = {mission_effects = {}}
+	local state = {
+		mission_effects = {}
+	}
 
 	for name, effects in pairs(self._mission_effects) do
 		state.mission_effects[name] = {}
@@ -199,6 +201,7 @@ function EnvironmentEffectsManager:load(data)
 		end
 	end
 end
+
 EnvironmentEffect = EnvironmentEffect or class()
 
 function EnvironmentEffect:init(default)
@@ -220,4 +223,3 @@ end
 function EnvironmentEffect:default()
 	return self._default
 end
-

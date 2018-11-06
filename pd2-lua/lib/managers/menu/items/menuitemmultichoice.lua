@@ -207,13 +207,17 @@ end
 
 function MenuItemMultiChoice:setup_gui(node, row_item)
 	local right_align = node:_right_align()
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.gui_text = node:_text_item_part(row_item, row_item.gui_panel, right_align, row_item.align)
 
 	row_item.gui_text:set_wrap(true)
 	row_item.gui_text:set_word_wrap(true)
 
-	row_item.choice_panel = row_item.gui_panel:panel({w = node.item_panel:w()})
+	row_item.choice_panel = row_item.gui_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.choice_text = row_item.choice_panel:text({
 		vertical = "center",
 		y = 0,
@@ -429,6 +433,7 @@ function MenuItemMultiChoice:fade_row_item(node, row_item, mouse_over)
 
 	return true
 end
+
 local xl_pad = 64
 
 function MenuItemMultiChoice:_layout(node, row_item)
@@ -508,6 +513,7 @@ function MenuItemMultiChoice:_layout(node, row_item)
 
 	return true
 end
+
 MenuItemMultiChoiceWithIcon = MenuItemMultiChoiceWithIcon or class(MenuItemMultiChoice)
 
 function MenuItemMultiChoiceWithIcon:init(data_node, parameters, ...)
@@ -592,4 +598,3 @@ function MenuItemMultiChoice:popup_choice(row_item)
 
 	managers.system_menu:show_buttons(dialog_data)
 end
-

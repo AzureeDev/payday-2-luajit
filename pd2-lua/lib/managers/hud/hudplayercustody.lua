@@ -86,7 +86,7 @@ function HUDPlayerCustody:init(hud)
 	local _, _, w, h = trade_text1:text_rect()
 
 	trade_text1:set_h(h)
-	trade_text1:set_y((self._hud_panel:h() - 152) - 80)
+	trade_text1:set_y(self._hud_panel:h() - 152 - 80)
 
 	local level_id = Global.level_data and Global.level_data.level_id
 	local level_tweak = tweak_data.levels[level_id]
@@ -138,7 +138,9 @@ function HUDPlayerCustody:set_civilians_killed(amount)
 	local amount_text = (amount < 10 and "0" or "") .. amount
 	local civilians_killed = self._hud_panel:child("custody_panel"):child("civilians_killed")
 
-	civilians_killed:set_text(utf8.to_upper(managers.localization:text("hud_civilians_killed", {AMOUNT = tostring(amount_text)})))
+	civilians_killed:set_text(utf8.to_upper(managers.localization:text("hud_civilians_killed", {
+		AMOUNT = tostring(amount_text)
+	})))
 end
 
 function HUDPlayerCustody:set_trade_delay(time)
@@ -150,7 +152,9 @@ function HUDPlayerCustody:set_trade_delay(time)
 	local time_text = self:_get_time_text(time)
 	local trade_delay = self._hud_panel:child("custody_panel"):child("trade_delay")
 
-	trade_delay:set_text(utf8.to_upper(managers.localization:text("hud_trade_delay", {TIME = tostring(time_text)})))
+	trade_delay:set_text(utf8.to_upper(managers.localization:text("hud_trade_delay", {
+		TIME = tostring(time_text)
+	})))
 end
 
 function HUDPlayerCustody:set_trade_delay_visible(visible)
@@ -207,4 +211,3 @@ function HUDPlayerCustody:set_respawn_type(is_ai_trade)
 		self._last_respawn_type_is_ai_trade = is_ai_trade
 	end
 end
-

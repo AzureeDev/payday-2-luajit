@@ -85,7 +85,12 @@ function MotionPathPathFinder:_get_unit(unit_id)
 	local unit = self._graph_units[unit_id]
 
 	if not unit then
-		unit = Application:editor() and managers.editor:unit_with_id(unit_id) or managers.worlddefinition:get_unit(unit_id)
+		if Application:editor() then
+			unit = managers.editor:unit_with_id(unit_id)
+		else
+			unit = managers.worlddefinition:get_unit(unit_id)
+		end
+
 		self._graph_units[unit_id] = unit
 	end
 
@@ -113,9 +118,11 @@ function MotionPathPathFinder:find_path(start_pos, end_pos)
 	local last_path = end_node.path
 	local current_node = end_node
 
-	while current_node and start_node.path ~= current_node.path do
-		last_path = current_node.path
-		current_node = current_node.came_from
+	if current_node then
+		while current_node and start_node.path ~= current_node.path do
+			last_path = current_node.path
+			current_node = current_node.came_from
+		end
 	end
 
 	return last_path
@@ -231,4 +238,3 @@ function MotionPathPathFinder:_get_best_node(open_nodes)
 
 	return best_node
 end
-

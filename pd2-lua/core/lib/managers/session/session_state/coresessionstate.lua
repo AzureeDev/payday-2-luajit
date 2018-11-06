@@ -50,4 +50,3 @@ end
 function SessionState:session_info()
 	return self._session_info
 end
-

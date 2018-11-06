@@ -8,7 +8,9 @@ MutatorFriendlyFire.reductions = {
 	exp = 0
 }
 MutatorFriendlyFire.disables_achievements = true
-MutatorFriendlyFire.categories = {"gameplay"}
+MutatorFriendlyFire.categories = {
+	"gameplay"
+}
 MutatorFriendlyFire.icon_coords = {
 	3,
 	1
@@ -100,4 +102,3 @@ end
 function MutatorFriendlyFire:options_fill()
 	return self:_get_percentage_fill(self:_min_damage(), self:_max_damage(), self:get_friendly_fire_damage_multiplier())
 end
-

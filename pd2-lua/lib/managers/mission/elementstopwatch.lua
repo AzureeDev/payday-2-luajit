@@ -168,6 +168,7 @@ function ElementStopwatch:enable_trigger(id)
 		self._triggers[id].disabled = false
 	end
 end
+
 ElementStopwatchOperator = ElementStopwatchOperator or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementStopwatchOperator:init(...)
@@ -249,6 +250,7 @@ function ElementStopwatchOperator:_save_value_ok(new_time, saved_time)
 
 	return false
 end
+
 ElementStopwatchTrigger = ElementStopwatchTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementStopwatchTrigger:init(...)
@@ -294,6 +296,7 @@ function ElementStopwatchTrigger:set_enabled(enabled)
 
 	ElementStopwatchTrigger.super.set_enabled(self, enabled)
 end
+
 ElementStopwatchFilter = ElementStopwatchFilter or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementStopwatchFilter:init(...)
@@ -371,4 +374,3 @@ function ElementStopwatchFilter:_check_time(element, value)
 
 	return false
 end
-

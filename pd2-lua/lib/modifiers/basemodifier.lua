@@ -17,4 +17,3 @@ function BaseModifier:value(id)
 
 	return self._data[id]
 end
-

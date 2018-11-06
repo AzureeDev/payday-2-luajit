@@ -5,7 +5,9 @@ function SideJobsGui:init(...)
 end
 
 function SideJobsGui:_setup(is_start_page)
-	local component_data = {topic_id = "menu_side_jobs_title"}
+	local component_data = {
+		topic_id = "menu_side_jobs_title"
+	}
 
 	SideJobsGui.super._setup(self, is_start_page, component_data)
 	self:tabs_panel():set_visible(false)
@@ -18,4 +20,3 @@ function SideJobsGui:populate_tabs_data(tabs_data)
 		page_class = "CustomSafehouseGuiPageDaily"
 	})
 end
-

@@ -13,17 +13,18 @@ end
 
 function UpgradesManager:_setup()
 	if not Global.upgrades_manager then
-		Global.upgrades_manager = {}
-		Global.upgrades_manager.aquired = {}
-		Global.upgrades_manager.automanage = false
-		Global.upgrades_manager.progress = {
-			0,
-			0,
-			0,
-			0
+		Global.upgrades_manager = {
+			aquired = {},
+			automanage = false,
+			progress = {
+				0,
+				0,
+				0,
+				0
+			},
+			target_tree = self:_autochange_tree(),
+			disabled_visual_upgrades = {}
 		}
-		Global.upgrades_manager.target_tree = self:_autochange_tree()
-		Global.upgrades_manager.disabled_visual_upgrades = {}
 	end
 
 	self._global = Global.upgrades_manager
@@ -548,7 +549,9 @@ function UpgradesManager:get_value(upgrade_id, ...)
 
 		return is_default_weapon, weapon_level, weapon_id ~= new_weapon_id
 	elseif upgrade.category == "melee_weapon" then
-		local params = {...}
+		local params = {
+			...
+		}
 		local default_id = params[1] or managers.blackmarket and managers.blackmarket:get_category_default("melee_weapon") or "weapon"
 		local melee_weapon_id = upgrade_id
 		local is_default_weapon = melee_weapon_id == default_id
@@ -566,7 +569,9 @@ function UpgradesManager:get_value(upgrade_id, ...)
 
 		return is_default_weapon, melee_weapon_level
 	elseif upgrade.category == "grenade" then
-		local params = {...}
+		local params = {
+			...
+		}
 		local default_id = params[1] or managers.blackmarket and managers.blackmarket:get_category_default("grenade") or "weapon"
 		local grenade_id = upgrade_id
 		local is_default_weapon = grenade_id == default_id
@@ -603,7 +608,9 @@ end
 function UpgradesManager:get_upgrade_locks(upgrade_id)
 	local upgrade = tweak_data.upgrades.definitions[upgrade_id]
 
-	return {dlc = upgrade.dlc}
+	return {
+		dlc = upgrade.dlc
+	}
 end
 
 function UpgradesManager:is_upgrade_locked(upgrade_id)
@@ -835,7 +842,9 @@ function UpgradesManager:print_aquired_tree()
 	local tree = {}
 
 	for name, data in pairs(self._global.aquired) do
-		tree[data.level] = {name = name}
+		tree[data.level] = {
+			name = name
+		}
 	end
 
 	for i, data in pairs(tree) do
@@ -976,4 +985,3 @@ function UpgradesManager:reset()
 
 	self:_setup()
 end
-

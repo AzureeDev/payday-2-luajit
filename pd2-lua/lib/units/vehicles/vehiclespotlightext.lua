@@ -52,7 +52,7 @@ function VehicleSpotlightExt:update(unit, t, dt)
 	end
 
 	local target_direction = nil
-	target_direction = alive(self._target) and self._target:position() or self._neutral_direction or Vector3(0, 0, 0)
+	target_direction = (not alive(self._target) or self._target:position()) and (self._neutral_direction or Vector3(0, 0, 0))
 
 	for _, obj_pair in ipairs(self._objects) do
 		local obj = obj_pair[1]
@@ -107,4 +107,3 @@ function VehicleSpotlightExt:find_new_target()
 
 	return best_target[1]
 end
-

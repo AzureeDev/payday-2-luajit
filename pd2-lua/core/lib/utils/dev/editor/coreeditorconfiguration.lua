@@ -1,4 +1,3 @@
-
 function CoreEditor:build_configuration()
 	self._config = {}
 	local frame_size_height = 400
@@ -242,7 +241,14 @@ function CoreEditor:on_configuration_apply()
 	for value, data in pairs(self._config) do
 		local ctrlr = data.ctrlr or data
 		local changed = false
-		self[value] = type(self[value]) == "number" and (self[value] ~= tonumber(ctrlr:get_value()) or tonumber(ctrlr:get_value())) or self[value] ~= ctrlr:get_value() or ctrlr:get_value()
+
+		if type(self[value]) == "number" then
+			changed = self[value] ~= tonumber(ctrlr:get_value())
+			self[value] = tonumber(ctrlr:get_value())
+		else
+			changed = self[value] ~= ctrlr:get_value()
+			self[value] = ctrlr:get_value()
+		end
 
 		if data.callback then
 			data.callback(changed, self[value])
@@ -255,4 +261,3 @@ function CoreEditor:on_configuration_apply()
 		managers.slave:set_batch_count(self._slave_num_batches)
 	end
 end
-

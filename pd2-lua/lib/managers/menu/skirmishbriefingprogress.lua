@@ -53,7 +53,7 @@ function SkirmishBriefingProgress:redraw()
 	for i = 0, wave_diff, 1 do
 		local wave_number = start_wave + i
 		local wave_progress = i / wave_diff
-		local color = wave_progress <= progress and tweak_data.screen_colors.skirmish_color or tweak_data.screen_colors.text:with_alpha(0.4)
+		local color = progress >= wave_progress and tweak_data.screen_colors.skirmish_color or tweak_data.screen_colors.text:with_alpha(0.4)
 		local wave_indicator = nil
 
 		if wave_number == start_wave or wave_number == end_wave or wave_number == current_wave then
@@ -76,6 +76,7 @@ function SkirmishBriefingProgress:redraw()
 		wave_indicator:set_center_x(progress_bar:x() + progress_bar:width() * wave_progress)
 	end
 end
+
 SkirmishProgressWaveNumber = SkirmishProgressWaveNumber or class(GUIObjectWrapper)
 
 function SkirmishProgressWaveNumber:init(parent, config)
@@ -108,4 +109,3 @@ function SkirmishProgressWaveNumber:init(parent, config)
 	panel:set_width(width)
 	panel:set_height(arrow:bottom())
 end
-

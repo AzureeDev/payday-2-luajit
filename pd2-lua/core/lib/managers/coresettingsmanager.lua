@@ -73,4 +73,3 @@ function SettingsManager:_inspect(value)
 		error("Unable to inspect type \"" .. t .. "\".")
 	end
 end
-

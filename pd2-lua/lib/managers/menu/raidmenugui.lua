@@ -116,26 +116,32 @@ function RaidMenuGui:preview_erma()
 end
 
 function RaidMenuGui:preview_push()
-	managers.menu:open_node("raid_weapon_preview_node", {{
-		category = "melee",
-		item_id = "push"
-	}})
+	managers.menu:open_node("raid_weapon_preview_node", {
+		{
+			category = "melee",
+			item_id = "push"
+		}
+	})
 	managers.blackmarket:preview_melee_weapon("push")
 end
 
 function RaidMenuGui:preview_grip()
-	managers.menu:open_node("raid_weapon_preview_node", {{
-		category = "melee",
-		item_id = "grip"
-	}})
+	managers.menu:open_node("raid_weapon_preview_node", {
+		{
+			category = "melee",
+			item_id = "grip"
+		}
+	})
 	managers.blackmarket:preview_melee_weapon("grip")
 end
 
 function RaidMenuGui:_open_preview_node(data)
-	managers.menu:open_node("raid_weapon_preview_node", {{
-		item_id = data.id,
-		category = data.category
-	}})
+	managers.menu:open_node("raid_weapon_preview_node", {
+		{
+			item_id = data.id,
+			category = data.category
+		}
+	})
 end
 
 function RaidMenuGui:preview_jfr_01()
@@ -156,9 +162,10 @@ end
 
 function RaidMenuGui:_preview_mask(mask_id)
 	managers.blackmarket:view_mask_with_mask_id(mask_id)
-	managers.menu:open_node("raid_weapon_preview_node", {{
-		category = "mask",
-		item_id = mask_id
-	}})
+	managers.menu:open_node("raid_weapon_preview_node", {
+		{
+			category = "mask",
+			item_id = mask_id
+		}
+	})
 end
-

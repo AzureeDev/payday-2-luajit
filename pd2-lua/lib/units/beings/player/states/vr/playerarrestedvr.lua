@@ -24,6 +24,7 @@ function PlayerArrestedVR:destroy()
 
 	__destroy(self)
 end
+
 local mvec_pos_new = Vector3()
 local mvec_hmd_delta = Vector3()
 
@@ -64,7 +65,7 @@ function PlayerArrestedVR:_update_check_actions(t, dt)
 		self._equip_weapon_expire_t = nil
 	end
 
-	if self._unequip_weapon_expire_t and self._unequip_weapon_expire_t + 0.5 <= t then
+	if self._unequip_weapon_expire_t and t >= self._unequip_weapon_expire_t + 0.5 then
 		self._unequip_weapon_expire_t = nil
 	end
 
@@ -105,4 +106,3 @@ function PlayerArrestedVR:set_belt_and_hands_enabled(enabled)
 		end
 	end
 end
-

@@ -176,42 +176,46 @@ CopActionHurt.death_anim_fe_variants = {
 }
 CopActionHurt.hurt_anim_variants_highest_num = 21
 CopActionHurt.hurt_anim_variants = {
-	hurt = {not_crouching = {
-		fwd = {
-			high = 13,
-			low = 5
-		},
-		bwd = {
-			high = 5,
-			low = 2
-		},
-		l = {
-			high = 5,
-			low = 2
-		},
-		r = {
-			high = 5,
-			low = 2
+	hurt = {
+		not_crouching = {
+			fwd = {
+				high = 13,
+				low = 5
+			},
+			bwd = {
+				high = 5,
+				low = 2
+			},
+			l = {
+				high = 5,
+				low = 2
+			},
+			r = {
+				high = 5,
+				low = 2
+			}
 		}
-	}},
-	heavy_hurt = {not_crouching = {
-		fwd = {
-			high = 21,
-			low = 7
-		},
-		bwd = {
-			high = 14,
-			low = 7
-		},
-		l = {
-			high = 11,
-			low = 4
-		},
-		r = {
-			high = 11,
-			low = 4
+	},
+	heavy_hurt = {
+		not_crouching = {
+			fwd = {
+				high = 21,
+				low = 7
+			},
+			bwd = {
+				high = 14,
+				low = 7
+			},
+			l = {
+				high = 11,
+				low = 4
+			},
+			r = {
+				high = 11,
+				low = 4
+			}
 		}
-	}},
+	},
 	expl_hurt = {
 		bwd = 15,
 		l = 13,
@@ -225,7 +229,9 @@ CopActionHurt.hurt_anim_variants = {
 		r = 7
 	}
 }
-CopActionHurt.running_hurt_anim_variants = {fwd = 14}
+CopActionHurt.running_hurt_anim_variants = {
+	fwd = 14
+}
 CopActionHurt.shield_knock_variants = 5
 ShieldActionHurt = ShieldActionHurt or class(CopActionHurt)
 ShieldActionHurt.hurt_anim_variants = deep_clone(CopActionHurt.hurt_anim_variants)
@@ -310,7 +316,12 @@ function CopActionHurt:init(action_desc, common_data)
 	elseif action_type == "fire_hurt" or action_type == "light_hurt" and action_desc.variant == "fire" then
 		local char_tweak = tweak_data.character[self._unit:base()._tweak_table]
 		local use_animation_on_fire_damage = nil
-		use_animation_on_fire_damage = char_tweak.use_animation_on_fire_damage == nil and true or char_tweak.use_animation_on_fire_damage
+
+		if char_tweak.use_animation_on_fire_damage == nil then
+			use_animation_on_fire_damage = true
+		else
+			use_animation_on_fire_damage = char_tweak.use_animation_on_fire_damage
+		end
 
 		if start_dot_dance_antimation then
 			if ignite_character == "dragonsbreath" then
@@ -328,7 +339,7 @@ function CopActionHurt:init(action_desc, common_data)
 
 						if fwd_dot < 0 then
 							local hit_pos = action_desc.hit_pos
-							local hit_vec = (hit_pos - common_data.pos):with_z(0):normalized()
+							local hit_vec = hit_pos - common_data.pos:with_z(0):normalized()
 
 							if mvector3.dot(hit_vec, common_data.right) > 0 then
 								dir_str = "r"
@@ -353,7 +364,18 @@ function CopActionHurt:init(action_desc, common_data)
 			redir_res = self._ext_movement:play_redirect("taser")
 			local variant = self:_pseudorandom(4)
 			local dir_str = nil
-			dir_str = variant == 1 and "var1" or variant == 2 and "var2" or variant == 3 and "var3" or variant == 4 and "var4" or "fwd"
+
+			if variant == 1 then
+				dir_str = "var1"
+			elseif variant == 2 then
+				dir_str = "var2"
+			elseif variant == 3 then
+				dir_str = "var3"
+			elseif variant == 4 then
+				dir_str = "var4"
+			else
+				dir_str = "fwd"
+			end
 
 			self._machine:set_parameter(redir_res, dir_str, 1)
 		end
@@ -372,7 +394,7 @@ function CopActionHurt:init(action_desc, common_data)
 
 			if fwd_dot < 0 then
 				local hit_pos = action_desc.hit_pos
-				local hit_vec = (hit_pos - common_data.pos):with_z(0):normalized()
+				local hit_vec = hit_pos - common_data.pos:with_z(0):normalized()
 
 				if mvector3.dot(hit_vec, common_data.right) > 0 then
 					dir_str = "r"
@@ -584,21 +606,37 @@ function CopActionHurt:init(action_desc, common_data)
 				local fwd_dot = action_desc.direction_vec:dot(common_data.fwd)
 				local right_dot = action_desc.direction_vec:dot(common_data.right)
 				local dir_str = nil
-				dir_str = math.abs(right_dot) < math.abs(fwd_dot) and (fwd_dot < 0 and "fwd" or "bwd") or right_dot > 0 and "l" or "r"
+
+				if math.abs(right_dot) < math.abs(fwd_dot) then
+					if fwd_dot < 0 then
+						dir_str = "fwd"
+					else
+						dir_str = "bwd"
+					end
+				elseif right_dot > 0 then
+					dir_str = "l"
+				else
+					dir_str = "r"
+				end
 
 				self._machine:set_parameter(redir_res, dir_str, 1)
 
 				local hit_z = action_desc.hit_pos.z
-				height = self._ext_movement:m_com().z < hit_z and "high" or "low"
+
+				if self._ext_movement:m_com().z < hit_z then
+					height = "high"
+				else
+					height = "low"
+				end
 
 				if action_type == "death" then
-					death_type = is_civilian and "normal" or action_desc.death_type
-
-					if is_female then
-						variant = self.death_anim_fe_variants[death_type][crouching and "crouching" or "not_crouching"][dir_str][height]
+					if is_civilian then
+						death_type = "normal"
 					else
-						variant = self.death_anim_variants[death_type][crouching and "crouching" or "not_crouching"][dir_str][height]
+						death_type = action_desc.death_type
 					end
+
+					variant = (not is_female or self.death_anim_fe_variants[death_type][crouching and "crouching" or "not_crouching"][dir_str][height]) and self.death_anim_variants[death_type][crouching and "crouching" or "not_crouching"][dir_str][height]
 
 					if variant > 1 then
 						variant = self:_pseudorandom(variant)
@@ -609,7 +647,11 @@ function CopActionHurt:init(action_desc, common_data)
 					end
 
 					if not variant then
-						variant = action_type == "expl_hurt" and self.hurt_anim_variants[action_type][dir_str] or self.hurt_anim_variants[action_type].not_crouching[dir_str][height]
+						if action_type == "expl_hurt" then
+							variant = self.hurt_anim_variants[action_type][dir_str]
+						else
+							variant = self.hurt_anim_variants[action_type].not_crouching[dir_str][height]
+						end
 
 						if variant > 1 then
 							variant = self:_pseudorandom(variant)
@@ -851,12 +893,19 @@ function CopActionHurt:_pseudorandom(a, b)
 	local t = math.floor(ht * mult + 0.5) / mult
 	local r = math.random() * 999 + 1
 	local uid = self._unit:id()
-	local seed = (uid ^ (t / 183.62) * 100) % 100000
+	local seed = uid^(t / 183.62) * 100 % 100000
 
 	math.randomseed(seed)
 
 	local ret = nil
-	ret = a and b and math.random(a, b) or a and math.random(a) or math.random()
+
+	if a and b then
+		ret = math.random(a, b)
+	elseif a then
+		ret = math.random(a)
+	else
+		ret = math.random()
+	end
 
 	math.randomseed(os.time() / r + Application:time())
 
@@ -866,6 +915,7 @@ function CopActionHurt:_pseudorandom(a, b)
 
 	return ret
 end
+
 CopActionHurt.idx_to_hurt_type_map = {
 	"bleedout",
 	"light_hurt",
@@ -909,6 +959,7 @@ end
 function CopActionHurt.idx_to_hurt_type(idx)
 	return CopActionHurt.idx_to_hurt_type_map[idx]
 end
+
 CopActionHurt.idx_to_death_type_map = {
 	[1.0] = "normal",
 	[2.0] = "heavy"
@@ -921,6 +972,7 @@ end
 function CopActionHurt.idx_to_death_type(idx)
 	return CopActionHurt.idx_to_death_type_map[idx]
 end
+
 CopActionHurt.idx_to_type_map = {
 	"hurt",
 	"heavy_hurt",
@@ -936,6 +988,7 @@ end
 function CopActionHurt.idx_to_type(idx)
 	return CopActionHurt.idx_to_type_map[idx]
 end
+
 CopActionHurt.idx_to_variant_map = {
 	"bullet",
 	"melee",
@@ -962,6 +1015,7 @@ end
 
 function CopActionHurt:_start_enemy_fire_animation(action_type, t, use_animation_on_fire_damage, action_desc, common_data)
 end
+
 local tmp_used_flame_objects = nil
 
 function CopActionHurt:_start_enemy_fire_effect_on_death(death_variant)
@@ -1002,7 +1056,9 @@ function CopActionHurt:_start_enemy_fire_effect_on_death(death_variant)
 		tmp_used_flame_objects[idx] = false
 	end
 
-	managers.fire:start_burn_body_sound({enemy_unit = self._unit}, effect_tbl.duration)
+	managers.fire:start_burn_body_sound({
+		enemy_unit = self._unit
+	}, effect_tbl.duration)
 end
 
 function CopActionHurt:_dragons_breath_sparks()
@@ -1033,7 +1089,12 @@ function CopActionHurt:_get_floor_normal(at_pos, fwd, right)
 
 	local to_pos = from_pos + down_vec
 	local down_ray = World:raycast("ray", from_pos, to_pos, "slot_mask", 1)
-	fwd_pos = down_ray and down_ray.position or to_pos:with_z(at_pos.z)
+
+	if down_ray then
+		fwd_pos = down_ray.position
+	else
+		fwd_pos = to_pos:with_z(at_pos.z)
+	end
 
 	mvec3_set(from_pos, fwd)
 	mvec3_mul(from_pos, -dis)
@@ -1042,7 +1103,12 @@ function CopActionHurt:_get_floor_normal(at_pos, fwd, right)
 	mvec3_add(to_pos, down_vec)
 
 	down_ray = World:raycast("ray", from_pos, to_pos, "slot_mask", 1)
-	bwd_pos = down_ray and down_ray.position or to_pos:with_z(at_pos.z)
+
+	if down_ray then
+		bwd_pos = down_ray.position
+	else
+		bwd_pos = to_pos:with_z(at_pos.z)
+	end
 
 	mvec3_set(from_pos, right)
 	mvec3_mul(from_pos, dis)
@@ -1051,7 +1117,12 @@ function CopActionHurt:_get_floor_normal(at_pos, fwd, right)
 	mvec3_add(to_pos, down_vec)
 
 	down_ray = World:raycast("ray", from_pos, to_pos, "slot_mask", 1)
-	r_pos = down_ray and down_ray.position or to_pos:with_z(at_pos.z)
+
+	if down_ray then
+		r_pos = down_ray.position
+	else
+		r_pos = to_pos:with_z(at_pos.z)
+	end
 
 	mvec3_set(from_pos, right)
 	mvec3_mul(from_pos, -dis)
@@ -1168,7 +1239,9 @@ function CopActionHurt:_get_pos_clamped_to_graph(test_head)
 			mvector3.add(new_pos, tmp_vec3)
 		end
 	else
-		ray_params = {tracker_from = tracker}
+		ray_params = {
+			tracker_from = tracker
+		}
 	end
 
 	ray_params.pos_to = new_pos
@@ -1619,6 +1692,7 @@ function CopActionHurt:clbk_body_active_state(tag, unit, body, activated)
 		end
 	end
 end
+
 CopActionHurt._apply_freefall = CopActionWalk._apply_freefall
 
 function CopActionHurt:_freeze_ragdoll()
@@ -1677,4 +1751,3 @@ function CopActionHurt:on_destroy()
 		self._delayed_shooting_hurt_clbk_id = nil
 	end
 end
-

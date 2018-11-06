@@ -91,4 +91,3 @@ function SlotManager:init()
 end
 
 CoreClass.override_class(CoreSlotManager.SlotManager, SlotManager)
-

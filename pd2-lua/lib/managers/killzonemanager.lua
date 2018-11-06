@@ -64,7 +64,9 @@ function KillzoneManager:_kill_unit(unit)
 		return
 	end
 
-	unit:character_damage():damage_killzone({instant_death = true})
+	unit:character_damage():damage_killzone({
+		instant_death = true
+	})
 end
 
 function KillzoneManager:_warning_shot(unit)
@@ -78,7 +80,9 @@ function KillzoneManager:_warning_shot(unit)
 	local col_ray = World:raycast("ray", from_pos, to_pos, "slot_mask", managers.slot:get_mask("bullet_impact_targets"), "ignore_unit", unit)
 
 	if col_ray and col_ray.unit then
-		managers.game_play_central:play_impact_sound_and_effects({col_ray = col_ray})
+		managers.game_play_central:play_impact_sound_and_effects({
+			col_ray = col_ray
+		})
 	end
 end
 
@@ -102,7 +106,9 @@ end
 function KillzoneManager:_deal_gas_damage(unit)
 	local attack_data = {
 		damage = 0.75,
-		col_ray = {ray = math.UP}
+		col_ray = {
+			ray = math.UP
+		}
 	}
 
 	unit:character_damage():damage_killzone(attack_data)
@@ -111,7 +117,9 @@ end
 function KillzoneManager:_deal_fire_damage(unit)
 	local attack_data = {
 		damage = 0.5,
-		col_ray = {ray = math.UP}
+		col_ray = {
+			ray = math.UP
+		}
 	}
 
 	unit:character_damage():damage_killzone(attack_data)
@@ -156,4 +164,3 @@ end
 function KillzoneManager:_remove_unit(unit)
 	self._units[unit:key()] = nil
 end
-

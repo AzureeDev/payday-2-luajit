@@ -125,7 +125,9 @@ function MissionElementListFlow:on_unit_selected(unit)
 		local i = self._selected_list:append_item(unit:unit_data().name_id)
 
 		self._selected_list:set_item(i, 1, "" .. unit_id)
-		self._selected_list:set_item_data(i, {unit = unit})
+		self._selected_list:set_item_data(i, {
+			unit = unit
+		})
 		self:_autosize_columns(self._selected_list)
 
 		local links = managers.editor:layer("Mission"):get_unit_links(unit)
@@ -137,7 +139,9 @@ function MissionElementListFlow:on_unit_selected(unit)
 			self._on_executed_list:set_item(i, 1, "" .. on_executed_unit:unit_data().unit_id)
 			self._on_executed_list:set_item(i, 2, "" .. (data.alternative and data.alternative or "N/A"))
 			self._on_executed_list:set_item(i, 3, "" .. (data.delay and data.delay or "N/A"))
-			self._on_executed_list:set_item_data(i, {unit = on_executed_unit})
+			self._on_executed_list:set_item_data(i, {
+				unit = on_executed_unit
+			})
 		end
 
 		for _, data in ipairs(links.executers) do
@@ -147,7 +151,9 @@ function MissionElementListFlow:on_unit_selected(unit)
 			self._executers_list:set_item(i, 1, "" .. link_unit:unit_data().unit_id)
 			self._executers_list:set_item(i, 2, "" .. (data.alternative and data.alternative or "N/A"))
 			self._executers_list:set_item(i, 3, "" .. (data.delay and data.delay or "N/A"))
-			self._executers_list:set_item_data(i, {unit = link_unit})
+			self._executers_list:set_item_data(i, {
+				unit = link_unit
+			})
 		end
 	end
 
@@ -170,18 +176,22 @@ function MissionElementListFlow:_on_gui_previous()
 	self._skip_history = true
 	self._unit_history_index = math.max(self._unit_history_index - 1, 1)
 
-	managers.editor:select_units({self._unit_history[self._unit_history_index]})
+	managers.editor:select_units({
+		self._unit_history[self._unit_history_index]
+	})
 end
 
 function MissionElementListFlow:_on_gui_next()
-	if #self._unit_history < self._unit_history_index then
+	if self._unit_history_index > #self._unit_history then
 		return
 	end
 
 	self._skip_history = true
 	self._unit_history_index = math.min(self._unit_history_index + 1, #self._unit_history)
 
-	managers.editor:select_units({self._unit_history[self._unit_history_index]})
+	managers.editor:select_units({
+		self._unit_history[self._unit_history_index]
+	})
 end
 
 function MissionElementListFlow:key_cancel(ctrlr, event)
@@ -220,7 +230,9 @@ function MissionElementListFlow:_on_select_executer()
 			managers.editor:look_towards_unit(item_data.unit)
 		end
 
-		managers.editor:select_units({item_data.unit})
+		managers.editor:select_units({
+			item_data.unit
+		})
 	end
 end
 
@@ -236,7 +248,9 @@ function MissionElementListFlow:_on_select_on_executed()
 			managers.editor:look_towards_unit(item_data.unit)
 		end
 
-		managers.editor:select_units({item_data.unit})
+		managers.editor:select_units({
+			item_data.unit
+		})
 	end
 end
 
@@ -306,4 +320,3 @@ function MissionElementListFlow:recreate()
 
 	self._panel:layout()
 end
-

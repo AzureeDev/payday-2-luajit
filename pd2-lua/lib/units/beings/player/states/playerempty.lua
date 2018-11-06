@@ -18,4 +18,3 @@ end
 
 function PlayerEmpty:destroy()
 end
-

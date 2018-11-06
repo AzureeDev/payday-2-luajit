@@ -6,7 +6,9 @@ function CarryTweakData:init(tweak_data)
 		chance = 0.5,
 		value_multiplier = 60
 	}
-	self.types = {being = {}}
+	self.types = {
+		being = {}
+	}
 	self.types.being.move_speed_modifier = 0.5
 	self.types.being.jump_modifier = 0.5
 	self.types.being.can_run = false
@@ -92,7 +94,9 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_gold",
 		bag_value = "gold",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.money = {
 		type = "medium",
@@ -100,14 +104,18 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "money",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
 		dye = true,
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.diamonds = {
 		type = "light",
 		name_id = "hud_carry_diamonds",
 		bag_value = "diamonds",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.painting = {
 		type = "light",
@@ -115,21 +123,27 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "painting",
 		unit = "units/payday2/pickups/gen_pku_canvasbag/gen_pku_canvasbag",
 		visual_unit_name = "units/payday2/characters/npc_acc_canvas_bag_1/npc_acc_canvas_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.coke = {
 		type = "coke_light",
 		name_id = "hud_carry_coke",
 		bag_value = "coke",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.meth = {
 		type = "coke_light",
 		name_id = "hud_carry_meth",
 		bag_value = "meth",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.lance_bag = {
 		type = "medium",
@@ -170,7 +184,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "weapons",
 		unit = "units/pd2_dlc1/pickups/gen_pku_explosivesbag/gen_pku_explosivesbag",
 		visual_unit_name = "units/payday2/characters/npc_acc_explosives_bag_1/npc_acc_explosives_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.person = {
 		type = "being",
@@ -201,91 +217,117 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_engine_1",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_02 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_2",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_03 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_3",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_04 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_4",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_05 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_5",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_06 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_6",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_07 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_7",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_08 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_8",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_09 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_9",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_10 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_10",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_11 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_11",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.engine_12 = {
 		type = "heavy",
 		name_id = "hud_carry_engine_12",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.turret = {
 		type = "heavy",
 		name_id = "hud_carry_turret",
 		bag_value = "turret",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.ammo = {
 		type = "medium",
@@ -293,21 +335,27 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "shells",
 		unit = "units/pd2_dlc1/pickups/gen_pku_explosivesbag/gen_pku_explosivesbag",
 		visual_unit_name = "units/payday2/characters/npc_acc_explosives_bag_1/npc_acc_explosives_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.artifact_statue = {
 		type = "very_heavy",
 		name_id = "hud_carry_artifact",
 		bag_value = "artifact_statue",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.mus_artifact = {
 		type = "medium",
 		name_id = "hud_carry_artifact",
 		bag_value = "mus_artifact_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.mus_artifact_paint = {
 		type = "light",
@@ -315,14 +363,18 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "mus_artifact_bag",
 		unit = "units/payday2/pickups/gen_pku_canvasbag/gen_pku_canvasbag",
 		visual_unit_name = "units/payday2/characters/npc_acc_canvas_bag_1/npc_acc_canvas_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.samurai_suit = {
 		type = "medium",
 		name_id = "hud_carry_samurai",
 		bag_value = "samurai_suit",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.equipment_bag = {
 		type = "medium",
@@ -336,20 +388,26 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_coke_pure",
 		bag_value = "coke_pure",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.evidence_bag = {
 		type = "light",
 		name_id = "hud_carry_evidence_bag",
 		bag_value = "evidence_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.sandwich = {
 		type = "very_heavy",
 		name_id = "hud_carry_sandwich",
 		bag_value = "sandwich",
-		AI_carry = {SO_category = "enemies"},
+		AI_carry = {
+			SO_category = "enemies"
+		},
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1"
 	}
@@ -357,7 +415,9 @@ function CarryTweakData:init(tweak_data)
 		type = "coke_light",
 		name_id = "hud_carry_hope_diamond",
 		bag_value = "hope_diamond",
-		AI_carry = {SO_category = "enemies"},
+		AI_carry = {
+			SO_category = "enemies"
+		},
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1"
 	}
@@ -366,14 +426,18 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_cro_loot",
 		bag_value = "cro_loot",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.cro_loot2 = {
 		type = "heavy",
 		name_id = "hud_carry_cro_loot",
 		bag_value = "cro_loot",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.ladder_bag = {
 		type = "light",
@@ -381,7 +445,9 @@ function CarryTweakData:init(tweak_data)
 		skip_exit_secure = true,
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.vehicle_falcogini = {
 		type = "light",
@@ -391,7 +457,9 @@ function CarryTweakData:init(tweak_data)
 		visual_object = "",
 		unit = "",
 		bag_value = "vehicle_falcogini",
-		AI_carry = {SO_category = ""}
+		AI_carry = {
+			SO_category = ""
+		}
 	}
 	self.warhead = {
 		type = "very_heavy",
@@ -446,7 +514,9 @@ function CarryTweakData:init(tweak_data)
 		type = "heavy",
 		name_id = "hud_carry_???",
 		skip_exit_secure = false,
-		AI_carry = {SO_category = "enemies"},
+		AI_carry = {
+			SO_category = "enemies"
+		},
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1"
 	}
@@ -473,7 +543,9 @@ function CarryTweakData:init(tweak_data)
 		type = "heavy",
 		name_id = "hud_carry_pig",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.nail_muriatic_acid = {
 		type = "light",
@@ -481,7 +553,9 @@ function CarryTweakData:init(tweak_data)
 		skip_exit_secure = true,
 		unit = "units/payday2/pickups/gen_pku_toolbag/gen_pku_toolbag",
 		visual_unit_name = "units/payday2/characters/npc_acc_tools_bag_1/npc_acc_tools_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.nail_caustic_soda = {
 		type = "light",
@@ -489,7 +563,9 @@ function CarryTweakData:init(tweak_data)
 		skip_exit_secure = true,
 		unit = "units/payday2/pickups/gen_pku_toolbag_large/gen_pku_toolbag_large",
 		visual_unit_name = "units/payday2/characters/npc_acc_tools_bag_large_1/npc_acc_tools_bag_large_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.nail_hydrogen_chloride = {
 		type = "light",
@@ -497,21 +573,27 @@ function CarryTweakData:init(tweak_data)
 		skip_exit_secure = true,
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.nail_euphadrine_pills = {
 		type = "light",
 		name_id = "hud_carry_euphadrine_pills",
 		skip_exit_secure = true,
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.meth_half = {
 		type = "coke_light",
 		name_id = "hud_carry_meth",
 		bag_value = "meth_half",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.equipment_bag_global_event = {
 		type = "medium",
@@ -525,7 +607,9 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_present",
 		bag_value = "present",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.paper_roll = {
 		type = "medium",
@@ -539,21 +623,35 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_counterfeit_money",
 		bag_value = "counterfeit_money",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
+	}
+	self.uno_gold = {
+		type = "heavy",
+		name_id = "hud_carry_mayan_gold",
+		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.goat = {
 		type = "medium",
 		name_id = "hud_carry_goat",
 		unit = "units/pd2_dlc_peta/pickups/pta_pku_goatbag/pta_pku_goatbag",
 		visual_unit_name = "units/pd2_dlc_peta/characters/npc_acc_goat_bag_1/npc_acc_goat_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.masterpiece_painting = {
 		type = "light",
 		name_id = "hud_carry_masterpiece_painting",
 		bag_value = "masterpiece_painting",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.breaching_charges = {
 		type = "medium",
@@ -567,21 +665,27 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_prototype",
 		bag_value = "prototype",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.master_server = {
 		type = "heavy",
 		name_id = "hud_carry_master_server",
 		bag_value = "master_server",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.lost_artifact = {
 		type = "medium",
 		name_id = "hud_carry_lost_artifact",
 		bag_value = "lost_artifact",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.parachute = {
 		type = "light",
@@ -589,7 +693,9 @@ function CarryTweakData:init(tweak_data)
 		skip_exit_secure = true,
 		visual_unit_name = "units/pd2_dlc_jerry/characters/npc_acc_parachute_1/npc_acc_parachute_1",
 		unit = "units/pd2_dlc_jerry/pickups/gen_pku_parachute_bag/gen_pku_parachute_bag",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.drk_bomb_part = {
 		type = "medium",
@@ -597,7 +703,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "drk_bomb_part",
 		unit = "units/pd2_dlc1/pickups/gen_pku_explosivesbag/gen_pku_explosivesbag",
 		visual_unit_name = "units/payday2/characters/npc_acc_explosives_bag_1/npc_acc_explosives_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.weapon_glock = {
 		type = "light",
@@ -616,40 +724,52 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_master_server",
 		bag_value = "mad_master_server_value_1",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.mad_master_server_value_2 = {
 		type = "heavy",
 		name_id = "hud_carry_master_server",
 		bag_value = "mad_master_server_value_2",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.mad_master_server_value_3 = {
 		type = "heavy",
 		name_id = "hud_carry_master_server",
 		bag_value = "mad_master_server_value_3",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.mad_master_server_value_4 = {
 		type = "heavy",
 		name_id = "hud_carry_master_server",
 		bag_value = "mad_master_server_value_4",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.bike_part_light = {
 		type = "light",
 		name_id = "hud_carry_bike_part",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.bike_part_heavy = {
 		type = "heavy",
 		name_id = "hud_carry_bike_part",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.drone_control_helmet = {
 		type = "light",
@@ -657,7 +777,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "mad_master_server_value_4",
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.chl_puck = {
 		type = "light",
@@ -672,7 +794,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "toothbrush",
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.cloaker_gold = {}
 	self.cloaker_gold = {
@@ -681,7 +805,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "cloaker_gold",
 		unit = "units/pd2_dlc_help/pickups/gen_pku_spooky_bag/gen_pku_spooky_bag",
 		visual_unit_name = "units/pd2_dlc_help/characters/npc_acc_spooky_bag/npc_acc_spooky_bag",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.cloaker_money = {
 		type = "cloaker_explosives",
@@ -689,7 +815,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "cloaker_money",
 		unit = "units/pd2_dlc_help/pickups/gen_pku_spooky_bag/gen_pku_spooky_bag",
 		visual_unit_name = "units/pd2_dlc_help/characters/npc_acc_spooky_bag/npc_acc_spooky_bag",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.cloaker_cocaine = {
 		type = "cloaker_explosives",
@@ -697,7 +825,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "cloaker_cocaine",
 		unit = "units/pd2_dlc_help/pickups/gen_pku_spooky_bag/gen_pku_spooky_bag",
 		visual_unit_name = "units/pd2_dlc_help/characters/npc_acc_spooky_bag/npc_acc_spooky_bag",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.diamond_necklace = {
 		type = "light",
@@ -705,7 +835,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "diamond_necklace",
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.vr_headset = {
 		type = "light",
@@ -713,7 +845,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "vr_headset",
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.women_shoes = {
 		type = "light",
@@ -721,7 +855,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "women_shoes",
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.expensive_vine = {
 		type = "light",
@@ -729,7 +865,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "expensive_vine",
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.ordinary_wine = {
 		type = "light",
@@ -737,7 +875,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "ordinary_wine",
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.robot_toy = {
 		type = "light",
@@ -745,27 +885,35 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "robot_toy",
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.yayo = {
 		type = "coke_light",
 		name_id = "hud_carry_yayo",
 		bag_value = "coke",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.rubies = {
 		type = "heavy",
 		name_id = "hud_carry_rubies",
 		bag_value = "rubies",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.red_diamond = {
 		type = "coke_light",
 		name_id = "hud_carry_red_diamond",
 		bag_value = "red_diamond",
-		AI_carry = {SO_category = "enemies"},
+		AI_carry = {
+			SO_category = "enemies"
+		},
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1"
 	}
@@ -774,14 +922,18 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_diamonds_dah",
 		bag_value = "diamonds",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.box_unknown_tag = {
 		type = "heavy",
 		bag_value = "box_unknown",
 		name_id = "hud_carry_box",
 		skip_exit_secure = false,
-		AI_carry = {SO_category = "enemies"},
+		AI_carry = {
+			SO_category = "enemies"
+		},
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1"
 	}
@@ -791,14 +943,18 @@ function CarryTweakData:init(tweak_data)
 		unit = "units/payday2/pickups/gen_pku_toolbag/gen_pku_toolbag",
 		visual_unit_name = "units/payday2/characters/npc_acc_tools_bag_1/npc_acc_tools_bag_1",
 		skip_exit_secure = true,
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 	self.box_unknown = {
 		type = "heavy",
 		bag_value = "box_unknown",
 		name_id = "hud_carry_box",
 		skip_exit_secure = false,
-		AI_carry = {SO_category = "enemies"},
+		AI_carry = {
+			SO_category = "enemies"
+		},
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1"
 	}
@@ -807,7 +963,9 @@ function CarryTweakData:init(tweak_data)
 		bag_value = "box_unknown",
 		name_id = "hud_carry_black_tablet",
 		skip_exit_secure = false,
-		AI_carry = {SO_category = "enemies"},
+		AI_carry = {
+			SO_category = "enemies"
+		},
 		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
 		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1"
 	}
@@ -816,7 +974,9 @@ function CarryTweakData:init(tweak_data)
 		name_id = "hud_carry_old_wine",
 		bag_value = "old_wine",
 		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
-		AI_carry = {SO_category = "enemies"}
+		AI_carry = {
+			SO_category = "enemies"
+		}
 	}
 end
 
@@ -845,4 +1005,3 @@ function CarryTweakData:get_zipline_offset(carry_id)
 
 	return Vector3(15, 0, -8)
 end
-

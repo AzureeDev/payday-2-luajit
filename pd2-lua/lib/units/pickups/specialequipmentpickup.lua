@@ -35,4 +35,3 @@ function SpecialEquipmentPickup:destroy(...)
 	managers.occlusion:add_occlusion(self._unit)
 	SpecialEquipmentPickup.super.destroy(self, ...)
 end
-

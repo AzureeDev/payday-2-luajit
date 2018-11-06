@@ -1,8 +1,12 @@
 SpawnEnemyGroupUnitElement = SpawnEnemyGroupUnitElement or class(MissionElement)
 SpawnEnemyGroupUnitElement.SAVE_UNIT_POSITION = false
 SpawnEnemyGroupUnitElement.SAVE_UNIT_ROTATION = false
-SpawnEnemyGroupUnitElement.RANDOMS = {"amount"}
-SpawnEnemyGroupUnitElement.LINK_ELEMENTS = {"elements"}
+SpawnEnemyGroupUnitElement.RANDOMS = {
+	"amount"
+}
+SpawnEnemyGroupUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function SpawnEnemyGroupUnitElement:init(unit)
 	MissionElement.init(self, unit)
@@ -106,10 +110,14 @@ function SpawnEnemyGroupUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"ai_spawn_enemy"}
+	local names = {
+		"ai_spawn_enemy"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
-	self:_build_value_combobox(panel, panel_sizer, "spawn_type", table.list_add({"ordered"}, {
+	self:_build_value_combobox(panel, panel_sizer, "spawn_type", table.list_add({
+		"ordered"
+	}, {
 		"random",
 		"group",
 		"group_guaranteed"
@@ -123,7 +131,9 @@ function SpawnEnemyGroupUnitElement:_build_panel(panel, panel_sizer)
 		floats = 0,
 		min = 0
 	}, "Used to specify how often this spawn can be used. 0 means no interval")
-	self:_build_value_combobox(panel, panel_sizer, "team", table.list_add({"default"}, tweak_data.levels:get_team_names_indexed()), "Select the group's team (overrides character team).")
+	self:_build_value_combobox(panel, panel_sizer, "team", table.list_add({
+		"default"
+	}, tweak_data.levels:get_team_names_indexed()), "Select the group's team (overrides character team).")
 
 	local opt_sizer = panel_sizer
 	local filter_sizer = EWS:BoxSizer("HORIZONTAL")
@@ -193,4 +203,3 @@ function SpawnEnemyGroupUnitElement:on_preferred_spawn_groups_checkbox_changed(p
 		end
 	end
 end
-

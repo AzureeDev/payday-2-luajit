@@ -202,7 +202,7 @@ function CoreAreaHubElement:draw(shape, r, g, b)
 		local start = position + Vector3(0, 0, start_z)
 		local center = (start + start + Vector3(shape.width * shape.size_mul, shape.length * shape.size_mul, height)) / 2
 
-		self._brush:box(center, Vector3((shape.width * shape.size_mul) / 2, 0, 0), Vector3(0, (shape.length * shape.size_mul) / 2, 0), Vector3(0, 0, height / 2))
+		self._brush:box(center, Vector3(shape.width * shape.size_mul / 2, 0, 0), Vector3(0, shape.length * shape.size_mul / 2, 0), Vector3(0, 0, height / 2))
 		Application:draw_box(position + Vector3(0, 0, start_z), position + Vector3(shape.width * shape.size_mul, shape.length * shape.size_mul, height + start_z), r, g, b)
 	elseif shape.type == "plane" then
 		local start = position + Vector3(0, 0, start_z)
@@ -226,10 +226,10 @@ function CoreAreaHubElement:draw(shape, r, g, b)
 
 			Application:draw_line(pos, pos + shape.rotation:y() * 500, 0, 1, 0)
 			Application:draw_line(pos + shape.rotation:x() * width, pos + shape.rotation:x() * width + shape.rotation:y() * 500, 0, 1, 0)
-			Application:draw_line(pos + (shape.rotation:x() * width) / 2, pos + (shape.rotation:x() * width) / 2 + shape.rotation:y() * 500, 0, 1, 0)
+			Application:draw_line(pos + shape.rotation:x() * width / 2, pos + shape.rotation:x() * width / 2 + shape.rotation:y() * 500, 0, 1, 0)
 			Application:draw_line(pos, pos + shape.rotation:y() * -500, 1, 0, 0)
 			Application:draw_line(pos + shape.rotation:x() * width, pos + shape.rotation:x() * width + shape.rotation:y() * -500, 1, 0, 0)
-			Application:draw_line(pos + (shape.rotation:x() * width) / 2, pos + (shape.rotation:x() * width) / 2 + shape.rotation:y() * -500, 1, 0, 0)
+			Application:draw_line(pos + shape.rotation:x() * width / 2, pos + shape.rotation:x() * width / 2 + shape.rotation:y() * -500, 1, 0, 0)
 		end
 	end
 end
@@ -369,21 +369,21 @@ function CoreAreaHubElement:set_shape_properties(type, pos, end_pos)
 		type = type,
 		position = pos,
 		rotation = Rotation(),
-		size_mul = 1
+		size_mul = 1,
+		height = end_pos.z - t.position.z
 	}
-	t.height = end_pos.z - t.position.z
 
 	if type == "sphere" then
-		t.radious = (Vector3(t.position.x, t.position.y, 0) - Vector3(end_pos.x, end_pos.y, 0)):length()
+		t.radious = Vector3(t.position.x, t.position.y, 0) - Vector3(end_pos.x, end_pos.y, 0):length()
 	elseif type == "box" then
 		t.length = end_pos.y - t.position.y
 		t.width = end_pos.x - t.position.x
 	elseif type == "plane" then
-		local x = (end_pos - t.position):normalized()
+		local x = end_pos - t.position:normalized()
 		local z = Vector3(0, 0, 1)
 		local y = z:cross(x)
 		t.rotation = Rotation(x, y, z)
-		t.width = (end_pos - t.position):length()
+		t.width = end_pos - t.position:length()
 	end
 
 	return t
@@ -455,8 +455,12 @@ function CoreAreaHubElement:_build_panel(panel, panel_sizer)
 
 	interval_ctrlr:set_tool_tip("Set the check interval in seconds (set to 0 for every frame).")
 	interval_ctrlr:connect("EVT_CHAR", callback(nil, _G, "verify_number"), interval_ctrlr)
-	interval_ctrlr:connect("EVT_COMMAND_TEXT_ENTER", callback(self, self, "set_interval"), {ctrlr = interval_ctrlr})
-	interval_ctrlr:connect("EVT_KILL_FOCUS", callback(self, self, "set_interval"), {ctrlr = interval_ctrlr})
+	interval_ctrlr:connect("EVT_COMMAND_TEXT_ENTER", callback(self, self, "set_interval"), {
+		ctrlr = interval_ctrlr
+	})
+	interval_ctrlr:connect("EVT_KILL_FOCUS", callback(self, self, "set_interval"), {
+		ctrlr = interval_ctrlr
+	})
 	interval_sizer:add(interval_ctrlr, 3, 0, "EXPAND")
 	panel_sizer:add(interval_sizer, 0, 0, "EXPAND")
 
@@ -582,4 +586,3 @@ end
 
 function CoreAreaHubElement:destroy()
 end
-

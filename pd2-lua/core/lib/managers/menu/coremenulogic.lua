@@ -40,19 +40,23 @@ end
 function Logic:_queue_action(action_name, ...)
 	table.insert(self._action_queue, {
 		action_name = action_name,
-		parameters = {...}
+		parameters = {
+			...
+		}
 	})
 end
 
 function Logic:_execute_action_queue()
-	while self._accept_input and #self._action_queue > 0 do
-		local action = self._action_queue[1]
+	if self._accept_input then
+		while self._accept_input and #self._action_queue > 0 do
+			local action = self._action_queue[1]
 
-		if self._action_callback_map[action.action_name] then
-			self._action_callback_map[action.action_name](unpack(action.parameters))
+			if self._action_callback_map[action.action_name] then
+				self._action_callback_map[action.action_name](unpack(action.parameters))
+			end
+
+			table.remove(self._action_queue, 1)
 		end
-
-		table.remove(self._action_queue, 1)
 	end
 end
 
@@ -87,7 +91,9 @@ function Logic:_select_node(node_name, ...)
 			managers.menu_component:set_active_components(node:parameters().menu_components, node)
 		end
 
-		node:parameters().create_params = {...}
+		node:parameters().create_params = {
+			...
+		}
 
 		table.insert(self._node_stack, node)
 		self:_call_callback("renderer_show_node", node)
@@ -177,7 +183,7 @@ function Logic:_navigate_back(skip_nodes)
 
 	skip_nodes = type(skip_nodes) == "number" and skip_nodes or 0
 
-	if 1 + skip_nodes < #self._node_stack then
+	if #self._node_stack > 1 + skip_nodes then
 		for i = 1, 1 + skip_nodes, 1 do
 			table.remove(self._node_stack, #self._node_stack)
 			self:_call_callback("renderer_navigate_back")
@@ -336,4 +342,3 @@ function Logic:close(closing_menu)
 
 	self:_call_callback("menu_manager_select_node", false)
 end
-

@@ -112,4 +112,3 @@ function PointPickerPanel:_on_finished_picking(sender, raycast)
 		self:set_value(raycast.position)
 	end
 end
-

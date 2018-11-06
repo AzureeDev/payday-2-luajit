@@ -13,7 +13,9 @@ function CommunityChallengesManager:init()
 		self._challenges[challenge.challenge_id] = challenge
 	end
 
-	self._global = Global.community_challenges_manager or {active_bonus = 0}
+	self._global = Global.community_challenges_manager or {
+		active_bonus = 0
+	}
 	Global.community_challenges_manager = self._global
 
 	self:fetch_community_challenge_data()
@@ -104,4 +106,3 @@ end
 function CommunityChallengesManager:remove_event_listener(message, uid)
 	self._message_system:unregister(message, uid)
 end
-

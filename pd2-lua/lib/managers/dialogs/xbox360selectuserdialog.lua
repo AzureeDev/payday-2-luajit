@@ -46,4 +46,3 @@ function Xbox360SelectUserDialog:done_callback()
 
 	SelectUserDialog.done_callback(self)
 end
-

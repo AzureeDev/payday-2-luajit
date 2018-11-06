@@ -24,4 +24,3 @@ function ElementActivateScript:on_executed(instigator)
 
 	ElementActivateScript.super.on_executed(self, instigator)
 end
-

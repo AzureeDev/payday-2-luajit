@@ -165,9 +165,14 @@ function StopwatchUnitElement:_build_panel(panel, panel_sizer)
 	})
 	self:_add_help_text("Creates a stopwatch element. Continuously counts up once started until stopped or paused. Can be operated on using the logic_stopwatch_operator. Can be displayed on a digital gui.")
 end
+
 StopwatchOperatorUnitElement = StopwatchOperatorUnitElement or class(MissionElement)
-StopwatchOperatorUnitElement.RANDOMS = {"time"}
-StopwatchOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+StopwatchOperatorUnitElement.RANDOMS = {
+	"time"
+}
+StopwatchOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function StopwatchOperatorUnitElement:init(unit)
 	StopwatchOperatorUnitElement.super.init(self, unit)
@@ -283,7 +288,9 @@ function StopwatchOperatorUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_stopwatch/logic_stopwatch"}
+	local names = {
+		"logic_stopwatch/logic_stopwatch"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 
@@ -335,8 +342,11 @@ function StopwatchOperatorUnitElement:_build_panel(panel, panel_sizer)
 
 	self:set_element_data({})
 end
+
 StopwatchTriggerUnitElement = StopwatchTriggerUnitElement or class(MissionElement)
-StopwatchTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+StopwatchTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function StopwatchTriggerUnitElement:init(unit)
 	StopwatchTriggerUnitElement.super.init(self, unit)
@@ -410,7 +420,9 @@ function StopwatchTriggerUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_stopwatch/logic_stopwatch"}
+	local names = {
+		"logic_stopwatch/logic_stopwatch"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_number(panel, panel_sizer, "time", {
@@ -419,10 +431,13 @@ function StopwatchTriggerUnitElement:_build_panel(panel, panel_sizer)
 	}, "Specify at what time on the stopwatch this should trigger.")
 	self:_add_help_text("This element is a trigger to logic_stopwatch element.")
 end
+
 StopwatchFilterUnitElement = StopwatchFilterUnitElement or class(MissionElement)
 StopwatchFilterUnitElement.SAVE_UNIT_POSITION = false
 StopwatchFilterUnitElement.SAVE_UNIT_ROTATION = false
-StopwatchFilterUnitElement.LINK_ELEMENTS = {"elements"}
+StopwatchFilterUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function StopwatchFilterUnitElement:init(unit)
 	StopwatchFilterUnitElement.super.init(self, unit)
@@ -502,7 +517,7 @@ function StopwatchFilterUnitElement:add_triggers(vc)
 end
 
 function StopwatchFilterUnitElement:_add_stopwatch_value_unit(params)
-	local dialog = (params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal):new("Add Stopwatch Unit", params.add_filter)
+	local dialog = params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal:new("Add Stopwatch Unit", params.add_filter)
 
 	for _, unit in ipairs(dialog:selected_units()) do
 		local id = unit:unit_data().unit_id
@@ -539,7 +554,9 @@ function StopwatchFilterUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_counter/logic_counter"}
+	local names = {
+		"logic_counter/logic_counter"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "needed_to_execute", {
@@ -603,4 +620,3 @@ function StopwatchFilterUnitElement:_build_panel(panel, panel_sizer)
 	}, "Select which check operation to perform")
 	self:_add_help_text("This element is a filter to logic_stopwatch element.")
 end
-

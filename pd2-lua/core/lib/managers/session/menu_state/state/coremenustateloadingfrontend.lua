@@ -23,4 +23,3 @@ function LoadingFrontEnd:transition()
 		return CoreMenuStateStopLoadingFrontEnd.StopLoadingFrontEnd
 	end
 end
-

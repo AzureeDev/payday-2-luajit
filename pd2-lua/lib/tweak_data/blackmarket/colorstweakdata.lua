@@ -1,4 +1,3 @@
-
 function BlackMarketTweakData:_init_colors(tweak_data)
 	self.colors = {}
 	local white = Color.white
@@ -3487,4 +3486,3 @@ function BlackMarketTweakData:_init_colors(tweak_data)
 		end
 	end
 end
-

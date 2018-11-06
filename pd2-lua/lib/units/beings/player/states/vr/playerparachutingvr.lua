@@ -6,6 +6,7 @@ function PlayerParachutingVR:init(...)
 
 	self._comfort_screen_setting_changed_clbk = callback(self, self, "_on_comfort_screen_setting_changed")
 end
+
 local __enter = PlayerParachuting.enter
 
 function PlayerParachutingVR:enter(...)
@@ -25,6 +26,7 @@ function PlayerParachutingVR:enter(...)
 	self._parachute_unit:damage():run_sequence_simple("animation_unfold")
 	self._unit:link(self._unit:orientation_object():name(), self._parachute_unit)
 end
+
 local __exit = PlayerParachuting.exit
 
 function PlayerParachutingVR:exit(...)
@@ -45,6 +47,7 @@ end
 function PlayerParachutingVR:_update_variables(t, dt)
 	self._current_height = self._ext_movement:hmd_position().z
 end
+
 local __update_movement = PlayerParachuting._update_movement
 local hmd_delta = Vector3()
 local ghost_pos = Vector3()
@@ -73,4 +76,3 @@ function PlayerParachutingVR:_on_comfort_screen_setting_changed(setting, old, ne
 		self._comfort_screen_active = false
 	end
 end
-

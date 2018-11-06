@@ -8,7 +8,9 @@ MutatorEnemyHealth.reductions = {
 	exp = 0
 }
 MutatorEnemyHealth.disables_achievements = true
-MutatorEnemyHealth.categories = {"enemies"}
+MutatorEnemyHealth.categories = {
+	"enemies"
+}
 MutatorEnemyHealth.icon_coords = {
 	4,
 	1
@@ -104,4 +106,3 @@ end
 function MutatorEnemyHealth:options_fill()
 	return self:_get_percentage_fill(self:_min_health(), self:_max_health(), self:get_health_multiplier())
 end
-

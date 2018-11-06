@@ -26,4 +26,3 @@ end
 function PS3KeyboardInputDialog:done_callback(input_text, success)
 	KeyboardInputDialog.done_callback(self, success, input_text)
 end
-

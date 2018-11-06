@@ -34,4 +34,3 @@ function PlayerHandStateWeaponAssist:update(t, dt)
 		self._hand_unit:set_moving(2)
 	end
 end
-

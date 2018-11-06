@@ -45,7 +45,9 @@ function LevelSettingsLayer:save(save_params)
 	local t = {
 		single_data_block = true,
 		entry = self._save_name,
-		data = {settings = self._settings}
+		data = {
+			settings = self._settings
+		}
 	}
 
 	self:_add_project_save_data(t.data)
@@ -191,4 +193,3 @@ function LevelSettingsLayer:clear()
 
 	self._settings = {}
 end
-

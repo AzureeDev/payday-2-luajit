@@ -35,6 +35,7 @@ function WarpCommonState:_setup_warp(warp_type, target, cost)
 	self.params.state_data._warp_target = target
 	self.params.state_data._warp_type = warp_type
 end
+
 WarpTargetState = WarpTargetState or class(WarpCommonState)
 
 function WarpTargetState:init(args)
@@ -150,6 +151,7 @@ function WarpTargetState:transition()
 		return WarpIdleState
 	end
 end
+
 WarpLadderState = WarpLadderState or class(WarpCommonState)
 
 function WarpLadderState:init(data)
@@ -166,6 +168,7 @@ function WarpLadderState:transition()
 		return WarpIdleState
 	end
 end
+
 WarpWarpingState = WarpWarpingState or class(WarpCommonState)
 
 function WarpWarpingState:init(args)
@@ -177,6 +180,7 @@ function WarpWarpingState:transition()
 		return WarpIdleState
 	end
 end
+
 WarpIdleState = WarpIdleState or class(WarpCommonState)
 
 function WarpIdleState:init()
@@ -193,9 +197,12 @@ function WarpIdleState:transition()
 	local autowarp = managers.vr:get_setting("autowarp_length") ~= "off"
 
 	if autowarp and self.params.state_data._hold_warp or (touching or warping) and not self.params.state_data._hold_warp then
-		return WarpTargetState, {hand = self.params.unit:hand():warp_hand()}
+		return WarpTargetState, {
+			hand = self.params.unit:hand():warp_hand()
+		}
 	end
 end
+
 PlayerStandardVR = PlayerStandard or Application:error("PlayerStandardVR requires PlayerStandard!")
 local __init_standard = PlayerStandard.init
 local __update_standard = PlayerStandard.update
@@ -209,7 +216,7 @@ PlayerStandardVR.DUCK_START_TH = 30
 PlayerStandardVR.DUCK_END_TH = 5
 PlayerStandardVR.MAX_WARP_DISTANCE = 500
 PlayerStandardVR.MAX_WARP_JUMP_DISTANCE = 450
-PlayerStandardVR.WARP_JUMP_TIME = (2 * tweak_data.player.movement_state.standard.movement.jump_velocity.z) / 982
+PlayerStandardVR.WARP_JUMP_TIME = 2 * tweak_data.player.movement_state.standard.movement.jump_velocity.z / 982
 PlayerStandardVR.MAX_WARP_JUMP_MOVE_SPEED = PlayerStandardVR.MAX_WARP_JUMP_DISTANCE / PlayerStandardVR.WARP_JUMP_TIME
 PlayerStandardVR.MAX_WARP_DESYNC_TIME = PlayerStandardVR.MAX_WARP_DISTANCE / tweak_data.player.movement_state.standard.movement.speed.RUNNING_MAX
 PlayerStandardVR.MOVEMENT_DISTANCE_LIMIT = 20
@@ -248,7 +255,7 @@ function PlayerStandardVR:_start_action_jump(t)
 	local jump_height = self._jump_end_pos.z - self._jump_start_pos.z
 	local jump_distance = mvector3.distance(self._jump_end_pos, self._jump_start_pos)
 	local v_h = tweak_data.player.movement_state.standard.movement.speed.STANDARD_MAX
-	local v_v = (jump_height + 10 + 491 * move_time * move_time) / ((move_time * jump_distance) / horz_distance)
+	local v_v = (jump_height + 10 + 491 * move_time * move_time) / (move_time * jump_distance / horz_distance)
 
 	mvector3.multiply(jump_vec, v_h)
 	mvector3.set_z(jump_vec, v_v)
@@ -313,7 +320,7 @@ function PlayerStandardVR:_end_action_warp(t)
 		local min, max, total_amount, time = unpack(managers.player:upgrade_value("player", "warp_health"))
 		local health_regen = (max - min) * warp_amount + min
 
-		if not self._state_data.warp_health or self._state_data.warp_health.t + time < t then
+		if not self._state_data.warp_health or t > self._state_data.warp_health.t + time then
 			self._state_data.warp_health = {
 				amount = 0,
 				t = t
@@ -336,7 +343,7 @@ function PlayerStandardVR:_end_action_warp(t)
 		local min, max, max_restores, time = unpack(managers.player:upgrade_value("player", upgrade))
 		local armor_regen = (max - min) * warp_amount + min
 
-		if not self._state_data.warp_armor or self._state_data.warp_armor.t + time < t then
+		if not self._state_data.warp_armor or t > self._state_data.warp_armor.t + time then
 			self._state_data.warp_armor = {
 				restores = 0,
 				t = t
@@ -543,6 +550,7 @@ function PlayerStandardVR:update(t, dt)
 
 	__update_standard(self, t, dt)
 end
+
 local mvec_pos_new = Vector3()
 local mvec_hmd_delta = Vector3()
 local mvec_prev_pos = Vector3()
@@ -569,7 +577,7 @@ function PlayerStandardVR:_update_movement(t, dt)
 			mvector3.add(pos_new, dir * warp_len)
 		end
 	else
-		if not self._state_data.last_warp_pos or self.MOVEMENT_DISTANCE_LIMIT * self.MOVEMENT_DISTANCE_LIMIT < mvector3.distance_sq(self._state_data.last_warp_pos, pos_new) then
+		if not self._state_data.last_warp_pos or mvector3.distance_sq(self._state_data.last_warp_pos, pos_new) > self.MOVEMENT_DISTANCE_LIMIT * self.MOVEMENT_DISTANCE_LIMIT then
 			mvector3.set_z(pos_new, self._pos.z)
 		end
 
@@ -797,6 +805,7 @@ function PlayerStandardVR:_end_action_ladder()
 	self._state_data.last_warp_pos = nil
 	self._state_data._warp_start_time = TimerManager:game():time()
 end
+
 local mvec3_zero = Vector3()
 
 function PlayerStandardVR:_start_action_ladder(t, ladder_unit, need_warp)
@@ -919,7 +928,7 @@ function PlayerStandardVR:_update_network_jump(pos, is_exit, t, dt)
 end
 
 function PlayerStandardVR:_update_network_position(t, dt, cur_pos, pos_new)
-	if (not self._last_sent_pos_t or 1 / tweak_data.network.player_tick_rate < t - self._last_sent_pos_t) and (not pos_new or mvector3.distance_sq(self._last_sent_pos, pos_new) > 2500) then
+	if (not self._last_sent_pos_t or t - self._last_sent_pos_t > 1 / tweak_data.network.player_tick_rate) and (not pos_new or mvector3.distance_sq(self._last_sent_pos, pos_new) > 2500) then
 		self._ext_network:send("action_walk_nav_point", cur_pos)
 
 		self._last_sent_pos_t = t
@@ -945,8 +954,9 @@ function PlayerStandardVR:_get_melee_charge_lerp_value(t, offset)
 	local melee_entry = managers.blackmarket:equipped_melee_weapon()
 	local max_charge_time = tweak_data.blackmarket.melee_weapons[melee_entry].stats.charge_time
 
-	return math.clamp((t - melee_start_t) - offset, 0, max_charge_time) / max_charge_time
+	return math.clamp(t - melee_start_t - offset, 0, max_charge_time) / max_charge_time
 end
+
 local __get_input = PlayerStandard._get_input
 
 function PlayerStandardVR:_get_input(t, dt, paused)
@@ -1192,7 +1202,9 @@ function PlayerStandardVR:_check_fire_per_weapon(t, pressed, held, released, wea
 		if fired then
 			local engine = self._unit:hand():get_active_hand_id(akimbo and "akimbo" or "weapon") == 1 and "right" or "left"
 
-			managers.rumble:play("weapon_fire", nil, nil, {engine = engine})
+			managers.rumble:play("weapon_fire", nil, nil, {
+				engine = engine
+			})
 
 			local weap_tweak_data = tweak_data.weapon[weap_base:get_name_id()]
 			local shake_multiplier = weap_tweak_data.shake[self._state_data.in_steelsight and "fire_steelsight_multiplier" or "fire_multiplier"]
@@ -1271,9 +1283,9 @@ function PlayerStandardVR:_check_fire_per_weapon(t, pressed, held, released, wea
 			yaw = 360 - yaw
 		end
 
-		yaw = math.floor((255 * yaw) / 360)
+		yaw = math.floor(255 * yaw / 360)
 		local pitch = math.clamp(rot:pitch(), -85, 85) + 85
-		pitch = math.floor((127 * pitch) / 170)
+		pitch = math.floor(127 * pitch / 170)
 
 		self._unit:network():send("set_look_dir", yaw, pitch)
 		self._unit:camera():set_forced_sync_delay(t + 1)
@@ -1291,10 +1303,10 @@ function PlayerStandardVR:_check_action_weapon_gadget(t, input)
 		self:_toggle_gadget(self._equipped_unit:base())
 	end
 end
+
 local tmp_head_fwd = Vector3(0, 0, 0)
 
 function PlayerStandardVR:_check_action_steelsight(t, input)
-
 	local function check_weapon_aim(weapon_unit)
 		if self._ext_movement:m_head_pos().z - weapon_unit:position().z > 20 or weapon_unit:position().z - self._ext_movement:m_head_pos().z > 0 then
 			return false
@@ -1382,6 +1394,7 @@ function PlayerStandardVR:swap_weapon(selection_wanted)
 
 	self._ext_network:send("switch_weapon", speed_multiplier, 1)
 end
+
 local __is_reloading = PlayerStandard._is_reloading
 
 function PlayerStandardVR:_is_reloading()
@@ -1415,19 +1428,22 @@ function PlayerStandardVR:_start_action_reload(t)
 		end
 
 		if weapon:reload_exit_expire_t() then
-			reload_time = weapon:started_reload_empty() and reload_time + weapon:reload_exit_expire_t() / speed_multiplier or reload_time + weapon:reload_not_empty_exit_expire_t() / speed_multiplier
+			if weapon:started_reload_empty() then
+				reload_time = reload_time + weapon:reload_exit_expire_t() / speed_multiplier
+			else
+				reload_time = reload_time + weapon:reload_not_empty_exit_expire_t() / speed_multiplier
+			end
 		end
 
 		local tweak = weapon:weapon_tweak_data()
-
-		if weapon:clip_empty() then
-			reload_time = reload_time + (tweak.timers.reload_empty or weapon:reload_expire_t() or 2.6) / speed_multiplier
-		else
-			reload_time = reload_time + (tweak.timers.reload_not_empty or weapon:reload_expire_t() or 2.2) / speed_multiplier
-		end
+		reload_time = weapon:clip_empty() and reload_time + (tweak.timers.reload_empty or weapon:reload_expire_t() or 2.6) / speed_multiplier or reload_time + (tweak.timers.reload_not_empty or weapon:reload_expire_t() or 2.2) / speed_multiplier
 
 		if not managers.vr:get_setting("auto_reload") then
-			reload_time = table.contains(tweak.categories, "bow") and 0 or reload_time - tweak_data.vr.reload_buff
+			if table.contains(tweak.categories, "bow") then
+				reload_time = 0
+			else
+				reload_time = reload_time - tweak_data.vr.reload_buff
+			end
 		end
 
 		self._state_data.reload_start_t = t
@@ -1568,7 +1584,9 @@ function PlayerStandardVR:trigger_reload()
 
 	local engine = self._unit:hand():get_default_hand_id("weapon") == 1 and "right" or "left"
 
-	managers.rumble:play("reloaded", nil, nil, {engine = engine})
+	managers.rumble:play("reloaded", nil, nil, {
+		engine = engine
+	})
 
 	self._can_trigger_reload = false
 	self._reload_amount = nil
@@ -1583,6 +1601,7 @@ end
 
 function PlayerStandardVR:_play_unequip_animation()
 end
+
 local __start_action_interact = PlayerStandard._start_action_interact
 
 function PlayerStandardVR:_start_action_interact(t, input, timer, interact_object)
@@ -1592,6 +1611,7 @@ function PlayerStandardVR:_start_action_interact(t, input, timer, interact_objec
 
 	__start_action_interact(self, t, input, timer, interact_object)
 end
+
 local __interupt_action_interact = PlayerStandard._interupt_action_interact
 
 function PlayerStandardVR:_interupt_action_interact(t, input, complete)
@@ -1599,6 +1619,7 @@ function PlayerStandardVR:_interupt_action_interact(t, input, complete)
 
 	__interupt_action_interact(self, t, input, complete)
 end
+
 local __start_action_use_item = PlayerStandard._start_action_use_item
 
 function PlayerStandardVR:_start_action_use_item(...)
@@ -1613,6 +1634,7 @@ function PlayerStandardVR:_start_action_throw_projectile(...)
 		self._unit:equipment():throw_projectile(self._unit:hand():hand_unit(hand_id))
 	end
 end
+
 PlayerStandardVR._start_action_throw_grenade = PlayerStandardVR._start_action_throw_projectile
 
 function PlayerStandardVR:_on_zipline_screen_setting_changed(setting, old, new)
@@ -1661,4 +1683,3 @@ function PlayerStandardVR:set_base_rotation(rot)
 
 	self._camera_base_rot = self._camera_unit:base():base_rotation()
 end
-

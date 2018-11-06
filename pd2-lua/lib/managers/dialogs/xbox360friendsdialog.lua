@@ -27,4 +27,3 @@ function Xbox360FriendsDialog:done_callback()
 
 	FriendsDialog.done_callback(self)
 end
-

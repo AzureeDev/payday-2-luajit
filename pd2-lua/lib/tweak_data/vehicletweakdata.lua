@@ -54,8 +54,14 @@ function VehicleTweakData:_init_data_falcogini()
 				shooting_pos = Vector3(50, -20, 50)
 			}
 		},
-		loot_points = {loot = {name = "loot"}},
-		damage = {max_health = 100000},
+		loot_points = {
+			loot = {
+				name = "loot"
+			}
+		},
+		damage = {
+			max_health = 100000
+		},
 		max_speed = 200,
 		max_rpm = 9000,
 		loot_drop_point = "v_repair_engine",
@@ -119,12 +125,20 @@ function VehicleTweakData:_init_data_muscle()
 			}
 		},
 		loot_points = {
-			loot_left = {name = "loot_left"},
-			loot_right = {name = "loot_right"},
-			loot = {name = "loot"}
+			loot_left = {
+				name = "loot_left"
+			},
+			loot_right = {
+				name = "loot_right"
+			},
+			loot = {
+				name = "loot"
+			}
 		},
 		trunk_point = "trunk",
-		damage = {max_health = 9000000},
+		damage = {
+			max_health = 9000000
+		},
 		max_speed = 160,
 		max_rpm = 8000,
 		loot_drop_point = "v_repair_engine",
@@ -174,8 +188,14 @@ function VehicleTweakData:_init_data_forklift()
 				driving = false
 			}
 		},
-		loot_points = {loot_left = {name = "loot"}},
-		damage = {max_health = 9000000},
+		loot_points = {
+			loot_left = {
+				name = "loot"
+			}
+		},
+		damage = {
+			max_health = 9000000
+		},
 		max_speed = 20,
 		max_rpm = 1600,
 		loot_drop_point = "v_repair_engine",
@@ -212,12 +232,20 @@ function VehicleTweakData:_init_data_forklift_2()
 			going_reverse = "forklift_reverse_warning",
 			hit = "car_hit_gen_01"
 		},
-		seats = {driver = {
-			driving = true,
-			name = "driver"
-		}},
-		loot_points = {loot_left = {name = "loot"}},
-		damage = {max_health = 100000},
+		seats = {
+			driver = {
+				driving = true,
+				name = "driver"
+			}
+		},
+		loot_points = {
+			loot_left = {
+				name = "loot"
+			}
+		},
+		damage = {
+			max_health = 100000
+		},
 		max_speed = 20,
 		max_rpm = 1600,
 		loot_drop_point = "v_repair_engine",
@@ -281,10 +309,16 @@ function VehicleTweakData:_init_data_box_truck_1()
 			}
 		},
 		loot_points = {
-			loot_left = {name = "loot_left"},
-			loot_right = {name = "loot_right"}
+			loot_left = {
+				name = "loot_left"
+			},
+			loot_right = {
+				name = "loot_right"
+			}
 		},
-		damage = {max_health = 900000},
+		damage = {
+			max_health = 900000
+		},
 		max_speed = 160,
 		max_rpm = 8000,
 		loot_drop_point = "v_repair_engine",
@@ -321,12 +355,20 @@ function VehicleTweakData:_init_data_mower_1()
 			going_reverse = "forklift_reverse_warning",
 			hit = "car_hit_gen_01"
 		},
-		seats = {driver = {
-			driving = true,
-			name = "driver"
-		}},
-		loot_points = {loot_left = {name = "loot"}},
-		damage = {max_health = 9000000},
+		seats = {
+			driver = {
+				driving = true,
+				name = "driver"
+			}
+		},
+		loot_points = {
+			loot_left = {
+				name = "loot"
+			}
+		},
+		damage = {
+			max_health = 9000000
+		},
 		max_speed = 20,
 		max_rpm = 1600,
 		loot_drop_point = "v_repair_engine",
@@ -390,8 +432,14 @@ function VehicleTweakData:_init_data_boat_rib_1()
 				driving = false
 			}
 		},
-		loot_points = {loot_left = {name = "loot"}},
-		damage = {max_health = 9000000},
+		loot_points = {
+			loot_left = {
+				name = "loot"
+			}
+		},
+		damage = {
+			max_health = 9000000
+		},
 		max_speed = 20,
 		max_rpm = 1600,
 		loot_drop_point = "v_repair_engine",
@@ -457,10 +505,16 @@ function VehicleTweakData:_init_data_blackhawk_1()
 			}
 		},
 		loot_points = {
-			loot_left = {name = "loot_left"},
-			loot_right = {name = "loot_right"}
+			loot_left = {
+				name = "loot_left"
+			},
+			loot_right = {
+				name = "loot_right"
+			}
 		},
-		damage = {max_health = 9e+27},
+		damage = {
+			max_health = 9e+27
+		},
 		max_speed = 160,
 		max_rpm = 8000,
 		loot_drop_point = "v_repair_engine",
@@ -469,6 +523,8 @@ function VehicleTweakData:_init_data_blackhawk_1()
 		driver_camera_offset = Vector3(0, 0, 0),
 		fov = 75
 	}
+	self.blackhawk_2 = deep_clone(self.blackhawk_1)
+	self.blackhawk_2.name = nil
 end
 
 function VehicleTweakData:_init_data_bike_1()
@@ -494,12 +550,20 @@ function VehicleTweakData:_init_data_bike_1()
 			engine_sound_event = "mc_harley",
 			hit = "mc_hit_gen_01"
 		},
-		seats = {driver = {
-			driving = true,
-			name = "driver"
-		}},
-		loot_points = {loot_left = {name = "loot"}},
-		damage = {max_health = 18000000},
+		seats = {
+			driver = {
+				driving = true,
+				name = "driver"
+			}
+		},
+		loot_points = {
+			loot_left = {
+				name = "loot"
+			}
+		},
+		damage = {
+			max_health = 18000000
+		},
 		max_speed = 180,
 		max_rpm = 3000,
 		loot_drop_point = "v_repair_engine",
@@ -507,10 +571,12 @@ function VehicleTweakData:_init_data_bike_1()
 		interact_distance = 250,
 		driver_camera_offset = Vector3(0, -4, 5),
 		fov = 75,
-		camera_limits = {driver = {
-			pitch = 30,
-			yaw = 30
-		}}
+		camera_limits = {
+			driver = {
+				pitch = 30,
+				yaw = 30
+			}
+		}
 	}
 end
 
@@ -537,12 +603,20 @@ function VehicleTweakData:_init_data_bike_2()
 			engine_sound_event = "mc_harley",
 			hit = "mc_hit_gen_01"
 		},
-		seats = {driver = {
-			driving = true,
-			name = "driver"
-		}},
-		loot_points = {loot_left = {name = "loot"}},
-		damage = {max_health = 18000000},
+		seats = {
+			driver = {
+				driving = true,
+				name = "driver"
+			}
+		},
+		loot_points = {
+			loot_left = {
+				name = "loot"
+			}
+		},
+		damage = {
+			max_health = 18000000
+		},
 		max_speed = 180,
 		max_rpm = 3000,
 		loot_drop_point = "v_repair_engine",
@@ -550,10 +624,11 @@ function VehicleTweakData:_init_data_bike_2()
 		interact_distance = 250,
 		driver_camera_offset = Vector3(0, -4, 5),
 		fov = 75,
-		camera_limits = {driver = {
-			pitch = 30,
-			yaw = 30
-		}}
+		camera_limits = {
+			driver = {
+				pitch = 30,
+				yaw = 30
+			}
+		}
 	}
 end
-

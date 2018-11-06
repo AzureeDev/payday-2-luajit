@@ -9,11 +9,15 @@ function SineSpline:init(position_table, nr_subseg, curviness, first_control_poi
 	self._control_points = {}
 
 	if first_control_point then
-		self._control_points[1] = {p2 = first_control_point}
+		self._control_points[1] = {
+			p2 = first_control_point
+		}
 	end
 
 	if last_control_point then
-		self._control_points[#position_table] = {p1 = last_control_point}
+		self._control_points[#position_table] = {
+			p1 = last_control_point
+		}
 	end
 end
 
@@ -212,4 +216,3 @@ function SineSpline:_extract_control_points_at_index(index)
 
 	self._control_points[index] = segment_control_points
 end
-

@@ -49,6 +49,7 @@ end
 
 function Widget:reset_values()
 end
+
 MoveWidget = MoveWidget or CoreClass.class(Widget)
 
 function MoveWidget:init(layer)
@@ -145,8 +146,8 @@ function MoveWidget:calc_move_widget_pos(unit, widget_rot)
 		local normal = axis1:cross(axis2)
 		local d = self._unit_start_pos:dot(normal)
 
-		if (p2 - p1):dot(normal) ~= 0 then
-			local t = (d - p1:dot(normal)) / (p2 - p1):dot(normal)
+		if p2 - p1:dot(normal) ~= 0 then
+			local t = (d - p1:dot(normal)) / p2 - p1:dot(normal)
 			result_pos = (p2 - p1) * t
 		end
 	else
@@ -210,6 +211,7 @@ function MoveWidget:set_move_widget_offset(unit, widget_rot)
 	self._unit_start_pos = unit:position()
 	self._move_widget_offset = unit:position() - self:calc_move_widget_pos(unit, widget_rot)
 end
+
 RotationWidget = RotationWidget or CoreClass.class(Widget)
 
 function RotationWidget:init(layer)
@@ -272,10 +274,10 @@ function RotationWidget:calculate(unit, widget_rot, widget_pos, widget_screen_po
 	real_click_screen_pos = real_click_screen_pos:with_z(real_click_screen_pos.z / 1000)
 	local real_widget_screen_pos = managers.editor:world_to_screen(self._widget:position())
 	real_widget_screen_pos = real_widget_screen_pos:with_z(real_widget_screen_pos.z / 1000)
-	local real_screen_dir = (real_click_screen_pos - real_widget_screen_pos):normalized()
+	local real_screen_dir = real_click_screen_pos - real_widget_screen_pos:normalized()
 	local real_widget_axis_pos = managers.editor:world_to_screen(self._widget:position() + widget_rot[self._rotate_widget_axis](widget_rot) * 100)
 	real_widget_axis_pos = real_widget_axis_pos:with_z(real_widget_axis_pos.z / 1000)
-	local real_widget_screen_dir = (real_widget_axis_pos - real_widget_screen_pos):normalized()
+	local real_widget_screen_dir = real_widget_axis_pos - real_widget_screen_pos:normalized()
 	local real_cross_dir = real_screen_dir:cross(real_widget_screen_dir)
 	real_cross_dir = real_cross_dir:with_z(0):normalized()
 	local world_to_1 = managers.editor:screen_to_world(real_click_screen_pos + real_cross_dir * 3)
@@ -303,4 +305,3 @@ function RotationWidget:calculate(unit, widget_rot, widget_pos, widget_screen_po
 
 	return result_rot
 end
-

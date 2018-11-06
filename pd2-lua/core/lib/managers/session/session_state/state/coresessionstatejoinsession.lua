@@ -18,4 +18,3 @@ end
 function JoinSession:transition()
 	return CoreSessionStateInSession.InSession, self._session
 end
-

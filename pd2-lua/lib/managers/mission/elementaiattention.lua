@@ -52,7 +52,13 @@ function ElementAIAttention:_select_units_from_spawners()
 	end
 
 	local wanted_nr_units = nil
-	wanted_nr_units = self._values.trigger_times <= 0 and 1 or self._values.trigger_times
+
+	if self._values.trigger_times <= 0 then
+		wanted_nr_units = 1
+	else
+		wanted_nr_units = self._values.trigger_times
+	end
+
 	wanted_nr_units = math.min(wanted_nr_units, #candidates)
 	local chosen_units = {}
 
@@ -98,7 +104,12 @@ function ElementAIAttention:_create_override_attention_settings(unit)
 
 	if setting_desc then
 		local clbk_receiver_class = nil
-		clbk_receiver_class = (unit:base().is_local_player or unit:base().is_husk_player) and unit:movement() or unit:brain()
+
+		if unit:base().is_local_player or unit:base().is_husk_player then
+			clbk_receiver_class = unit:movement()
+		else
+			clbk_receiver_class = unit:brain()
+		end
 
 		if not clbk_receiver_class then
 			debug_pause_unit(unit, "[ElementAIAttention:_create_override_attention_settings] cannot override attention for:", unit)
@@ -170,11 +181,15 @@ end
 
 function ElementAIAttention:_fetch_unit_by_unit_id(unit_id)
 	local unit = nil
-	unit = Application:editor() and managers.editor:unit_with_id(tonumber(unit_id)) or managers.worlddefinition:get_unit_on_load(tonumber(unit_id), callback(self, self, "_load_unit"))
+
+	if Application:editor() then
+		unit = managers.editor:unit_with_id(tonumber(unit_id))
+	else
+		unit = managers.worlddefinition:get_unit_on_load(tonumber(unit_id), callback(self, self, "_load_unit"))
+	end
 
 	return unit
 end
 
 function ElementAIAttention._load_unit(unit)
 end
-

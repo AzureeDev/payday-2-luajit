@@ -21,6 +21,7 @@ function ElementInstanceInput:on_executed(instigator)
 
 	ElementInstanceInput.super.on_executed(self, instigator)
 end
+
 ElementInstanceOutput = ElementInstanceOutput or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementInstanceOutput:init(...)
@@ -47,6 +48,7 @@ function ElementInstanceOutput:on_executed(instigator)
 
 	ElementInstanceOutput.super.on_executed(self, instigator)
 end
+
 ElementInstanceInputEvent = ElementInstanceInputEvent or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementInstanceInputEvent:init(...)
@@ -86,6 +88,7 @@ function ElementInstanceInputEvent:on_executed(instigator)
 
 	ElementInstanceInputEvent.super.on_executed(self, instigator)
 end
+
 ElementInstanceOutputEvent = ElementInstanceOutputEvent or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementInstanceOutputEvent:init(...)
@@ -112,6 +115,7 @@ function ElementInstanceOutputEvent:on_executed(instigator)
 
 	ElementInstanceOutputEvent.super.on_executed(self, instigator)
 end
+
 ElementInstancePoint = ElementInstancePoint or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementInstancePoint:client_on_executed(...)
@@ -156,6 +160,7 @@ function ElementInstancePoint:load(data)
 		self:_create()
 	end
 end
+
 ElementInstanceParams = ElementInstanceParams or class(CoreMissionScriptElement.MissionScriptElement)
 ElementInstanceSetParams = ElementInstanceSetParams or class(CoreMissionScriptElement.MissionScriptElement)
 
@@ -190,4 +195,3 @@ function ElementInstanceSetParams:on_executed(instigator)
 
 	ElementInstanceSetParams.super.on_executed(self, instigator)
 end
-

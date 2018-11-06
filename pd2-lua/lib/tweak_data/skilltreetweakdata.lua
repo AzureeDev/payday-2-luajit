@@ -1,7 +1,6 @@
 SkillTreeTweakData = SkillTreeTweakData or class()
 
 function SkillTreeTweakData:init()
-
 	local function digest(value)
 		return Application:digest_value(value, true)
 	end
@@ -78,11 +77,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.black_marketeer = {
 		{
-			upgrades = {"player_hostage_health_regen_addend_1"},
+			upgrades = {
+				"player_hostage_health_regen_addend_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_hostage_health_regen_addend_2"},
+			upgrades = {
+				"player_hostage_health_regen_addend_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_black_marketeer_beta",
@@ -94,11 +97,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.gun_fighter = {
 		{
-			upgrades = {"pistol_damage_addend_1"},
+			upgrades = {
+				"pistol_damage_addend_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"pistol_damage_addend_2"},
+			upgrades = {
+				"pistol_damage_addend_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_gun_fighter_beta",
@@ -117,7 +124,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_revive_health_boost"},
+			upgrades = {
+				"player_revive_health_boost"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_combat_medic_beta",
@@ -180,7 +189,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_additional_assets"},
+			upgrades = {
+				"player_additional_assets"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_inside_man_beta",
@@ -195,7 +206,9 @@ function SkillTreeTweakData:init()
 			upgrades = {},
 			cost = self.costs.default
 		},
-		{cost = self.costs.pro},
+		{
+			cost = self.costs.pro
+		},
 		name_id = "menu_target_mark_beta",
 		desc_id = "menu_target_mark_beta_desc",
 		icon_xy = {
@@ -224,11 +237,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.fast_learner = {
 		{
-			upgrades = {"player_revive_damage_reduction_level_1"},
+			upgrades = {
+				"player_revive_damage_reduction_level_1"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_revive_damage_reduction_level_2"},
+			upgrades = {
+				"player_revive_damage_reduction_level_2"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_fast_learner_beta",
@@ -240,11 +257,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.stockholm_syndrome = {
 		{
-			upgrades = {"player_civ_calming_alerts"},
+			upgrades = {
+				"player_civ_calming_alerts"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_super_syndrome_1"},
+			upgrades = {
+				"player_super_syndrome_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_stockholm_syndrome_beta",
@@ -264,7 +285,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_convert_enemies_max_minions_2"},
+			upgrades = {
+				"player_convert_enemies_max_minions_2"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_cable_guy_beta",
@@ -276,11 +299,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.tactician = {
 		{
-			upgrades = {"player_marked_enemy_extra_damage"},
+			upgrades = {
+				"player_marked_enemy_extra_damage"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_buy_spotter_asset"},
+			upgrades = {
+				"player_buy_spotter_asset"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_tactician_beta",
@@ -299,7 +326,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"team_damage_hostage_absorption"},
+			upgrades = {
+				"team_damage_hostage_absorption"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_triathlete_beta",
@@ -311,11 +340,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.equilibrium = {
 		{
-			upgrades = {"pistol_swap_speed_multiplier"},
+			upgrades = {
+				"pistol_swap_speed_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"pistol_spread_index_addend"},
+			upgrades = {
+				"pistol_spread_index_addend"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_equilibrium_beta",
@@ -331,7 +364,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"pistol_fire_rate_multiplier"},
+			upgrades = {
+				"pistol_fire_rate_multiplier"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_negotiator_beta",
@@ -343,11 +378,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.medic_2x = {
 		{
-			upgrades = {"doctor_bag_quantity"},
+			upgrades = {
+				"doctor_bag_quantity"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"doctor_bag_amount_increase1"},
+			upgrades = {
+				"doctor_bag_amount_increase1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_medic_2x_beta",
@@ -389,7 +428,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"cooldown_long_dis_revive"},
+			upgrades = {
+				"cooldown_long_dis_revive"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_inspire_beta",
@@ -401,11 +442,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.messiah = {
 		{
-			upgrades = {"player_messiah_revive_from_bleed_out_1"},
+			upgrades = {
+				"player_messiah_revive_from_bleed_out_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_recharge_messiah_1"},
+			upgrades = {
+				"player_recharge_messiah_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_pistol_beta_messiah",
@@ -417,11 +462,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.ammo_reservoir = {
 		{
-			upgrades = {"temporary_no_ammo_cost_1"},
+			upgrades = {
+				"temporary_no_ammo_cost_1"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"temporary_no_ammo_cost_2"},
+			upgrades = {
+				"temporary_no_ammo_cost_2"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_ammo_reservoir_beta",
@@ -449,7 +498,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.oppressor = {
 		{
-			upgrades = {"player_armor_regen_time_mul_1"},
+			upgrades = {
+				"player_armor_regen_time_mul_1"
+			},
 			cost = self.costs.default
 		},
 		{
@@ -468,11 +519,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.steroids = {
 		{
-			upgrades = {"player_non_special_melee_multiplier"},
+			upgrades = {
+				"player_non_special_melee_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_melee_damage_multiplier"},
+			upgrades = {
+				"player_melee_damage_multiplier"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_steroids_beta",
@@ -484,7 +539,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.bandoliers = {
 		{
-			upgrades = {"extra_ammo_multiplier1"},
+			upgrades = {
+				"extra_ammo_multiplier1"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -504,11 +561,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.pack_mule = {
 		{
-			upgrades = {"carry_throw_distance_multiplier"},
+			upgrades = {
+				"carry_throw_distance_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_armor_carry_bonus_1"},
+			upgrades = {
+				"player_armor_carry_bonus_1"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_pack_mule_beta",
@@ -527,7 +588,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"shotgun_damage_multiplier_2"},
+			upgrades = {
+				"shotgun_damage_multiplier_2"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_shotgun_impact_beta",
@@ -539,7 +602,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.portable_saw = {
 		{
-			upgrades = {"saw_secondary"},
+			upgrades = {
+				"saw_secondary"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -559,11 +624,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.tough_guy = {
 		{
-			upgrades = {"player_damage_shake_multiplier"},
+			upgrades = {
+				"player_damage_shake_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_bleed_out_health_multiplier"},
+			upgrades = {
+				"player_bleed_out_health_multiplier"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_tough_guy_beta",
@@ -575,11 +644,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.underdog = {
 		{
-			upgrades = {"player_damage_multiplier_outnumbered"},
+			upgrades = {
+				"player_damage_multiplier_outnumbered"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_damage_dampener_outnumbered"},
+			upgrades = {
+				"player_damage_dampener_outnumbered"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_underdog_beta",
@@ -591,11 +664,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.juggernaut = {
 		{
-			upgrades = {"player_armor_multiplier"},
+			upgrades = {
+				"player_armor_multiplier"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"body_armor6"},
+			upgrades = {
+				"body_armor6"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_juggernaut_beta",
@@ -607,11 +684,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.from_the_hip = {
 		{
-			upgrades = {"shotgun_hip_fire_spread_index_addend"},
+			upgrades = {
+				"shotgun_hip_fire_spread_index_addend"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"weapon_hip_fire_spread_index_addend"},
+			upgrades = {
+				"weapon_hip_fire_spread_index_addend"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_from_the_hip_beta",
@@ -623,7 +704,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.shotgun_cqb = {
 		{
-			upgrades = {"shotgun_reload_speed_multiplier_1"},
+			upgrades = {
+				"shotgun_reload_speed_multiplier_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -642,11 +725,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.shades = {
 		{
-			upgrades = {"player_flashbang_multiplier_1"},
+			upgrades = {
+				"player_flashbang_multiplier_1"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_flashbang_multiplier_2"},
+			upgrades = {
+				"player_flashbang_multiplier_2"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_shades_beta",
@@ -658,11 +745,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.ammo_2x = {
 		{
-			upgrades = {"ammo_bag_quantity"},
+			upgrades = {
+				"ammo_bag_quantity"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"ammo_bag_ammo_increase1"},
+			upgrades = {
+				"ammo_bag_ammo_increase1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_ammo_2x_beta",
@@ -674,7 +765,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.carbon_blade = {
 		{
-			upgrades = {"saw_enemy_slicer"},
+			upgrades = {
+				"saw_enemy_slicer"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -693,7 +786,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.show_of_force = {
 		{
-			upgrades = {"player_interacting_damage_multiplier"},
+			upgrades = {
+				"player_interacting_damage_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
@@ -713,11 +808,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.wolverine = {
 		{
-			upgrades = {"player_melee_damage_health_ratio_multiplier"},
+			upgrades = {
+				"player_melee_damage_health_ratio_multiplier"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_damage_health_ratio_multiplier"},
+			upgrades = {
+				"player_damage_health_ratio_multiplier"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_wolverine_beta",
@@ -729,7 +828,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.overkill = {
 		{
-			upgrades = {"player_overkill_damage_multiplier"},
+			upgrades = {
+				"player_overkill_damage_multiplier"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -748,11 +849,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.mag_plus = {
 		{
-			upgrades = {"weapon_clip_ammo_increase_1"},
+			upgrades = {
+				"weapon_clip_ammo_increase_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"weapon_clip_ammo_increase_2"},
+			upgrades = {
+				"weapon_clip_ammo_increase_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_mag_plus_beta",
@@ -764,11 +869,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.iron_man = {
 		{
-			upgrades = {"team_armor_regen_time_multiplier"},
+			upgrades = {
+				"team_armor_regen_time_multiplier"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_shield_knock"},
+			upgrades = {
+				"player_shield_knock"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_iron_man_beta",
@@ -812,7 +921,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_carry_sentry_and_trip"},
+			upgrades = {
+				"player_carry_sentry_and_trip"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_blast_radius_beta",
@@ -824,7 +935,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.insulation = {
 		{
-			upgrades = {"player_taser_malfunction"},
+			upgrades = {
+				"player_taser_malfunction"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -852,7 +965,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_drill_autorepair_1"},
+			upgrades = {
+				"player_drill_autorepair_1"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_hardware_expert_beta",
@@ -880,11 +995,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.sharpshooter = {
 		{
-			upgrades = {"weapon_single_spread_index_addend"},
+			upgrades = {
+				"weapon_single_spread_index_addend"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"single_shot_accuracy_inc_1"},
+			upgrades = {
+				"single_shot_accuracy_inc_1"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_sharpshooter_beta",
@@ -896,11 +1015,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.sentry_gun = {
 		{
-			upgrades = {"sentry_gun"},
+			upgrades = {
+				"sentry_gun"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"sentry_gun_armor_multiplier"},
+			upgrades = {
+				"sentry_gun_armor_multiplier"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_sentry_gun_beta",
@@ -912,7 +1035,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.sentry_targeting_package = {
 		{
-			upgrades = {"sentry_gun_spread_multiplier"},
+			upgrades = {
+				"sentry_gun_spread_multiplier"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -931,11 +1056,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.sentry_2_0 = {
 		{
-			upgrades = {"sentry_gun_can_reload"},
+			upgrades = {
+				"sentry_gun_can_reload"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"sentry_gun_shield"},
+			upgrades = {
+				"sentry_gun_shield"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_sentry_2_0_beta",
@@ -947,11 +1076,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.drill_expert = {
 		{
-			upgrades = {"player_drill_speed_multiplier1"},
+			upgrades = {
+				"player_drill_speed_multiplier1"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_drill_speed_multiplier2"},
+			upgrades = {
+				"player_drill_speed_multiplier2"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_drill_expert_beta",
@@ -963,7 +1096,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.military_grade = {
 		{
-			upgrades = {"trip_mine_quantity_increase_2"},
+			upgrades = {
+				"trip_mine_quantity_increase_2"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -979,11 +1114,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.dye_pack_removal = {
 		{
-			upgrades = {"player_dye_pack_chance_multiplier"},
+			upgrades = {
+				"player_dye_pack_chance_multiplier"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_dye_pack_cash_loss_multiplier"},
+			upgrades = {
+				"player_dye_pack_cash_loss_multiplier"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_dye_pack_removal_beta",
@@ -1011,11 +1150,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.discipline = {
 		{
-			upgrades = {"player_interacting_damage_multiplier"},
+			upgrades = {
+				"player_interacting_damage_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_steelsight_when_downed"},
+			upgrades = {
+				"player_steelsight_when_downed"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_discipline_beta",
@@ -1027,11 +1170,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.trip_miner = {
 		{
-			upgrades = {"trip_mine_quantity_increase_1"},
+			upgrades = {
+				"trip_mine_quantity_increase_1"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_trip_mine_deploy_time_multiplier"},
+			upgrades = {
+				"player_trip_mine_deploy_time_multiplier"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_trip_miner_beta",
@@ -1043,11 +1190,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.shaped_charge = {
 		{
-			upgrades = {"trip_mine_quantity_increase_2"},
+			upgrades = {
+				"trip_mine_quantity_increase_2"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_trip_mine_shaped_charge"},
+			upgrades = {
+				"player_trip_mine_shaped_charge"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_shaped_charge_beta",
@@ -1066,7 +1217,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"ecm_jammer_can_open_sec_doors"},
+			upgrades = {
+				"ecm_jammer_can_open_sec_doors"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_ecm_booster_beta",
@@ -1086,7 +1239,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_run_dodge_chance"},
+			upgrades = {
+				"player_run_dodge_chance"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_sprinter_beta",
@@ -1098,11 +1253,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.smg_training = {
 		{
-			upgrades = {"smg_reload_speed_multiplier"},
+			upgrades = {
+				"smg_reload_speed_multiplier"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"smg_recoil_multiplier"},
+			upgrades = {
+				"smg_recoil_multiplier"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_smg_training_beta",
@@ -1114,11 +1273,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.smg_master = {
 		{
-			upgrades = {"smg_reload_speed_multiplier"},
+			upgrades = {
+				"smg_reload_speed_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"smg_fire_rate_multiplier"},
+			upgrades = {
+				"smg_fire_rate_multiplier"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_smg_master_beta",
@@ -1130,11 +1293,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.transporter = {
 		{
-			upgrades = {"carry_interact_speed_multiplier_1"},
+			upgrades = {
+				"carry_interact_speed_multiplier_1"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_armor_carry_bonus_1"},
+			upgrades = {
+				"player_armor_carry_bonus_1"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_transporter_beta",
@@ -1150,7 +1317,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_respawn_time_multiplier"},
+			upgrades = {
+				"player_respawn_time_multiplier"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_cat_burglar_beta",
@@ -1162,7 +1331,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.chameleon = {
 		{
-			upgrades = {"player_standstill_omniscience"},
+			upgrades = {
+				"player_standstill_omniscience"
+			},
 			cost = self.costs.default
 		},
 		{
@@ -1190,7 +1361,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"bodybags_bag_quantity"},
+			upgrades = {
+				"bodybags_bag_quantity"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_cleaner_beta",
@@ -1202,7 +1375,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.ecm_2x = {
 		{
-			upgrades = {"ecm_jammer_quantity_increase_1"},
+			upgrades = {
+				"ecm_jammer_quantity_increase_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1229,7 +1404,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_silent_kill"},
+			upgrades = {
+				"player_silent_kill"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_assassin_beta",
@@ -1241,11 +1418,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.martial_arts = {
 		{
-			upgrades = {"player_melee_damage_dampener"},
+			upgrades = {
+				"player_melee_damage_dampener"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_melee_knockdown_mul"},
+			upgrades = {
+				"player_melee_knockdown_mul"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_martial_arts_beta",
@@ -1257,11 +1438,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.nine_lives = {
 		{
-			upgrades = {"player_bleed_out_health_multiplier"},
+			upgrades = {
+				"player_bleed_out_health_multiplier"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_additional_lives_1"},
+			upgrades = {
+				"player_additional_lives_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_nine_lives_beta",
@@ -1289,7 +1474,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.moving_target = {
 		{
-			upgrades = {"player_can_strafe_run"},
+			upgrades = {
+				"player_can_strafe_run"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1305,11 +1492,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.scavenger = {
 		{
-			upgrades = {"temporary_damage_speed_multiplier"},
+			upgrades = {
+				"temporary_damage_speed_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_team_damage_speed_multiplier_send"},
+			upgrades = {
+				"player_team_damage_speed_multiplier_send"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_scavenger_beta",
@@ -1328,7 +1519,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"weapon_silencer_spread_index_addend"},
+			upgrades = {
+				"weapon_silencer_spread_index_addend"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_silence_expert_beta",
@@ -1340,7 +1533,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.good_luck_charm = {
 		{
-			upgrades = {"player_tape_loop_duration_1"},
+			upgrades = {
+				"player_tape_loop_duration_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1355,8 +1550,12 @@ function SkillTreeTweakData:init()
 		}
 	}
 	self.skills.disguise = {
-		{cost = self.costs.hightier},
-		{cost = self.costs.hightierpro},
+		{
+			cost = self.costs.hightier
+		},
+		{
+			cost = self.costs.hightierpro
+		},
 		name_id = "menu_disguise_beta",
 		desc_id = "menu_disguise_beta_desc",
 		icon_xy = {
@@ -1389,7 +1588,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_on_zipline_dodge_chance"},
+			upgrades = {
+				"player_on_zipline_dodge_chance"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_freedom_call_beta",
@@ -1417,11 +1618,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.tea_time = {
 		{
-			upgrades = {"first_aid_kit_deploy_time_multiplier"},
+			upgrades = {
+				"first_aid_kit_deploy_time_multiplier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"first_aid_kit_damage_reduction_upgrade"},
+			upgrades = {
+				"first_aid_kit_damage_reduction_upgrade"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_tea_time_beta",
@@ -1455,7 +1660,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.alpha_dog = {
 		{
-			upgrades = {"player_crouch_dodge_chance_1"},
+			upgrades = {
+				"player_crouch_dodge_chance_1"
+			},
 			cost = self.costs.default
 		},
 		{
@@ -1471,7 +1678,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.tea_cookies = {
 		{
-			upgrades = {"first_aid_kit_quantity_increase_1"},
+			upgrades = {
+				"first_aid_kit_quantity_increase_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1490,11 +1699,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.cell_mates = {
 		{
-			upgrades = {"player_cheat_death_chance_1"},
+			upgrades = {
+				"player_cheat_death_chance_1"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_cheat_death_chance_1"},
+			upgrades = {
+				"player_cheat_death_chance_1"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_cell_mates_beta",
@@ -1510,7 +1723,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"pistol_reload_speed_multiplier"},
+			upgrades = {
+				"pistol_reload_speed_multiplier"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_thug_life_beta",
@@ -1522,11 +1737,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.thick_skin = {
 		{
-			upgrades = {"player_melee_concealment_modifier"},
+			upgrades = {
+				"player_melee_concealment_modifier"
+			},
 			cost = self.costs.default
 		},
 		{
-			upgrades = {"player_ballistic_vest_concealment_1"},
+			upgrades = {
+				"player_ballistic_vest_concealment_1"
+			},
 			cost = self.costs.pro
 		},
 		name_id = "menu_thick_skin_beta",
@@ -1538,11 +1757,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.backstab = {
 		{
-			upgrades = {"player_detection_risk_add_crit_chance_1"},
+			upgrades = {
+				"player_detection_risk_add_crit_chance_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_detection_risk_add_crit_chance_2"},
+			upgrades = {
+				"player_detection_risk_add_crit_chance_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_backstab_beta",
@@ -1554,11 +1777,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.drop_soap = {
 		{
-			upgrades = {"player_counter_strike_melee"},
+			upgrades = {
+				"player_counter_strike_melee"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_counter_strike_spooc"},
+			upgrades = {
+				"player_counter_strike_spooc"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_drop_soap_beta",
@@ -1592,11 +1819,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.trigger_happy = {
 		{
-			upgrades = {"pistol_stacking_hit_damage_multiplier_1"},
+			upgrades = {
+				"pistol_stacking_hit_damage_multiplier_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"pistol_stacking_hit_damage_multiplier_2"},
+			upgrades = {
+				"pistol_stacking_hit_damage_multiplier_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_trigger_happy_beta",
@@ -1608,7 +1839,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.perseverance = {
 		{
-			upgrades = {"temporary_berserker_damage_multiplier_1"},
+			upgrades = {
+				"temporary_berserker_damage_multiplier_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1650,7 +1883,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.akimbo = {
 		{
-			upgrades = {"akimbo_recoil_index_addend_2"},
+			upgrades = {
+				"akimbo_recoil_index_addend_2"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1669,11 +1904,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.jail_diet = {
 		{
-			upgrades = {"player_detection_risk_add_dodge_chance_1"},
+			upgrades = {
+				"player_detection_risk_add_dodge_chance_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_detection_risk_add_dodge_chance_2"},
+			upgrades = {
+				"player_detection_risk_add_dodge_chance_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_jail_diet_beta",
@@ -1685,11 +1924,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.prison_wife = {
 		{
-			upgrades = {"player_headshot_regen_armor_bonus_1"},
+			upgrades = {
+				"player_headshot_regen_armor_bonus_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_headshot_regen_armor_bonus_2"},
+			upgrades = {
+				"player_headshot_regen_armor_bonus_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_prison_wife_beta",
@@ -1701,11 +1944,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.stable_shot = {
 		{
-			upgrades = {"player_stability_increase_bonus_1"},
+			upgrades = {
+				"player_stability_increase_bonus_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_not_moving_accuracy_increase_bonus_1"},
+			upgrades = {
+				"player_not_moving_accuracy_increase_bonus_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_stable_shot_beta",
@@ -1717,7 +1964,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.hitman = {
 		{
-			upgrades = {"player_marked_enemy_extra_damage"},
+			upgrades = {
+				"player_marked_enemy_extra_damage"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1738,11 +1987,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.spotter_teamwork = {
 		{
-			upgrades = {"head_shot_ammo_return_1"},
+			upgrades = {
+				"head_shot_ammo_return_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"head_shot_ammo_return_2"},
+			upgrades = {
+				"head_shot_ammo_return_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_single_shot_ammo_return_beta",
@@ -1762,7 +2015,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"temporary_single_shot_fast_reload_1"},
+			upgrades = {
+				"temporary_single_shot_fast_reload_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_speedy_reload_beta",
@@ -1774,11 +2029,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.far_away = {
 		{
-			upgrades = {"shotgun_steelsight_accuracy_inc_1"},
+			upgrades = {
+				"shotgun_steelsight_accuracy_inc_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"shotgun_steelsight_range_inc_1"},
+			upgrades = {
+				"shotgun_steelsight_range_inc_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_far_away_beta",
@@ -1790,7 +2049,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.close_by = {
 		{
-			upgrades = {"shotgun_hip_run_and_shoot_1"},
+			upgrades = {
+				"shotgun_hip_run_and_shoot_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1809,11 +2070,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.scavenging = {
 		{
-			upgrades = {"player_increased_pickup_area_1"},
+			upgrades = {
+				"player_increased_pickup_area_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_double_drop_1"},
+			upgrades = {
+				"player_double_drop_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_scavenging_beta",
@@ -1825,11 +2090,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.defense_up = {
 		{
-			upgrades = {"sentry_gun_cost_reduction_1"},
+			upgrades = {
+				"sentry_gun_cost_reduction_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"sentry_gun_shield"},
+			upgrades = {
+				"sentry_gun_shield"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_defense_up_beta",
@@ -1841,11 +2110,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.eco_sentry = {
 		{
-			upgrades = {"sentry_gun_cost_reduction_2"},
+			upgrades = {
+				"sentry_gun_cost_reduction_2"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"sentry_gun_armor_multiplier"},
+			upgrades = {
+				"sentry_gun_armor_multiplier"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_eco_sentry_beta",
@@ -1857,7 +2130,9 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.engineering = {
 		{
-			upgrades = {"sentry_gun_silent"},
+			upgrades = {
+				"sentry_gun_silent"
+			},
 			cost = self.costs.hightier
 		},
 		{
@@ -1876,11 +2151,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.jack_of_all_trades = {
 		{
-			upgrades = {"deploy_interact_faster_1"},
+			upgrades = {
+				"deploy_interact_faster_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"second_deployable_1"},
+			upgrades = {
+				"second_deployable_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_jack_of_all_trades_beta",
@@ -1892,11 +2171,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.tower_defense = {
 		{
-			upgrades = {"sentry_gun_quantity_1"},
+			upgrades = {
+				"sentry_gun_quantity_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"sentry_gun_quantity_2"},
+			upgrades = {
+				"sentry_gun_quantity_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_tower_defense_beta",
@@ -1908,11 +2191,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.kick_starter = {
 		{
-			upgrades = {"player_drill_autorepair_2"},
+			upgrades = {
+				"player_drill_autorepair_2"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_drill_melee_hit_restart_chance_1"},
+			upgrades = {
+				"player_drill_melee_hit_restart_chance_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_kick_starter_beta",
@@ -1924,11 +2211,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.fire_trap = {
 		{
-			upgrades = {"trip_mine_fire_trap_1"},
+			upgrades = {
+				"trip_mine_fire_trap_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"trip_mine_fire_trap_2"},
+			upgrades = {
+				"trip_mine_fire_trap_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_fire_trap_beta",
@@ -1940,11 +2231,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.fast_fire = {
 		{
-			upgrades = {"player_automatic_mag_increase_1"},
+			upgrades = {
+				"player_automatic_mag_increase_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_ap_bullets_1"},
+			upgrades = {
+				"player_ap_bullets_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_fast_fire_beta",
@@ -1956,11 +2251,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.steady_grip = {
 		{
-			upgrades = {"player_weapon_accuracy_increase_1"},
+			upgrades = {
+				"player_weapon_accuracy_increase_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_stability_increase_bonus_2"},
+			upgrades = {
+				"player_stability_increase_bonus_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_steady_grip_beta",
@@ -1972,11 +2271,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.fire_control = {
 		{
-			upgrades = {"player_hip_fire_accuracy_inc_1"},
+			upgrades = {
+				"player_hip_fire_accuracy_inc_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_weapon_movement_stability_1"},
+			upgrades = {
+				"player_weapon_movement_stability_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_fire_control_beta",
@@ -1988,11 +2291,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.shock_and_awe = {
 		{
-			upgrades = {"player_run_and_shoot_1"},
+			upgrades = {
+				"player_run_and_shoot_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_automatic_faster_reload_1"},
+			upgrades = {
+				"player_automatic_faster_reload_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_shock_and_awe_beta",
@@ -2004,11 +2311,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.heavy_impact = {
 		{
-			upgrades = {"weapon_knock_down_1"},
+			upgrades = {
+				"weapon_knock_down_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"weapon_knock_down_2"},
+			upgrades = {
+				"weapon_knock_down_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_heavy_impact_beta",
@@ -2020,11 +2331,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.body_expertise = {
 		{
-			upgrades = {"weapon_automatic_head_shot_add_1"},
+			upgrades = {
+				"weapon_automatic_head_shot_add_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"weapon_automatic_head_shot_add_2"},
+			upgrades = {
+				"weapon_automatic_head_shot_add_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_body_expertise_beta",
@@ -2058,11 +2373,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.dire_need = {
 		{
-			upgrades = {"player_armor_depleted_stagger_shot_1"},
+			upgrades = {
+				"player_armor_depleted_stagger_shot_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_armor_depleted_stagger_shot_2"},
+			upgrades = {
+				"player_armor_depleted_stagger_shot_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_dire_need_beta",
@@ -2074,11 +2393,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.up_you_go = {
 		{
-			upgrades = {"player_revived_damage_resist_1"},
+			upgrades = {
+				"player_revived_damage_resist_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_revived_health_regain_1"},
+			upgrades = {
+				"player_revived_health_regain_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_up_you_go_beta",
@@ -2097,7 +2420,9 @@ function SkillTreeTweakData:init()
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_temp_increased_movement_speed_1"},
+			upgrades = {
+				"player_temp_increased_movement_speed_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_running_from_death_beta",
@@ -2109,11 +2434,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.dance_instructor = {
 		{
-			upgrades = {"pistol_magazine_capacity_inc_1"},
+			upgrades = {
+				"pistol_magazine_capacity_inc_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"pistol_fire_rate_multiplier"},
+			upgrades = {
+				"pistol_fire_rate_multiplier"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_dance_instructor",
@@ -2125,11 +2454,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.expert_handling = {
 		{
-			upgrades = {"pistol_stacked_accuracy_bonus_1"},
+			upgrades = {
+				"pistol_stacked_accuracy_bonus_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"pistol_reload_speed_multiplier"},
+			upgrades = {
+				"pistol_reload_speed_multiplier"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_expert_handling",
@@ -2141,11 +2474,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.bloodthirst = {
 		{
-			upgrades = {"player_melee_damage_stacking_1"},
+			upgrades = {
+				"player_melee_damage_stacking_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_temp_melee_kill_increase_reload_speed_1"},
+			upgrades = {
+				"player_temp_melee_kill_increase_reload_speed_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_bloodthirst",
@@ -2157,11 +2494,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.feign_death = {
 		{
-			upgrades = {"player_cheat_death_chance_1"},
+			upgrades = {
+				"player_cheat_death_chance_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"player_cheat_death_chance_2"},
+			upgrades = {
+				"player_cheat_death_chance_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_feign_death",
@@ -2240,11 +2581,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.combat_engineering = {
 		{
-			upgrades = {"trip_mine_explosion_size_multiplier_1"},
+			upgrades = {
+				"trip_mine_explosion_size_multiplier_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"trip_mine_damage_multiplier_1"},
+			upgrades = {
+				"trip_mine_damage_multiplier_1"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_combat_engineering",
@@ -2256,11 +2601,15 @@ function SkillTreeTweakData:init()
 	}
 	self.skills.single_shot_ammo_return = {
 		{
-			upgrades = {"snp_graze_damage_1"},
+			upgrades = {
+				"snp_graze_damage_1"
+			},
 			cost = self.costs.hightier
 		},
 		{
-			upgrades = {"snp_graze_damage_2"},
+			upgrades = {
+				"snp_graze_damage_2"
+			},
 			cost = self.costs.hightierpro
 		},
 		name_id = "menu_sniper_graze_damage",
@@ -2277,7 +2626,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"combat_medic"},
+				{
+					"combat_medic"
+				},
 				{
 					"tea_time",
 					"fast_learner"
@@ -2286,7 +2637,9 @@ function SkillTreeTweakData:init()
 					"tea_cookies",
 					"medic_2x"
 				},
-				{"inspire"}
+				{
+					"inspire"
+				}
 			}
 		},
 		{
@@ -2295,7 +2648,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"triathlete"},
+				{
+					"triathlete"
+				},
 				{
 					"cable_guy",
 					"joker"
@@ -2304,7 +2659,9 @@ function SkillTreeTweakData:init()
 					"stockholm_syndrome",
 					"control_freak"
 				},
-				{"black_marketeer"}
+				{
+					"black_marketeer"
+				}
 			}
 		},
 		{
@@ -2313,7 +2670,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"stable_shot"},
+				{
+					"stable_shot"
+				},
 				{
 					"rifleman",
 					"sharpshooter"
@@ -2322,7 +2681,9 @@ function SkillTreeTweakData:init()
 					"spotter_teamwork",
 					"speedy_reload"
 				},
-				{"single_shot_ammo_return"}
+				{
+					"single_shot_ammo_return"
+				}
 			}
 		},
 		{
@@ -2331,7 +2692,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"underdog"},
+				{
+					"underdog"
+				},
 				{
 					"shotgun_cqb",
 					"shotgun_impact"
@@ -2340,7 +2703,9 @@ function SkillTreeTweakData:init()
 					"far_away",
 					"close_by"
 				},
-				{"overkill"}
+				{
+					"overkill"
+				}
 			}
 		},
 		{
@@ -2349,7 +2714,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"oppressor"},
+				{
+					"oppressor"
+				},
 				{
 					"show_of_force",
 					"pack_mule"
@@ -2358,7 +2725,9 @@ function SkillTreeTweakData:init()
 					"iron_man",
 					"prison_wife"
 				},
-				{"juggernaut"}
+				{
+					"juggernaut"
+				}
 			}
 		},
 		{
@@ -2367,7 +2736,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"scavenging"},
+				{
+					"scavenging"
+				},
 				{
 					"ammo_reservoir",
 					"portable_saw"
@@ -2376,7 +2747,9 @@ function SkillTreeTweakData:init()
 					"ammo_2x",
 					"carbon_blade"
 				},
-				{"bandoliers"}
+				{
+					"bandoliers"
+				}
 			}
 		},
 		{
@@ -2385,7 +2758,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"defense_up"},
+				{
+					"defense_up"
+				},
 				{
 					"sentry_targeting_package",
 					"eco_sentry"
@@ -2394,7 +2769,9 @@ function SkillTreeTweakData:init()
 					"engineering",
 					"jack_of_all_trades"
 				},
-				{"tower_defense"}
+				{
+					"tower_defense"
+				}
 			}
 		},
 		{
@@ -2403,7 +2780,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"hardware_expert"},
+				{
+					"hardware_expert"
+				},
 				{
 					"combat_engineering",
 					"drill_expert"
@@ -2412,7 +2791,9 @@ function SkillTreeTweakData:init()
 					"more_fire_power",
 					"kick_starter"
 				},
-				{"fire_trap"}
+				{
+					"fire_trap"
+				}
 			}
 		},
 		{
@@ -2421,7 +2802,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"steady_grip"},
+				{
+					"steady_grip"
+				},
 				{
 					"heavy_impact",
 					"fire_control"
@@ -2430,7 +2813,9 @@ function SkillTreeTweakData:init()
 					"shock_and_awe",
 					"fast_fire"
 				},
-				{"body_expertise"}
+				{
+					"body_expertise"
+				}
 			}
 		},
 		{
@@ -2439,7 +2824,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"jail_workout"},
+				{
+					"jail_workout"
+				},
 				{
 					"cleaner",
 					"chameleon"
@@ -2448,7 +2835,9 @@ function SkillTreeTweakData:init()
 					"second_chances",
 					"ecm_booster"
 				},
-				{"ecm_2x"}
+				{
+					"ecm_2x"
+				}
 			}
 		},
 		{
@@ -2457,7 +2846,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"sprinter"},
+				{
+					"sprinter"
+				},
 				{
 					"awareness",
 					"thick_skin"
@@ -2466,7 +2857,9 @@ function SkillTreeTweakData:init()
 					"dire_need",
 					"insulation"
 				},
-				{"jail_diet"}
+				{
+					"jail_diet"
+				}
 			}
 		},
 		{
@@ -2475,7 +2868,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"scavenger"},
+				{
+					"scavenger"
+				},
 				{
 					"optic_illusions",
 					"silence_expert"
@@ -2484,7 +2879,9 @@ function SkillTreeTweakData:init()
 					"backstab",
 					"hitman"
 				},
-				{"unseen_strike"}
+				{
+					"unseen_strike"
+				}
 			}
 		},
 		{
@@ -2493,7 +2890,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"equilibrium"},
+				{
+					"equilibrium"
+				},
 				{
 					"dance_instructor",
 					"akimbo"
@@ -2502,7 +2901,9 @@ function SkillTreeTweakData:init()
 					"gun_fighter",
 					"expert_handling"
 				},
-				{"trigger_happy"}
+				{
+					"trigger_happy"
+				}
 			}
 		},
 		{
@@ -2511,7 +2912,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"nine_lives"},
+				{
+					"nine_lives"
+				},
 				{
 					"running_from_death",
 					"up_you_go"
@@ -2520,7 +2923,9 @@ function SkillTreeTweakData:init()
 					"perseverance",
 					"feign_death"
 				},
-				{"messiah"}
+				{
+					"messiah"
+				}
 			}
 		},
 		{
@@ -2529,7 +2934,9 @@ function SkillTreeTweakData:init()
 			unlocked = true,
 			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
 			tiers = {
-				{"martial_arts"},
+				{
+					"martial_arts"
+				},
 				{
 					"bloodthirst",
 					"steroids"
@@ -2538,7 +2945,9 @@ function SkillTreeTweakData:init()
 					"drop_soap",
 					"wolverine"
 				},
-				{"frenzy"}
+				{
+					"frenzy"
+				}
 			}
 		}
 	}
@@ -2597,58 +3006,86 @@ function SkillTreeTweakData:init()
 		"x_ppk"
 	}
 	self.skill_switches = {
-		{name_id = "menu_st_skill_switch_1"},
+		{
+			name_id = "menu_st_skill_switch_1"
+		},
 		{
 			name_id = "menu_st_skill_switch_2",
-			locks = {level = 50}
+			locks = {
+				level = 50
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_3",
-			locks = {level = 75}
+			locks = {
+				level = 75
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_4",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_5",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_6",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_7",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_8",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_9",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_10",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_11",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_12",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_13",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_14",
-			locks = {level = 100}
+			locks = {
+				level = 100
+			}
 		},
 		{
 			name_id = "menu_st_skill_switch_15",
@@ -2674,7 +3111,9 @@ function SkillTreeTweakData:init()
 		cost = 300,
 		desc_id = "menu_deckall_2_desc",
 		name_id = "menu_deckall_2",
-		upgrades = {"weapon_passive_headshot_damage_multiplier"},
+		upgrades = {
+			"weapon_passive_headshot_damage_multiplier"
+		},
 		icon_xy = {
 			1,
 			0
@@ -2802,7 +3241,9 @@ function SkillTreeTweakData:init()
 				cost = 200,
 				desc_id = "menu_deck2_1_desc",
 				name_id = "menu_deck2_1",
-				upgrades = {"player_passive_health_multiplier_1"},
+				upgrades = {
+					"player_passive_health_multiplier_1"
+				},
 				icon_xy = {
 					0,
 					0
@@ -2827,7 +3268,9 @@ function SkillTreeTweakData:init()
 				cost = 1000,
 				desc_id = "menu_deck2_5_desc",
 				name_id = "menu_deck2_5",
-				upgrades = {"player_passive_health_multiplier_3"},
+				upgrades = {
+					"player_passive_health_multiplier_3"
+				},
 				icon_xy = {
 					2,
 					1
@@ -2838,7 +3281,9 @@ function SkillTreeTweakData:init()
 				cost = 2400,
 				desc_id = "menu_deck2_7_desc",
 				name_id = "menu_deck2_7",
-				upgrades = {"player_panic_suppression"},
+				upgrades = {
+					"player_panic_suppression"
+				},
 				icon_xy = {
 					3,
 					1
@@ -2881,7 +3326,9 @@ function SkillTreeTweakData:init()
 				cost = 400,
 				desc_id = "menu_deck3_3_desc",
 				name_id = "menu_deck3_3",
-				upgrades = {"player_tier_armor_multiplier_3"},
+				upgrades = {
+					"player_tier_armor_multiplier_3"
+				},
 				icon_xy = {
 					5,
 					1
@@ -2892,7 +3339,9 @@ function SkillTreeTweakData:init()
 				cost = 1000,
 				desc_id = "menu_deck3_5_desc",
 				name_id = "menu_deck3_5",
-				upgrades = {"player_tier_armor_multiplier_4"},
+				upgrades = {
+					"player_tier_armor_multiplier_4"
+				},
 				icon_xy = {
 					7,
 					1
@@ -2936,7 +3385,9 @@ function SkillTreeTweakData:init()
 				cost = 200,
 				desc_id = "menu_deck4_1_desc",
 				name_id = "menu_deck4_1",
-				upgrades = {"player_passive_dodge_chance_1"},
+				upgrades = {
+					"player_passive_dodge_chance_1"
+				},
 				icon_xy = {
 					1,
 					2
@@ -2947,7 +3398,9 @@ function SkillTreeTweakData:init()
 				cost = 400,
 				desc_id = "menu_deck4_3_desc",
 				name_id = "menu_deck4_3",
-				upgrades = {"player_camouflage_multiplier"},
+				upgrades = {
+					"player_camouflage_multiplier"
+				},
 				icon_xy = {
 					4,
 					2
@@ -2958,7 +3411,9 @@ function SkillTreeTweakData:init()
 				cost = 1000,
 				desc_id = "menu_deck4_5_desc",
 				name_id = "menu_deck4_5",
-				upgrades = {"player_passive_dodge_chance_2"},
+				upgrades = {
+					"player_passive_dodge_chance_2"
+				},
 				icon_xy = {
 					2,
 					2
@@ -2969,7 +3424,9 @@ function SkillTreeTweakData:init()
 				cost = 2400,
 				desc_id = "menu_deck4_7_desc",
 				name_id = "menu_deck4_7",
-				upgrades = {"player_passive_dodge_chance_3"},
+				upgrades = {
+					"player_passive_dodge_chance_3"
+				},
 				icon_xy = {
 					3,
 					2
@@ -2998,7 +3455,9 @@ function SkillTreeTweakData:init()
 				cost = 200,
 				desc_id = "menu_deck5_1_desc",
 				name_id = "menu_deck5_1",
-				upgrades = {"player_perk_armor_regen_timer_multiplier_1"},
+				upgrades = {
+					"player_perk_armor_regen_timer_multiplier_1"
+				},
 				icon_xy = {
 					6,
 					2
@@ -3024,7 +3483,9 @@ function SkillTreeTweakData:init()
 				cost = 1000,
 				desc_id = "menu_deck5_5_desc",
 				name_id = "menu_deck5_5",
-				upgrades = {"player_perk_armor_regen_timer_multiplier_3"},
+				upgrades = {
+					"player_perk_armor_regen_timer_multiplier_3"
+				},
 				icon_xy = {
 					0,
 					3
@@ -3035,7 +3496,9 @@ function SkillTreeTweakData:init()
 				cost = 2400,
 				desc_id = "menu_deck5_7_desc",
 				name_id = "menu_deck5_7",
-				upgrades = {"player_perk_armor_regen_timer_multiplier_4"},
+				upgrades = {
+					"player_perk_armor_regen_timer_multiplier_4"
+				},
 				icon_xy = {
 					1,
 					3
@@ -3064,7 +3527,9 @@ function SkillTreeTweakData:init()
 				cost = 200,
 				desc_id = "menu_deck6_1_desc",
 				name_id = "menu_deck6_1",
-				upgrades = {"player_passive_dodge_chance_1"},
+				upgrades = {
+					"player_passive_dodge_chance_1"
+				},
 				icon_xy = {
 					1,
 					2
@@ -3146,7 +3611,9 @@ function SkillTreeTweakData:init()
 				cost = 200,
 				desc_id = "menu_deck7_1_desc",
 				name_id = "menu_deck7_1",
-				upgrades = {"player_tier_dodge_chance_1"},
+				upgrades = {
+					"player_tier_dodge_chance_1"
+				},
 				icon_xy = {
 					1,
 					2
@@ -3234,7 +3701,9 @@ function SkillTreeTweakData:init()
 				cost = 400,
 				desc_id = "menu_deck8_1_desc",
 				name_id = "menu_deck8_1",
-				upgrades = {"player_damage_dampener_close_contact_1"},
+				upgrades = {
+					"player_damage_dampener_close_contact_1"
+				},
 				icon_xy = {
 					3,
 					4
@@ -3260,7 +3729,9 @@ function SkillTreeTweakData:init()
 				cost = 2400,
 				desc_id = "menu_deck8_3_desc",
 				name_id = "menu_deck8_5",
-				upgrades = {"player_damage_dampener_close_contact_3"},
+				upgrades = {
+					"player_damage_dampener_close_contact_3"
+				},
 				icon_xy = {
 					5,
 					4
@@ -3407,7 +3878,9 @@ function SkillTreeTweakData:init()
 				cost = 2400,
 				desc_id = "menu_deck10_7_desc",
 				name_id = "menu_deck10_7",
-				upgrades = {"temporary_loose_ammo_restore_health_2"},
+				upgrades = {
+					"temporary_loose_ammo_restore_health_2"
+				},
 				icon_xy = {
 					7,
 					5
@@ -3435,7 +3908,9 @@ function SkillTreeTweakData:init()
 				cost = 200,
 				desc_id = "menu_deck11_1_desc",
 				name_id = "menu_deck11_1",
-				upgrades = {"player_damage_to_hot_1"},
+				upgrades = {
+					"player_damage_to_hot_1"
+				},
 				icon_xy = {
 					1,
 					6
@@ -3508,7 +3983,9 @@ function SkillTreeTweakData:init()
 				cost = 200,
 				desc_id = "menu_deck12_1_desc",
 				name_id = "menu_deck12_1",
-				upgrades = {"player_armor_regen_damage_health_ratio_multiplier_1"},
+				upgrades = {
+					"player_armor_regen_damage_health_ratio_multiplier_1"
+				},
 				icon_xy = {
 					6,
 					6
@@ -3519,7 +3996,9 @@ function SkillTreeTweakData:init()
 				cost = 400,
 				desc_id = "menu_deck12_3_desc",
 				name_id = "menu_deck12_3",
-				upgrades = {"player_movement_speed_damage_health_ratio_multiplier"},
+				upgrades = {
+					"player_movement_speed_damage_health_ratio_multiplier"
+				},
 				icon_xy = {
 					7,
 					6
@@ -3530,7 +4009,9 @@ function SkillTreeTweakData:init()
 				cost = 1000,
 				desc_id = "menu_deck12_5_desc",
 				name_id = "menu_deck12_5",
-				upgrades = {"player_armor_regen_damage_health_ratio_multiplier_2"},
+				upgrades = {
+					"player_armor_regen_damage_health_ratio_multiplier_2"
+				},
 				icon_xy = {
 					0,
 					7
@@ -3541,7 +4022,9 @@ function SkillTreeTweakData:init()
 				cost = 2400,
 				desc_id = "menu_deck12_7_desc",
 				name_id = "menu_deck12_7",
-				upgrades = {"player_armor_regen_damage_health_ratio_multiplier_3"},
+				upgrades = {
+					"player_armor_regen_damage_health_ratio_multiplier_3"
+				},
 				icon_xy = {
 					1,
 					7
@@ -3571,7 +4054,9 @@ function SkillTreeTweakData:init()
 				cost = 200,
 				desc_id = "menu_deck13_1_desc",
 				name_id = "menu_deck13_1",
-				upgrades = {"player_armor_health_store_amount_1"},
+				upgrades = {
+					"player_armor_health_store_amount_1"
+				},
 				icon_xy = {
 					3,
 					7
@@ -3643,7 +4128,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "coco",
 				desc_id = "menu_deck14_1_desc",
 				name_id = "menu_deck14_1",
-				upgrades = {"player_cocaine_stacking_1"},
+				upgrades = {
+					"player_cocaine_stacking_1"
+				},
 				icon_xy = {
 					0,
 					0
@@ -3655,7 +4142,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "coco",
 				desc_id = "menu_deck14_3_desc",
 				name_id = "menu_deck14_3",
-				upgrades = {"player_sync_cocaine_stacks"},
+				upgrades = {
+					"player_sync_cocaine_stacks"
+				},
 				icon_xy = {
 					1,
 					0
@@ -3667,7 +4156,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "coco",
 				desc_id = "menu_deck14_5_desc",
 				name_id = "menu_deck14_5",
-				upgrades = {"player_cocaine_stacks_decay_multiplier_1"},
+				upgrades = {
+					"player_cocaine_stacks_decay_multiplier_1"
+				},
 				icon_xy = {
 					2,
 					0
@@ -3679,7 +4170,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "coco",
 				desc_id = "menu_deck14_7_desc",
 				name_id = "menu_deck14_7",
-				upgrades = {"player_sync_cocaine_upgrade_level_1"},
+				upgrades = {
+					"player_sync_cocaine_upgrade_level_1"
+				},
 				icon_xy = {
 					3,
 					0
@@ -3739,7 +4232,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "opera",
 				desc_id = "menu_deck15_5_desc",
 				name_id = "menu_deck15_5",
-				upgrades = {"player_armor_increase_2"},
+				upgrades = {
+					"player_armor_increase_2"
+				},
 				icon_xy = {
 					2,
 					0
@@ -3751,7 +4246,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "opera",
 				desc_id = "menu_deck15_7_desc",
 				name_id = "menu_deck15_7",
-				upgrades = {"player_armor_increase_3"},
+				upgrades = {
+					"player_armor_increase_3"
+				},
 				icon_xy = {
 					3,
 					0
@@ -3797,7 +4294,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "wild",
 				desc_id = "menu_deck16_3_desc",
 				name_id = "menu_deck16_3",
-				upgrades = {"player_less_health_wild_armor_1"},
+				upgrades = {
+					"player_less_health_wild_armor_1"
+				},
 				icon_xy = {
 					1,
 					0
@@ -3809,7 +4308,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "wild",
 				desc_id = "menu_deck16_5_desc",
 				name_id = "menu_deck16_5",
-				upgrades = {"player_less_health_wild_cooldown_1"},
+				upgrades = {
+					"player_less_health_wild_cooldown_1"
+				},
 				icon_xy = {
 					2,
 					0
@@ -3821,7 +4322,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "wild",
 				desc_id = "menu_deck16_7_desc",
 				name_id = "menu_deck16_7",
-				upgrades = {"player_less_armor_wild_health_1"},
+				upgrades = {
+					"player_less_armor_wild_health_1"
+				},
 				icon_xy = {
 					3,
 					0
@@ -3867,7 +4370,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "chico",
 				desc_id = "menu_deck17_3_desc",
 				name_id = "menu_deck17_3",
-				upgrades = {"player_passive_health_multiplier_1"},
+				upgrades = {
+					"player_passive_health_multiplier_1"
+				},
 				icon_xy = {
 					1,
 					0
@@ -3929,7 +4434,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "max",
 				desc_id = "menu_deck18_1_desc",
 				name_id = "menu_deck18_1",
-				upgrades = {"smoke_screen_grenade"},
+				upgrades = {
+					"smoke_screen_grenade"
+				},
 				icon_xy = {
 					0,
 					0
@@ -3941,7 +4448,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "max",
 				desc_id = "menu_deck18_3_desc",
 				name_id = "menu_deck18_3",
-				upgrades = {"player_dodge_shot_gain"},
+				upgrades = {
+					"player_dodge_shot_gain"
+				},
 				icon_xy = {
 					1,
 					0
@@ -3953,7 +4462,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "max",
 				desc_id = "menu_deck18_5_desc",
 				name_id = "menu_deck18_5",
-				upgrades = {"player_passive_dodge_chance_1"},
+				upgrades = {
+					"player_passive_dodge_chance_1"
+				},
 				icon_xy = {
 					2,
 					0
@@ -3965,7 +4476,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "max",
 				desc_id = "menu_deck18_7_desc",
 				name_id = "menu_deck18_7",
-				upgrades = {"player_dodge_replenish_armor"},
+				upgrades = {
+					"player_dodge_replenish_armor"
+				},
 				icon_xy = {
 					3,
 					0
@@ -4012,7 +4525,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "myh",
 				desc_id = "menu_deck19_3_desc",
 				name_id = "menu_deck19_3",
-				upgrades = {"player_armor_to_health_conversion"},
+				upgrades = {
+					"player_armor_to_health_conversion"
+				},
 				icon_xy = {
 					1,
 					0
@@ -4024,7 +4539,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "myh",
 				desc_id = "menu_deck19_5_desc",
 				name_id = "menu_deck19_5",
-				upgrades = {"player_damage_control_auto_shrug"},
+				upgrades = {
+					"player_damage_control_auto_shrug"
+				},
 				icon_xy = {
 					2,
 					0
@@ -4036,7 +4553,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "myh",
 				desc_id = "menu_deck19_7_desc",
 				name_id = "menu_deck19_7",
-				upgrades = {"player_damage_control_cooldown_drain_2"},
+				upgrades = {
+					"player_damage_control_cooldown_drain_2"
+				},
 				icon_xy = {
 					3,
 					0
@@ -4097,7 +4616,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "ecp",
 				desc_id = "menu_deck20_5_desc",
 				name_id = "menu_deck20_5",
-				upgrades = {"player_tag_team_damage_absorption"},
+				upgrades = {
+					"player_tag_team_damage_absorption"
+				},
 				icon_xy = {
 					2,
 					0
@@ -4109,7 +4630,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "ecp",
 				desc_id = "menu_deck20_7_desc",
 				name_id = "menu_deck20_7",
-				upgrades = {"player_passive_health_multiplier_3"},
+				upgrades = {
+					"player_passive_health_multiplier_3"
+				},
 				icon_xy = {
 					3,
 					0
@@ -4185,7 +4708,9 @@ function SkillTreeTweakData:init()
 				texture_bundle_folder = "joy",
 				desc_id = "menu_deck21_7_desc",
 				name_id = "menu_deck21_7",
-				upgrades = {"player_pocket_ecm_kill_dodge_1"},
+				upgrades = {
+					"player_pocket_ecm_kill_dodge_1"
+				},
 				icon_xy = {
 					3,
 					0
@@ -4252,7 +4777,6 @@ function SkillTreeTweakData:get_tiers(tree_idx)
 end
 
 function SkillTreeTweakData:get_tier_unlocks()
-
 	local function digest(value)
 		return Application:digest_value(value, false)
 	end
@@ -4297,4 +4821,3 @@ function SkillTreeTweakData:get_specialization_icon_data(spec, no_fallback)
 		64
 	}
 end
-

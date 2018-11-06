@@ -361,7 +361,7 @@ function JobManager:_setup_heat_job_containers()
 	local containers = {}
 	Global.job_manager.heat_containers = containers
 	local num_containers = #tweak_data.narrative.MAX_JOBS_IN_CONTAINERS
-	local step = (self.JOB_HEAT_MAX_VALUE * 2) / num_containers
+	local step = self.JOB_HEAT_MAX_VALUE * 2 / num_containers
 
 	for i, max_jobs in ipairs(tweak_data.narrative.MAX_JOBS_IN_CONTAINERS) do
 		local heat = math.ceil(i * step - self.JOB_HEAT_MAX_VALUE)
@@ -421,41 +421,43 @@ function JobManager:_chk_fill_heat_containers()
 	local reached_end = false
 	local loop_breaker = 100
 
-	while not reached_end and loop_breaker > 0 do
-		reached_end = true
+	if not reached_end then
+		while not reached_end and loop_breaker > 0 do
+			reached_end = true
 
-		for index, container in ipairs(jobs_in_containers) do
-			local max_jobs = container.max_jobs
-			local heat = container.heat
+			for index, container in ipairs(jobs_in_containers) do
+				local max_jobs = container.max_jobs
+				local heat = container.heat
 
-			if max_jobs and max_jobs < #container then
-				reached_end = false
-				local num_to_move = #container - max_jobs
-				local new_container = nil
+				if max_jobs and max_jobs < #container then
+					reached_end = false
+					local num_to_move = #container - max_jobs
+					local new_container = nil
 
-				if heat < 0 then
-					new_container = jobs_in_containers[index + 1]
+					if heat < 0 then
+						new_container = jobs_in_containers[index + 1]
 
-					for i = 1, num_to_move, 1 do
-						local t = table.remove(container, #container)
+						for i = 1, num_to_move, 1 do
+							local t = table.remove(container, #container)
 
-						table.insert(new_container, 1, t)
+							table.insert(new_container, 1, t)
+						end
+					elseif heat > 0 then
+						new_container = jobs_in_containers[index - 1]
+
+						for i = 1, num_to_move, 1 do
+							local t = table.remove(container, 1)
+
+							table.insert(new_container, t)
+						end
+
+						break
 					end
-				elseif heat > 0 then
-					new_container = jobs_in_containers[index - 1]
-
-					for i = 1, num_to_move, 1 do
-						local t = table.remove(container, 1)
-
-						table.insert(new_container, t)
-					end
-
-					break
 				end
 			end
-		end
 
-		loop_breaker = loop_breaker - 1
+			loop_breaker = loop_breaker - 1
+		end
 	end
 
 	self._global.heat_containers = {}
@@ -744,7 +746,10 @@ end
 
 function JobManager:_change_job_heat(job_id, heat, cap_heat)
 	self._global.heat[job_id] = self._global.heat[job_id] + heat
-	self._global.heat[job_id] = cap_heat and math.min(self._global.heat[job_id], 0)
+
+	if cap_heat then
+		self._global.heat[job_id] = math.min(self._global.heat[job_id], 0)
+	end
 
 	self:_chk_is_heat_correct(job_id)
 end
@@ -755,7 +760,10 @@ function JobManager:set_job_heat(job_id, new_heat, cap_heat)
 	end
 
 	self._global.heat[job_id] = new_heat
-	self._global.heat[job_id] = cap_heat and math.min(self._global.heat[job_id], 0)
+
+	if cap_heat then
+		self._global.heat[job_id] = math.min(self._global.heat[job_id], 0)
+	end
 
 	self:_chk_is_heat_correct(job_id)
 end
@@ -815,7 +823,9 @@ function JobManager:plot_heat_graph(remove_only)
 		return
 	end
 
-	local my_panel = ws:panel():panel({name = "JobManager_TEST_PANEL"})
+	local my_panel = ws:panel():panel({
+		name = "JobManager_TEST_PANEL"
+	})
 
 	my_panel:set_size(500, 500)
 	my_panel:set_center(ws:panel():w() / 2, ws:panel():h() / 2)
@@ -1631,7 +1641,7 @@ end
 
 function JobManager:_check_add_to_cooldown()
 	if Network:is_server() and self._global.start_time then
-		local cooldown_time = (self._global.start_time + tweak_data.narrative.CONTRACT_COOLDOWN_TIME) - TimerManager:wall_running():time()
+		local cooldown_time = self._global.start_time + tweak_data.narrative.CONTRACT_COOLDOWN_TIME - TimerManager:wall_running():time()
 
 		if cooldown_time > 0 then
 			self._global.cooldown = self._global.cooldown or {}
@@ -1641,7 +1651,9 @@ function JobManager:_check_add_to_cooldown()
 end
 
 function JobManager:sync_save(data)
-	local state = {next_interupt_stage = self._global.next_interupt_stage}
+	local state = {
+		next_interupt_stage = self._global.next_interupt_stage
+	}
 	data.JobManager = state
 end
 
@@ -1649,4 +1661,3 @@ function JobManager:sync_load(data)
 	local state = data.JobManager
 	self._global.next_interupt_stage = state.next_interupt_stage
 end
-

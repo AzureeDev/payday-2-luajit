@@ -27,4 +27,3 @@ end
 function ItemOption:set_parameters(parameters)
 	self._parameters = parameters
 end
-

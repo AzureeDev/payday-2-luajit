@@ -23,7 +23,7 @@ end
 function Ladder.next_ladder()
 	Ladder.ladder_index = Ladder.ladder_index + 1
 
-	if #Ladder.active_ladders < Ladder.ladder_index then
+	if Ladder.ladder_index > #Ladder.active_ladders then
 		Ladder.ladder_index = 1
 	end
 
@@ -65,7 +65,7 @@ function Ladder:set_config(check_ground_clipping)
 		local up_ray = self._unit:raycast("ray", middle_pos + self._normal * self.MOVER_NORMAL_OFFSET, top + self._normal * self.MOVER_NORMAL_OFFSET, "slot_mask", 1)
 
 		if up_ray then
-			top = (up_ray.position - self._normal * self.MOVER_NORMAL_OFFSET) - self._up * 15
+			top = up_ray.position - self._normal * self.MOVER_NORMAL_OFFSET - self._up * 15
 		end
 
 		local bottom_ray = self._unit:raycast("ray", middle_pos + self._normal * self.MOVER_NORMAL_OFFSET, position + self._normal * self.MOVER_NORMAL_OFFSET, "slot_mask", 1)
@@ -81,14 +81,14 @@ function Ladder:set_config(check_ground_clipping)
 	self._top = top
 	self._rotation = Rotation(self._w_dir, self._up, self._normal)
 	self._corners = {
-		position - (self._w_dir * self._width) / 2,
-		position + (self._w_dir * self._width) / 2,
-		top + (self._w_dir * self._width) / 2,
-		top - (self._w_dir * self._width) / 2
+		position - self._w_dir * self._width / 2,
+		position + self._w_dir * self._width / 2,
+		top + self._w_dir * self._width / 2,
+		top - self._w_dir * self._width / 2
 	}
 	local snap_start = Ladder.SNAP_LENGTH
 
-	if 2 * Ladder.SNAP_LENGTH < self._height then
+	if self._height > 2 * Ladder.SNAP_LENGTH then
 		self._climb_distance = self._height - 2 * Ladder.SNAP_LENGTH
 	else
 		snap_start = self._height * 0.2
@@ -101,7 +101,12 @@ function Ladder:set_config(check_ground_clipping)
 	if Ladder.SEGMENT_LENGTH < self._climb_distance then
 		segments = self._climb_distance / Ladder.SEGMENT_LENGTH
 		local percent = (segments - math.floor(segments)) / math.floor(segments)
-		segments = percent > 0.1 and math.ceil(segments) or math.floor(segments)
+
+		if percent > 0.1 then
+			segments = math.ceil(segments)
+		else
+			segments = math.floor(segments)
+		end
 	end
 
 	self._segments = segments
@@ -134,6 +139,7 @@ function Ladder:update(t, dt)
 		self:debug_draw()
 	end
 end
+
 local mvec1 = Vector3()
 
 function Ladder:can_access(pos, move_dir)
@@ -174,7 +180,7 @@ function Ladder:can_access(pos, move_dir)
 
 	local towards_dot = mvector3.dot(move_dir, self._normal)
 
-	if self._height - self._climb_on_top_offset < h_dot then
+	if h_dot > self._height - self._climb_on_top_offset then
 		return towards_dot > 0.5
 	end
 
@@ -202,7 +208,7 @@ function Ladder:_check_end_climbing_vr(pos, move_dir, gnd_ray)
 	local w_dot = mvector3.dot(self._w_dir, mvec1)
 	local h_dot = mvector3.dot(self._up, mvec1)
 
-	if w_dot < 100 or self._width + 100 < w_dot then
+	if w_dot < 100 or w_dot > self._width + 100 then
 		return true
 	elseif h_dot < 0 or self._height < h_dot then
 		return true
@@ -210,7 +216,7 @@ function Ladder:_check_end_climbing_vr(pos, move_dir, gnd_ray)
 		local towards_dot = mvector3.dot(move_dir, self._normal)
 
 		if towards_dot > 0 then
-			if self._height - self._climb_on_top_offset < h_dot then
+			if h_dot > self._height - self._climb_on_top_offset then
 				return false
 			end
 
@@ -227,13 +233,13 @@ function Ladder:on_ladder_vr(pos, t)
 
 	local w_dot = math.dot(self._w_dir, mvec1)
 
-	if w_dot < -100 or self._width + 100 < w_dot then
+	if w_dot < -100 or w_dot > self._width + 100 then
 		return false
 	end
 
 	local n_dot = math.dot(self._normal, mvec1)
 
-	if Ladder.ON_LADDER_NORMAL_OFFSET + 50 < n_dot then
+	if n_dot > Ladder.ON_LADDER_NORMAL_OFFSET + 50 then
 		return false
 	end
 
@@ -263,7 +269,7 @@ function Ladder:check_end_climbing(pos, move_dir, gnd_ray)
 		local towards_dot = mvector3.dot(move_dir, self._normal)
 
 		if towards_dot > 0 then
-			if self._height - self._climb_on_top_offset < h_dot then
+			if h_dot > self._height - self._climb_on_top_offset then
 				return false
 			end
 
@@ -471,4 +477,3 @@ end
 function Ladder:vr_disabled()
 	return self._vr_disabled
 end
-

@@ -37,4 +37,3 @@ end
 function VehicleStateDriving:is_vulnerable()
 	return true
 end
-

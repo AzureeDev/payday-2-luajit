@@ -23,4 +23,3 @@ function SwitchStateMachine:switch_state(state_class, ...)
 
 	self:_set_state(state_class, ...)
 end
-

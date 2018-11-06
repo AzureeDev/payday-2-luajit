@@ -46,7 +46,9 @@ function CrimeSpreeMissionsMenuComponent:_setup()
 		parent:remove(self._panel)
 	end
 
-	self._panel = parent:panel({layer = self._init_layer})
+	self._panel = parent:panel({
+		layer = self._init_layer
+	})
 	local w = (self.button_size.w + padding) * tweak_data.crime_spree.gui.missions_displayed - padding
 	local h = self.button_size.h + self.button_size.title_h
 	local bottom = parent:bottom() - tweak_data.menu.pd2_large_font_size * 1.5
@@ -55,7 +57,7 @@ function CrimeSpreeMissionsMenuComponent:_setup()
 	self._title_panel:set_w(w)
 	self._title_panel:set_h(tweak_data.menu.pd2_medium_font_size)
 	self._title_panel:set_right(parent:right())
-	self._title_panel:set_bottom((bottom - h) - 4)
+	self._title_panel:set_bottom(bottom - h - 4)
 	self._title_panel:text({
 		layer = 51,
 		vertical = "bottom",
@@ -187,7 +189,7 @@ function CrimeSpreeMissionsMenuComponent:move_selection(dir)
 
 	self._selected_button = self:selection_index() + dir
 
-	if #self._buttons < self._selected_button then
+	if self._selected_button > #self._buttons then
 		self._selected_button = 1
 	elseif self._selected_button < 1 then
 		self._selected_button = #self._buttons
@@ -322,6 +324,7 @@ end
 
 function CrimeSpreeMissionsMenuComponent:input_focus()
 end
+
 CrimeSpreeMissionButton = CrimeSpreeMissionButton or class(MenuGuiItem)
 CrimeSpreeMissionButton._type = "CrimeSpreeMissionButton"
 CrimeSpreeMissionButton.RandomState = {
@@ -342,7 +345,9 @@ function CrimeSpreeMissionButton:init(idx, parent, mission_data)
 		h = CrimeSpreeMissionsMenuComponent.button_size.h + CrimeSpreeMissionsMenuComponent.button_size.title_h,
 		x = (CrimeSpreeMissionsMenuComponent.button_size.w + padding) * (idx - 1)
 	})
-	self._image_panel = self._panel:panel({h = self._panel:h() - CrimeSpreeMissionsMenuComponent.button_size.title_h})
+	self._image_panel = self._panel:panel({
+		h = self._panel:h() - CrimeSpreeMissionsMenuComponent.button_size.title_h
+	})
 	self._mission_bg = self._image_panel:rect({
 		layer = -2,
 		color = Color.black
@@ -445,21 +450,27 @@ function CrimeSpreeMissionButton:init(idx, parent, mission_data)
 		w = self._panel:w(),
 		h = self._panel:h()
 	})
-	self._border_panel = self._panel:panel({layer = 20})
+	self._border_panel = self._panel:panel({
+		layer = 20
+	})
 
-	BoxGuiObject:new(self._border_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._border_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
-	self._active_border = BoxGuiObject:new(self._border_panel, {sides = {
-		2,
-		2,
-		2,
-		2
-	}})
+	self._active_border = BoxGuiObject:new(self._border_panel, {
+		sides = {
+			2,
+			2,
+			2,
+			2
+		}
+	})
 
 	self:update_button_text()
 	self:refresh()
@@ -619,7 +630,7 @@ function CrimeSpreeMissionButton:update_button_text(text, mission_data, dont_res
 end
 
 function CrimeSpreeMissionButton:button_text_h()
-	return (self._panel:h() - tweak_data.menu.pd2_small_font_size) - 4
+	return self._panel:h() - tweak_data.menu.pd2_small_font_size - 4
 end
 
 function CrimeSpreeMissionButton:update_info_text(mission_data)
@@ -642,7 +653,9 @@ function CrimeSpreeMissionButton:update_info_text(mission_data)
 
 	text = text .. spacer
 	local len = utf8.len(text)
-	local inc_text = managers.localization:text("menu_cs_lobby_mission_inc", {inc = mission_data.add})
+	local inc_text = managers.localization:text("menu_cs_lobby_mission_inc", {
+		inc = mission_data.add
+	})
 	text = text .. inc_text
 
 	self._info_text:set_text(text)
@@ -737,6 +750,5 @@ function CrimeSpreeMissionButton:_get_mission_category(mission)
 end
 
 function CrimeSpreeMissionButton:mission_id()
-	return (self._mission_data or {}).id
+	return self._mission_data or {}.id
 end
-

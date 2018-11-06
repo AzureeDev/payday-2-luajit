@@ -178,7 +178,12 @@ end
 
 function HostNetworkSession:chk_peer_already_in(rpc)
 	local old_peer = nil
-	old_peer = rpc:protocol_at_index(0) == "STEAM" and self:peer_by_user_id(rpc:ip_at_index(0)) or self:peer_by_ip(rpc:ip_at_index(0))
+
+	if rpc:protocol_at_index(0) == "STEAM" then
+		old_peer = self:peer_by_user_id(rpc:ip_at_index(0))
+	else
+		old_peer = self:peer_by_ip(rpc:ip_at_index(0))
+	end
 
 	return old_peer
 end
@@ -539,7 +544,14 @@ function HostNetworkSession:remove_peer(peer, peer_id, reason)
 
 	local info_msg_type = "kick_peer"
 	local info_msg_id = nil
-	info_msg_id = reason == "kicked" and 0 or reason == "auth_fail" and 2 or 1
+
+	if reason == "kicked" then
+		info_msg_id = 0
+	elseif reason == "auth_fail" then
+		info_msg_id = 2
+	else
+		info_msg_id = 1
+	end
 
 	for other_peer_id, other_peer in pairs(self._peers) do
 		if other_peer:handshakes()[peer_id] == true or other_peer:handshakes()[peer_id] == "asked" or other_peer:handshakes()[peer_id] == "exchanging_info" then
@@ -676,7 +688,7 @@ function HostNetworkSession:chk_server_joinable_state()
 		end
 	end
 
-	if tweak_data.max_players - 1 <= table.size(self._peers) then
+	if table.size(self._peers) >= tweak_data.max_players - 1 then
 		managers.network.matchmake:set_server_joinable(false)
 
 		return
@@ -966,4 +978,3 @@ function HostNetworkSession:_inc_load_counter()
 		self._load_counter = self._load_counter + 1
 	end
 end
-

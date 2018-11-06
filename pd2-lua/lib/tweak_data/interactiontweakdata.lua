@@ -446,9 +446,9 @@ function InteractionTweakData:init(tweak_data)
 		timer = 5,
 		action_text_id = "hud_action_try_keys",
 		interact_distance = 100,
-		sound_start = "bar_pick_lock",
-		sound_interupt = "bar_pick_lock_cancel",
-		sound_done = "bar_pick_lock_finished",
+		sound_start = "bar_unlock_grate_door",
+		sound_interupt = "bar_unlock_grate_door_cancel",
+		sound_done = "bar_unlock_grate_door_finished",
 		special_equipment = "keychain",
 		equipment_text_id = "hud_action_try_keys_no_key",
 		is_lockpicking = true
@@ -479,6 +479,27 @@ function InteractionTweakData:init(tweak_data)
 	}
 	self.hospital_security_cable = {
 		text_id = "debug_interact_hospital_security_cable",
+		icon = "interaction_wirecutter",
+		start_active = false,
+		timer = 5,
+		interact_distance = 75
+	}
+	self.hospital_security_cable_red = {
+		text_id = "hud_int_hold_cut_wire_red",
+		icon = "interaction_wirecutter",
+		start_active = false,
+		timer = 5,
+		interact_distance = 75
+	}
+	self.hospital_security_cable_blue = {
+		text_id = "hud_int_hold_cut_wire_blue",
+		icon = "interaction_wirecutter",
+		start_active = false,
+		timer = 5,
+		interact_distance = 75
+	}
+	self.hospital_security_cable_green = {
+		text_id = "hud_int_hold_cut_wire_green",
 		icon = "interaction_wirecutter",
 		start_active = false,
 		timer = 5,
@@ -1759,7 +1780,9 @@ function InteractionTweakData:init(tweak_data)
 		timer = 0.5,
 		special_equipment_block = "gas"
 	}
-	self.gen_ladyjustice_statue = {text_id = "hud_int_ladyjustice_statue"}
+	self.gen_ladyjustice_statue = {
+		text_id = "hud_int_ladyjustice_statue"
+	}
 	self.hold_place_gps_tracker = {
 		text_id = "hud_int_hold_place_gps_tracker",
 		action_text_id = "hud_action_placing_gps_tracker",
@@ -1981,6 +2004,11 @@ function InteractionTweakData:init(tweak_data)
 		contour = "deployable",
 		sound_done = "pick_up_thermite"
 	}
+	self.gen_pku_thermite_paste_not_deployable = {
+		text_id = "hud_int_take_thermite_paste",
+		special_equipment_block = "thermite_paste",
+		sound_done = "pick_up_thermite"
+	}
 	self.button_infopad = {
 		text_id = "hud_int_press_for_info",
 		start_active = false,
@@ -2020,7 +2048,9 @@ function InteractionTweakData:init(tweak_data)
 		sound_interupt = "bar_close_crate_cancel",
 		sound_done = "bar_close_crate_finished"
 	}
-	self.halloween_trick = {text_id = "hud_int_trick_treat"}
+	self.halloween_trick = {
+		text_id = "hud_int_trick_treat"
+	}
 	self.disassemble_turret = {
 		text_id = "hud_int_hold_disassemble_turret",
 		action_text_id = "hud_action_disassemble_turret",
@@ -2135,8 +2165,12 @@ function InteractionTweakData:init(tweak_data)
 		sound_interupt = "bar_c4_apply_cancel",
 		sound_done = "bar_c4_apply_finished"
 	}
-	self.player_zipline = {text_id = "hud_int_use_zipline"}
-	self.bag_zipline = {text_id = "hud_int_bag_zipline"}
+	self.player_zipline = {
+		text_id = "hud_int_use_zipline"
+	}
+	self.bag_zipline = {
+		text_id = "hud_int_bag_zipline"
+	}
 	self.huge_lance = {
 		text_id = "hud_int_equipment_huge_lance",
 		action_text_id = "hud_action_placing_huge_lance",
@@ -2255,7 +2289,9 @@ function InteractionTweakData:init(tweak_data)
 		sound_interupt = "bar_keyboard_cancel",
 		sound_done = "bar_keyboard_finished"
 	}
-	self.take_keys = {text_id = "hud_int_take_keys"}
+	self.take_keys = {
+		text_id = "hud_int_take_keys"
+	}
 	self.push_button = {
 		text_id = "hud_int_push_button",
 		axis = "z"
@@ -2923,7 +2959,9 @@ function InteractionTweakData:init(tweak_data)
 		action_text_id = "hud_action_open_display",
 		timer = 1
 	}
-	self.mus_take_diamond = {text_id = "debug_interact_diamond"}
+	self.mus_take_diamond = {
+		text_id = "debug_interact_diamond"
+	}
 	self.rewire_electric_box = {
 		text_id = "hud_int_rewire_box",
 		action_text_id = "hud_action_rewire_box",
@@ -3180,7 +3218,9 @@ function InteractionTweakData:init(tweak_data)
 		sound_interupt = "bar_scan_documents_cancel",
 		sound_done = "bar_scan_documents_finished"
 	}
-	self.send_blueprints = {text_id = "hud_int_send_blueprints"}
+	self.send_blueprints = {
+		text_id = "hud_int_send_blueprints"
+	}
 	self.cas_customer_database = {
 		text_id = "hud_check_customer_database",
 		action_text_id = "hud_action_cas_checking_customer_database",
@@ -5163,6 +5203,83 @@ function InteractionTweakData:init(tweak_data)
 		timer = 2,
 		equipment_consume = true
 	}
+	self.press_insert_sample = {
+		text_id = "hud_int_insert_blood_sample",
+		equipment_text_id = "hint_no_blood_sample",
+		special_equipment = "blood_sample",
+		interact_distance = 150,
+		start_active = false,
+		equipment_consume = true
+	}
+	self.press_take_sample = {
+		text_id = "hud_int_take_blood_sample",
+		special_equipment_block = "blood_sample",
+		interact_distance = 150,
+		start_active = false
+	}
+	self.press_touch_book = {
+		text_id = "hud_int_touch_book",
+		interact_distance = 150,
+		start_active = false
+	}
+	self.hold_take_sample = {
+		text_id = "hud_int_hold_take_blood_sample",
+		action_text_id = "hud_action_taking_blood_sample",
+		special_equipment_block = "blood_sample",
+		interact_distance = 150,
+		start_active = false,
+		timer = 3
+	}
+	self.hold_take_sample_valid = {
+		text_id = "hud_int_hold_take_blood_valid_sample",
+		action_text_id = "hud_action_taking_blood_valid_sample",
+		special_equipment_block = "blood_sample_verified",
+		interact_distance = 150,
+		start_active = false
+	}
+	self.hold_stash_vial = {
+		text_id = "hud_int_hold_stash_vial",
+		action_text_id = "hud_action_stashing_vial",
+		equipment_text_id = "hint_no_blood_sample",
+		special_equipment = "blood_sample_verified",
+		timer = 3,
+		interact_distance = 150,
+		start_active = false,
+		equipment_consume = true
+	}
+	self.press_call_elevator = {
+		text_id = "hud_int_call_elevator",
+		interact_distance = 150,
+		start_active = false
+	}
+	self.hold_check_file = {
+		text_id = "hud_int_hold_check_file",
+		action_text_id = "hud_action_checking_file",
+		timer = 3,
+		interact_distance = 150,
+		start_active = false,
+		sound_start = "bar_shuffle_papers",
+		sound_interupt = "bar_shuffle_papers_cancel",
+		sound_done = "bar_shuffle_papers_finished"
+	}
+	self.breach_crowbar = {
+		text_id = "hud_int_hold_breach",
+		action_text_id = "hud_action_breach",
+		equipment_text_id = "debug_interact_equipment_crowbar",
+		special_equipment = "crowbar",
+		start_active = false,
+		timer = 8,
+		sound_start = "bar_pry_open_elevator_door",
+		sound_interupt = "bar_pry_open_elevator_door_cancel",
+		sound_done = "bar_pry_open_elevator_door_finished"
+	}
+	self.hold_place_sentry = {
+		text_id = "hud_int_set_up_sentry",
+		action_text_id = "hud_action_set_up_sentry",
+		timer = 3,
+		interact_distance = 150,
+		start_active = false
+	}
 	self.tag_laptop = {
 		text_id = "hud_int_hack_laptop",
 		action_text_id = "hud_action_hack_laptop",
@@ -5485,6 +5602,166 @@ function InteractionTweakData:init(tweak_data)
 	self.invisible_interaction_open_axis_sah.sound_interupt = "bar_train_panel_hacking_cancel"
 	self.invisible_interaction_open_axis_sah.sound_done = "bar_train_panel_hacking_finished"
 	self.invisible_interaction_open_axis_sah.timer = 4
+	self.hold_extend_bridge = {
+		axis = "y",
+		text_id = "hud_int_press_extend_bridge",
+		interact_distance = 150,
+		start_active = false
+	}
+	self.hold_pull_switch_distance = {
+		text_id = "hud_int_hold_pull_switch",
+		action_text_id = "hud_action_pulling_switch",
+		timer = 1,
+		interact_distance = 90,
+		start_active = false
+	}
+	self.take_pardons = {
+		text_id = "hud_int_hold_take_pardons",
+		action_text_id = "hud_action_taking_pardons",
+		interact_distance = 150,
+		start_active = false,
+		timer = 1,
+		axis = "y"
+	}
+	self.vit_take_usb_key = {
+		text_id = "hud_int_hold_search_usb_key",
+		special_equipment_block = "cas_usb_key",
+		interact_distance = 150,
+		start_active = false,
+		timer = 3
+	}
+	self.vit_search = {
+		text_id = "hud_int_hold_search_books",
+		action_text_id = "hud_action_search_books",
+		interact_distance = 150,
+		start_active = false,
+		timer = 1
+	}
+	self.vit_search_clues = {
+		text_id = "hud_int_hold_search_clues",
+		action_text_id = "hud_action_searching_clues",
+		interact_distance = 150,
+		start_active = false,
+		timer = 3,
+		timer = 3,
+		sound_start = "bar_keyboard",
+		sound_interupt = "bar_keyboard_cancel",
+		sound_done = "bar_keyboard_finished"
+	}
+	self.vit_remove_painting = {
+		text_id = "hud_int_hold_remove_painting",
+		action_text_id = "hud_action_removing_painting",
+		interact_distance = 150,
+		start_active = false,
+		timer = 3,
+		sound_start = "bar_steal_painting",
+		sound_interupt = "bar_steal_painting_cancel",
+		sound_done = "bar_steal_painting_finished"
+	}
+	self.vit_insert_usb = {
+		text_id = "hud_int_hold_insert_usb",
+		action_text_id = "hud_action_inserting_usb",
+		special_equipment = "cas_usb_key",
+		equipment_text_id = "hint_no_usb_key",
+		equipment_consume = true,
+		interact_distance = 150,
+		start_active = false,
+		timer = 3
+	}
+	self.gen_pku_thermite_timer_3sec = deep_clone(self.gen_pku_thermite)
+	self.gen_pku_thermite_timer_3sec.timer = 3
+	self.gen_pku_thermite_timer_3sec.start_active = false
+	self.vit_keycard_use = {
+		text_id = "hud_int_equipment_keycard",
+		equipment_text_id = "hud_int_equipment_no_keycard",
+		special_equipment = "president_key",
+		equipment_consume = true,
+		start_active = true,
+		axis = "y"
+	}
+	self.start_hacking = {
+		text_id = "hud_int_hold_start_hack",
+		action_text_id = "hud_action_starting_hack",
+		interact_distance = 150,
+		start_active = false,
+		timer = 3
+	}
+	self.postpone_update = {
+		text_id = "hud_int_hold_postpone_update",
+		action_text_id = "hud_action_postponing_update",
+		interact_distance = 150,
+		start_active = false,
+		timer = 1
+	}
+	self.reboot_computer = {
+		text_id = "hud_int_hold_reboot",
+		action_text_id = "hud_action_reboot",
+		interact_distance = 150,
+		start_active = false,
+		timer = 3
+	}
+	self.bypass_the_firewall = {
+		text_id = "hud_int_hold_bypass_firewall",
+		action_text_id = "hud_action_bypassing_the_firewall",
+		interact_distance = 150,
+		start_active = false,
+		timer = 3
+	}
+	self.uno_use_device = {
+		text_id = "hud_int_use_device",
+		interact_distance = 150,
+		start_active = false
+	}
+	self.uno_assemble_device = {
+		text_id = "hud_int_assemble_device",
+		action_text_id = "hud_action_assemble_device",
+		timer = 7,
+		interact_distance = 200,
+		start_active = false
+	}
+	self.uno_pull_lever = {
+		text_id = "hud_int_hold_pull_lever",
+		action_text_id = "hud_action_pulling_lever",
+		interact_distance = 200,
+		start_active = false,
+		timer = 1
+	}
+	self.uno_open_door = {
+		text_id = "hud_int_hold_open_door",
+		action_text_id = "hud_action_opening_door",
+		interact_distance = 200,
+		start_active = false,
+		timer = 1,
+		can_interact_only_in_civilian = true
+	}
+	self.uno_hold_pku_gold = {
+		text_id = "hud_int_hold_pku_uno_gold",
+		action_text_id = "hud_action_taking_uno_gold",
+		timer = 1,
+		interact_distance = 200,
+		start_active = false
+	}
+	self.uno_hold_pku_gold_bar = {
+		text_id = "hud_int_take_mayan_gold_bar"
+	}
+	self.uno_hold_pku_gold.action_text_id = "hud_action_taking_mayan_gold_bar"
+	self.uno_hold_pku_gold_bar.timer = 1
+	self.uno_hold_pku_gold_bar.interact_distance = 200
+	self.uno_hold_pku_gold_bar.start_active = false
+	self.uno_press_activate = {
+		text_id = "hud_int_press_activate",
+		timer = 1,
+		interact_distance = 150,
+		start_active = false
+	}
+	self.uno_mayan_gold_bar = {
+		text_id = "hud_int_place_mayan_gold_bar",
+		action_text_id = "hud_action_placing_mayan_gold_bar",
+		equipment_text_id = "hud_int_equipment_no_mayan_gold",
+		special_equipment = "mayan_gold_bar",
+		equipment_consume = true,
+		start_active = true
+	}
 	self.hold_remove_parts = {
 		text_id = "hud_int_hold_remove_parts",
 		action_text_id = "hud_action_remove_parts",
@@ -5526,4 +5803,3 @@ function InteractionTweakData:init(tweak_data)
 		sound_interupt = "bar_restaurant_kitchen_cancel"
 	}
 end
-

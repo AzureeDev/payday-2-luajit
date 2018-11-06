@@ -39,4 +39,3 @@ core:_close_pristine_namespace()
 core:import("CoreDatabaseManager")
 
 managers.database = managers.database or CoreDatabaseManager.DatabaseManager:new()
-

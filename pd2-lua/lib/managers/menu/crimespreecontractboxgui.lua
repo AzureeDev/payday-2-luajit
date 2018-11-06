@@ -167,4 +167,3 @@ end
 function CrimeSpreeContractBoxGui:release_scroll_bar()
 	return false
 end
-

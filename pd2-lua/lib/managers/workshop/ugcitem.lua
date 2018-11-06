@@ -23,7 +23,9 @@ function UGCItem:init(item_path)
 	self._config_path = item_path .. UGCItem.CONFIG_NAME
 	self._info_path = item_path .. UGCItem.INFO_NAME
 	self._preview_path = self._staging_path .. UGCItem.PREVIEW_FILE
-	self._config = {timestamp = time_stamp()}
+	self._config = {
+		timestamp = time_stamp()
+	}
 	self._info = {
 		visibility = UGCItem.DEFAULT_VISIBILITY,
 		tags = UGCItem.DEFAULT_TAGS
@@ -424,7 +426,6 @@ function UGCItem:_save_xml(path, node_name, attributes, params, param_preprocess
 end
 
 function UGCItem:_load_config()
-
 	local function parse_vector(key, value)
 		if string.find(value, "Vector3") then
 			local x, y, z = string.match(value, "Vector3%(([-+]?[0-9]*.?[0-9]*), ([-+]?[0-9]*.?[0-9]*), ([-+]?[0-9]*.?[0-9]*)%)")
@@ -461,7 +462,11 @@ local function tags_to_string(tags)
 	local tag_string = nil
 
 	for tag, enabled in pairs(tags) do
-		tag_string = tag_string ~= nil and tag_string .. ":" .. tag or tag
+		if tag_string ~= nil then
+			tag_string = tag_string .. ":" .. tag
+		else
+			tag_string = tag
+		end
 	end
 
 	return tag_string
@@ -529,4 +534,3 @@ function UGCItem:_save_info()
 		return
 	end
 end
-

@@ -6,7 +6,9 @@ local CELL_XML = "    <Cell><Data ss:Type=\"String\">%s</Data></Cell> "
 Row = Row or CoreClass.class()
 
 function Row:init(...)
-	self._vals = {...}
+	self._vals = {
+		...
+	}
 end
 
 function Row:add_val(val)
@@ -26,16 +28,17 @@ end
 function Row:to_xml(f)
 	f:write(string.format(EMPTY_ROW_XML, self:_to_cells_xml()))
 end
+
 local EMPTY_HEADER1_ROW_XML = "   <Row ss:StyleID=\"header1\"> %s\n   </Row> "
 Header1Row = Header1Row or CoreClass.class(Row)
 
 function Header1Row:to_xml(f)
 	f:write(string.format(EMPTY_HEADER1_ROW_XML, self:_to_cells_xml()))
 end
+
 local EMPTY_HEADER2_ROW_XML = "   <Row ss:StyleID=\"header2\"> %s\n   </Row> "
 Header2Row = Header2Row or CoreClass.class(Row)
 
 function Header2Row:to_xml(f)
 	f:write(string.format(EMPTY_HEADER2_ROW_XML, self:_to_cells_xml()))
 end
-

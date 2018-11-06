@@ -67,4 +67,3 @@ function CoreTreeNode:remove()
 	self._parent = nil
 	self._children = {}
 end
-

@@ -10,13 +10,13 @@ function DOTManager:update(t, dt)
 	for index = #self._doted_enemies, 1, -1 do
 		local dot_info = self._doted_enemies[index]
 
-		if dot_info.dot_damage_received_time + self._dot_grace_period < t and dot_info.dot_counter >= 0.5 then
+		if t > dot_info.dot_damage_received_time + self._dot_grace_period and dot_info.dot_counter >= 0.5 then
 			self:_damage_dot(dot_info)
 
 			dot_info.dot_counter = 0
 		end
 
-		if dot_info.dot_damage_received_time + dot_info.dot_length < t then
+		if t > dot_info.dot_damage_received_time + dot_info.dot_length then
 			table.remove(self._doted_enemies, index)
 		else
 			dot_info.dot_counter = dot_info.dot_counter + dt
@@ -106,7 +106,9 @@ end
 
 function DOTManager:_damage_dot(dot_info)
 	local attacker_unit = managers.player:player_unit()
-	local col_ray = {unit = dot_info.enemy_unit}
+	local col_ray = {
+		unit = dot_info.enemy_unit
+	}
 	local damage = dot_info.dot_damage
 	local ignite_character = false
 	local weapon_unit = dot_info.weapon_unit
@@ -131,4 +133,3 @@ end
 function DOTManager:on_simulation_ended()
 	self._doted_enemies = {}
 end
-

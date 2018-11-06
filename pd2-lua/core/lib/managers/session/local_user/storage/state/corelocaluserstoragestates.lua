@@ -7,10 +7,12 @@ function Init:transition()
 		return Loading
 	end
 end
+
 DetectSignOut = DetectSignOut or class()
 
 function DetectSignOut:init()
 end
+
 Loading = Loading or class(DetectSignOut)
 
 function Loading:init()
@@ -37,6 +39,7 @@ function Loading:transition()
 		return LoadError
 	end
 end
+
 Ready = Ready or class()
 
 function Ready:init()
@@ -49,6 +52,7 @@ end
 
 function Ready:transition()
 end
+
 NoSaveGameFound = NoSaveGameFound or class()
 
 function NoSaveGameFound:init()
@@ -58,8 +62,8 @@ end
 function NoSaveGameFound:transition()
 	self.storage:_not_stable_for_loading()
 end
+
 LoadError = LoadError or class()
 
 function LoadError:transition()
 end
-

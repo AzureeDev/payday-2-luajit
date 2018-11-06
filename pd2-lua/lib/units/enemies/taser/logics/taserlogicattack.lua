@@ -5,7 +5,9 @@ function TaserLogicAttack.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	my_data.detection = data.char_tweak.detection.combat
 	my_data.tase_distance = data.char_tweak.weapon.is_rifle.tase_distance
@@ -44,7 +46,9 @@ function TaserLogicAttack.enter(data, new_logic_name, enter_params)
 		return
 	end
 
-	data.unit:brain():set_attention_settings({cbt = true})
+	data.unit:brain():set_attention_settings({
+		cbt = true
+	})
 end
 
 function TaserLogicAttack.exit(data, new_logic_name, enter_params)
@@ -302,13 +306,18 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 	else
 		if my_data.shooting or my_data.tasing then
 			local new_action = nil
-			new_action = data.unit:anim_data().reload and {
-				body_part = 3,
-				type = "reload"
-			} or {
-				body_part = 3,
-				type = "idle"
-			}
+
+			if data.unit:anim_data().reload then
+				new_action = {
+					body_part = 3,
+					type = "reload"
+				}
+			else
+				new_action = {
+					body_part = 3,
+					type = "idle"
+				}
+			end
 
 			data.unit:brain():action_request(new_action)
 		elseif not data.unit:anim_data().run then
@@ -441,4 +450,3 @@ function TaserLogicAttack._chk_play_charge_weapon_sound(data, my_data, focus_ene
 		data.unit:sound():play("taser_charge", nil, true)
 	end
 end
-

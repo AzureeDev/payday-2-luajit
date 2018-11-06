@@ -5,7 +5,9 @@ function SpoocLogicAttack.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	my_data.detection = data.char_tweak.detection.combat
 
@@ -47,7 +49,9 @@ function SpoocLogicAttack.enter(data, new_logic_name, enter_params)
 	my_data.cover_test_step = 1
 	data.spooc_attack_timeout_t = data.spooc_attack_timeout_t or 0
 
-	data.unit:brain():set_attention_settings({cbt = true})
+	data.unit:brain():set_attention_settings({
+		cbt = true
+	})
 end
 
 function SpoocLogicAttack.exit(data, new_logic_name, enter_params)
@@ -339,4 +343,3 @@ function SpoocLogicAttack._is_last_standing_criminal(focus_enemy)
 
 	return true
 end
-

@@ -26,4 +26,3 @@ function FindSession:transition()
 		return CoreSessionStateJoinSession.JoinSession, self._session_id_to_join
 	end
 end
-

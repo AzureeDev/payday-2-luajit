@@ -11,7 +11,9 @@ function InteractionEditorPropUI:init(parent, owner)
 
 	self._prop_panel:set_sizer(self._box)
 
-	self._node_panels = {[CoreInteractionEditorGenericPanel.NAME] = CoreInteractionEditorGenericPanel.InteractionEditorGenericPanel:new(self._prop_panel, self._box, owner)}
+	self._node_panels = {
+		[CoreInteractionEditorGenericPanel.NAME] = CoreInteractionEditorGenericPanel.InteractionEditorGenericPanel:new(self._prop_panel, self._box, owner)
+	}
 end
 
 function InteractionEditorPropUI:window()
@@ -31,4 +33,3 @@ function InteractionEditorPropUI:rebuild(desc, node)
 
 	self._current_panel:set_visible(true, desc, node)
 end
-

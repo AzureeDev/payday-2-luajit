@@ -56,7 +56,7 @@ function SpecializationBoxGui:_create_text_box(ws, title, text, content_data, co
 	})
 
 	progress_bg:set_position(progress_text:right() + 4, progress_text:top())
-	progress_bg:set_w((self._scroll_panel:w() - progress_bg:left()) - 5)
+	progress_bg:set_w(self._scroll_panel:w() - progress_bg:left() - 5)
 
 	local progress_bar = self._scroll_panel:rect({
 		alpha = 1,
@@ -86,23 +86,29 @@ function SpecializationBoxGui:_create_text_box(ws, title, text, content_data, co
 
 	local conversion_rate_text = self._scroll_panel:text(small_text)
 
-	conversion_rate_text:set_text(managers.localization:to_upper_text("menu_st_spec_xp_conversion", {rate = string.format("%i:1", conversion_rate_number)}))
+	conversion_rate_text:set_text(managers.localization:to_upper_text("menu_st_spec_xp_conversion", {
+		rate = string.format("%i:1", conversion_rate_number)
+	}))
 	make_fine_text(conversion_rate_text)
 	conversion_rate_text:set_position(progress_bg:left(), progress_bg:bottom() + 2)
 
 	local w = progress_bg:right() - progress_text:left()
-	local exp_panel = self._scroll_panel:panel({layer = 2})
+	local exp_panel = self._scroll_panel:panel({
+		layer = 2
+	})
 
 	exp_panel:set_left(progress_text:left())
 	exp_panel:set_w(w / 2 - 10)
 	exp_panel:set_top(conversion_rate_text:bottom() + 20)
-	exp_panel:set_h((self._scroll_panel:h() - exp_panel:top()) - 10)
-	BoxGuiObject:new(exp_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	exp_panel:set_h(self._scroll_panel:h() - exp_panel:top() - 10)
+	BoxGuiObject:new(exp_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local exp_title_text = exp_panel:text(small_text)
 
@@ -119,18 +125,22 @@ function SpecializationBoxGui:_create_text_box(ws, title, text, content_data, co
 	exp_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(xp_present)))
 	make_fine_text(exp_count_text)
 
-	local points_panel = self._scroll_panel:panel({layer = 2})
+	local points_panel = self._scroll_panel:panel({
+		layer = 2
+	})
 
 	points_panel:set_w(w / 2 - 10)
 	points_panel:set_right(progress_bg:right())
 	points_panel:set_top(exp_panel:top())
 	points_panel:set_h(exp_panel:h())
-	BoxGuiObject:new(points_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(points_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local points_gained_title_text = points_panel:text(small_text)
 
@@ -209,24 +219,29 @@ function SpecializationBoxGui._update(o, self)
 
 	managers.menu_component:post_event("count_1")
 
-	while self._anim_data and not self._anim_data.goto_end and (self._anim_data.xp_present ~= self._anim_data.end_xp_present or self._anim_data.points_present ~= self._anim_data.end_points_present) do
-		dt = coroutine.yield()
-		self._anim_data.xp_present = math.step(self._anim_data.xp_present, self._anim_data.end_xp_present, self._anim_data.conversion_rate * dt * speed)
-		self._anim_data.points_present = math.step(self._anim_data.points_present, self._anim_data.end_points_present, dt * speed)
-		self._anim_data.available_points_present = self._anim_data.start_available_points_present + self._anim_data.points_present
+	if self._anim_data and not self._anim_data.goto_end then
+		if self._anim_data.xp_present == self._anim_data.end_xp_present then
+		end
 
-		self._anim_data.exp_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.xp_present))))
-		make_fine_text(self._anim_data.exp_count_text)
-		self._anim_data.points_gained_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.points_present))))
-		make_fine_text(self._anim_data.points_gained_count_text)
-		self._anim_data.available_points_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.available_points_present))))
-		make_fine_text(self._anim_data.available_points_count_text)
+		while self._anim_data and not self._anim_data.goto_end and (self._anim_data.xp_present ~= self._anim_data.end_xp_present or self._anim_data.points_present ~= self._anim_data.end_points_present) do
+			dt = coroutine.yield()
+			self._anim_data.xp_present = math.step(self._anim_data.xp_present, self._anim_data.end_xp_present, self._anim_data.conversion_rate * dt * speed)
+			self._anim_data.points_present = math.step(self._anim_data.points_present, self._anim_data.end_points_present, dt * speed)
+			self._anim_data.available_points_present = self._anim_data.start_available_points_present + self._anim_data.points_present
 
-		self._anim_data.progress_width = math.lerp(self._anim_data.start_progress_width, self._anim_data.end_progress_width, self._anim_data.points_present / self._anim_data.end_points_present)
+			self._anim_data.exp_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.xp_present))))
+			make_fine_text(self._anim_data.exp_count_text)
+			self._anim_data.points_gained_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.points_present))))
+			make_fine_text(self._anim_data.points_gained_count_text)
+			self._anim_data.available_points_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.available_points_present))))
+			make_fine_text(self._anim_data.available_points_count_text)
 
-		self._anim_data.progress_bar:set_width(self._anim_data.progress_width)
+			self._anim_data.progress_width = math.lerp(self._anim_data.start_progress_width, self._anim_data.end_progress_width, self._anim_data.points_present / self._anim_data.end_points_present)
 
-		speed = speed + speed * 0.2 * dt
+			self._anim_data.progress_bar:set_width(self._anim_data.progress_width)
+
+			speed = speed + speed * 0.2 * dt
+		end
 	end
 
 	managers.menu_component:post_event("count_1_finished")
@@ -240,4 +255,3 @@ function SpecializationBoxGui._update(o, self)
 
 	self._anim_data.conversion_ended = true
 end
-

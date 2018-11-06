@@ -190,7 +190,9 @@ function GroupAITweakData:_init_chatter_data()
 end
 
 function GroupAITweakData:_init_unit_categories(difficulty_index)
-	local access_type_walk_only = {walk = true}
+	local access_type_walk_only = {
+		walk = true
+	}
 	local access_type_all = {
 		acrobatic = true,
 		walk = true
@@ -268,9 +270,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.spooc = {
 			special_type = "spooc",
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_spook_hvh_1/ene_spook_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_spook_hvh_1/ene_spook_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_cloaker/ene_murkywater_cloaker")
+				}
 			},
 			access = access_type_all
 		}
@@ -278,9 +289,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.spooc = {
 			special_type = "spooc",
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_spook_1/ene_spook_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_spook_hvh_1/ene_spook_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_spook_1/ene_spook_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_spook_hvh_1/ene_spook_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_cloaker/ene_murkywater_cloaker")
+				}
 			},
 			access = access_type_all
 		}
@@ -293,20 +313,36 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/payday2/characters/ene_cop_3/ene_cop_3"),
 				Idstring("units/payday2/characters/ene_cop_4/ene_cop_4")
 			},
-			russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870")},
+			russia = {
+				Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870")
+			},
 			zombie = {
 				Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_1/ene_cop_hvh_1"),
 				Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_3/ene_cop_hvh_3"),
 				Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_4/ene_cop_hvh_4")
+			},
+			murkywater = {
+				Idstring("units/payday2/characters/ene_cop_1/ene_cop_1"),
+				Idstring("units/payday2/characters/ene_cop_3/ene_cop_3"),
+				Idstring("units/payday2/characters/ene_cop_4/ene_cop_4")
 			}
 		},
 		access = access_type_walk_only
 	}
 	self.unit_categories.CS_cop_stealth_MP5 = {
 		unit_types = {
-			america = {Idstring("units/payday2/characters/ene_cop_2/ene_cop_2")},
-			russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg")},
-			zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_2/ene_cop_hvh_2")}
+			america = {
+				Idstring("units/payday2/characters/ene_cop_2/ene_cop_2")
+			},
+			russia = {
+				Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg")
+			},
+			zombie = {
+				Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_2/ene_cop_hvh_2")
+			},
+			murkywater = {
+				Idstring("units/payday2/characters/ene_cop_2/ene_cop_2")
+			}
 		},
 		access = access_type_walk_only
 	}
@@ -314,34 +350,70 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	if difficulty_index == 8 then
 		self.unit_categories.CS_swat_MP5 = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_1/ene_swat_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_1/ene_swat_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				}
 			},
 			access = access_type_all
 		}
 		self.unit_categories.CS_swat_R870 = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_2/ene_swat_hvh_2")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_2/ene_swat_hvh_2")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				}
 			},
 			access = access_type_all
 		}
 	else
 		self.unit_categories.CS_swat_MP5 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_swat_1/ene_swat_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_1/ene_swat_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_swat_1/ene_swat_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_1/ene_swat_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				}
 			},
 			access = access_type_all
 		}
 		self.unit_categories.CS_swat_R870 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_swat_2/ene_swat_2")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_2/ene_swat_hvh_2")}
+				america = {
+					Idstring("units/payday2/characters/ene_swat_2/ene_swat_2")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_2/ene_swat_hvh_2")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
+				}
 			},
 			access = access_type_all
 		}
@@ -350,50 +422,104 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	if difficulty_index == 8 then
 		self.unit_categories.CS_heavy_M4 = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_1/ene_swat_heavy_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_1/ene_swat_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_all
 		}
 		self.unit_categories.CS_heavy_R870 = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_r870/ene_akan_cs_heavy_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_r870/ene_swat_heavy_hvh_r870")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_r870/ene_akan_cs_heavy_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_r870/ene_swat_heavy_hvh_r870")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_all
 		}
 		self.unit_categories.CS_heavy_M4_w = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_1/ene_swat_heavy_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_1/ene_swat_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_walk_only
 		}
 	else
 		self.unit_categories.CS_heavy_M4 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_1/ene_swat_heavy_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_1/ene_swat_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_all
 		}
 		self.unit_categories.CS_heavy_R870 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_swat_heavy_r870/ene_swat_heavy_r870")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_r870/ene_akan_cs_heavy_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_r870/ene_swat_heavy_hvh_r870")}
+				america = {
+					Idstring("units/payday2/characters/ene_swat_heavy_r870/ene_swat_heavy_r870")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_r870/ene_akan_cs_heavy_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_r870/ene_swat_heavy_hvh_r870")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
+				}
 			},
 			access = access_type_all
 		}
 		self.unit_categories.CS_heavy_M4_w = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_1/ene_swat_heavy_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_swat_heavy_hvh_1/ene_swat_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_walk_only
 		}
@@ -403,9 +529,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.CS_tazer = {
 			special_type = "taser",
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_tazer/ene_zeal_tazer")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_tazer_hvh_1/ene_tazer_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_tazer/ene_zeal_tazer")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_tazer_hvh_1/ene_tazer_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_tazer/ene_murkywater_tazer")
+				}
 			},
 			access = access_type_all
 		}
@@ -413,9 +548,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.CS_tazer = {
 			special_type = "taser",
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_tazer_1/ene_tazer_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_tazer_hvh_1/ene_tazer_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_tazer_1/ene_tazer_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_tazer_hvh_1/ene_tazer_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_tazer/ene_murkywater_tazer")
+				}
 			},
 			access = access_type_all
 		}
@@ -425,9 +569,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.CS_shield = {
 			special_type = "shield",
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_shield_c45/ene_akan_cs_shield_c45")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_2/ene_shield_hvh_2")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_shield_c45/ene_akan_cs_shield_c45")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_2/ene_shield_hvh_2")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				}
 			},
 			access = access_type_walk_only
 		}
@@ -435,9 +588,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.CS_shield = {
 			special_type = "shield",
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_shield_2/ene_shield_2")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_shield_c45/ene_akan_cs_shield_c45")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_2/ene_shield_hvh_2")}
+				america = {
+					Idstring("units/payday2/characters/ene_shield_2/ene_shield_2")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_shield_c45/ene_akan_cs_shield_c45")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_2/ene_shield_hvh_2")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				}
 			},
 			access = access_type_walk_only
 		}
@@ -456,6 +618,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			zombie = {
 				Idstring("units/pd2_dlc_hvh/characters/ene_fbi_hvh_1/ene_fbi_hvh_1"),
 				Idstring("units/pd2_dlc_hvh/characters/ene_fbi_hvh_2/ene_fbi_hvh_2")
+			},
+			murkywater = {
+				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_1"),
+				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_2")
 			}
 		},
 		access = access_type_all
@@ -473,15 +639,28 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			zombie = {
 				Idstring("units/pd2_dlc_hvh/characters/ene_fbi_hvh_2/ene_fbi_hvh_2"),
 				Idstring("units/pd2_dlc_hvh/characters/ene_fbi_hvh_3/ene_fbi_hvh_3")
+			},
+			murkywater = {
+				Idstring("units/payday2/characters/ene_fbi_2/ene_fbi_2"),
+				Idstring("units/payday2/characters/ene_fbi_2/ene_fbi_3")
 			}
 		},
 		access = access_type_all
 	}
 	self.unit_categories.FBI_suit_stealth_MP5 = {
 		unit_types = {
-			america = {Idstring("units/payday2/characters/ene_fbi_3/ene_fbi_3")},
-			russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_asval_smg/ene_akan_cs_cop_asval_smg")},
-			zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_hvh_3/ene_fbi_hvh_3")}
+			america = {
+				Idstring("units/payday2/characters/ene_fbi_3/ene_fbi_3")
+			},
+			russia = {
+				Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_asval_smg/ene_akan_cs_cop_asval_smg")
+			},
+			zombie = {
+				Idstring("units/pd2_dlc_hvh/characters/ene_fbi_hvh_3/ene_fbi_hvh_3")
+			},
+			murkywater = {
+				Idstring("units/payday2/characters/ene_fbi_3/ene_fbi_3")
+			}
 		},
 		access = access_type_all
 	}
@@ -489,27 +668,54 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	if difficulty_index < 6 then
 		self.unit_categories.FBI_swat_M4 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_fbi_swat_1/ene_fbi_swat_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_1/ene_fbi_swat_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_fbi_swat_1/ene_fbi_swat_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_1/ene_fbi_swat_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi")
+				}
 			},
 			access = access_type_all
 		}
 	elseif difficulty_index < 8 then
 		self.unit_categories.FBI_swat_M4 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_city_swat_1/ene_city_swat_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ak47_ass/ene_akan_fbi_swat_dw_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_1/ene_fbi_swat_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_city_swat_1/ene_city_swat_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ak47_ass/ene_akan_fbi_swat_dw_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_1/ene_fbi_swat_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_city/ene_murkywater_light_city")
+				}
 			},
 			access = access_type_all
 		}
 	else
 		self.unit_categories.FBI_swat_M4 = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ak47_ass/ene_akan_fbi_swat_dw_ak47_ass")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_1/ene_fbi_swat_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ak47_ass/ene_akan_fbi_swat_dw_ak47_ass")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_1/ene_fbi_swat_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				}
 			},
 			access = access_type_all
 		}
@@ -518,27 +724,54 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	if difficulty_index < 6 then
 		self.unit_categories.FBI_swat_R870 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_2/ene_fbi_swat_hvh_2")}
+				america = {
+					Idstring("units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_2/ene_fbi_swat_hvh_2")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
+				}
 			},
 			access = access_type_all
 		}
 	elseif difficulty_index < 8 then
 		self.unit_categories.FBI_swat_R870 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_city_swat_r870/ene_city_swat_r870")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_r870/ene_akan_fbi_swat_dw_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_2/ene_fbi_swat_hvh_2")}
+				america = {
+					Idstring("units/payday2/characters/ene_city_swat_r870/ene_city_swat_r870")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_r870/ene_akan_fbi_swat_dw_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_2/ene_fbi_swat_hvh_2")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_city_r870/ene_murkywater_light_city_r870")
+				}
 			},
 			access = access_type_all
 		}
 	else
 		self.unit_categories.FBI_swat_R870 = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_r870/ene_akan_fbi_swat_dw_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_2/ene_fbi_swat_hvh_2")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_r870/ene_akan_fbi_swat_dw_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_swat_hvh_2/ene_fbi_swat_hvh_2")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				}
 			},
 			access = access_type_all
 		}
@@ -547,27 +780,54 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	if difficulty_index < 6 then
 		self.unit_categories.FBI_heavy_G36 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_g36/ene_murkywater_heavy_g36")
+				}
 			},
 			access = access_type_all
 		}
 	elseif difficulty_index < 8 then
 		self.unit_categories.FBI_heavy_G36 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_city_heavy_g36/ene_city_heavy_g36")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_city_heavy_g36/ene_city_heavy_g36")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_g36/ene_murkywater_heavy_g36")
+				}
 			},
 			access = access_type_all
 		}
 	else
 		self.unit_categories.FBI_heavy_G36 = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_all
 		}
@@ -576,27 +836,54 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	if difficulty_index < 6 then
 		self.unit_categories.FBI_heavy_R870 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_fbi_heavy_r870/ene_fbi_heavy_r870")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_r870/ene_fbi_heavy_hvh_r870")}
+				america = {
+					Idstring("units/payday2/characters/ene_fbi_heavy_r870/ene_fbi_heavy_r870")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_r870/ene_fbi_heavy_hvh_r870")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
+				}
 			},
 			access = access_type_all
 		}
 	elseif difficulty_index < 8 then
 		self.unit_categories.FBI_heavy_R870 = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_city_heavy_r870/ene_city_heavy_r870")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_r870/ene_fbi_heavy_hvh_r870")}
+				america = {
+					Idstring("units/payday2/characters/ene_city_heavy_r870/ene_city_heavy_r870")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_r870/ene_fbi_heavy_hvh_r870")
+				},
+				murkywater = {
+					Idstring("units/payday2/characters/ene_city_heavy_r870/ene_city_heavy_r870")
+				}
 			},
 			access = access_type_all
 		}
 	else
 		self.unit_categories.FBI_heavy_R870 = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_r870/ene_fbi_heavy_hvh_r870")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_r870/ene_fbi_heavy_hvh_r870")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_all
 		}
@@ -605,18 +892,36 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	if difficulty_index < 8 then
 		self.unit_categories.FBI_heavy_G36_w = {
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_walk_only
 		}
 	else
 		self.unit_categories.FBI_heavy_G36_w = {
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_fbi_heavy_hvh_1/ene_fbi_heavy_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				}
 			},
 			access = access_type_walk_only
 		}
@@ -626,9 +931,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.FBI_shield = {
 			special_type = "shield",
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_shield_1/ene_shield_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_sr2_smg/ene_akan_fbi_shield_sr2_smg")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_1/ene_shield_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_shield_1/ene_shield_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_sr2_smg/ene_akan_fbi_shield_sr2_smg")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_1/ene_shield_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				}
 			},
 			access = access_type_walk_only
 		}
@@ -636,9 +950,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.FBI_shield = {
 			special_type = "shield",
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_city_shield/ene_city_shield")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_dw_sr2_smg/ene_akan_fbi_shield_dw_sr2_smg")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_1/ene_shield_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_city_shield/ene_city_shield")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_dw_sr2_smg/ene_akan_fbi_shield_dw_sr2_smg")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_1/ene_shield_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				}
 			},
 			access = access_type_walk_only
 		}
@@ -646,9 +969,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.FBI_shield = {
 			special_type = "shield",
 			unit_types = {
-				america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_dw_sr2_smg/ene_akan_fbi_shield_dw_sr2_smg")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_1/ene_shield_hvh_1")}
+				america = {
+					Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_dw_sr2_smg/ene_akan_fbi_shield_dw_sr2_smg")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_shield_hvh_1/ene_shield_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				}
 			},
 			access = access_type_walk_only
 		}
@@ -658,9 +990,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		self.unit_categories.FBI_tank = {
 			special_type = "tank",
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_r870/ene_akan_fbi_tank_r870")},
-				zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_1/ene_bulldozer_hvh_1")}
+				america = {
+					Idstring("units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_r870/ene_akan_fbi_tank_r870")
+				},
+				zombie = {
+					Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_1/ene_bulldozer_hvh_1")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2")
+				}
 			},
 			access = access_type_all
 		}
@@ -679,6 +1020,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				zombie = {
 					Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_1/ene_bulldozer_hvh_1"),
 					Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_2/ene_bulldozer_hvh_2")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3")
 				}
 			},
 			access = access_type_all
@@ -704,6 +1049,12 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 					Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_2/ene_bulldozer_hvh_2"),
 					Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_3/ene_bulldozer_hvh_3"),
 					Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun_classic/ene_bulldozer_minigun_classic")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_1/ene_murkywater_bulldozer_1"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_4/ene_murkywater_bulldozer_4")
 				}
 			},
 			access = access_type_all
@@ -732,6 +1083,13 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 					Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_1/ene_bulldozer_hvh_1"),
 					Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"),
 					Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_1/ene_murkywater_bulldozer_1"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_4/ene_murkywater_bulldozer_4"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_medic/ene_murkywater_bulldozer_medic")
 				}
 			},
 			access = access_type_all
@@ -741,18 +1099,36 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	self.unit_categories.medic_M4 = {
 		special_type = "medic",
 		unit_types = {
-			america = {Idstring("units/payday2/characters/ene_medic_m4/ene_medic_m4")},
-			russia = {Idstring("units/payday2/characters/ene_medic_m4/ene_medic_m4")},
-			zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_medic_hvh_m4/ene_medic_hvh_m4")}
+			america = {
+				Idstring("units/payday2/characters/ene_medic_m4/ene_medic_m4")
+			},
+			russia = {
+				Idstring("units/pd2_dlc_mad/characters/ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass")
+			},
+			zombie = {
+				Idstring("units/pd2_dlc_hvh/characters/ene_medic_hvh_m4/ene_medic_hvh_m4")
+			},
+			murkywater = {
+				Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic/ene_murkywater_medic")
+			}
 		},
 		access = access_type_all
 	}
 	self.unit_categories.medic_R870 = {
 		special_type = "medic",
 		unit_types = {
-			america = {Idstring("units/payday2/characters/ene_medic_r870/ene_medic_r870")},
-			russia = {Idstring("units/payday2/characters/ene_medic_r870/ene_medic_r870")},
-			zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_medic_hvh_r870/ene_medic_hvh_r870")}
+			america = {
+				Idstring("units/payday2/characters/ene_medic_r870/ene_medic_r870")
+			},
+			russia = {
+				Idstring("units/pd2_dlc_mad/characters/ene_akan_medic_r870/ene_akan_medic_r870")
+			},
+			zombie = {
+				Idstring("units/pd2_dlc_hvh/characters/ene_medic_hvh_r870/ene_medic_hvh_r870")
+			},
+			murkywater = {
+				Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic_r870/ene_murkywater_medic_r870")
+			}
 		},
 		access = access_type_all
 	}
@@ -760,9 +1136,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		is_captain = true,
 		special_type = "shield",
 		unit_types = {
-			america = {Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")},
-			russia = {Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")},
-			zombie = {Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")}
+			america = {
+				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
+			},
+			russia = {
+				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
+			},
+			zombie = {
+				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
+			},
+			murkywater = {
+				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
+			}
 		},
 		access = access_type_walk_only
 	}
@@ -770,9 +1155,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		is_captain = true,
 		special_type = "shield",
 		unit_types = {
-			america = {Idstring("units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1")},
-			russia = {Idstring("units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1")},
-			zombie = {Idstring("units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1")}
+			america = {
+				Idstring("units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1")
+			},
+			russia = {
+				Idstring("units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1")
+			},
+			zombie = {
+				Idstring("units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1")
+			},
+			murkywater = {
+				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
+			}
 		},
 		access = access_type_walk_only
 	}
@@ -2142,14 +2536,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				4,
 				4
 			},
-			spawn = {{
-				amount_min = 4,
-				freq = 1,
-				amount_max = 4,
-				rank = 3,
-				unit = "FBI_shield",
-				tactics = self._tactics.shield_wall
-			}}
+			spawn = {
+				{
+					amount_min = 4,
+					freq = 1,
+					amount_max = 4,
+					rank = 3,
+					unit = "FBI_shield",
+					tactics = self._tactics.shield_wall
+				}
+			}
 		}
 	elseif difficulty_index == 3 then
 		self.enemy_spawn_groups.tac_shield_wall = {
@@ -2157,14 +2553,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				4,
 				4
 			},
-			spawn = {{
-				amount_min = 4,
-				freq = 1,
-				amount_max = 4,
-				rank = 3,
-				unit = "FBI_shield",
-				tactics = self._tactics.shield_wall
-			}}
+			spawn = {
+				{
+					amount_min = 4,
+					freq = 1,
+					amount_max = 4,
+					rank = 3,
+					unit = "FBI_shield",
+					tactics = self._tactics.shield_wall
+				}
+			}
 		}
 	elseif difficulty_index == 4 then
 		self.enemy_spawn_groups.tac_shield_wall = {
@@ -2172,14 +2570,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				4,
 				4
 			},
-			spawn = {{
-				amount_min = 4,
-				freq = 1,
-				amount_max = 4,
-				rank = 3,
-				unit = "FBI_shield",
-				tactics = self._tactics.shield_wall
-			}}
+			spawn = {
+				{
+					amount_min = 4,
+					freq = 1,
+					amount_max = 4,
+					rank = 3,
+					unit = "FBI_shield",
+					tactics = self._tactics.shield_wall
+				}
+			}
 		}
 	elseif difficulty_index == 5 then
 		self.enemy_spawn_groups.tac_shield_wall = {
@@ -2289,14 +2689,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_flanking
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_flanking
+				}
+			}
 		}
 	elseif difficulty_index == 3 then
 		self.enemy_spawn_groups.tac_tazer_flanking = {
@@ -2304,14 +2706,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_flanking
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_flanking
+				}
+			}
 		}
 	elseif difficulty_index == 4 then
 		self.enemy_spawn_groups.tac_tazer_flanking = {
@@ -2319,14 +2723,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_flanking
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_flanking
+				}
+			}
 		}
 	elseif difficulty_index == 5 then
 		self.enemy_spawn_groups.tac_tazer_flanking = {
@@ -2334,14 +2740,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_flanking
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_flanking
+				}
+			}
 		}
 	elseif difficulty_index == 6 then
 		self.enemy_spawn_groups.tac_tazer_flanking = {
@@ -2349,14 +2757,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_flanking
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_flanking
+				}
+			}
 		}
 	else
 		self.enemy_spawn_groups.tac_tazer_flanking = {
@@ -2399,14 +2809,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_charge
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_charge
+				}
+			}
 		}
 	elseif difficulty_index == 3 then
 		self.enemy_spawn_groups.tac_tazer_charge = {
@@ -2414,14 +2826,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_charge
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_charge
+				}
+			}
 		}
 	elseif difficulty_index == 4 then
 		self.enemy_spawn_groups.tac_tazer_charge = {
@@ -2429,14 +2843,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_charge
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_charge
+				}
+			}
 		}
 	elseif difficulty_index == 5 then
 		self.enemy_spawn_groups.tac_tazer_charge = {
@@ -2444,14 +2860,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_charge
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_charge
+				}
+			}
 		}
 	elseif difficulty_index == 6 then
 		self.enemy_spawn_groups.tac_tazer_charge = {
@@ -2459,14 +2877,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "CS_tazer",
-				tactics = self._tactics.tazer_charge
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "CS_tazer",
+					tactics = self._tactics.tazer_charge
+				}
+			}
 		}
 	else
 		self.enemy_spawn_groups.tac_tazer_charge = {
@@ -2509,14 +2929,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "FBI_tank",
-				tactics = self._tactics.tank_rush
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "FBI_tank",
+					tactics = self._tactics.tank_rush
+				}
+			}
 		}
 	elseif difficulty_index == 3 then
 		self.enemy_spawn_groups.tac_bull_rush = {
@@ -2524,14 +2946,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "FBI_tank",
-				tactics = self._tactics.tank_rush
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "FBI_tank",
+					tactics = self._tactics.tank_rush
+				}
+			}
 		}
 	elseif difficulty_index == 4 then
 		self.enemy_spawn_groups.tac_bull_rush = {
@@ -2539,14 +2963,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "FBI_tank",
-				tactics = self._tactics.tank_rush
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "FBI_tank",
+					tactics = self._tactics.tank_rush
+				}
+			}
 		}
 	elseif difficulty_index == 5 then
 		self.enemy_spawn_groups.tac_bull_rush = {
@@ -2554,14 +2980,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "FBI_tank",
-				tactics = self._tactics.tank_rush
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "FBI_tank",
+					tactics = self._tactics.tank_rush
+				}
+			}
 		}
 	elseif difficulty_index == 6 then
 		self.enemy_spawn_groups.tac_bull_rush = {
@@ -2569,14 +2997,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				1,
 				1
 			},
-			spawn = {{
-				amount_min = 1,
-				freq = 1,
-				amount_max = 1,
-				rank = 3,
-				unit = "FBI_tank",
-				tactics = self._tactics.tank_rush
-			}}
+			spawn = {
+				{
+					amount_min = 1,
+					freq = 1,
+					amount_max = 1,
+					rank = 3,
+					unit = "FBI_tank",
+					tactics = self._tactics.tank_rush
+				}
+			}
 		}
 	else
 		self.enemy_spawn_groups.tac_bull_rush = {
@@ -2641,13 +3071,15 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			1,
 			1
 		},
-		spawn = {{
-			freq = 1,
-			amount_min = 1,
-			rank = 1,
-			unit = "spooc",
-			tactics = self._tactics.spooc
-		}}
+		spawn = {
+			{
+				freq = 1,
+				amount_min = 1,
+				rank = 1,
+				unit = "spooc",
+				tactics = self._tactics.spooc
+			}
+		}
 	}
 	self.enemy_spawn_groups.FBI_spoocs = self.enemy_spawn_groups.single_spooc
 end
@@ -2655,7 +3087,9 @@ end
 function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	local is_console = SystemInfo:platform() ~= Idstring("WIN32")
 	self.max_nr_simultaneous_boss_types = 0
-	self.difficulty_curve_points = {0.5}
+	self.difficulty_curve_points = {
+		0.5
+	}
 
 	if difficulty_index < 6 then
 		self.smoke_and_flash_grenade_timeout = {
@@ -2714,10 +3148,12 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 					300
 				}
 			},
-			recurring_spawn_1 = {interval = {
-				30,
-				60
-			}}
+			recurring_spawn_1 = {
+				interval = {
+					30,
+					60
+				}
+			}
 		}
 	elseif difficulty_index == 3 then
 		self.besiege.recurring_group_SO = {
@@ -2728,10 +3164,12 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 					120
 				}
 			},
-			recurring_spawn_1 = {interval = {
-				30,
-				60
-			}}
+			recurring_spawn_1 = {
+				interval = {
+					30,
+					60
+				}
+			}
 		}
 	elseif difficulty_index == 4 then
 		self.besiege.recurring_group_SO = {
@@ -2742,10 +3180,12 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 					60
 				}
 			},
-			recurring_spawn_1 = {interval = {
-				30,
-				60
-			}}
+			recurring_spawn_1 = {
+				interval = {
+					30,
+					60
+				}
+			}
 		}
 	elseif difficulty_index == 5 then
 		self.besiege.recurring_group_SO = {
@@ -2756,10 +3196,12 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 					40
 				}
 			},
-			recurring_spawn_1 = {interval = {
-				30,
-				60
-			}}
+			recurring_spawn_1 = {
+				interval = {
+					30,
+					60
+				}
+			}
 		}
 	else
 		self.besiege.recurring_group_SO = {
@@ -2770,10 +3212,12 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 					30
 				}
 			},
-			recurring_spawn_1 = {interval = {
-				30,
-				60
-			}}
+			recurring_spawn_1 = {
+				interval = {
+					30,
+					60
+				}
+			}
 		}
 	end
 
@@ -3794,11 +4238,13 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		0,
 		0
 	}
-	self.besiege.cloaker.groups = {single_spooc = {
-		1,
-		1,
-		1
-	}}
+	self.besiege.cloaker.groups = {
+		single_spooc = {
+			1,
+			1,
+			1
+		}
+	}
 	self.street = deep_clone(self.besiege)
 	self.phalanx.minions.min_count = 4
 	self.phalanx.minions.amount = 10
@@ -3879,7 +4325,9 @@ function GroupAITweakData:_create_table_structure()
 	self.enemy_spawn_groups = {}
 	self.besiege = {
 		regroup = {},
-		assault = {force = {}},
+		assault = {
+			force = {}
+		},
 		reenforce = {},
 		recon = {},
 		rescue = {},
@@ -3887,7 +4335,9 @@ function GroupAITweakData:_create_table_structure()
 	}
 	self.safehouse = {
 		regroup = {},
-		assault = {force = {}},
+		assault = {
+			force = {}
+		},
 		reenforce = {},
 		recon = {},
 		rescue = {},
@@ -3899,10 +4349,15 @@ function GroupAITweakData:_create_table_structure()
 		spawn_chance = {}
 	}
 	self.street = {
-		blockade = {force = {}},
-		assault = {force = {}},
+		blockade = {
+			force = {}
+		},
+		assault = {
+			force = {}
+		},
 		regroup = {},
-		capture = {force = {}}
+		capture = {
+			force = {}
+		}
 	}
 end
-

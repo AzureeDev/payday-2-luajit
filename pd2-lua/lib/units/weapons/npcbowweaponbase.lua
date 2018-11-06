@@ -11,5 +11,5 @@ function NPCBowWeaponBase:fire_blank(direction, impact)
 		self:tweak_data_anim_play("fire")
 	end
 end
-NPCCrossBowWeaponBase = NPCCrossBowWeaponBase or class(NPCBowWeaponBase)
 
+NPCCrossBowWeaponBase = NPCCrossBowWeaponBase or class(NPCBowWeaponBase)

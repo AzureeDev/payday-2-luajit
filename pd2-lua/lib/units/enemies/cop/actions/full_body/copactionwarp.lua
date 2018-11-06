@@ -45,7 +45,7 @@ function CopActionWarp:init(action_desc, common_data)
 				yaw = 360 + yaw
 			end
 
-			sync_yaw = 1 + math.ceil((yaw * 254) / 360)
+			sync_yaw = 1 + math.ceil(yaw * 254 / 360)
 		else
 			has_rotation = false
 		end
@@ -91,4 +91,3 @@ function CopActionWarp:chk_block(action_type, t)
 
 	return true
 end
-

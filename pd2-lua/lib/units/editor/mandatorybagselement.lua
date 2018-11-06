@@ -18,11 +18,12 @@ function MandatoryBagsUnitElement:_build_panel(panel, panel_sizer)
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
 
-	self:_build_value_combobox(panel, panel_sizer, "carry_id", table.list_add({"none"}, tweak_data.carry:get_carry_ids()))
+	self:_build_value_combobox(panel, panel_sizer, "carry_id", table.list_add({
+		"none"
+	}, tweak_data.carry:get_carry_ids()))
 	self:_build_value_number(panel, panel_sizer, "amount", {
 		min = 0,
 		floats = 0,
 		max = 100
 	}, "Amount of mandatory bags.")
 end
-

@@ -60,7 +60,7 @@ function MissionScriptElement:get_random_table_value(value)
 		return value
 	end
 
-	return (value[1] + math.random(value[2] + 1)) - 1
+	return value[1] + math.random(value[2] + 1) - 1
 end
 
 function MissionScriptElement:get_random_table_value_float(value)
@@ -334,4 +334,3 @@ end
 
 function MissionScriptElement:destroy()
 end
-

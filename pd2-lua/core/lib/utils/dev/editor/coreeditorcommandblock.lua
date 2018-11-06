@@ -40,4 +40,3 @@ end
 function CoreEditorCommandBlock:__tostring()
 	return string.format("[CoreEditorCommandBlock actions: %s]", tostring(#self._actions))
 end
-

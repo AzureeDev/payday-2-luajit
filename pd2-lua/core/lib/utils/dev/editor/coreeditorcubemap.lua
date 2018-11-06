@@ -138,7 +138,9 @@ function CoreEditor:create_cube_map(params)
 	self._saved_show_center = self._show_center
 	self._show_center = false
 
-	self:on_hide_helper_units({vis = false})
+	self:on_hide_helper_units({
+		vis = false
+	})
 
 	self._saved_hidden_object = {}
 	self._saved_hidden_units = {}
@@ -241,7 +243,9 @@ function CoreEditor:cube_map_done()
 
 	self._show_center = self._saved_show_center
 
-	self:on_hide_helper_units({vis = true})
+	self:on_hide_helper_units({
+		vis = true
+	})
 
 	for _, obj in ipairs(self._saved_hidden_object) do
 		obj:set_visibility(true)
@@ -269,4 +273,3 @@ function CoreEditor:cube_map_done()
 	self._vp:set_width_mul_enabled(true)
 	assert(self._vp:pop_ref_fov())
 end
-

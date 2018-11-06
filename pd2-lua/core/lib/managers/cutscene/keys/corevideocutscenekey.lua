@@ -146,4 +146,3 @@ function CoreVideoCutsceneKey:resume()
 		self._paused = false
 	end
 end
-

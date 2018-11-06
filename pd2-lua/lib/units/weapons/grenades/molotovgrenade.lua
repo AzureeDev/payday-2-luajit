@@ -68,4 +68,3 @@ function MolotovGrenade:add_damage_result(unit, is_dead, damage_percent)
 		self:_check_achievements(unit, is_dead, damage_percent, 1, 1)
 	end
 end
-

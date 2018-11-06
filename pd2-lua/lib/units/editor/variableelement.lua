@@ -38,4 +38,3 @@ function VariableElement:_build_panel(panel, panel_sizer)
 	panel_sizer:add(text_sizer, 0, 0, "EXPAND")
 	self:_build_value_checkbox(panel, panel_sizer, "activated", "Set if the variable is active and uncheck if the variable is disabled.")
 end
-

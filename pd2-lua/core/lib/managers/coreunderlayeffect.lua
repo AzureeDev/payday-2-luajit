@@ -94,6 +94,7 @@ function CoreUnderlayMaterial:database_lookup(str)
 
 	return value
 end
+
 CoreUnderlayEffect = CoreUnderlayEffect or class()
 
 function CoreUnderlayEffect:init()
@@ -208,4 +209,3 @@ function CoreUnderlayEffect:value(material, key)
 		return nil
 	end
 end
-

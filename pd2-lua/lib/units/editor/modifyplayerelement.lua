@@ -20,4 +20,3 @@ function ModifyPlayerElement:_build_panel(panel, panel_sizer)
 	self:_build_value_checkbox(panel, panel_sizer, "invulnerable", "Player cannot be hurt", "Invulnerable")
 	self:_add_help_text("Modifies player properties. The changes are only applied to a player as instigator and cannot be used as a global state")
 end
-

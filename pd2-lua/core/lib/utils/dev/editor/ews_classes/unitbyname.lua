@@ -430,4 +430,3 @@ end
 function UnitByName:thaw()
 	self._list:thaw()
 end
-

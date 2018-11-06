@@ -234,7 +234,9 @@ function CrimeSpreeManager:update(t, dt)
 
 		if button then
 			if self:in_progress() then
-				button:set_text(managers.localization:text("cn_crime_spree_level", {level = managers.experience:cash_string(self:spree_level(), "")}))
+				button:set_text(managers.localization:text("cn_crime_spree_level", {
+					level = managers.experience:cash_string(self:spree_level(), "")
+				}))
 				button:set_color(tweak_data.screen_colors.crime_spree_risk * 0.8)
 				button:set_highlight_color(tweak_data.screen_colors.crime_spree_risk)
 			else
@@ -827,10 +829,12 @@ function CrimeSpreeManager:_give_all_cosmetics_reward(amount)
 		end
 	end
 
-	return {{
-		type = type,
-		amount = amt
-	}}
+	return {
+		{
+			type = type,
+			amount = amt
+		}
+	}
 end
 
 function CrimeSpreeManager:generate_cosmetic_drops(amount)
@@ -991,6 +995,7 @@ function CrimeSpreeManager:can_continue_spree()
 
 	return true
 end
+
 CrimeSpreeManager.GageAssetEvents = {
 	Unlock = 2,
 	SendAlreadyUnlocked = 1
@@ -1140,7 +1145,9 @@ function CrimeSpreeManager:_setup_temporary_job()
 	end
 
 	local mission_data = self:get_mission(self:current_mission())
-	tweak_data.narrative.jobs.crime_spree.chain = {mission_data and mission_data.level}
+	tweak_data.narrative.jobs.crime_spree.chain = {
+		mission_data and mission_data.level
+	}
 end
 
 function CrimeSpreeManager:on_mission_started(mission_id)
@@ -1582,10 +1589,9 @@ function CrimeSpreeManager:consumable_value(name)
 end
 
 function CrimeSpreeManager:_check_highest_level(value)
-	if (self._global.highest_level or 0) < value then
+	if value > (self._global.highest_level or 0) then
 		self._global.highest_level = value
 
 		managers.mission:call_global_event(Message.OnHighestCrimeSpree, value)
 	end
 end
-

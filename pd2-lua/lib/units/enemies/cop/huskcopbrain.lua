@@ -25,7 +25,9 @@ function HuskCopBrain:post_init()
 
 	self._last_alert_t = 0
 
-	self._unit:character_damage():add_listener("HuskCopBrain_death" .. tostring(self._unit:key()), {"death"}, callback(self, self, "clbk_death"))
+	self._unit:character_damage():add_listener("HuskCopBrain_death" .. tostring(self._unit:key()), {
+		"death"
+	}, callback(self, self, "clbk_death"))
 
 	self._post_init_complete = true
 	self._surrendered = false
@@ -209,4 +211,3 @@ function HuskCopBrain:pre_destroy()
 		self:sync_net_event(self._NET_EVENTS.weapon_laser_off)
 	end
 end
-

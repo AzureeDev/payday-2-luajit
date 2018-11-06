@@ -1,5 +1,7 @@
 SpecialObjectiveTriggerUnitElement = SpecialObjectiveTriggerUnitElement or class(MissionElement)
-SpecialObjectiveTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+SpecialObjectiveTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function SpecialObjectiveTriggerUnitElement:init(unit)
 	MissionElement.init(self, unit)
@@ -99,4 +101,3 @@ function SpecialObjectiveTriggerUnitElement:_build_panel(panel, panel_sizer)
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "event", self._options, "Select an event from the combobox")
 end
-

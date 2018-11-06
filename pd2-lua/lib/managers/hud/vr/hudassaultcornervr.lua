@@ -72,16 +72,36 @@ function HUDAssaultCornerVR:feed_point_of_no_return_timer(time)
 end
 
 function HUDAssaultCornerVR:flash_point_of_no_return_timer()
-
 	local function flash_timer(o)
 		local t = 0
 
 		while t < 0.5 do
 			t = t + coroutine.yield()
 			local n = 1 - math.sin(t * 180)
-			local r = math.lerp(1 or self._noreturn_color.r, 1, n)
-			local g = math.lerp(0 or self._noreturn_color.g, 0.8, n)
-			local b = math.lerp(0 or self._noreturn_color.b, 0.2, n)
+			slot3 = math.lerp
+			slot4 = 1
+
+			if 1 then
+				slot4 = self._noreturn_color.r
+			end
+
+			local r = slot3(slot4, 1, n)
+			slot4 = math.lerp
+			slot5 = 0
+
+			if 0 then
+				slot5 = self._noreturn_color.g
+			end
+
+			local g = slot4(slot5, 0.8, n)
+			slot5 = math.lerp
+			slot6 = 0
+
+			if 0 then
+				slot6 = self._noreturn_color.b
+			end
+
+			local b = slot5(slot6, 0.2, n)
 
 			o:set_color(Color(r, g, b))
 			o:set_font_size(math.lerp(26, 32, n))
@@ -102,7 +122,9 @@ function HUDAssaultCornerVR:_animate_show_noreturn(point_of_no_return_panel, del
 	icon_noreturnbox:animate(callback(self, self, "_show_icon_assaultbox"))
 
 	local function open_done()
-		point_of_no_return_text:animate(callback(self, self, "_animate_show_texts"), {point_of_no_return_text})
+		point_of_no_return_text:animate(callback(self, self, "_animate_show_texts"), {
+			point_of_no_return_text
+		})
 	end
 
 	self._noreturn_bg_box:stop()
@@ -117,4 +139,3 @@ function HUDAssaultCornerVR:_set_hostage_offseted(is_offseted)
 		self:start_assault_callback()
 	end
 end
-

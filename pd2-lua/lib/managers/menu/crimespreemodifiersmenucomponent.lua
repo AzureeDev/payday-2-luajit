@@ -25,8 +25,12 @@ function CrimeSpreeModifiersMenuComponent:_setup()
 		parent:remove(self._panel)
 	end
 
-	self._panel = self._ws:panel():panel({layer = 51})
-	self._fullscreen_panel = self._fullscreen_ws:panel():panel({layer = 50})
+	self._panel = self._ws:panel():panel({
+		layer = 51
+	})
+	self._fullscreen_panel = self._fullscreen_ws:panel():panel({
+		layer = 50
+	})
 
 	self._fullscreen_panel:rect({
 		alpha = 0.75,
@@ -94,7 +98,7 @@ function CrimeSpreeModifiersMenuComponent:_setup()
 
 	self._modifiers_panel = self._panel:panel({
 		w = self._panel:w(),
-		h = (self._panel:h() - tweak_data.menu.pd2_large_font_size) - padding * 2
+		h = self._panel:h() - tweak_data.menu.pd2_large_font_size - padding * 2
 	})
 	self._button_panel = self._panel:panel({
 		y = self._modifiers_panel:bottom() + padding,
@@ -146,12 +150,14 @@ function CrimeSpreeModifiersMenuComponent:_setup()
 	finalize_btn:set_link("right", back_btn)
 	back_btn:set_link("up", self._buttons[1])
 	back_btn:set_link("left", finalize_btn)
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	if not managers.menu:is_pc_controller() then
 		self:_move_selection("up")
@@ -252,7 +258,6 @@ function CrimeSpreeModifiersMenuComponent:mouse_moved(o, x, y)
 		return
 	end
 
-	local used, pointer
 	used, pointer, self._selected_item = nil
 
 	for idx, btn in ipairs(self._buttons) do
@@ -312,6 +317,7 @@ end
 function CrimeSpreeModifiersMenuComponent:move_right()
 	self:_move_selection("right")
 end
+
 CrimeSpreeModifierButton = CrimeSpreeModifierButton or class(MenuGuiItem)
 CrimeSpreeModifierButton._type = "CrimeSpreeModifierButton"
 CrimeSpreeModifierButton.size = {
@@ -358,7 +364,7 @@ function CrimeSpreeModifierButton:init(parent, data)
 		x = padding,
 		y = self._image:bottom() + top_padding,
 		w = self._panel:w() - padding * 2,
-		h = ((self._panel:h() - self._image:bottom()) - top_padding) - padding,
+		h = self._panel:h() - self._image:bottom() - top_padding - padding,
 		font_size = tweak_data.menu.pd2_tiny_font_size,
 		font = tweak_data.menu.pd2_tiny_font,
 		color = tweak_data.screen_colors.text
@@ -370,19 +376,23 @@ function CrimeSpreeModifierButton:init(parent, data)
 		color = tweak_data.screen_colors.button_stage_3
 	})
 
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
-	self._active_outline = BoxGuiObject:new(self._panel, {sides = {
-		2,
-		2,
-		2,
-		2
-	}})
+	self._active_outline = BoxGuiObject:new(self._panel, {
+		sides = {
+			2,
+			2,
+			2,
+			2
+		}
+	})
 
 	self._image:set_size(self._image_size * self._size_modifier, self._image_size * self._size_modifier)
 	self._image:set_center(self._image_pos.x, self._image_pos.y)
@@ -460,6 +470,7 @@ function CrimeSpreeModifierButton:smoothstep(a, b, step, n)
 
 	return x
 end
+
 CrimeSpreeButton = CrimeSpreeButton or class(MenuGuiItem)
 CrimeSpreeButton._type = "CrimeSpreeButton"
 
@@ -549,4 +560,3 @@ function CrimeSpreeButton:shrink_wrap_button(w_padding, h_padding)
 
 	self._panel:set_size(w + (w_padding or 0), h + (h_padding or 0))
 end
-

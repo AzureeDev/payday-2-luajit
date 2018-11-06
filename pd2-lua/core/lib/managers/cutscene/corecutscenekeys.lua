@@ -1,4 +1,6 @@
-CoreCutsceneKey = CoreCutsceneKey or {_classes = {}}
+CoreCutsceneKey = CoreCutsceneKey or {
+	_classes = {}
+}
 
 function CoreCutsceneKey:create(element_name, key_collection)
 	return assert(self._classes[element_name], "Element name \"" .. tostring(element_name) .. "\" does not match any registered cutscene key type."):new(key_collection)
@@ -35,7 +37,7 @@ end
 function CoreCutsceneKey:next_available_colour()
 	self._colour_index = (self._colour_index or 0) + 1
 
-	if #self:colour_palette() < self._colour_index then
+	if self._colour_index > #self:colour_palette() then
 		self._colour_index = 1
 	end
 
@@ -115,4 +117,3 @@ CoreCutsceneKey:register_class("core/lib/managers/cutscene/keys/CoreVolumeSetCut
 CoreCutsceneKey:register_class("core/lib/managers/cutscene/keys/CoreZoomCameraCutsceneKey")
 CoreCutsceneKey:register_class("core/lib/managers/cutscene/keys/CoreChangeShadowCutsceneKey")
 CoreCutsceneKey:register_class("core/lib/managers/cutscene/keys/CoreLightGroupCutsceneKey")
-

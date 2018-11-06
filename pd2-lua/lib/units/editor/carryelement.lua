@@ -29,6 +29,7 @@ function CarryUnitElement:_build_panel(panel, panel_sizer)
 
 	table.insert(operations, "poof")
 	self:_build_value_combobox(panel, panel_sizer, "operation", operations)
-	self:_build_value_combobox(panel, panel_sizer, "type_filter", table.list_add({"none"}, tweak_data.carry:get_carry_ids()))
+	self:_build_value_combobox(panel, panel_sizer, "type_filter", table.list_add({
+		"none"
+	}, tweak_data.carry:get_carry_ids()))
 end
-

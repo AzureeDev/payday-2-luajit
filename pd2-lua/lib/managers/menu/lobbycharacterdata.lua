@@ -55,7 +55,9 @@ function LobbyCharacterData:init(panel, peer)
 	self._state_text = state_text
 	self._infamy_icon = infamy_icon
 	local level = managers.crime_spree:get_peer_spree_level(peer:id())
-	local level_text = level >= 0 and managers.localization:text("menu_cs_level", {level = managers.experience:cash_string(level, "")}) or ""
+	local level_text = level >= 0 and managers.localization:text("menu_cs_level", {
+		level = managers.experience:cash_string(level, "")
+	}) or ""
 	local spree_text = self._panel:text({
 		vertical = "top",
 		name = "spree_level",
@@ -127,7 +129,9 @@ function LobbyCharacterData:update_character()
 		local level = managers.crime_spree:get_peer_spree_level(peer:id())
 
 		if level >= 0 then
-			local level_text = managers.localization:text("menu_cs_level", {level = managers.experience:cash_string(level, "")})
+			local level_text = managers.localization:text("menu_cs_level", {
+				level = managers.experience:cash_string(level, "")
+			})
 
 			self._spree_text:set_text(level_text)
 		else
@@ -206,4 +210,3 @@ function LobbyCharacterData:make_fine_text(text)
 
 	return x, y, w, h
 end
-

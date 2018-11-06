@@ -183,4 +183,3 @@ function BlinkExt:load(data)
 
 	self:set_state(self._state, self._delay)
 end
-

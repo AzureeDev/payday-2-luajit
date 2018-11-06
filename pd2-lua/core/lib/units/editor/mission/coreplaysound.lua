@@ -1,5 +1,7 @@
 CorePlaySoundUnitElement = CorePlaySoundUnitElement or class(MissionElement)
-CorePlaySoundUnitElement.LINK_ELEMENTS = {"elements"}
+CorePlaySoundUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 PlaySoundUnitElement = PlaySoundUnitElement or class(CorePlaySoundUnitElement)
 
 function PlaySoundUnitElement:init(...)
@@ -179,4 +181,3 @@ function CorePlaySoundUnitElement:destroy()
 	self:stop_test_element()
 	CorePlaySoundUnitElement.super.destroy(self)
 end
-

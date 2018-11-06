@@ -68,10 +68,8 @@ function BaseMutator:longdesc()
 end
 
 function BaseMutator:icon()
-	local x = self.icon_coords
-	x = x[1]
-	local y = self.icon_coords
-	y = y[2]
+	local x = self.icon_coords[1]
+	local y = self.icon_coords[2]
 	local size = MutatorsManager._icon_size
 
 	return MutatorsManager._atlas_file, {
@@ -290,7 +288,12 @@ function BaseMutator:build_matchmaking_key()
 	if table.size(self:values()) > 0 then
 		for key, data in pairs(self:values()) do
 			local value = data.current
-			matchmaking_key = type(value) == "number" and matchmaking_key .. string.format("%s %.4f ", data.network_key, value) or matchmaking_key .. string.format("%s %s ", data.network_key, tostring(value))
+
+			if type(value) == "number" then
+				matchmaking_key = matchmaking_key .. string.format("%s %.4f ", data.network_key, value)
+			else
+				matchmaking_key = matchmaking_key .. string.format("%s %s ", data.network_key, tostring(value))
+			end
 		end
 	end
 
@@ -302,14 +305,7 @@ function BaseMutator:build_compressed_data(id)
 
 	for key, data in pairs(self:values()) do
 		local value = data.current
-
-		if type(value) == "number" then
-			matchmaking_key = matchmaking_key .. string.format("%.2f ", value)
-		elseif type(value) == "boolean" then
-			matchmaking_key = matchmaking_key .. string.format("%d ", value and 1 or 0)
-		else
-			matchmaking_key = matchmaking_key .. string.format("%s ", tostring(value))
-		end
+		matchmaking_key = type(value) == "number" and matchmaking_key .. string.format("%.2f ", value) or type(value) == "boolean" and matchmaking_key .. string.format("%d ", value and 1 or 0) or matchmaking_key .. string.format("%s ", tostring(value))
 	end
 
 	return matchmaking_key
@@ -360,20 +356,8 @@ function BaseMutator:partial_uncompress_data(str_dat)
 
 		local new_value = string.sub(str_dat, 1, idx)
 		str_dat = string.sub(str_dat, idx + 1)
-
-		if type(default) == "number" then
-			local number = tonumber(new_value)
-
-			if number == nil then
-				ret = ret .. string.format("%s %.4f ", data.network_key, default)
-			else
-				ret = ret .. string.format("%s %.4f ", data.network_key, number)
-			end
-		elseif type(default) == "boolean" then
-			ret = ret .. string.format("%s %s ", data.network_key, tostring(tonumber(new_value) == 1))
-		else
-			ret = ret .. string.format("%s %s ", data.network_key, tostring(new_value))
-		end
+		local number = tonumber(new_value)
+		ret = number == nil and ret .. string.format("%s %.4f ", data.network_key, default) or ret .. string.format("%s %.4f ", data.network_key, number) or type(default) == "boolean" and ret .. string.format("%s %s ", data.network_key, tostring(tonumber(new_value) == 1)) or ret .. string.format("%s %s ", data.network_key, tostring(new_value))
 	end
 
 	return ret, str_dat
@@ -426,4 +410,3 @@ end
 function BaseMutator:modify_value(id, value)
 	return value
 end
-

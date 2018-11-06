@@ -9,9 +9,10 @@ function ExperienceManager:_setup()
 	self._total_levels = #tweak_data.experience_manager.levels
 
 	if not Global.experience_manager then
-		Global.experience_manager = {}
-		Global.experience_manager.total = Application:digest_value(0, true)
-		Global.experience_manager.level = Application:digest_value(0, true)
+		Global.experience_manager = {
+			total = Application:digest_value(0, true),
+			level = Application:digest_value(0, true)
+		}
 	end
 
 	self._global = Global.experience_manager
@@ -344,9 +345,11 @@ function ExperienceManager:rank_string(rank)
 	for i = #numbers, 1, -1 do
 		local num = numbers[i]
 
-		while rank - num >= 0 and rank > 0 do
-			roman = roman .. chars[i]
-			rank = rank - num
+		if rank - num >= 0 then
+			while rank - num >= 0 and rank > 0 do
+				roman = roman .. chars[i]
+				rank = rank - num
+			end
 		end
 
 		for j = 1, i - 1, 1 do
@@ -484,11 +487,13 @@ function ExperienceManager:get_levels_gained_from_xp(xp)
 	local plvl = managers.experience:current_level() + 1
 	local level_data = nil
 
-	while xp > 0 and plvl < self._total_levels do
-		plvl = plvl + 1
-		xp_needed_to_level = tweak_data:get_value("experience_manager", "levels", plvl, "points")
-		level_gained = level_gained + math.min(xp / xp_needed_to_level, 1)
-		xp = math.max(xp - xp_needed_to_level, 0)
+	if xp > 0 then
+		while xp > 0 and plvl < self._total_levels do
+			plvl = plvl + 1
+			xp_needed_to_level = tweak_data:get_value("experience_manager", "levels", plvl, "points")
+			level_gained = level_gained + math.min(xp / xp_needed_to_level, 1)
+			xp = math.max(xp - xp_needed_to_level, 0)
+		end
 	end
 
 	return level_gained
@@ -875,4 +880,3 @@ function ExperienceManager:chk_ask_use_backup(savegame_data, backup_savegame_dat
 		return true
 	end
 end
-

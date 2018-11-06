@@ -159,7 +159,6 @@ function WorldDefinition:_load_continent_init_package(path)
 end
 
 function WorldDefinition:_load_continent_package(path)
-
 	function blacklist_filter_pred(t, name)
 		if t == Idstring("unit") then
 			return not self._blacklist_data[name:key()]
@@ -777,7 +776,9 @@ function WorldDefinition:_create_environment(data, offset)
 		end)
 	end
 
-	self._environment = {sky_rot = data.environment_values.sky_rot}
+	self._environment = {
+		sky_rot = data.environment_values.sky_rot
+	}
 	local wind = data.wind
 
 	Wind:set_direction(wind.angle, wind.angle_var, 5)
@@ -950,6 +951,7 @@ function WorldDefinition:preload_unit(name)
 		CoreEngineAccess._editor_load(Idstring("unit"), name:id())
 	end
 end
+
 local is_editor = Application:editor()
 
 function WorldDefinition:make_unit(data, offset)
@@ -976,7 +978,12 @@ function WorldDefinition:make_unit(data, offset)
 	end
 
 	local unit = nil
-	unit = MassUnitManager:can_spawn_unit(Idstring(name)) and not is_editor and MassUnitManager:spawn_unit(Idstring(name), data.position + offset, data.rotation) or CoreUnit.safe_spawn_unit(name, data.position, data.rotation)
+
+	if MassUnitManager:can_spawn_unit(Idstring(name)) and not is_editor then
+		unit = MassUnitManager:spawn_unit(Idstring(name), data.position + offset, data.rotation)
+	else
+		unit = CoreUnit.safe_spawn_unit(name, data.position, data.rotation)
+	end
 
 	if unit then
 		self:assign_unit_data(unit, data)
@@ -994,6 +1001,7 @@ function WorldDefinition:make_unit(data, offset)
 
 	return unit
 end
+
 local is_editor = Application:editor()
 
 function WorldDefinition:assign_unit_data(unit, data)
@@ -1345,10 +1353,12 @@ function WorldDefinition:add_trigger_sequence(unit, triggers)
 				trigger = trigger
 			})
 		else
-			self._trigger_units[trigger.notify_unit_id] = {{
-				unit = unit,
-				trigger = trigger
-			}}
+			self._trigger_units[trigger.notify_unit_id] = {
+				{
+					unit = unit,
+					trigger = trigger
+				}
+			}
 		end
 	end
 end
@@ -1383,7 +1393,9 @@ function WorldDefinition:get_unit_on_load(id, call)
 	if self._use_unit_callbacks[id] then
 		table.insert(self._use_unit_callbacks[id], call)
 	else
-		self._use_unit_callbacks[id] = {call}
+		self._use_unit_callbacks[id] = {
+			call
+		}
 	end
 
 	return nil
@@ -1400,4 +1412,3 @@ end
 function WorldDefinition:get_mission_element_unit(id)
 	return self._mission_element_units[id]
 end
-

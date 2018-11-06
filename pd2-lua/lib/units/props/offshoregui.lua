@@ -110,4 +110,3 @@ function OffshoreGui:perform_sync()
 		managers.sync:add_synced_offshore_gui(self._unit:id(), self._visible, managers.money:offshore())
 	end
 end
-

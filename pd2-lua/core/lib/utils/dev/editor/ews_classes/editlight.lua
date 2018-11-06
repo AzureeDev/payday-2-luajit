@@ -8,7 +8,7 @@ EditUnitLight.DEFAULT_SPOT_PROJECTION_TEXTURE = "units/lights/spot_light_project
 function EditUnitLight:init(editor)
 	EditUnitLight.super.init(self)
 
-	local panel, sizer = (editor or managers.editor):add_unit_edit_page({
+	local panel, sizer = editor or managers.editor:add_unit_edit_page({
 		name = "Light",
 		class = self
 	})
@@ -306,7 +306,17 @@ function EditUnitLight:update_light_ctrls_from_light(light)
 	CoreEws.change_slider_and_number_value(self._spot_start_angle_params, light:spot_angle_start())
 	CoreEws.change_slider_and_number_value(self._spot_end_angle_params, light:spot_angle_end())
 
-	local is_spot = (not string.match(light:properties(), "omni") or false) and true
+	if string.match(light:properties(), "omni") then
+		if false then
+			slot4 = true
+		else
+			slot4 = false
+
+			if false then
+				local is_spot = true
+			end
+		end
+	end
 
 	self._spot_start_angle_params.number_ctrlr:set_enabled(is_spot)
 	self._spot_start_angle_params.slider_ctrlr:set_enabled(is_spot)
@@ -536,4 +546,3 @@ function EditUnitLight:_draw_light(light, t, dt)
 	self._brush:disc(light:position() + Vector3(0, 0, clipping_values.y), light:far_range())
 	self._pen:circle(light:position() + Vector3(0, 0, clipping_values.y), light:far_range())
 end
-

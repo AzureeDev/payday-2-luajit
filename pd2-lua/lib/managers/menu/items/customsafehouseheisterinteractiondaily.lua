@@ -74,9 +74,9 @@ function InGameHeisterInteractionGui:init(node, layer, parameters)
 end
 
 function InGameHeisterInteractionGui:_setup_item_panel_parent(safe_rect, shape)
-	local x = (safe_rect.x + safe_rect.width / 2) - self.WIDTH / 2 + self.PADDING
-	local y = (safe_rect.y + safe_rect.height / 2) - self.HEIGHT / 2 + self.PADDING
-	local shape = {
+	local x = safe_rect.x + safe_rect.width / 2 - self.WIDTH / 2 + self.PADDING
+	local y = safe_rect.y + safe_rect.height / 2 - self.HEIGHT / 2 + self.PADDING
+	shape = {
 		x = x,
 		y = y,
 		w = self.WIDTH,
@@ -196,6 +196,7 @@ end
 function InGameHeisterInteractionGui:refresh_gui(node)
 	return node
 end
+
 local header_text_desc_height = 80
 local obj_text_desc_height = 60
 
@@ -214,9 +215,13 @@ function InGameHeisterInteractionGui:_setup_default()
 		ws:panel():remove(ws:panel():child("main_panel"))
 	end
 
-	local main_panel = ws:panel():panel({name = "main_panel"})
+	local main_panel = ws:panel():panel({
+		name = "main_panel"
+	})
 	self._main_panel = main_panel
-	self._fullscreen_panel = mc_full_ws:panel():panel({layer = 0})
+	self._fullscreen_panel = mc_full_ws:panel():panel({
+		layer = 0
+	})
 	local width = self.WIDTH
 	local height = self.HEIGHT
 	self._panel = main_panel:panel({
@@ -231,12 +236,14 @@ function InGameHeisterInteractionGui:_setup_default()
 		layer = 0,
 		color = Color.black
 	})
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local txt = managers.localization:to_upper_text("menu_cs_div_safehouse_daily") .. ": "
 	local header_panel = self._panel:panel({
@@ -282,15 +289,17 @@ function InGameHeisterInteractionGui:_setup_layout()
 	local width = self.WIDTH
 	local height = self.HEIGHT
 	self._scroll_panel = self._panel:panel({
-		h = (height - small_font_size * 3) - self.PADDING * 2,
+		h = height - small_font_size * 3 - self.PADDING * 2,
 		w = width - self.PADDING * 2
 	})
-	self._anim_box = BoxGuiObject:new(self._scroll_panel, {sides = {
-		0,
-		0,
-		0,
-		2
-	}})
+	self._anim_box = BoxGuiObject:new(self._scroll_panel, {
+		sides = {
+			0,
+			0,
+			0,
+			2
+		}
+	})
 
 	self._scroll_panel:move(self.PADDING, self.PADDING + small_font_size)
 
@@ -367,7 +376,9 @@ function InGameHeisterInteractionGui:_setup_layout()
 	})
 
 	expire_panel:move(self.PADDING * 0.5, expire_panel_pos)
-	expire_panel:rect({color = tweak_data.screen_colors.important_2:with_alpha(0.2)})
+	expire_panel:rect({
+		color = tweak_data.screen_colors.important_2:with_alpha(0.2)
+	})
 
 	local expire_text = expire_panel:text({
 		blend_mode = "add",
@@ -409,7 +420,7 @@ function InGameHeisterInteractionGui:_setup_layout()
 	for idx, reward in ipairs(daily_challenge.rewards) do
 		local reward_item = CustomSafehouseGuiRewardItem:new(self, reward_panel, idx, reward, daily_info.id, true)
 
-		reward_item._panel:move((self._scroll_panel:w() - self.PADDING * 2) - 128 * idx, 0)
+		reward_item._panel:move(self._scroll_panel:w() - self.PADDING * 2 - 128 * idx, 0)
 		table.insert(self._reward_buttons, reward_item)
 
 		if not managers.menu:is_pc_controller() then
@@ -474,7 +485,7 @@ function InGameHeisterInteractionGui:_setup_daily_complete()
 
 	make_fine_text(header)
 	header:set_center_x(self._daily_complete_panel:center_x())
-	header:set_y((self._daily_complete_panel:center_y() - medium_font_size * 3) - y_offs)
+	header:set_y(self._daily_complete_panel:center_y() - medium_font_size * 3 - y_offs)
 
 	local timer_panel = self._daily_complete_panel:panel({
 		name = "DailyRenewPanel",
@@ -484,7 +495,9 @@ function InGameHeisterInteractionGui:_setup_daily_complete()
 
 	timer_panel:set_left(self._daily_complete_panel:panel():w() * 0.5 - timer_panel:w() * 0.5)
 	timer_panel:set_top(header:bottom() + self.PADDING)
-	timer_panel:rect({color = tweak_data.screen_colors.challenge_title:with_alpha(0.4)})
+	timer_panel:rect({
+		color = tweak_data.screen_colors.challenge_title:with_alpha(0.4)
+	})
 
 	self._complete_timer_panel = timer_panel
 	local timer_text = timer_panel:text({
@@ -574,12 +587,14 @@ function InGameHeisterInteractionGui:_update_hide_daily(t, dt)
 			self._scroll_panel:clear()
 			self:_setup_daily_complete()
 		else
-			self._anim_box = BoxGuiObject:new(self._scroll_panel, {sides = {
-				0,
-				0,
-				0,
-				2
-			}})
+			self._anim_box = BoxGuiObject:new(self._scroll_panel, {
+				sides = {
+					0,
+					0,
+					0,
+					2
+				}
+			})
 		end
 	end
 end
@@ -594,12 +609,12 @@ function InGameHeisterInteractionGui:_update_show_complete(t, dt)
 		managers.menu_component:post_event("box_tick")
 	end
 
-	if base_time + step_time < self._complete_t and self._complete_info and not self._complete_info:visible() then
+	if self._complete_t > base_time + step_time and self._complete_info and not self._complete_info:visible() then
 		self._complete_info:set_visible(true)
 		managers.menu_component:post_event("box_tick")
 	end
 
-	if base_time + step_time * 2 < self._complete_t and self._complete_timer_panel and not self._complete_timer_panel:visible() then
+	if self._complete_t > base_time + step_time * 2 and self._complete_timer_panel and not self._complete_timer_panel:visible() then
 		self._complete_timer_panel:set_visible(true)
 		managers.menu_component:post_event("box_tick")
 		self:set_animation_state("_update_renew_daily")
@@ -656,7 +671,7 @@ function InGameHeisterInteractionGui:move_reward_button(dir)
 
 	local next_button = current_button + dir
 
-	if #self._reward_buttons < next_button then
+	if next_button > #self._reward_buttons then
 		next_button = 1
 	elseif next_button < 1 then
 		next_button = #self._reward_buttons
@@ -683,4 +698,3 @@ end
 
 function InGameHeisterInteractionGui:_update_buttons()
 end
-

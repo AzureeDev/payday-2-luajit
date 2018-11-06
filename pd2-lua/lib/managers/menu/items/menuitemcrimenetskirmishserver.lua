@@ -44,7 +44,9 @@ function MenuItemCrimeNetSkirmishServer:setup_gui(node, row_item)
 	end
 
 	local is_weekly = tonumber(lobby:key_value("skirmish")) == SkirmishManager.LOBBY_WEEKLY
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	local server_panel = row_item.gui_panel:panel({
 		name = "server",
 		h = 64,
@@ -82,7 +84,9 @@ function MenuItemCrimeNetSkirmishServer:setup_gui(node, row_item)
 		player_marker:set_position(cx, cy)
 	end
 
-	local side_panel = server_panel:panel({x = 36})
+	local side_panel = server_panel:panel({
+		x = 36
+	})
 	local host_name = side_panel:text({
 		name = "host_name",
 		vertical = "center",
@@ -171,4 +175,3 @@ end
 function MenuItemCrimeNetSkirmishServer:on_delete_row_item(row_item, ...)
 	MenuItemCrimeNetSkirmishServer.super.on_delete_row_item(self, row_item, ...)
 end
-

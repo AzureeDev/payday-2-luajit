@@ -125,7 +125,12 @@ function ControllerWrapperSettings:validate()
 
 				if unselectable_input then
 					local invalid = nil
-					invalid = #input_name_list > 1 and not connection:get_any_input() and unselectable_input:get_multi() or unselectable_input:get_single()
+
+					if #input_name_list > 1 and not connection:get_any_input() then
+						invalid = unselectable_input:get_multi()
+					else
+						invalid = unselectable_input:get_single()
+					end
 
 					if invalid then
 						self._editable_connection_map[connection_name] = nil
@@ -144,7 +149,9 @@ function ControllerWrapperSettings:populate_data(data)
 
 	for _, connection in pairs(self._connection_map) do
 		if not connection_list then
-			connection_list = {_meta = "connections"}
+			connection_list = {
+				_meta = "connections"
+			}
 
 			table.insert(sub_data, connection_list)
 		end
@@ -156,7 +163,9 @@ function ControllerWrapperSettings:populate_data(data)
 
 	for _, editable in pairs(self._editable_connection_map) do
 		if not editable_list then
-			editable_list = {_meta = "editable"}
+			editable_list = {
+				_meta = "editable"
+			}
 
 			table.insert(sub_data, editable_list)
 		end
@@ -168,7 +177,9 @@ function ControllerWrapperSettings:populate_data(data)
 
 	for _, unselectable in pairs(self._unselectable_input_map) do
 		if not unselectable_list then
-			unselectable_list = {_meta = "unselectable"}
+			unselectable_list = {
+				_meta = "unselectable"
+			}
 
 			table.insert(sub_data, unselectable_list)
 		end
@@ -232,6 +243,7 @@ function ControllerWrapperSettings:get_origin(debug_path)
 		return "[Controller]"
 	end
 end
+
 ControllerWrapperConnection = ControllerWrapperConnection or class()
 ControllerWrapperConnection.TYPE = "generic"
 ControllerWrapperConnection.DEFAULT_MIN_SRC_RANGE = 0
@@ -441,7 +453,9 @@ function ControllerWrapperConnection:get_connect_dest_type()
 end
 
 function ControllerWrapperConnection:populate_data(data)
-	local sub_data = {_meta = self.TYPE}
+	local sub_data = {
+		_meta = self.TYPE
+	}
 
 	self:populate_data_attributes(sub_data)
 
@@ -497,6 +511,7 @@ end
 function ControllerWrapperConnection:__tostring(additional_info)
 	return string.format("[Controller][Connection][Type: %s, Name: %s, Input: %s, Controller: %s, Debug: %s, Enabled: %s, Any input: %s, Delay: %s%s]", tostring(self.TYPE), tostring(self._name), self._input_name_list and table.concat_map(self._input_name_list, true, "N/A") or "", tostring(self._controller_id), tostring(self._debug), tostring(not self._disabled), tostring(not self._single_input), tostring(self._delay), tostring(additional_info or ""))
 end
+
 ControllerWrapperButton = ControllerWrapperButton or class(ControllerWrapperConnection)
 ControllerWrapperButton.TYPE = "button"
 
@@ -507,6 +522,7 @@ end
 function ControllerWrapperButton:__tostring(additional_info)
 	return ControllerWrapperConnection.__tostring(self, additional_info)
 end
+
 ControllerWrapperAxis = ControllerWrapperAxis or class(ControllerWrapperConnection)
 ControllerWrapperAxis.TYPE = "axis"
 ControllerWrapperAxis.IS_AXIS = true
@@ -736,6 +752,7 @@ end
 function ControllerWrapperAxis:__tostring(additional_info)
 	return ControllerWrapperConnection.__tostring(self, tostring(additional_info or "") .. ", Multiplier: " .. tostring(self._multiplier) .. ", Lerp: " .. tostring(self._lerp) .. ", Initial lerp axis: " .. tostring(self._init_lerp_axis) .. ", Pad bottom: " .. tostring(self._pad_bottom) .. ", Pad top: " .. tostring(self._pad_top) .. ", Soft top: " .. tostring(self._soft_top) .. ", No limit: " .. tostring(self._no_limit) .. ", Inversion: " .. tostring(self._inversion))
 end
+
 ControllerWrapperDelayConnection = ControllerWrapperDelayConnection or class()
 ControllerWrapperDelayConnection.TYPE = "delay"
 
@@ -755,7 +772,9 @@ end
 
 function ControllerWrapperDelayConnection:populate_data(data)
 	local list = data.connections
-	local sub_data = {_meta = self.TYPE}
+	local sub_data = {
+		_meta = self.TYPE
+	}
 
 	if not list then
 		list = {}
@@ -770,6 +789,7 @@ end
 function ControllerWrapperDelayConnection:__tostring(additional_info)
 	return string.format("[Controller][DelayConnection][Name: %s%s]", tostring(self._name), tostring(additional_info))
 end
+
 ControllerWrapperEditable = ControllerWrapperEditable or class()
 ControllerWrapperEditable.TYPE = "connection"
 
@@ -817,6 +837,7 @@ end
 function ControllerWrapperEditable:__tostring(additional_info)
 	return string.format("[Editable connection name: %s, Caption: %s, Locale id: %s]", tostring(self._connection_name), tostring(self._caption), tostring(self._locale_id))
 end
+
 ControllerWrapperUnselectable = ControllerWrapperUnselectable or class()
 ControllerWrapperUnselectable.TYPE = "input"
 
@@ -884,4 +905,3 @@ end
 function ControllerWrapperUnselectable:__tostring(additional_info)
 	return string.format("[Unselectable input name: \"%s\"]", tostring(self._input_name))
 end
-

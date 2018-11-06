@@ -335,4 +335,3 @@ function CoreCutsceneCast:_root_unit()
 
 	return self.__root_unit
 end
-

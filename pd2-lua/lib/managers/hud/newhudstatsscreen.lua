@@ -94,10 +94,13 @@ function HudTrackedAchievement:update_progress()
 		end
 	end
 end
+
 HUDStatsScreen = HUDStatsScreen or class(ExtendedPanel)
 
 function HUDStatsScreen:init()
-	HUDStatsScreen.super.init(self, managers.hud:script(managers.hud.STATS_SCREEN_FULLSCREEN).panel, {use_given = true})
+	HUDStatsScreen.super.init(self, managers.hud:script(managers.hud.STATS_SCREEN_FULLSCREEN).panel, {
+		use_given = true
+	})
 	self:clear()
 
 	local padding = 10
@@ -176,7 +179,9 @@ function HUDStatsScreen:recreate_left()
 				color = tweak_data.screen_colors.text
 			}), 8, 0)
 
-			local str = managers.localization:text("menu_cs_level", {level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")})
+			local str = managers.localization:text("menu_cs_level", {
+				level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")
+			})
 
 			placer:add_right(self._left:fine_text({
 				font = medium_font,
@@ -258,7 +263,9 @@ function HUDStatsScreen:recreate_left()
 
 			placer:new_row(8, 0)
 
-			local payout = managers.localization:text("hud_day_payout", {MONEY = managers.experience:cash_string(managers.money:get_potential_payout_from_current_stage())})
+			local payout = managers.localization:text("hud_day_payout", {
+				MONEY = managers.experience:cash_string(managers.money:get_potential_payout_from_current_stage())
+			})
 
 			placer:add_bottom(self._left:fine_text({
 				keep_w = true,
@@ -303,7 +310,9 @@ function HUDStatsScreen:recreate_left()
 		}), 0)
 	end
 
-	local loot_panel = ExtendedPanel:new(self._left, {w = (self._left:w() - 16) - 8})
+	local loot_panel = ExtendedPanel:new(self._left, {
+		w = self._left:w() - 16 - 8
+	})
 	placer = UiPlacer:new(16, 0, 8, 4)
 	local mandatory_bags_data = managers.loot:get_mandatory_bags_data()
 	local mandatory_amount = mandatory_bags_data and mandatory_bags_data.amount
@@ -560,7 +569,7 @@ function HUDStatsScreen:_animate_show_stats_left_panel(left_panel, right_panel, 
 	local TOTAL_T = 0.33 * start_x / -left_panel:w()
 	local t = 0
 
-	while t < TOTAL_T do
+	while TOTAL_T > t do
 		local dt = coroutine.yield() * 1 / TimerManager:game():multiplier()
 		t = t + dt
 		local a = math.lerp(start_a, 1, t / TOTAL_T)
@@ -599,7 +608,7 @@ function HUDStatsScreen:_animate_hide_stats_left_panel(left_panel, right_panel, 
 	local TOTAL_T = 0.33 * (1 - start_x / -left_panel:w())
 	local t = 0
 
-	while t < TOTAL_T do
+	while TOTAL_T > t do
 		local dt = coroutine.yield() * 1 / TimerManager:game():multiplier()
 		t = t + dt
 		local a = math.lerp(start_a, 0, t / TOTAL_T)
@@ -634,4 +643,3 @@ function HUDStatsScreen:update(t, dt)
 		v:update_progress()
 	end
 end
-

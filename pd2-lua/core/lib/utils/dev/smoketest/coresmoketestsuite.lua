@@ -14,4 +14,3 @@ end
 function Suite:update(t, dt)
 	assert(false, "Not implemented")
 end
-

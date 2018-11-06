@@ -28,7 +28,9 @@ function SentryGunBrain:init(unit)
 	self._SO_access_str = "teamAI1"
 	self._SO_access = managers.navigation:convert_access_flag(self._SO_access_str)
 
-	unit:event_listener():add("Brain_on_switch_fire_mode_event", {"on_switch_fire_mode"}, callback(self, self, "_on_switch_fire_mode_event"))
+	unit:event_listener():add("Brain_on_switch_fire_mode_event", {
+		"on_switch_fire_mode"
+	}, callback(self, self, "_on_switch_fire_mode_event"))
 end
 
 function SentryGunBrain:_on_switch_fire_mode_event(ap_bullets)
@@ -87,7 +89,11 @@ function SentryGunBrain:is_active()
 end
 
 function SentryGunBrain:set_active(state)
-	state = state and true or false
+	if state then
+		state = true
+	else
+		state = false
+	end
 
 	if self._active == state then
 		return
@@ -145,7 +151,9 @@ function SentryGunBrain:_upd_detection(t)
 		end
 	end
 
-	local ignore_units = {self._unit}
+	local ignore_units = {
+		self._unit
+	}
 
 	local function _nearly_visible_chk(attention_info, detect_pos)
 		local near_pos = tmp_vec1
@@ -392,7 +400,9 @@ function SentryGunBrain:_select_focus_attention(t)
 		dot_weight = dot_weight * dot_weight * dot_weight
 		total_weight = total_weight * dot_weight
 
-		if self:_ignore_shield({self._unit}, current_pos, attention_info) then
+		if self:_ignore_shield({
+			self._unit
+		}, current_pos, attention_info) then
 			total_weight = total_weight * 0.01
 		end
 
@@ -473,7 +483,9 @@ function SentryGunBrain:_upd_fire(t)
 		end
 	elseif self._ext_movement:rearming() then
 		self._ext_movement:complete_rearming()
-	elseif attention and attention.reaction and AIAttentionObject.REACT_SHOOT <= attention.reaction and not self._ext_movement:warming_up(t) and not self:_ignore_shield({self._unit}, self._ext_movement:m_head_pos(), self._attention_obj) then
+	elseif attention and attention.reaction and AIAttentionObject.REACT_SHOOT <= attention.reaction and not self._ext_movement:warming_up(t) and not self:_ignore_shield({
+		self._unit
+	}, self._ext_movement:m_head_pos(), self._attention_obj) then
 		local expend_ammo = Network:is_server()
 		local damage_player = attention.unit:base() and attention.unit:base().is_local_player
 		local my_pos = self._ext_movement:m_head_pos()
@@ -560,7 +572,9 @@ function SentryGunBrain:is_target_on_sight(my_pos, target_base_pos)
 	mvector3.set_z(right_offset, mvector3.z(right_offset) + self.attention_target_offset_ver)
 	mvector3.set_z(left_offset, mvector3.z(left_offset) + self.attention_target_offset_ver)
 
-	local ignore_units = {self._unit}
+	local ignore_units = {
+		self._unit
+	}
 	local offsets = {
 		Vector3(0, 0, 0),
 		right_offset,
@@ -803,7 +817,9 @@ function SentryGunBrain:switch_on()
 	end
 
 	if is_server then
-		PlayerMovement.set_attention_settings(self, {"sentry_gun_enemy_cbt"})
+		PlayerMovement.set_attention_settings(self, {
+			"sentry_gun_enemy_cbt"
+		})
 	end
 end
 
@@ -811,7 +827,9 @@ function SentryGunBrain:_setup_attention_handler()
 	self._attention_handler = CharacterAttentionObject:new(self._unit)
 
 	self._attention_handler:set_team(self._ext_movement:team())
-	PlayerMovement.set_attention_settings(self, {"sentry_gun_enemy_cbt"})
+	PlayerMovement.set_attention_settings(self, {
+		"sentry_gun_enemy_cbt"
+	})
 end
 
 function SentryGunBrain:attention_handler()
@@ -823,11 +841,15 @@ function SentryGunBrain:SO_access()
 end
 
 function SentryGunBrain:on_hacked_start()
-	PlayerMovement.set_attention_settings(self, {"sentry_gun_enemy_cbt_hacked"})
+	PlayerMovement.set_attention_settings(self, {
+		"sentry_gun_enemy_cbt_hacked"
+	})
 end
 
 function SentryGunBrain:on_hacked_end()
-	PlayerMovement.set_attention_settings(self, {"sentry_gun_enemy_cbt"})
+	PlayerMovement.set_attention_settings(self, {
+		"sentry_gun_enemy_cbt"
+	})
 end
 
 function SentryGunBrain:_attention_health_ratio(attention)
@@ -845,6 +867,7 @@ function SentryGunBrain:_attention_objective(attention)
 
 	return "unknown"
 end
+
 local up_offs = math.UP * 50
 
 function SentryGunBrain:_ignore_shield(ignore_units, my_pos, attention)
@@ -903,4 +926,3 @@ end
 function SentryGunBrain:is_hostile()
 	return not self._idle
 end
-

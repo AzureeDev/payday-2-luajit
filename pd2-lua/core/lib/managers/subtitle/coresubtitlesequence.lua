@@ -98,4 +98,3 @@ function StringIDSubtitle:string()
 
 	return managers.localization:text(self.__string_data)
 end
-

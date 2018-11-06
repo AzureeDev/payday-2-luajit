@@ -38,7 +38,9 @@ function Pickup:delete_unit()
 end
 
 function Pickup:save(data)
-	local state = {active = self._active}
+	local state = {
+		active = self._active
+	}
 	data.Pickup = state
 end
 
@@ -55,4 +57,3 @@ end
 
 function Pickup:destroy(unit)
 end
-

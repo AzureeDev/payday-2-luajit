@@ -42,6 +42,7 @@ function ElementMotionPathOperator:on_executed(instigator)
 
 	ElementMotionPathOperator.super.on_executed(self, instigator)
 end
+
 ElementMotionPathTrigger = ElementMotionPathTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementMotionPathTrigger:init(...)
@@ -66,4 +67,3 @@ function ElementMotionPathTrigger:on_executed(instigator)
 
 	ElementMotionPathTrigger.super.on_executed(self, instigator)
 end
-

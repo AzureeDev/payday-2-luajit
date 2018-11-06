@@ -52,4 +52,3 @@ function Feeder:update(t, dt)
 		input_data[input_data_name] = data
 	end
 end
-

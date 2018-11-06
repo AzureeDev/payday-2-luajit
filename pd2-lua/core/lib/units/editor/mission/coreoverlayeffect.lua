@@ -162,4 +162,3 @@ function CoreOverlayEffectUnitElement:_build_panel(panel, panel_sizer)
 	panel_sizer:add(fade_out_sizer, 0, 0, "EXPAND")
 	self:changed_effect()
 end
-

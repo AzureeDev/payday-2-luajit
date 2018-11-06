@@ -67,7 +67,9 @@ function SpawnCivilianUnitElement:_reload_unit_list_btn()
 	self:stop_test_element()
 
 	if self._hed.enemy ~= "none" then
-		managers.editor:reload_units({Idstring(self._hed.enemy)}, true, true)
+		managers.editor:reload_units({
+			Idstring(self._hed.enemy)
+		}, true, true)
 	end
 end
 
@@ -79,7 +81,9 @@ function SpawnCivilianUnitElement:_build_panel(panel, panel_sizer)
 	local enemy_sizer = EWS:BoxSizer("HORIZONTAL")
 
 	panel_sizer:add(enemy_sizer, 0, 0, "EXPAND")
-	self:_build_value_combobox(panel, enemy_sizer, "enemy", self._options, nil, nil, {horizontal_sizer_proportions = 1})
+	self:_build_value_combobox(panel, enemy_sizer, "enemy", self._options, nil, nil, {
+		horizontal_sizer_proportions = 1
+	})
 
 	local toolbar = EWS:ToolBar(panel, "", "TB_FLAT,TB_NODIVIDER")
 
@@ -87,13 +91,17 @@ function SpawnCivilianUnitElement:_build_panel(panel, panel_sizer)
 	toolbar:connect("ADD_UNIT_LIST", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "_reload_unit_list_btn"), nil)
 	toolbar:realize()
 	enemy_sizer:add(toolbar, 0, 0, "EXPAND,LEFT")
-	self:_build_value_combobox(panel, panel_sizer, "state", table.list_add(self._states, {"none"}))
+	self:_build_value_combobox(panel, panel_sizer, "state", table.list_add(self._states, {
+		"none"
+	}))
 
 	local pickups = table.map_keys(tweak_data.pickups)
 
 	table.insert(pickups, "none")
 	self:_build_value_combobox(panel, panel_sizer, "force_pickup", pickups)
-	self:_build_value_combobox(panel, panel_sizer, "team", table.list_add({"default"}, tweak_data.levels:get_team_names_indexed()), "Select the character's team.")
+	self:_build_value_combobox(panel, panel_sizer, "team", table.list_add({
+		"default"
+	}, tweak_data.levels:get_team_names_indexed()), "Select the character's team.")
 end
 
 function SpawnCivilianUnitElement:_load_pickup()
@@ -141,4 +149,3 @@ function SpawnCivilianUnitElement:destroy(...)
 	SpawnCivilianUnitElement.super.destroy(self, ...)
 	self:stop_test_element()
 end
-

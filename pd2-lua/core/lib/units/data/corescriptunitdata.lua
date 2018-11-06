@@ -28,13 +28,10 @@ CoreScriptUnitData.hide_on_projection_light = nil
 CoreScriptUnitData.disable_on_ai_graph = nil
 
 if Application:editor() then
-
 	function CoreScriptUnitData:init()
 		self.unit_groups = {}
 	end
 else
-
 	function CoreScriptUnitData:init()
 	end
 end
-

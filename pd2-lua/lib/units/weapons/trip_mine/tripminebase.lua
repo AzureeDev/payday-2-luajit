@@ -1,7 +1,8 @@
 TripMineBase = TripMineBase or class(UnitBase)
-TripMineBase.EVENT_IDS = {}
-TripMineBase.EVENT_IDS.sensor_beep = 1
-TripMineBase.EVENT_IDS.explosion_beep = 2
+TripMineBase.EVENT_IDS = {
+	sensor_beep = 1,
+	explosion_beep = 2
+}
 
 function TripMineBase.spawn(pos, rot, sensor_upgrade, peer_id)
 	local unit = World:spawn_unit(Idstring("units/payday2/equipment/gen_equipment_tripmine/gen_equipment_tripmine"), pos, rot)
@@ -13,7 +14,9 @@ function TripMineBase.spawn(pos, rot, sensor_upgrade, peer_id)
 end
 
 function TripMineBase:set_server_information(peer_id)
-	self._server_information = {owner_peer_id = peer_id}
+	self._server_information = {
+		owner_peer_id = peer_id
+	}
 
 	managers.network:session():peer(peer_id):set_used_deployable(true)
 end
@@ -74,7 +77,9 @@ function TripMineBase:interaction_text_id()
 end
 
 function TripMineBase:is_category(...)
-	for _, cat in ipairs({...}) do
+	for _, cat in ipairs({
+		...
+	}) do
 		if cat == "trip_mine" then
 			return true
 		end
@@ -424,7 +429,9 @@ function TripMineBase:_explode(col_ray)
 			if character and not characters_hit[hit_body:unit():key()] then
 				local com = hit_body:center_of_mass()
 				local ray_from = math.point_on_line(self._ray_from_pos, self._ray_to_pos, com)
-				ray_hit = not World:raycast("ray", ray_from, com, "slot_mask", slotmask, "ignore_unit", {hit_body:unit()}, "report")
+				ray_hit = not World:raycast("ray", ray_from, com, "slot_mask", slotmask, "ignore_unit", {
+					hit_body:unit()
+				}, "report")
 
 				if ray_hit then
 					characters_hit[hit_body:unit():key()] = true
@@ -566,7 +573,9 @@ function TripMineBase:_play_sound_and_effects()
 
 	sound_source:set_position(self._unit:position())
 	sound_source:post_event("trip_mine_explode")
-	managers.enemy:add_delayed_clbk("TrMiexpl", callback(TripMineBase, TripMineBase, "_dispose_of_sound", {sound_source = sound_source}), TimerManager:game():time() + 4)
+	managers.enemy:add_delayed_clbk("TrMiexpl", callback(TripMineBase, TripMineBase, "_dispose_of_sound", {
+		sound_source = sound_source
+	}), TimerManager:game():time() + 4)
 end
 
 function TripMineBase:_emit_sensor_sound_and_effect()
@@ -641,4 +650,3 @@ function TripMineBase:destroy()
 		self._validate_clbk_id = nil
 	end
 end
-

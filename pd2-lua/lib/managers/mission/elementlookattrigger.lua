@@ -82,4 +82,3 @@ function ElementLookAtTrigger:update_lookat()
 		end
 	end
 end
-

@@ -238,4 +238,3 @@ function MutatorExplodingEnemies:_detonate(cop_damage, attack_data)
 		managers.network:session():send_to_peers_synched("sync_explosion_to_client", attack_data.attacker_unit, pos, normal, ply_damage, range, curve_pow)
 	end
 end
-

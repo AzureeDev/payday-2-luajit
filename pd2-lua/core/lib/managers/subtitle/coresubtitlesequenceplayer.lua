@@ -36,4 +36,3 @@ function SubtitleSequencePlayer:evaluate_at_time(time)
 		self._last_evaluated_time = time
 	end
 end
-

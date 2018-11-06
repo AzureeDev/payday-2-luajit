@@ -75,6 +75,7 @@ function CustomSafehouseFilterUnitElement:set_element_data(data)
 		self._tier_box:set_selection(math.clamp(current_selection, 0, num_tiers))
 	end
 end
+
 CustomSafehouseTrophyFilterUnitElement = CustomSafehouseTrophyFilterUnitElement or class(MissionElement)
 
 function CustomSafehouseTrophyFilterUnitElement:init(unit)
@@ -107,6 +108,7 @@ function CustomSafehouseTrophyFilterUnitElement:_build_panel(panel, panel_sizer)
 		"locked"
 	}, "Check if the trophy is unlocked or locked")
 end
+
 CustomSafehouseAwardTrophyUnitElement = CustomSafehouseAwardTrophyUnitElement or class(MissionElement)
 
 function CustomSafehouseAwardTrophyUnitElement:init(unit)
@@ -141,7 +143,9 @@ function CustomSafehouseAwardTrophyUnitElement:_build_panel(panel, panel_sizer)
 		end
 	end
 
-	local objectives = {"select a trophy"}
+	local objectives = {
+		"select a trophy"
+	}
 
 	if self._hed.trophy then
 		local id = self._hed.trophy
@@ -187,4 +191,3 @@ function CustomSafehouseAwardTrophyUnitElement:set_element_data(data)
 		self._objective_box:set_selection(0)
 	end
 end
-

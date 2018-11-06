@@ -29,6 +29,7 @@ function ElementJobValue:on_executed(instigator)
 
 	ElementJobValue.super.on_executed(self, instigator)
 end
+
 ElementJobValueFilter = ElementJobValueFilter or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementJobValueFilter:init(...)
@@ -44,7 +45,12 @@ function ElementJobValueFilter:on_executed(instigator)
 	end
 
 	local value = nil
-	value = self._values.save and managers.mission:get_saved_job_value(self._values.key) or managers.mission:get_job_value(self._values.key)
+
+	if self._values.save then
+		value = managers.mission:get_saved_job_value(self._values.key)
+	else
+		value = managers.mission:get_job_value(self._values.key)
+	end
 
 	if not self:_check_value(value) then
 		return
@@ -86,6 +92,7 @@ function ElementJobValueFilter:_check_value(value)
 		return self._values.value < value
 	end
 end
+
 ElementApplyJobValue = ElementApplyJobValue or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementApplyJobValue:init(...)
@@ -101,7 +108,12 @@ function ElementApplyJobValue:on_executed(instigator)
 	end
 
 	local value = nil
-	value = self._values.save and managers.mission:get_saved_job_value(self._values.key) or managers.mission:get_job_value(self._values.key)
+
+	if self._values.save then
+		value = managers.mission:get_saved_job_value(self._values.key)
+	else
+		value = managers.mission:get_job_value(self._values.key)
+	end
 
 	for _, id in ipairs(self._values.elements) do
 		local element = self:get_mission_element(id)
@@ -113,4 +125,3 @@ function ElementApplyJobValue:on_executed(instigator)
 
 	ElementApplyJobValue.super.on_executed(self, instigator)
 end
-

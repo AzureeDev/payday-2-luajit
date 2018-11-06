@@ -39,4 +39,3 @@ function StatisticsGenerator._root_path()
 
 	return f(path)
 end
-

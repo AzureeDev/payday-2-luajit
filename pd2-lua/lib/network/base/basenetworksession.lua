@@ -339,13 +339,21 @@ function BaseNetworkSession:_on_peer_removed(peer, peer_id, reason)
 
 	if managers.chat then
 		if reason == "left" then
-			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_left", {name = peer:name()}))
+			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_left", {
+				name = peer:name()
+			}))
 		elseif reason == "kicked" then
-			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_kicked", {name = peer:name()}))
+			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_kicked", {
+				name = peer:name()
+			}))
 		elseif reason == "auth_fail" then
-			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_failed", {name = peer:name()}))
+			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_failed", {
+				name = peer:name()
+			}))
 		else
-			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_lost", {name = peer:name()}))
+			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_lost", {
+				name = peer:name()
+			}))
 		end
 	end
 
@@ -748,7 +756,12 @@ function BaseNetworkSession:clbk_network_send(target_rpc, post_send)
 			end
 		else
 			local peer = nil
-			peer = target_rpc:protocol_at_index(0) == "TCP_IP" and self:peer_by_ip(target_ip) or self:peer_by_user_id(target_ip)
+
+			if target_rpc:protocol_at_index(0) == "TCP_IP" then
+				peer = self:peer_by_ip(target_ip)
+			else
+				peer = self:peer_by_user_id(target_ip)
+			end
 
 			if not peer then
 				self:add_connection_to_trash(target_rpc)
@@ -1233,7 +1246,12 @@ function BaseNetworkSession:_get_peer_outfit_versions_str()
 
 	for peer_id = 1, tweak_data.max_players, 1 do
 		local peer = nil
-		peer = peer_id == self._local_peer:id() and self._local_peer or self._peers[peer_id]
+
+		if peer_id == self._local_peer:id() then
+			peer = self._local_peer
+		else
+			peer = self._peers[peer_id]
+		end
 
 		if peer and peer:waiting_for_player_ready() then
 			outfit_versions_str = outfit_versions_str .. tostring(peer_id) .. "-" .. peer:outfit_version() .. "."
@@ -1666,12 +1684,20 @@ function BaseNetworkSession:on_statistics_recieved(peer_id, peer_kills, peer_spe
 	local total_kills = 0
 	local total_specials_kills = 0
 	local total_head_shots = 0
-	local best_killer = {score = 0}
-	local best_special_killer = {score = 0}
-	local best_accuracy = {score = 0}
+	local best_killer = {
+		score = 0
+	}
+	local best_special_killer = {
+		score = 0
+	}
+	local best_accuracy = {
+		score = 0
+	}
 	local group_accuracy = 0
 	local group_downs = 0
-	local most_downs = {score = 0}
+	local most_downs = {
+		score = 0
+	}
 
 	for _, peer in pairs(self._peers_all) do
 		if peer:has_statistics() then
@@ -1717,4 +1743,3 @@ function BaseNetworkSession:on_statistics_recieved(peer_id, peer_kills, peer_spe
 
 	self:send_to_peers("sync_statistics_result", best_killer.peer_id, best_killer.score, best_special_killer.peer_id, best_special_killer.score, best_accuracy.peer_id, best_accuracy.score, most_downs.peer_id, most_downs.score, total_kills, total_specials_kills, total_head_shots, group_accuracy, group_downs)
 end
-

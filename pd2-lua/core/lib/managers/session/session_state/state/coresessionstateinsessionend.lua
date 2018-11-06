@@ -17,4 +17,3 @@ end
 function InSessionEnd:transition()
 	return CoreSessionStateInit
 end
-

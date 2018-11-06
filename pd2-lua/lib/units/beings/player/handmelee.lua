@@ -58,6 +58,7 @@ function HandMelee:unit()
 		return self._melee_unit
 	end
 end
+
 local ray_vec = Vector3(0, 0, 0)
 local ray_pen = Draw:pen()
 
@@ -103,6 +104,7 @@ function HandMelee:_get_hitpoint()
 		return hit_point
 	end
 end
+
 local mvec_delta = Vector3()
 local mvec_bayonet_dir = Vector3()
 
@@ -234,4 +236,3 @@ function HandMelee:set_charge_start_t(t)
 		self._charge_sound = nil
 	end
 end
-

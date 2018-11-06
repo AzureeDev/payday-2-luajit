@@ -160,7 +160,6 @@ function CoreUnitSequenceTriggerUnitElement:add_triggers(vc)
 end
 
 function CoreUnitSequenceTriggerUnitElement:select_unit_list_btn()
-
 	local function f(unit)
 		if not managers.editor:layer("Statics"):category_map()[unit:type():s()] then
 			return false
@@ -322,4 +321,3 @@ function CoreUnitSequenceTriggerUnitElement:set_sequence_data(guis_id)
 		end
 	end
 end
-

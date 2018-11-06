@@ -6,9 +6,15 @@ function SentryGunEquipment:init(unit)
 	self._unit = unit
 	local event_listener = unit:event_listener()
 
-	event_listener:add("SentryGunEquipment_on_damage_received", {"on_damage_received"}, callback(self, self, "_on_damage_received_event"))
-	event_listener:add("SentryGunEquipment_on_death_event", {"on_death"}, callback(self, self, "_on_death_event"))
-	event_listener:add("SentryGunEquipment_on_destroy_unit", {"on_destroy_unit"}, callback(self, self, "_on_destroy_unit"))
+	event_listener:add("SentryGunEquipment_on_damage_received", {
+		"on_damage_received"
+	}, callback(self, self, "_on_damage_received_event"))
+	event_listener:add("SentryGunEquipment_on_death_event", {
+		"on_death"
+	}, callback(self, self, "_on_death_event"))
+	event_listener:add("SentryGunEquipment_on_destroy_unit", {
+		"on_destroy_unit"
+	}, callback(self, self, "_on_destroy_unit"))
 end
 
 function SentryGunEquipment:_on_damage_received_event(health_ratio)
@@ -44,4 +50,3 @@ function SentryGunEquipment:_check_sound()
 		self._broken_loop_snd_event = self._unit:sound_source():post_event("wp_sentrygun_broken_loop")
 	end
 end
-

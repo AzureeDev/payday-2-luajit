@@ -72,4 +72,3 @@ function ButlerSound:_sound_start_muttering()
 
 	ButlerSound.super._sound_start_muttering(self, override_sound)
 end
-

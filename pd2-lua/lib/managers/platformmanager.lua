@@ -9,8 +9,9 @@ PlatformManager.PLATFORM_CLASS_MAP = {}
 function PlatformManager:new(...)
 	local platform = SystemInfo:platform()
 
-	return (self.PLATFORM_CLASS_MAP[platform:key()] or GenericPlatformManager):new(...)
+	return self.PLATFORM_CLASS_MAP[platform:key()] or GenericPlatformManager:new(...)
 end
+
 GenericPlatformManager = GenericPlatformManager or class()
 
 function GenericPlatformManager:init()
@@ -23,7 +24,9 @@ end
 function GenericPlatformManager:event(event_type, ...)
 	table.insert(self._event_queue_list, {
 		event_type = event_type,
-		param_list = {...}
+		param_list = {
+			...
+		}
 	})
 end
 
@@ -92,6 +95,7 @@ end
 
 function GenericPlatformManager:set_feedback_color(color)
 end
+
 Xbox360PlatformManager = Xbox360PlatformManager or class(GenericPlatformManager)
 PlatformManager.PLATFORM_CLASS_MAP[_G.Idstring("X360"):key()] = Xbox360PlatformManager
 
@@ -120,6 +124,7 @@ end
 function Xbox360PlatformManager:set_presence(name, callback)
 	GenericPlatformManager.set_presence(self, name)
 end
+
 XB1PlatformManager = XB1PlatformManager or class(GenericPlatformManager)
 PlatformManager.PLATFORM_CLASS_MAP[_G.Idstring("XB1"):key()] = XB1PlatformManager
 
@@ -168,6 +173,7 @@ end
 function XB1PlatformManager:set_progress(progress)
 	XboxLive:write_game_progress(progress * 100)
 end
+
 PS3PlatformManager = PS3PlatformManager or class(GenericPlatformManager)
 PlatformManager.PLATFORM_CLASS_MAP[_G.Idstring("PS3"):key()] = PS3PlatformManager
 
@@ -197,6 +203,7 @@ end
 function PS3PlatformManager:set_presence(name)
 	GenericPlatformManager.set_presence(self, name)
 end
+
 PS4PlatformManager = PS4PlatformManager or class(GenericPlatformManager)
 PlatformManager.PLATFORM_CLASS_MAP[_G.Idstring("PS4"):key()] = PS4PlatformManager
 
@@ -283,6 +290,7 @@ function PS4PlatformManager:set_feedback_color(color)
 		end
 	end
 end
+
 WinPlatformManager = WinPlatformManager or class(GenericPlatformManager)
 PlatformManager.PLATFORM_CLASS_MAP[_G.Idstring("WIN32"):key()] = WinPlatformManager
 
@@ -294,9 +302,11 @@ function WinPlatformManager:set_rich_presence(name)
 
 		if name == "Idle" then
 			Steam:set_rich_presence("status", "")
+			Steam:set_rich_presence("steam_display", "")
 		else
 			if Global.game_settings.permission == "private" then
 				Steam:set_rich_presence("status", "")
+				Steam:set_rich_presence("steam_display", "")
 
 				return
 			end
@@ -316,15 +326,23 @@ function WinPlatformManager:set_rich_presence(name)
 
 			if in_lobby then
 				if job_data then
-					presence = presence .. managers.localization:text("steam_rp_in_lobby_heist", {heist = job_name})
+					presence = presence .. managers.localization:text("steam_rp_in_lobby_heist", {
+						heist = job_name
+					})
 				else
 					presence = presence .. managers.localization:text("steam_rp_in_lobby")
 				end
 			elseif job_data then
-				presence = #(managers.job:current_job_chain_data() or {}) > 1 and presence .. managers.localization:text("steam_rp_current_heist_multi_day", {
-					heist = job_name,
-					day = tostring(managers.job:current_stage())
-				}) or presence .. managers.localization:text("steam_rp_current_heist_one_day", {heist = job_name})
+				if #(managers.job:current_job_chain_data() or {}) > 1 then
+					presence = presence .. managers.localization:text("steam_rp_current_heist_multi_day", {
+						heist = job_name,
+						day = tostring(managers.job:current_stage())
+					})
+				else
+					presence = presence .. managers.localization:text("steam_rp_current_heist_one_day", {
+						heist = job_name
+					})
+				end
 			end
 
 			presence = presence .. "\n" .. managers.localization:text("steam_rp_current_players", {
@@ -333,14 +351,19 @@ function WinPlatformManager:set_rich_presence(name)
 			})
 
 			if managers.crime_spree and managers.crime_spree:is_active() then
-				presence = presence .. "\n" .. managers.localization:text("steam_rp_current_spree", {level = managers.experience:cash_string(managers.crime_spree:spree_level(), "")})
+				presence = presence .. "\n" .. managers.localization:text("steam_rp_current_spree", {
+					level = managers.experience:cash_string(managers.crime_spree:spree_level(), "")
+				})
 			elseif managers.job:has_active_job() then
 				local difficulty_stars = managers.job:current_difficulty_stars()
 				local difficulty = _G.tweak_data.difficulties[managers.job:current_difficulty_stars() + 2] or 1
-				presence = presence .. "\n" .. managers.localization:text("steam_rp_current_difficulty", {difficulty = managers.localization:to_upper_text(_G.tweak_data.difficulty_name_ids[difficulty])})
+				presence = presence .. "\n" .. managers.localization:text("steam_rp_current_difficulty", {
+					difficulty = managers.localization:to_upper_text(_G.tweak_data.difficulty_name_ids[difficulty])
+				})
 			end
 
 			Steam:set_rich_presence("status", presence)
+			Steam:set_rich_presence("steam_display", "#raw_status")
 		end
 	end
 
@@ -396,7 +419,9 @@ function WinPlatformManager:update_discord_heist()
 		local day_string = ""
 
 		if #(managers.job:current_job_chain_data() or {}) > 1 then
-			day_string = managers.localization:text("discord_rp_day_string", {day = tostring(managers.job:current_stage())})
+			day_string = managers.localization:text("discord_rp_day_string", {
+				day = tostring(managers.job:current_stage())
+			})
 		end
 
 		if managers.crime_spree and managers.crime_spree:is_active() then
@@ -452,7 +477,9 @@ function WinPlatformManager:set_rich_presence_discord(name)
 	local day_string = ""
 
 	if #(managers.job:current_job_chain_data() or {}) > 1 then
-		day_string = managers.localization:text("discord_rp_day_string", {day = tostring(managers.job:current_stage())})
+		day_string = managers.localization:text("discord_rp_day_string", {
+			day = tostring(managers.job:current_stage())
+		})
 	end
 
 	if managers.crime_spree and managers.crime_spree:is_active() then
@@ -481,7 +508,9 @@ function WinPlatformManager:set_rich_presence_discord(name)
 		Discord:set_large_image(large_image, job_name)
 		Discord:set_small_image(small_image, character_name)
 	elseif name == "SafeHousePlaying" then
-		Discord:set_status(managers.localization:text("discord_rp_safehouse"), managers.localization:text("discord_rp_safehouse_details", {heist = job_name}))
+		Discord:set_status(managers.localization:text("discord_rp_safehouse"), managers.localization:text("discord_rp_safehouse_details", {
+			heist = job_name
+		}))
 
 		if playing then
 			Discord:set_start_time_relative(0)
@@ -531,4 +560,3 @@ function WinPlatformManager:set_rich_presence_discord(name)
 		Discord:set_small_image(small_image, character_name)
 	end
 end
-

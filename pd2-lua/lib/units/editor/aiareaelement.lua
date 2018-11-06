@@ -150,4 +150,3 @@ function AIAreaElement:_remove_nav_seg(u_id)
 		end
 	end
 end
-

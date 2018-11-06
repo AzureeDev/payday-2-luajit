@@ -61,7 +61,9 @@ function MenuNodeSkillSwitchGui:_create_menu_item(row_item)
 
 		if unlocked then
 			local points = managers.skilltree:points(gd)
-			distribution_text = distribution_text .. managers.localization:to_upper_text(points > 0 and "menu_st_points_unspent_skill_switch" or "menu_st_points_all_spent_skill_switch", {points = string.format("%.3d", points)})
+			distribution_text = distribution_text .. managers.localization:to_upper_text(points > 0 and "menu_st_points_unspent_skill_switch" or "menu_st_points_all_spent_skill_switch", {
+				points = string.format("%.3d", points)
+			})
 
 			if managers.skilltree:get_selected_skill_switch() == skill_switch then
 				status_text = managers.localization:to_upper_text("menu_st_active_skill_switch")
@@ -76,18 +78,28 @@ function MenuNodeSkillSwitchGui:_create_menu_item(row_item)
 			local reasons_text = nil
 
 			for _, reason in ipairs(reasons) do
-				reasons_text = not reasons_text and "" or reasons_text .. " + "
+				if not reasons_text then
+					reasons_text = ""
+				else
+					reasons_text = reasons_text .. " + "
+				end
 
 				if reason == "money" then
 					reasons_text = reasons_text .. self:get_unlock_cost_text(skill_switch, false)
 				elseif reason == "level" then
-					reasons_text = reasons_text .. managers.localization:to_upper_text("menu_st_req_level_skill_switch", {level = td.locks.level})
+					reasons_text = reasons_text .. managers.localization:to_upper_text("menu_st_req_level_skill_switch", {
+						level = td.locks.level
+					})
 				elseif reason == "achievement" then
-					reasons_text = reasons_text .. managers.localization:to_upper_text("menu_st_req_achievement_skill_switch", {achievement = managers.localization:text("menu_st_achievement_" .. td.locks.achievement)})
+					reasons_text = reasons_text .. managers.localization:to_upper_text("menu_st_req_achievement_skill_switch", {
+						achievement = managers.localization:text("menu_st_achievement_" .. td.locks.achievement)
+					})
 				end
 			end
 
-			distribution_text = managers.localization:to_upper_text("menu_st_requires_skill_switch", {reasons = reasons_text})
+			distribution_text = managers.localization:to_upper_text("menu_st_requires_skill_switch", {
+				reasons = reasons_text
+			})
 			distribution_after_text = true
 		end
 
@@ -131,9 +143,13 @@ function MenuNodeSkillSwitchGui:get_unlock_cost_text(skill_switch, include_free)
 			offshore = managers.experience:cash_string(offshore_cost)
 		})
 	elseif spending_cost ~= 0 then
-		return managers.localization:to_upper_text("menu_st_req_spending_skill_switch", {spending = managers.experience:cash_string(spending_cost)})
+		return managers.localization:to_upper_text("menu_st_req_spending_skill_switch", {
+			spending = managers.experience:cash_string(spending_cost)
+		})
 	elseif offshore_cost ~= 0 then
-		return managers.localization:to_upper_text("menu_st_req_offshore_skill_switch", {offshore = managers.experience:cash_string(offshore_cost)})
+		return managers.localization:to_upper_text("menu_st_req_offshore_skill_switch", {
+			offshore = managers.experience:cash_string(offshore_cost)
+		})
 	elseif include_free then
 		return managers.localization:to_upper_text("menu_st_req_free_cost_skill_switch")
 	end
@@ -283,8 +299,7 @@ function MenuNodeSkillSwitchGui:_setup_item_panel(safe_rect, res)
 		max_layer = math.max(max_layer, child_layer)
 	end
 
-	for _, child in ipairs(self.item_panel:children()) do
-		-- Nothing
+	for slot9, slot10 in ipairs(self.item_panel:children()) do
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -322,12 +337,14 @@ function MenuNodeSkillSwitchGui:_setup_item_panel(safe_rect, res)
 	self.box_panel:move(-10, -10)
 	self.box_panel:set_layer(51)
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_clipping(false)
 	self.boxgui:set_layer(1000)
@@ -407,4 +424,3 @@ function MenuNodeSkillSwitchGui:mouse_moved(o, x, y)
 
 	return used, icon
 end
-

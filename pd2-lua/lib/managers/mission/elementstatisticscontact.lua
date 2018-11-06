@@ -63,4 +63,3 @@ function ElementStatisticsContact:_completed_contact_data(contact_id, state, dif
 
 	return count
 end
-

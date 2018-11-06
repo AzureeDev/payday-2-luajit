@@ -266,4 +266,3 @@ function MissionElementTimeline:zoom_around(time, offset_in_window, delta)
 	self._scrolled_area:scroll(Vector3(scroll_offset / self._scrolled_area:scroll_pixels_per_unit().x, -1, 0))
 	self._scrolled_area:thaw()
 end
-

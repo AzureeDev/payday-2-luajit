@@ -13,4 +13,3 @@ function ElementSpawnTeamAI:on_executed(instigator)
 
 	managers.groupai:state():spawn_one_teamAI(false, char_name, self._values.position, self._values.rotation)
 end
-

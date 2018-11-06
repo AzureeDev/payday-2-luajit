@@ -163,10 +163,15 @@ end
 
 function DebugManager.draw_point(index, count, old_point, point, skip_lines)
 	local color = nil
-	color = point._color and point._color or DebugManager.get_color_by_index(index, count)
+
+	if point._color then
+		color = point._color
+	else
+		color = DebugManager.get_color_by_index(index, count)
+	end
 
 	if not skip_lines and old_point then
-		local dir = (point._pos - old_point._pos):normalized()
+		local dir = point._pos - old_point._pos:normalized()
 
 		Application:draw_line_unpaused(old_point._pos, point._pos, unpack(color))
 		Application:draw_cone(point._pos, point._pos - dir * point._radius * 2, point._radius, unpack(color))
@@ -178,7 +183,12 @@ end
 function DebugManager.draw_rot_list(list)
 	for index, point in ipairs(list) do
 		local color = nil
-		color = point._color and point._color or DebugManager.get_color_by_index(index, #list)
+
+		if point._color then
+			color = point._color
+		else
+			color = DebugManager.get_color_by_index(index, #list)
+		end
 
 		Application:draw_sphere_unpaused(point._pos, point._radius, unpack(color))
 		Application:draw_line_unpaused(point._pos, point._pos + point._rot:x() * DebugManager.ROT_LINE_LENGTH, 1, 0, 0)
@@ -189,7 +199,12 @@ end
 
 function DebugManager.get_color_by_index(index, count)
 	local scale = nil
-	scale = count > 1 and (index - 1) / (count - 1) or 0
+
+	if count > 1 then
+		scale = (index - 1) / (count - 1)
+	else
+		scale = 0
+	end
 
 	return DebugManager.get_color(scale)
 end
@@ -237,8 +252,14 @@ end
 function DebugManager.args_to_string(...)
 	local s = ""
 
-	for i, arg in pairs({...}) do
-		s = i > 1 and s .. "    " .. tostring(arg) or tostring(arg)
+	for i, arg in pairs({
+		...
+	}) do
+		if i > 1 then
+			s = s .. "    " .. tostring(arg)
+		else
+			s = tostring(arg)
+		end
 	end
 
 	return s
@@ -246,6 +267,7 @@ end
 
 function DebugManager:qa_debug(username)
 end
+
 DebugPoint = DebugPoint or class()
 
 function DebugPoint:init(pos, rot, red, green, blue, radius)
@@ -262,6 +284,7 @@ function DebugPoint:init(pos, rot, red, green, blue, radius)
 
 	self._radius = radius or 5
 end
+
 DebugFunction = DebugFunction or class()
 
 function DebugFunction:init(func, start_delay, interval, call_count)
@@ -293,6 +316,7 @@ function DebugFunction:update(t, dt)
 		return false
 	end
 end
+
 DebugRaycast = DebugRaycast or class()
 DebugRaycast.MAX_ARROW_SIZE = 8
 
@@ -326,7 +350,7 @@ function DebugRaycast:set_from(from)
 	self._from = from
 
 	if self._to then
-		self._dir = (self._to - self._from):normalized()
+		self._dir = self._to - self._from:normalized()
 	end
 end
 
@@ -342,8 +366,8 @@ end
 
 function DebugRaycast:update_from_to_vars()
 	if self._from and self._to then
-		self._dir = (self._to - self._from):normalized()
-		self._distance = (self._to - self._from):length()
+		self._dir = self._to - self._from:normalized()
+		self._distance = self._to - self._from:length()
 
 		if self._distance < self.MAX_ARROW_SIZE then
 			self._arrow_size = self._distance
@@ -432,6 +456,7 @@ function DebugRaycast:update(t, dt)
 		end
 	end
 end
+
 DebugProfilerCounter = DebugProfilerCounter or class()
 
 function DebugProfilerCounter:init(name, index, obj, func_name, color, min, max, enabled, graph_enabled, gui_enabled, instance_override)
@@ -523,7 +548,9 @@ function DebugProfilerCounter:set_enabled(enabled)
 
 			function self._new_func(...)
 				local id = Profiler:start(name)
-				local return_list = {old_func(...)}
+				local return_list = {
+					old_func(...)
+				}
 
 				Profiler:stop(id)
 
@@ -537,7 +564,12 @@ function DebugProfilerCounter:set_enabled(enabled)
 
 			if self._old_func then
 				local obj = nil
-				obj = self._instance_override and self._obj or getmetatable(self._obj)
+
+				if self._instance_override then
+					obj = self._obj
+				else
+					obj = getmetatable(self._obj)
+				end
 
 				rawset(obj, self._func_name, self._old_func)
 			end
@@ -630,6 +662,7 @@ function DebugProfilerCounter:update_gui()
 		end
 	end
 end
+
 BaseDebug = BaseDebug or class()
 
 function BaseDebug:init()
@@ -660,6 +693,7 @@ end
 
 function BaseDebug:reloaded()
 end
+
 FuncDebug = FuncDebug or class(BaseDebug)
 
 function FuncDebug:init()
@@ -721,6 +755,7 @@ end
 function FuncDebug:remove(index)
 	self._func_list[index] = nil
 end
+
 PosDebug = PosDebug or class(BaseDebug)
 
 function PosDebug:init()
@@ -835,6 +870,7 @@ function PosDebug:set_max_count(list_index, max_count)
 		DebugManager.trim_list(list, self:get_max_count(list_index))
 	end
 end
+
 RotDebug = RotDebug or class(BaseDebug)
 
 function RotDebug:init()
@@ -926,6 +962,7 @@ function RotDebug:set_max_count(list_index, max_count)
 		DebugManager.trim_list(list, self:get_max_count(list_index))
 	end
 end
+
 GUIDebug = GUIDebug or class(BaseDebug)
 GUIDebug.GUI_TEXT_COUNT = 60
 
@@ -1067,6 +1104,7 @@ function GUIDebug:set_color(index, red, green, blue, alpha)
 		self._text[index]:set_color(Color(math.min(alpha or 1, 1), red or 1, green or 1, blue or 1))
 	end
 end
+
 GraphDebug = GraphDebug or class(PosDebug)
 GraphDebug.AXIS_ARROW_SIZE = 20
 GraphDebug.GUI_WORLD_WIDTH = 1000
@@ -1385,14 +1423,14 @@ function GraphDebug:set_max_count(list_index, max_count)
 		local list = self._pos_list[list_index]
 
 		if list and max_count < #list then
-			self:scroll_number_list(list_index, (#list - max_count) - 1)
+			self:scroll_number_list(list_index, #list - max_count - 1)
 
 			self._invalidated = true
 		end
 	else
 		for list_index, list in pairs(self._pos_list) do
 			if max_count < #list then
-				self:scroll_number_list(list_index, (#list - max_count) - 1)
+				self:scroll_number_list(list_index, #list - max_count - 1)
 
 				self._invalidated = true
 			end
@@ -1443,6 +1481,7 @@ function GraphDebug:set_visible(visible)
 		end
 	end
 end
+
 HijackDebug = HijackDebug or class(BaseDebug)
 
 function HijackDebug:init()
@@ -1452,7 +1491,9 @@ function HijackDebug:init()
 	self._hijack_ray_enabled = false
 	self._old_func_list = {}
 	self._hijack_ray_func = callback(self, self, "default_hijacked_ray_func")
-	self._ray_obj_list = {[World:key()] = World}
+	self._ray_obj_list = {
+		[World:key()] = World
+	}
 	self._hijacked_statemachine_map = nil
 end
 
@@ -1553,7 +1594,9 @@ function HijackDebug:hijacked_ray(obj, ...)
 end
 
 function HijackDebug:default_hijacked_ray_func(obj, old_func, ...)
-	local param_list = {...}
+	local param_list = {
+		...
+	}
 	local ray = old_func(obj, ...)
 	local point_list = nil
 	local ray_wrapper = DebugRaycast:new()
@@ -1587,8 +1630,10 @@ function HijackDebug:default_hijacked_ray_func(obj, old_func, ...)
 			elseif param == "slot_mask" then
 				i = i + 1
 
-				while i < #param_list and type(param_list[i + 1]) ~= "string" do
-					i = i + 1
+				if i < #param_list then
+					while i < #param_list and type(param_list[i + 1]) ~= "string" do
+						i = i + 1
+					end
 				end
 			elseif param == "bundle" then
 				ray_wrapper:set_bundle(param_list[i + 1])
@@ -1619,7 +1664,7 @@ function HijackDebug:default_hijacked_ray_func(obj, old_func, ...)
 			elseif param == "points" then
 				point_list = param_list[i + 1]
 				i = i + 1
-			else
+			elseif i < #param_list then
 				while i < #param_list and type(param_list[i + 1]) ~= "string" do
 					i = i + 1
 				end
@@ -1630,7 +1675,12 @@ function HijackDebug:default_hijacked_ray_func(obj, old_func, ...)
 
 		if point_list then
 			local to_index = nil
-			to_index = ray and ray.hit_segment and ray.hit_segment or #point_list
+
+			if ray and ray.hit_segment then
+				to_index = ray.hit_segment
+			else
+				to_index = #point_list
+			end
 
 			for i = 2, to_index, 1 do
 				ray_wrapper = DebugRaycast:new(ray_wrapper)
@@ -1742,6 +1792,7 @@ function HijackDebug:play_redirect(machine_or_unit, redirect)
 
 	return result
 end
+
 SimpleDebug = SimpleDebug or class(BaseDebug)
 
 function SimpleDebug:init()
@@ -1755,7 +1806,9 @@ function SimpleDebug:add_depricate(dep_type, depricate_time, ...)
 		type = dep_type,
 		time = TimerManager:wall():time(),
 		duration = depricate_time,
-		arg = {...}
+		arg = {
+			...
+		}
 	}
 
 	table.insert(self._depricate_list, dep)
@@ -1803,6 +1856,7 @@ function SimpleDebug:clear()
 
 	self._depricate_list = {}
 end
+
 PrintDebug = PrintDebug or class(BaseDebug)
 
 function PrintDebug:xml_file(file, indent, indent_string)
@@ -1839,6 +1893,7 @@ function PrintDebug:node(node, indent, indent_string)
 		cat_print("debug", str .. "/>")
 	end
 end
+
 ProfilerDebug = ProfilerDebug or class(BaseDebug)
 
 function ProfilerDebug:init()
@@ -1928,7 +1983,9 @@ end
 
 function ProfilerDebug:set_unit_enabled(unit, enabled, function_name_list, ignore_map, include_only_map, min_range, max_range, disabled, graph_disabled, gui_disabled, print_counters, class_override)
 	if alive(unit) and unit.type_name == "Unit" then
-		function_name_list = function_name_list or {"update"}
+		function_name_list = function_name_list or {
+			"update"
+		}
 
 		for _, extension_name in ipairs(unit:extensions()) do
 			for _, function_name in ipairs(function_name_list) do
@@ -2008,7 +2065,6 @@ function ProfilerDebug:toggle_compare_find(slotmask, find_type, radius, length, 
 	local can_intersect = func_name ~= "find_units_quick"
 
 	if find_type == "cone" or find_type == "cylinder" or find_type == "capsule" then
-
 		function f(from, to)
 			result = World[func_name](World, "force_slot", find_type, from, to, radius, slotmask)
 		end
@@ -2028,7 +2084,6 @@ function ProfilerDebug:toggle_compare_find(slotmask, find_type, radius, length, 
 		})
 
 		if can_intersect then
-
 			function f(from, to)
 				result = World[func_name](World, "intersect", "force_slot", find_type, from, to, radius, slotmask)
 			end
@@ -2048,7 +2103,6 @@ function ProfilerDebug:toggle_compare_find(slotmask, find_type, radius, length, 
 			})
 		end
 	elseif find_type == "sphere" then
-
 		function f(from, to)
 			result = World[func_name](World, "force_slot", find_type, from, radius, slotmask)
 		end
@@ -2068,7 +2122,6 @@ function ProfilerDebug:toggle_compare_find(slotmask, find_type, radius, length, 
 		})
 
 		if can_intersect then
-
 			function f(from, to)
 				result = World[func_name](World, "intersect", "force_slot", find_type, from, radius, slotmask)
 			end
@@ -2191,6 +2244,7 @@ function ProfilerDebug:toggle_compare_find(slotmask, find_type, radius, length, 
 	end)
 	cat_debug("debug", "Unit count: " .. #World:find_units_quick("all", slotmask))
 end
+
 MacroDebug = MacroDebug or class(BaseDebug)
 MacroDebug.DEFAULT_LINE_DURATION = 2
 
@@ -2642,7 +2696,9 @@ function MacroDebug:test_spawn_all(layer_name, sub_type)
 	if not managers.editor then
 		cat_error("debug", "Need to run this in the editor.")
 	elseif not layer_name then
-		local allowed_layer_name_map = {Statics = true}
+		local allowed_layer_name_map = {
+			Statics = true
+		}
 
 		for next_layer_name, layer in pairs(managers.editor._layers) do
 			if allowed_layer_name_map[next_layer_name] then
@@ -2662,7 +2718,13 @@ end
 
 function MacroDebug:set_draw_unit_enabled(unit_name, is_enabled, draw_camera_line, draw_on_top, red, green, blue, disabled_color_scale)
 	local unit_name_id = nil
-	unit_name_id = type(unit_name) == "string" and Idstring(unit_name) or unit_name
+
+	if type(unit_name) == "string" then
+		unit_name_id = Idstring(unit_name)
+	else
+		unit_name_id = unit_name
+	end
+
 	local unit_name_id_key = unit_name_id:key()
 
 	if is_enabled then
@@ -2741,7 +2803,9 @@ function MacroDebug:get_asset_path()
 end
 
 function MacroDebug:check_dangerous_network_slot(slot_list)
-	slot_list = slot_list or {0}
+	slot_list = slot_list or {
+		0
+	}
 	local asset_path = self:get_asset_path()
 	local unit_file_list = self:get_file_list_by_type("unit")
 	local found_unit_file_map = {}
@@ -2756,7 +2820,16 @@ function MacroDebug:check_dangerous_network_slot(slot_list)
 
 			if child_node_name == "network" then
 				local sync_type = child_node:parameter("sync")
-				network_sync = sync_type and sync_type ~= "none" and sync_type
+
+				if sync_type and sync_type ~= "none" then
+					network_sync = sync_type
+				else
+					network_sync = false
+
+					if false then
+						network_sync = true
+					end
+				end
 			elseif child_node_name == "object" then
 				object_file = child_node:parameter("file")
 			end
@@ -2931,7 +3004,7 @@ function MacroDebug:update(t, dt)
 						local cam = managers.viewport:get_current_camera()
 						local rot = cam and cam:rotation() or Rotation()
 
-						pen:line(unit:position(), ((cam and cam:position() or Vector3()) + rot:y() * 10) - rot:z() * 1)
+						pen:line(unit:position(), (cam and cam:position() or Vector3()) + rot:y() * 10 - rot:z() * 1)
 					end
 				end
 			end
@@ -3002,6 +3075,7 @@ function MacroDebug:_hijacked_endurance_activate(option_map, endurance, env)
 
 	endurance:hijacked_activate(env)
 end
+
 MemoryDebug = MemoryDebug or class(BaseDebug)
 MemoryDebug.CALC_TYPE_FUNC_MAP = DebugManager.CALC_TYPE_FUNC_MAP or {
 	table = "add_calc_table",
@@ -3050,7 +3124,6 @@ end
 
 function MemoryDebug:find_instance(find_value, is_meta_data, print_path, find_all, seen_map, map)
 	if find_value ~= nil then
-
 		local function func(path, key, value, populate_map, info_map, seen_map, func)
 			return self:find_instance_callback(print_path, path, key, value, populate_map, info_map, seen_map, find_value, is_meta_data, find_all)
 		end
@@ -3076,7 +3149,11 @@ function MemoryDebug:find_instance_callback(print_path, path, key, value, popula
 		populate_map[key] = value
 
 		if print_path then
-			path = path and path .. "." or ""
+			if path then
+				path = path .. "."
+			else
+				path = ""
+			end
 
 			cat_print("debug", path .. tostring(key))
 		end
@@ -3159,7 +3236,16 @@ function MemoryDebug:traverse_instances_recursively(path, key, value, func, popu
 
 		if type(value) == "table" then
 			local next_populate_map = {}
-			path = path and (type(key) == "number" and path .. "[" .. key .. "]" or path .. "." .. tostring(key)) or key
+
+			if path then
+				if type(key) == "number" then
+					path = path .. "[" .. key .. "]"
+				else
+					path = path .. "." .. tostring(key)
+				end
+			else
+				path = key
+			end
 
 			for next_key, next_value in pairs(value) do
 				self:traverse_instances_recursively(path, next_key, next_value, func, next_populate_map, info_map, seen_map)
@@ -3177,7 +3263,6 @@ function MemoryDebug:calc(map, seen_map)
 	local global_populate_map = nil
 
 	if map ~= nil then
-
 		local function func(path, key, value, populate_map, info_map, seen_map, func)
 			global_populate_map = global_populate_map or populate_map
 
@@ -3251,6 +3336,7 @@ end
 function MemoryDebug:add_calc_function(value, populate_map)
 	return 128
 end
+
 ConsoleDebug = ConsoleDebug or class(BaseDebug)
 ConsoleDebug.IS_PREFERRED_DISABLED = true
 
@@ -3320,8 +3406,17 @@ function ConsoleDebug:get_stack_dump_text(skip_level)
 		if not info then
 			break
 		else
-			text = text and text .. "\n" or ""
-			text = info.what == "C" and text .. string.format("%s:%d (C++ method)", info.source, info.currentline) or text .. string.format("%s:%d", info.source, info.currentline)
+			if text then
+				text = text .. "\n"
+			else
+				text = ""
+			end
+
+			if info.what == "C" then
+				text = text .. string.format("%s:%d (C++ method)", info.source, info.currentline)
+			else
+				text = text .. string.format("%s:%d", info.source, info.currentline)
+			end
 		end
 
 		level = level + 1
@@ -3387,7 +3482,9 @@ end
 function ConsoleDebug:get_arg_text(...)
 	local text = ""
 
-	for i, arg in ipairs({...}) do
+	for i, arg in ipairs({
+		...
+	}) do
 		if i > 1 then
 			text = text .. "\t"
 		end
@@ -3491,24 +3588,26 @@ function ConsoleDebug:invalidate()
 		local remainder_scroll = self._scroll - floored_scroll
 		local scroll_first = remainder_scroll > 0
 
-		while index > 0 and y > 0 do
-			local text_data = self._text_list[index]
-			config.color = text_data.color or Color.white
-			config.text = string.format("[%.2f] %s", text_data.time, text_data.text)
-			local text_gui = self._panel:text(config)
-			local height = text_gui:line_height() * text_gui:number_of_lines()
+		if index > 0 then
+			while index > 0 and y > 0 do
+				local text_data = self._text_list[index]
+				config.color = text_data.color or Color.white
+				config.text = string.format("[%.2f] %s", text_data.time, text_data.text)
+				local text_gui = self._panel:text(config)
+				local height = text_gui:line_height() * text_gui:number_of_lines()
 
-			if scroll_first then
-				y = y + remainder_scroll * height
-				scroll_first = false
+				if scroll_first then
+					y = y + remainder_scroll * height
+					scroll_first = false
+				end
+
+				y = y - height
+
+				text_gui:set_height(height)
+				text_gui:set_y(y)
+
+				index = index - 1
 			end
-
-			y = y - height
-
-			text_gui:set_height(height)
-			text_gui:set_y(y)
-
-			index = index - 1
 		end
 	end
 end
@@ -3600,6 +3699,7 @@ function ConsoleDebug:set_scroll(scroll)
 		self:invalidate()
 	end
 end
+
 MenuDebug = MenuDebug or class(BaseDebug)
 MenuDebug.IS_PREFERRED_DISABLED = true
 
@@ -3749,7 +3849,7 @@ end
 
 function MenuDebug:change_selection(change)
 	local max_index = math.max(self._current_menu_data and #self._current_menu_data or 1, 1)
-	self._current_menu_index = (((self._current_menu_index or 1) + change) - 1) % max_index + 1
+	self._current_menu_index = ((self._current_menu_index or 1) + change - 1) % max_index + 1
 
 	self:setup_menu()
 end
@@ -3859,10 +3959,14 @@ function MenuDebug:setup_menu()
 		local bg_color = self._current_menu_data.bg_color or self._menu_data.bg_color
 
 		if bg_color then
-			self._background_rect = self._panel:rect({color = bg_color})
+			self._background_rect = self._panel:rect({
+				color = bg_color
+			})
 		end
 
-		local option_config = {layer = 1}
+		local option_config = {
+			layer = 1
+		}
 		local t = TimerManager:main():time()
 		local dt = TimerManager:main():delta_time()
 
@@ -3935,10 +4039,18 @@ function MenuDebug:setup_menu_shape()
 		panel_y = panel_y - select_y + option_h / 2
 
 		for _, option in ipairs(self._option_panel:children()) do
-			local center_dist = math.abs(((panel_y + option:y()) - safe_rect.y) - safe_rect.height / 2)
+			local center_dist = math.abs(panel_y + option:y() - safe_rect.y - safe_rect.height / 2)
 			local edge_dist = safe_rect.height / 2 - center_dist
 			local fade = nil
-			fade = fade_dist > 0 and math.clamp(edge_dist / fade_dist, 0, 1) or edge_dist > 0 and 1 or 0
+
+			if fade_dist > 0 then
+				fade = math.clamp(edge_dist / fade_dist, 0, 1)
+			elseif edge_dist > 0 then
+				fade = 1
+			else
+				fade = 0
+			end
+
 			local color = option:color()
 
 			option:set_color(color:with_alpha(color.alpha * fade))
@@ -4006,4 +4118,3 @@ function MenuDebug:update(t, dt)
 		end
 	end
 end
-

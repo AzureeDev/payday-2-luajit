@@ -18,7 +18,9 @@ function MutatorsListGui:populate_tabs_data(tabs_data)
 end
 
 function MutatorsListGui:_start_page_data()
-	local data = {topic_id = "menu_mutators"}
+	local data = {
+		topic_id = "menu_mutators"
+	}
 
 	return data
 end
@@ -36,4 +38,3 @@ function MutatorsListGui:refresh()
 	MutatorsListGui.super.refresh(self)
 	self._selected_page:refresh()
 end
-

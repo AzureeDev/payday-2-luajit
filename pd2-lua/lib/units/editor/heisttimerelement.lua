@@ -16,6 +16,7 @@ function HeistTimerOperatorUnitElement:add_element()
 		end
 	end
 end
+
 HeistTimerTriggerUnitElement = HeistTimerTriggerUnitElement or class(TimerTriggerUnitElement)
 
 function HeistTimerTriggerUnitElement:add_element()
@@ -34,4 +35,3 @@ function HeistTimerTriggerUnitElement:add_element()
 		end
 	end
 end
-

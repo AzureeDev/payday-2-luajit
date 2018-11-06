@@ -56,7 +56,9 @@ function DialogueUnitElement:_build_panel(panel, panel_sizer)
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
 
-	self:_build_value_combobox(panel, panel_sizer, "dialogue", table.list_add({"none"}, managers.dialog:conversation_names()), "Select a dialogue from the combobox")
+	self:_build_value_combobox(panel, panel_sizer, "dialogue", table.list_add({
+		"none"
+	}, managers.dialog:conversation_names()), "Select a dialogue from the combobox")
 	self:_build_value_checkbox(panel, panel_sizer, "force_quit_current", "Force quits current dialog to allow this to be played immediately")
 	self:_build_value_checkbox(panel, panel_sizer, "execute_on_executed_when_done", "Execute on executed when done")
 	self:_build_value_checkbox(panel, panel_sizer, "use_position")
@@ -64,4 +66,3 @@ function DialogueUnitElement:_build_panel(panel, panel_sizer)
 	self:_build_value_checkbox(panel, panel_sizer, "can_not_be_muted", "This dialogue will play regardless of if the player has disabled contractor VO")
 	self:_build_value_checkbox(panel, panel_sizer, "play_on_player_instigator_only", "This dialogue will only play on the player that triggers it")
 end
-

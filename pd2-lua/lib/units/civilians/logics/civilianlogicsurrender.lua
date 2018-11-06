@@ -10,7 +10,9 @@ function CivilianLogicSurrender.enter(data, new_logic_name, enter_params)
 
 	local force_lie_down = enter_params and enter_params.force_lie_down or false
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 
 	if data.is_tied then
@@ -109,7 +111,7 @@ function CivilianLogicSurrender.enter(data, new_logic_name, enter_params)
 				body_part = 1,
 				type = "act"
 			}
-			local action_res = data.unit:brain():action_request(action_data)
+			slot11 = data.unit:brain():action_request(action_data)
 		end
 	end
 end
@@ -272,7 +274,9 @@ function CivilianLogicSurrender.on_tied(data, aggressor_unit, not_tied, can_flee
 			CivilianLogicFlee._chk_add_delayed_rescue_SO(data, my_data)
 
 			if aggressor_unit == managers.player:player_unit() then
-				managers.statistics:tied({name = data.unit:base()._tweak_table})
+				managers.statistics:tied({
+					name = data.unit:base()._tweak_table
+				})
 			else
 				aggressor_unit:network():send_to_unit({
 					"statistics_tied",
@@ -513,7 +517,6 @@ function CivilianLogicSurrender._update_enemy_detection(data, my_data)
 	local delta_t = t - my_data.last_upd_t
 	local my_pos = data.unit:movement():m_head_pos()
 	local enemies = managers.groupai:state():all_criminals()
-	local visible, closest_dis, closest_enemy
 	visible, closest_dis, closest_enemy, my_data.inside_intimidate_aura = nil
 	local my_tracker = data.unit:movement():nav_tracker()
 	local chk_vis_func = my_tracker.check_visibility
@@ -562,7 +565,9 @@ function CivilianLogicSurrender._update_enemy_detection(data, my_data)
 		CopLogicBase._reset_attention(data)
 	end
 
-	if my_data.inside_intimidate_aura then
+	if managers.navigation:get_nav_seg_metadata(my_tracker:nav_segment()).force_civ_submission then
+		my_data.submission_meter = my_data.submission_max
+	elseif my_data.inside_intimidate_aura then
 		my_data.submission_meter = my_data.submission_max
 	elseif visible then
 		my_data.submission_meter = math.min(my_data.submission_max, my_data.submission_meter + delta_t)
@@ -589,4 +594,3 @@ function CivilianLogicSurrender.is_available_for_assignment(data, objective)
 
 	return not data.unit:anim_data().tied and (objective and objective.type == "revive" or data.t - data.internal_data.state_enter_t > 5 and data.internal_data.submission_meter / data.internal_data.submission_max < 0.95)
 end
-

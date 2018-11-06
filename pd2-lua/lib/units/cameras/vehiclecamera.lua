@@ -37,7 +37,9 @@ end
 function VehicleCamera:_setup_sound_listener()
 	self._listener_id = managers.listener:add_listener("access_camera", self._camera, self._camera, nil, false)
 
-	managers.listener:add_set("access_camera", {"access_camera"})
+	managers.listener:add_set("access_camera", {
+		"access_camera"
+	})
 
 	self._listener_activation_id = managers.listener:activate_set("main", "access_camera")
 	self._sound_check_object = managers.sound_environment:add_check_object({
@@ -46,6 +48,7 @@ function VehicleCamera:_setup_sound_listener()
 		object = self._unit:orientation_object()
 	})
 end
+
 local pos = Vector3()
 local target = Vector3()
 
@@ -98,7 +101,7 @@ function VehicleCamera:show_next(player_unit)
 		self._active_camera_object = self._camera_list[self._camera_list_i]
 
 		self:activate(player_unit)
-	elseif #self._camera_list <= self._camera_list_i then
+	elseif self._camera_list_i >= #self._camera_list then
 		self:deactivate(player_unit)
 	else
 		self._camera_list_i = self._camera_list_i + 1
@@ -159,4 +162,3 @@ function VehicleCamera:destroy()
 		self._listener_id = nil
 	end
 end
-

@@ -46,4 +46,3 @@ end
 function FineText:color()
 	return self._gui_obj:color()
 end
-

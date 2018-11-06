@@ -11,7 +11,9 @@ function BodyBagsBagBase.spawn(pos, rot, upgrade_lvl, peer_id)
 end
 
 function BodyBagsBagBase:set_server_information(peer_id)
-	self._server_information = {owner_peer_id = peer_id}
+	self._server_information = {
+		owner_peer_id = peer_id
+	}
 
 	managers.network:session():peer(peer_id):set_used_deployable(true)
 end
@@ -232,6 +234,7 @@ function BodyBagsBagBase:destroy()
 		self._validate_clbk_id = nil
 	end
 end
+
 CustomBodyBagsBagBase = CustomBodyBagsBagBase or class(BodyBagsBagBase)
 
 function CustomBodyBagsBagBase:init(unit)
@@ -259,4 +262,3 @@ function CustomBodyBagsBagBase:_set_empty()
 		self._unit:damage():run_sequence_simple("empty")
 	end
 end
-

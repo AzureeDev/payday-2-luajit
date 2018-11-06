@@ -82,7 +82,9 @@ function CoreSpawnUnitUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local unit_options = {"none"}
+	local unit_options = {
+		"none"
+	}
 
 	for name, _ in pairs(managers.editor:layers().Dynamics:get_unit_map()) do
 		table.insert(unit_options, managers.editor:get_real_name(name))
@@ -114,4 +116,3 @@ function CoreSpawnUnitUnitElement:add_to_mission_package()
 		continent = self._unit:unit_data().continent
 	})
 end
-

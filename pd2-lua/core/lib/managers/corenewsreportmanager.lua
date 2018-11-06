@@ -52,7 +52,6 @@ function NewsReportManager:init()
 end
 
 function NewsReportManager:replace(str)
-
 	local function replace_str(s)
 		local value = NewsReportManager.KEYWORDS[s]
 
@@ -183,4 +182,3 @@ end
 function NewsReportManager:get_old_news(category)
 	return self:check_news(category, true)
 end
-

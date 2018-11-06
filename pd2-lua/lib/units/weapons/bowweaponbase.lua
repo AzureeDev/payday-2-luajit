@@ -136,7 +136,9 @@ function BowWeaponBase:steelsight_pressed()
 		self:play_tweak_data_sound("charge_cancel")
 	end
 
-	return {exit_steelsight = true}
+	return {
+		exit_steelsight = true
+	}
 end
 
 function BowWeaponBase:wants_steelsight()
@@ -180,6 +182,7 @@ end
 function BowWeaponBase:charge_max_t()
 	return self:weapon_tweak_data().charge_data.max_t
 end
+
 CrossbowWeaponBase = CrossbowWeaponBase or class(ProjectileWeaponBase)
 
 function CrossbowWeaponBase:init(unit)
@@ -207,4 +210,3 @@ function CrossbowWeaponBase:add_damage_result(unit, is_dead, attacker, damage_pe
 		weapon_unit = self._unit
 	})
 end
-

@@ -4,7 +4,9 @@ QuickFlashGrenade.States = {
 		"_state_launched",
 		1
 	},
-	{"_state_bounced"},
+	{
+		"_state_bounced"
+	},
 	{
 		"_state_detonated",
 		3
@@ -262,7 +264,7 @@ function QuickFlashGrenade:_chk_dazzle_local_player(detonate_pos, range, ignore_
 				if not return_ray then
 					local travel_dis = bounce_ray.distance + mvector3.distance(m_pl_head_pos, bounce_pos)
 
-					if travel_dis < range then
+					if range > travel_dis then
 						return true, false, travel_dis, linear_dis
 					end
 				end
@@ -316,4 +318,3 @@ function QuickFlashGrenade:on_network_event(event_id)
 		Application:error("Received a network event id that is not mapped!")
 	end
 end
-

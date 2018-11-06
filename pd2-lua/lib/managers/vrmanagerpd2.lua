@@ -31,7 +31,9 @@ function VRViewport:vp()
 end
 
 function VRViewport:set_render_params(...)
-	self._render_params = {...}
+	self._render_params = {
+		...
+	}
 end
 
 function VRViewport:use_adaptive_quality()
@@ -52,6 +54,7 @@ end
 function VRViewport:render()
 	Application:render(unpack(self._render_params))
 end
+
 VRManagerPD2 = VRManagerPD2 or class()
 VRManagerPD2.DISABLE_ADAPTIVE_QUALITY = false
 
@@ -505,6 +508,7 @@ end
 function VRManagerPD2:walking_mode()
 	return self:get_setting("movement_type") == "warp_walk"
 end
+
 local rt_swap = {
 	{
 		Idstring("Text"),
@@ -537,7 +541,9 @@ local rt_swap = {
 }
 
 function VRManagerPD2.overlay_helper(panel)
-	local objects = {panel}
+	local objects = {
+		panel
+	}
 	local i = 1
 
 	while #objects > 0 do
@@ -558,7 +564,8 @@ function VRManagerPD2.overlay_helper(panel)
 			for _, s in ipairs(rt_swap) do
 				if s[1] == rt then
 					object:set_render_template(s[2])
-					goto label_0
+
+					break
 				end
 			end
 		end
@@ -566,7 +573,9 @@ function VRManagerPD2.overlay_helper(panel)
 end
 
 function VRManagerPD2.depth_disable_helper(panel)
-	local objects = {panel}
+	local objects = {
+		panel
+	}
 	local i = 1
 
 	while #objects > 0 do
@@ -579,8 +588,9 @@ function VRManagerPD2.depth_disable_helper(panel)
 				table.insert(objects, o)
 			end
 		else
-			object:configure({depth_mode = "disabled"})
+			object:configure({
+				depth_mode = "disabled"
+			})
 		end
 	end
 end
-

@@ -10,4 +10,3 @@ end
 
 function LocalUser:profile_data_loaded()
 end
-

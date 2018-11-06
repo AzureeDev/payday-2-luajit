@@ -21,4 +21,3 @@ function GageModifierLifeSteal:OnPlayerManagerKillshot(player_unit, unit_tweak, 
 		self._last_killshot_t = TimerManager:game():time()
 	end
 end
-

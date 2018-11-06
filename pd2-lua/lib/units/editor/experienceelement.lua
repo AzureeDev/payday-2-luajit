@@ -22,4 +22,3 @@ function ExperienceUnitElement:_build_panel(panel, panel_sizer)
 		min = 0
 	}, "Specify the amount of experience given.")
 end
-

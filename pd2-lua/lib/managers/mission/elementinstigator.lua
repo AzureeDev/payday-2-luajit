@@ -31,7 +31,9 @@ function ElementInstigator:instigator_operation_set(instigator)
 	end
 
 	if alive(instigator) and not instigator:character_damage():dead() then
-		self._instigators = {instigator}
+		self._instigators = {
+			instigator
+		}
 
 		if instigator:unit_data().mission_element then
 			instigator:unit_data().mission_element:add_event_callback("death", callback(self, self, "on_instigator_death"))
@@ -146,7 +148,9 @@ end
 
 function ElementInstigator:add_trigger(id, type, callback)
 	self._triggers[type] = self._triggers[type] or {}
-	self._triggers[type][id] = {callback = callback}
+	self._triggers[type][id] = {
+		callback = callback
+	}
 end
 
 function ElementInstigator:_check_triggers(type)
@@ -158,6 +162,7 @@ function ElementInstigator:_check_triggers(type)
 		cb_data.callback()
 	end
 end
+
 ElementInstigatorOperator = ElementInstigatorOperator or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementInstigatorOperator:init(...)
@@ -214,6 +219,7 @@ function ElementInstigatorOperator:_check_and_execute(use_instigator)
 		managers.editor:output_warning("Cant use instigator. Reason: " .. (not alive(use_instigator) and " Dont exist" or use_instigator:character_damage():dead() and "Dead") .. ". In element " .. self._editor_name .. ".")
 	end
 end
+
 ElementInstigatorTrigger = ElementInstigatorTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementInstigatorTrigger:init(...)
@@ -238,4 +244,3 @@ function ElementInstigatorTrigger:on_executed(instigator)
 
 	ElementInstigatorTrigger.super.on_executed(self, instigator)
 end
-

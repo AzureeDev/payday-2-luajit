@@ -49,7 +49,7 @@ function ColorPickerDialog:set_visible(visible)
 end
 
 function ColorPickerDialog:center(window)
-	self._window:set_position((window:get_position() + window:get_size() * 0.5) - self._window:get_size() * 0.5)
+	self._window:set_position(window:get_position() + window:get_size() * 0.5 - self._window:get_size() * 0.5)
 end
 
 function ColorPickerDialog:close()
@@ -69,4 +69,3 @@ function ColorPickerDialog:_on_close()
 	self:_send_event("EVT_CLOSE_WINDOW", self._window)
 	managers.toolhub:close(ColorPickerDialog.EDITOR_TITLE)
 end
-

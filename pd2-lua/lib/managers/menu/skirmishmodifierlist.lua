@@ -32,7 +32,7 @@ function SkirmishModifierList:init(parent, config)
 			texture_rect = icon_tweak.texture_rect,
 			x = h_padding
 		})
-		local description_width = (((modifier_panel:width() - modifier_icon:width()) - 5) - h_padding * 2) - scrollbar_padding
+		local description_width = modifier_panel:width() - modifier_icon:width() - 5 - h_padding * 2 - scrollbar_padding
 		local modifier_desc = modifier_panel:text({
 			vertical = "center",
 			name = "modifier_desc",
@@ -73,4 +73,3 @@ end
 function SkirmishModifierList:perform_scroll(...)
 	self._scroll:perform_scroll(...)
 end
-

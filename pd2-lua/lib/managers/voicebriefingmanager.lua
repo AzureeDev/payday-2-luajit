@@ -29,7 +29,9 @@ function VoiceBriefingManager:_set_parameters(params)
 end
 
 function VoiceBriefingManager:_debug_callback(...)
-	Application:debug(inspect({...}))
+	Application:debug(inspect({
+		...
+	}))
 	self:_sound_callback(...)
 end
 
@@ -134,7 +136,9 @@ function VoiceBriefingManager:post_event_simple(event_name)
 	end
 
 	self:stop_event()
-	self:_set_parameters({show_subtitle = true})
+	self:_set_parameters({
+		show_subtitle = true
+	})
 
 	self._event_name = event_name
 	self._event_instance = self._sound_source:post_event(event_name, callback(self, self, "_sound_callback"), nil, "marker", "end_of_event")
@@ -178,4 +182,3 @@ end
 function VoiceBriefingManager:add_listener(listener)
 	table.insert(self._listeners, listener)
 end
-

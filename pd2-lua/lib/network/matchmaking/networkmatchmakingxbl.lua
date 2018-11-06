@@ -7,12 +7,11 @@ NetworkMatchMakingXBL.SMARTMATCH_RE_ADVERTISE_PAUSE_T = 1
 NetworkMatchMakingXBL.SMARTMATCH_HOST_TIMEOUT_T = 15
 NetworkMatchMakingXBL.SMARTMATCH_CLIENT_TIMEOUT_T = 30
 NetworkMatchMakingXBL.SMARTMATCH_CLIENT_TIMEOUT_T2 = 30
-NetworkMatchMakingXBL.SMARTMATCH_STRICT = true
 
 function NetworkMatchMakingXBL:init()
 	self._callback_map = {}
 	self._distance_filter = -1
-	self._difficulty_filter = 0
+	self._difficulty_filter = 2
 	self._try_re_enter_lobby = nil
 	self._players = {}
 	self._next_cancel_callback_id = 0
@@ -291,16 +290,34 @@ end
 
 function NetworkMatchMakingXBL:_save_globals()
 	Global.xbl = Global.xbl or {}
-	Global.xbl.match = {}
-	Global.xbl.match.session = self._session
-	Global.xbl.match.server_rpc = self._server_rpc
-	Global.xbl.match.game_owner_name = self._game_owner_name
-	Global.xbl.match.num_players = self._num_players
-	Global.xbl.match.is_server = self._is_server_var
-	Global.xbl.match.is_client = self._is_client_var
-	Global.xbl.match.players = self._players
-	Global.xbl.match.hopper_variables = self._hopper_variables
-	Global.xbl.match._host_session_attributes = self._host_session_attributes
+	Global.xbl.match = {
+		session = self._session,
+		server_rpc = self._server_rpc,
+		game_owner_name = self._game_owner_name,
+		num_players = self._num_players,
+		is_server = self._is_server_var,
+		is_client = self._is_client_var,
+		players = self._players,
+		hopper_variables = self._hopper_variables,
+		_host_session_attributes = self._host_session_attributes
+	}
+end
+
+function NetworkMatchMakingXBL:load_user_filters()
+	print("[NetworkMatchMakingXBL:load_user_filters]")
+
+	Global.game_settings.gamemode_filter = managers.user:get_setting("crimenet_filter_crimespree")
+	Global.game_settings.crime_spree_max_lobby_diff = managers.user:get_setting("crime_spree_lobby_diff")
+end
+
+function NetworkMatchMakingXBL:reset_filters()
+	print("GN: reset_filters")
+
+	local usr = managers.user
+
+	usr:set_setting("crimenet_filter_crimespree", usr:get_default_setting("crimenet_filter_crimespree"))
+	usr:set_setting("crime_spree_lobby_diff", usr:get_default_setting("crime_spree_lobby_diff"))
+	self:load_user_filters()
 end
 
 function NetworkMatchMakingXBL:update()
@@ -309,7 +326,7 @@ function NetworkMatchMakingXBL:update()
 end
 
 function NetworkMatchMakingXBL:_chk_advertise_session_for_smartmatch()
-	if self._session and managers.network:session() and managers.network:session():is_host() and self:is_server_joinable() and XboxLive:smartmatch_state() ~= "searching" and self:is_host_lobby_public() then
+	if self._session and managers.network:session() and managers.network:session():is_host() and self:is_server_joinable() and XboxLive:smartmatch_state() ~= "searching" and (self:is_host_lobby_public() or XboxLive:smartmatch_state() ~= "expired") then
 		self._smartmatch_idle_start_t = self._smartmatch_idle_start_t or TimerManager:wall_running():time()
 
 		if self.SMARTMATCH_RE_ADVERTISE_PAUSE_T < TimerManager:wall_running():time() - self._smartmatch_idle_start_t then
@@ -317,18 +334,23 @@ function NetworkMatchMakingXBL:_chk_advertise_session_for_smartmatch()
 
 			self._smartmatch_idle_start_t = nil
 
-			print("\n**************" .. (self._host_smartmatch_strict and "SEARCHING STRICT" or "SEARCHING ANY") .. "**************\n")
+			print("\n**************SEARCHING**************\n")
+
+			local hopper_used = nil
+
+			if self._hopper_variables.GameMode == 1 then
+				hopper_used = "hopper_mode_crimespree_v2"
+			else
+				hopper_used = "hopper_mode_normal_v2"
+			end
+
+			print("[NetworkMatchMakingXBL:_chk_advertise_session_for_smartmatch] using hopper: ", hopper_used)
 
 			local smartmatch_params = {
 				become_host = true,
 				timeout = self.SMARTMATCH_HOST_TIMEOUT_T,
-				hopper_name = self._host_smartmatch_strict and "hopper_match_game_strict_v1" or "hopper_match_game_any_v1"
+				hopper_name = hopper_used
 			}
-
-			if self.SMARTMATCH_STRICT then
-				self._host_smartmatch_strict = not self._host_smartmatch_strict
-			end
-
 			local progress_callback = callback(self, self, "clbk_smartmatch_host", {
 				cancel_id = self:add_cancelable_callback(),
 				smartmatch_params = smartmatch_params
@@ -336,7 +358,7 @@ function NetworkMatchMakingXBL:_chk_advertise_session_for_smartmatch()
 
 			self:_begin_smartmatch(smartmatch_params, progress_callback)
 		else
-			print("countdown to new smartmatch", (self.SMARTMATCH_RE_ADVERTISE_PAUSE_T + self._smartmatch_idle_start_t) - TimerManager:wall_running():time())
+			print("countdown to new smartmatch", self.SMARTMATCH_RE_ADVERTISE_PAUSE_T + self._smartmatch_idle_start_t - TimerManager:wall_running():time())
 		end
 	else
 		self._smartmatch_idle_start_t = nil
@@ -375,38 +397,6 @@ function NetworkMatchMakingXBL:set_gamemode(game_mode)
 end
 
 function NetworkMatchMakingXBL:get_lobby_data()
-	local numbers = self._host_session_attributes.numbers
-	local lobby_data = {
-		owner_name = managers.network.account:username_id(),
-		owner_id = managers.network.account:player_id(),
-		level = numbers[1] % 1000,
-		difficulty = numbers[2],
-		permission = numbers[3],
-		state = numbers[4] or 1,
-		min_level = numbers[7] or 0,
-		num_players = self._num_players or 1,
-		drop_in = numbers[6] or 1,
-		job_id = math.floor(numbers[1] / 1000)
-	}
-
-	if self._attributes_numbers then
-		local numbers = self._attributes_numbers
-		lobby_data.crime_spree = numbers[9] or -1
-
-		if lobby_data.crime_spree ~= -1 then
-			lobby_data.crime_spree_mission = numbers[10] or 0
-		end
-	end
-
-	if self._host_session_mutators then
-		local mutators = managers.mutators:matchmake_partial_unpack_string(self._host_session_mutators)
-
-		for k, v in pairs(mutators) do
-			lobby_data[k] = v
-		end
-	end
-
-	return lobby_data
 end
 
 function NetworkMatchMakingXBL:get_lobby_return_count()
@@ -480,7 +470,9 @@ function NetworkMatchMakingXBL:_find_server_callback(cancel_id, servers, mode)
 			room_id = server.info:id(),
 			info = server.info
 		})
-		table.insert(info.attribute_list, {numbers = self:_server_to_numbers(server)})
+		table.insert(info.attribute_list, {
+			numbers = self:_server_to_numbers(server)
+		})
 	end
 
 	self:_call_callback("search_lobby", info)
@@ -590,11 +582,13 @@ function NetworkMatchMakingXBL:join_server_with_check(session_id, skip_permissio
 	end
 
 	if data and data.info then
-		f({{
-			open_private_slots = 0,
-			info = data.info,
-			host_name = data.host_name
-		}})
+		f({
+			{
+				open_private_slots = 0,
+				info = data.info,
+				host_name = data.host_name
+			}
+		})
 	else
 		debug_pause("[NetworkMatchMakingXBL:join_server_with_check] Missing data.", inspect(data))
 		f({})
@@ -620,7 +614,7 @@ function NetworkMatchMakingXBL:_update_queued_join_by_smartmatch()
 	end
 
 	if self._last_join_smartmatch_cancel_t and TimerManager:wall():time() - self._last_join_smartmatch_cancel_t < self.CANCEL_JOIN_SMARTMATCH_DELAY_T then
-		print("timing out smartmatch join request", (self._last_join_smartmatch_cancel_t + self.CANCEL_JOIN_SMARTMATCH_DELAY_T) - TimerManager:wall():time())
+		print("timing out smartmatch join request", self._last_join_smartmatch_cancel_t + self.CANCEL_JOIN_SMARTMATCH_DELAY_T - TimerManager:wall():time())
 
 		return
 	end
@@ -634,25 +628,15 @@ function NetworkMatchMakingXBL:_update_queued_join_by_smartmatch()
 	local params = self._queued_join_by_smartmatch
 	self._queued_join_by_smartmatch = nil
 
-	self:_join_by_smartmatch(params.job_id_filter, params.difficulty_filter)
+	self:_join_by_smartmatch(params.mode_filter, params.job_id_filter, params.difficulty_filter)
 end
 
-function NetworkMatchMakingXBL:_join_by_smartmatch(job_id_filter, difficulty_filter)
-	print("[NetworkMatchMakingXBL:_join_by_smartmatch] job_id_filter", job_id_filter, "difficulty_filter", difficulty_filter)
+function NetworkMatchMakingXBL:_join_by_smartmatch(mode_filter, job_id_filter, difficulty_filter)
+	print("[NetworkMatchMakingXBL:_join_by_smartmatch] mode_filter", mode_filter, "job_id_filter", job_id_filter, "difficulty_filter", difficulty_filter)
 
 	self._server_rpc = nil
 	self._session = nil
-
-	if job_id_filter == -1 then
-		print("[NetworkMatchMakingXBL:_join_by_smartmatch] searching inexact")
-
-		self._smartmatch_search_inexact = true
-	else
-		print("[NetworkMatchMakingXBL:_join_by_smartmatch] searching exact")
-
-		self._smartmatch_search_inexact = nil
-	end
-
+	self._smartmatch_search_inexact = true
 	self._join_smartmatch = "search"
 	local player_index = managers.user:get_platform_id()
 
@@ -667,29 +651,27 @@ function NetworkMatchMakingXBL:_join_by_smartmatch(job_id_filter, difficulty_fil
 	XboxLive:set_context("GAME_TYPE", "STANDARD")
 	XboxLive:set_context("game_mode", "ONLINE")
 
-	local lobby_mode = 0
-
-	if managers.user:get_setting("crimenet_filter_crimespree") then
-		lobby_mode = 1
-	end
-
-	if managers.user:get_setting("crimenet_filter_mutators") then
-		lobby_mode = 2
-	end
-
+	local mission, difficulty = nil
+	mission = (mode_filter ~= 1 or tweak_data.crime_spree:get_id_from_index(job_id_filter)) and tostring(job_id_filter == -1 and job_id_filter or tweak_data.narrative:get_index_from_job_id(job_id_filter))
 	self._hopper_variables = {
 		NrHosts = 0,
 		NrClients = 1,
-		PrefMission = tostring(job_id_filter == -1 and job_id_filter or tweak_data.narrative:get_index_from_job_id(job_id_filter)),
+		GameMode = mode_filter,
 		PrefDifficulty = difficulty_filter,
+		PrefMission = mission,
 		PlayerLevel = self:_get_smartmatch_player_level(),
-		GameMode = lobby_mode
+		CrimespreeLevel = difficulty_filter
 	}
-	local clbk_params = {cancel_id = self:add_cancelable_callback()}
+
+	print("_hopper_variables = ", inspect(self._hopper_variables))
+
+	local clbk_params = {
+		cancel_id = self:add_cancelable_callback()
+	}
 	local progress_clbk = callback(self, self, "clbk_create_client_lobby", clbk_params)
 	local status = XboxLive:create_session("smartmatch_host_game_v1", false, progress_clbk)
 
-	print(" [NetworkMatchMakingXBL:join_by_smartmatch] create_session status", status)
+	print(" [NetworkMatchMakingXBL:_join_by_smartmatch] create_session status", status)
 
 	if not status then
 		print(" failed to create session")
@@ -700,20 +682,23 @@ function NetworkMatchMakingXBL:_join_by_smartmatch(job_id_filter, difficulty_fil
 	end
 end
 
-function NetworkMatchMakingXBL:join_by_smartmatch(job_id_filter, difficulty_filter)
-	print("[NetworkMatchMakingXBL:join_by_smartmatch] job_id_filter", job_id_filter, "difficulty_filter", difficulty_filter)
+function NetworkMatchMakingXBL:join_by_smartmatch(mode_filter, job_id_filter, difficulty_filter)
+	print("[NetworkMatchMakingXBL:join_by_smartmatch] mode_filter", mode_filter, "job_id_filter", job_id_filter, "difficulty_filter", difficulty_filter)
 
 	if self._join_smartmatch then
 		return
 	end
 
 	if not self._queued_join_by_smartmatch then
-		local dialog_params = {cancel_func = callback(self, self, "clbk_btn_cancel_match")}
+		local dialog_params = {
+			cancel_func = callback(self, self, "clbk_btn_cancel_match")
+		}
 
 		managers.menu:show_searching_match_dialog(dialog_params)
 	end
 
 	self._queued_join_by_smartmatch = {
+		mode_filter = mode_filter,
 		job_id_filter = job_id_filter,
 		difficulty_filter = difficulty_filter
 	}
@@ -748,10 +733,20 @@ function NetworkMatchMakingXBL:clbk_create_client_lobby(params, session)
 	end
 
 	self._session = session
+	local hopper_used = nil
+
+	if self._hopper_variables.GameMode == 1 then
+		hopper_used = "hopper_mode_crimespree_v2"
+	else
+		hopper_used = "hopper_mode_normal_v2"
+	end
+
+	print("[NetworkMatchMakingXBL:clbk_create_client_lobby] using hopper: ", hopper_used)
+
 	local smartmatch_params = {
 		become_host = false,
 		timeout = self.SMARTMATCH_CLIENT_TIMEOUT_T,
-		hopper_name = self._smartmatch_search_inexact and "hopper_match_game_any_v1" or "hopper_match_game_strict_v1"
+		hopper_name = hopper_used
 	}
 	local progress_callback = callback(self, self, "clbk_smartmatch_client", {
 		cancel_id = self:add_cancelable_callback(),
@@ -814,11 +809,32 @@ function NetworkMatchMakingXBL:clbk_join_session_result(status)
 	self:_is_client(true)
 	managers.network.voice_chat:open_session()
 	managers.network:start_client()
-	managers.menu:show_waiting_for_server_response({cancel_func = function ()
-		managers.network:session():on_join_request_cancelled()
-	end})
+	managers.menu:show_waiting_for_server_response({
+		cancel_func = function ()
+			managers.network:session():on_join_request_cancelled()
+		end
+	})
+
+	if self._session then
+		print("GN: Session is legal here")
+
+		local found_crimespree_mission_index = self._session:get_property("CSMISSIONINDEX", "NUMBER")
+
+		if found_crimespree_mission_index > 100 then
+			local found_crimespree_mission = tweak_data.crime_spree:get_id_from_index(found_crimespree_mission_index)
+
+			managers.crime_spree:enable_crime_spree_gamemode()
+			managers.crime_spree:set_temporary_mission(found_crimespree_mission)
+			print("GN: temp mission set!")
+		end
+	end
 
 	local function joined_game(res, level_index, difficulty_index, state_index)
+		if res ~= "JOINED_LOBBY" and res ~= "JOINED_GAME" then
+			managers.crime_spree:disable_crime_spree_gamemode()
+			print("GN: CS mode disabled!")
+		end
+
 		managers.system_menu:close("waiting_for_server_response")
 		print("[NetworkMatchMakingXBL:clbk_join_session_result:joined_game] res", res, "level_index", level_index, "difficulty_index", difficulty_index, "state_index", state_index)
 
@@ -826,6 +842,9 @@ function NetworkMatchMakingXBL:clbk_join_session_result(status)
 			MenuCallbackHandler:crimenet_focus_changed(nil, false)
 			managers.menu:on_enter_lobby()
 		elseif res == "JOINED_GAME" then
+			Application:stack_dump()
+			print("GN: HEre 1")
+
 			local level_id = tweak_data.levels:get_level_name_from_index(level_index)
 			Global.game_settings.level_id = level_id
 		elseif res == "KICKED" then
@@ -939,20 +958,20 @@ function NetworkMatchMakingXBL:set_server_attributes(settings)
 end
 
 function NetworkMatchMakingXBL:create_lobby(settings)
+	print("[NetworkMatchMakingXBL:create_lobby]", inspect(settings))
+	Application:stack_dump()
+
 	local attributes_numbers = settings.numbers
+	local player_index = managers.user:get_platform_id()
+	local gt = "STANDARD"
+	local gm = "ONLINE"
 	self._num_players = nil
 
 	self:set_server_joinable(true)
-	print("[NetworkMatchMakingXBL:create_lobby]", inspect(settings))
 
 	settings.numbers[4] = 1
 
 	self:set_attributes(settings)
-
-	local player_index = managers.user:get_platform_id()
-	local gt = "STANDARD"
-	local gm = "ONLINE"
-
 	XboxLive:set_context("GAME_TYPE", gt)
 	XboxLive:set_context("game_mode", gm)
 
@@ -983,24 +1002,31 @@ function NetworkMatchMakingXBL:create_lobby(settings)
 
 	managers.system_menu:show(dialog_data)
 
-	local lobby_mode = 0
+	local mission, lobby_mode = nil
+	local crimespree_level = settings.numbers[9]
+	local is_crimespree = crimespree_level > -1
 
-	if settings.crime_spree > -1 then
+	if is_crimespree then
+		mission = tostring(tweak_data.narrative:get_index_from_job_id(managers.job:current_job_id()))
 		lobby_mode = 1
+	else
+		mission = tostring(tweak_data.narrative:get_index_from_job_id(managers.job:current_job_id()))
+		lobby_mode = 0
 	end
 
 	if #self._host_session_mutators > 0 then
-		lobby_mode = 2
+		mission = "mutators"
 	end
 
 	if self:is_host_lobby_public() then
 		self._hopper_variables = {
 			NrHosts = 1,
 			NrClients = 0,
-			PrefMission = tostring(tweak_data.narrative:get_index_from_job_id(managers.job:current_job_id())),
+			GameMode = lobby_mode,
+			PrefMission = mission,
 			PrefDifficulty = tweak_data:difficulty_to_index(Global.game_settings.difficulty),
 			PlayerLevel = self:_get_smartmatch_player_level(),
-			GameMode = lobby_mode
+			CrimespreeLevel = crimespree_level
 		}
 
 		print("[Hopper Variables]", inspect(self._hopper_variables))
@@ -1012,7 +1038,6 @@ function NetworkMatchMakingXBL:create_lobby(settings)
 	}))
 
 	print("[NetworkMatchMakingXBL:create_lobby] create_session result", success)
-	print("[NetworkMatchMakingXBL:create_lobby] create_session result", success)
 end
 
 function NetworkMatchMakingXBL:_create_lobby_failed()
@@ -1022,7 +1047,11 @@ function NetworkMatchMakingXBL:_create_lobby_failed()
 	local dialog_data = {
 		title = title,
 		text = managers.localization:text("dialog_err_failed_creating_lobby"),
-		button_list = {{text = managers.localization:text("dialog_ok")}}
+		button_list = {
+			{
+				text = managers.localization:text("dialog_ok")
+			}
+		}
 	}
 
 	managers.system_menu:show(dialog_data)
@@ -1039,6 +1068,14 @@ function NetworkMatchMakingXBL:clbk_smartmatch_host(params, session, smartmatch_
 end
 
 function NetworkMatchMakingXBL:_begin_smartmatch(params, progress_clbk)
+	if self._hopper_variables.GameMode == 1 then
+		local cs_settings = {}
+
+		managers.crime_spree:apply_matchmake_attributes(cs_settings)
+
+		self._hopper_variables.PrefMission = tweak_data.crime_spree:get_index_from_id(cs_settings.crime_spree_mission)
+	end
+
 	print("[NetworkMatchMakingXBL:_begin_smartmatch] self._hopper_variables", inspect(self._hopper_variables))
 
 	local status = XboxLive:begin_smartmatch(self._session, progress_clbk, params.timeout, params.hopper_name, params.become_host, self._hopper_variables)
@@ -1097,7 +1134,9 @@ function NetworkMatchMakingXBL:clbk_smartmatch_client_inexact_join_no()
 end
 
 function NetworkMatchMakingXBL:clbk_smartmatch_client(params, session, smartmatch_status)
-	print("[NetworkMatchMakingXBL:clbk_smartmatch_client] params", inspect(params), "session", session, "status:", smartmatch_status)
+	print("[NetworkMatchMakingXBL:clbk_smartmatch_client] params", inspect(params))
+	print("[NetworkMatchMakingXBL:clbk_smartmatch_client] session", session)
+	print("[NetworkMatchMakingXBL:clbk_smartmatch_client] status:", smartmatch_status)
 
 	if self:check_callback_canceled(params.cancel_id) then
 		cat_print("lobby", "smartmatch was canceled")
@@ -1114,84 +1153,131 @@ function NetworkMatchMakingXBL:clbk_smartmatch_client(params, session, smartmatc
 	end
 
 	if smartmatch_status == "found" then
-		print("[NetworkMatchMakingXBL:clbk_smartmatch_client] " .. (self._smartmatch_search_inexact and "result any" or "result strict"))
+		print("[NetworkMatchMakingXBL:clbk_smartmatch_client] found")
 
 		local pref_mission = self._hopper_variables.PrefMission
 		local pref_difficulty = self._hopper_variables.PrefDifficulty
-		local session_mission_nr = session:get_property("LEVELINDEX", "NUMBER")
+		local found_crimespree_level = session:get_property("CSLEVEL", "NUMBER")
+		local found_crimespree_mission_index, found_crimespree_mission, found_session_mission_index, found_session_mission, found_session_difficulty = nil
 
-		if not session_mission_nr then
-			print(" broken session_mission_nr")
+		if found_crimespree_level == -1 then
+			found_session_mission_index = session:get_property("LEVELINDEX", "NUMBER")
+
+			if not found_session_mission_index then
+				print(" broken found_session_mission_index")
+
+				self._session = session
+
+				self:clbk_join_session_result(false)
+
+				self._session = nil
+
+				return
+			end
+
+			found_session_mission_index = math.floor(found_session_mission_index / 1000)
+			local found_session_mission = tostring(found_session_mission_index)
+			local found_session_difficulty = session:get_property("DIFFICULTY", "NUMBER")
+
+			if not found_session_difficulty then
+				print(" broken found_session_difficulty")
+
+				self._session = session
+
+				self:clbk_join_session_result(false)
+
+				self._session = nil
+
+				return
+			end
 
 			self._session = session
 
-			self:clbk_join_session_result(false)
+			print("requested: pref_mission", pref_mission, "pref_difficulty", pref_difficulty)
+			print("found: found_session_mission", found_session_mission, "found_session_difficulty", found_session_difficulty)
 
-			self._session = nil
+			local is_inexact_match = nil
 
-			return
-		end
+			if pref_mission == "-1" then
+				-- Nothing
+			elseif not is_inexact_match then
+				if pref_mission ~= found_session_mission then
+					is_inexact_match = true
 
-		session_mission_nr = math.floor(session_mission_nr / 1000)
-		local session_mission = tostring(session_mission_nr)
-		local session_difficulty = session:get_property("DIFFICULTY", "NUMBER")
+					print(" mission mismatch")
+				elseif pref_difficulty ~= found_session_difficulty then
+					is_inexact_match = true
 
-		if not session_difficulty then
-			print(" broken session_difficulty")
+					print(" difficulty mismatch")
+				end
+			end
 
+			if is_inexact_match then
+				print(" inexact match")
+				managers.system_menu:close("search_match")
+
+				self._join_smartmatch = "confirm_inexact"
+				local params = {
+					yes_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_yes"),
+					no_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_no"),
+					timeout_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_no"),
+					timeout = self.INEXACT_MATCH_CONFIRM_TIMEOUT,
+					host_name = session:get_property("GAMERHOSTNAME", "STRING"),
+					job_name = managers.localization:text(tweak_data.narrative.jobs[tweak_data.narrative:get_job_name_from_index(found_session_mission_index)].name_id),
+					difficulty = managers.localization:text(tweak_data.difficulty_name_ids[tweak_data.difficulties[found_session_difficulty]])
+				}
+
+				print("GN: found_session_mission_index = ", found_session_mission_index)
+				print("GN: job_name = ", job_name)
+				managers.menu:show_smartmatch_inexact_match_dialog(params)
+			else
+				self:clbk_join_session_result(true)
+			end
+		else
+			found_crimespree_mission_index = session:get_property("CSMISSIONINDEX", "NUMBER")
+			found_crimespree_mission = tweak_data.crime_spree:get_id_from_index(found_crimespree_mission_index)
+			found_session_difficulty = -1
 			self._session = session
 
-			self:clbk_join_session_result(false)
+			print("requested: crimespree")
+			print("found: found_crimespree_mission", found_crimespree_mission)
 
-			self._session = nil
+			local is_inexact_match = nil
 
-			return
-		end
-
-		self._session = session
-
-		print("requested: pref_mission", pref_mission, "pref_difficulty", pref_difficulty)
-		print("found: session_mission", session_mission, "session_difficulty", session_difficulty)
-
-		local is_inexact_match = nil
-
-		if pref_mission == "-1" then
-			-- Nothing
-		elseif not is_inexact_match then
-			if pref_mission ~= session_mission then
+			if pref_mission == "-1" then
+				-- Nothing
+			elseif not is_inexact_match and pref_mission ~= found_crimespree_mission then
 				is_inexact_match = true
 
 				print(" mission mismatch")
-			elseif pref_difficulty ~= session_difficulty then
-				is_inexact_match = true
-
-				print(" difficulty mismatch")
 			end
-		end
 
-		if is_inexact_match then
-			print(" inexact match")
-			managers.system_menu:close("search_match")
+			if is_inexact_match then
+				print(" inexact match")
+				managers.system_menu:close("search_match")
 
-			self._join_smartmatch = "confirm_inexact"
-			local params = {
-				yes_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_yes"),
-				no_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_no"),
-				timeout_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_no"),
-				timeout = self.INEXACT_MATCH_CONFIRM_TIMEOUT,
-				host_name = session:get_property("GAMERHOSTNAME", "STRING"),
-				job_name = managers.localization:text(tweak_data.narrative.jobs[tweak_data.narrative:get_job_name_from_index(session_mission_nr)].name_id),
-				difficulty = managers.localization:text(tweak_data.difficulty_name_ids[tweak_data.difficulties[session_difficulty]])
-			}
+				self._join_smartmatch = "confirm_inexact"
+				local params = {
+					yes_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_yes"),
+					no_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_no"),
+					timeout_clbk = callback(self, self, "clbk_smartmatch_client_inexact_join_no"),
+					timeout = self.INEXACT_MATCH_CONFIRM_TIMEOUT,
+					host_name = session:get_property("GAMERHOSTNAME", "STRING"),
+					job_name = found_crimespree_mission,
+					difficulty = found_crimespree_level
+				}
 
-			managers.menu:show_smartmatch_inexact_match_dialog(params)
-		else
-			self:clbk_join_session_result(true)
+				print("GN: found_session_mission_index = ", found_crimespree_mission_index)
+				print("GN: job_name = ", found_crimespree_mission)
+				managers.menu:show_smartmatch_inexact_match_dialog(params)
+			else
+				self:clbk_join_session_result(true)
+			end
 		end
 	elseif smartmatch_status == "failed" then
 		local searching_again = nil
 
-		if not self._smartmatch_search_inexact and self.SMARTMATCH_STRICT then
+		if not self._smartmatch_search_inexact then
 			print(" searching inexact")
 
 			local dialog = managers.system_menu:get_dialog("search_match")
@@ -1200,10 +1286,20 @@ function NetworkMatchMakingXBL:clbk_smartmatch_client(params, session, smartmatc
 			dialog:set_text(new_text, true)
 
 			self._smartmatch_search_inexact = true
+			local hopper_used = nil
+
+			if self._hopper_variables.GameMode == 1 then
+				hopper_used = "hopper_mode_crimespree_v2"
+			else
+				hopper_used = "hopper_mode_normal_v2"
+			end
+
+			print("[NetworkMatchMakingXBL:clbk_smartmatch_client] using hopper: ", hopper_used)
+
 			local smartmatch_params = {
-				hopper_name = "hopper_match_game_any_v1",
 				become_host = false,
-				timeout = self.SMARTMATCH_CLIENT_TIMEOUT_T2
+				timeout = self.SMARTMATCH_CLIENT_TIMEOUT_T2,
+				hopper_name = hopper_used
 			}
 			local progress_callback = callback(self, self, "clbk_smartmatch_client", {
 				cancel_id = self:add_cancelable_callback(),
@@ -1258,7 +1354,6 @@ end
 
 function NetworkMatchMakingXBL:set_server_joinable(state)
 	print("[NetworkMatchMakingXBL:set_server_joinable]", state)
-	Application:stack_dump()
 
 	self._server_joinable_state = state
 
@@ -1361,14 +1456,29 @@ function NetworkMatchMakingXBL:set_attributes(settings)
 	XboxLive:set_property("MUTATORS", mutators_data[1])
 
 	self._host_session_mutators = mutators_data[1]
+	local cs_settings = {}
+	local crime_spree_mission_index = nil
 
-	managers.crime_spree:apply_matchmake_attributes(settings)
+	managers.crime_spree:apply_matchmake_attributes(cs_settings)
+	print("GN: lobby attributes: ", inspect(cs_settings))
+
+	settings.numbers[9] = cs_settings.crime_spree
+	settings.numbers[10] = tweak_data.crime_spree:get_index_from_id(cs_settings.crime_spree_mission)
+
+	XboxLive:set_property("CSLEVEL", settings.numbers[9])
+	XboxLive:set_property("CSMISSIONINDEX", settings.numbers[10])
 
 	self._host_session_attributes = settings
+
+	print("set_attributes _host_session_attributes = ", inspect(self._host_session_attributes))
 end
 
 function NetworkMatchMakingXBL:_server_to_numbers(server)
+	local crimespree_mission_index = tonumber(properties.CSMISSIONINDEX)
+	local crimespree_mission_id = tweak_data.crime_spree:get_id_from_index(crimespree_mission_id)
 	local properties = server.properties
+
+	print("GN: server properties = ", server.properties)
 
 	return {
 		tonumber(properties.LEVELINDEX),
@@ -1377,6 +1487,8 @@ function NetworkMatchMakingXBL:_server_to_numbers(server)
 		tonumber(properties.SERVERSTATE),
 		tonumber(properties.NUMPLAYERS),
 		tonumber(properties.ALLOWDROPIN),
+		tonumber(properties.CSLEVEL),
+		crimespree_mission_id,
 		tonumber(properties.MINLEVEL)
 	}
 end
@@ -1421,188 +1533,11 @@ function NetworkMatchMakingXBL:from_host_lobby_re_opened(status)
 	end
 end
 
-function NetworkMatchMakingXBL:_test_search(settings)
-	local player_index = managers.user:get_platform_id()
-	local prop = {MINLEVEL = managers.experience:current_level()}
-	local con = {
-		GAME_TYPE = settings.game_type,
-		game_mode = settings.game_mode
-	}
-
-	XboxLive:search_session("Find Matches", player_index, 25, prop, con, callback(self, self, "_find_test_server_callback", self:add_cancelable_callback()))
-end
-
-function NetworkMatchMakingXBL:_find_test_server_callback(cancel_id, servers, mode)
-	if self:check_callback_canceled(cancel_id) then
-		return
-	end
-
-	self._last_mode = mode
-
-	print("_find_test_server_callback", mode, inspect(servers))
-
-	if not servers then
-		print("SEaRCH FAILED")
-
-		return
-	end
-
-	self._test_servers = {}
-
-	for _, server in ipairs(servers) do
-		self._test_server = server
-
-		table.insert(self._test_servers, server)
-		print(inspect(server))
-	end
-
-	local player_index = managers.user:get_platform_id()
-end
-
-function NetworkMatchMakingXBL:_test_join(xs_info, skip_showing_dialog)
-	xs_info = xs_info or self._test_server.info
-	local player_index = managers.user:get_platform_id()
-
-	print("_test_join", xs_info)
-
-	if self._session then
-		XboxLive:leave_local(self._session, player_index)
-		XboxLive:delete_session(self._session)
-	end
-
-	self._session = XboxLive:create_session_object_from_info("live_multiplayer_standard", player_index, 4, 0, xs_info)
-
-	if not self._session then
-		print("FAILED CREATE CLIENT SESSION")
-
-		return
-	end
-
-	if not XboxLive:join_local(self._session, player_index, true) then
-		return
-	end
-
-	print("self._session", self._session)
-
-	local result = "failed"
-
-	print("[NetworkMatchMakingXBL:join_server:f]")
-	managers.system_menu:close("join_server")
-
-	if result == "success" then
-		print("Success!")
-		print("[NetworkMatchMakingXBL:join_server] server details", self._session:ip(), self._session:id())
-		print("Gonna handshake now!")
-
-		self._server_rpc = Network:handshake(self._session:ip(), nil, "TCP_IP")
-
-		print("Handshook!")
-		print("Server RPC:", self._server_rpc and self._server_rpc:ip_at_index(0))
-
-		if not self._server_rpc then
-			return
-		end
-
-		managers.network:start_client()
-		managers.menu:show_waiting_for_server_response({cancel_func = function ()
-			managers.network:session():on_join_request_cancelled()
-		end})
-
-		local function joined_game(res, level_index, difficulty_index, state_index)
-			managers.system_menu:close("waiting_for_server_response")
-			print("[NetworkMatchMakingXBL:join_server:joined_game]", res, level_index, difficulty_index, state_index)
-
-			if res == "JOINED_LOBBY" then
-				managers.network.voice_chat:open_session()
-				MenuCallbackHandler:crimenet_focus_changed(nil, false)
-				managers.menu:on_enter_lobby()
-			elseif res == "JOINED_GAME" then
-				local level_id = tweak_data.levels:get_level_name_from_index(level_index)
-				Global.game_settings.level_id = level_id
-			elseif res == "KICKED" then
-				managers.network.matchmake:leave_game()
-				managers.network.voice_chat:destroy_voice()
-				managers.network:queue_stop_network()
-				managers.menu:show_peer_kicked_dialog()
-			elseif res == "TIMED_OUT" then
-				managers.network.matchmake:leave_game()
-				managers.network.voice_chat:destroy_voice()
-				managers.network:queue_stop_network()
-				managers.menu:show_request_timed_out_dialog()
-			elseif res == "GAME_STARTED" then
-				managers.network.matchmake:leave_game()
-				managers.network.voice_chat:destroy_voice()
-				managers.network:queue_stop_network()
-				managers.menu:show_game_started_dialog()
-			elseif res == "DO_NOT_OWN_HEIST" then
-				managers.network.matchmake:leave_game()
-				managers.network.voice_chat:destroy_voice()
-				managers.network:queue_stop_network()
-				managers.menu:show_does_not_own_heist()
-			elseif res == "CANCELLED" then
-				managers.network.matchmake:leave_game()
-				managers.network.voice_chat:destroy_voice()
-				managers.network:queue_stop_network()
-			elseif res == "FAILED_CONNECT" or res == "AUTH_FAILED" or res == "AUTH_HOST_FAILED" then
-				managers.network.matchmake:leave_game()
-				managers.network.voice_chat:destroy_voice()
-				managers.network:queue_stop_network()
-				managers.menu:show_failed_joining_dialog()
-			else
-				Application:error("[NetworkMatchMakingXBL:join_server] FAILED TO START MULTIPLAYER!", res)
-			end
-		end
-
-		managers.network:join_game_at_host_rpc(self._server_rpc, joined_game)
-	else
-		managers.menu:show_failed_joining_dialog()
-		self:search_lobby(self:search_friends_only())
-	end
-end
-
 function NetworkMatchMakingXBL:_join_server_callback()
 end
 
 function NetworkMatchMakingXBL:_get_smartmatch_player_level()
 	return math.floor(managers.experience:current_level() / 20)
-end
-
-function NetworkMatchMakingXBL:_test_create(settings)
-	print("settings\n", inspect(settings))
-
-	if settings == nil then
-		-- Nothing
-	end
-
-	local gt = settings.game_type
-	local gm = settings.game_mode
-	local skl = settings.skill
-	local player_index = managers.user:get_platform_id()
-
-	XboxLive:set_context("GAME_TYPE", gt)
-	XboxLive:set_context("game_mode", gm)
-
-	if self._session and self._session:state() == "started" then
-		XboxLive:leave_local(self._session, player_index)
-		XboxLive:delete_session(self._session, function ()
-			print("DELETED SESSION")
-		end)
-	end
-
-	local create_prop = {"group_lobby"}
-
-	if self._uses_arbitration == true then
-		table.insert(create_prop, "uses_arbitration")
-	end
-
-	local pub_slots = self.OPEN_SLOTS
-	local priv_slots = 0
-
-	print("creating session\n", inspect(create_prop))
-
-	local session = XboxLive:create_session("live_multiplayer_standard", player_index, pub_slots, priv_slots, callback(self, self, "_create_server_callback", self:add_cancelable_callback()))
-
-	print("create return value", session)
 end
 
 function NetworkMatchMakingXBL:_create_server_callback(cancel_id, session)
@@ -1654,4 +1589,3 @@ function NetworkMatchMakingXBL:_is_client(set)
 		return self._is_client_var
 	end
 end
-

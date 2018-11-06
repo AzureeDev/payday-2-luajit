@@ -341,7 +341,15 @@ function CoreEnvironmentControllerManager:blurzone_check_cylinder(blurzone, came
 	local pos_z = blurzone.pos.z
 	local cam_z = camera_pos.z
 	local len = nil
-	len = cam_z < pos_z and (blurzone.pos - camera_pos):length() or pos_z + blurzone.height < cam_z and (blurzone.pos:with_z(pos_z + blurzone.height) - camera_pos):length() or (blurzone.pos:with_z(cam_z) - camera_pos):length()
+
+	if cam_z < pos_z then
+		len = blurzone.pos - camera_pos:length()
+	elseif cam_z > pos_z + blurzone.height then
+		len = blurzone.pos:with_z(pos_z + blurzone.height) - camera_pos:length()
+	else
+		len = blurzone.pos:with_z(cam_z) - camera_pos:length()
+	end
+
 	local result = math.min(len / blurzone.radius, 1)
 	result = result * result
 
@@ -349,12 +357,13 @@ function CoreEnvironmentControllerManager:blurzone_check_cylinder(blurzone, came
 end
 
 function CoreEnvironmentControllerManager:blurzone_check_sphere(blurzone, camera_pos)
-	local len = (blurzone.pos - camera_pos):length()
+	local len = blurzone.pos - camera_pos:length()
 	local result = math.min(len / blurzone.radius, 1)
 	result = result * result
 
 	return (1 - result) * blurzone.opacity
 end
+
 local ids_dof_near_plane = Idstring("near_plane")
 local ids_dof_far_plane = Idstring("far_plane")
 local ids_dof_settings = Idstring("settings")
@@ -489,7 +498,7 @@ function CoreEnvironmentControllerManager:set_post_composite(t, dt)
 	hit_some_mod = hit_some_mod * hit_some_mod * hit_some_mod
 	hit_some_mod = 1 - hit_some_mod
 	local downed_value = self._downed_value / 100
-	local death_mod = math.max((1 - self._health_effect_value) - 0.5, 0) * 2
+	local death_mod = math.max(1 - self._health_effect_value - 0.5, 0) * 2
 	local blur_zone_flashbang = blur_zone_val + flashbang
 	local flash_1 = math.pow(flashbang, 0.4)
 	flash_1 = flash_1 + math.pow(concussion, 0.4)
@@ -562,7 +571,9 @@ end
 
 function CoreEnvironmentControllerManager:_create_dof_tweak_data()
 	local new_dof_settings = {
-		none = {use_no_dof = true},
+		none = {
+			use_no_dof = true
+		},
 		standard = {}
 	}
 	new_dof_settings.standard.steelsight = {
@@ -678,7 +689,7 @@ function CoreEnvironmentControllerManager:bloom_blur_size(size, vp)
 
 		if effect then
 			for i = 1, table.getn(effects), 1 do
-				local visibility = 5 - size <= i
+				local visibility = i >= 5 - size
 				local mod = effect:modifier(effects[i])
 
 				if mod then
@@ -944,7 +955,7 @@ function CoreEnvironmentControllerManager:set_dome_occ_params(occ_pos, occ_size,
 end
 
 function CoreEnvironmentControllerManager:_refresh_occ_params(vp)
-	local deferred_processor = (vp or self._vp):vp():get_post_processor_effect("World", Idstring("deferred"))
+	local deferred_processor = vp or self._vp:vp():get_post_processor_effect("World", Idstring("deferred"))
 
 	if deferred_processor then
 		local apply_ambient = deferred_processor:modifier(Idstring("apply_ambient"))
@@ -1004,6 +1015,7 @@ end
 function CoreEnvironmentControllerManager:base_contrast()
 	return self._base_contrast
 end
+
 local ids_d_sun = Idstring("d_sun")
 
 function CoreEnvironmentControllerManager:feed_params()
@@ -1017,4 +1029,3 @@ end
 
 function CoreEnvironmentControllerManager:set_global_param(param_name, param_value)
 end
-

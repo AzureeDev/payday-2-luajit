@@ -63,4 +63,3 @@ function MedicDamage:heal_unit(unit, override_cooldown)
 
 	return true
 end
-

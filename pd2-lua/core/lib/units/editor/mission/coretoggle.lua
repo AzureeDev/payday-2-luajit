@@ -1,7 +1,9 @@
 CoreToggleUnitElement = CoreToggleUnitElement or class(MissionElement)
 CoreToggleUnitElement.SAVE_UNIT_POSITION = false
 CoreToggleUnitElement.SAVE_UNIT_ROTATION = false
-CoreToggleUnitElement.LINK_ELEMENTS = {"elements"}
+CoreToggleUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 ToggleUnitElement = ToggleUnitElement or class(CoreToggleUnitElement)
 
 function ToggleUnitElement:init(...)
@@ -86,4 +88,3 @@ function CoreToggleUnitElement:_build_panel(panel, panel_sizer)
 		min = -1
 	}, "Sets the elements trigger times when toggle on (-1 means do not use)")
 end
-

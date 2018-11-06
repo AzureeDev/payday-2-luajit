@@ -28,4 +28,3 @@ function MenuItemColoredDivider:set_color(color)
 		self._rect:set_color(self._color)
 	end
 end
-

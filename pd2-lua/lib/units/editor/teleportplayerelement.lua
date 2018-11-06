@@ -44,4 +44,3 @@ function TeleportPlayerUnitElement:_build_panel(panel, panel_sizer)
 	})
 	self:_build_value_checkbox(panel, panel_sizer, "refill", "Refills the player's ammo and health after teleport")
 end
-

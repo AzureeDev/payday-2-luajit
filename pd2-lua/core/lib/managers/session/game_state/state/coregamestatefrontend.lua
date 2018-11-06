@@ -20,4 +20,3 @@ function FrontEnd:transition()
 		return CoreGameStatePrepareLoadingGame.PrepareLoadingGame
 	end
 end
-

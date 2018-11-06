@@ -62,6 +62,7 @@ function ElementEnemyPreferedAdd:on_executed(instigator)
 	self:add()
 	ElementEnemyPreferedAdd.super.on_executed(self, instigator)
 end
+
 ElementEnemyPreferedRemove = ElementEnemyPreferedRemove or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementEnemyPreferedRemove:init(...)
@@ -83,4 +84,3 @@ function ElementEnemyPreferedRemove:on_executed(instigator)
 
 	ElementEnemyPreferedRemove.super.on_executed(self, instigator)
 end
-

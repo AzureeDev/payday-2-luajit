@@ -22,7 +22,9 @@ function MenuGuiComponentGeneric:init(ws, fullscreen_ws, node)
 	self._fullscreen_panel = self._fullscreen_ws:panel():panel({})
 	self._event_listener = EventListenerHolder:new()
 
-	self._event_listener:add(self, {"refresh"}, callback(self, self, "_on_refresh_event"))
+	self._event_listener:add(self, {
+		"refresh"
+	}, callback(self, self, "_on_refresh_event"))
 
 	self._node = node
 	self.make_fine_text = BlackMarketGui.make_fine_text
@@ -66,7 +68,9 @@ function MenuGuiComponentGeneric:populate_tabs_data(tabs_data)
 end
 
 function MenuGuiComponentGeneric:_start_page_data()
-	local data = {topic_id = "dialog_ok"}
+	local data = {
+		topic_id = "dialog_ok"
+	}
 
 	return data
 end
@@ -90,7 +94,9 @@ function MenuGuiComponentGeneric:_setup(is_start_page, component_data)
 		self._ws:panel():remove(self._panel)
 	end
 
-	self._panel = self._ws:panel():panel({layer = self._init_layer})
+	self._panel = self._ws:panel():panel({
+		layer = self._init_layer
+	})
 
 	self:_setup_panel_size()
 
@@ -223,7 +229,7 @@ function MenuGuiComponentGeneric:_blur_background()
 end
 
 function MenuGuiComponentGeneric:_add_panels()
-	local h = (self._panel:h() - TOP_ADJUSTMENT) - PAGE_TAB_H
+	local h = self._panel:h() - TOP_ADJUSTMENT - PAGE_TAB_H
 
 	if not self._data.no_back_button then
 		h = h - BOT_ADJUSTMENT
@@ -262,13 +268,17 @@ function MenuGuiComponentGeneric:_add_panels()
 	self._info_panel:set_world_top(self._page_panel:world_y())
 	self._info_panel:set_right(self._panel:w())
 
-	self._outline_panel = self._page_panel:panel({layer = 10})
-	self._outline_box = BoxGuiObject:new(self._outline_panel, self._data.outline_data or {sides = {
-		1,
-		1,
-		2,
-		2
-	}})
+	self._outline_panel = self._page_panel:panel({
+		layer = 10
+	})
+	self._outline_box = BoxGuiObject:new(self._outline_panel, self._data.outline_data or {
+		sides = {
+			1,
+			1,
+			2,
+			2
+		}
+	})
 
 	if self._data.outline_data and self._data.outline_data.layer then
 		self._outline_box:set_layer(self._data.outline_data.layer)
@@ -358,7 +368,7 @@ function MenuGuiComponentGeneric:_add_legend()
 end
 
 function MenuGuiComponentGeneric:set_active_page(new_index, play_sound)
-	if new_index == self._active_page or new_index <= 0 or #self._tabs < new_index then
+	if new_index == self._active_page or new_index <= 0 or new_index > #self._tabs then
 		return false
 	end
 
@@ -410,12 +420,14 @@ function MenuGuiComponentGeneric:set_active_page(new_index, play_sound)
 		self._outline_box:close()
 	end
 
-	self._outline_box = BoxGuiObject:new(self._outline_panel, self._data.outline_data or {sides = {
-		1,
-		1,
-		2,
-		2
-	}})
+	self._outline_box = BoxGuiObject:new(self._outline_panel, self._data.outline_data or {
+		sides = {
+			1,
+			1,
+			2,
+			2
+		}
+	})
 
 	if self._data.outline_data and self._data.outline_data.layer then
 		self._outline_box:set_layer(self._data.outline_data.layer)
@@ -439,27 +451,39 @@ function MenuGuiComponentGeneric:update_legend()
 		local legends = {}
 
 		if table.contains(legend_items, "move") then
-			legends[#legends + 1] = {string_id = "menu_legend_preview_move"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_preview_move"
+			}
 		end
 
 		if table.contains(legend_items, "scroll") then
-			legends[#legends + 1] = {string_id = "menu_legend_scroll"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_scroll"
+			}
 		end
 
 		if table.contains(legend_items, "select") then
-			legends[#legends + 1] = {string_id = "menu_legend_select"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_select"
+			}
 		end
 
 		if table.contains(legend_items, "claim_reward") then
-			legends[#legends + 1] = {string_id = "menu_legend_claim_reward"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_claim_reward"
+			}
 		end
 
 		if table.contains(legend_items, "back") then
-			legends[#legends + 1] = {string_id = "menu_legend_back"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_back"
+			}
 		end
 
 		if table.contains(legend_items, "zoom") then
-			legends[#legends + 1] = {string_id = "menu_legend_preview_zoom"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_preview_zoom"
+			}
 		end
 
 		local legend_text = ""
@@ -668,4 +692,3 @@ function MenuGuiComponentGeneric:update_pages_hover(button, x, y)
 		end
 	end
 end
-

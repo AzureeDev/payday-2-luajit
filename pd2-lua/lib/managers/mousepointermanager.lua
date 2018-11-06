@@ -117,7 +117,7 @@ function MousePointerManager:_set_size()
 	local res = RenderSettings.resolution
 	local w = scaled_size.width
 	local h = scaled_size.height
-	local y = res.y / 2 - (res.x / w * h) / 2
+	local y = res.y / 2 - res.x / w * h / 2
 	local n = w / math.clamp(res.x, 0, w)
 	local m = res.x / res.y
 
@@ -516,4 +516,3 @@ function MousePointerManager:set_custom_workspace(ws)
 		self:_activate()
 	end
 end
-

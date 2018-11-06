@@ -9,4 +9,3 @@ end
 
 function GameDirectionUnitElement:_build_panel(panel, panel_sizer)
 end
-

@@ -114,7 +114,9 @@ function PlayerMovement:post_init()
 	self._attention_handler = CharacterAttentionObject:new(self._unit, true)
 	self._enemy_weapons_hot_listen_id = "PlayerMovement" .. tostring(self._unit:key())
 
-	managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {"enemy_weapons_hot"}, callback(self, self, "clbk_enemy_weapons_hot"))
+	managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {
+		"enemy_weapons_hot"
+	}, callback(self, self, "clbk_enemy_weapons_hot"))
 end
 
 function PlayerMovement:attention_handler()
@@ -565,7 +567,13 @@ function PlayerMovement:on_suspicion(observer_unit, status)
 			status = status
 		}
 		local visible_status = nil
-		visible_status = managers.groupai:state():whisper_mode() and not managers.groupai:state():stealth_hud_disabled() and status or false
+
+		if managers.groupai:state():whisper_mode() and not managers.groupai:state():stealth_hud_disabled() then
+			visible_status = status
+		else
+			visible_status = false
+		end
+
 		self._suspicion = self._suspicion or {}
 
 		if visible_status == false or visible_status == true then
@@ -628,7 +636,12 @@ function PlayerMovement:_calc_suspicion_ratio_and_sync(observer_unit, status)
 		end
 	elseif type(status) == "boolean" then
 		self._suspicion_ratio = status
-		suspicion_sync = status and 255 or 0
+
+		if status then
+			suspicion_sync = 255
+		else
+			suspicion_sync = 0
+		end
 	else
 		self._suspicion_ratio = false
 		suspicion_sync = 0
@@ -1231,7 +1244,9 @@ function PlayerMovement:update_teleport(t, dt)
 				if managers.player:current_state() == "mask_off" or managers.player:current_state() == "civilian" or managers.player:current_state() == "lobby_empty" then
 					new_selection = selection
 				else
-					self:current_state():_start_action_unequip_weapon(t, {selection_wanted = selection})
+					self:current_state():_start_action_unequip_weapon(t, {
+						selection_wanted = selection
+					})
 				end
 			else
 				managers.player:player_unit():inventory()._equipped_selection = selection
@@ -1243,7 +1258,9 @@ function PlayerMovement:update_teleport(t, dt)
 		end
 
 		if new_selection then
-			self:current_state():_start_action_unequip_weapon(t, {selection_wanted = new_selection})
+			self:current_state():_start_action_unequip_weapon(t, {
+				selection_wanted = new_selection
+			})
 		end
 
 		if managers.player:is_carrying() then
@@ -1264,4 +1281,3 @@ end
 function PlayerMovement:has_teleport_data(key)
 	return self._teleport_data and not not self._teleport_data[key]
 end
-

@@ -96,4 +96,3 @@ function QuickSmokeGrenade:destroy()
 		World:effect_manager():fade_kill(self._smoke_effect)
 	end
 end
-

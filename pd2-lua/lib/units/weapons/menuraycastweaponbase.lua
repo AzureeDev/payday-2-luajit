@@ -120,6 +120,7 @@ function NewRaycastWeaponBase:_assemble_completed(clbk, parts, blueprint)
 		clbk()
 	end
 end
+
 local material_type_ids = Idstring("material")
 
 function NewRaycastWeaponBase:apply_material_parameters()
@@ -316,7 +317,9 @@ function NewRaycastWeaponBase:stance_mod()
 
 	for part_id, data in pairs(self._parts) do
 		if factory.parts[part_id].stance_mod and factory.parts[part_id].stance_mod[self._factory_id] then
-			return {translation = factory.parts[part_id].stance_mod[self._factory_id].translation}
+			return {
+				translation = factory.parts[part_id].stance_mod[self._factory_id].translation
+			}
 		end
 	end
 
@@ -480,4 +483,3 @@ function NewRaycastWeaponBase:destroy(unit)
 
 	managers.weapon_factory:disassemble(self._parts)
 end
-

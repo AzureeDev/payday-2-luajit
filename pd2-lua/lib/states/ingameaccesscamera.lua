@@ -77,7 +77,9 @@ function IngameAccessCamera:_get_cameras()
 
 		if access_cameras then
 			for _, access_camera in ipairs(access_cameras) do
-				table.insert(self._cameras, {access_camera = access_camera})
+				table.insert(self._cameras, {
+					access_camera = access_camera
+				})
 			end
 		end
 	end
@@ -86,7 +88,7 @@ end
 function IngameAccessCamera:_next_index()
 	self._camera_data.index = self._camera_data.index + 1
 
-	if #self._cameras < self._camera_data.index then
+	if self._camera_data.index > #self._cameras then
 		self._camera_data.index = 1
 	end
 
@@ -161,7 +163,9 @@ function IngameAccessCamera:_show_camera()
 	local text_id = access_camera:value("text_id") ~= "debug_none" and access_camera:value("text_id") or "hud_cam_access_camera_test_generated"
 	local number = (self._camera_data.index < 10 and "0" or "") .. self._camera_data.index
 
-	managers.hud:set_access_camera_name(managers.localization:text(text_id, {NUMBER = number}))
+	managers.hud:set_access_camera_name(managers.localization:text(text_id, {
+		NUMBER = number
+	}))
 end
 
 function IngameAccessCamera:update(t, dt)
@@ -249,7 +253,12 @@ function IngameAccessCamera:update(t, dt)
 	for i, unit in ipairs(units) do
 		if World:in_view_with_options(unit:movement():m_head_pos(), 0, 0, 4000) then
 			local ray = nil
-			ray = self._last_access_camera and self._last_access_camera:has_camera_unit() and self._cam_unit:raycast("ray", unit:movement():m_head_pos(), self._cam_unit:position(), "ray_type", "ai_vision", "slot_mask", managers.slot:get_mask("world_geometry"), "ignore_unit", self._last_access_camera:camera_unit(), "report") or self._cam_unit:raycast("ray", unit:movement():m_head_pos(), self._cam_unit:position(), "ray_type", "ai_vision", "slot_mask", managers.slot:get_mask("world_geometry"), "report")
+
+			if self._last_access_camera and self._last_access_camera:has_camera_unit() then
+				ray = self._cam_unit:raycast("ray", unit:movement():m_head_pos(), self._cam_unit:position(), "ray_type", "ai_vision", "slot_mask", managers.slot:get_mask("world_geometry"), "ignore_unit", self._last_access_camera:camera_unit(), "report")
+			else
+				ray = self._cam_unit:raycast("ray", unit:movement():m_head_pos(), self._cam_unit:position(), "ray_type", "ai_vision", "slot_mask", managers.slot:get_mask("world_geometry"), "report")
+			end
 
 			if not ray then
 				amount = amount + 1
@@ -315,7 +324,9 @@ function IngameAccessCamera:at_enter(old_state, ...)
 
 	self:_get_cameras()
 
-	self._camera_data = {index = 0}
+	self._camera_data = {
+		index = 0
+	}
 	self._no_feeds = not self:_any_enabled_cameras()
 
 	if self._no_feeds then
@@ -396,4 +407,3 @@ end
 function IngameAccessCamera:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

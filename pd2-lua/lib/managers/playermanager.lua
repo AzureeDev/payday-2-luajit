@@ -60,25 +60,33 @@ function PlayerManager:init()
 	self._num_kills = 0
 	self._timers = {}
 	self._player_list = {}
-	self._viewport_configs[1] = {{dimensions = {
-		w = 1,
-		h = 1,
-		x = 0,
-		y = 0
-	}}}
+	self._viewport_configs[1] = {
+		{
+			dimensions = {
+				w = 1,
+				h = 1,
+				x = 0,
+				y = 0
+			}
+		}
+	}
 	self._viewport_configs[2] = {
-		{dimensions = {
-			w = 1,
-			h = 0.5,
-			x = 0,
-			y = 0
-		}},
-		{dimensions = {
-			w = 1,
-			h = 0.5,
-			x = 0,
-			y = 0.5
-		}}
+		{
+			dimensions = {
+				w = 1,
+				h = 0.5,
+				x = 0,
+				y = 0
+			}
+		},
+		{
+			dimensions = {
+				w = 1,
+				h = 0.5,
+				x = 0,
+				y = 0.5
+			}
+		}
 	}
 
 	self:_setup_rules()
@@ -151,7 +159,6 @@ function PlayerManager:check_skills()
 	end
 
 	if self:has_category_upgrade("player", "melee_damage_stacking") then
-
 		local function start_bloodthirst_base(weapon_unit, variant)
 			if variant ~= "melee" and not self._coroutine_mgr:is_running(PlayerAction.BloodthirstBase) then
 				local data = self:upgrade_value("player", "melee_damage_stacking", nil)
@@ -231,7 +238,7 @@ function PlayerManager:check_skills()
 		local function on_player_damage(attack_data)
 			local t = TimerManager:game():time()
 
-			if attack_data.variant == "bullet" and last_gain_time + cooldown < t then
+			if attack_data.variant == "bullet" and t > last_gain_time + cooldown then
 				last_gain_time = t
 
 				managers.player:_dodge_shot_gain(managers.player:_dodge_shot_gain() + dodge_gain)
@@ -252,7 +259,6 @@ function PlayerManager:check_skills()
 	end
 
 	if managers.blackmarket:equipped_grenade() == "smoke_screen_grenade" then
-
 		local function speed_up_on_kill()
 			if #managers.player:smoke_screens() == 0 then
 				managers.player:speed_up_grenade_cooldown(1)
@@ -526,17 +532,20 @@ function PlayerManager:_setup()
 	self._temporary_upgrades = {}
 
 	if not Global.player_manager then
-		Global.player_manager = {}
-		Global.player_manager.upgrades = {}
-		Global.player_manager.team_upgrades = {}
-		Global.player_manager.cooldown_upgrades = {}
+		Global.player_manager = {
+			upgrades = {},
+			team_upgrades = {},
+			cooldown_upgrades = {}
+		}
 		Global.player_manager.cooldown_upgrades.cooldown = {}
 		Global.player_manager.weapons = {}
 		Global.player_manager.equipment = {}
 		Global.player_manager.grenades = {}
 		Global.player_manager.synced_upgrades = {}
 		Global.player_manager.kit = {
-			weapon_slots = {"glock_17"},
+			weapon_slots = {
+				"glock_17"
+			},
 			equipment_slots = {},
 			special_equipment_slots = {}
 		}
@@ -548,9 +557,13 @@ function PlayerManager:_setup()
 	end
 
 	Global.player_manager.default_kit = {
-		weapon_slots = {"glock_17"},
+		weapon_slots = {
+			"glock_17"
+		},
 		equipment_slots = {},
-		special_equipment_slots = {"cable_tie"}
+		special_equipment_slots = {
+			"cable_tie"
+		}
 	}
 	Global.player_manager.synced_bonuses = {}
 	Global.player_manager.synced_equipment_possession = {}
@@ -567,7 +580,9 @@ function PlayerManager:_setup()
 end
 
 function PlayerManager:_setup_rules()
-	self._rules = {no_run = 0}
+	self._rules = {
+		no_run = 0
+	}
 end
 
 function PlayerManager:aquire_default_upgrades()
@@ -830,7 +845,12 @@ function PlayerManager:spawn_dropin_penalty(dead, bleed_out, health, used_deploy
 	self:_set_body_bags_amount(math.max(self:total_body_bags() - used_body_bags, 0))
 
 	local min_health = nil
-	min_health = (dead or bleed_out) and 0 or 0.25
+
+	if dead or bleed_out then
+		min_health = 0
+	else
+		min_health = 0.25
+	end
 
 	player:character_damage():set_health(math.max(min_health, health) * player:character_damage():_max_health())
 
@@ -879,8 +899,7 @@ function PlayerManager:setup_viewports()
 	local configs = self._viewport_configs[self._last_id]
 
 	if configs then
-		for k, player in ipairs(self._players) do
-			-- Nothing
+		for slot5, slot6 in ipairs(self._players) do
 		end
 	else
 		Application:error("Unsupported number of players: " .. tostring(self._last_id))
@@ -1293,8 +1312,10 @@ function PlayerManager:chk_wild_kill_counter(killed_unit, variant)
 		self._wild_kill_triggers = self._wild_kill_triggers or {}
 		local t = Application:time()
 
-		while self._wild_kill_triggers[1] and self._wild_kill_triggers[1] <= t do
-			table.remove(self._wild_kill_triggers, 1)
+		if self._wild_kill_triggers[1] then
+			while self._wild_kill_triggers[1] and self._wild_kill_triggers[1] <= t do
+				table.remove(self._wild_kill_triggers, 1)
+			end
 		end
 
 		if tweak_data.upgrades.wild_max_triggers_per_time <= #self._wild_kill_triggers then
@@ -1337,8 +1358,10 @@ function PlayerManager:chk_wild_kill_counter(killed_unit, variant)
 		local trigger_time = t + math.max(trigger_cooldown, 0)
 		local insert_index = #self._wild_kill_triggers
 
-		while insert_index > 0 and trigger_time < self._wild_kill_triggers[insert_index] do
-			insert_index = insert_index - 1
+		if insert_index > 0 then
+			while insert_index > 0 and trigger_time < self._wild_kill_triggers[insert_index] do
+				insert_index = insert_index - 1
+			end
 		end
 
 		table.insert(self._wild_kill_triggers, insert_index + 1, trigger_time)
@@ -1747,7 +1770,9 @@ function PlayerManager:activate_temporary_upgrade(category, upgrade)
 
 	local time = upgrade_value[2]
 	self._temporary_upgrades[category] = self._temporary_upgrades[category] or {}
-	self._temporary_upgrades[category][upgrade] = {expire_time = Application:time() + time}
+	self._temporary_upgrades[category][upgrade] = {
+		expire_time = Application:time() + time
+	}
 
 	if self:is_upgrade_synced(category, upgrade) then
 		managers.network:session():send_to_peers("sync_temporary_upgrade_activated", self:temporary_upgrade_index(category, upgrade))
@@ -1769,7 +1794,7 @@ end
 function PlayerManager:activate_temporary_upgrade_by_level(category, upgrade, level)
 	local upgrade_level = self:upgrade_level(category, upgrade, 0) or 0
 
-	if upgrade_level < level then
+	if level > upgrade_level then
 		return
 	end
 
@@ -1895,7 +1920,9 @@ function PlayerManager:aquire_cooldown_upgrade(upgrade)
 	end
 
 	self._global.cooldown_upgrades[upgrade.category] = self._global.cooldown_upgrades[upgrade.category] or {}
-	self._global.cooldown_upgrades[upgrade.category][upgrade.upgrade] = {cooldown_time = Application:time()}
+	self._global.cooldown_upgrades[upgrade.category][upgrade.upgrade] = {
+		cooldown_time = Application:time()
+	}
 end
 
 function PlayerManager:unaquire_cooldown_upgrade(upgrade)
@@ -1911,7 +1938,9 @@ function PlayerManager:disable_cooldown_upgrade(category, upgrade)
 
 	local time = upgrade_value[2]
 	self._global.cooldown_upgrades[category] = self._global.cooldown_upgrades[category] or {}
-	self._global.cooldown_upgrades[category][upgrade] = {cooldown_time = Application:time() + time}
+	self._global.cooldown_upgrades[category][upgrade] = {
+		cooldown_time = Application:time() + time
+	}
 end
 
 function PlayerManager:has_disabled_cooldown_upgrade(category, upgrade)
@@ -2064,12 +2093,12 @@ end
 
 function PlayerManager:get_skill_exp_multiplier(whisper_mode)
 	local multiplier = 1
-	multiplier = (multiplier + managers.player:upgrade_value("player", "xp_multiplier", 1)) - 1
-	multiplier = (multiplier + managers.player:upgrade_value("player", "passive_xp_multiplier", 1)) - 1
-	multiplier = (multiplier + managers.player:team_upgrade_value("xp", "multiplier", 1)) - 1
+	multiplier = multiplier + managers.player:upgrade_value("player", "xp_multiplier", 1) - 1
+	multiplier = multiplier + managers.player:upgrade_value("player", "passive_xp_multiplier", 1) - 1
+	multiplier = multiplier + managers.player:team_upgrade_value("xp", "multiplier", 1) - 1
 
 	if whisper_mode then
-		multiplier = (multiplier + managers.player:team_upgrade_value("xp", "stealth_multiplier", 1)) - 1
+		multiplier = multiplier + managers.player:team_upgrade_value("xp", "stealth_multiplier", 1) - 1
 	end
 
 	if managers.network:session() then
@@ -2089,7 +2118,7 @@ function PlayerManager:get_skill_exp_multiplier(whisper_mode)
 						if custom_stats then
 							for part_id, stats in pairs(custom_stats) do
 								if stats.exp_multiplier then
-									multiplier = (multiplier + stats.exp_multiplier) - 1
+									multiplier = multiplier + stats.exp_multiplier - 1
 								end
 							end
 						end
@@ -2098,7 +2127,7 @@ function PlayerManager:get_skill_exp_multiplier(whisper_mode)
 						tweak = tweak and tweak_data.economy.bonuses[tweak.bonus]
 
 						if tweak and tweak.exp_multiplier then
-							multiplier = (multiplier + tweak.exp_multiplier) - 1
+							multiplier = multiplier + tweak.exp_multiplier - 1
 						end
 					end
 				end
@@ -2137,7 +2166,7 @@ function PlayerManager:get_skill_money_multiplier(whisper_mode)
 						if custom_stats then
 							for part_id, stats in pairs(custom_stats) do
 								if stats.exp_multiplier then
-									multiplier = (multiplier + stats.money_multiplier) - 1
+									multiplier = multiplier + stats.money_multiplier - 1
 								end
 							end
 						end
@@ -2146,7 +2175,7 @@ function PlayerManager:get_skill_money_multiplier(whisper_mode)
 						tweak = tweak and tweak_data.economy.bonuses[tweak.bonus]
 
 						if tweak and tweak.money_multiplier then
-							multiplier = (multiplier + tweak.money_multiplier) - 1
+							multiplier = multiplier + tweak.money_multiplier - 1
 						end
 					end
 				end
@@ -2171,10 +2200,10 @@ function PlayerManager:get_hostage_bonus_multiplier(category)
 		hostages = math.min(hostages, hostage_max_num)
 	end
 
-	multiplier = (multiplier + self:team_upgrade_value(category, "hostage_multiplier", 1)) - 1
-	multiplier = (multiplier + self:team_upgrade_value(category, "passive_hostage_multiplier", 1)) - 1
-	multiplier = (multiplier + self:upgrade_value("player", "hostage_" .. category .. "_multiplier", 1)) - 1
-	multiplier = (multiplier + self:upgrade_value("player", "passive_hostage_" .. category .. "_multiplier", 1)) - 1
+	multiplier = multiplier + self:team_upgrade_value(category, "hostage_multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value(category, "passive_hostage_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "hostage_" .. category .. "_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "passive_hostage_" .. category .. "_multiplier", 1) - 1
 	local local_player = self:local_player()
 
 	if self:has_category_upgrade("player", "close_to_hostage_boost") and self._is_local_close_to_hostage then
@@ -2265,14 +2294,14 @@ end
 
 function PlayerManager:body_armor_skill_multiplier(override_armor)
 	local multiplier = 1
-	multiplier = (multiplier + self:upgrade_value("player", "tier_armor_multiplier", 1)) - 1
-	multiplier = (multiplier + self:upgrade_value("player", "passive_armor_multiplier", 1)) - 1
-	multiplier = (multiplier + self:upgrade_value("player", "armor_multiplier", 1)) - 1
-	multiplier = (multiplier + self:team_upgrade_value("armor", "multiplier", 1)) - 1
-	multiplier = (multiplier + self:get_hostage_bonus_multiplier("armor")) - 1
-	multiplier = (multiplier + self:upgrade_value("player", "perk_armor_loss_multiplier", 1)) - 1
-	multiplier = (multiplier + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_multiplier", 1)) - 1
-	multiplier = (multiplier + self:upgrade_value("player", "chico_armor_multiplier", 1)) - 1
+	multiplier = multiplier + self:upgrade_value("player", "tier_armor_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "passive_armor_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "armor_multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("armor", "multiplier", 1) - 1
+	multiplier = multiplier + self:get_hostage_bonus_multiplier("armor") - 1
+	multiplier = multiplier + self:upgrade_value("player", "perk_armor_loss_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "chico_armor_multiplier", 1) - 1
 
 	return multiplier
 end
@@ -2354,10 +2383,10 @@ end
 
 function PlayerManager:stamina_multiplier()
 	local multiplier = 1
-	multiplier = (multiplier + self:upgrade_value("player", "stamina_multiplier", 1)) - 1
-	multiplier = (multiplier + self:team_upgrade_value("stamina", "multiplier", 1)) - 1
-	multiplier = (multiplier + self:team_upgrade_value("stamina", "passive_multiplier", 1)) - 1
-	multiplier = (multiplier + self:get_hostage_bonus_multiplier("stamina")) - 1
+	multiplier = multiplier + self:upgrade_value("player", "stamina_multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("stamina", "multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("stamina", "passive_multiplier", 1) - 1
+	multiplier = multiplier + self:get_hostage_bonus_multiplier("stamina") - 1
 	multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
 
 	return multiplier
@@ -2375,9 +2404,9 @@ function PlayerManager:critical_hit_chance()
 	multiplier = multiplier + self:upgrade_value("player", "critical_hit_chance", 0)
 	multiplier = multiplier + self:upgrade_value("weapon", "critical_hit_chance", 0)
 	multiplier = multiplier + self:team_upgrade_value("critical_hit", "chance", 0)
-	multiplier = (multiplier + self:get_hostage_bonus_multiplier("critical_hit")) - 1
+	multiplier = multiplier + self:get_hostage_bonus_multiplier("critical_hit") - 1
 	multiplier = multiplier + managers.player:temporary_upgrade_value("temporary", "unseen_strike", 1) - 1
-	multiplier = (multiplier + self._crit_mul) - 1
+	multiplier = multiplier + self._crit_mul - 1
 	local detection_risk_add_crit_chance = managers.player:upgrade_value("player", "detection_risk_add_crit_chance")
 	multiplier = multiplier + self:get_value_from_risk_upgrade(detection_risk_add_crit_chance)
 
@@ -2418,14 +2447,14 @@ end
 
 function PlayerManager:health_skill_multiplier()
 	local multiplier = 1
-	multiplier = (multiplier + self:upgrade_value("player", "health_multiplier", 1)) - 1
-	multiplier = (multiplier + self:upgrade_value("player", "passive_health_multiplier", 1)) - 1
-	multiplier = (multiplier + self:team_upgrade_value("health", "passive_multiplier", 1)) - 1
-	multiplier = (multiplier + self:get_hostage_bonus_multiplier("health")) - 1
+	multiplier = multiplier + self:upgrade_value("player", "health_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "passive_health_multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("health", "passive_multiplier", 1) - 1
+	multiplier = multiplier + self:get_hostage_bonus_multiplier("health") - 1
 	multiplier = multiplier - self:upgrade_value("player", "health_decrease", 0)
 
 	if self:num_local_minions() > 0 then
-		multiplier = (multiplier + self:upgrade_value("player", "minion_master_health_multiplier", 1)) - 1
+		multiplier = multiplier + self:upgrade_value("player", "minion_master_health_multiplier", 1) - 1
 	end
 
 	return multiplier
@@ -2661,7 +2690,9 @@ function PlayerManager:equipment_slots()
 	local forced_deployable = managers.blackmarket:forced_deployable()
 
 	if forced_deployable then
-		return forced_deployable ~= "none" and {forced_deployable} or {}
+		return forced_deployable ~= "none" and {
+			forced_deployable
+		} or {}
 	end
 
 	return self._global.kit.equipment_slots
@@ -2808,7 +2839,9 @@ function PlayerManager:set_synced_cable_ties(peer_id, amount)
 		peer:on_used_cable_tie()
 	end
 
-	self._global.synced_cable_ties[peer_id] = {amount = amount}
+	self._global.synced_cable_ties[peer_id] = {
+		amount = amount
+	}
 	local character_data = managers.criminals:character_data_by_peer_id(peer_id)
 
 	if character_data and character_data.panel_id then
@@ -3050,6 +3083,9 @@ function PlayerManager:get_contour_for_marked_enemy(enemy_type)
 
 		if managers.player:has_category_upgrade("player", "marked_inc_dmg_distance") then
 			contour_type = "mark_unit_dangerous_damage_bonus_distance"
+
+			if "mark_unit_dangerous_damage_bonus_distance" then
+			end
 		end
 	else
 		if managers.player:has_category_upgrade("player", "marked_enemy_extra_damage") then
@@ -3347,7 +3383,7 @@ function PlayerManager:transfer_from_custody_special_equipment_to(target_id)
 					local amount_to_transfer = amount
 					local targets_amount = self._global.synced_equipment_possession[target_id] and self._global.synced_equipment_possession[target_id][name] or 0
 
-					if targets_amount < max_amount then
+					if max_amount > targets_amount then
 						local transfer_amount = math.min(amount_to_transfer, max_amount - targets_amount)
 						amount_to_transfer = amount_to_transfer - transfer_amount
 
@@ -3442,7 +3478,7 @@ function PlayerManager:transfer_special_equipment(peer_id, include_custody)
 					local id = p:id()
 					local peer_amount = self._global.synced_equipment_possession[id] and self._global.synced_equipment_possession[id][name] or 0
 
-					if peer_amount < max_amount then
+					if max_amount > peer_amount then
 						local transfer_amount = math.min(amount_to_transfer, max_amount - peer_amount)
 						amount_to_transfer = amount_to_transfer - transfer_amount
 
@@ -3496,7 +3532,11 @@ function PlayerManager:peer_dropped_out(peer)
 			local position = Vector3()
 
 			if alive(peer_unit) then
-				position = peer_unit:movement():zipline_unit() and peer_unit:movement():zipline_unit():position() or peer_unit:position()
+				if peer_unit:movement():zipline_unit() then
+					position = peer_unit:movement():zipline_unit():position()
+				else
+					position = peer_unit:position()
+				end
 			end
 
 			local dir = Vector3(0, 0, 0)
@@ -4060,7 +4100,7 @@ function PlayerManager:add_special(params)
 	if special_equipment then
 		if equipment.max_quantity or equipment.quantity or params.transfer and equipment.transfer_quantity then
 			local dedigested_amount = special_equipment.amount and Application:digest_value(special_equipment.amount, false) or 1
-			local new_amount = self:has_category_upgrade(name, "quantity_unlimited") and -1 or math.min(dedigested_amount + amount, (params.transfer and equipment.transfer_quantity or equipment.max_quantity or equipment.quantity) + extra)
+			local new_amount = self:has_category_upgrade(name, "quantity_unlimited") and -1 or slot10(slot11, slot12 + extra)
 			special_equipment.amount = Application:digest_value(new_amount, true)
 
 			if special_equipment.is_cable_tie then
@@ -4473,7 +4513,9 @@ function PlayerManager:set_carry(carry_id, carry_multiplier, dye_initiated, has_
 
 	local title = managers.localization:text("hud_carrying_announcement_title")
 	local type_text = carry_data.name_id and managers.localization:text(carry_data.name_id)
-	local text = managers.localization:text("hud_carrying_announcement", {CARRY_TYPE = type_text})
+	local text = managers.localization:text("hud_carrying_announcement", {
+		CARRY_TYPE = type_text
+	})
 	local icon = nil
 
 	if not dye_initiated then
@@ -4481,8 +4523,11 @@ function PlayerManager:set_carry(carry_id, carry_multiplier, dye_initiated, has_
 
 		if carry_data.dye then
 			local chance = tweak_data.carry.dye.chance * managers.player:upgrade_value("player", "dye_pack_chance_multiplier", 1)
-			has_dye_pack = true
-			dye_value_multiplier = math.round(tweak_data.carry.dye.value_multiplier * managers.player:upgrade_value("player", "dye_pack_cash_loss_multiplier", 1))
+
+			if false then
+				has_dye_pack = true
+				dye_value_multiplier = math.round(tweak_data.carry.dye.value_multiplier * managers.player:upgrade_value("player", "dye_pack_cash_loss_multiplier", 1))
+			end
 		end
 	end
 
@@ -5234,7 +5279,9 @@ function PlayerManager:on_enter_custody(_player, already_dead)
 	end
 
 	self:force_drop_carry()
-	managers.statistics:downed({death = true})
+	managers.statistics:downed({
+		death = true
+	})
 
 	if not already_dead then
 		player:network():send("sync_player_movement_state", "dead", player:character_damage():down_time(), player:id())
@@ -5298,7 +5345,9 @@ function PlayerManager:on_hallowSPOOCed()
 				mvector3.set_z(vec, 0)
 				mvector3.negate(vec)
 				mvector3.normalize(vec)
-				camera_unit:base():clbk_aim_assist({ray = vec})
+				camera_unit:base():clbk_aim_assist({
+					ray = vec
+				})
 				player:sound():play("cloaker_detect_mono", nil, nil)
 			end
 		end
@@ -5546,4 +5595,3 @@ function PlayerManager:crew_add_concealment(new_value)
 		end
 	end
 end
-

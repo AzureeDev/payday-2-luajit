@@ -23,7 +23,9 @@ function CrimeSpreeModifierDetailsPage:init(...)
 	local level_layer = 50
 
 	if warning_title then
-		local level_panel = self:panel():panel({layer = level_layer})
+		local level_panel = self:panel():panel({
+			layer = level_layer
+		})
 
 		level_panel:bitmap({
 			texture = "guis/textures/pd2/cs_warning_background",
@@ -72,7 +74,9 @@ function CrimeSpreeModifierDetailsPage:init(...)
 		next_modifiers_h = suspend_desc_text:bottom() + padding
 	end
 
-	self._next_panel = self:panel():panel({h = next_modifiers_h})
+	self._next_panel = self:panel():panel({
+		h = next_modifiers_h
+	})
 	local name_color = managers.crime_spree:in_progress() and tweak_data.screen_colors.text or tweak_data.screen_colors.important_1
 	self._next_text = self._next_panel:text({
 		vertical = "center",
@@ -121,12 +125,14 @@ function CrimeSpreeModifierDetailsPage:init(...)
 		layer = warning_title and level_layer + 10 or 0
 	})
 
-	BoxGuiObject:new(outline_panel, {sides = {
-		4,
-		4,
-		2,
-		1
-	}})
+	BoxGuiObject:new(outline_panel, {
+		sides = {
+			4,
+			4,
+			2,
+			1
+		}
+	})
 end
 
 function CrimeSpreeModifierDetailsPage:upcoming_modifiers_text()
@@ -142,7 +148,9 @@ function CrimeSpreeModifierDetailsPage:upcoming_modifiers_text()
 		if next_level then
 			local text_id = "menu_cs_next_modifier_" .. category
 			local padding = i > 1 and "  " or ""
-			local localized = managers.localization:to_upper_text(text_id, {next = next_level - managers.crime_spree:server_spree_level()})
+			local localized = managers.localization:to_upper_text(text_id, {
+				next = next_level - managers.crime_spree:server_spree_level()
+			})
 			upcoming_modifiers_text = upcoming_modifiers_text .. padding .. localized
 		end
 	end
@@ -196,7 +204,7 @@ function CrimeSpreeModifierDetailsPage:add_modifiers_panel(parent, modifiers, is
 		extra_padding_right = padding
 	end
 
-	local max_level = (modifiers[#modifiers] or {}).level or 0
+	local max_level = modifiers[#modifiers] or {}.level or 0
 	local max_level_text = parent:text({
 		vertical = "top",
 		halign = "right",
@@ -249,7 +257,7 @@ function CrimeSpreeModifierDetailsPage:add_modifiers_panel(parent, modifiers, is
 				x = padding * 1.5 + level_w,
 				font = tweak_data.menu.pd2_small_font,
 				font_size = tweak_data.menu.pd2_small_font_size,
-				w = ((panel:w() - level_w) - padding * 2) - extra_padding_right,
+				w = panel:w() - level_w - padding * 2 - extra_padding_right,
 				h = tweak_data.menu.pd2_small_font_size,
 				color = Color.white
 			})
@@ -291,4 +299,3 @@ function CrimeSpreeModifierDetailsPage:add_modifiers_panel(parent, modifiers, is
 
 	return next_y
 end
-

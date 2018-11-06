@@ -18,6 +18,7 @@ function ElementBlackscreenVariant:on_executed(instigator)
 	managers.groupai:state():set_blackscreen_variant(tonumber(self._values.variant))
 	ElementBlackscreenVariant.super.on_executed(self, instigator)
 end
+
 ElementEndscreenVariant = ElementEndscreenVariant or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementEndscreenVariant:init(...)
@@ -36,4 +37,3 @@ function ElementEndscreenVariant:on_executed(instigator)
 	managers.groupai:state():set_endscreen_variant(tonumber(self._values.variant))
 	ElementEndscreenVariant.super.on_executed(self, instigator)
 end
-

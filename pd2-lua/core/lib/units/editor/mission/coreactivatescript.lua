@@ -52,4 +52,3 @@ function CoreActivateScriptUnitElement:_build_panel(panel, panel_sizer)
 		ctrlr = scripts
 	})
 end
-

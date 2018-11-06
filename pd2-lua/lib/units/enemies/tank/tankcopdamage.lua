@@ -20,4 +20,3 @@ function TankCopDamage:seq_clbk_vizor_shatter()
 		managers.modifiers:run_func("OnTankVisorShatter", self._unit)
 	end
 end
-

@@ -77,6 +77,7 @@ function BlackscreenVariantElement:_get_params(panel, panel_sizer)
 
 	return bscreen_params
 end
+
 EndscreenVariantElement = EndscreenVariantElement or class(BlackscreenVariantElement)
 
 function EndscreenVariantElement:init(unit)
@@ -130,4 +131,3 @@ function EndscreenVariantElement:_get_params(panel, panel_sizer)
 
 	return bscreen_params
 end
-

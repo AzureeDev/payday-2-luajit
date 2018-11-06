@@ -12,4 +12,3 @@ function ScriptLocations:setup(callback)
 
 	self._updator = callback
 end
-

@@ -30,7 +30,9 @@ end
 function Storage:_common_save_params()
 	return {
 		preview = false,
-		save_slots = {1},
+		save_slots = {
+			1
+		},
 		user_index = self._user_index
 	}
 end
@@ -92,7 +94,9 @@ function Storage:profile_data_is_loaded()
 end
 
 function Storage:_create_profile_data()
-	local profile_data = {settings = {}}
+	local profile_data = {
+		settings = {}
+	}
 	profile_data.settings.title_data = {}
 	profile_data.settings.version = 0
 	profile_data.progress = {
@@ -110,4 +114,3 @@ end
 function Storage:profile_progress()
 	return self._profile_data.progress.title_data
 end
-

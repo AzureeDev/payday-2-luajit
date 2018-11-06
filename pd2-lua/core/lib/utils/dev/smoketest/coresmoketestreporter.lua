@@ -21,4 +21,3 @@ end
 function Reporter:tests_done()
 	cat_print("spam", "[Smoketest] tests_done")
 end
-

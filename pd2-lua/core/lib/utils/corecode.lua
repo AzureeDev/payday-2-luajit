@@ -68,7 +68,7 @@ function traceback(max_level)
 	while true do
 		local info = debug.getinfo(level, "Sl")
 
-		if not info or max_level + 2 <= level then
+		if not info or level >= max_level + 2 then
 			break
 		end
 
@@ -189,7 +189,9 @@ function add_prints(class_name, ignore_list)
 	local obj = _G[class_name]
 	local to_change = {}
 	ignore_list = ignore_list or {}
-	local ignore = {new = true}
+	local ignore = {
+		new = true
+	}
 
 	for _, v in pairs(ignore_list) do
 		ignore[v] = true
@@ -197,7 +199,6 @@ function add_prints(class_name, ignore_list)
 
 	for k, v in pairs(obj) do
 		if type(v) == "function" and not ignore[k] then
-
 			to_change[k] = function (...)
 				print("[" .. class_name .. "]" .. "." .. k, ...)
 
@@ -298,7 +299,13 @@ function help(o)
 					end
 
 					k = k .. string.rep(" ", 40 - #k)
-					k = info.what == "Lua" and k .. "(" .. info.source .. ":" .. info.linedefined .. ")" or k .. "(C++ function)"
+
+					if info.what == "Lua" then
+						k = k .. "(" .. info.source .. ":" .. info.linedefined .. ")"
+					else
+						k = k .. "(C++ function)"
+					end
+
 					methods[k] = true
 				end
 			end
@@ -356,7 +363,9 @@ end
 function memory_report(limit)
 	local seen = {}
 	local count = {}
-	local name = {_G = _G}
+	local name = {
+		_G = _G
+	}
 
 	for k, v in pairs(_G) do
 		if type(v) == "userdata" and v.key or type(v) ~= "userdata" then
@@ -425,7 +434,7 @@ function memory_report(limit)
 	for k, v in pairs(count) do
 		total = total + v
 
-		if (limit or 100) < v then
+		if v > (limit or 100) then
 			res[#res + 1] = string.format("%6i  %s", v, k)
 		end
 	end
@@ -456,7 +465,9 @@ function profile(s)
 		return
 	end
 
-	local t = {s = s}
+	local t = {
+		s = s
+	}
 	local start, stop = s:find(":")
 
 	if start then
@@ -525,3 +536,19 @@ function reprofile()
 	__old_profiled = {}
 end
 
+function safe_get_value(table, ...)
+	local keys = {
+		...
+	}
+	local value = table
+
+	for _, key in ipairs(keys) do
+		value = value[key]
+
+		if value == nil then
+			break
+		end
+	end
+
+	return value
+end

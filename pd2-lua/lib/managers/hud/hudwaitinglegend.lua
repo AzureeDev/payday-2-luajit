@@ -56,7 +56,9 @@ function HUDWaitingLegend:update_buttons()
 		local button_text = managers.localization:btn_macro(btn.binding, true, true)
 
 		if button_text then
-			str = str .. (str == "" and "" or "  ") .. managers.localization:text(btn.text, {MY_BTN = button_text})
+			str = str .. (str == "" and "" or "  ") .. managers.localization:text(btn.text, {
+				MY_BTN = button_text
+			})
 		end
 	end
 
@@ -169,4 +171,3 @@ function HUDWaitingLegend:kick()
 		managers.vote:message_host_kick(self._current_peer)
 	end
 end
-

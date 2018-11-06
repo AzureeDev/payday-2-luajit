@@ -12,6 +12,7 @@ end
 function CoreCutsceneUnitCallback:get_parameter_map()
 	return self._params
 end
+
 CoreCutsceneInputParam = CoreCutsceneInputParam or class()
 
 function CoreCutsceneInputParam:init(name, value_type, default_value, min_value, max_value, decimals)
@@ -63,9 +64,14 @@ function CoreCutsceneInputParam:validate_number(number, min_value, max_value, de
 	end
 
 	if self._decimals ~= nil then
-		local round_helper = 10 ^ self._decimals
+		local round_helper = 10^self._decimals
 		number = math.round(number * round_helper)
-		number = number == 0 and 0 or number / round_helper
+
+		if number == 0 then
+			number = 0
+		else
+			number = number / round_helper
+		end
 	end
 
 	if min_value ~= nil and number < min_value then
@@ -84,4 +90,3 @@ function CoreCutsceneInputParam:validate_boolean(boolean)
 		return boolean
 	end
 end
-

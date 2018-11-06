@@ -25,4 +25,3 @@ end
 function CoreChangeCameraCutsceneKey:is_valid_camera(camera)
 	return self.super.is_valid_unit_name(self, camera) and string.begins(camera, "camera")
 end
-

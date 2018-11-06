@@ -22,4 +22,3 @@ function CoreDeprecatedHubElement:_build_panel(panel, panel_sizer)
 	deprecated_sizer:add(EWS:StaticText(panel, "Have a nice day!", 0, ""), 1, 0, "ALIGN_CENTER")
 	panel_sizer:add(deprecated_sizer, 0, 0, "EXPAND")
 end
-

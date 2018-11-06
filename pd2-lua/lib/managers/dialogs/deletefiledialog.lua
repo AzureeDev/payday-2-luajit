@@ -10,4 +10,3 @@ function DeleteFileDialog:done_callback(success)
 
 	self:fade_out_close()
 end
-

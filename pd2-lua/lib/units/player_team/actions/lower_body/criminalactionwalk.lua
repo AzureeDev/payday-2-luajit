@@ -78,4 +78,3 @@ function CriminalActionWalk:_get_current_max_walk_speed(move_dir)
 
 	return speed
 end
-

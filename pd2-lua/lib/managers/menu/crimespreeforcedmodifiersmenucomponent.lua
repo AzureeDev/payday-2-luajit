@@ -23,8 +23,12 @@ function CrimeSpreeForcedModifiersMenuComponent:_setup()
 		parent:remove(self._panel)
 	end
 
-	self._panel = self._ws:panel():panel({layer = 51})
-	self._fullscreen_panel = self._fullscreen_ws:panel():panel({layer = 50})
+	self._panel = self._ws:panel():panel({
+		layer = 51
+	})
+	self._fullscreen_panel = self._fullscreen_ws:panel():panel({
+		layer = 50
+	})
 
 	self._fullscreen_panel:rect({
 		alpha = 0.75,
@@ -57,7 +61,9 @@ function CrimeSpreeForcedModifiersMenuComponent:_setup()
 	local info_text = FineText:new(self._panel, {
 		wrap = true,
 		word_wrap = true,
-		text = managers.localization:text(info_text_id, {count = #modifiers}),
+		text = managers.localization:text(info_text_id, {
+			count = #modifiers
+		}),
 		x = padding,
 		y = padding,
 		w = modifiers_width - padding * 2
@@ -123,12 +129,14 @@ function CrimeSpreeForcedModifiersMenuComponent:_setup()
 	self._text_header:set_size(self._panel:w(), h)
 	self._text_header:set_left(self._panel:left())
 	self._text_header:set_bottom(self._panel:top())
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	if not managers.menu:is_pc_controller() then
 		self:_select_back_btn()
@@ -185,7 +193,6 @@ function CrimeSpreeForcedModifiersMenuComponent:mouse_moved(o, x, y)
 	end
 
 	local used = false
-	local pointer
 	pointer, self._selected_item = nil
 	used, pointer = self._modifiers_scroll:mouse_moved(nil, x, y)
 
@@ -229,8 +236,8 @@ function CrimeSpreeForcedModifiersMenuComponent:_select_back_btn()
 
 	return true
 end
+
 CrimeSpreeForcedModifiersMenuComponent.move_up = CrimeSpreeForcedModifiersMenuComponent._select_back_btn
 CrimeSpreeForcedModifiersMenuComponent.move_down = CrimeSpreeForcedModifiersMenuComponent._select_back_btn
 CrimeSpreeForcedModifiersMenuComponent.move_left = CrimeSpreeForcedModifiersMenuComponent._select_back_btn
 CrimeSpreeForcedModifiersMenuComponent.move_right = CrimeSpreeForcedModifiersMenuComponent._select_back_btn
-

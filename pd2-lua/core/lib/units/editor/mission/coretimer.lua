@@ -1,11 +1,15 @@
 CoreTimerUnitElement = CoreTimerUnitElement or class(MissionElement)
 CoreTimerUnitElement.SAVE_UNIT_POSITION = false
 CoreTimerUnitElement.SAVE_UNIT_ROTATION = false
-CoreTimerUnitElement.INSTANCE_VAR_NAMES = {{
-	value = "timer",
-	type = "number"
-}}
-CoreTimerUnitElement.RANDOMS = {"timer"}
+CoreTimerUnitElement.INSTANCE_VAR_NAMES = {
+	{
+		value = "timer",
+		type = "number"
+	}
+}
+CoreTimerUnitElement.RANDOMS = {
+	"timer"
+}
 TimerUnitElement = TimerUnitElement or class(CoreTimerUnitElement)
 
 function TimerUnitElement:init(...)
@@ -184,9 +188,14 @@ function CoreTimerUnitElement:_build_panel(panel, panel_sizer)
 	}, "Specifies how long time (in seconds) to wait before execute")
 	self:_add_help_text("Creates a timer element. When the timer runs out, execute will be run. The timer element can be operated on using the logic_timer_operator")
 end
+
 CoreTimerOperatorUnitElement = CoreTimerOperatorUnitElement or class(MissionElement)
-CoreTimerOperatorUnitElement.RANDOMS = {"time"}
-CoreTimerOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+CoreTimerOperatorUnitElement.RANDOMS = {
+	"time"
+}
+CoreTimerOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 TimerOperatorUnitElement = TimerOperatorUnitElement or class(CoreTimerOperatorUnitElement)
 
 function TimerOperatorUnitElement:init(...)
@@ -261,7 +270,9 @@ function CoreTimerOperatorUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_timer/logic_timer"}
+	local names = {
+		"logic_timer/logic_timer"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "operation", {
@@ -279,8 +290,11 @@ function CoreTimerOperatorUnitElement:_build_panel(panel, panel_sizer)
 	}, "Amount of time to add, subtract or set to the timers.")
 	self:_add_help_text("This element can modify logic_timer element. Select timers to modify using insert and clicking on the elements.")
 end
+
 CoreTimerTriggerUnitElement = CoreTimerTriggerUnitElement or class(MissionElement)
-CoreTimerTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+CoreTimerTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 TimerTriggerUnitElement = TimerTriggerUnitElement or class(CoreTimerTriggerUnitElement)
 
 function TimerTriggerUnitElement:init(...)
@@ -350,7 +364,9 @@ function CoreTimerTriggerUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_timer/logic_timer"}
+	local names = {
+		"logic_timer/logic_timer"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_number(panel, panel_sizer, "time", {
@@ -359,4 +375,3 @@ function CoreTimerTriggerUnitElement:_build_panel(panel, panel_sizer)
 	}, "Specify how much time should be left on the timer to trigger.")
 	self:_add_help_text("This element is a trigger to logic_timer element.")
 end
-

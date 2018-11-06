@@ -21,7 +21,7 @@ function HUDPackageUnlockedItem:init(panel, row, params, hud_stage_end_screen)
 		y = 40,
 		x = 10,
 		w = panel:w() - 20,
-		h = (panel:h() * 1 / num_unlocks - 15) - 10
+		h = panel:h() * 1 / num_unlocks - 15 - 10
 	})
 
 	self._panel:move(0, self._panel:h() * (row - 1))
@@ -49,8 +49,20 @@ function HUDPackageUnlockedItem:init(panel, row, params, hud_stage_end_screen)
 	elseif params.skirmish_wave then
 		bitmap_texture = "guis/dlcs/skm/textures/pd2/endscreen/announcement_skm"
 		local text_id = nil
-		text_id = params.success and (params.skirmish_wave == select(2, managers.skirmish:wave_range()) and "menu_skirmish_success_all_end_screen" or "menu_skirmish_success_end_screen") or "menu_skirmish_fail_end_screen"
-		text_string = managers.localization:to_upper_text(text_id, {wave = params.skirmish_wave})
+
+		if params.success then
+			if params.skirmish_wave == select(2, managers.skirmish:wave_range()) then
+				text_id = "menu_skirmish_success_all_end_screen"
+			else
+				text_id = "menu_skirmish_success_end_screen"
+			end
+		else
+			text_id = "menu_skirmish_fail_end_screen"
+		end
+
+		text_string = managers.localization:to_upper_text(text_id, {
+			wave = params.skirmish_wave
+		})
 
 		if managers.skirmish:is_weekly_skirmish() and #managers.skirmish:unclaimed_rewards() > 0 then
 			text_string = text_string .. " " .. managers.localization:to_upper_text("menu_skirmish_weekly_reward_end_screen")
@@ -82,7 +94,9 @@ function HUDPackageUnlockedItem:init(panel, row, params, hud_stage_end_screen)
 				end
 
 				bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/armors/" .. upgrade_def.armor_id
-				text_string = managers.localization:text("menu_es_package_armor", {armor = managers.localization:to_upper_text(upgrade_def.name_id)})
+				text_string = managers.localization:text("menu_es_package_armor", {
+					armor = managers.localization:to_upper_text(upgrade_def.name_id)
+				})
 			elseif category == Idstring("grenade") then
 				local guis_catalog = "guis/"
 				local bundle_folder = tweak_data.blackmarket.projectiles[upgrade] and tweak_data.blackmarket.projectiles[upgrade].texture_bundle_folder
@@ -92,7 +106,9 @@ function HUDPackageUnlockedItem:init(panel, row, params, hud_stage_end_screen)
 				end
 
 				bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/grenades/" .. upgrade
-				text_string = managers.localization:text("menu_es_package_projectile", {projectile = managers.localization:to_upper_text(tweak_data.blackmarket.projectiles[upgrade].name_id)})
+				text_string = managers.localization:text("menu_es_package_projectile", {
+					projectile = managers.localization:to_upper_text(tweak_data.blackmarket.projectiles[upgrade].name_id)
+				})
 			elseif category == Idstring("melee_weapon") then
 				local bm_tweak_data = tweak_data.blackmarket.melee_weapons[upgrade]
 				local guis_catalog = "guis/"
@@ -103,10 +119,14 @@ function HUDPackageUnlockedItem:init(panel, row, params, hud_stage_end_screen)
 				end
 
 				bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/melee_weapons/" .. upgrade
-				text_string = managers.localization:text("menu_es_package_melee_weapon", {melee_weapon = bm_tweak_data and managers.localization:to_upper_text(bm_tweak_data.name_id)})
+				text_string = managers.localization:text("menu_es_package_melee_weapon", {
+					melee_weapon = bm_tweak_data and managers.localization:to_upper_text(bm_tweak_data.name_id)
+				})
 			elseif category == Idstring("rep_upgrade") then
 				bitmap_texture = "guis/textures/pd2/endscreen/" .. upgrade_def.category
-				text_string = managers.localization:to_upper_text("menu_es_rep_upgrade", {point = upgrade_def.value or 2})
+				text_string = managers.localization:to_upper_text("menu_es_rep_upgrade", {
+					point = upgrade_def.value or 2
+				})
 				blend_mode = "add"
 
 				hud_stage_end_screen:give_skill_points(upgrade_def.value or 2)
@@ -122,7 +142,9 @@ function HUDPackageUnlockedItem:init(panel, row, params, hud_stage_end_screen)
 		local on_last_stage = managers.job:on_last_stage()
 		bitmap_texture = "guis/textures/pd2/endscreen/stealth_bonus"
 		local string_id = on_last_stage and "menu_es_ghost_bonus_job" or "menu_es_ghost_bonus_day"
-		text_string = managers.localization:to_upper_text(string_id, {bonus = ghost_bonus})
+		text_string = managers.localization:to_upper_text(string_id, {
+			bonus = ghost_bonus
+		})
 		blend_mode = "add"
 	elseif gage_assignment then
 		local completed, progressed = managers.gage_assignment:get_latest_data()
@@ -227,6 +249,7 @@ function HUDPackageUnlockedItem:close()
 	self._panel:stop()
 	self._panel:animate(callback(self, self, "destroy_animation"))
 end
+
 HUDStageEndScreen = HUDStageEndScreen or class()
 local max_speed_up = 5
 HUDStageEndScreen.stages = {
@@ -330,7 +353,9 @@ function HUDStageEndScreen:init(hud, workspace)
 
 	if managers.job:has_active_job() then
 		local current_contact_data = managers.job:current_contact_data()
-		local contact_gui = current_contact_data and self._background_layer_full:gui(current_contact_data.assets_gui, {empty = true})
+		local contact_gui = current_contact_data and self._background_layer_full:gui(current_contact_data.assets_gui, {
+			empty = true
+		})
 		local contact_pattern = contact_gui and contact_gui:has_script() and contact_gui:script().pattern
 
 		if contact_pattern then
@@ -435,7 +460,14 @@ function HUDStageEndScreen:init(hud, workspace)
 	end
 
 	self._stage_name = managers.job:current_level_id() and managers.localization:to_upper_text(tweak_data.levels[managers.job:current_level_id()].name_id) or ""
-	self._stage_name = managers.skirmish:is_skirmish() and (managers.skirmish:is_weekly_skirmish() and managers.localization:to_upper_text("menu_weekly_skirmish") or managers.localization:to_upper_text("menu_skirmish"))
+
+	if managers.skirmish:is_skirmish() then
+		if managers.skirmish:is_weekly_skirmish() then
+			self._stage_name = managers.localization:to_upper_text("menu_weekly_skirmish")
+		else
+			self._stage_name = managers.localization:to_upper_text("menu_skirmish")
+		end
+	end
 
 	self._foreground_layer_safe:text({
 		name = "stage_text",
@@ -526,12 +558,14 @@ function HUDStageEndScreen:init(hud, workspace)
 		y = content_font_size,
 		color = tweak_data.screen_colors.text
 	})
-	self._coins_box = BoxGuiObject:new(self._coins_backpanel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._coins_box = BoxGuiObject:new(self._coins_backpanel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	self._lp_backpanel = self._background_layer_safe:panel({
 		name = "lp_backpanel",
 		y = 70,
@@ -694,7 +728,9 @@ function HUDStageEndScreen:init(hud, workspace)
 		wrap = true,
 		align = "left",
 		word_wrap = true,
-		text = managers.localization:text("menu_es_skill_points_info", {SKILL_MENU = managers.localization:to_upper_text("menu_skilltree")}),
+		text = managers.localization:text("menu_es_skill_points_info", {
+			SKILL_MENU = managers.localization:to_upper_text("menu_skilltree")
+		}),
 		h = small_font_size,
 		font_size = small_font_size,
 		font = small_font,
@@ -708,7 +744,7 @@ function HUDStageEndScreen:init(hud, workspace)
 	self._lp_sp_info:set_h(ih)
 	self._lp_sp_info:set_leftbottom(self._lp_circle:right() + 0, self._lp_forepanel:h() - 10)
 
-	local w = (self._lp_forepanel:w() - self._lp_sp_info:x()) - 90
+	local w = self._lp_forepanel:w() - self._lp_sp_info:x() - 90
 	local number_text_x = self._lp_sp_info:left() + w
 
 	self._lp_skill_points:set_size(sw, sh)
@@ -716,25 +752,25 @@ function HUDStageEndScreen:init(hud, workspace)
 	self._lp_skill_points:set_bottom(self._lp_sp_info:top())
 	self._lp_sp_gain:set_left(number_text_x)
 	self._lp_sp_gain:set_top(self._lp_skill_points:top())
-	self._lp_sp_gain:set_size((self._lp_forepanel:w() - self._lp_sp_gain:left()) - 10, sh)
+	self._lp_sp_gain:set_size(self._lp_forepanel:w() - self._lp_sp_gain:left() - 10, sh)
 	self._lp_next_level:set_size(nw, nh)
 	self._lp_next_level:set_left(self._lp_sp_info:left())
 	self._lp_next_level:set_bottom(self._lp_skill_points:top())
 	self._lp_xp_nl:set_left(number_text_x)
 	self._lp_xp_nl:set_top(self._lp_next_level:top())
-	self._lp_xp_nl:set_size((self._lp_forepanel:w() - self._lp_xp_nl:left()) - 10, nh)
+	self._lp_xp_nl:set_size(self._lp_forepanel:w() - self._lp_xp_nl:left() - 10, nh)
 	self._lp_curr_xp:set_size(cw, ch)
 	self._lp_curr_xp:set_left(self._lp_sp_info:left())
 	self._lp_curr_xp:set_bottom(self._lp_next_level:top())
 	self._lp_xp_curr:set_left(number_text_x)
 	self._lp_xp_curr:set_top(self._lp_curr_xp:top())
-	self._lp_xp_curr:set_size((self._lp_forepanel:w() - self._lp_xp_curr:left()) - 10, ch)
+	self._lp_xp_curr:set_size(self._lp_forepanel:w() - self._lp_xp_curr:left() - 10, ch)
 	self._lp_xp_gained:set_size(gw, gh)
 	self._lp_xp_gained:set_left(self._lp_curr_xp:left())
 	self._lp_xp_gained:set_bottom(self._lp_curr_xp:top())
 	self._lp_xp_gain:set_left(number_text_x)
 	self._lp_xp_gain:set_top(self._lp_xp_gained:top())
-	self._lp_xp_gain:set_size((self._lp_forepanel:w() - self._lp_xp_gain:left()) - 10, gh)
+	self._lp_xp_gain:set_size(self._lp_forepanel:w() - self._lp_xp_gain:left() - 10, gh)
 	self._lp_xp_gained:set_bottom(math.round(self._lp_forepanel:h() / 2))
 	self._lp_curr_xp:set_top(self._lp_xp_gained:bottom())
 	self._lp_next_level:set_top(self._lp_curr_xp:bottom())
@@ -756,12 +792,14 @@ function HUDStageEndScreen:init(hud, workspace)
 		self._lp_sp_info:move(-30, 0)
 	end
 
-	self._box = BoxGuiObject:new(self._lp_backpanel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._box = BoxGuiObject:new(self._lp_backpanel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	WalletGuiObject.set_wallet(self._foreground_layer_safe)
 
@@ -770,7 +808,7 @@ function HUDStageEndScreen:init(hud, workspace)
 		name = "package_forepanel",
 		y = 70,
 		w = self._foreground_layer_safe:w() / 2 - 10,
-		h = (self._foreground_layer_safe:h() / 2 - 70) - 10
+		h = self._foreground_layer_safe:h() / 2 - 70 - 10
 	})
 
 	self._package_forepanel:set_right(self._foreground_layer_safe:w())
@@ -788,12 +826,14 @@ function HUDStageEndScreen:init(hud, workspace)
 	package_box_panel:set_shape(self._package_forepanel:shape())
 	package_box_panel:set_layer(self._package_forepanel:layer())
 
-	self._package_box = BoxGuiObject:new(package_box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._package_box = BoxGuiObject:new(package_box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	self._package_items = {}
 
 	self:clear_stage()
@@ -817,9 +857,13 @@ function HUDStageEndScreen:init(hud, workspace)
 		h = self._foreground_layer_safe:h() / 2
 	})
 	local macros = {
-		BTN_SPEED = managers.localization:btn_macro("menu_challenge_claim", true),
-		BTN_SPEED = managers.menu:is_pc_controller() or managers.localization:get_default_macro("BTN_SWITCH_WEAPON")
+		BTN_SPEED = managers.localization:btn_macro("menu_challenge_claim", true)
 	}
+
+	if not managers.menu:is_pc_controller() then
+		macros.BTN_SPEED = managers.localization:get_default_macro("BTN_SWITCH_WEAPON")
+	end
+
 	self._skip_text = skip_panel:text({
 		name = "skip_text",
 		visible = false,
@@ -893,7 +937,9 @@ function HUDStageEndScreen:_create_bonus(params)
 	local title_string = params.title or params.bonus > 0 and positive_title or negative_title or ""
 	local sign_string = params.bonus > 0 and "+ " or "- "
 	local stat_string = managers.money:add_decimal_marks_to_string(tostring(math.abs(params.bonus)))
-	local bonus_panel = panel:panel({layer = 1})
+	local bonus_panel = panel:panel({
+		layer = 1
+	})
 	local title_text = bonus_panel:text({
 		name = "title",
 		text = title_string,
@@ -1358,7 +1404,9 @@ function HUDStageEndScreen:_update_skirmish_wave()
 		item:close()
 	end
 
-	self._package_items = {wave_item}
+	self._package_items = {
+		wave_item
+	}
 end
 
 function HUDStageEndScreen:_check_special_packages()
@@ -1387,7 +1435,13 @@ function HUDStageEndScreen:_check_special_packages()
 
 	if ghost_bonus_mul and ghost_bonus_mul > 0 then
 		local ghost_bonus = math.round(ghost_bonus_mul * 100)
-		ghost_string = ghost_bonus == 0 and string.format("%0.2f", math.abs(ghost_bonus_mul * 100)) or tostring(math.abs(ghost_bonus))
+
+		if ghost_bonus == 0 then
+			ghost_string = string.format("%0.2f", math.abs(ghost_bonus_mul * 100))
+		else
+			ghost_string = tostring(math.abs(ghost_bonus))
+		end
+
 		ghost_package = HUDPackageUnlockedItem:new(self._package_forepanel, row, {
 			ghost_bonus = ghost_string,
 			unlocks = unlock_count
@@ -1483,11 +1537,13 @@ function HUDStageEndScreen:_wait_for_video()
 	local fade_t = 1
 	local alpha = 0
 
-	while alive(video) and video:loop_count() == 0 do
-		local dt = coroutine.yield() * (self._speed_up or 1)
-		time = time + dt
+	if alive(video) then
+		while alive(video) and video:loop_count() == 0 do
+			local dt = coroutine.yield() * (self._speed_up or 1)
+			time = time + dt
 
-		video:set_alpha(math.min(time, 1) * 0.2)
+			video:set_alpha(math.min(time, 1) * 0.2)
+		end
 	end
 
 	if alive(video) then
@@ -1572,48 +1628,60 @@ function HUDStageEndScreen:stage_money_counter_init(t, dt)
 		return true
 	end
 
-	self._money = {income = {
-		{
-			"menu_es_cash_stage",
-			math.round(stage_payout or 0)
-		},
-		{
-			"menu_es_cash_job",
-			math.round(job_payout or 0)
-		},
-		{
-			"menu_cash_bonus_bags",
-			math.round(bag_payout or 0)
-		},
-		{
-			"menu_cash_vehicles",
-			math.round(vehicle_payout or 0)
-		},
-		{
-			"menu_cash_crew",
-			math.round(crew_payout or 0)
-		},
-		{
-			"hud_instant_cash",
-			math.round(small_loot_payout or 0)
-		},
-		{
-			"menu_es_skirmish_cash",
-			math.round(skirmish_payout or 0)
-		},
-		{
-			"menu_mutators_reduction_cash",
-			math.round(mutators_reduction or 0)
-		},
-		name_id = managers.localization:to_upper_text("menu_cash_income", {money = ""})
-	}}
+	self._money = {
+		income = {
+			{
+				"menu_es_cash_stage",
+				math.round(stage_payout or 0)
+			},
+			{
+				"menu_es_cash_job",
+				math.round(job_payout or 0)
+			},
+			{
+				"menu_cash_bonus_bags",
+				math.round(bag_payout or 0)
+			},
+			{
+				"menu_cash_vehicles",
+				math.round(vehicle_payout or 0)
+			},
+			{
+				"menu_cash_crew",
+				math.round(crew_payout or 0)
+			},
+			{
+				"hud_instant_cash",
+				math.round(small_loot_payout or 0)
+			},
+			{
+				"menu_es_skirmish_cash",
+				math.round(skirmish_payout or 0)
+			},
+			{
+				"menu_mutators_reduction_cash",
+				math.round(mutators_reduction or 0)
+			},
+			name_id = managers.localization:to_upper_text("menu_cash_income", {
+				money = ""
+			})
+		}
+	}
 
 	if check_if_clear(self._money.income) then
 		self._money.income = {}
 	end
 
-	self._money.costs = {name_id = managers.localization:to_upper_text("menu_cash_costs", {money = ""})}
-	self._money.costs = check_if_clear(self._money.costs) and {}
+	self._money.costs = {
+		name_id = managers.localization:to_upper_text("menu_cash_costs", {
+			money = ""
+		})
+	}
+
+	if check_if_clear(self._money.costs) then
+		self._money.costs = {}
+	end
+
 	local spending_earned = managers.money:heist_spending()
 	self._money.balance = {
 		{
@@ -1625,7 +1693,9 @@ function HUDStageEndScreen:stage_money_counter_init(t, dt)
 			math.round(spending_earned),
 			spending_earned > 0 and tweak_data.screen_colors.friend_color or tweak_data.screen_colors.pro_color
 		},
-		name_id = managers.localization:to_upper_text("menu_cash_balance", {money = ""})
+		name_id = managers.localization:to_upper_text("menu_cash_balance", {
+			money = ""
+		})
 	}
 
 	if check_if_clear(self._money.balance) then
@@ -1778,7 +1848,9 @@ function HUDStageEndScreen:perform_income_count(t, dt, parent_panel, stage_table
 					local text_object = parent_panel:text({
 						x = 10,
 						y = self._money_text_y,
-						text = managers.localization:to_upper_text(income_specific[1], {money = ""}),
+						text = managers.localization:to_upper_text(income_specific[1], {
+							money = ""
+						}),
 						font = tweak_data.menu.pd2_small_font,
 						font_size = tweak_data.menu.pd2_small_font_size
 					})
@@ -1805,13 +1877,11 @@ end
 function HUDStageEndScreen:stage_money_counter_hide(t, dt)
 	Application:debug("HUDStageEndScreen:stage_money_counter_hide")
 
-	if false then
-		if not self._is_fail_video then
-			local video = self._background_layer_full:child("money_video")
+	if false and not self._is_fail_video then
+		local video = self._background_layer_full:child("money_video")
 
-			if video then
-				video:animate(callback(self, self, "destroy_animation"))
-			end
+		if video then
+			video:animate(callback(self, self, "destroy_animation"))
 		end
 	end
 
@@ -1903,7 +1973,7 @@ function HUDStageEndScreen:safehouse_currency_init(t, dt)
 	self._bonuses_panel = self._lp_forepanel:panel({
 		y = 10,
 		x = self._lp_xp_gained:x(),
-		w = (self._lp_forepanel:w() - self._lp_xp_gained:left()) - 10,
+		w = self._lp_forepanel:w() - self._lp_xp_gained:left() - 10,
 		h = self._lp_xp_gained:top() - 10
 	})
 	self._wait_t = 0.5
@@ -2246,15 +2316,13 @@ function HUDStageEndScreen:stage_experience_init(t, dt)
 	self._lp_backpanel:child("bg_progress_circle"):show()
 	self._lp_forepanel:child("level_progress_text"):show()
 
-	if false then
-		if managers.experience:reached_level_cap() then
-			self._lp_text:set_text(tostring(data.start_t.level))
-			self._lp_circle:set_color(Color(1, 1, 1))
-			managers.menu_component:post_event("box_tick")
-			self:step_stage_to_end()
+	if false and managers.experience:reached_level_cap() then
+		self._lp_text:set_text(tostring(data.start_t.level))
+		self._lp_circle:set_color(Color(1, 1, 1))
+		managers.menu_component:post_event("box_tick")
+		self:step_stage_to_end()
 
-			return
-		end
+		return
 	end
 
 	self._lp_circle:set_alpha(0)
@@ -2264,7 +2332,7 @@ function HUDStageEndScreen:stage_experience_init(t, dt)
 	self._bonuses_panel = self._lp_forepanel:panel({
 		y = 10,
 		x = self._lp_xp_gained:x(),
-		w = (self._lp_forepanel:w() - self._lp_xp_gained:left()) - 10,
+		w = self._lp_forepanel:w() - self._lp_xp_gained:left() - 10,
 		h = self._lp_xp_gained:top() - 10
 	})
 	self._anim_exp_bonus = nil
@@ -2651,8 +2719,8 @@ function HUDStageEndScreen:stage_experience_spin_levels(t, dt)
 				self._next_level_xp = false
 			end
 
-			self._static_current_xp = (self._static_current_xp + current_level_data.total) - self._static_start_xp
-			self._static_gained_xp = (self._static_gained_xp + current_level_data.total) - self._static_start_xp
+			self._static_current_xp = self._static_current_xp + current_level_data.total - self._static_start_xp
+			self._static_gained_xp = self._static_gained_xp + current_level_data.total - self._static_start_xp
 			self._current_xp = self._static_current_xp
 			self._gained_xp = self._static_gained_xp
 			self._static_start_xp = 0
@@ -2753,7 +2821,7 @@ function HUDStageEndScreen:stage_experience_spin_slowdown(t, dt)
 	if data.end_t.current ~= 0 then
 		self._top_speed = self._top_speed or 1
 		local ex = (data.end_t.total - self._next_level_xp) / data.end_t.current
-		self._speed = math.max(1, self._top_speed / (self._top_speed * 2) ^ ex)
+		self._speed = math.max(1, self._top_speed / (self._top_speed * 2)^ex)
 	end
 
 	local ratio = 1 - self._next_level_xp / data.end_t.total
@@ -2816,7 +2884,6 @@ function HUDStageEndScreen:stage_done(t, dt)
 end
 
 function HUDStageEndScreen:level_up(level)
-
 	local function level_text_func(o, ding_scale, level)
 		local center_x, center_y = o:center()
 		local size = tweak_data.menu.pd2_massive_font_size
@@ -2886,14 +2953,18 @@ function HUDStageEndScreen:level_up(level)
 
 		if data.announcements then
 			for i, announcement in ipairs(data.announcements) do
-				table.insert(new_items, {announcement = announcement})
+				table.insert(new_items, {
+					announcement = announcement
+				})
 			end
 		end
 
 		if data.upgrades then
 			for i, upgrade in ipairs(data.upgrades) do
 				if not managers.upgrades:is_upgrade_locked(upgrade) then
-					table.insert(new_items, {upgrade = upgrade})
+					table.insert(new_items, {
+						upgrade = upgrade
+					})
 				end
 			end
 		end
@@ -3137,9 +3208,7 @@ function HUDStageEndScreen:set_statistics(criminals_completed, success)
 end
 
 function HUDStageEndScreen:animate_level_progress(o, data)
-
 	local function animate_func(o, self, data)
-
 		local function spin_func(self, o, xp, end_xp, total_xp, current_xp, gained_xp, speed, breaks)
 			local dt = 0
 			local ratio = xp / total_xp
@@ -3236,7 +3305,9 @@ function HUDStageEndScreen:animate_level_progress(o, data)
 					end
 				elseif data.upgrades then
 					self._package_unlocked_text:set_text(utf8.to_upper(managers.localization:text("menu_package_unlocked") .. ": '" .. managers.localization:text(data.name_id) .. "'"))
-					self._package_upgrade_text:set_text(utf8.to_upper(managers.localization:text("menu_package_upgrade", {package = data.name_id})))
+					self._package_upgrade_text:set_text(utf8.to_upper(managers.localization:text("menu_package_upgrade", {
+						package = data.name_id
+					})))
 					self._package_unlocked_text:set_align("left")
 
 					for _, id in ipairs(data.upgrades) do
@@ -3281,7 +3352,7 @@ function HUDStageEndScreen:animate_level_progress(o, data)
 
 				local w = self._package_picture:texture_width()
 				local h = self._package_picture:texture_height()
-				local sh = math.min(self._package_forepanel:w() * 0.3, (self._package_forepanel:w() * 0.3) / (w / h))
+				local sh = math.min(self._package_forepanel:w() * 0.3, self._package_forepanel:w() * 0.3 / (w / h))
 				local sw = math.min(self._package_forepanel:w() * 0.3, self._package_forepanel:w() * 0.3 * w / h)
 				local cx, cy = self._package_picture:center()
 
@@ -3436,4 +3507,3 @@ function HUDStageEndScreen:reload()
 
 	HUDStageEndScreen.init(self, self._hud, self._workspace)
 end
-

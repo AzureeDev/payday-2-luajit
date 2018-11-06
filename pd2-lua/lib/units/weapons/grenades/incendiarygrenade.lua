@@ -86,4 +86,3 @@ function IncendiaryGrenade:update(unit, t, dt)
 		self._unit:set_slot(0)
 	end
 end
-

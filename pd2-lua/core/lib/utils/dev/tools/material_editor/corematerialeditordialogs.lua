@@ -94,6 +94,7 @@ function CoreMaterialEditorGlobalDialog:_fill_tree(id, parent, node)
 
 	return new_id
 end
+
 CoreMaterialEditorStartDialog = CoreMaterialEditorStartDialog or class()
 
 function CoreMaterialEditorStartDialog:init(parent, editor)
@@ -166,7 +167,7 @@ function CoreMaterialEditorStartDialog:show_modal()
 end
 
 function CoreMaterialEditorStartDialog:update(t, dt)
-	self._frame_pos = (self._parent:get_position() + self._parent:get_size() * 0.5) - self._frame_size * 0.5
+	self._frame_pos = self._parent:get_position() + self._parent:get_size() * 0.5 - self._frame_size * 0.5
 
 	self._frame:set_position(self._frame_pos)
 end
@@ -178,12 +179,13 @@ function CoreMaterialEditorStartDialog:end_modal()
 	self._parent:set_enabled(true)
 	self._parent:set_focus()
 end
+
 CoreMaterialEditorCompileWarningDialog = CoreMaterialEditorCompileWarningDialog or class()
 
 function CoreMaterialEditorCompileWarningDialog:init(parent)
 	self._parent = parent
 	local frame_size = Vector3(540, 340, 0)
-	local frame_pos = (self._parent:get_position() + self._parent:get_size() * 0.5) - frame_size * 0.5
+	local frame_pos = self._parent:get_position() + self._parent:get_size() * 0.5 - frame_size * 0.5
 	self._dialog = EWS:Dialog(parent, "Warning!", "", frame_pos, frame_size, "")
 	local main_frame_box = EWS:BoxSizer("VERTICAL")
 	local main_panel = EWS:Panel(self._dialog, "", "")
@@ -215,4 +217,3 @@ end
 function CoreMaterialEditorCompileWarningDialog:end_modal(data)
 	self._dialog:end_modal(data)
 end
-

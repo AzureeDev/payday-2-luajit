@@ -6,7 +6,7 @@ function BookBoxGui:init(ws, title, config)
 	config.w = config.w or 360
 	local x, y = ws:size()
 	config.x = config.x or x - config.w
-	config.y = config.y or (y - config.h) - CoreMenuRenderer.Renderer.border_height
+	config.y = config.y or y - config.h - CoreMenuRenderer.Renderer.border_height
 	self._header_type = config.header_type or "event"
 
 	BookBoxGui.super.init(self, ws, title, nil, nil, config)
@@ -359,4 +359,3 @@ function BookBoxGui:_mouse_over_page_panel(x, y)
 
 	return nil
 end
-

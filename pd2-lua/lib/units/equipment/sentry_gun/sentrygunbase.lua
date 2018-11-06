@@ -71,7 +71,9 @@ function SentryGunBase:is_owner()
 end
 
 function SentryGunBase:is_category(...)
-	local arg = {...}
+	local arg = {
+		...
+	}
 	local categories = self:weapon_tweak_data().categories
 
 	if not categories then
@@ -158,7 +160,12 @@ function SentryGunBase.spawn(owner, pos, rot, peer_id, verify_equipment, unit_id
 	end
 
 	local team = nil
-	team = owner and owner:movement():team() or managers.groupai:state():team_data(tweak_data.levels:get_default_team_ID("player"))
+
+	if owner then
+		team = owner:movement():team()
+	else
+		team = managers.groupai:state():team_data(tweak_data.levels:get_default_team_ID("player"))
+	end
 
 	unit:movement():set_team(team)
 	unit:brain():set_active(true)
@@ -212,7 +219,9 @@ function SentryGunBase:activate_as_module(team_type, tweak_table_id)
 		spread_mul = 1,
 		autoaim = true,
 		alert_AI = false,
-		ignore_units = {self._unit},
+		ignore_units = {
+			self._unit
+		},
 		bullet_slotmask = managers.slot:get_mask("bullet_impact_targets")
 	}
 
@@ -237,7 +246,9 @@ function SentryGunBase:get_name_id()
 end
 
 function SentryGunBase:set_server_information(peer_id)
-	self._server_information = {owner_peer_id = peer_id}
+	self._server_information = {
+		owner_peer_id = peer_id
+	}
 
 	managers.network:session():peer(peer_id):set_used_deployable(true)
 end
@@ -314,7 +325,9 @@ end
 function SentryGunBase:post_setup()
 	self._sentry_uid = "sentry_" .. tostring(sentry_uid)
 
-	managers.mission:add_global_event_listener(self._sentry_uid, {"on_picked_up_carry"}, callback(self, self, "_on_picked_up_cash"))
+	managers.mission:add_global_event_listener(self._sentry_uid, {
+		"on_picked_up_carry"
+	}, callback(self, self, "_on_picked_up_cash"))
 
 	sentry_uid = sentry_uid + 1
 	self._attached_data = self._attach(nil, nil, self._unit)
@@ -432,7 +445,12 @@ function SentryGunBase._attach(pos, rot, sentrygun_unit)
 	local from_pos = pos + rot:z() * 10
 	local to_pos = pos + rot:z() * -20
 	local ray = nil
-	ray = sentrygun_unit and sentrygun_unit:raycast("ray", from_pos, to_pos, "slot_mask", managers.slot:get_mask("world_geometry")) or World:raycast("ray", from_pos, to_pos, "slot_mask", managers.slot:get_mask("world_geometry"))
+
+	if sentrygun_unit then
+		ray = sentrygun_unit:raycast("ray", from_pos, to_pos, "slot_mask", managers.slot:get_mask("world_geometry"))
+	else
+		ray = World:raycast("ray", from_pos, to_pos, "slot_mask", managers.slot:get_mask("world_geometry"))
+	end
 
 	if ray then
 		local attached_data = {
@@ -483,6 +501,7 @@ function SentryGunBase:show_blocked_hint(interaction_tweak_data, player, skip_hi
 		managers.hint:show_hint("hint_nea_sentry_gun")
 	end
 end
+
 local refill_ratios = {
 	1,
 	0.9375,
@@ -581,7 +600,7 @@ function SentryGunBase:sync_net_event(event_id, peer)
 				local ammo_ratio = weapon.unit:base():get_ammo_ratio()
 
 				if ammo_ratio < ammo_reduction then
-					leftover = (leftover + ammo_reduction) - ammo_ratio
+					leftover = leftover + ammo_reduction - ammo_ratio
 					weapon_list[id] = {
 						unit = weapon.unit,
 						amount = ammo_ratio,
@@ -719,4 +738,3 @@ function SentryGunBase:pre_destroy()
 
 	self._unit:event_listener():call("on_destroy_unit")
 end
-

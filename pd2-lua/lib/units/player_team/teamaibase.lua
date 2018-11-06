@@ -46,10 +46,14 @@ function TeamAIBase:set_loadout(loadout)
 
 	local function aquire(item)
 		if not tweak_data.upgrades.crew_skill_definitions[item] then
-			local definition = {upgrades = item and {{
-				category = "team",
-				upgrade = item
-			}} or {}}
+			local definition = {
+				upgrades = item and {
+					{
+						category = "team",
+						upgrade = item
+					}
+				} or {}
+			}
 		end
 
 		for _, v in pairs(definition.upgrades) do
@@ -69,13 +73,16 @@ end
 
 function TeamAIBase:remove_upgrades()
 	if self._loadout then
-
 		local function unaquire(item)
 			if not tweak_data.upgrades.crew_skill_definitions[item] then
-				local definition = {upgrades = item and {{
-					category = "team",
-					upgrade = item
-				}} or {}}
+				local definition = {
+					upgrades = item and {
+						{
+							category = "team",
+							upgrade = item
+						}
+					} or {}
+				}
 			end
 
 			for _, v in pairs(definition.upgrades) do
@@ -136,4 +143,3 @@ end
 function TeamAIBase:character_name()
 	return managers.criminals:character_name_by_unit(self._unit)
 end
-

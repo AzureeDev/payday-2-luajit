@@ -82,7 +82,9 @@ function NetworkPeer:init(name, rpc, id, loading, synced, in_lobby, character, u
 		managers.network.voice_chat:on_member_added(self, self._muted)
 	end
 
-	self._profile = {outfit_string = ""}
+	self._profile = {
+		outfit_string = ""
+	}
 	self._handshakes = {}
 	self._streaming_status = 0
 	self._outfit_assets = {
@@ -451,7 +453,9 @@ function NetworkPeer:mark_cheater(reason, auto_kick)
 
 	self._cheater = true
 
-	managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text(managers.vote:kick_reason_to_string(reason), {name = self:name()}))
+	managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text(managers.vote:kick_reason_to_string(reason), {
+		name = self:name()
+	}))
 
 	if auto_kick and Global.game_settings.auto_kick then
 		managers.vote:kick_auto(reason, self, self._begin_ticket_session_called)
@@ -769,7 +773,9 @@ function NetworkPeer:set_ip_verified(state)
 	local user = Steam:user(self:ip())
 
 	if user and user:rich_presence("is_modded") == "1" or self:is_modded() then
-		managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_added_modded", {name = self:name()}))
+		managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_added_modded", {
+			name = self:name()
+		}))
 	end
 end
 
@@ -983,7 +989,9 @@ function NetworkPeer:chk_enable_queue()
 end
 
 function NetworkPeer:_push_to_queue(queue_name, ...)
-	table.insert(self._msg_queues[queue_name], {...})
+	table.insert(self._msg_queues[queue_name], {
+		...
+	})
 end
 
 function NetworkPeer:_clean_queue()
@@ -1516,70 +1524,94 @@ function NetworkPeer:_reload_outfit()
 	local complete_outfit = self:blackmarket_outfit()
 	local mask_id = complete_outfit.mask.mask_id
 	local mask_u_name = managers.blackmarket:mask_unit_name_by_mask_id(mask_id, self._id)
-	local mask_asset_data = {name = Idstring(mask_u_name)}
+	local mask_asset_data = {
+		name = Idstring(mask_u_name)
+	}
 	new_outfit_assets.unit.mask = mask_asset_data
 	local mask_blueprint = self:mask_blueprint()
 	local mask_pattern_id = mask_blueprint.pattern.id
 	local mask_pattern_texture = tweak_data.blackmarket.textures[mask_pattern_id].texture
-	local mask_pattern_texture_asset_data = {name = Idstring(mask_pattern_texture)}
+	local mask_pattern_texture_asset_data = {
+		name = Idstring(mask_pattern_texture)
+	}
 	new_outfit_assets.texture.mask_pattern = mask_pattern_texture_asset_data
 	local mask_material_id = mask_blueprint.material.id
 	local mask_reflection_texture = tweak_data.blackmarket.materials[mask_material_id].texture
-	local mask_reflection_texture_asset_data = {name = Idstring(mask_reflection_texture)}
+	local mask_reflection_texture_asset_data = {
+		name = Idstring(mask_reflection_texture)
+	}
 	new_outfit_assets.texture.mask_reflection = mask_reflection_texture_asset_data
 
 	if is_local_peer then
-		local mask_backstraps_asset_data = {name = Idstring("units/payday2/masks/msk_fps_back_straps/msk_fps_back_straps")}
+		local mask_backstraps_asset_data = {
+			name = Idstring("units/payday2/masks/msk_fps_back_straps/msk_fps_back_straps")
+		}
 		new_outfit_assets.unit.mask_backstraps = mask_backstraps_asset_data
 	end
 
 	local factory_id = complete_outfit.primary.factory_id .. (is_local_peer and "" or "_npc")
 	local ids_primary_u_name = Idstring(tweak_data.weapon.factory[factory_id].unit)
-	new_outfit_assets.unit.primary_w = {name = ids_primary_u_name}
+	new_outfit_assets.unit.primary_w = {
+		name = ids_primary_u_name
+	}
 	local use_fps_parts = is_local_peer or managers.weapon_factory:use_thq_weapon_parts() and not tweak_data.weapon.factory[factory_id].skip_thq_parts
 	local primary_w_parts = managers.weapon_factory:preload_blueprint(complete_outfit.primary.factory_id, complete_outfit.primary.blueprint, not use_fps_parts, not is_local_peer, function ()
 	end, true)
 
 	for part_id, part in pairs(primary_w_parts) do
-		new_outfit_assets.unit["prim_w_part_" .. tostring(part_id)] = {name = part.name}
+		new_outfit_assets.unit["prim_w_part_" .. tostring(part_id)] = {
+			name = part.name
+		}
 	end
 
 	local factory_id = complete_outfit.secondary.factory_id .. (is_local_peer and "" or "_npc")
 	local ids_secondary_u_name = Idstring(tweak_data.weapon.factory[factory_id].unit)
-	new_outfit_assets.unit.secondary_w = {name = ids_secondary_u_name}
+	new_outfit_assets.unit.secondary_w = {
+		name = ids_secondary_u_name
+	}
 	local use_fps_parts = is_local_peer or managers.weapon_factory:use_thq_weapon_parts() and not tweak_data.weapon.factory[factory_id].skip_thq_parts
 	local secondary_w_parts = managers.weapon_factory:preload_blueprint(complete_outfit.secondary.factory_id, complete_outfit.secondary.blueprint, not use_fps_parts, not is_local_peer, function ()
 	end, true)
 
 	for part_id, part in pairs(secondary_w_parts) do
-		new_outfit_assets.unit["sec_w_part_" .. tostring(part_id)] = {name = part.name}
+		new_outfit_assets.unit["sec_w_part_" .. tostring(part_id)] = {
+			name = part.name
+		}
 	end
 
 	local melee_tweak_data = tweak_data.blackmarket.melee_weapons[complete_outfit.melee_weapon]
 	local melee_u_name = is_local_peer and melee_tweak_data.unit or melee_tweak_data.third_unit
 
 	if melee_u_name then
-		new_outfit_assets.unit.melee_w = {name = Idstring(melee_u_name)}
+		new_outfit_assets.unit.melee_w = {
+			name = Idstring(melee_u_name)
+		}
 	end
 
 	local grenade_tweak_data = tweak_data.blackmarket.projectiles[complete_outfit.grenade]
 	local grenade_u_name = grenade_tweak_data.unit
 
 	if grenade_u_name then
-		new_outfit_assets.unit.grenade_w = {name = Idstring(grenade_u_name)}
+		new_outfit_assets.unit.grenade_w = {
+			name = Idstring(grenade_u_name)
+		}
 	end
 
 	local grenade_sprint_u_name = grenade_tweak_data.sprint_unit
 
 	if grenade_sprint_u_name then
-		new_outfit_assets.unit.grenade_sprint_w = {name = Idstring(grenade_sprint_u_name)}
+		new_outfit_assets.unit.grenade_sprint_w = {
+			name = Idstring(grenade_sprint_u_name)
+		}
 	end
 
 	if is_local_peer then
 		local grenade_dummy_u_name = grenade_tweak_data.unit_dummy
 
 		if grenade_dummy_u_name then
-			new_outfit_assets.unit.grenade_dummy_w = {name = Idstring(grenade_dummy_u_name)}
+			new_outfit_assets.unit.grenade_dummy_w = {
+				name = Idstring(grenade_dummy_u_name)
+			}
 		end
 	end
 
@@ -1840,7 +1872,13 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
 	local is_local_peer = self._id == managers.network:session():local_peer():id()
 	local unit_name = Idstring(tweak_data.blackmarket.characters[self:character_id()].fps_unit)
 	local unit = nil
-	unit = is_local_peer and World:spawn_unit(unit_name, pos_rot[1], pos_rot[2]) or Network:spawn_unit_on_client(self:rpc(), unit_name, pos_rot[1], pos_rot[2])
+
+	if is_local_peer then
+		unit = World:spawn_unit(unit_name, pos_rot[1], pos_rot[2])
+	else
+		unit = Network:spawn_unit_on_client(self:rpc(), unit_name, pos_rot[1], pos_rot[2])
+	end
+
 	local team_id = tweak_data.levels:get_default_team_ID("player")
 
 	self:set_unit(unit, character_name, team_id)
@@ -2047,7 +2085,7 @@ function NetworkPeer:_update_equipped_armor()
 		self._equipped_armor_id = new_armor_id
 		local armor_sequence = tweak_data.blackmarket.armors[new_armor_id].sequence
 
-		if managers.job and managers.job:current_level_id() == "glace" then
+		if managers.job and managers.job:current_level_id() == "glace" or managers.job:current_level_id() == "dah" or managers.job:current_level_id() == "wwh" or managers.job:current_level_id() == "sah" then
 			armor_sequence = nil
 		end
 
@@ -2136,4 +2174,3 @@ end
 function NetworkPeer:is_vr()
 	return self._is_vr
 end
-

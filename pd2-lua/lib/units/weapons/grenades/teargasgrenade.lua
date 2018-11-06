@@ -40,7 +40,9 @@ function TearGasGrenade:update(unit, t, dt)
 			player:character_damage():damage_killzone({
 				variant = "killzone",
 				damage = self.damage,
-				col_ray = {ray = math.UP}
+				col_ray = {
+					ray = math.UP
+				}
 			})
 		end
 	end
@@ -71,4 +73,3 @@ function TearGasGrenade:detonate()
 		managers.network:session():send_to_peers("sync_tear_gas_grenade_detonate", self._unit)
 	end
 end
-

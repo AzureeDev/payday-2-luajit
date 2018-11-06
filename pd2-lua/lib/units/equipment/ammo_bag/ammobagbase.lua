@@ -16,7 +16,9 @@ function AmmoBagBase.spawn(pos, rot, ammo_upgrade_lvl, peer_id, bullet_storm_lev
 end
 
 function AmmoBagBase:set_server_information(peer_id)
-	self._server_information = {owner_peer_id = peer_id}
+	self._server_information = {
+		owner_peer_id = peer_id
+	}
 
 	managers.network:session():peer(peer_id):set_used_deployable(true)
 end
@@ -257,6 +259,7 @@ function AmmoBagBase:destroy()
 		self._validate_clbk_id = nil
 	end
 end
+
 CustomAmmoBagBase = CustomAmmoBagBase or class(AmmoBagBase)
 
 function CustomAmmoBagBase:init(unit)
@@ -284,4 +287,3 @@ function CustomAmmoBagBase:_set_empty()
 		self._unit:damage():run_sequence_simple("empty")
 	end
 end
-

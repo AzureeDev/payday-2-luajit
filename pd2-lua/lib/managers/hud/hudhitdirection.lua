@@ -1,10 +1,11 @@
 HUDHitDirection = HUDHitDirection or class()
 HUDHitDirection.UNIT_TYPE_HIT_PLAYER = 1
 HUDHitDirection.UNIT_TYPE_HIT_VEHICLE = 2
-HUDHitDirection.DAMAGE_TYPES = {}
-HUDHitDirection.DAMAGE_TYPES.HEALTH = 1
-HUDHitDirection.DAMAGE_TYPES.ARMOUR = 2
-HUDHitDirection.DAMAGE_TYPES.VEHICLE = 3
+HUDHitDirection.DAMAGE_TYPES = {
+	HEALTH = 1,
+	ARMOUR = 2,
+	VEHICLE = 3
+}
 HUDHitDirection.PANEL_SIZE = 300
 
 function HUDHitDirection:init(hud)
@@ -111,4 +112,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDHitDirectionVR")
 end
-

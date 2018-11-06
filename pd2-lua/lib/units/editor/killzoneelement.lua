@@ -21,4 +21,3 @@ function KillzoneUnitElement:_build_panel(panel, panel_sizer)
 		"laser"
 	})
 end
-

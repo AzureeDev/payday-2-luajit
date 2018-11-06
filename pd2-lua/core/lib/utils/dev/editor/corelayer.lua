@@ -304,7 +304,7 @@ function Layer:_update_drag_select(t, dt)
 		})
 	end
 
-	local len = (self._drag_start_pos - end_pos):length()
+	local len = self._drag_start_pos - end_pos:length()
 
 	if len > 0.05 then
 		local top_left = self._drag_start_pos
@@ -402,12 +402,12 @@ function Layer:draw_grid(t, dt)
 	end
 
 	for i = -5, 5, 1 do
-		local from_x = (self._current_pos + rot:x() * i * self:grid_size()) - rot:y() * 6 * self:grid_size()
+		local from_x = self._current_pos + rot:x() * i * self:grid_size() - rot:y() * 6 * self:grid_size()
 		local to_x = self._current_pos + rot:x() * i * self:grid_size() + rot:y() * 6 * self:grid_size()
 
 		Application:draw_line(from_x, to_x, 0, 0.5, 0)
 
-		local from_y = (self._current_pos + rot:y() * i * self:grid_size()) - rot:x() * 6 * self:grid_size()
+		local from_y = self._current_pos + rot:y() * i * self:grid_size() - rot:x() * 6 * self:grid_size()
 		local to_y = self._current_pos + rot:y() * i * self:grid_size() + rot:x() * 6 * self:grid_size()
 
 		Application:draw_line(from_y, to_y, 0, 0.5, 0)
@@ -629,7 +629,23 @@ function Layer:change_combo_box_trg(data)
 
 	for i = 1, #self[data.t], 1 do
 		if self[data.value] == self[data.t][i] then
-			next_i = self:ctrl() and (i == 1 and #self[data.t] or 1) or self:shift() and (i == 1 and #self[data.t] or i - 1) or i == #self[data.t] and 1 or i + 1
+			if self:ctrl() then
+				if i == 1 then
+					next_i = #self[data.t]
+				else
+					next_i = 1
+				end
+			elseif self:shift() then
+				if i == 1 then
+					next_i = #self[data.t]
+				else
+					next_i = i - 1
+				end
+			elseif i == #self[data.t] then
+				next_i = 1
+			else
+				next_i = i + 1
+			end
 		end
 	end
 
@@ -892,7 +908,7 @@ function Layer:recreate_units(name, data)
 	self._continent_locked_picked = true
 
 	for _, params in ipairs(data) do
-		local unit_name = (name or params.name):id()
+		local unit_name = name or params.name:id()
 		local continent = params.continent
 		local pos = params.position
 		local rot = params.rotation
@@ -1039,7 +1055,9 @@ function Layer:set_drag_select()
 	end
 
 	self._drag_select = true
-	self._polyline = managers.editor._gui:polyline({color = Color(0.5, 1, 1, 1)})
+	self._polyline = managers.editor._gui:polyline({
+		color = Color(0.5, 1, 1, 1)
+	})
 
 	self._polyline:set_closed(true)
 
@@ -1324,7 +1342,7 @@ end
 function Layer:recalc_locals(unit, reference)
 	local pos = reference:position()
 	local rot = reference:rotation()
-	unit:unit_data().local_pos = (unit:unit_data().world_pos - pos):rotate_with(rot:inverse())
+	unit:unit_data().local_pos = unit:unit_data().world_pos - pos:rotate_with(rot:inverse())
 	unit:unit_data().local_rot = rot:inverse() * unit:rotation()
 end
 
@@ -1345,9 +1363,11 @@ function Layer:verify_selected_units()
 
 	local i = 1
 
-	while not alive(self._selected_unit) and i < #self._selected_units do
-		self._selected_unit = self._selected_units[i]
-		i = i + 1
+	if not alive(self._selected_unit) then
+		while not alive(self._selected_unit) and i < #self._selected_units do
+			self._selected_unit = self._selected_units[i]
+			i = i + 1
+		end
 	end
 
 	return alive(self._selected_unit)
@@ -1530,7 +1550,18 @@ function Layer:clone_edited_values(unit, source)
 
 		if projection_texture then
 			local is_projection = CoreEditorUtils.is_projection_light(source, light, "projection")
-			local is_spot = (not string.match(light:properties(), "omni") or false) and true
+
+			if string.match(light:properties(), "omni") then
+				if false then
+					slot12 = true
+				else
+					slot12 = false
+
+					if false then
+						local is_spot = true
+					end
+				end
+			end
 
 			if is_projection and is_spot then
 				new_light:set_projection_texture(Idstring(projection_texture), false, false)
@@ -1720,6 +1751,7 @@ end
 function Layer:selected_amount_string()
 	return "Selected " .. self._save_name .. ": " .. #self._selected_units
 end
+
 local idstring_wpn = Idstring("wpn")
 
 function Layer:save()
@@ -1730,7 +1762,9 @@ function Layer:save()
 			local t = {
 				entry = self._save_name,
 				continent = unit_data.continent and unit_data.continent:name(),
-				data = {unit_data = CoreEditorSave.save_data_table(unit)}
+				data = {
+					unit_data = CoreEditorSave.save_data_table(unit)
+				}
 			}
 
 			self:_add_project_unit_save_data(unit, t.data)
@@ -1783,8 +1817,7 @@ function Layer:test_spawn(type)
 			if math.mod(i, prow) == 0 then
 				c_rad = max_rad * 1
 
-				for _, unit in ipairs(row_units) do
-					-- Nothing
+				for slot21, slot22 in ipairs(row_units) do
 				end
 
 				max_rad = 0
@@ -1815,4 +1848,3 @@ end
 function Layer:alt()
 	return CoreInput.alt()
 end
-

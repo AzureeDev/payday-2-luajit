@@ -269,6 +269,7 @@ function CoreUnitCallbackCutsceneKey:_param_with_name(param_name)
 
 	return param
 end
+
 CoreUnitCallbackCutsceneKeyParam = CoreUnitCallbackCutsceneKeyParam or class()
 
 function CoreUnitCallbackCutsceneKeyParam:__tostring()
@@ -319,4 +320,3 @@ function CoreUnitCallbackCutsceneKeyParam:_save_under(parent_node)
 
 	return param_node
 end
-

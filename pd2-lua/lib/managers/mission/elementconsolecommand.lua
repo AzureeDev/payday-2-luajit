@@ -14,4 +14,3 @@ function ElementConsoleCommand:on_executed(instigator)
 	Application:console_command("s " .. self._values.cmd)
 	ElementConsoleCommand.super.on_executed(self, instigator)
 end
-

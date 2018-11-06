@@ -132,7 +132,9 @@ function EconomyTweakData:_init_armor_skins()
 		ecp_female = Idstring("units/pd2_dlc_ecp/characters/npc_criminals_ecp_female/mtr_criminal_ecp_female_cc"),
 		ecp_male = Idstring("units/pd2_dlc_ecp/characters/npc_criminals_ecp_male/mtr_criminal_ecp_male_cc")
 	}
-	self.armor_skins = {none = {}}
+	self.armor_skins = {
+		none = {}
+	}
 	self.armor_skins.none.name_id = "bm_askn_none"
 	self.armor_skins.none.desc_id = "bm_askn_none_desc"
 	self.armor_skins.none.reserve_quality = true
@@ -156,14 +158,30 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/cvc",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_004_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")},
-		uv_scale = {[3] = Vector3(12.086, 12.086, 1)},
-		uv_offset_rot = {[3] = Vector3(-0.320689, 1.38638, 0)},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(2.82853, 0, 1)},
-		uv_scale = {[3] = Vector3(9.32087, 11.1325, 1)},
-		uv_offset_rot = {[3] = Vector3(-0.320768, 1.37938, 0)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_004_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")
+		},
+		uv_scale = {
+			[3] = Vector3(12.086, 12.086, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(-0.320689, 1.38638, 0)
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(2.82853, 0, 1)
+		},
+		uv_scale = {
+			[3] = Vector3(9.32087, 11.1325, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(-0.320768, 1.37938, 0)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.cvc_black = {
@@ -174,11 +192,21 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/cvc",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_001_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(2.82853, 0, 1)},
-		uv_scale = {[3] = Vector3(9.32087, 11.1325, 1)},
-		uv_offset_rot = {[3] = Vector3(-0.320768, 1.37938, 0)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_001_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(2.82853, 0, 1)
+		},
+		uv_scale = {
+			[3] = Vector3(9.32087, 11.1325, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(-0.320768, 1.37938, 0)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.cvc_tan = {
@@ -189,11 +217,21 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/cvc",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_007_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(2.82853, 0, 1)},
-		uv_scale = {[3] = Vector3(9.32087, 11.1325, 1)},
-		uv_offset_rot = {[3] = Vector3(-0.320768, 1.37938, 0)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_007_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(2.82853, 0, 1)
+		},
+		uv_scale = {
+			[3] = Vector3(9.32087, 11.1325, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(-0.320768, 1.37938, 0)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.cvc_grey = {
@@ -208,10 +246,18 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 			[2] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_002_c_df"),
 			[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_002_df")
 		},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(2.82853, 0, 1)},
-		uv_scale = {[3] = Vector3(9.32087, 11.1325, 1)},
-		uv_offset_rot = {[3] = Vector3(-0.320768, 1.37938, 0)},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(2.82853, 0, 1)
+		},
+		uv_scale = {
+			[3] = Vector3(9.32087, 11.1325, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(-0.320768, 1.37938, 0)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.cvc_navy_blue = {
@@ -222,11 +268,21 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/cvc",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_008_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(2.82853, 0, 1)},
-		uv_scale = {[3] = Vector3(9.32087, 11.1325, 1)},
-		uv_offset_rot = {[3] = Vector3(-0.320768, 1.37938, 0)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_008_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(2.82853, 0, 1)
+		},
+		uv_scale = {
+			[3] = Vector3(9.32087, 11.1325, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(-0.320768, 1.37938, 0)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_tree_stump = {
@@ -237,14 +293,30 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/drm",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_001_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_001_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_001_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(3.11472, 0, 1)},
-		pattern_pos = {[3] = Vector3(0, 0.37825, 0)},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_001_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_001_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_001_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(3.11472, 0, 1)
+		},
+		pattern_pos = {
+			[3] = Vector3(0, 0.37825, 0)
+		},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_gray_raider = {
@@ -255,10 +327,18 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/drm",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_004_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/cf15/pattern_gradient/gradient_cf15_002_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_003_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_004_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/cf15/pattern_gradient/gradient_cf15_002_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_003_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
 		pattern_tweak = {
 			[2] = Vector3(1.87455, 0, 1),
 			[3] = Vector3(3.49631, 0, 1)
@@ -267,8 +347,12 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 			[2] = Vector3(-0.0796563, 0.111138, 0),
 			[3] = Vector3(0.607203, 0.988791, 0)
 		},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_desert_twilight = {
@@ -279,14 +363,30 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/drm",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_002_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/bah/pattern_gradient/gradient_bah_002_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/sputnik/pattern/pattern_pixel_camo_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(4.25948, 0, 1)},
-		pattern_pos = {[3] = Vector3(0.607203, 0.988791, 0)},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_002_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/bah/pattern_gradient/gradient_bah_002_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/sputnik/pattern/pattern_pixel_camo_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(4.25948, 0, 1)
+		},
+		pattern_pos = {
+			[3] = Vector3(0.607203, 0.988791, 0)
+		},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_navy_breeze = {
@@ -297,10 +397,18 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/drm",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_004_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/cf15/pattern_gradient/gradient_cf15_crime_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_007_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_004_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/cf15/pattern_gradient/gradient_cf15_crime_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_007_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
 		pattern_tweak = {
 			[2] = Vector3(1.87455, 0, 1),
 			[3] = Vector3(3.16242, 0, 1)
@@ -327,10 +435,18 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/drm",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_003_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/pattern_gradient/gradient_drm_002_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/sputnik/pattern/pattern_pixel_camo_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_003_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/pattern_gradient/gradient_drm_002_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/sputnik/pattern/pattern_pixel_camo_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
 		pattern_tweak = {
 			[2] = Vector3(1.87455, 0, 1),
 			[3] = Vector3(3.49631, 0, 1)
@@ -339,8 +455,12 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 			[2] = Vector3(-0.0796563, 0.111138, 0),
 			[3] = Vector3(0.607203, 0.988791, 0)
 		},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_khaki_eclipse = {
@@ -351,14 +471,30 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/drm",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_006_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_001_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_001_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(3.11472, 0, 1)},
-		pattern_pos = {[3] = Vector3(0, 0.37825, 0)},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_006_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_001_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_001_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(3.11472, 0, 1)
+		},
+		pattern_pos = {
+			[3] = Vector3(0, 0.37825, 0)
+		},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_desert_tech = {
@@ -373,9 +509,15 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 			[2] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_004_df"),
 			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_007_df")
 		},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/pattern_gradient/gradient_drm_001_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_006_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/pattern_gradient/gradient_drm_001_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_006_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
 		pattern_tweak = {
 			[2] = Vector3(1.87455, 0, 1),
 			[3] = Vector3(3.49631, 0, 1)
@@ -384,8 +526,12 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 			[2] = Vector3(-0.0796563, 0.111138, 0),
 			[3] = Vector3(0.607203, 0.988791, 0)
 		},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_misted_grey = {
@@ -396,14 +542,30 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/drm",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_008_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/pattern_gradient/gradient_drm_002_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/sputnik/pattern/pattern_pixel_camo_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(3.49631, 0, 1)},
-		pattern_pos = {[3] = Vector3(0.607203, 0.988791, 0)},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_008_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/pattern_gradient/gradient_drm_002_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/sputnik/pattern/pattern_pixel_camo_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(3.49631, 0, 1)
+		},
+		pattern_pos = {
+			[3] = Vector3(0.607203, 0.988791, 0)
+		},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_khaki_regular = {
@@ -414,13 +576,27 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 		reserve_quality = false,
 		steam_economy = false,
 		texture_bundle_folder = "cash/safes/drm",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_009_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/cf15/pattern_gradient/gradient_cf15_005_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
-		pattern_tweak = {[3] = Vector3(3.49631, 0, 1)},
-		pattern_pos = {[3] = Vector3(0.607203, 0.988791, 0)},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/drm/base_gradient/base_drm_009_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/cf15/pattern_gradient/gradient_cf15_005_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
+		pattern_tweak = {
+			[3] = Vector3(3.49631, 0, 1)
+		},
+		pattern_pos = {
+			[3] = Vector3(0.607203, 0.988791, 0)
+		},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 	self.armor_skins.drm_somber_woodland = {
@@ -439,8 +615,12 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 			[2] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_010_df"),
 			[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_010_df")
 		},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_007_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_007_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/drm/sticker/drm_sticker_001_df")
+		},
 		pattern_tweak = {
 			[2] = Vector3(1.87455, 0, 1),
 			[3] = Vector3(3.49631, 0, 1)
@@ -449,8 +629,12 @@ function EconomyTweakData:_init_armor_skins_crime_spree()
 			[2] = Vector3(-0.0796563, 0.111138, 0),
 			[3] = Vector3(0.721679, 0.988791, 0)
 		},
-		uv_scale = {[3] = Vector3(15.5653, 15.5663, 1)},
-		uv_offset_rot = {[3] = Vector3(0.222614, 0.924553, 0.049451)},
+		uv_scale = {
+			[3] = Vector3(15.5653, 15.5663, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.222614, 0.924553, 0.049451)
+		},
 		sorting_idx = sorting_groups.crime_spree
 	}
 end
@@ -462,14 +646,30 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		rarity = "uncommon",
 		reserve_quality = false,
 		texture_bundle_folder = "cash/safes/ast",
-		base_gradient = {[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_001_df"},
-		pattern_gradient = {[7.0] = "units/payday2_cash/safes/ast/pattern_gradient/gradient_ast_004_df"},
-		pattern = {[7.0] = "units/payday2_cash/safes/ast/pattern/ast_pattern_005_df"},
-		sticker = {[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_005_df"},
-		pattern_tweak = {[7] = Vector3(1.39757, 0, 1)},
-		pattern_pos = {[7] = Vector3(-0.404006, -1.06225, 0)},
-		uv_scale = {[7] = Vector3(20, 20, 0)},
-		uv_offset_rot = {[7] = Vector3(0.216075, 0.931553, 0)},
+		base_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_001_df"
+		},
+		pattern_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/pattern_gradient/gradient_ast_004_df"
+		},
+		pattern = {
+			[7.0] = "units/payday2_cash/safes/ast/pattern/ast_pattern_005_df"
+		},
+		sticker = {
+			[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_005_df"
+		},
+		pattern_tweak = {
+			[7] = Vector3(1.39757, 0, 1)
+		},
+		pattern_pos = {
+			[7] = Vector3(-0.404006, -1.06225, 0)
+		},
+		uv_scale = {
+			[7] = Vector3(20, 20, 0)
+		},
+		uv_offset_rot = {
+			[7] = Vector3(0.216075, 0.931553, 0)
+		},
 		steam_economy = true
 	}
 	self.armor_skins.ast_armor2 = {
@@ -478,13 +678,27 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		rarity = "uncommon",
 		reserve_quality = false,
 		texture_bundle_folder = "cash/safes/ast",
-		base_gradient = {[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_002_df"},
-		pattern_gradient = {[7.0] = "units/payday2_cash/safes/ast/pattern_gradient/gradient_ast_002_df"},
-		pattern = {[7.0] = "units/payday2_cash/safes/ast/pattern/ast_pattern_002_df"},
-		sticker = {[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_004_df"},
-		pattern_tweak = {[7] = Vector3(3.83019, 0, 1)},
-		pattern_pos = {[7] = Vector3(0, 0, 0)},
-		uv_scale = {[7] = Vector3(1.01, 1.01, 0)},
+		base_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_002_df"
+		},
+		pattern_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/pattern_gradient/gradient_ast_002_df"
+		},
+		pattern = {
+			[7.0] = "units/payday2_cash/safes/ast/pattern/ast_pattern_002_df"
+		},
+		sticker = {
+			[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_004_df"
+		},
+		pattern_tweak = {
+			[7] = Vector3(3.83019, 0, 1)
+		},
+		pattern_pos = {
+			[7] = Vector3(0, 0, 0)
+		},
+		uv_scale = {
+			[7] = Vector3(1.01, 1.01, 0)
+		},
 		uv_offset_rot = {
 			[7] = Vector3(0, 0.998331, 0),
 			[2] = Vector3(-2, -2, 0)
@@ -497,14 +711,30 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		rarity = "uncommon",
 		reserve_quality = false,
 		texture_bundle_folder = "cash/safes/ast",
-		base_gradient = {[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_003_df"},
-		pattern_gradient = {[7.0] = "units/payday2_cash/safes/ast/pattern_gradient/gradient_ast_003_df"},
-		pattern = {[7.0] = "units/payday2_cash/safes/ast/pattern/ast_pattern_004_df"},
-		sticker = {[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_002_df"},
-		pattern_tweak = {[7] = Vector3(2.87622, 0, 1)},
-		pattern_pos = {[7] = Vector3(-0.0224181, -0.461245, 0)},
-		uv_scale = {[7] = Vector3(11.4173, 11.4173, 0)},
-		uv_offset_rot = {[7] = Vector3(-0.324689, 1.38854, 0)},
+		base_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_003_df"
+		},
+		pattern_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/pattern_gradient/gradient_ast_003_df"
+		},
+		pattern = {
+			[7.0] = "units/payday2_cash/safes/ast/pattern/ast_pattern_004_df"
+		},
+		sticker = {
+			[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_002_df"
+		},
+		pattern_tweak = {
+			[7] = Vector3(2.87622, 0, 1)
+		},
+		pattern_pos = {
+			[7] = Vector3(-0.0224181, -0.461245, 0)
+		},
+		uv_scale = {
+			[7] = Vector3(11.4173, 11.4173, 0)
+		},
+		uv_offset_rot = {
+			[7] = Vector3(-0.324689, 1.38854, 0)
+		},
 		steam_economy = true
 	}
 	self.armor_skins.ast_armor4 = {
@@ -513,15 +743,25 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		rarity = "rare",
 		reserve_quality = false,
 		texture_bundle_folder = "cash/safes/ast",
-		base_gradient = {[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_004_df"},
-		pattern_gradient = {[7.0] = "units/payday2_cash/safes/red/pattern_gradient/gradient_france_df"},
-		pattern = {[7.0] = "units/payday2_cash/safes/default/pattern/pattern_default_df"},
+		base_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_004_df"
+		},
+		pattern_gradient = {
+			[7.0] = "units/payday2_cash/safes/red/pattern_gradient/gradient_france_df"
+		},
+		pattern = {
+			[7.0] = "units/payday2_cash/safes/default/pattern/pattern_default_df"
+		},
 		sticker = {
 			[2.0] = "units/payday2_cash/safes/wwt/sticker/wwt_sticker_001_df",
 			[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_001_df"
 		},
-		pattern_tweak = {[7] = Vector3(1, 0, 1)},
-		pattern_pos = {[7] = Vector3(0, 0, 0)},
+		pattern_tweak = {
+			[7] = Vector3(1, 0, 1)
+		},
+		pattern_pos = {
+			[7] = Vector3(0, 0, 0)
+		},
 		uv_scale = {
 			[2] = Vector3(1.20187, 2.10769, 1),
 			[7] = Vector3(1.00349, 1.00349, 0)
@@ -530,7 +770,9 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 			[2] = Vector3(0.001, 1.12589, 6.28319),
 			[7] = Vector3(0.001, 1.00163, 6.28319)
 		},
-		cubemap_pattern_control = {[7] = Vector3(0, 0, 0)},
+		cubemap_pattern_control = {
+			[7] = Vector3(0, 0, 0)
+		},
 		steam_economy = true
 	}
 	self.armor_skins.ast_armor5 = {
@@ -539,10 +781,18 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		rarity = "rare",
 		reserve_quality = false,
 		texture_bundle_folder = "cash/safes/ast",
-		base_gradient = {[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_005_df"},
-		pattern_gradient = {[7.0] = "units/payday2_cash/safes/red/pattern_gradient/gradient_france_df"},
-		sticker = {[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_003_df"},
-		pattern_pos = {[6] = Vector3(0, 0, 0)},
+		base_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_005_df"
+		},
+		pattern_gradient = {
+			[7.0] = "units/payday2_cash/safes/red/pattern_gradient/gradient_france_df"
+		},
+		sticker = {
+			[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_003_df"
+		},
+		pattern_pos = {
+			[6] = Vector3(0, 0, 0)
+		},
 		uv_scale = {
 			[2] = Vector3(0.629771, 1.00417, 0.367994),
 			[7] = Vector3(1.0325, 1.0325, 0.367994)
@@ -560,10 +810,18 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		rarity = "epic",
 		reserve_quality = false,
 		texture_bundle_folder = "cash/safes/ast",
-		base_gradient = {[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_006_df"},
-		pattern_gradient = {[7.0] = "units/payday2_cash/safes/red/pattern_gradient/gradient_france_df"},
-		pattern = {[7.0] = "units/payday2_cash/safes/default/pattern/pattern_default_df"},
-		sticker = {[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_006_df"},
+		base_gradient = {
+			[7.0] = "units/payday2_cash/safes/ast/base_gradient/base_ast_006_df"
+		},
+		pattern_gradient = {
+			[7.0] = "units/payday2_cash/safes/red/pattern_gradient/gradient_france_df"
+		},
+		pattern = {
+			[7.0] = "units/payday2_cash/safes/default/pattern/pattern_default_df"
+		},
+		sticker = {
+			[7.0] = "units/payday2_cash/safes/ast/sticker/ast_sticker_006_df"
+		},
 		uv_scale = {
 			[7] = Vector3(1.01117, 1.01117, 0),
 			[2] = Vector3(0.486747, 0.868144, 0)
@@ -608,7 +866,9 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 			[6] = Vector3(-0.318149, 1.38946, 0),
 			[7] = Vector3(-0.318149, 1.38946, 0)
 		},
-		cubemap_pattern_control = {[6] = Vector3(0, 0, 0)},
+		cubemap_pattern_control = {
+			[6] = Vector3(0, 0, 0)
+		},
 		steam_economy = true
 	}
 	self.armor_skins.cas_police = {
@@ -650,10 +910,18 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		pattern_gradient = "units/payday2_cash/safes/cas/pattern_gradient/gradient_cas_003_df",
 		pattern = "units/payday2_cash/safes/cas/pattern/cas_pattern_003_df",
 		sticker = "units/payday2_cash/safes/cas/sticker/cas_sticker_003_df",
-		pattern_tweak = {[7] = Vector3(2.35154, 0, 1)},
-		pattern_pos = {[7] = Vector3(-0.814214, 0.235154, 0)},
-		uv_scale = {[7] = Vector3(5.87399, 5.87399, 1)},
-		uv_offset_rot = {[7] = Vector3(0.285, 1.2559, 3.16632)},
+		pattern_tweak = {
+			[7] = Vector3(2.35154, 0, 1)
+		},
+		pattern_pos = {
+			[7] = Vector3(-0.814214, 0.235154, 0)
+		},
+		uv_scale = {
+			[7] = Vector3(5.87399, 5.87399, 1)
+		},
+		uv_offset_rot = {
+			[7] = Vector3(0.285, 1.2559, 3.16632)
+		},
 		steam_economy = true
 	}
 	self.armor_skins.cas_slayer = {
@@ -670,8 +938,12 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 			[2] = Vector3(1.68376, 0, 0),
 			[6] = Vector3(3.5917, 0, 0)
 		},
-		uv_scale = {[7] = Vector3(1.01117, 1.01117, 1)},
-		uv_offset_rot = {[7] = Vector3(0, 0.998331, 0)},
+		uv_scale = {
+			[7] = Vector3(1.01117, 1.01117, 1)
+		},
+		uv_offset_rot = {
+			[7] = Vector3(0, 0.998331, 0)
+		},
 		steam_economy = true
 	}
 	self.armor_skins.cas_trash = {
@@ -684,8 +956,12 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		pattern_gradient = "units/payday2_cash/safes/cas/pattern_gradient/gradient_cas_005_df",
 		pattern = "units/payday2_cash/safes/cas/pattern/cas_pattern_005_df",
 		sticker = "units/payday2_cash/safes/cas/sticker/cas_sticker_005_df",
-		pattern_tweak = {[6] = Vector3(1, 0, 1)},
-		pattern_pos = {[6] = Vector3(0, 0, 0)},
+		pattern_tweak = {
+			[6] = Vector3(1, 0, 1)
+		},
+		pattern_pos = {
+			[6] = Vector3(0, 0, 0)
+		},
 		uv_scale = {
 			[2] = Vector3(0.772794, 0.772794, 1),
 			[6] = Vector3(1.01, 1.01, 1)
@@ -745,14 +1021,30 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		rarity = "uncommon",
 		reserve_quality = false,
 		texture_bundle_folder = "cash/safes/cvc",
-		base_gradient = {[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_012_df")},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_004_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_003_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_006_df")},
-		uv_scale = {[3] = Vector3(20, 18.5698, 1)},
-		uv_offset_rot = {[3] = Vector3(0.216614, 0.925013, 0)},
-		pattern_tweak = {[3] = Vector3(4.64107, 0, 1)},
-		pattern_pos = {[3] = Vector3(0.244694, 0.397329, 0)},
+		base_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_012_df")
+		},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_004_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_003_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_006_df")
+		},
+		uv_scale = {
+			[3] = Vector3(20, 18.5698, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.216614, 0.925013, 0)
+		},
+		pattern_tweak = {
+			[3] = Vector3(4.64107, 0, 1)
+		},
+		pattern_pos = {
+			[3] = Vector3(0.244694, 0.397329, 0)
+		},
 		sorting_idx = sorting_groups.camo
 	}
 	self.armor_skins.cvc_city_camo = {
@@ -765,9 +1057,15 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 			[2] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_002_b_df"),
 			[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_002_df")
 		},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_010_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_006_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_006_df")},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_010_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_006_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_006_df")
+		},
 		pattern_tweak = {
 			[2] = Vector3(1.77916, 0, 1),
 			[3] = Vector3(1.87455, 0, 1)
@@ -776,8 +1074,12 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 			[2] = Vector3(0.216075, 0.473647, 0),
 			[3] = Vector3(0.216075, 0.445028, 0)
 		},
-		uv_scale = {[3] = Vector3(20, 18.5698, 1)},
-		uv_offset_rot = {[3] = Vector3(0.216614, 0.925013, 0)},
+		uv_scale = {
+			[3] = Vector3(20, 18.5698, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.216614, 0.925013, 0)
+		},
 		sorting_idx = sorting_groups.camo
 	}
 	self.armor_skins.cvc_desert_camo = {
@@ -794,15 +1096,25 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 			[2] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_006_df"),
 			[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_005_df")
 		},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_001_df")},
-		sticker = {[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_006_df")},
-		uv_scale = {[3] = Vector3(20, 18.5698, 1)},
-		uv_offset_rot = {[3] = Vector3(0.216614, 0.925013, 0)},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_001_df")
+		},
+		sticker = {
+			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_006_df")
+		},
+		uv_scale = {
+			[3] = Vector3(20, 18.5698, 1)
+		},
+		uv_offset_rot = {
+			[3] = Vector3(0.216614, 0.925013, 0)
+		},
 		pattern_tweak = {
 			[2] = Vector3(1.92225, 0, 1),
 			[3] = Vector3(2.82853, 0, 1)
 		},
-		uv_scale = {[3] = Vector3(20, 18.5698, 1)},
+		uv_scale = {
+			[3] = Vector3(20, 18.5698, 1)
+		},
 		sorting_idx = sorting_groups.camo
 	}
 	self.armor_skins.cvc_avenger = {
@@ -815,14 +1127,22 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 			[2] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_011_df"),
 			[3] = Idstring("units/payday2_cash/safes/cvc/base_gradient/base_cvc_013_df")
 		},
-		pattern_gradient = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_003_df")},
-		pattern = {[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_001_df")},
+		pattern_gradient = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern_gradient/gradient_grunt_003_df")
+		},
+		pattern = {
+			[3] = Idstring("units/payday2_cash/safes/grunt/pattern/grunt_pattern_001_df")
+		},
 		sticker = {
 			[2] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_005_b_df"),
 			[3] = Idstring("units/payday2_cash/safes/cvc/sticker/cvc_sticker_005_df")
 		},
-		pattern_tweak = {[3] = Vector3(2.01765, 0, 1)},
-		pattern_pos = {[3] = Vector3(0.216075, 0.445028, 0)},
+		pattern_tweak = {
+			[3] = Vector3(2.01765, 0, 1)
+		},
+		pattern_pos = {
+			[3] = Vector3(0.216075, 0.445028, 0)
+		},
 		uv_offset_rot = {
 			[2] = Vector3(-0.00333866, 1.33222, 3.13635),
 			[3] = Vector3(0.00374075, 0.996331, 0)
@@ -880,4 +1200,3 @@ function EconomyTweakData:_init_armor_skins_armor_safe()
 		cubemap_pattern_control = Vector3(0, 0.001, 0)
 	}
 end
-

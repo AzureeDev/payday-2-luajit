@@ -21,4 +21,3 @@ function VideoManager:volume_changed(volume)
 		video:set_volume_gain(volume)
 	end
 end
-

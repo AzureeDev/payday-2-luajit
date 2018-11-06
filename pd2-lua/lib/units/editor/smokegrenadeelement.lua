@@ -33,4 +33,3 @@ function SmokeGrenadeElement:_build_panel(panel, panel_sizer)
 	}, "Select what type of effect will be spawned.")
 	self:_add_help_text("Spawns a smoke grenade.")
 end
-

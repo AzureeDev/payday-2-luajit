@@ -63,6 +63,7 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_hector_boss_no_armor(presets)
 	self:_init_tank(presets)
 	self:_init_medic(presets)
+	self:_init_shadow_spooc(presets)
 	self:_init_spooc(presets)
 	self:_init_shield(presets)
 	self:_init_phalanx_minion(presets)
@@ -153,9 +154,15 @@ function CharacterTweakData:_init_region_zombie()
 	self._speech_prefix_p2 = "n"
 end
 
+function CharacterTweakData:_init_region_murkywater()
+	self:_init_region_america()
+end
+
 function CharacterTweakData:_init_security(presets)
 	self.security = deep_clone(presets.base)
-	self.security.tags = {"law"}
+	self.security.tags = {
+		"law"
+	}
 	self.security.experience = {}
 	self.security.weapon = presets.weapon.normal
 	self.security.detection = presets.detection.guard
@@ -171,10 +178,12 @@ function CharacterTweakData:_init_security(presets)
 	self.security.suppression = presets.suppression.easy
 	self.security.surrender = presets.surrender.easy
 	self.security.ecm_vulnerability = 1
-	self.security.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.security.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.security.weapon_voice = "3"
 	self.security.experience.cable_tie = "tie_swat"
 	self.security.speech_prefix_p1 = "l"
@@ -214,7 +223,9 @@ end
 
 function CharacterTweakData:_init_gensec(presets)
 	self.gensec = deep_clone(presets.base)
-	self.gensec.tags = {"law"}
+	self.gensec.tags = {
+		"law"
+	}
 	self.gensec.experience = {}
 	self.gensec.weapon = presets.weapon.normal
 	self.gensec.detection = presets.detection.guard
@@ -229,10 +240,12 @@ function CharacterTweakData:_init_gensec(presets)
 	self.gensec.suppression = presets.suppression.hard
 	self.gensec.surrender = presets.surrender.easy
 	self.gensec.ecm_vulnerability = 1
-	self.gensec.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.gensec.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.gensec.weapon_voice = "3"
 	self.gensec.experience.cable_tie = "tie_swat"
 	self.gensec.speech_prefix_p1 = "l"
@@ -254,7 +267,9 @@ end
 
 function CharacterTweakData:_init_cop(presets)
 	self.cop = deep_clone(presets.base)
-	self.cop.tags = {"law"}
+	self.cop.tags = {
+		"law"
+	}
 	self.cop.experience = {}
 	self.cop.weapon = presets.weapon.normal
 	self.cop.detection = presets.detection.normal
@@ -268,10 +283,12 @@ function CharacterTweakData:_init_cop(presets)
 	self.cop.suppression = presets.suppression.easy
 	self.cop.surrender = presets.surrender.easy
 	self.cop.ecm_vulnerability = 1
-	self.cop.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.cop.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.cop.weapon_voice = "1"
 	self.cop.experience.cable_tie = "tie_swat"
 	self.cop.speech_prefix_p1 = self._prefix_data_p1.swat()
@@ -303,7 +320,9 @@ end
 
 function CharacterTweakData:_init_fbi(presets)
 	self.fbi = deep_clone(presets.base)
-	self.fbi.tags = {"law"}
+	self.fbi.tags = {
+		"law"
+	}
 	self.fbi.experience = {}
 	self.fbi.weapon = presets.weapon.normal
 	self.fbi.detection = presets.detection.normal
@@ -317,10 +336,12 @@ function CharacterTweakData:_init_fbi(presets)
 	self.fbi.suppression = presets.suppression.hard_def
 	self.fbi.surrender = presets.surrender.easy
 	self.fbi.ecm_vulnerability = 1
-	self.fbi.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.fbi.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.fbi.weapon_voice = "2"
 	self.fbi.experience.cable_tie = "tie_swat"
 	self.fbi.speech_prefix_p1 = "l"
@@ -358,10 +379,12 @@ function CharacterTweakData:_init_medic(presets)
 		12
 	}
 	self.medic.ecm_vulnerability = 1
-	self.medic.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.medic.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.medic.weapon_voice = "2"
 	self.medic.experience.cable_tie = "tie_swat"
 	self.medic.speech_prefix_p1 = self._prefix_data_p1.medic()
@@ -386,7 +409,9 @@ end
 
 function CharacterTweakData:_init_swat(presets)
 	self.swat = deep_clone(presets.base)
-	self.swat.tags = {"law"}
+	self.swat.tags = {
+		"law"
+	}
 	self.swat.experience = {}
 	self.swat.weapon = presets.weapon.normal
 	self.swat.detection = presets.detection.normal
@@ -400,10 +425,12 @@ function CharacterTweakData:_init_swat(presets)
 	self.swat.suppression = presets.suppression.hard_agg
 	self.swat.surrender = presets.surrender.easy
 	self.swat.ecm_vulnerability = 1
-	self.swat.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.swat.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.swat.weapon_voice = "2"
 	self.swat.experience.cable_tie = "tie_swat"
 	self.swat.speech_prefix_p1 = self._prefix_data_p1.swat()
@@ -422,7 +449,9 @@ end
 
 function CharacterTweakData:_init_heavy_swat(presets)
 	self.heavy_swat = deep_clone(presets.base)
-	self.heavy_swat.tags = {"law"}
+	self.heavy_swat.tags = {
+		"law"
+	}
 	self.heavy_swat.experience = {}
 	self.heavy_swat.weapon = presets.weapon.normal
 	self.heavy_swat.detection = presets.detection.normal
@@ -437,10 +466,12 @@ function CharacterTweakData:_init_heavy_swat(presets)
 	self.heavy_swat.suppression = presets.suppression.hard_agg
 	self.heavy_swat.surrender = presets.surrender.easy
 	self.heavy_swat.ecm_vulnerability = 1
-	self.heavy_swat.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.heavy_swat.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.heavy_swat.weapon_voice = "2"
 	self.heavy_swat.experience.cable_tie = "tie_swat"
 	self.heavy_swat.speech_prefix_p1 = self._prefix_data_p1.heavy_swat()
@@ -460,7 +491,9 @@ end
 
 function CharacterTweakData:_init_fbi_swat(presets)
 	self.fbi_swat = deep_clone(presets.base)
-	self.fbi_swat.tags = {"law"}
+	self.fbi_swat.tags = {
+		"law"
+	}
 	self.fbi_swat.experience = {}
 	self.fbi_swat.weapon = presets.weapon.good
 	self.fbi_swat.detection = presets.detection.normal
@@ -474,10 +507,12 @@ function CharacterTweakData:_init_fbi_swat(presets)
 	self.fbi_swat.suppression = presets.suppression.hard_def
 	self.fbi_swat.surrender = presets.surrender.easy
 	self.fbi_swat.ecm_vulnerability = 1
-	self.fbi_swat.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.fbi_swat.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.fbi_swat.weapon_voice = "2"
 	self.fbi_swat.experience.cable_tie = "tie_swat"
 	self.fbi_swat.speech_prefix_p1 = self._prefix_data_p1.heavy_swat()
@@ -495,7 +530,9 @@ end
 
 function CharacterTweakData:_init_fbi_heavy_swat(presets)
 	self.fbi_heavy_swat = deep_clone(presets.base)
-	self.fbi_heavy_swat.tags = {"law"}
+	self.fbi_heavy_swat.tags = {
+		"law"
+	}
 	self.fbi_heavy_swat.experience = {}
 	self.fbi_heavy_swat.weapon = presets.weapon.good
 	self.fbi_heavy_swat.detection = presets.detection.normal
@@ -510,10 +547,12 @@ function CharacterTweakData:_init_fbi_heavy_swat(presets)
 	self.fbi_heavy_swat.suppression = presets.suppression.hard_agg
 	self.fbi_heavy_swat.surrender = presets.surrender.easy
 	self.fbi_heavy_swat.ecm_vulnerability = 1
-	self.fbi_heavy_swat.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.fbi_heavy_swat.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.fbi_heavy_swat.weapon_voice = "2"
 	self.fbi_heavy_swat.experience.cable_tie = "tie_swat"
 	self.fbi_heavy_swat.speech_prefix_p1 = self._prefix_data_p1.heavy_swat()
@@ -530,7 +569,9 @@ end
 
 function CharacterTweakData:_init_city_swat(presets)
 	self.city_swat = deep_clone(presets.base)
-	self.city_swat.tags = {"law"}
+	self.city_swat.tags = {
+		"law"
+	}
 	self.city_swat.experience = {}
 	self.city_swat.weapon = presets.weapon.good
 	self.city_swat.detection = presets.detection.normal
@@ -544,10 +585,12 @@ function CharacterTweakData:_init_city_swat(presets)
 	self.city_swat.suppression = presets.suppression.hard_def
 	self.city_swat.surrender = presets.surrender.easy
 	self.city_swat.ecm_vulnerability = 1
-	self.city_swat.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.city_swat.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.city_swat.weapon_voice = "2"
 	self.city_swat.experience.cable_tie = "tie_swat"
 	self.city_swat.silent_priority_shout = "f37"
@@ -582,10 +625,12 @@ function CharacterTweakData:_init_sniper(presets)
 	self.sniper.move_and_shoot_cooldown = 1
 	self.sniper.suppression = presets.suppression.easy
 	self.sniper.ecm_vulnerability = 1
-	self.sniper.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.sniper.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.sniper.weapon_voice = "1"
 	self.sniper.experience.cable_tie = "tie_swat"
 	self.sniper.speech_prefix_p1 = "l"
@@ -614,10 +659,12 @@ function CharacterTweakData:_init_gangster(presets)
 	self.gangster.suppression = presets.suppression.easy
 	self.gangster.surrender = nil
 	self.gangster.ecm_vulnerability = 1
-	self.gangster.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.gangster.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.gangster.no_arrest = true
 	self.gangster.no_retreat = true
 	self.gangster.weapon_voice = "3"
@@ -630,7 +677,9 @@ function CharacterTweakData:_init_gangster(presets)
 	self.gangster.rescue_hostages = false
 	self.gangster.use_radio = nil
 	self.gangster.dodge = presets.dodge.average
-	self.gangster.challenges = {type = "gangster"}
+	self.gangster.challenges = {
+		type = "gangster"
+	}
 	self.gangster.chatter = presets.enemy_chatter.no_chatter
 	self.gangster.melee_weapon = "fists"
 	self.gangster.steal_loot = nil
@@ -806,15 +855,19 @@ function CharacterTweakData:_init_mobster_boss(presets)
 	self.mobster_boss.damage.explosion_damage_mul = 1
 	self.mobster_boss.damage.hurt_severity = presets.hurt_severities.base_no_poison
 	self.mobster_boss.move_speed = presets.move_speed.very_slow
-	self.mobster_boss.allowed_poses = {stand = true}
+	self.mobster_boss.allowed_poses = {
+		stand = true
+	}
 	self.mobster_boss.no_retreat = true
 	self.mobster_boss.no_arrest = true
 	self.mobster_boss.surrender = nil
 	self.mobster_boss.ecm_vulnerability = 0.85
-	self.mobster_boss.ecm_hurts = {ears = {
-		max_duration = 9,
-		min_duration = 7
-	}}
+	self.mobster_boss.ecm_hurts = {
+		ears = {
+			max_duration = 9,
+			min_duration = 7
+		}
+	}
 	self.mobster_boss.weapon_voice = "3"
 	self.mobster_boss.experience.cable_tie = "tie_swat"
 	self.mobster_boss.access = "gangster"
@@ -962,15 +1015,19 @@ function CharacterTweakData:_init_biker_boss(presets)
 	self.biker_boss.damage.explosion_damage_mul = 1
 	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.biker_boss.move_speed = presets.move_speed.very_slow
-	self.biker_boss.allowed_poses = {stand = true}
+	self.biker_boss.allowed_poses = {
+		stand = true
+	}
 	self.biker_boss.no_retreat = true
 	self.biker_boss.no_arrest = true
 	self.biker_boss.surrender = nil
 	self.biker_boss.ecm_vulnerability = 0
-	self.biker_boss.ecm_hurts = {ears = {
-		max_duration = 0,
-		min_duration = 0
-	}}
+	self.biker_boss.ecm_hurts = {
+		ears = {
+			max_duration = 0,
+			min_duration = 0
+		}
+	}
 	self.biker_boss.weapon_voice = "3"
 	self.biker_boss.experience.cable_tie = "tie_swat"
 	self.biker_boss.access = "gangster"
@@ -1123,15 +1180,19 @@ function CharacterTweakData:_init_chavez_boss(presets)
 	self.chavez_boss.headshot_dmg_mul = 2
 	self.chavez_boss.damage.explosion_damage_mul = 1
 	self.chavez_boss.move_speed = presets.move_speed.fast
-	self.chavez_boss.allowed_poses = {stand = true}
+	self.chavez_boss.allowed_poses = {
+		stand = true
+	}
 	self.chavez_boss.no_retreat = true
 	self.chavez_boss.no_arrest = true
 	self.chavez_boss.surrender = nil
 	self.chavez_boss.ecm_vulnerability = 0
-	self.chavez_boss.ecm_hurts = {ears = {
-		max_duration = 0,
-		min_duration = 0
-	}}
+	self.chavez_boss.ecm_hurts = {
+		ears = {
+			max_duration = 0,
+			min_duration = 0
+		}
+	}
 	self.chavez_boss.weapon_voice = "1"
 	self.chavez_boss.experience.cable_tie = "tie_swat"
 	self.chavez_boss.access = "gangster"
@@ -1450,15 +1511,19 @@ function CharacterTweakData:_init_drug_lord_boss(presets)
 	self.drug_lord_boss.headshot_dmg_mul = 2
 	self.drug_lord_boss.damage.explosion_damage_mul = 1
 	self.drug_lord_boss.move_speed = presets.move_speed.normal
-	self.drug_lord_boss.allowed_poses = {stand = true}
+	self.drug_lord_boss.allowed_poses = {
+		stand = true
+	}
 	self.drug_lord_boss.no_retreat = true
 	self.drug_lord_boss.no_arrest = true
 	self.drug_lord_boss.surrender = nil
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.ecm_hurts = {ears = {
-		max_duration = 0,
-		min_duration = 0
-	}}
+	self.drug_lord_boss.ecm_hurts = {
+		ears = {
+			max_duration = 0,
+			min_duration = 0
+		}
+	}
 	self.drug_lord_boss.weapon_voice = "3"
 	self.drug_lord_boss.experience.cable_tie = "tie_swat"
 	self.drug_lord_boss.access = "gangster"
@@ -1612,15 +1677,19 @@ function CharacterTweakData:_init_drug_lord_boss_stealth(presets)
 	self.drug_lord_boss_stealth.headshot_dmg_mul = 2
 	self.drug_lord_boss_stealth.damage.explosion_damage_mul = 1
 	self.drug_lord_boss_stealth.move_speed = presets.move_speed.normal
-	self.drug_lord_boss_stealth.allowed_poses = {stand = true}
+	self.drug_lord_boss_stealth.allowed_poses = {
+		stand = true
+	}
 	self.drug_lord_boss_stealth.no_retreat = true
 	self.drug_lord_boss_stealth.no_arrest = true
 	self.drug_lord_boss_stealth.surrender = nil
 	self.drug_lord_boss_stealth.ecm_vulnerability = 0
-	self.drug_lord_boss_stealth.ecm_hurts = {ears = {
-		max_duration = 0,
-		min_duration = 0
-	}}
+	self.drug_lord_boss_stealth.ecm_hurts = {
+		ears = {
+			max_duration = 0,
+			min_duration = 0
+		}
+	}
 	self.drug_lord_boss_stealth.weapon_voice = "3"
 	self.drug_lord_boss_stealth.experience.cable_tie = "tie_swat"
 	self.drug_lord_boss_stealth.access = "gangster"
@@ -1908,8 +1977,12 @@ function CharacterTweakData:_init_tank(presets)
 	self.tank.headshot_dmg_mul = 5
 	self.tank.damage.explosion_damage_mul = 1.1
 	self.tank.move_speed = presets.move_speed.slow
-	self.tank.allowed_stances = {cbt = true}
-	self.tank.allowed_poses = {stand = true}
+	self.tank.allowed_stances = {
+		cbt = true
+	}
+	self.tank.allowed_poses = {
+		stand = true
+	}
 	self.tank.crouch_move = false
 	self.tank.no_run_start = true
 	self.tank.no_run_stop = true
@@ -1917,10 +1990,12 @@ function CharacterTweakData:_init_tank(presets)
 	self.tank.no_arrest = true
 	self.tank.surrender = nil
 	self.tank.ecm_vulnerability = 0.85
-	self.tank.ecm_hurts = {ears = {
-		max_duration = 3,
-		min_duration = 1
-	}}
+	self.tank.ecm_hurts = {
+		ears = {
+			max_duration = 3,
+			min_duration = 1
+		}
+	}
 	self.tank.weapon_voice = "3"
 	self.tank.experience.cable_tie = "tie_swat"
 	self.tank.access = "tank"
@@ -1932,8 +2007,12 @@ function CharacterTweakData:_init_tank(presets)
 	self.tank.deathguard = true
 	self.tank.melee_weapon = "fists"
 	self.tank.melee_weapon_dmg_multiplier = 2.5
-	self.tank.melee_anims = {"cbt_std_melee"}
-	self.tank.critical_hits = {damage_mul = self.tank.headshot_dmg_mul * 1}
+	self.tank.melee_anims = {
+		"cbt_std_melee"
+	}
+	self.tank.critical_hits = {
+		damage_mul = self.tank.headshot_dmg_mul * 1
+	}
 	self.tank.die_sound_event = "bdz_x02a_any_3p"
 	self.tank.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.tank.chatter = {
@@ -2267,10 +2346,12 @@ function CharacterTweakData:_init_spooc(presets)
 	self.spooc.flammable = true
 	self.spooc.dodge = presets.dodge.ninja
 	self.spooc.dodge_with_grenade = {
-		smoke = {duration = {
-			10,
-			20
-		}},
+		smoke = {
+			duration = {
+				10,
+				20
+			}
+		},
 		check = function (t, nr_grenades_used)
 			local delay_till_next_use = math.lerp(17, 45, math.min(1, (nr_grenades_used or 0) / 4))
 			local chance = math.lerp(1, 0.5, math.min(1, (nr_grenades_used or 0) / 10))
@@ -2286,8 +2367,68 @@ function CharacterTweakData:_init_spooc(presets)
 	self.spooc.steal_loot = nil
 	self.spooc.spawn_sound_event = "cloaker_presence_loop"
 	self.spooc.die_sound_event = "cloaker_presence_stop"
+	self.spooc.spooc_sound_events = {
+		detect_stop = "cloaker_detect_stop",
+		detect = "cloaker_detect_mono"
+	}
 
 	table.insert(self._enemy_list, "spooc")
+end
+
+function CharacterTweakData:_init_shadow_spooc(presets)
+	self.shadow_spooc = deep_clone(presets.base)
+	self.shadow_spooc.tags = {
+		"law"
+	}
+	self.shadow_spooc.experience = {}
+	self.shadow_spooc.weapon = deep_clone(presets.weapon.good)
+	self.shadow_spooc.detection = presets.detection.normal
+	self.shadow_spooc.HEALTH_INIT = 100
+	self.shadow_spooc.headshot_dmg_mul = 6
+	self.shadow_spooc.move_speed = presets.move_speed.lightning
+	self.shadow_spooc.no_retreat = true
+	self.shadow_spooc.no_arrest = true
+	self.shadow_spooc.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts
+	self.shadow_spooc.surrender_break_time = {
+		4,
+		6
+	}
+	self.shadow_spooc.suppression = nil
+	self.shadow_spooc.surrender = nil
+	self.shadow_spooc.silent_priority_shout = "f37"
+	self.shadow_spooc.priority_shout_max_dis = 700
+	self.shadow_spooc.rescue_hostages = false
+	self.shadow_spooc.spooc_attack_timeout = {
+		10,
+		10
+	}
+	self.shadow_spooc.spooc_attack_beating_time = {
+		3,
+		3
+	}
+	self.shadow_spooc.spooc_attack_use_smoke_chance = 0
+	self.shadow_spooc.weapon_voice = "3"
+	self.shadow_spooc.experience.cable_tie = "tie_swat"
+	self.shadow_spooc.speech_prefix_p1 = "uno_clk"
+	self.shadow_spooc.speech_prefix_count = nil
+	self.shadow_spooc.access = "spooc"
+	self.shadow_spooc.use_radio = nil
+	self.shadow_spooc.use_animation_on_fire_damage = false
+	self.shadow_spooc.flammable = false
+	self.shadow_spooc.dodge = presets.dodge.ninja
+	self.shadow_spooc.chatter = presets.enemy_chatter.no_chatter
+	self.shadow_spooc.do_not_drop_ammo = true
+	self.shadow_spooc.steal_loot = nil
+	self.shadow_spooc.spawn_sound_event = "uno_cloaker_presence_loop"
+	self.shadow_spooc.die_sound_event = "uno_cloaker_presence_stop"
+	self.shadow_spooc.spooc_sound_events = {
+		detect_stop = "uno_cloaker_detect_stop",
+		taunt_during_assault = "",
+		taunt_after_assault = "",
+		detect = "uno_cloaker_detect"
+	}
+
+	table.insert(self._enemy_list, "shadow_spooc")
 end
 
 function CharacterTweakData:_init_shield(presets)
@@ -2302,8 +2443,12 @@ function CharacterTweakData:_init_shield(presets)
 	self.shield.detection = presets.detection.normal
 	self.shield.HEALTH_INIT = 8
 	self.shield.headshot_dmg_mul = 2
-	self.shield.allowed_stances = {cbt = true}
-	self.shield.allowed_poses = {crouch = true}
+	self.shield.allowed_stances = {
+		cbt = true
+	}
+	self.shield.allowed_poses = {
+		crouch = true
+	}
 	self.shield.always_face_enemy = true
 	self.shield.move_speed = presets.move_speed.very_fast
 	self.shield.no_run_start = true
@@ -2312,10 +2457,12 @@ function CharacterTweakData:_init_shield(presets)
 	self.shield.no_arrest = true
 	self.shield.surrender = nil
 	self.shield.ecm_vulnerability = 0.9
-	self.shield.ecm_hurts = {ears = {
-		max_duration = 9,
-		min_duration = 7
-	}}
+	self.shield.ecm_hurts = {
+		ears = {
+			max_duration = 9,
+			min_duration = 7
+		}
+	}
 	self.shield.priority_shout = "f31"
 	self.shield.rescue_hostages = false
 	self.shield.deathguard = false
@@ -2583,10 +2730,12 @@ function CharacterTweakData:_init_phalanx_minion(presets)
 	self.phalanx_minion.immune_to_concussion = true
 	self.phalanx_minion.ignore_medic_revive_animation = true
 	self.phalanx_minion.ecm_vulnerability = 1
-	self.phalanx_minion.ecm_hurts = {ears = {
-		max_duration = 3,
-		min_duration = 2
-	}}
+	self.phalanx_minion.ecm_hurts = {
+		ears = {
+			max_duration = 3,
+			min_duration = 2
+		}
+	}
 	self.phalanx_minion.priority_shout = "f45"
 
 	table.insert(self._enemy_list, "phalanx_minion")
@@ -2614,127 +2763,129 @@ function CharacterTweakData:_init_taser(presets)
 		"special"
 	}
 	self.taser.experience = {}
-	self.taser.weapon = {is_rifle = {
-		melee_speed = 0.5,
-		miss_dis = 40,
-		RELOAD_SPEED = 0.66,
-		spread = 20,
-		tase_sphere_cast_radius = 30,
-		melee_dmg = 10,
-		tase_distance = 1500,
-		focus_dis = 200,
-		focus_delay = 4,
-		aim_delay = {
-			0.1,
-			0.1
-		},
-		melee_retry_delay = {
-			1,
-			2
-		},
-		aim_delay_tase = {
-			0,
-			0
-		},
-		range = {
-			optimal = 2000,
-			far = 5000,
-			close = 1000
-		},
-		autofire_rounds = presets.weapon.normal.is_rifle.autofire_rounds,
-		FALLOFF = {
-			{
-				dmg_mul = 3,
-				r = 100,
-				acc = {
-					0.6,
-					0.9
-				},
-				recoil = {
-					0.4,
-					0.7
-				},
-				mode = {
-					0,
-					3,
-					3,
-					1
-				}
+	self.taser.weapon = {
+		is_rifle = {
+			melee_speed = 0.5,
+			miss_dis = 40,
+			RELOAD_SPEED = 0.66,
+			spread = 20,
+			tase_sphere_cast_radius = 30,
+			melee_dmg = 10,
+			tase_distance = 1500,
+			focus_dis = 200,
+			focus_delay = 4,
+			aim_delay = {
+				0.1,
+				0.1
 			},
-			{
-				dmg_mul = 2.5,
-				r = 500,
-				acc = {
-					0.75,
-					0.95
-				},
-				recoil = {
-					0.35,
-					0.7
-				},
-				mode = {
-					0,
-					3,
-					3,
-					1
-				}
+			melee_retry_delay = {
+				1,
+				2
 			},
-			{
-				dmg_mul = 2,
-				r = 1000,
-				acc = {
-					0.65,
-					0.95
-				},
-				recoil = {
-					0.35,
-					0.75
-				},
-				mode = {
-					1,
-					2,
-					2,
-					0
-				}
+			aim_delay_tase = {
+				0,
+				0
 			},
-			{
-				dmg_mul = 1.25,
-				r = 2000,
-				acc = {
-					0.65,
-					0.8
-				},
-				recoil = {
-					0.4,
-					1.2
-				},
-				mode = {
-					3,
-					2,
-					2,
-					0
-				}
+			range = {
+				optimal = 2000,
+				far = 5000,
+				close = 1000
 			},
-			{
-				dmg_mul = 1,
-				r = 3000,
-				acc = {
-					0.45,
-					0.6
+			autofire_rounds = presets.weapon.normal.is_rifle.autofire_rounds,
+			FALLOFF = {
+				{
+					dmg_mul = 3,
+					r = 100,
+					acc = {
+						0.6,
+						0.9
+					},
+					recoil = {
+						0.4,
+						0.7
+					},
+					mode = {
+						0,
+						3,
+						3,
+						1
+					}
 				},
-				recoil = {
-					1.5,
-					3
+				{
+					dmg_mul = 2.5,
+					r = 500,
+					acc = {
+						0.75,
+						0.95
+					},
+					recoil = {
+						0.35,
+						0.7
+					},
+					mode = {
+						0,
+						3,
+						3,
+						1
+					}
 				},
-				mode = {
-					3,
-					1,
-					1,
-					0
+				{
+					dmg_mul = 2,
+					r = 1000,
+					acc = {
+						0.65,
+						0.95
+					},
+					recoil = {
+						0.35,
+						0.75
+					},
+					mode = {
+						1,
+						2,
+						2,
+						0
+					}
+				},
+				{
+					dmg_mul = 1.25,
+					r = 2000,
+					acc = {
+						0.65,
+						0.8
+					},
+					recoil = {
+						0.4,
+						1.2
+					},
+					mode = {
+						3,
+						2,
+						2,
+						0
+					}
+				},
+				{
+					dmg_mul = 1,
+					r = 3000,
+					acc = {
+						0.45,
+						0.6
+					},
+					recoil = {
+						1.5,
+						3
+					},
+					mode = {
+						3,
+						1,
+						1,
+						0
+					}
 				}
 			}
 		}
-	}}
+	}
 	self.taser.detection = presets.detection.normal
 	self.taser.HEALTH_INIT = 30
 	self.taser.headshot_dmg_mul = 2
@@ -2743,10 +2894,12 @@ function CharacterTweakData:_init_taser(presets)
 	self.taser.no_arrest = true
 	self.taser.surrender = presets.surrender.special
 	self.taser.ecm_vulnerability = 0.9
-	self.taser.ecm_hurts = {ears = {
-		max_duration = 8,
-		min_duration = 6
-	}}
+	self.taser.ecm_hurts = {
+		ears = {
+			max_duration = 8,
+			min_duration = 6
+		}
+	}
 	self.taser.surrender_break_time = {
 		4,
 		6
@@ -2770,12 +2923,16 @@ function CharacterTweakData:_init_taser(presets)
 	self.taser.announce_incomming = "incomming_taser"
 	self.taser.steal_loot = nil
 	self.taser.die_sound_event = "tsr_x02a_any_3p"
-	self.taser.special_deaths = {bullet = {["head":id():key()] = {
-		sequence = "kill_tazer_headshot",
-		special_comment = "x01",
-		weapon_id = "model70",
-		character_name = "bodhi"
-	}}}
+	self.taser.special_deaths = {
+		bullet = {
+			["head":id():key()] = {
+				sequence = "kill_tazer_headshot",
+				special_comment = "x01",
+				weapon_id = "model70",
+				character_name = "bodhi"
+			}
+		}
+	}
 
 	table.insert(self._enemy_list, "taser")
 end
@@ -2795,10 +2952,12 @@ function CharacterTweakData:_init_inside_man(presets)
 	self.inside_man.suppression = presets.suppression.no_supress
 	self.inside_man.surrender = nil
 	self.inside_man.ecm_vulnerability = 1
-	self.inside_man.ecm_hurts = {ears = {
-		max_duration = 10,
-		min_duration = 8
-	}}
+	self.inside_man.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}
 	self.inside_man.weapon_voice = "1"
 	self.inside_man.experience.cable_tie = "tie_swat"
 	self.inside_man.speech_prefix_p1 = "l"
@@ -2814,7 +2973,9 @@ end
 function CharacterTweakData:_init_civilian(presets)
 	self.civilian = {
 		detection = presets.detection.civilian,
-		tags = {"civilian"},
+		tags = {
+			"civilian"
+		},
 		experience = {},
 		HEALTH_INIT = 0.9,
 		headshot_dmg_mul = 1,
@@ -2835,12 +2996,16 @@ function CharacterTweakData:_init_civilian(presets)
 			5,
 			20
 		},
-		damage = {hurt_severity = presets.hurt_severities.no_hurts},
+		damage = {
+			hurt_severity = presets.hurt_severities.no_hurts
+		},
 		ecm_vulnerability = 1,
-		ecm_hurts = {ears = {
-			max_duration = 10,
-			min_duration = 8
-		}}
+		ecm_hurts = {
+			ears = {
+				max_duration = 10,
+				min_duration = 8
+			}
+		}
 	}
 	self.civilian.experience.cable_tie = "tie_civ"
 	self.civilian.silent_priority_shout = "f37"
@@ -2848,7 +3013,9 @@ function CharacterTweakData:_init_civilian(presets)
 	self.civilian.speech_prefix_count = 2
 	self.civilian.access = "civ_male"
 	self.civilian.intimidateable = true
-	self.civilian.challenges = {type = "civilians"}
+	self.civilian.challenges = {
+		type = "civilians"
+	}
 	self.civilian.calls_in = true
 	self.civilian.hostage_move_speed = 1.25
 	self.civilian_female = deep_clone(self.civilian)
@@ -2871,7 +3038,9 @@ function CharacterTweakData:_init_melee_box(presets)
 	self.melee_box.flee_type = "hide"
 	self.melee_box.access = "civ_male"
 	self.melee_box.intimidateable = nil
-	self.melee_box.challenges = {type = "civilians"}
+	self.melee_box.challenges = {
+		type = "civilians"
+	}
 	self.melee_box.calls_in = nil
 	self.melee_box.ignores_aggression = true
 end
@@ -2881,7 +3050,9 @@ function CharacterTweakData:_init_bank_manager(presets)
 		experience = {},
 		escort = {},
 		detection = presets.detection.civilian,
-		tags = {"civilian"},
+		tags = {
+			"civilian"
+		},
 		HEALTH_INIT = self.civilian.HEALTH_INIT,
 		headshot_dmg_mul = self.civilian.headshot_dmg_mul,
 		move_speed = presets.move_speed.normal,
@@ -2899,17 +3070,21 @@ function CharacterTweakData:_init_bank_manager(presets)
 		submission_intimidate = 120,
 		damage = presets.hurt_severities.no_hurts,
 		ecm_vulnerability = 1,
-		ecm_hurts = {ears = {
-			max_duration = 10,
-			min_duration = 8
-		}}
+		ecm_hurts = {
+			ears = {
+				max_duration = 10,
+				min_duration = 8
+			}
+		}
 	}
 	self.bank_manager.experience.cable_tie = "tie_civ"
 	self.bank_manager.speech_prefix_p1 = "cm"
 	self.bank_manager.speech_prefix_count = 2
 	self.bank_manager.access = "civ_male"
 	self.bank_manager.intimidateable = true
-	self.bank_manager.challenges = {type = "civilians"}
+	self.bank_manager.challenges = {
+		type = "civilians"
+	}
 	self.bank_manager.calls_in = true
 end
 
@@ -2919,7 +3094,9 @@ function CharacterTweakData:_init_drunk_pilot(presets)
 	self.drunk_pilot.flee_type = "hide"
 	self.drunk_pilot.access = "civ_male"
 	self.drunk_pilot.intimidateable = nil
-	self.drunk_pilot.challenges = {type = "civilians"}
+	self.drunk_pilot.challenges = {
+		type = "civilians"
+	}
 	self.drunk_pilot.calls_in = nil
 	self.drunk_pilot.ignores_aggression = true
 end
@@ -2929,7 +3106,9 @@ function CharacterTweakData:_init_boris(presets)
 	self.boris.flee_type = "hide"
 	self.boris.access = "civ_male"
 	self.boris.intimidateable = nil
-	self.boris.challenges = {type = "civilians"}
+	self.boris.challenges = {
+		type = "civilians"
+	}
 	self.boris.calls_in = nil
 	self.boris.ignores_aggression = true
 end
@@ -2966,7 +3145,9 @@ function CharacterTweakData:_init_escort(presets)
 	self.escort.speech_prefix_count = 2
 	self.escort.access = "civ_male"
 	self.escort.intimidateable = false
-	self.escort.challenges = {type = "civilians"}
+	self.escort.challenges = {
+		type = "civilians"
+	}
 	self.escort.calls_in = nil
 	self.escort.is_escort = true
 	self.escort.escort_idle_talk = true
@@ -2976,8 +3157,12 @@ end
 function CharacterTweakData:_init_escort_undercover(presets)
 	self.escort_undercover = deep_clone(self.civilian)
 	self.escort_undercover.move_speed = presets.move_speed.slow
-	self.escort_undercover.allowed_stances = {hos = true}
-	self.escort_undercover.allowed_poses = {stand = true}
+	self.escort_undercover.allowed_stances = {
+		hos = true
+	}
+	self.escort_undercover.allowed_poses = {
+		stand = true
+	}
 	self.escort_undercover.no_run_start = true
 	self.escort_undercover.no_run_stop = true
 	self.escort_undercover.flee_type = "hide"
@@ -3040,7 +3225,9 @@ function CharacterTweakData:_init_spa_vip_hurt(presets)
 	self.spa_vip_hurt.flee_type = "hide"
 	self.spa_vip_hurt.access = "civ_male"
 	self.spa_vip_hurt.intimidateable = nil
-	self.spa_vip_hurt.challenges = {type = "civilians"}
+	self.spa_vip_hurt.challenges = {
+		type = "civilians"
+	}
 	self.spa_vip_hurt.calls_in = nil
 	self.spa_vip_hurt.ignores_aggression = true
 end
@@ -3527,28 +3714,50 @@ function CharacterTweakData:_init_ecp(presets)
 end
 
 function CharacterTweakData:_presets(tweak_data)
-	local presets = {hurt_severities = {}}
+	local presets = {
+		hurt_severities = {}
+	}
 	presets.hurt_severities.no_hurts = {
 		tase = true,
 		bullet = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		explosion = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		melee = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		fire = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		poison = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		}
 	}
 	presets.hurt_severities.no_hurts_no_tase = deep_clone(presets.hurt_severities.no_hurts)
@@ -3557,97 +3766,181 @@ function CharacterTweakData:_presets(tweak_data)
 		tase = true,
 		bullet = {
 			health_reference = 1,
-			zones = {{light = 1}}
+			zones = {
+				{
+					light = 1
+				}
+			}
 		},
 		explosion = {
 			health_reference = 1,
-			zones = {{explode = 1}}
+			zones = {
+				{
+					explode = 1
+				}
+			}
 		},
 		melee = {
 			health_reference = 1,
-			zones = {{light = 1}}
+			zones = {
+				{
+					light = 1
+				}
+			}
 		},
 		fire = {
 			health_reference = 1,
-			zones = {{light = 1}}
+			zones = {
+				{
+					light = 1
+				}
+			}
 		},
 		poison = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		}
 	}
 	presets.hurt_severities.only_light_hurt_and_fire = {
 		tase = true,
 		bullet = {
 			health_reference = 1,
-			zones = {{light = 1}}
+			zones = {
+				{
+					light = 1
+				}
+			}
 		},
 		explosion = {
 			health_reference = 1,
-			zones = {{explode = 1}}
+			zones = {
+				{
+					explode = 1
+				}
+			}
 		},
 		melee = {
 			health_reference = 1,
-			zones = {{light = 1}}
+			zones = {
+				{
+					light = 1
+				}
+			}
 		},
 		fire = {
 			health_reference = 1,
-			zones = {{fire = 1}}
+			zones = {
+				{
+					fire = 1
+				}
+			}
 		},
 		poison = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		}
 	}
 	presets.hurt_severities.light_hurt_fire_poison = deep_clone(presets.hurt_severities.only_light_hurt_and_fire)
 	presets.hurt_severities.light_hurt_fire_poison.poison = {
 		health_reference = 1,
-		zones = {{poison = 1}}
+		zones = {
+			{
+				poison = 1
+			}
+		}
 	}
 	presets.hurt_severities.only_explosion_hurts = {
 		tase = true,
 		bullet = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		explosion = {
 			health_reference = 1,
-			zones = {{explode = 1}}
+			zones = {
+				{
+					explode = 1
+				}
+			}
 		},
 		melee = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		fire = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		poison = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		}
 	}
 	presets.hurt_severities.only_fire_and_poison_hurts = {
 		tase = true,
 		bullet = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		explosion = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		melee = {
 			health_reference = 1,
-			zones = {{none = 1}}
+			zones = {
+				{
+					none = 1
+				}
+			}
 		},
 		fire = {
 			health_reference = 1,
-			zones = {{fire = 1}}
+			zones = {
+				{
+					fire = 1
+				}
+			}
 		},
 		poison = {
 			health_reference = 1,
-			zones = {{poison = 1}}
+			zones = {
+				{
+					poison = 1
+				}
+			}
 		}
 	}
 	presets.hurt_severities.base = {
@@ -3730,20 +4023,30 @@ function CharacterTweakData:_presets(tweak_data)
 		},
 		fire = {
 			health_reference = "current",
-			zones = {{fire = 1}}
+			zones = {
+				{
+					fire = 1
+				}
+			}
 		},
 		poison = {
 			health_reference = "current",
-			zones = {{
-				poison = 1,
-				none = 0
-			}}
+			zones = {
+				{
+					poison = 1,
+					none = 0
+				}
+			}
 		}
 	}
 	presets.hurt_severities.base_no_poison = deep_clone(presets.hurt_severities.base)
 	presets.hurt_severities.base_no_poison.poison = {
 		health_reference = 1,
-		zones = {{none = 1}}
+		zones = {
+			{
+				none = 1
+			}
+		}
 	}
 	presets.base = {
 		HEALTH_INIT = 2.5,
@@ -3772,7 +4075,9 @@ function CharacterTweakData:_presets(tweak_data)
 		rescue_hostages = true,
 		use_radio = self._default_chatter,
 		dodge = nil,
-		challenges = {type = "law"},
+		challenges = {
+			type = "law"
+		},
 		calls_in = true,
 		ignore_medic_revive_animation = false,
 		spotlight_important = false,
@@ -3831,7 +4136,9 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	presets.gang_member_damage.respawn_time_penalty = 0
 	presets.gang_member_damage.base_respawn_time_penalty = 5
-	presets.weapon = {normal = {}}
+	presets.weapon = {
+		normal = {}
+	}
 	presets.weapon.normal.is_pistol = {
 		aim_delay = {
 			0.1,
@@ -4762,7 +5069,9 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.good = {is_pistol = {}}
+	presets.weapon.good = {
+		is_pistol = {}
+	}
 	presets.weapon.good.is_pistol.aim_delay = {
 		0.1,
 		0.1
@@ -5672,7 +5981,9 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.expert = {is_pistol = {}}
+	presets.weapon.expert = {
+		is_pistol = {}
+	}
 	presets.weapon.expert.is_pistol.aim_delay = {
 		0.1,
 		0.1
@@ -6651,7 +6962,9 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.sniper = {is_rifle = {}}
+	presets.weapon.sniper = {
+		is_rifle = {}
+	}
 	presets.weapon.sniper.is_rifle.aim_delay = {
 		0,
 		0.1
@@ -6727,7 +7040,9 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathwish = {is_revolver = {}}
+	presets.weapon.deathwish = {
+		is_revolver = {}
+	}
 	presets.weapon.deathwish.is_revolver.aim_delay = {
 		0,
 		0
@@ -7599,7 +7914,9 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.easywish = {is_revolver = {}}
+	presets.weapon.easywish = {
+		is_revolver = {}
+	}
 	presets.weapon.easywish.is_revolver.aim_delay = {
 		0,
 		0
@@ -8489,7 +8806,9 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.gang_member = {is_pistol = {}}
+	presets.weapon.gang_member = {
+		is_pistol = {}
+	}
 	presets.weapon.gang_member.is_pistol.aim_delay = {
 		0,
 		0.5
@@ -9030,13 +9349,15 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.gang_member.rifle = deep_clone(presets.weapon.gang_member.is_rifle)
 	presets.weapon.gang_member.rifle.autofire_rounds = nil
 	presets.weapon.gang_member.akimbo_pistol = presets.weapon.gang_member.is_pistol
-	presets.detection = {normal = {
-		idle = {},
-		combat = {},
-		recon = {},
-		guard = {},
-		ntl = {}
-	}}
+	presets.detection = {
+		normal = {
+			idle = {},
+			combat = {},
+			recon = {},
+			guard = {},
+			ntl = {}
+		}
+	}
 	presets.detection.normal.idle.dis_max = 10000
 	presets.detection.normal.idle.angle_max = 120
 	presets.detection.normal.idle.delay = {
@@ -9244,13 +9565,15 @@ function CharacterTweakData:_presets(tweak_data)
 						0,
 						0
 					},
-					variations = {side_step = {
-						chance = 1,
-						timeout = {
-							2,
-							3
+					variations = {
+						side_step = {
+							chance = 1,
+							timeout = {
+								2,
+								3
+							}
 						}
-					}}
+					}
 				},
 				scared = {
 					chance = 0.5,
@@ -9258,13 +9581,15 @@ function CharacterTweakData:_presets(tweak_data)
 						1,
 						2
 					},
-					variations = {side_step = {
-						chance = 1,
-						timeout = {
-							2,
-							3
+					variations = {
+						side_step = {
+							chance = 1,
+							timeout = {
+								2,
+								3
+							}
 						}
-					}}
+					}
 				}
 			}
 		},
@@ -9277,13 +9602,15 @@ function CharacterTweakData:_presets(tweak_data)
 						0,
 						0
 					},
-					variations = {side_step = {
-						chance = 1,
-						timeout = {
-							2,
-							3
+					variations = {
+						side_step = {
+							chance = 1,
+							timeout = {
+								2,
+								3
+							}
 						}
-					}}
+					}
 				},
 				scared = {
 					chance = 0.4,
@@ -9291,13 +9618,15 @@ function CharacterTweakData:_presets(tweak_data)
 						4,
 						7
 					},
-					variations = {dive = {
-						chance = 1,
-						timeout = {
-							5,
-							8
+					variations = {
+						dive = {
+							chance = 1,
+							timeout = {
+								5,
+								8
+							}
 						}
-					}}
+					}
 				}
 			}
 		},
@@ -9335,15 +9664,17 @@ function CharacterTweakData:_presets(tweak_data)
 						1,
 						7
 					},
-					variations = {side_step = {
-						chance = 1,
-						shoot_chance = 1,
-						shoot_accuracy = 0.7,
-						timeout = {
-							1,
-							7
+					variations = {
+						side_step = {
+							chance = 1,
+							shoot_chance = 1,
+							shoot_accuracy = 0.7,
+							timeout = {
+								1,
+								7
+							}
 						}
-					}}
+					}
 				},
 				scared = {
 					chance = 0.8,
@@ -10020,8 +10351,12 @@ function CharacterTweakData:_presets(tweak_data)
 	end
 
 	presets.surrender = {
-		always = {base_chance = 1},
-		never = {base_chance = 0},
+		always = {
+			base_chance = 1
+		},
+		never = {
+			base_chance = 0
+		},
 		easy = {
 			base_chance = 0.3,
 			significant_chance = 0.35,
@@ -10047,10 +10382,12 @@ function CharacterTweakData:_presets(tweak_data)
 		normal = {
 			base_chance = 0.3,
 			significant_chance = 0.35,
-			reasons = {health = {
-				[1.0] = 0.1,
-				[0.999] = 0.9
-			}},
+			reasons = {
+				health = {
+					[1.0] = 0.1,
+					[0.999] = 0.9
+				}
+			},
 			factors = {}
 		},
 		hard = {
@@ -10178,7 +10515,9 @@ function CharacterTweakData:_presets(tweak_data)
 			aggressive = true,
 			follow_me = true
 		},
-		shield = {follow_me = true}
+		shield = {
+			follow_me = true
+		}
 	}
 
 	return presets
@@ -10215,7 +10554,8 @@ function CharacterTweakData:_create_table_structure()
 		"sg417",
 		"svdsil_snp",
 		"mini",
-		"heavy_zeal_sniper"
+		"heavy_zeal_sniper",
+		"smoke"
 	}
 	self.weap_unit_names = {
 		Idstring("units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92"),
@@ -10247,7 +10587,8 @@ function CharacterTweakData:_create_table_structure()
 		Idstring("units/pd2_dlc_chico/weapons/wpn_npc_sg417/wpn_npc_sg417"),
 		Idstring("units/pd2_dlc_spa/weapons/wpn_npc_svd_silenced/wpn_npc_svd_silenced"),
 		Idstring("units/pd2_dlc_drm/weapons/wpn_npc_mini/wpn_npc_mini"),
-		Idstring("units/pd2_dlc_drm/weapons/wpn_npc_heavy_zeal_sniper/wpn_npc_heavy_zeal_sniper")
+		Idstring("units/pd2_dlc_drm/weapons/wpn_npc_heavy_zeal_sniper/wpn_npc_heavy_zeal_sniper"),
+		Idstring("units/pd2_dlc_uno/weapons/wpn_npc_smoke/wpn_npc_smoke")
 	}
 end
 
@@ -11778,6 +12119,10 @@ function CharacterTweakData:_set_hard()
 	self.presets.weapon.gang_member.is_shotgun_mag = deep_clone(self.presets.weapon.gang_member.is_shotgun_pump)
 	self.flashbang_multiplier = 1.25
 	self.concussion_multiplier = 1
+	self.shadow_spooc.shadow_spooc_attack_timeout = {
+		8,
+		10
+	}
 	self.spooc.spooc_attack_timeout = {
 		8,
 		10
@@ -12393,6 +12738,10 @@ function CharacterTweakData:_set_overkill()
 
 	self:_set_characters_weapon_preset("good")
 
+	self.shadow_spooc.shadow_spooc_attack_timeout = {
+		6,
+		8
+	}
 	self.spooc.spooc_attack_timeout = {
 		6,
 		8
@@ -12582,6 +12931,10 @@ function CharacterTweakData:_set_overkill_145()
 
 	self:_set_characters_weapon_preset("expert")
 
+	self.shadow_spooc.shadow_spooc_attack_timeout = {
+		3.5,
+		5
+	}
 	self.spooc.spooc_attack_timeout = {
 		3.5,
 		5
@@ -13107,6 +13460,10 @@ function CharacterTweakData:_set_easy_wish()
 
 	self:_set_characters_weapon_preset("expert")
 
+	self.shadow_spooc.shadow_spooc_attack_timeout = {
+		3,
+		4
+	}
 	self.spooc.spooc_attack_timeout = {
 		3,
 		4
@@ -13754,6 +14111,10 @@ function CharacterTweakData:_set_overkill_290()
 
 	self:_set_characters_weapon_preset("deathwish")
 
+	self.shadow_spooc.shadow_spooc_attack_timeout = {
+		3,
+		4
+	}
 	self.spooc.spooc_attack_timeout = {
 		3,
 		4
@@ -14969,6 +15330,10 @@ function CharacterTweakData:_set_sm_wish()
 		3,
 		4
 	}
+	self.shadow_spooc.shadow_spooc_attack_timeout = {
+		3,
+		4
+	}
 	self.sniper.weapon.is_rifle.FALLOFF = {
 		{
 			dmg_mul = 12,
@@ -15647,6 +16012,7 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self.tank_mini.HEALTH_INIT = self.tank_mini.HEALTH_INIT * hp_mul
 	self.tank_medic.HEALTH_INIT = self.tank_medic.HEALTH_INIT * hp_mul
 	self.spooc.HEALTH_INIT = self.spooc.HEALTH_INIT * hp_mul
+	self.shadow_spooc.HEALTH_INIT = self.shadow_spooc.HEALTH_INIT * hp_mul
 	self.shield.HEALTH_INIT = self.shield.HEALTH_INIT * hp_mul
 	self.phalanx_minion.HEALTH_INIT = self.phalanx_minion.HEALTH_INIT * hp_mul
 	self.phalanx_vip.HEALTH_INIT = self.phalanx_vip.HEALTH_INIT * hp_mul
@@ -15699,6 +16065,10 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 
 	if self.tank.headshot_dmg_mul then
 		self.tank.headshot_dmg_mul = self.tank.headshot_dmg_mul * hs_mul
+	end
+
+	if self.shadow_spooc.headshot_dmg_mul then
+		self.shadow_spooc.headshot_dmg_mul = self.shadow_spooc.headshot_dmg_mul * hs_mul
 	end
 
 	if self.spooc.headshot_dmg_mul then
@@ -15776,7 +16146,8 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 		"shield",
 		"taser",
 		"city_swat",
-		"fbi_swat"
+		"fbi_swat",
+		"shadow_spooc"
 	}
 
 	table.insert(all_units, "bolivian")
@@ -15799,6 +16170,7 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	self.biker.SPEED_RUN = self.biker.SPEED_RUN * run_mul
 	self.tank.SPEED_RUN = self.tank.SPEED_RUN * run_mul
 	self.spooc.SPEED_RUN = self.spooc.SPEED_RUN * run_mul
+	self.shadow_spooc.SPEED_RUN = self.spooc.SPEED_RUN * run_mul
 	self.shield.SPEED_RUN = self.shield.SPEED_RUN * run_mul
 	self.taser.SPEED_RUN = self.taser.SPEED_RUN * run_mul
 	self.city_swat.SPEED_RUN = self.city_swat.SPEED_RUN * run_mul
@@ -16023,7 +16395,9 @@ function CharacterTweakData:character_map()
 		},
 		cage = {
 			path = "units/pd2_dlc_cage/characters/",
-			list = {"civ_female_bank_2"}
+			list = {
+				"civ_female_bank_2"
+			}
 		},
 		arena = {
 			path = "units/pd2_dlc_arena/characters/",
@@ -16081,7 +16455,9 @@ function CharacterTweakData:character_map()
 		},
 		red = {
 			path = "units/pd2_dlc_red/characters/",
-			list = {"civ_female_inside_man_1"}
+			list = {
+				"civ_female_inside_man_1"
+			}
 		},
 		dinner = {
 			path = "units/pd2_dlc_dinner/characters/",
@@ -16092,7 +16468,9 @@ function CharacterTweakData:character_map()
 		},
 		pal = {
 			path = "units/pd2_dlc_pal/characters/",
-			list = {"civ_male_mitch"}
+			list = {
+				"civ_male_mitch"
+			}
 		},
 		cane = {
 			path = "units/pd2_dlc_cane/characters/",
@@ -16112,7 +16490,9 @@ function CharacterTweakData:character_map()
 		},
 		peta = {
 			path = "units/pd2_dlc_peta/characters/",
-			list = {"civ_male_boris"}
+			list = {
+				"civ_male_boris"
+			}
 		},
 		mad = {
 			path = "units/pd2_dlc_mad/characters/",
@@ -16138,7 +16518,9 @@ function CharacterTweakData:character_map()
 				"ene_akan_cs_swat_ak47_ass",
 				"ene_akan_cs_swat_r870",
 				"ene_akan_cs_swat_sniper_svd_snp",
-				"ene_akan_cs_tazer_ak47_ass"
+				"ene_akan_cs_tazer_ak47_ass",
+				"ene_akan_medic_ak47_ass",
+				"ene_akan_medic_r870"
 			}
 		},
 		born = {
@@ -16173,7 +16555,9 @@ function CharacterTweakData:character_map()
 		},
 		moon = {
 			path = "units/pd2_dlc_moon/characters/",
-			list = {"civ_male_pilot_2"}
+			list = {
+				"civ_male_pilot_2"
+			}
 		},
 		friend = {
 			path = "units/pd2_dlc_friend/characters/",
@@ -16201,7 +16585,9 @@ function CharacterTweakData:character_map()
 		},
 		help = {
 			path = "units/pd2_dlc_help/characters/",
-			list = {"ene_zeal_bulldozer_halloween"}
+			list = {
+				"ene_zeal_bulldozer_halloween"
+			}
 		},
 		spa = {
 			path = "units/pd2_dlc_spa/characters/",
@@ -16232,7 +16618,9 @@ function CharacterTweakData:character_map()
 		},
 		run = {
 			path = "units/pd2_dlc_run/characters/",
-			list = {"npc_matt"}
+			list = {
+				"npc_matt"
+			}
 		},
 		rvd = {
 			path = "units/pd2_dlc_rvd/characters/",
@@ -16321,7 +16709,27 @@ function CharacterTweakData:character_map()
 		},
 		tag = {
 			path = "units/pd2_dlc_tag/characters/",
-			list = {"ene_male_commissioner"}
+			list = {
+				"ene_male_commissioner"
+			}
+		},
+		nmh = {
+			path = "units/pd2_dlc_nmh/characters/",
+			list = {
+				"civ_male_doctor_01",
+				"civ_male_doctor_02",
+				"civ_male_doctor_03",
+				"civ_male_scrubs_01",
+				"civ_male_scrubs_02",
+				"civ_male_scrubs_03",
+				"civ_male_scrubs_04",
+				"civ_female_scrubs_01",
+				"civ_female_scrubs_02",
+				"civ_female_scrubs_03",
+				"civ_female_scrubs_04",
+				"civ_female_doctor_01",
+				"civ_female_hotpants"
+			}
 		},
 		sah = {
 			path = "units/pd2_dlc_sah/characters/",
@@ -16347,9 +16755,49 @@ function CharacterTweakData:character_map()
 				"civ_female_drug_lord_hostage",
 				"civ_male_prisoner_hostage"
 			}
+		},
+		bph = {
+			path = "units/pd2_dlc_bph/characters/",
+			list = {
+				"civ_male_locke_escort",
+				"civ_male_bain",
+				"ene_male_bain",
+				"ene_murkywater_medic",
+				"ene_murkywater_medic_r870",
+				"ene_murkywater_tazer",
+				"ene_murkywater_cloaker",
+				"ene_murkywater_bulldozer_1",
+				"ene_murkywater_bulldozer_2",
+				"ene_murkywater_bulldozer_3",
+				"ene_murkywater_bulldozer_4",
+				"ene_murkywater_bulldozer_medic",
+				"ene_murkywater_shield",
+				"ene_murkywater_sniper",
+				"ene_murkywater_heavy",
+				"ene_murkywater_heavy_shotgun",
+				"ene_murkywater_heavy_g36",
+				"ene_murkywater_light_city",
+				"ene_murkywater_light_city_r870",
+				"ene_murkywater_light_fbi_r870",
+				"ene_murkywater_light_fbi",
+				"ene_murkywater_light",
+				"ene_murkywater_light_r870"
+			}
+		},
+		vit = {
+			path = "units/pd2_dlc_vit/characters/",
+			list = {
+				"ene_murkywater_secret_service"
+			}
+		},
+		uno = {
+			path = "units/pd2_dlc_uno/characters/",
+			list = {
+				"ene_shadow_cloaker_1",
+				"ene_shadow_cloaker_2"
+			}
 		}
 	}
 
 	return char_map
 end
-

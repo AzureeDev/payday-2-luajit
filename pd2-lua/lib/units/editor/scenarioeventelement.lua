@@ -106,4 +106,3 @@ function ScenarioEventUnitElement:_build_panel(panel, panel_sizer)
 		ctrlr = chance_inc
 	})
 end
-

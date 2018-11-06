@@ -24,4 +24,3 @@ function TeamAICommandsElement:_build_panel(panel, panel_sizer)
 		"ignore_player"
 	}, "Select an team AI command")
 end
-

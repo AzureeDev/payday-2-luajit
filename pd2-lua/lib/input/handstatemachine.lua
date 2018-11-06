@@ -3,8 +3,12 @@ HandStateMachine = HandStateMachine or class()
 function HandStateMachine:init(states, default_l, default_r)
 	self._states = states
 	self._hands = {
-		{default_l},
-		{default_r}
+		{
+			default_l
+		},
+		{
+			default_r
+		}
 	}
 	self._modified_connection_list = {}
 
@@ -203,4 +207,3 @@ function HandStateMachine:_apply_bindings()
 		controller:rebind_connections()
 	end
 end
-

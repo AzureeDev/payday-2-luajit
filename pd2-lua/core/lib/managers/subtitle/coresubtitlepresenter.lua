@@ -187,7 +187,9 @@ function OverlayPresenter:_clear_workspace()
 	end
 
 	self.__ws = managers.gui_data:create_saferect_workspace("screen", Overlay:gui())
-	self.__subtitle_panel = self.__ws:panel():panel({layer = 150})
+	self.__subtitle_panel = self.__ws:panel():panel({
+		layer = 150
+	})
 
 	self:_on_resolution_changed()
 end
@@ -293,4 +295,3 @@ end
 function OverlayPresenter:_default_font_size()
 	return 22
 end
-

@@ -28,8 +28,12 @@ function ShotgunBase:_create_use_setups()
 	local use_data = {}
 	local player_setup = {
 		selection_index = tweak_data.weapon[self._name_id].use_data.selection_index,
-		equip = {align_place = tweak_data.weapon[self._name_id].use_data.align_place or "left_hand"},
-		unequip = {align_place = "back"}
+		equip = {
+			align_place = tweak_data.weapon[self._name_id].use_data.align_place or "left_hand"
+		},
+		unequip = {
+			align_place = "back"
+		}
 	}
 	use_data.player = player_setup
 	self._use_data = use_data
@@ -97,6 +101,7 @@ function ShotgunBase:get_damage_falloff(damage, col_ray, user_unit)
 
 	return (1 - math.min(1, math.max(0, distance - self._damage_near * inc_range_mul) / (self._damage_far * inc_range_mul))) * damage
 end
+
 local mvec_temp = Vector3()
 local mvec_to = Vector3()
 local mvec_direction = Vector3()
@@ -160,7 +165,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		mvector3.add(mvec_to, from_pos)
 
 		local ray_from_unit = shoot_through_data and alive(shoot_through_data.ray_from_unit) and shoot_through_data.ray_from_unit or nil
-		local col_ray = (ray_from_unit or World):raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+		local col_ray = ray_from_unit or World:raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
 
 		if col_rays then
 			if col_ray then
@@ -251,7 +256,13 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		if damage > 0 then
 			local my_result = nil
 			local add_shoot_through_bullet = self._can_shoot_through_shield or self._can_shoot_through_enemy or self._can_shoot_through_wall
-			my_result = add_shoot_through_bullet and ShotgunBase.super._fire_raycast(self, user_unit, from_pos, col_ray.ray, dmg_mul, shoot_player, 0, autohit_mul, suppr_mul, shoot_through_data) or self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+
+			if add_shoot_through_bullet then
+				my_result = ShotgunBase.super._fire_raycast(self, user_unit, from_pos, col_ray.ray, dmg_mul, shoot_player, 0, autohit_mul, suppr_mul, shoot_through_data)
+			else
+				my_result = self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+			end
+
 			my_result = managers.mutators:modify_value("ShotgunBase:_fire_raycast", my_result)
 
 			if my_result and my_result.type == "death" then
@@ -277,7 +288,9 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	end
 
 	if not result then
-		local result = {hit_enemy = next(hit_enemies) and true or false}
+		result = {
+			hit_enemy = next(hit_enemies) and true or false
+		}
 
 		if self._alert_events then
 			result.rays = #col_rays > 0 and col_rays
@@ -345,6 +358,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 	return result
 end
+
 SaigaShotgun = SaigaShotgun or class(ShotgunBase)
 
 function SaigaShotgun:init(...)
@@ -352,6 +366,7 @@ function SaigaShotgun:init(...)
 
 	self._use_shotgun_reload = false
 end
+
 InstantElectricBulletBase = InstantElectricBulletBase or class(InstantBulletBase)
 
 function InstantElectricBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, damage, armor_piercing)
@@ -370,4 +385,3 @@ function InstantElectricBulletBase:give_impact_damage(col_ray, weapon_unit, user
 
 	return defense_data
 end
-

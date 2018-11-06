@@ -1,7 +1,9 @@
 UnitDamage = UnitDamage or class(CoreUnitDamage)
 UnitDamage.COLLISION_SFX_QUITE_TIME = 0.3
 UnitDamage.SFX_COLLISION_TAG = Idstring("sfx_only")
-UnitDamage.EVENTS = {"on_take_damage"}
+UnitDamage.EVENTS = {
+	"on_take_damage"
+}
 
 function UnitDamage:init(unit, ...)
 	CoreUnitDamage.init(self, unit, ...)
@@ -66,7 +68,7 @@ function UnitDamage:can_play_collision_sfx()
 end
 
 function UnitDamage:set_play_collision_sfx_quite_time(quite_time)
-	if self._collision_sfx_quite_time == nil ~= quite_time == nil and quite_time then
+	if self._collision_sfx_quite_time == nil ~= (quite_time == nil) and quite_time then
 		self:setup_sfx_collision_body_tags()
 	end
 
@@ -103,4 +105,3 @@ function UnitDamage:set_update_callback(func_name, ...)
 
 	UnitDamage.super.set_update_callback(self, func_name, ...)
 end
-

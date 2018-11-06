@@ -8,7 +8,9 @@ MutatorEnemyDamage.reductions = {
 	exp = 0
 }
 MutatorEnemyDamage.disables_achievements = true
-MutatorEnemyDamage.categories = {"enemies"}
+MutatorEnemyDamage.categories = {
+	"enemies"
+}
 MutatorEnemyDamage.icon_coords = {
 	5,
 	1
@@ -92,4 +94,3 @@ end
 function MutatorEnemyDamage:options_fill()
 	return self:_get_percentage_fill(self:_min_damage(), self:_max_damage(), self:get_damage_multiplier())
 end
-

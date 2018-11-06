@@ -102,7 +102,9 @@ function CoreHubElement:_add_panel(parent, parent_sizer)
 	panel_sizer:add(EWS:StaticLine(panel, "", "LI_HORIZONTAL"), 0, 0, "EXPAND")
 	parent_sizer:add(panel, 1, 0, "EXPAND")
 	panel:set_visible(false)
-	panel:set_extension({alive = true})
+	panel:set_extension({
+		alive = true
+	})
 
 	return panel, panel_sizer
 end
@@ -274,8 +276,8 @@ function CoreHubElement:draw_arrow(from, to, r, g, b, thick)
 	b = math.clamp(b * mul, 0, 1)
 	from = from:position()
 	to = to:position()
-	local len = (from - to):length()
-	local dir = (to - from):normalized()
+	local len = from - to:length()
+	local dir = to - from:normalized()
 	len = len - 50
 
 	if thick then
@@ -285,8 +287,8 @@ function CoreHubElement:draw_arrow(from, to, r, g, b, thick)
 		Application:draw_line(from, to, r, g, b)
 	end
 
-	self._arrow_brush:cone(to, to + (from - to):normalized() * 150, 48)
-	Application:draw_cone(to, to + (from - to):normalized() * 150, 48, r, g, b)
+	self._arrow_brush:cone(to, to + from - to:normalized() * 150, 48)
+	Application:draw_cone(to, to + from - to:normalized() * 150, 48, r, g, b)
 end
 
 function CoreHubElement:clear()
@@ -341,4 +343,3 @@ function CoreHubElement:destroy()
 		self._icon_ws = nil
 	end
 end
-

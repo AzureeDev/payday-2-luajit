@@ -22,4 +22,3 @@ end
 function VehicleStateLocked:is_vulnerable()
 	return false
 end
-

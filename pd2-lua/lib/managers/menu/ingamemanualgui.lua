@@ -38,19 +38,19 @@ function IngameManualGui:init(ws, fullscreen_ws)
 		x = 0,
 		layer = 4,
 		w = width,
-		y = (self._manual_panel:h() - height) - 1
+		y = self._manual_panel:h() - height - 1
 	})
 	self._manual_panel:rect({
 		w = 1,
 		x = 0,
 		layer = 4,
-		h = (self._manual_panel:h() - height * 2) - 2,
+		h = self._manual_panel:h() - height * 2 - 2,
 		y = height + 1
 	})
 	self._manual_panel:rect({
 		w = 1,
 		layer = 4,
-		h = (self._manual_panel:h() - height * 2) - 2,
+		h = self._manual_panel:h() - height * 2 - 2,
 		x = self._manual_panel:w() - 1,
 		y = height + 1
 	})
@@ -271,7 +271,9 @@ function IngameManualGui:unretrieve_texture()
 end
 
 function IngameManualGui:texture_done_clbk(texture_ids)
-	local new_page_panel = self._manual_panel:panel({visible = false})
+	local new_page_panel = self._manual_panel:panel({
+		visible = false
+	})
 	local texture = new_page_panel:bitmap({
 		name = "texture",
 		layer = 1,
@@ -305,4 +307,3 @@ function IngameManualGui:close()
 	self._ws:panel():remove(self._manual_panel)
 	self._fullscreen_ws:panel():remove(self._fullscreen_panel)
 end
-

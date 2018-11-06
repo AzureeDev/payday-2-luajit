@@ -132,4 +132,3 @@ end
 function CoreEnvEditor:remove_effect()
 	self:_move_selected_items(self._active_effect_list, self._effect_list, managers.environment_effects:effects_names())
 end
-

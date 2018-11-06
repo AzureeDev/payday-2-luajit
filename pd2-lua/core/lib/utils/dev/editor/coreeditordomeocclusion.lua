@@ -43,7 +43,9 @@ function CoreEditor:_create_dome_occlusion(params)
 	self._saved_show_center = self._show_center
 	self._show_center = false
 
-	self:on_hide_helper_units({vis = false})
+	self:on_hide_helper_units({
+		vis = false
+	})
 
 	self._saved_hidden_object = {}
 	self._saved_hidden_units = {}
@@ -80,7 +82,7 @@ function CoreEditor:_create_dome_occlusion(params)
 	local x = corner.x + w / 2
 	local y = corner.y - d / 2
 	local fov = 4
-	local far_range = (math.max(w, d) / 2) / math.tan(fov / 2)
+	local far_range = math.max(w, d) / 2 / math.tan(fov / 2)
 	local z = corner.z + far_range
 
 	self:set_camera_far_range(far_range + 10000)
@@ -178,7 +180,9 @@ function CoreEditor:dome_occlusion_done()
 
 	self._show_center = self._saved_show_center
 
-	self:on_hide_helper_units({vis = true})
+	self:on_hide_helper_units({
+		vis = true
+	})
 
 	for _, obj in ipairs(self._saved_hidden_object) do
 		obj:set_visibility(true)
@@ -204,4 +208,3 @@ function CoreEditor:dome_occlusion_done()
 
 	self._dome_occlusion_params = nil
 end
-

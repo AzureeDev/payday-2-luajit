@@ -99,7 +99,9 @@ end
 function IngameWaitingForRespawnState:_setup_sound_listener()
 	self._listener_id = managers.listener:add_listener("spectator_camera", self._camera_object, self._camera_object, nil, false)
 
-	managers.listener:add_set("spectator_camera", {"spectator_camera"})
+	managers.listener:add_set("spectator_camera", {
+		"spectator_camera"
+	})
 
 	self._listener_activation_id = managers.listener:activate_set("main", "spectator_camera")
 	self._sound_check_object = managers.sound_environment:add_check_object({
@@ -260,6 +262,7 @@ function IngameWaitingForRespawnState:update(t, dt)
 
 	self:_upd_watch(t, dt)
 end
+
 local mvec3_set = mvector3.set
 local mvec3_add = mvector3.add
 local mvec3_subtract = mvector3.subtract
@@ -608,7 +611,13 @@ function IngameWaitingForRespawnState:cb_next_player()
 	end
 
 	local i_watch = self:_get_teammate_index_by_unit_key(watch_u_key)
-	i_watch = i_watch == #self._spectator_data.teammate_list and 1 or i_watch + 1
+
+	if i_watch == #self._spectator_data.teammate_list then
+		i_watch = 1
+	else
+		i_watch = i_watch + 1
+	end
+
 	watch_u_key = self._spectator_data.teammate_list[i_watch]
 	self._spectator_data.watch_u_key = watch_u_key
 	self._dis_curr = nil
@@ -624,7 +633,13 @@ function IngameWaitingForRespawnState:cb_prev_player()
 	end
 
 	local i_watch = self:_get_teammate_index_by_unit_key(watch_u_key)
-	i_watch = i_watch == 1 and #self._spectator_data.teammate_list or i_watch - 1
+
+	if i_watch == 1 then
+		i_watch = #self._spectator_data.teammate_list
+	else
+		i_watch = i_watch - 1
+	end
+
 	watch_u_key = self._spectator_data.teammate_list[i_watch]
 	self._spectator_data.watch_u_key = watch_u_key
 	self._dis_curr = nil
@@ -702,4 +717,3 @@ end
 function IngameWaitingForRespawnState:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

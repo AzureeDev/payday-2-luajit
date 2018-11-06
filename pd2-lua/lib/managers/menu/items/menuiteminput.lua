@@ -353,7 +353,14 @@ function MenuItemInput:_update_caret(row_item)
 	local x, y, w, h = text:selection_rect()
 
 	if s == 0 and e == 0 then
-		x = text:align() == "center" and text:world_x() + text:w() / 2 or row_item.align == "right" and text:world_right() or text:world_left()
+		if text:align() == "center" then
+			x = text:world_x() + text:w() / 2
+		elseif row_item.align == "right" then
+			x = text:world_right()
+		else
+			x = text:world_left()
+		end
+
 		y = text:world_y()
 	end
 
@@ -554,4 +561,3 @@ function MenuItemInput:key_press(row_item, o, k)
 
 	self:_layout(row_item)
 end
-

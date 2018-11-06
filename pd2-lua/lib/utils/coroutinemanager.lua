@@ -38,7 +38,9 @@ function CoroutineManager:add_coroutine(name, func, ...)
 	local priority = func.Priority
 
 	if not self._coroutines[priority][name] and not self._buffer[name] then
-		local arg = {...}
+		local arg = {
+			...
+		}
 		self._buffer[name] = {
 			name = name,
 			func = func,
@@ -48,7 +50,9 @@ function CoroutineManager:add_coroutine(name, func, ...)
 end
 
 function CoroutineManager:add_and_run_coroutine(name, func, ...)
-	local arg = {...}
+	local arg = {
+		...
+	}
 	local co = coroutine.create(func.Function)
 	local result, error_msg = coroutine.resume(co, unpack(arg))
 	local status = coroutine.status(co)
@@ -114,4 +118,3 @@ end
 function CoroutineManager:clear()
 	self:init()
 end
-

@@ -133,7 +133,6 @@ function core_lua_dump(file_name, root, max_level, no_bin)
 	assert(file)
 
 	if no_bin then
-
 		function string_to_binary(str)
 			return str
 		end
@@ -148,4 +147,3 @@ function core_lua_dump(file_name, root, max_level, no_bin)
 	file:close()
 	cat_print("debug", "LUA dump done!")
 end
-

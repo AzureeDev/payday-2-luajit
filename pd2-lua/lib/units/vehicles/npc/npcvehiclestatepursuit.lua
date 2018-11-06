@@ -104,7 +104,13 @@ function NpcVehicleStatePursuit:calc_speed_limit(path, unit_and_pos)
 	local default_speed_limit = path.default_speed_limit or -1
 	local retval = default_speed_limit
 	local points_in_direction = nil
-	points_in_direction = (not unit_and_pos.direction or unit_and_pos.direction == "fwd") and path.points or path.points_bck
+
+	if not unit_and_pos.direction or unit_and_pos.direction == "fwd" then
+		points_in_direction = path.points
+	else
+		points_in_direction = path.points_bck
+	end
+
 	local target_speed = points_in_direction[unit_and_pos.target_checkpoint].speed
 
 	if target_speed ~= -1 then
@@ -139,7 +145,7 @@ function NpcVehicleStatePursuit:_loco_unit_proximity(npc_driving_ext, target_ste
 
 	local player_position = player_unit:position()
 	local cop_position = self._unit:position()
-	local distance_to_player = math.abs((player_position - cop_position):length()) / 100
+	local distance_to_player = math.abs(player_position - cop_position:length()) / 100
 	local acceleration = 0
 	local brake = 0
 	local handbrake = 0
@@ -192,7 +198,7 @@ function NpcVehicleStatePursuit:handle_stuck_vehicle(npc_driving_ext, t, dt)
 	if self._tachograph.tick_at < t then
 		local cop_position = self._unit:position()
 		self._tachograph.tick_at = t + self._tachograph.timeframe
-		self._tachograph.distance = (cop_position - self._tachograph.last_pos):length() / 100
+		self._tachograph.distance = cop_position - self._tachograph.last_pos:length() / 100
 		self._tachograph.last_pos = cop_position
 
 		if self._tachograph.distance <= 1 then
@@ -216,4 +222,3 @@ function NpcVehicleStatePursuit:_choose_recovery_maneuver()
 
 	return recovery_maneuver
 end
-

@@ -37,7 +37,6 @@ function NewRaycastWeaponBase:init(unit)
 	self._fire_mode_category = self:weapon_tweak_data().FIRE_MODE
 
 	if managers.player:has_category_upgrade("player", "armor_depleted_stagger_shot") then
-
 		local function clbk(value)
 			self:set_stagger(value)
 		end
@@ -245,6 +244,7 @@ function NewRaycastWeaponBase:clbk_assembly_complete(clbk, parts, blueprint)
 
 	clbk()
 end
+
 local material_type_ids = Idstring("material")
 
 function NewRaycastWeaponBase:apply_material_parameters()
@@ -560,7 +560,7 @@ function NewRaycastWeaponBase:_update_stats_values(disallow_replenish)
 	end
 
 	for stat, _ in pairs(stats) do
-		if stats[stat] < 1 or #stats_tweak_data[stat] < stats[stat] then
+		if stats[stat] < 1 or stats[stat] > #stats_tweak_data[stat] then
 			Application:error("[NewRaycastWeaponBase] Base weapon stat is out of bound!", "stat: " .. stat, "index: " .. stats[stat], "max_index: " .. #stats_tweak_data[stat], "This stat will be clamped!")
 		end
 
@@ -593,7 +593,7 @@ function NewRaycastWeaponBase:_update_stats_values(disallow_replenish)
 	end
 
 	if stats.concealment then
-		stats.suspicion = math.clamp((#stats_tweak_data.concealment - base_stats.concealment) - (parts_stats.concealment or 0), 1, #stats_tweak_data.concealment)
+		stats.suspicion = math.clamp(#stats_tweak_data.concealment - base_stats.concealment - (parts_stats.concealment or 0), 1, #stats_tweak_data.concealment)
 		self._current_stats.suspicion = stats_tweak_data.concealment[stats.suspicion]
 	end
 
@@ -1286,6 +1286,7 @@ function NewRaycastWeaponBase:set_gadget_color(color)
 		end
 	end
 end
+
 local tmp_pos_vec = Vector3()
 
 function NewRaycastWeaponBase:set_gadget_position(pos)
@@ -1993,4 +1994,3 @@ end
 if _G.IS_VR then
 	require("lib/units/weapons/vr/NewRaycastWeaponBaseVR")
 end
-

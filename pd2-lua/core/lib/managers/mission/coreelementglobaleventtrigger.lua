@@ -9,7 +9,9 @@ function ElementGlobalEventTrigger:init(...)
 end
 
 function ElementGlobalEventTrigger:on_script_activated()
-	managers.mission:add_global_event_listener(self._id, {self._values.global_event}, callback(self, self, Network:is_client() and "send_to_host" or "on_executed"))
+	managers.mission:add_global_event_listener(self._id, {
+		self._values.global_event
+	}, callback(self, self, Network:is_client() and "send_to_host" or "on_executed"))
 end
 
 function ElementGlobalEventTrigger:send_to_host(instigator)
@@ -25,4 +27,3 @@ function ElementGlobalEventTrigger:on_executed(instigator)
 
 	ElementGlobalEventTrigger.super.on_executed(self, instigator)
 end
-

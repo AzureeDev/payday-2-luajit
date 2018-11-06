@@ -876,11 +876,12 @@ function AttentionTweakData:_post_init()
 	for setting_name, setting in pairs(self.settings) do
 		local i_insert = 1
 
-		while self.indexes[i_insert] and self.indexes[i_insert] <= setting_name do
-			i_insert = i_insert + 1
+		if self.indexes[i_insert] then
+			while self.indexes[i_insert] and self.indexes[i_insert] <= setting_name do
+				i_insert = i_insert + 1
+			end
 		end
 
 		table.insert(self.indexes, i_insert, setting_name)
 	end
 end
-

@@ -12,4 +12,3 @@ function NetworkTweakData:init(tweak_data)
 	}
 	self.stealth_speed_boost = 1.005
 end
-

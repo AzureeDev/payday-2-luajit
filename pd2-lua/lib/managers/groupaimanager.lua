@@ -77,4 +77,3 @@ end
 function GroupAIManager:visualization_enabled()
 	return self._state._draw_enabled
 end
-

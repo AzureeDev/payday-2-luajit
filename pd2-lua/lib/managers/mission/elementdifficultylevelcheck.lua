@@ -25,4 +25,3 @@ function ElementDifficultyLevelCheck:on_executed(instigator)
 
 	ElementDifficultyLevelCheck.super.on_executed(self, instigator)
 end
-

@@ -68,7 +68,7 @@ function HUDLootScreen:init(hud, workspace, saved_lootdrop, saved_selected, save
 	self._hud_panel = self._foreground_layer_safe:panel()
 
 	self._hud_panel:set_y(25)
-	self._hud_panel:set_h((self._hud_panel:h() - 25) - 150)
+	self._hud_panel:set_h(self._hud_panel:h() - 25 - 150)
 
 	self._peer_data = {}
 	self._peers_panel = self._hud_panel:panel({})
@@ -250,7 +250,7 @@ function HUDLootScreen:create_peer(peers_panel, peer_id)
 	card_info_panel:set_h(main_text:bottom())
 	card_info_panel:set_center_y(panel:h() * 0.5)
 
-	local total_cards_w = ((panel:w() - peer_info_panel:w()) - card_info_panel:w()) - 10
+	local total_cards_w = panel:w() - peer_info_panel:w() - card_info_panel:w() - 10
 	local card_w = math.round((total_cards_w - 10) / 3)
 
 	for i = 1, 3, 1 do
@@ -313,12 +313,14 @@ function HUDLootScreen:create_peer(peers_panel, peer_id)
 		x = peer_info_panel:right() + 5,
 		w = total_cards_w,
 		h = panel:h() - 10
-	}), {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	}), {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	if not is_local_peer then
 		box:set_color(tweak_data.screen_colors.item_stage_2)
@@ -384,7 +386,7 @@ function HUDLootScreen:create_selected_panel(peer_id)
 	local function anim_func(o)
 		while true do
 			over(1, function (p)
-				o:set_alpha(math.sin((p * 180) % 180) * 0.2 + 0.6)
+				o:set_alpha(math.sin(p * 180 % 180) * 0.2 + 0.6)
 			end)
 		end
 	end
@@ -471,7 +473,9 @@ function HUDLootScreen:remove_peer(peer_id, reason)
 		panel:child("selected_panel"):hide()
 	end
 
-	self._peer_data[peer_id] = {active = false}
+	self._peer_data[peer_id] = {
+		active = false
+	}
 end
 
 function HUDLootScreen:hide()
@@ -505,7 +509,13 @@ end
 function HUDLootScreen:show()
 	if not self._video and SystemInfo:platform() ~= Idstring("X360") then
 		local variant = nil
-		variant = managers.dlc:is_installing() and 1 or math.random(8)
+
+		if managers.dlc:is_installing() then
+			variant = 1
+		else
+			variant = math.random(8)
+		end
+
 		self._video = self._baselayer_two:video({
 			blend_mode = "add",
 			speed = 1,
@@ -588,7 +598,9 @@ function HUDLootScreen:make_cards(peer, max_pc, left_card, right_card)
 		peer_info_panel:child("peer_infamy"):set_visible(false)
 	end
 
-	max_quality:set_text(managers.localization:to_upper_text("menu_l_max_quality", {quality = max_pc}))
+	max_quality:set_text(managers.localization:to_upper_text("menu_l_max_quality", {
+		quality = max_pc
+	}))
 	self:make_fine_text(peer_name)
 	self:make_fine_text(max_quality)
 	peer_name:set_right(peer_info_panel:w())
@@ -756,7 +768,9 @@ function HUDLootScreen:make_lootdrop(lootdrop_data)
 			TextureCache:request(texture_path, "NORMAL", texture_loaded_clbk, 100)
 		else
 			Application:error("[HUDLootScreen]", "Texture not in DB", texture_path, peer_id)
-			item_panel:rect({color = Color.red})
+			item_panel:rect({
+				color = Color.red
+			})
 		end
 	end
 
@@ -845,7 +859,9 @@ function HUDLootScreen:begin_choose_card(peer_id, card_id)
 	local card_info_panel = panel:child("card_info")
 	local main_text = card_info_panel:child("main_text")
 
-	main_text:set_text(managers.localization:to_upper_text(wait_for_lootdrop and "menu_l_choose_card_waiting" or "menu_l_choose_card_chosen", {time = 5}))
+	main_text:set_text(managers.localization:to_upper_text(wait_for_lootdrop and "menu_l_choose_card_waiting" or "menu_l_choose_card_chosen", {
+		time = 5
+	}))
 
 	local _, _, _, hh = main_text:text_rect()
 
@@ -981,7 +997,9 @@ function HUDLootScreen:begin_flip_card(peer_id)
 	local card_info_panel = panel:child("card_info")
 	local main_text = card_info_panel:child("main_text")
 
-	main_text:set_text(managers.localization:to_upper_text("menu_l_choose_card_chosen", {time = 5}))
+	main_text:set_text(managers.localization:to_upper_text("menu_l_choose_card_chosen", {
+		time = 5
+	}))
 
 	local _, _, _, hh = main_text:text_rect()
 
@@ -1206,7 +1224,9 @@ function HUDLootScreen:show_item(peer_id)
 			}))
 		end
 
-		quality_text:set_text(managers.localization:to_upper_text("menu_l_quality", {quality = item_pc == 0 and "?" or item_pc}))
+		quality_text:set_text(managers.localization:to_upper_text("menu_l_quality", {
+			quality = item_pc == 0 and "?" or item_pc
+		}))
 
 		if global_value and global_value ~= "normal" then
 			local gv_tweak_data = tweak_data.lootdrop.global_values[global_value] or {}
@@ -1267,7 +1287,9 @@ function HUDLootScreen:update(t, dt)
 			local card_info_panel = panel:child("card_info")
 			local main_text = card_info_panel:child("main_text")
 
-			main_text:set_text(managers.localization:to_upper_text("menu_l_choose_card_chosen", {time = math.ceil(self._peer_data[peer_id].wait_t)}))
+			main_text:set_text(managers.localization:to_upper_text("menu_l_choose_card_chosen", {
+				time = math.ceil(self._peer_data[peer_id].wait_t)
+			}))
 
 			local _, _, _, hh = main_text:text_rect()
 
@@ -1346,7 +1368,7 @@ function HUDLootScreen:create_stars_giving_animation()
 				name = "star_" .. tostring(i),
 				texture = texture,
 				texture_rect = rect,
-				color = max_number_of_stars - difficulty_stars < i and tweak_data.screen_colors.risk or tweak_data.screen_colors.text
+				color = i > max_number_of_stars - difficulty_stars and tweak_data.screen_colors.risk or tweak_data.screen_colors.text
 			})
 			local star_color = star:color()
 
@@ -1409,4 +1431,3 @@ function HUDLootScreen:close()
 
 	self._backdrop = nil
 end
-

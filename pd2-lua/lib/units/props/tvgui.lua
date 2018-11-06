@@ -87,4 +87,3 @@ function TvGui:load(data)
 
 	self._video_panel:goto_frame(data.TvGui.play_position)
 end
-

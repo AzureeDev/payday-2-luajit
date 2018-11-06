@@ -7,4 +7,3 @@ end
 
 function CoreMissionElementData:init(unit)
 end
-

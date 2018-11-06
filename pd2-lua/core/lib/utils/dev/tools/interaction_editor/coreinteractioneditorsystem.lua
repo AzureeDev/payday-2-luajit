@@ -275,4 +275,3 @@ function InteractionEditorSystem:_load_patterns(desc, pattern_data, cfg_node)
 		self:add_pattern_data(node, pat, ptype, name, full_name)
 	end
 end
-

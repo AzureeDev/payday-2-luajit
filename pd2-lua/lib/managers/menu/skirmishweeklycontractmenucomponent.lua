@@ -3,8 +3,12 @@ SkirmishWeeklyContractMenuComponent = SkirmishWeeklyContractMenuComponent or cla
 function SkirmishWeeklyContractMenuComponent:init(ws, fullscreen_ws, node)
 	self._ws = ws
 	self._fullscreen_ws = fullscreen_ws
-	self._panel = ws:panel():panel({layer = 51})
-	self._fullscreen_panel = fullscreen_ws:panel():panel({layer = 50})
+	self._panel = ws:panel():panel({
+		layer = 51
+	})
+	self._fullscreen_panel = fullscreen_ws:panel():panel({
+		layer = 50
+	})
 	local job_data = node:parameters().menu_component_data
 	local bg_overlay = BlurSheet:new(self._fullscreen_panel, {
 		name = "bg_overlay",
@@ -41,12 +45,14 @@ function SkirmishWeeklyContractMenuComponent:init(ws, fullscreen_ws, node)
 		y = progress_title:bottom()
 	})
 
-	BoxGuiObject:new(reward_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(reward_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local countdown_text = FineText:new(reward_panel, {
 		name = "countdown",
@@ -157,10 +163,14 @@ function SkirmishWeeklyContractMenuComponent:init(ws, fullscreen_ws, node)
 					}
 					text_id = tweak_data.blackmarket.textures[reward_id].name_id
 				elseif reward_type == "materials" then
-					icon_data = {texture = guis_catalog .. "textures/pd2/blackmarket/icons/materials/" .. reward_id}
+					icon_data = {
+						texture = guis_catalog .. "textures/pd2/blackmarket/icons/materials/" .. reward_id
+					}
 					text_id = tweak_data.blackmarket.materials[reward_id].name_id
 				elseif reward_type == "masks" then
-					icon_data = {texture = guis_catalog .. "textures/pd2/blackmarket/icons/masks/" .. reward_id}
+					icon_data = {
+						texture = guis_catalog .. "textures/pd2/blackmarket/icons/masks/" .. reward_id
+					}
 					text_id = tweak_data.blackmarket.masks[reward_id].name_id
 				else
 					icon_data = tweak_data.hud_icons.downcard_overkill_deck
@@ -201,10 +211,11 @@ function SkirmishWeeklyContractMenuComponent:init(ws, fullscreen_ws, node)
 		name = "details",
 		y = reward_panel:bottom() + 10,
 		w = width / 2,
-		h = (height - (reward_panel:bottom() + 10)) - 16
+		h = height - (reward_panel:bottom() + 10) - 16
 	})
 	local show_progress_warning = job_data.state == tweak_data:server_state_to_index("in_game")
-	self._details_page = SkirmishWeeklyContractDetails:new(details_panel, show_progress_warning)
+	local modifiers = job_data.skirmish_weekly_modifiers and string.split(job_data.skirmish_weekly_modifiers, ";") or managers.skirmish:weekly_modifiers()
+	self._details_page = SkirmishWeeklyContractDetails:new(details_panel, show_progress_warning, modifiers)
 
 	managers.menu_component:disable_crimenet()
 	managers.menu:active_menu().input:deactivate_controller_mouse()
@@ -232,7 +243,6 @@ end
 
 local function redirect_to_member(class, member_name, functions)
 	for _, name in pairs(functions) do
-
 		class[name] = function (self, ...)
 			local member = self[member_name]
 
@@ -255,11 +265,12 @@ redirect_to_member(SkirmishWeeklyContractMenuComponent, "_details_page", {
 
 SkirmishWeeklyContractDetails = SkirmishWeeklyContractDetails or class(MenuGuiComponentGeneric)
 
-function SkirmishWeeklyContractDetails:init(panel, show_progress_warning)
+function SkirmishWeeklyContractDetails:init(panel, show_progress_warning, modifiers)
 	self._init_layer = panel:layer()
 	self.make_fine_text = BlackMarketGui.make_fine_text
 	self._rec_round_object = NewSkillTreeGui._rec_round_object
 	self._show_progress_warning = show_progress_warning
+	self._modifier_list = modifiers
 	self._panel = panel
 	self._tabs = {}
 	self._tabs_data = {}
@@ -290,13 +301,17 @@ function SkirmishWeeklyContractDetails:_add_panels()
 		h = tab_h
 	})
 	self._tabs_scroll_panel = self._tabs_panel:panel({})
-	self._outline_panel = self._page_panel:panel({layer = 10})
-	self._outline_box = BoxGuiObject:new(self._outline_panel, {sides = {
-		1,
-		1,
-		2,
-		1
-	}})
+	self._outline_panel = self._page_panel:panel({
+		layer = 10
+	})
+	self._outline_box = BoxGuiObject:new(self._outline_panel, {
+		sides = {
+			1,
+			1,
+			2,
+			1
+		}
+	})
 end
 
 function SkirmishWeeklyContractDetails:populate_tabs_data(tabs_data)
@@ -314,7 +329,7 @@ function SkirmishWeeklyContractDetails:close()
 end
 
 function SkirmishWeeklyContractDetails:set_active_page(new_index, play_sound)
-	if new_index == self._active_page or new_index <= 0 or #self._tabs < new_index then
+	if new_index == self._active_page or new_index <= 0 or new_index > #self._tabs then
 		return false
 	end
 
@@ -362,12 +377,14 @@ function SkirmishWeeklyContractDetails:set_active_page(new_index, play_sound)
 		self._outline_box:close()
 	end
 
-	self._outline_box = BoxGuiObject:new(self._outline_panel, {sides = {
-		1,
-		1,
-		2,
-		1
-	}})
+	self._outline_box = BoxGuiObject:new(self._outline_panel, {
+		sides = {
+			1,
+			1,
+			2,
+			1
+		}
+	})
 	self._active_page = new_index
 
 	self:update_legend()
@@ -386,6 +403,7 @@ function SkirmishWeeklyContractDetails:previous_page()
 		return self:set_active_page(self._active_page - 1)
 	end
 end
+
 SkirmishWeeklyContractPage = SkirmishWeeklyContractPage or class()
 
 function SkirmishWeeklyContractPage:init(page_id, page_panel, fullscreen_panel, gui)
@@ -418,6 +436,7 @@ end
 function SkirmishWeeklyContractPage:get_legend()
 	return {}
 end
+
 SkirmishWeeklyContractDescriptionPage = SkirmishWeeklyContractDescriptionPage or class(SkirmishWeeklyContractPage)
 
 function SkirmishWeeklyContractDescriptionPage:init(page_id, page_panel, fullscreen_panel, gui)
@@ -446,13 +465,14 @@ end
 function SkirmishWeeklyContractDescriptionPage:set_active(active)
 	self._desc:set_visible(active)
 end
+
 SkirmishWeeklyContractModifiersPage = SkirmishWeeklyContractModifiersPage or class(SkirmishWeeklyContractPage)
 
 function SkirmishWeeklyContractModifiersPage:init(page_id, page_panel, fullscreen_panel, gui)
 	self._gui = gui
 	self._modifier_list = SkirmishModifierList:new(page_panel, {
 		visible = false,
-		modifiers = managers.skirmish:active_weekly().modifiers
+		modifiers = gui._modifier_list
 	})
 
 	if not managers.menu:is_pc_controller() then
@@ -493,4 +513,3 @@ end
 function SkirmishWeeklyContractModifiersPage:set_active(active)
 	self._modifier_list:set_visible(active)
 end
-

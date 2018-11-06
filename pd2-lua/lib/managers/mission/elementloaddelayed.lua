@@ -23,4 +23,3 @@ function ElementLoadDelayed:on_executed(instigator)
 
 	ElementLoadDelayed.super.on_executed(self, instigator)
 end
-

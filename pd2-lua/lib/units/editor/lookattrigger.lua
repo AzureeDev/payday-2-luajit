@@ -82,4 +82,3 @@ function LookAtTriggerUnitElement:_build_panel(panel, panel_sizer)
 	self:_build_value_checkbox(panel, panel_sizer, "in_front", "Only in front")
 	self:_add_help_text("Interval defines how offen the check should be done. Sensitivity defines how precise the look angle must be. A sensitivity of 0.999 means that you need to look almost directly at it, 0.5 means that you will get the trigger somewhere at the edge of the screen (might be outside or inside). \n\nDistance(in meters) can be used as a filter to the trigger (0 means no distance filtering)")
 end
-

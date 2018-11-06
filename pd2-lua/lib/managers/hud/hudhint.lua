@@ -33,7 +33,9 @@ function HUDHint:init(hud)
 
 	marker:set_center_y(self._hint_panel:h() / 2)
 
-	local clip_panel = self._hint_panel:panel({name = "clip_panel"})
+	local clip_panel = self._hint_panel:panel({
+		name = "clip_panel"
+	})
 
 	clip_panel:rect({
 		name = "bg",
@@ -115,12 +117,14 @@ function HUDHint:_animate_show(hint_panel, done_cb, seconds, text)
 		marker:set_right(clip_panel:right())
 	end
 
-	while (t > 0 or forever) and not self._stop do
-		local dt = coroutine.yield()
-		t = t - dt
+	if t > 0 or forever then
+		while (t > 0 or forever) and not self._stop do
+			local dt = coroutine.yield()
+			t = t - dt
 
-		marker:set_alpha((1 + math.sin(Application:time() * 800)) / 2)
-		marker:set_right(clip_panel:right())
+			marker:set_alpha((1 + math.sin(Application:time() * 800)) / 2)
+			marker:set_right(clip_panel:right())
+		end
 	end
 
 	self._stop = false
@@ -148,4 +152,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDHintVR")
 end
-

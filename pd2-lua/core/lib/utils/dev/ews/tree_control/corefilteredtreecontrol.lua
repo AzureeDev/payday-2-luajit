@@ -105,4 +105,3 @@ function CoreFilteredTreeControl:thaw(already_refreshed)
 		self.super.thaw(self)
 	end
 end
-

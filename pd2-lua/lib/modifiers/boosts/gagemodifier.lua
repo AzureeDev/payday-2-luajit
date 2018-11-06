@@ -9,4 +9,3 @@ function GageModifier:init(modifier_tweak)
 	self.desc_id = modifier_tweak.unlock_desc_id
 	self._data = modifier_tweak.data
 end
-

@@ -94,4 +94,3 @@ function ExplodingProp:_check_detonation_ready()
 		self._data_list = nil
 	end
 end
-

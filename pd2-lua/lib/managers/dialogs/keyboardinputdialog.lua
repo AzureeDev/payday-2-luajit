@@ -38,4 +38,3 @@ end
 function KeyboardInputDialog:to_string()
 	return string.format("%s, Title: %s, Text: %s, Input text: %s, Max count: %s, Filter: %s", tostring(BaseDialog.to_string(self)), tostring(self._data.title), tostring(self._data.text), tostring(self._data.input_text), tostring(self._data.max_count), tostring(self._data.filter))
 end
-

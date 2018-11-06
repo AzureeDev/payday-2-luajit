@@ -20,4 +20,3 @@ function ElementSpawnGrenade:on_executed(instigator)
 
 	ElementSpawnGrenade.super.on_executed(self, instigator)
 end
-

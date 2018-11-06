@@ -7,4 +7,3 @@ end
 
 function Player:release_avatar()
 end
-

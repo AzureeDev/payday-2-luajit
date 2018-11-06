@@ -38,4 +38,3 @@ function DefaultNetworkHandler.lost_server(peer_ip)
 		end
 	end
 end
-

@@ -63,4 +63,3 @@ function GTextureManager:destroy()
 	self._texture_map = nil
 	self._preloaded = nil
 end
-

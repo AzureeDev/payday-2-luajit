@@ -27,7 +27,9 @@ function CustomSafehouseGui:init(...)
 end
 
 function CustomSafehouseGui:_start_page_data()
-	local data = {topic_id = "menu_custom_safehouse"}
+	local data = {
+		topic_id = "menu_custom_safehouse"
+	}
 
 	return data
 end
@@ -49,4 +51,3 @@ function CustomSafehouseGui:populate_tabs_data(tabs_data)
 		page_class = "CustomSafehouseGuiPageTrophies"
 	})
 end
-

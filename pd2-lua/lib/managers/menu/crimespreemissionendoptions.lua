@@ -38,7 +38,9 @@ function CrimeSpreeMissionEndOptions:_setup()
 		parent:remove(self._panel)
 	end
 
-	self._panel = parent:panel({layer = self._init_layer})
+	self._panel = parent:panel({
+		layer = self._init_layer
+	})
 	self._button_panel = self._panel:panel({})
 	local buttons = {
 		{
@@ -191,7 +193,6 @@ function CrimeSpreeMissionEndOptions:mouse_moved(o, x, y)
 		return
 	end
 
-	local used, pointer
 	used, pointer, self._selected_item = nil
 
 	for idx, btn in ipairs(self._buttons) do
@@ -238,7 +239,7 @@ function CrimeSpreeMissionEndOptions:_move_selection(dir)
 			self._selected_idx = #self._buttons
 		end
 
-		if #self._buttons < self._selected_idx then
+		if self._selected_idx > #self._buttons then
 			self._selected_idx = 1
 		end
 
@@ -249,4 +250,3 @@ function CrimeSpreeMissionEndOptions:_move_selection(dir)
 		end
 	end
 end
-

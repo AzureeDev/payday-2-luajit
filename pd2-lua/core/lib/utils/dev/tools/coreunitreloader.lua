@@ -38,7 +38,9 @@ function CoreUnitReloader:create_main_frame()
 
 	main_box:add(EWS:BitmapButton(self._unitreloader_frame, "dock.bmp", "", ""), 0, 0, "EXPAND")
 
-	self._main_box = {unit_combo_box = EWS:ComboBox(self._unitreloader_frame, "", "", "CB_SORT")}
+	self._main_box = {
+		unit_combo_box = EWS:ComboBox(self._unitreloader_frame, "", "", "CB_SORT")
+	}
 
 	self._main_box.unit_combo_box:connect("", "EVT_COMMAND_TEXT_ENTER", callback(self, self, "on_reload"), "")
 	main_box:add(self._main_box.unit_combo_box, 0, 0, "EXPAND")
@@ -135,4 +137,3 @@ function CoreUnitReloader:reload_units(unit_name)
 
 	self:log(num_reloads .. " " .. unit_name .. " reloaded.")
 end
-

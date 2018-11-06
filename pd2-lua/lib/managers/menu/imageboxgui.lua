@@ -15,7 +15,9 @@ end
 function ImageBoxGui:_create_image_box(image_config)
 	image_config = image_config or {}
 	local image_shapes = image_config.shapes or {}
-	local image_textures = image_config.textures or image_config.texture and {image_config.texture} or {}
+	local image_textures = image_config.textures or image_config.texture and {
+		image_config.texture
+	} or {}
 	local image_video = image_config.video or nil
 	local video_loop = image_config.video_loop or false
 	local keep_texure_ratio = image_config.keep_ratio or false
@@ -166,12 +168,14 @@ function ImageBoxGui:_create_image_box(image_config)
 		end
 	end
 
-	self._info_box:create_sides(info_area, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._info_box:create_sides(info_area, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	self:_set_scroll_indicator()
 	main:set_center(main:parent():w() / 2, main:parent():h() / 2)
 end
@@ -259,4 +263,3 @@ function ImageBoxGui:close()
 	self:unretrieve_textures()
 	ImageBoxGui.super.close(self)
 end
-

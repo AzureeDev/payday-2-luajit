@@ -1,4 +1,3 @@
-
 function CoreEditor:build_left_toolbar()
 	local icons_path = managers.database:base_path() .. "core\\lib\\utils\\dev\\editor\\icons\\"
 	local left_upper_panel = EWS:Panel(Global.frame_panel, "", "")
@@ -146,4 +145,3 @@ function CoreEditor:_interupt_frustum_freeze()
 	self._left_upper_toolbar:set_tool_state("TB_FRUSTUM_FREEZE", false)
 	self._camera_controller:frustum_unfreeze(self:camera())
 end
-

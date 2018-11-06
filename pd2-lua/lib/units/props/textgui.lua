@@ -1,26 +1,28 @@
 TextGui = TextGui or class()
 TextGui.COLORS = {}
-TextGui.COLORS = {}
-TextGui.COLORS.black = Color(0, 0, 0)
-TextGui.COLORS.white = Color(1, 1, 1)
-TextGui.COLORS.red = Color(0.8, 0, 0)
-TextGui.COLORS.green = Color(0, 0.8, 0)
-TextGui.COLORS.blue = Color(0, 0, 0.8)
-TextGui.COLORS.yellow = Color(0.8, 0.8, 0)
-TextGui.COLORS.orange = Color(0.8, 0.4, 0)
-TextGui.COLORS.light_red = Color(0.8, 0.4, 0.4)
-TextGui.COLORS.light_blue = Color(0.4, 0.6, 0.8)
-TextGui.COLORS.light_green = Color(0.6, 0.8, 0.4)
-TextGui.COLORS.light_yellow = Color(0.8, 0.8, 0.4)
-TextGui.COLORS.light_orange = Color(0.8, 0.6, 0.4)
-TextGui.GUI_EVENT_IDS = {}
-TextGui.GUI_EVENT_IDS.syncronize = 1
-TextGui.GUI_EVENT_IDS.timer_set = 2
-TextGui.GUI_EVENT_IDS.timer_start_count_up = 3
-TextGui.GUI_EVENT_IDS.timer_start_count_down = 4
-TextGui.GUI_EVENT_IDS.timer_pause = 5
-TextGui.GUI_EVENT_IDS.timer_resume = 6
-TextGui.GUI_EVENT_IDS.number_set = 7
+TextGui.COLORS = {
+	black = Color(0, 0, 0),
+	white = Color(1, 1, 1),
+	red = Color(0.8, 0, 0),
+	green = Color(0, 0.8, 0),
+	blue = Color(0, 0, 0.8),
+	yellow = Color(0.8, 0.8, 0),
+	orange = Color(0.8, 0.4, 0),
+	light_red = Color(0.8, 0.4, 0.4),
+	light_blue = Color(0.4, 0.6, 0.8),
+	light_green = Color(0.6, 0.8, 0.4),
+	light_yellow = Color(0.8, 0.8, 0.4),
+	light_orange = Color(0.8, 0.6, 0.4)
+}
+TextGui.GUI_EVENT_IDS = {
+	syncronize = 1,
+	timer_set = 2,
+	timer_start_count_up = 3,
+	timer_start_count_down = 4,
+	timer_pause = 5,
+	timer_resume = 6,
+	number_set = 7
+}
 
 function TextGui:init(unit)
 	self._unit = unit
@@ -118,7 +120,7 @@ function TextGui:_create_text_gui(row)
 	if text_data.align_h and text_data.align_h == "bottom" then
 		gui:set_bottom((row - 1) * y / self.ROWS + y / self.ROWS)
 	else
-		gui:set_center_y((row - 1) * y / self.ROWS + (y / self.ROWS) / 2)
+		gui:set_center_y((row - 1) * y / self.ROWS + y / self.ROWS / 2)
 	end
 
 	local x = self._panel:w()
@@ -144,7 +146,7 @@ function TextGui:_create_text_gui(row)
 
 	data.iterator = data.iterator + 1
 
-	if #data.texts_data < data.iterator then
+	if data.iterator > #data.texts_data then
 		data.iterator = 1
 	end
 end
@@ -293,7 +295,9 @@ function TextGui:_test2()
 		self:clear_row_and_guis(i)
 	end
 
-	local texts = {"Welcome to Big Bank"}
+	local texts = {
+		"Welcome to Big Bank"
+	}
 	local texts2 = {
 		"Loan",
 		"Invest",
@@ -389,4 +393,3 @@ function TextGui:load(data)
 		self:set_visible(state.visible)
 	end
 end
-

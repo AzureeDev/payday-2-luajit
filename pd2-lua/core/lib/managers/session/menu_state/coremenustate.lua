@@ -34,4 +34,3 @@ end
 function MenuState:game_state()
 	return self._game_state
 end
-

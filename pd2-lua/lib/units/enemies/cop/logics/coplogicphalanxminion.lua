@@ -42,7 +42,9 @@ CopLogicPhalanxMinion.allowed_transitional_actions = {
 function CopLogicPhalanxMinion.enter(data, new_logic_name, enter_params)
 	CopLogicBase.enter(data, new_logic_name, enter_params)
 
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	local is_cool = data.unit:movement():cool()
 	my_data.detection = data.char_tweak.detection.combat
 	local old_internal_data = data.internal_data
@@ -77,9 +79,13 @@ function CopLogicPhalanxMinion.enter(data, new_logic_name, enter_params)
 	CopLogicPhalanxMinion._chk_has_old_action(data, my_data)
 
 	if is_cool then
-		data.unit:brain():set_attention_settings({peaceful = true})
+		data.unit:brain():set_attention_settings({
+			peaceful = true
+		})
 	else
-		data.unit:brain():set_attention_settings({cbt = true})
+		data.unit:brain():set_attention_settings({
+			cbt = true
+		})
 	end
 
 	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
@@ -266,7 +272,7 @@ end
 function CopLogicPhalanxMinion._calc_phalanx_circle_radius(phalanx_minion_count)
 	local distance = tweak_data.group_ai.phalanx.minions.distance
 	local circumfence = distance * phalanx_minion_count
-	local radius = (circumfence / math.pi) / 2
+	local radius = circumfence / math.pi / 2
 
 	return math.max(radius, distance)
 end
@@ -326,7 +332,12 @@ end
 function CopLogicPhalanxMinion._get_next_neighbour_angle(neighbour_num, phalanx_minion_count, fixed_angle)
 	local angle_step = 360 / phalanx_minion_count
 	local result = fixed_angle + neighbour_num * angle_step
-	result = result < 0 and result + 360 or result % 360
+
+	if result < 0 then
+		result = result + 360
+	else
+		result = result % 360
+	end
 
 	return result
 end
@@ -403,4 +414,3 @@ function CopLogicPhalanxMinion.calc_initial_phalanx_pos(own_pos, objective)
 
 	return objective.pos
 end
-

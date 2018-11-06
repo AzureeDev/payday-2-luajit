@@ -9,6 +9,7 @@ function MenuTitlescreenState:init(game_state_machine, setup)
 		self:setup()
 	end
 end
+
 local is_ps3 = SystemInfo:platform() == Idstring("PS3")
 local is_ps4 = SystemInfo:platform() == Idstring("PS4")
 local is_xb1 = SystemInfo:platform() == Idstring("XB1")
@@ -365,27 +366,28 @@ function MenuTitlescreenState:reset_attract_video()
 end
 
 function MenuTitlescreenState:is_attract_video_delay_done()
-	return self._attract_video_time + _G.tweak_data.states.title.ATTRACT_VIDEO_DELAY < TimerManager:main():time()
+	return TimerManager:main():time() > self._attract_video_time + _G.tweak_data.states.title.ATTRACT_VIDEO_DELAY
 end
 
 function MenuTitlescreenState:play_attract_video()
 	self:reset_attract_video()
 
-	local res = RenderSettings.resolution
+	local screen_width = self._full_workspace:width()
+	local screen_height = self._full_workspace:height()
 	local src_width = 1280
 	local src_height = 720
 	local dest_width, dest_height = nil
 
-	if res.x / res.y < src_width / src_height then
-		dest_width = res.x
-		dest_height = (src_height * dest_width) / src_width
+	if src_width / src_height > screen_width / screen_height then
+		dest_width = screen_width
+		dest_height = src_height * dest_width / src_width
 	else
-		dest_height = res.y
-		dest_width = (src_width * dest_height) / src_height
+		dest_height = screen_height
+		dest_width = src_width * dest_height / src_height
 	end
 
-	local x = (res.x - dest_width) / 2
-	local y = (res.y - dest_height) / 2
+	local x = (screen_width - dest_width) / 2
+	local y = (screen_height - dest_height) / 2
 	self._attract_video_gui = self._full_workspace:panel():video({
 		video = "movies/attract",
 		x = x,
@@ -444,4 +446,3 @@ function MenuTitlescreenState:on_storage_changed(old_user_data, user_data)
 		self._waiting_for_loaded_savegames = nil
 	end
 end
-

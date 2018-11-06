@@ -68,4 +68,3 @@ function ElementInteraction:stop_simulation(...)
 		World:delete_unit(self._unit)
 	end
 end
-

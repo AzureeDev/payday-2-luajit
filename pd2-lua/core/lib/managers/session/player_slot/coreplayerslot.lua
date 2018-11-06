@@ -108,4 +108,3 @@ end
 function PlayerSlot:player()
 	return self._player
 end
-

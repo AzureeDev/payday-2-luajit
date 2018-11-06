@@ -40,7 +40,9 @@ function TangoTweakData:init(tweak_data)
 				item_entry = "facepaint",
 				type_items = "textures"
 			},
-			{tango_weapon_part = true}
+			{
+				tango_weapon_part = true
+			}
 		}
 	})
 	table.insert(self.challenges, {
@@ -76,7 +78,9 @@ function TangoTweakData:init(tweak_data)
 				item_entry = "sight",
 				type_items = "textures"
 			},
-			{tango_weapon_part = true}
+			{
+				tango_weapon_part = true
+			}
 		}
 	})
 	table.insert(self.challenges, {
@@ -112,7 +116,9 @@ function TangoTweakData:init(tweak_data)
 				item_entry = "bullets",
 				type_items = "textures"
 			},
-			{tango_weapon_part = true}
+			{
+				tango_weapon_part = true
+			}
 		}
 	})
 	table.insert(self.challenges, {
@@ -148,8 +154,9 @@ function TangoTweakData:init(tweak_data)
 				item_entry = "stripes",
 				type_items = "textures"
 			},
-			{tango_weapon_part = true}
+			{
+				tango_weapon_part = true
+			}
 		}
 	})
 end
-

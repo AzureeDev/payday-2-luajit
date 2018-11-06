@@ -48,7 +48,13 @@ end
 function CoreOverlayEffectHubElement:set_option_time(data)
 	local c = data.ctrlr
 	local value = c:get_value()
-	value = (c:get_value() ~= "" or nil) and tonumber(value)
+
+	if c:get_value() == "" then
+		value = nil
+	else
+		value = tonumber(value)
+	end
+
 	self._hed[data.value] = value
 end
 
@@ -156,4 +162,3 @@ function CoreOverlayEffectHubElement:_build_panel(panel, panel_sizer)
 	panel_sizer:add(fade_out_sizer, 0, 0, "EXPAND")
 	self:changed_effect()
 end
-

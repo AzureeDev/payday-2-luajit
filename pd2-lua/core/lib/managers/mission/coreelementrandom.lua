@@ -45,7 +45,7 @@ function ElementRandom:_calc_amount()
 	local amount = self._values.amount or 1
 
 	if self._values.amount_random and self._values.amount_random > 0 then
-		amount = (amount + math.random(self._values.amount_random + 1)) - 1
+		amount = amount + math.random(self._values.amount_random + 1) - 1
 	end
 
 	return amount
@@ -57,4 +57,3 @@ function ElementRandom:_get_random_elements()
 
 	return table.remove(self._unused_randoms, rand)
 end
-

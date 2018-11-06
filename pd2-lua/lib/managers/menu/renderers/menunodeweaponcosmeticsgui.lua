@@ -40,6 +40,7 @@ function MenuNodeSkinEditorGui:mouse_pressed(button, x, y)
 		end
 	end
 end
+
 MenuNodeArmorSkinEditorGui = MenuNodeArmorSkinEditorGui or class(MenuNodeGui)
 
 function MenuNodeArmorSkinEditorGui:init(node, layer, parameters)
@@ -58,17 +59,19 @@ function MenuNodeArmorSkinEditorGui:init(node, layer, parameters)
 
 		panel:set_w(self.ws:panel():w() * (1 - (node:parameters().align_line_proportions or 0.65)))
 		panel:set_right(self.ws:panel():w())
-		panel:set_h((self.ws:panel():h() - tweak_data.menu.pd2_large_font_size) - 10)
+		panel:set_h(self.ws:panel():h() - tweak_data.menu.pd2_large_font_size - 10)
 		panel:rect({
 			alpha = 0.4,
 			color = Color.black
 		})
-		BoxGuiObject:new(panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 	end
 end
 
@@ -100,4 +103,3 @@ function MenuNodeArmorSkinEditorGui:mouse_pressed(button, x, y)
 		end
 	end
 end
-

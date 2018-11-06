@@ -1,5 +1,7 @@
 EnemyDummyTriggerUnitElement = EnemyDummyTriggerUnitElement or class(MissionElement)
-EnemyDummyTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+EnemyDummyTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function EnemyDummyTriggerUnitElement:init(unit)
 	MissionElement.init(self, unit)
@@ -115,4 +117,3 @@ function EnemyDummyTriggerUnitElement:_build_panel(panel, panel_sizer)
 
 	self:_build_value_combobox(panel, panel_sizer, "event", options)
 end
-

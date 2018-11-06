@@ -32,4 +32,3 @@ function PlayerHandStatePoint:default_transition(next_state)
 		PlayerHandStatePoint.super.default_transition(self, next_state)
 	end
 end
-

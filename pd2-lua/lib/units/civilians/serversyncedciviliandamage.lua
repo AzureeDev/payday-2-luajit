@@ -37,4 +37,3 @@ end
 function ServerSyncedCivilianDamage:_send_sync_melee_attack_result(attack_data, hit_offset_height, variant)
 	TeamAIDamage._send_melee_attack_result(self, attack_data, hit_offset_height, variant)
 end
-

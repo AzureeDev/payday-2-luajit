@@ -66,6 +66,7 @@ function CoreEffectStackMember:reads_writes()
 
 	return reads, writes
 end
+
 CoreEffectStack = CoreEffectStack or class()
 
 function CoreEffectStack:init(stacktype)
@@ -224,6 +225,7 @@ function CoreEffectStack:load(node)
 		end
 	end
 end
+
 CoreEffectAtom = CoreEffectAtom or class(CoreEffectPropertyContainer)
 
 function CoreEffectAtom:init(name)
@@ -537,7 +539,9 @@ function CoreEffectAtom:collect_time_events()
 	for _, e in ipairs(ret) do
 		local name = e[1]
 		local t = tonumber(e[2][e[3]]) + tonumber(start_time._value)
-		e[2] = {t}
+		e[2] = {
+			t
+		}
 		e[3] = 1
 	end
 
@@ -550,7 +554,9 @@ function CoreEffectAtom:collect_time_events()
 	if tonumber(lifetime._value) >= 0 then
 		table.insert(ret, {
 			"end_time",
-			{tonumber(start_time._value) + tonumber(lifetime._value)},
+			{
+				tonumber(start_time._value) + tonumber(lifetime._value)
+			},
 			1
 		})
 	end
@@ -589,9 +595,9 @@ function CoreEffectAtom:scale_timeline(istart, iend, tstart, tend)
 		local t = tonumber(e[2][e[3]])
 
 		if t <= istart then
-			t = (t + tstart) - istart
+			t = t + tstart - istart
 		elseif iend <= t then
-			t = (t + tend) - iend
+			t = t + tend - iend
 		else
 			local rel = 0
 
@@ -645,9 +651,9 @@ function CoreEffectAtom:extend_timeline(istart, iend, tstart, tend)
 		local t = tonumber(e[2][e[3]])
 
 		if t <= istart then
-			t = (t + tstart) - istart
+			t = t + tstart - istart
 		elseif iend <= t then
-			t = (t + tend) - iend
+			t = t + tend - iend
 		end
 
 		e[2][e[3]] = t
@@ -743,6 +749,7 @@ function CoreEffectAtom:load(node)
 	self._stacks.simulator:load(node)
 	self._stacks.visualizer:load(node)
 end
+
 CoreEffectDefinition = CoreEffectDefinition or class(CoreEffectPropertyContainer)
 
 function CoreEffectDefinition:init()
@@ -849,4 +856,3 @@ function CoreEffectDefinition:load(n)
 		end
 	end
 end
-

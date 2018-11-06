@@ -1,4 +1,3 @@
-
 function HUDBGBox_create(panel, params, config)
 	local box_panel = panel:panel(params)
 	local color = config and config.color
@@ -263,6 +262,9 @@ function HUDBGBox_animate_bg_attention(bg, config)
 	local TOTAL_T = 3
 	local t = TOTAL_T
 
+	if t <= 0 then
+	end
+
 	while t > 0 or forever do
 		local dt = coroutine.yield()
 		t = t - dt
@@ -344,7 +346,7 @@ function HUDObjectives:init(hud)
 	})
 
 	amount_text:set_x(objective_text:x())
-	amount_text:set_y((objective_text:y() + objective_text:font_size()) - 2)
+	amount_text:set_y(objective_text:y() + objective_text:font_size() - 2)
 end
 
 function HUDObjectives:activate_objective(data)
@@ -518,4 +520,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDObjectivesVR")
 end
-

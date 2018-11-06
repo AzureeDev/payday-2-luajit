@@ -468,7 +468,9 @@ function CoreMaterialEditor:_save_global_to_disk(recompile)
 			platform = string.lower(SystemInfo:platform():s()),
 			source_root = managers.database:base_path(),
 			target_db_root = Application:base_path() .. "assets",
-			source_files = {managers.database:entry_relative_path(global_file)}
+			source_files = {
+				managers.database:entry_relative_path(global_file)
+			}
 		})
 		DB:reload()
 		managers.database:clear_all_cached_indices()
@@ -771,4 +773,3 @@ function CoreMaterialEditor:_load_parent_dropdown()
 	self._parent_combo_box:set_value("[NONE]")
 	self:_unfreeze_frame()
 end
-

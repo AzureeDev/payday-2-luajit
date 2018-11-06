@@ -65,4 +65,3 @@ function CoreMaterialEditor:_on_edit_global_popup(event)
 	popup:connect("POPUP_GLOBAL_REMOVE", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_remove"), event)
 	self._tree_ctrl:popup_menu(popup, Vector3(-1, -1, 0))
 end
-

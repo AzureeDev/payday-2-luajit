@@ -50,6 +50,7 @@ function ElementSpotter:on_executed(instigator, ...)
 
 	ElementSpotter.super.on_executed(self, instigator, ...)
 end
+
 local mvec1 = Vector3()
 
 function ElementSpotter:update_spotter()
@@ -95,4 +96,3 @@ function ElementSpotter:update_spotter()
 		self._found_units = #self._found_units > 0 and self._found_units or nil
 	end
 end
-

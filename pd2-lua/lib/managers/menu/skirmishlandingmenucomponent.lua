@@ -80,12 +80,18 @@ end
 
 function SkirmishMenuComponentBase:_move_in_direction(direction)
 	local button_in_direction = nil
-	button_in_direction = self._selected_button and self._selected_button:get_directional_link(direction) or self._default_selection
+
+	if self._selected_button then
+		button_in_direction = self._selected_button:get_directional_link(direction)
+	else
+		button_in_direction = self._default_selection
+	end
 
 	if button_in_direction then
 		self:_select_button(button_in_direction)
 	end
 end
+
 SkirmishLandingMenuComponent = SkirmishLandingMenuComponent or class(SkirmishMenuComponentBase)
 
 function SkirmishLandingMenuComponent:init(ws, fullscreen_ws, node)
@@ -108,7 +114,9 @@ function SkirmishLandingMenuComponent:init(ws, fullscreen_ws, node)
 		font = tweak_data.menu.pd2_large_font,
 		font_size = tweak_data.menu.pd2_large_font_size
 	})
-	local variant_selection_panel = self._panel:panel({name = "variant_selection"})
+	local variant_selection_panel = self._panel:panel({
+		name = "variant_selection"
+	})
 
 	local function open_node_callback(node_name)
 		return function ()
@@ -152,7 +160,9 @@ function SkirmishLandingMenuComponent:init(ws, fullscreen_ws, node)
 	end
 
 	if managers.menu:is_pc_controller() then
-		local back_button = BackButton:new(self._panel, {name = "back_button"})
+		local back_button = BackButton:new(self._panel, {
+			name = "back_button"
+		})
 
 		back_button:set_right(self._panel:right() - 10)
 		back_button:set_bottom(self._panel:bottom() - 10)
@@ -195,6 +205,7 @@ end
 function SkirmishLandingMenuComponent:input_focus()
 	return 1
 end
+
 ClickButton = ClickButton or class(GUIObjectWrapper)
 ClickButton.STATE_NORMAL = 0
 ClickButton.STATE_HOVER = 1
@@ -247,6 +258,7 @@ function ClickButton:mouse_clicked(button, x, y)
 		return true
 	end
 end
+
 BackButton = BackButton or class(ClickButton)
 
 function BackButton:init(parent, config)
@@ -291,6 +303,7 @@ function BackButton:set_button_state(state)
 		self._label_text:set_color(tweak_data.screen_colors.button_stage_2)
 	end
 end
+
 SkirmishVariantButton = SkirmishVariantButton or class(ClickButton)
 SkirmishVariantButton.PADDING = {
 	x = 8,
@@ -378,6 +391,7 @@ function SkirmishVariantButton:set_button_state(state)
 	self._picture:stop()
 	self._picture:animate(fade_color)
 end
+
 WeeklySkirmishVariantButton = WeeklySkirmishVariantButton or class(SkirmishVariantButton)
 
 function WeeklySkirmishVariantButton:init(parent, config)
@@ -445,7 +459,7 @@ function WeeklySkirmishVariantButton:init(parent, config)
 			w = 10,
 			layer = 1,
 			name = "milestone_" .. tostring(milestone),
-			x = (progress_bar:x() + progress_bar:w() * milestone_progress) - 5
+			x = progress_bar:x() + progress_bar:w() * milestone_progress - 5
 		})
 
 		milestone_panel:set_bottom(progress_bar:y())
@@ -503,10 +517,14 @@ local function get_reward_data(reward_type, reward_id)
 		}
 		text_id = tweak_data.blackmarket.textures[reward_id].name_id
 	elseif reward_type == "materials" then
-		icon_data = {texture = guis_catalog .. "textures/pd2/blackmarket/icons/materials/" .. reward_id}
+		icon_data = {
+			texture = guis_catalog .. "textures/pd2/blackmarket/icons/materials/" .. reward_id
+		}
 		text_id = tweak_data.blackmarket.materials[reward_id].name_id
 	elseif reward_type == "masks" then
-		icon_data = {texture = guis_catalog .. "textures/pd2/blackmarket/icons/masks/" .. reward_id}
+		icon_data = {
+			texture = guis_catalog .. "textures/pd2/blackmarket/icons/masks/" .. reward_id
+		}
 		text_id = tweak_data.blackmarket.masks[reward_id].name_id
 	else
 		icon_data = tweak_data.hud_icons.downcard_overkill_deck
@@ -522,8 +540,12 @@ function SkirmishWeeklyRewardsMenuComponent:init(ws, fullscreen_ws, node)
 
 	self._ws = ws
 	self._fullscreen_ws = fullscreen_ws
-	self._panel = ws:panel():panel({layer = 51})
-	self._fullscreen_panel = fullscreen_ws:panel():panel({layer = 50})
+	self._panel = ws:panel():panel({
+		layer = 51
+	})
+	self._fullscreen_panel = fullscreen_ws:panel():panel({
+		layer = 50
+	})
 	local bg_overlay = BlurSheet:new(self._fullscreen_panel, {
 		name = "bg_overlay",
 		layer = 50,
@@ -544,12 +566,14 @@ function SkirmishWeeklyRewardsMenuComponent:init(ws, fullscreen_ws, node)
 		name = "bg",
 		color = Color(0.75, 0, 0, 0)
 	})
-	BoxGuiObject:new(reward_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(reward_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local progress_title = FineText:new(reward_panel, {
 		name = "progress_title",
@@ -760,7 +784,9 @@ function SkirmishWeeklyRewardsMenuComponent:remove_button(button)
 	button:set_button_state(ClickButton.STATE_NORMAL)
 
 	if #self._buttons == 0 then
-		local continue_button = ContinueButton:new(self._reward_panel, {name = "continue_button"})
+		local continue_button = ContinueButton:new(self._reward_panel, {
+			name = "continue_button"
+		})
 
 		continue_button:set_right(self._reward_panel:w() - 10)
 		continue_button:set_bottom(self._reward_panel:h() - 10)
@@ -773,6 +799,7 @@ end
 function SkirmishWeeklyRewardsMenuComponent:input_focus()
 	return 1
 end
+
 RewardButton = RewardButton or class(ClickButton)
 
 function RewardButton:init(parent, config)
@@ -849,6 +876,7 @@ function RewardButton:set_button_state(state)
 		self:set_scale(1.2)
 	end
 end
+
 ContinueButton = ContinueButton or class(ClickButton)
 
 function ContinueButton:init(parent, config)
@@ -876,4 +904,3 @@ function ContinueButton:set_button_state(state)
 		self._label_text:set_color(tweak_data.screen_colors.button_stage_2)
 	end
 end
-

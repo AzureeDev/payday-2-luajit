@@ -73,15 +73,16 @@ function NetworkMatchMaking:_save_globals()
 		Global.empty = {}
 	end
 
-	Global.empty.match = {}
-	Global.empty.match.lobby_handler = self.lobby_handler
-	Global.empty.match.lobby_attributes = self._lobby_attributes
-	Global.empty.match.try_re_enter_lobby = self._try_re_enter_lobby
-	Global.empty.match.server_rpc = self._server_rpc
-	Global.empty.match.lobby_filters = self._lobby_filters
-	Global.empty.match.distance_filter = self._distance_filter
-	Global.empty.match.difficulty_filter = self._difficulty_filter
-	Global.empty.match.lobby_return_count = self._lobby_return_count
+	Global.empty.match = {
+		lobby_handler = self.lobby_handler,
+		lobby_attributes = self._lobby_attributes,
+		try_re_enter_lobby = self._try_re_enter_lobby,
+		server_rpc = self._server_rpc,
+		lobby_filters = self._lobby_filters,
+		distance_filter = self._distance_filter,
+		difficulty_filter = self._difficulty_filter,
+		lobby_return_count = self._lobby_return_count
+	}
 end
 
 function NetworkMatchMaking:load_user_filters()
@@ -127,7 +128,7 @@ function NetworkMatchMaking:update()
 
 			Application:error("RE-ENTERING LOBBY", self.lobby_handler:id())
 
-			local function _join_lobby_result_f(result, handler)
+			function slot1(result, handler)
 				if result == "success" then
 					Application:error("SUCCESS!")
 
@@ -186,7 +187,7 @@ function NetworkMatchMaking:get_friends_lobbies()
 
 		num_updated_lobbies = num_updated_lobbies + 1
 
-		if #lobbies <= num_updated_lobbies then
+		if num_updated_lobbies >= #lobbies then
 			local info = {
 				room_list = {},
 				attribute_list = {}
@@ -305,7 +306,6 @@ function NetworkMatchMaking:search_lobby(friends_only)
 	if friends_only then
 		self:get_friends_lobbies()
 	else
-
 		local function refresh_lobby()
 			if not self.browser then
 				return
@@ -521,9 +521,11 @@ function NetworkMatchMaking:join_server(room_id, skip_showing_dialog)
 
 			self.lobby_handler:setup_callbacks(NetworkMatchMaking._on_memberstatus_change, NetworkMatchMaking._on_data_update, NetworkMatchMaking._on_chat_message)
 			managers.network:start_client()
-			managers.menu:show_waiting_for_server_response({cancel_func = function ()
-				managers.network:session():on_join_request_cancelled()
-			end})
+			managers.menu:show_waiting_for_server_response({
+				cancel_func = function ()
+					managers.network:session():on_join_request_cancelled()
+				end
+			})
 
 			local function joined_game(res, level_index, difficulty_index, state_index)
 				managers.system_menu:close("waiting_for_server_response")
@@ -642,7 +644,11 @@ function NetworkMatchMaking:create_lobby(settings)
 			local dialog_data = {
 				title = title,
 				text = managers.localization:text("dialog_err_failed_creating_lobby"),
-				button_list = {{text = managers.localization:text("dialog_ok")}}
+				button_list = {
+					{
+						text = managers.localization:text("dialog_ok")
+					}
+				}
 			}
 
 			managers.system_menu:show(dialog_data)
@@ -766,4 +772,3 @@ function NetworkMatchMaking:from_host_lobby_re_opened(status)
 		end
 	end
 end
-

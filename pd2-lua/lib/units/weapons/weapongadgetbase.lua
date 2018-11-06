@@ -74,4 +74,3 @@ end
 function WeaponGadgetBase:destroy(unit)
 	WeaponGadgetBase.super.pre_destroy(self, unit)
 end
-

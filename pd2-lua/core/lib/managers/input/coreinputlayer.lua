@@ -29,4 +29,3 @@ function Layer:create_context()
 
 	return CoreInputContext.Context:new(context_description, self._input_context_stack)
 end
-

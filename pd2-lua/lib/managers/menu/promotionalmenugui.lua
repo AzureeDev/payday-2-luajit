@@ -7,7 +7,9 @@ function PromotionalMenuGui:init(ws, fullscreen_ws, node)
 	self._ws = managers.gui_data:create_saferect_workspace()
 	self._node = node
 	self._panel = self._ws:panel():panel()
-	self._fullscreen_panel = self._fullscreen_ws:panel():panel({layer = -100})
+	self._fullscreen_panel = self._fullscreen_ws:panel():panel({
+		layer = -100
+	})
 	self.make_fine_text = BlackMarketGui.make_fine_text
 	self._buttons = {}
 	self._selection = {
@@ -43,7 +45,9 @@ function PromotionalMenuGui:setup(menu_data, theme_data)
 	local padding = menu_data.padding or 10
 
 	if self._theme_data.backgrounds then
-		local bg_panel = self._fullscreen_ws:panel({layer = -100})
+		local bg_panel = self._fullscreen_ws:panel({
+			layer = -100
+		})
 
 		for idx, data in ipairs(self._theme_data.backgrounds) do
 			if data.type == "image" then
@@ -294,4 +298,3 @@ function PromotionalMenuGui:confirm_pressed()
 		btn:trigger()
 	end
 end
-

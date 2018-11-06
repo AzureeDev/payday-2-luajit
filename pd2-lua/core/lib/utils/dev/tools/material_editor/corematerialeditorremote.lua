@@ -26,4 +26,3 @@ function CoreMaterialEditorRemote:reload_shader_libs()
 		Application:load_shader_config(self.TEMP_PATH .. "temp_lib_ps3")
 	end
 end
-

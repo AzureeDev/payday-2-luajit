@@ -22,4 +22,3 @@ function ElementFlashlight:on_executed(instigator)
 	managers.game_play_central:set_flashlights_on(self._values.state)
 	ElementFlashlight.super.on_executed(self, instigator)
 end
-

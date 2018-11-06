@@ -12,7 +12,9 @@ function GageAssignmentTweakData:init(tweak_data)
 		10
 	}
 	self.EXPERIENCE_MULTIPLIER = 0.05
-	self.assignments = {green_mantis = {}}
+	self.assignments = {
+		green_mantis = {}
+	}
 	self.assignments.green_mantis.unit = Idstring("units/pd2_dlc_gage_jobs/pickups/gen_pku_gage_green/gen_pku_gage_green")
 	self.assignments.green_mantis.name_id = "menu_gage_green_mantis"
 	self.assignments.green_mantis.desc_id = "menu_gage_green_mantis_desc"
@@ -290,7 +292,7 @@ function GageAssignmentTweakData:get_num_assignment_units()
 	local num_assignment_units = self.NUM_ASSIGNMENT_UNITS
 	local difficulty = managers.job:current_difficulty_stars() + 1
 
-	if difficulty < 1 or #self.NUM_ASSIGNMENT_UNITS < difficulty then
+	if difficulty < 1 or difficulty > #self.NUM_ASSIGNMENT_UNITS then
 		debug_pause("GageAssignmentTweakData:get_num_assignment_units() difficulty out of bound", difficulty, inspect(self.NUM_ASSIGNMENT_UNITS))
 
 		difficulty = math.clamp(difficulty, 1, #self.NUM_ASSIGNMENT_UNITS)
@@ -309,4 +311,3 @@ function GageAssignmentTweakData:get_num_assignment_units()
 
 	return num_assignment_units[difficulty] or 1
 end
-

@@ -86,13 +86,16 @@ function LeftRightText:set_texts(left, right)
 		self:set_right(right)
 	end
 end
+
 AchievementButton = AchievementButton or class(BaseButton)
 AchievementButton.N_COLOR = Color(255, 30, 105, 150) / 255
 AchievementButton.H_COLOR = Color(255, 105, 230, 255) / 255
 AchievementButton.S_COLOR = Color.white
 
 function AchievementButton:init(parent, id, info, icon, small_icon, on_trigger)
-	AchievementButton.super.init(self, parent, {input = true})
+	AchievementButton.super.init(self, parent, {
+		input = true
+	})
 
 	self._select_panel = ExtendedPanel:new(self)
 	self._id = id
@@ -139,6 +142,7 @@ function AchievementButton:_hover_changed(hover)
 		self._icon:set_color(hover and self.H_COLOR or self.N_COLOR)
 	end
 end
+
 AchievementForceButton = AchievementForceButton or class(AchievementButton)
 
 function AchievementForceButton:init(parent, id, info, on_trigger)
@@ -160,6 +164,7 @@ function AchievementForceButton:_post_trigger()
 	self._select_panel:set_visible(self._info.tracked and not self._info.forced and num_forced < managers.achievment.MAX_TRACKED)
 	self._icon:set_visible(self._info.forced)
 end
+
 AchievementTrackButton = AchievementTrackButton or class(AchievementButton)
 
 function AchievementTrackButton:init(parent, id, info, on_trigger)
@@ -177,6 +182,7 @@ function AchievementTrackButton:_post_trigger()
 	self._select_panel:set_visible(not self._info.tracked)
 	self._icon:set_visible(self._info.tracked)
 end
+
 AchievementListItem = AchievementListItem or class(ListItem)
 AchievementListItem.HEIGHT = 70
 AchievementListItem.ND_COLOR = Color(255, 95, 95, 95) / 255
@@ -198,14 +204,18 @@ function AchievementListItem:init(parent, data, owner)
 	self._visual = visual
 	self._info = info or {}
 	self._data = data
-	self._select_panel = self._panel:panel({layer = self:layer() - 1})
+	self._select_panel = self._panel:panel({
+		layer = self:layer() - 1
+	})
 
-	BoxGuiObject:new(self._select_panel, {sides = {
-		2,
-		2,
-		2,
-		2
-	}})
+	BoxGuiObject:new(self._select_panel, {
+		sides = {
+			2,
+			2,
+			2,
+			2
+		}
+	})
 
 	self._highlight = self._panel:rect({
 		color = Color(40, 30, 105, 150) / 255,
@@ -234,10 +244,10 @@ function AchievementListItem:init(parent, data, owner)
 		})
 		local cx, cy = bitmap:center()
 
-		lock:set_center(math.round((cx + bitmap:w() * 0.5) - 10), math.round((cy + bitmap:h() * 0.5) - 10))
+		lock:set_center(math.round(cx + bitmap:w() * 0.5 - 10), math.round(cy + bitmap:h() * 0.5 - 10))
 	end
 
-	local left = (self:w() - 32) - 16
+	local left = self:w() - 32 - 16
 
 	if visual.unlock_id then
 		local texture = awarded and "guis/dlcs/trk/textures/pd2/unlocked" or "guis/dlcs/trk/textures/pd2/locked"
@@ -405,6 +415,7 @@ function AchievementListItem:mouse_clicked(o, button, x, y)
 
 	AchievementListItem.super.mouse_clicked(self, o, button, x, y)
 end
+
 ToggleInputPanel = ToggleInputPanel or class(ExtendedPanel)
 
 function ToggleInputPanel:init(...)
@@ -501,7 +512,11 @@ function add_achievement_detail_text(scroll, placer, visual, info, font_color)
 				break
 			end
 
-			text = not text and managers.localization:text("menu_achievements_levels_left_intro") .. managers.localization:text(job_data.name_id) or text .. ", " .. managers.localization:text(job_data.name_id)
+			if not text then
+				text = managers.localization:text("menu_achievements_levels_left_intro") .. managers.localization:text(job_data.name_id)
+			else
+				text = text .. ", " .. managers.localization:text(job_data.name_id)
+			end
 		end
 
 		if text then
@@ -525,10 +540,14 @@ end
 AchievementSortPicker = AchievementSortPicker or class(ExtendedPanel)
 
 function AchievementSortPicker:init(parent, on_change)
-	AchievementSortPicker.super.init(self, parent, {input = true})
+	AchievementSortPicker.super.init(self, parent, {
+		input = true
+	})
 	self:set_size(0, 0)
 
-	local placer = ResizingPlacer:new(self, {padding = 10})
+	local placer = ResizingPlacer:new(self, {
+		padding = 10
+	})
 	local strings = {
 		default = "menu_default",
 		alphabetical = "menu_sort_alphabetic",
@@ -543,10 +562,14 @@ function AchievementSortPicker:init(parent, on_change)
 	}
 
 	for k, id in pairs(strings) do
-		strings[k] = managers.localization:to_upper_text("menu_achievements_sort_order_picker", {SORT = managers.localization:text(id)})
+		strings[k] = managers.localization:to_upper_text("menu_achievements_sort_order_picker", {
+			SORT = managers.localization:text(id)
+		})
 	end
 
-	Global.achievements_filters = Global.achievements_filters or {sort_order = "default"}
+	Global.achievements_filters = Global.achievements_filters or {
+		sort_order = "default"
+	}
 	local current_id = Global.achievements_filters.sort_order
 	self._items = {}
 	self._on_change = on_change
@@ -666,12 +689,14 @@ function AchievementSortPicker:init(parent, on_change)
 		color = Color.black:with_alpha(0.25)
 	})
 
-	BoxGuiObject:new(self, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 end
 
 function AchievementSortPicker:mouse_moved(...)
@@ -703,7 +728,7 @@ end
 function AchievementSortPicker:_next()
 	local i = (self._current and self._current.index or 1) + 1
 
-	if #self._items < i then
+	if i > #self._items then
 		i = 1
 	end
 
@@ -721,7 +746,9 @@ function AchievementSortPicker:_prev()
 end
 
 function AchievementSortPicker:refresh()
-	Global.achievements_filters = Global.achievements_filters or {sort_order = "default"}
+	Global.achievements_filters = Global.achievements_filters or {
+		sort_order = "default"
+	}
 	local current_id = Global.achievements_filters.sort_order
 
 	for _, t in pairs(self._items) do
@@ -730,6 +757,7 @@ function AchievementSortPicker:refresh()
 		end
 	end
 end
+
 AchievementListGui = AchievementListGui or class(ExtendedPanel)
 AchievementListGui.ADD_PER_UPDATE = 20
 
@@ -745,7 +773,9 @@ function AchievementListGui:init(ws, fullscreen_ws, node)
 	managers.achievment:_update_current_milestone()
 
 	self._ws = ws
-	self._main_panel = ToggleInputPanel:new(self, {input = true})
+	self._main_panel = ToggleInputPanel:new(self, {
+		input = true
+	})
 
 	if not managers.menu:is_pc_controller() then
 		self._legends = TextLegendsBar:new(self._main_panel, nil, {
@@ -821,8 +851,10 @@ function AchievementListGui:init(ws, fullscreen_ws, node)
 		input = true,
 		padding = 0,
 		y = t_y,
-		h = (self._main_panel:h() - t_y) - 50
-	}, {padding = 0})
+		h = self._main_panel:h() - t_y - 50
+	}, {
+		padding = 0
+	})
 
 	self._scroll:add_lines_and_static_down_indicator()
 
@@ -853,7 +885,9 @@ function AchievementListGui:init(ws, fullscreen_ws, node)
 	end)
 	self._tracked_text = b_placer:add_left(self._main_panel:fine_text({
 		align = "right",
-		text = managers.localization:text("menu_achievements_tracking", {COUNT = num_fav}),
+		text = managers.localization:text("menu_achievements_tracking", {
+			COUNT = num_fav
+		}),
 		font = medium_font,
 		font_size = medium_font_size
 	}), 30)
@@ -871,7 +905,9 @@ function AchievementListGui:init(ws, fullscreen_ws, node)
 	})
 
 	back_panel:set_lefttop(self._scroll:lefttop())
-	back_panel:rect({color = Color.black:with_alpha(0.8)})
+	back_panel:rect({
+		color = Color.black:with_alpha(0.8)
+	})
 
 	self._filter_panel = GrowPanel:new(self._main_panel, {
 		input = true,
@@ -888,7 +924,9 @@ function AchievementListGui:init(ws, fullscreen_ws, node)
 		h = 600,
 		padding = 0,
 		w = self._filter_panel:w()
-	}, {padding = 10})
+	}, {
+		padding = 10
+	})
 
 	if managers.menu:is_pc_controller() then
 		local back_btn = TextButton:new(self._main_panel, {
@@ -951,12 +989,14 @@ function AchievementListGui:init(ws, fullscreen_ws, node)
 			layer = -1,
 			color = Color.black:with_alpha(0.25)
 		})
-		BoxGuiObject:new(search_panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(search_panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 
 		self._search = {
 			panel = search_panel,
@@ -1088,7 +1128,7 @@ function AchievementListGui:generate_side_panel()
 				font_size = medium_font_size
 			}, managers.localization:to_upper_text("menu_filtered_achievements"), string.format("%d / %d", count_done(self._current_list), #self._current_list)), 0)
 		elseif milestone then
-			local t = placer:add_bottom(LeftRightText:new(self._filter_panel, {
+			slot4 = placer:add_bottom(LeftRightText:new(self._filter_panel, {
 				w = self._filter_panel:row_w(),
 				font = medium_font,
 				font_size = medium_font_size
@@ -1118,7 +1158,9 @@ function AchievementListGui:generate_side_panel()
 						y = progress:y()
 					})
 
-					local arrow = self._filter_panel:bitmap({texture = "guis/dlcs/ami/textures/pd2/milestone_marker_arrow"})
+					local arrow = self._filter_panel:bitmap({
+						texture = "guis/dlcs/ami/textures/pd2/milestone_marker_arrow"
+					})
 
 					arrow:set_bottom(progress:top() - 3)
 					arrow:set_center_x(x + 2)
@@ -1164,12 +1206,14 @@ function AchievementListGui:generate_side_panel()
 		color = Color.black:with_alpha(0.8),
 		layer = self._filter_panel:layer() - 1
 	})
-	BoxGuiObject:new(self._filter_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._filter_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	self._detail_scroll:set_lefttop(self._filter_panel:leftbottom())
 	self._detail_scroll:move(0, 10)
 	self._detail_scroll:resize(nil, self._scroll:bottom() - self._detail_scroll:top())
@@ -1185,12 +1229,14 @@ function AchievementListGui:generate_side_panel()
 		color = Color.black:with_alpha(0.8),
 		layer = self._filter_panel:layer() - 1
 	})
-	BoxGuiObject:new(self._detail_bg, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._detail_bg, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	self:update_detail()
 end
 
@@ -1219,10 +1265,12 @@ function AchievementListGui:update_detail()
 	if not awarded then
 		bitmap:set_color(Color.white:with_alpha(0.1))
 
-		local lock = canvas:bitmap({texture = "guis/dlcs/trk/textures/pd2/lock"})
+		local lock = canvas:bitmap({
+			texture = "guis/dlcs/trk/textures/pd2/lock"
+		})
 		local cx, cy = bitmap:center()
 
-		lock:set_center(math.round((cx + bitmap:w() * 0.5) - 10), math.round((cy + bitmap:h() * 0.5) - 10))
+		lock:set_center(math.round(cx + bitmap:w() * 0.5 - 10), math.round(cy + bitmap:h() * 0.5 - 10))
 	end
 
 	placer:add_right(canvas:fine_text({
@@ -1289,7 +1337,9 @@ function AchievementListGui:update(...)
 		return v.tracked
 	end)
 
-	self._tracked_text:set_text(managers.localization:text("menu_achievements_tracking", {COUNT = num_fav}))
+	self._tracked_text:set_text(managers.localization:text("menu_achievements_tracking", {
+		COUNT = num_fav
+	}))
 	ExtendedPanel.make_fine_text(self._tracked_text)
 	placer:add_left(self._tracked_text, 30)
 	placer:add_left(self._tracked_icon)
@@ -1639,12 +1689,14 @@ function AchievementListGui:_on_filters_done()
 end
 
 function AchievementListGui:open_filter_popup()
-	managers.menu:open_node("achievements_filter", {{
-		on_filters_done = callback(self, self, "_on_filters_done"),
-		calc_filter_num = function ()
-			return self and #self:filter(self._all_achievements)
-		end
-	}})
+	managers.menu:open_node("achievements_filter", {
+		{
+			on_filters_done = callback(self, self, "_on_filters_done"),
+			calc_filter_num = function ()
+				return self and #self:filter(self._all_achievements)
+			end
+		}
+	})
 	self:show_blur()
 end
 
@@ -1697,7 +1749,7 @@ function AchievementListGui.progress_order(lhs, rhs)
 		local lpv = lp.get() / lp.max
 		local rpv = rp.get() / rp.max
 
-		if rpv < lpv then
+		if lpv > rpv then
 			return true
 		elseif lpv == rpv then
 			if lp.max == rp.max then
@@ -1716,7 +1768,6 @@ function AchievementListGui.progress_order(lhs, rhs)
 end
 
 function AchievementListGui.create_tracked_then_other_order(other_sort)
-
 	local function func(lhs, rhs)
 		if lhs.info.forced or rhs.info.forced then
 			if lhs.info.forced == rhs.info.forced then
@@ -1771,6 +1822,7 @@ end
 function AchievementListGui:_on_milestone()
 	self:_do_popup(AchievementMilestoneGui:new(self, callback(self, self, "_on_popup_done")))
 end
+
 AchievementListGui.MAX_SEARCH_LENGTH = 28
 
 function AchievementListGui:connect_search_input()
@@ -2062,4 +2114,3 @@ function AchievementListGui:update_caret()
 
 	self._search.placeholder:set_visible(not self._focus and #text_s == 0)
 end
-

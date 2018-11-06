@@ -25,7 +25,9 @@ CopDamage.WEAPON_TYPE_BULLET = 2
 CopDamage.WEAPON_TYPE_FLAMER = 3
 CopDamage._ON_STUN_ACCURACY_DECREASE = 0.5
 CopDamage._ON_STUN_ACCURACY_DECREASE_TIME = 5
-CopDamage.EVENT_IDS = {FINAL_LOWER_HEALTH_PERCENTAGE_LIMIT = 1}
+CopDamage.EVENT_IDS = {
+	FINAL_LOWER_HEALTH_PERCENTAGE_LIMIT = 1
+}
 CopDamage.DEBUG_HP = CopDamage.DEBUG_HP or false
 CopDamage._event_listeners = EventListenerHolder:new()
 
@@ -46,6 +48,7 @@ function CopDamage.MAD_3_ACHIEVEMENT(attack_data)
 		managers.job:set_memory("mad_3", false)
 	end
 end
+
 CopDamage._hurt_severities = {
 	heavy = "heavy_hurt",
 	fire = "fire_hurt",
@@ -95,8 +98,14 @@ function CopDamage:init(unit)
 	self._health = self._HEALTH_INIT
 	self._health_ratio = 1
 	self._HEALTH_INIT_PRECENT = self._HEALTH_INIT / self._HEALTH_GRANULARITY
-	self._autotarget_data = {fast = unit:get_object(Idstring("Spine1"))}
-	self._pickup = "ammo"
+	self._autotarget_data = {
+		fast = unit:get_object(Idstring("Spine1"))
+	}
+
+	if not char_tweak.do_not_drop_ammo then
+		self._pickup = "ammo"
+	end
+
 	self._listener_holder = EventListenerHolder:new()
 
 	if char_tweak.permanently_invulnerable or self.immortal then
@@ -182,8 +191,10 @@ function CopDamage:get_damage_type(damage_percent, category)
 
 	if hurt_table.health_reference == "full" then
 		-- Nothing
+	elseif hurt_table.health_reference == "current" then
+		dmg = math.min(1, self._HEALTH_INIT * dmg / self._health)
 	else
-		dmg = hurt_table.health_reference == "current" and math.min(1, (self._HEALTH_INIT * dmg) / self._health) or math.min(1, (self._HEALTH_INIT * dmg) / hurt_table.health_reference)
+		dmg = math.min(1, self._HEALTH_INIT * dmg / hurt_table.health_reference)
 	end
 
 	local zone = nil
@@ -371,7 +382,7 @@ function CopDamage:damage_bullet(attack_data)
 			end
 		end
 
-		if armor_pierce_value <= armor_pierce_roll then
+		if armor_pierce_roll >= armor_pierce_value then
 			return
 		end
 	end
@@ -429,7 +440,11 @@ function CopDamage:damage_bullet(attack_data)
 	end
 
 	if not self._char_tweak.ignore_headshot and not self._damage_reduction_multiplier and head then
-		damage = self._char_tweak.headshot_dmg_mul and damage * self._char_tweak.headshot_dmg_mul * headshot_multiplier or self._health * 10
+		if self._char_tweak.headshot_dmg_mul then
+			damage = damage * self._char_tweak.headshot_dmg_mul * headshot_multiplier
+		else
+			damage = self._health * 10
+		end
 	end
 
 	if attack_data.weapon_unit:base().get_add_head_shot_mul then
@@ -577,8 +592,10 @@ function CopDamage:damage_bullet(attack_data)
 	elseif result.type == "stagger" then
 		variant = 2
 		self._has_been_staggered = true
+	elseif result.type == "healed" then
+		variant = 3
 	else
-		variant = result.type == "healed" and 3 or 0
+		variant = 0
 	end
 
 	self:_send_bullet_attack_result(attack_data, attacker, damage_percent, body_index, hit_offset_height, variant)
@@ -598,7 +615,9 @@ function CopDamage:client_check_damage_achievements(weapon_unit, attacker_unit, 
 		return
 	end
 
-	local fake_ray = {distance = distance}
+	local fake_ray = {
+		distance = distance
+	}
 	local attack_data = {
 		weapon_unit = weapon_unit,
 		attacker_unit = attacker_unit,
@@ -724,13 +743,13 @@ function CopDamage:_check_damage_achievements(attack_data, head)
 		variant_pass = not achievement_data.variant
 
 		if achievement_data.variant then
-			variant_pass = type(achievement_data.variant) == "table" and table.contains(achievement_data.variant, attack_data.variant) or attack_data.variant == achievement_data.variant
+			variant_pass = (type(achievement_data.variant) ~= "table" or table.contains(achievement_data.variant, attack_data.variant)) and attack_data.variant == achievement_data.variant
 		end
 
 		attack_weapon_type_pass = not achievement_data.attack_weapon_type
 
 		if achievement_data.attack_weapon_type then
-			attack_weapon_type_pass = type(achievement_data.attack_weapon_type) == "table" and table.contains(achievement_data.attack_weapon_type, attack_weapon_type) or achievement_data.attack_weapon_type == attack_weapon_type
+			attack_weapon_type_pass = (type(achievement_data.attack_weapon_type) ~= "table" or table.contains(achievement_data.attack_weapon_type, attack_weapon_type)) and achievement_data.attack_weapon_type == attack_weapon_type
 		end
 
 		vip_pass = not achievement_data.is_vip
@@ -754,7 +773,9 @@ function CopDamage:_check_damage_achievements(attack_data, head)
 
 				managers.job:set_memory(achievement, memory, true)
 			else
-				managers.job:set_memory(achievement, {t}, true)
+				managers.job:set_memory(achievement, {
+					t
+				}, true)
 			end
 		end
 
@@ -937,12 +958,16 @@ function CopDamage:damage_fire(attack_data)
 	end
 
 	if not self._damage_reduction_multiplier and head then
-		damage = self._char_tweak.headshot_dmg_mul and damage * self._char_tweak.headshot_dmg_mul * headshot_multiplier or self._health * 10
+		if self._char_tweak.headshot_dmg_mul then
+			damage = damage * self._char_tweak.headshot_dmg_mul * headshot_multiplier
+		else
+			damage = self._health * 10
+		end
 	end
 
 	if self._head_body_name and attack_data.variant ~= "stun" then
 		head = attack_data.col_ray.body and self._head_body_key and attack_data.col_ray.body:key() == self._head_body_key
-		local body = self._unit:body(self._head_body_name)
+		slot8 = self._unit:body(self._head_body_name)
 	end
 
 	local attacker = attack_data.attacker_unit
@@ -1006,7 +1031,13 @@ function CopDamage:damage_fire(attack_data)
 		local fire_dot_data = attack_data.fire_dot_data
 		local flammable = nil
 		local char_tweak = tweak_data.character[self._unit:base()._tweak_table]
-		flammable = char_tweak.flammable == nil and true or char_tweak.flammable
+
+		if char_tweak.flammable == nil then
+			flammable = true
+		else
+			flammable = char_tweak.flammable
+		end
+
 		local distance = 1000
 		local hit_loc = attack_data.col_ray.hit_position
 
@@ -1425,7 +1456,9 @@ function CopDamage:_create_stun_exit_clbk()
 	if not self._stun_exit_clbk then
 		self._stun_exit_clbk = true
 
-		self._listener_holder:add("after_stun_accuracy", {"on_exit_hurt"}, callback(self, self, "_on_stun_hit_exit"))
+		self._listener_holder:add("after_stun_accuracy", {
+			"on_exit_hurt"
+		}, callback(self, self, "_on_stun_hit_exit"))
 	end
 end
 
@@ -1461,7 +1494,12 @@ function CopDamage:roll_critical_hit(attack_data)
 
 	if critical_hit then
 		local critical_damage_mul = critical_hits.damage_mul or self._char_tweak.headshot_dmg_mul
-		damage = critical_damage_mul and damage * critical_damage_mul or self._health * 10
+
+		if critical_damage_mul then
+			damage = damage * critical_damage_mul
+		else
+			damage = self._health * 10
+		end
 	end
 
 	return critical_hit, damage
@@ -1820,7 +1858,7 @@ function CopDamage:damage_melee(attack_data)
 		local enemy_type = enemy_base._tweak_table
 		local unit_weapon = enemy_base._default_weapon_id
 		local health_ratio = managers.player:player_unit():character_damage():health_ratio() * 100
-		local melee_pass, melee_weapons_pass, type_pass, enemy_pass, enemy_weapon_pass, diff_pass, health_pass, level_pass, job_pass, jobs_pass, enemy_count_pass, tags_all_pass, tags_any_pass, all_pass, cop_pass, gangster_pass, civilian_pass, stealth_pass, on_fire_pass, behind_pass, result_pass, mutators_pass, critical_pass, action_pass = nil
+		local melee_pass, melee_weapons_pass, type_pass, enemy_pass, enemy_weapon_pass, diff_pass, health_pass, level_pass, job_pass, jobs_pass, enemy_count_pass, tags_all_pass, tags_any_pass, all_pass, cop_pass, gangster_pass, civilian_pass, stealth_pass, on_fire_pass, behind_pass, result_pass, mutators_pass, critical_pass, action_pass, is_dropin_pass = nil
 
 		for achievement, achievement_data in pairs(achievements) do
 			melee_pass = not achievement_data.melee_id or achievement_data.melee_id == attack_data.name_id
@@ -1843,6 +1881,7 @@ function CopDamage:damage_melee(attack_data)
 			civilian_pass = not achievement_data.is_not_civilian or not is_civlian
 			stealth_pass = not achievement_data.is_stealth or managers.groupai:state():whisper_mode()
 			on_fire_pass = not achievement_data.is_on_fire or managers.fire:is_set_on_fire(self._unit)
+			is_dropin_pass = achievement_data.is_dropin == nil or achievement_data.is_dropin == managers.statistics:is_dropin()
 
 			if achievement_data.enemies then
 				enemy_pass = false
@@ -1871,7 +1910,7 @@ function CopDamage:damage_melee(attack_data)
 				action_pass = action_type == achievement_data.action.type
 			end
 
-			all_pass = melee_pass and melee_weapons_pass and type_pass and enemy_pass and enemy_weapon_pass and behind_pass and diff_pass and health_pass and level_pass and job_pass and jobs_pass and cop_pass and gangster_pass and civilian_pass and stealth_pass and on_fire_pass and enemy_count_pass and tags_all_pass and tags_any_pass and result_pass and mutators_pass and critical_pass and action_pass
+			all_pass = melee_pass and melee_weapons_pass and type_pass and enemy_pass and enemy_weapon_pass and behind_pass and diff_pass and health_pass and level_pass and job_pass and jobs_pass and cop_pass and gangster_pass and civilian_pass and stealth_pass and on_fire_pass and enemy_count_pass and tags_all_pass and tags_any_pass and result_pass and mutators_pass and critical_pass and action_pass and is_dropin_pass
 
 			if all_pass then
 				if achievement_data.stat then
@@ -1891,7 +1930,25 @@ function CopDamage:damage_melee(attack_data)
 
 	local hit_offset_height = math.clamp(attack_data.col_ray.position.z - self._unit:movement():m_pos().z, 0, 300)
 	local variant = nil
-	variant = result.type == "shield_knock" and 1 or result.type == "counter_tased" and 2 or result.type == "expl_hurt" and 4 or snatch_pager and 3 or result.type == "taser_tased" and 5 or dismember_victim and 6 or result.type == "healed" and 7 or 0
+
+	if result.type == "shield_knock" then
+		variant = 1
+	elseif result.type == "counter_tased" then
+		variant = 2
+	elseif result.type == "expl_hurt" then
+		variant = 4
+	elseif snatch_pager then
+		variant = 3
+	elseif result.type == "taser_tased" then
+		variant = 5
+	elseif dismember_victim then
+		variant = 6
+	elseif result.type == "healed" then
+		variant = 7
+	else
+		variant = 0
+	end
+
 	local body_index = self._unit:get_body_index(attack_data.col_ray.body:name())
 
 	self:_send_melee_attack_result(attack_data, damage_percent, damage_effect_percent, hit_offset_height, variant, body_index)
@@ -1938,16 +1995,22 @@ function CopDamage:damage_mission(attack_data)
 end
 
 function CopDamage:get_ranged_attack_autotarget_data_fast()
-	return {object = self._autotarget_data.fast}
+	return {
+		object = self._autotarget_data.fast
+	}
 end
 
 function CopDamage:get_ranged_attack_autotarget_data(shoot_from_pos, aim_vec)
 	local autotarget_data = nil
-	autotarget_data = {body = self._unit:body("b_spine1")}
+	autotarget_data = {
+		body = self._unit:body("b_spine1")
+	}
 	local dis = mvector3.distance(shoot_from_pos, self._unit:position())
 
 	if dis > 3500 then
-		autotarget_data = {body = self._unit:body("b_spine1")}
+		autotarget_data = {
+			body = self._unit:body("b_spine1")
+		}
 	else
 		self._aim_bodies = {}
 
@@ -1974,7 +2037,15 @@ function CopDamage:get_ranged_attack_autotarget_data(shoot_from_pos, aim_vec)
 			end
 		end
 
-		autotarget_data = uncovered_body and {body = uncovered_body} or {body = self._unit:body("b_spine1")}
+		if uncovered_body then
+			autotarget_data = {
+				body = uncovered_body
+			}
+		else
+			autotarget_data = {
+				body = self._unit:body("b_spine1")
+			}
+		end
 	end
 
 	return autotarget_data
@@ -2171,7 +2242,11 @@ function CopDamage:set_mover_collision_state(state)
 end
 
 function CopDamage:anim_clbk_mover_collision_state(unit, state)
-	state = state == "true" and true or false
+	if state == "true" then
+		state = true
+	else
+		state = false
+	end
 
 	self:set_mover_collision_state(state)
 end
@@ -2915,6 +2990,7 @@ function CopDamage:sync_damage_tase(attacker_unit, damage_percent, variant, deat
 	self:_send_sync_tase_attack_result(attack_data)
 	self:_on_damage_received(attack_data)
 end
+
 CopDamage.BODY_INDEX_MAX = 23
 
 function CopDamage:_send_bullet_attack_result(attack_data, attacker, damage_percent, body_index, hit_offset_height, variant)
@@ -3112,12 +3188,7 @@ function CopDamage:build_suppression(amount, panic_chance)
 	end
 
 	local amount_val = nil
-
-	if amount == "max" or amount == "panic" then
-		amount_val = (sup_tweak.brown_point or sup_tweak.react_point)[2]
-	else
-		amount_val = Network:is_server() and self._suppression_hardness_t and t < self._suppression_hardness_t and amount * 0.5 or amount
-	end
+	amount_val = (amount ~= "max" and amount ~= "panic" or sup_tweak.brown_point or sup_tweak.react_point[2]) and (Network:is_server() and self._suppression_hardness_t and t < self._suppression_hardness_t and amount * 0.5 or amount)
 
 	if not Network:is_server() then
 		local sync_amount = nil
@@ -3128,7 +3199,19 @@ function CopDamage:build_suppression(amount, panic_chance)
 			sync_amount = 15
 		else
 			local sync_amount_ratio = nil
-			sync_amount_ratio = sup_tweak.brown_point and (sup_tweak.brown_point[2] <= 0 and 1 or amount_val / sup_tweak.brown_point[2]) or sup_tweak.react_point[2] <= 0 and 1 or amount_val / sup_tweak.react_point[2]
+
+			if sup_tweak.brown_point then
+				if sup_tweak.brown_point[2] <= 0 then
+					sync_amount_ratio = 1
+				else
+					sync_amount_ratio = amount_val / sup_tweak.brown_point[2]
+				end
+			elseif sup_tweak.react_point[2] <= 0 then
+				sync_amount_ratio = 1
+			else
+				sync_amount_ratio = amount_val / sup_tweak.react_point[2]
+			end
+
 			sync_amount = math.clamp(math.ceil(sync_amount_ratio * 15), 1, 15)
 		end
 
@@ -3479,7 +3562,7 @@ function CopDamage:_apply_min_health_limit(damage, damage_percent)
 		local real_damage_percent = damage_percent / self._HEALTH_GRANULARITY
 		local new_health_ratio = self._health_ratio - real_damage_percent
 
-		if new_health_ratio < lower_health_percentage_limit then
+		if lower_health_percentage_limit > new_health_ratio then
 			real_damage_percent = self._health_ratio - lower_health_percentage_limit
 			damage_percent = math.ceil(real_damage_percent * self._HEALTH_GRANULARITY)
 			damage = damage_percent * self._HEALTH_INIT_PRECENT
@@ -3514,4 +3597,3 @@ end
 function CopDamage:can_kill()
 	return not self._char_tweak.permanently_invulnerable and not self.immortal or not self._invulnerable
 end
-

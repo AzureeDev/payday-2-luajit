@@ -191,13 +191,13 @@ function MenuRenderer:_create_blackborders()
 	top_border:set_position(-1, -1)
 	top_border:set_size(width + 2, border_h + 2)
 	top_border:set_visible(border_h > 0)
-	bottom_border:set_position(border_w - 1, (math.ceil(border_h) + 720) - 1)
+	bottom_border:set_position(border_w - 1, math.ceil(border_h) + 720 - 1)
 	bottom_border:set_size(width + 2, border_h + 2)
 	bottom_border:set_visible(border_h > 0)
 	left_border:set_position(-1, -1)
 	left_border:set_size(border_w + 2, height + 2)
 	left_border:set_visible(border_w > 0)
-	right_border:set_position((math.floor(border_w) + 1280) - 1, -1)
+	right_border:set_position(math.floor(border_w) + 1280 - 1, -1)
 	right_border:set_size(border_w + 2, height + 2)
 	right_border:set_visible(border_w > 0)
 end
@@ -205,6 +205,7 @@ end
 function MenuRenderer:update(t, dt)
 	MenuRenderer.super.update(self, t, dt)
 end
+
 local mugshot_stencil = {
 	random = {
 		"bg_lobby_fullteam",
@@ -598,4 +599,3 @@ function MenuRenderer:ws_test()
 		color = Color.red
 	})
 end
-

@@ -316,7 +316,9 @@ function UnitBreakdownView:on_export_clicked()
 	local sep_char = "\t"
 	local unit_format = "%s,%s,%s,%s,%s,%s,%s"
 	unit_format = string.gsub(unit_format, ",", sep_char)
-	local export_layers = {"Statics"}
+	local export_layers = {
+		"Statics"
+	}
 	local exclude_prefixes = {
 		"units/dev_tools/",
 		"core/units/light_omni"
@@ -347,4 +349,3 @@ function UnitBreakdownView:on_export_clicked()
 
 	Application:set_clipboard(export_text)
 end
-

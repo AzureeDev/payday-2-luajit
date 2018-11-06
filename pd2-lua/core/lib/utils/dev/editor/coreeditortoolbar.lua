@@ -1,4 +1,3 @@
-
 function CoreEditor:build_toolbar()
 	local icons_path = managers.database:base_path() .. "core\\lib\\utils\\dev\\editor\\icons\\"
 	self._toolbar = EWS:ToolBar(Global.frame, "", "TB_FLAT,TB_NODIVIDER")
@@ -80,7 +79,9 @@ function CoreEditor:build_toolbar()
 
 	self._toolbar:add_separator()
 	self._toolbar:add_check_tool("TB_USING_GROUPS", "Using groups (" .. self:ctrl_binding("using_group_toggle") .. ")", CoreEWS.image_path("world_editor\\using_groups_16x16.png"), "Toggle using groups on and off")
-	self._toolbar:connect("TB_USING_GROUPS", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "toolbar_toggle"), {value = "_using_groups"})
+	self._toolbar:connect("TB_USING_GROUPS", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "toolbar_toggle"), {
+		value = "_using_groups"
+	})
 
 	self._ews_triggers.using_group_toggle = callback(self, self, "toolbar_toggle_trg", {
 		value = "_using_groups",
@@ -98,11 +99,17 @@ function CoreEditor:build_toolbar()
 	self._toolbar:add_separator()
 	self:build_snap_rotations()
 	self._toolbar:add_radio_tool("TB_SNAPROTATE_X", "Snap rotate axis X", CoreEWS.image_path("world_editor\\snap_rotation_x_16x16.png"), "Snap rotate axis X")
-	Global.frame:connect("TB_SNAPROTATE_X", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "set_snap_rotation_axis"), {axis = "x"})
+	Global.frame:connect("TB_SNAPROTATE_X", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "set_snap_rotation_axis"), {
+		axis = "x"
+	})
 	self._toolbar:add_radio_tool("TB_SNAPROTATE_Y", "Snap rotate axis Y", CoreEWS.image_path("world_editor\\snap_rotation_y_16x16.png"), "Snap rotate axis Y")
-	Global.frame:connect("TB_SNAPROTATE_Y", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "set_snap_rotation_axis"), {axis = "y"})
+	Global.frame:connect("TB_SNAPROTATE_Y", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "set_snap_rotation_axis"), {
+		axis = "y"
+	})
 	self._toolbar:add_radio_tool("TB_SNAPROTATE_Z", "Snap rotate axis Z", CoreEWS.image_path("world_editor\\snap_rotation_z_16x16.png"), "Snap rotate axis Z")
-	Global.frame:connect("TB_SNAPROTATE_Z", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "set_snap_rotation_axis"), {axis = "z"})
+	Global.frame:connect("TB_SNAPROTATE_Z", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "set_snap_rotation_axis"), {
+		axis = "z"
+	})
 
 	if self._snap_rotation_axis == "x" then
 		self._toolbar:set_tool_state("TB_SNAPROTATE_X", true)
@@ -356,7 +363,23 @@ function CoreEditor:change_combo_box_trg(data)
 
 	for i = 1, #self[data.t], 1 do
 		if self[data.value] == self[data.t][i] then
-			next_i = ctrl() and (i == 1 and #self[data.t] or 1) or shift() and (i == 1 and #self[data.t] or i - 1) or i == #self[data.t] and 1 or i + 1
+			if ctrl() then
+				if i == 1 then
+					next_i = #self[data.t]
+				else
+					next_i = 1
+				end
+			elseif shift() then
+				if i == 1 then
+					next_i = #self[data.t]
+				else
+					next_i = i - 1
+				end
+			elseif i == #self[data.t] then
+				next_i = 1
+			else
+				next_i = i + 1
+			end
 		end
 	end
 
@@ -432,4 +455,3 @@ function CoreEditor:build_widgets_icons(panel, sizer, icons_path)
 	rotate:button():set_tool_tip("Select and Rotate (3)")
 	sizer:add(rotate:button(), 0, 5, "EXPAND,LEFT")
 end
-

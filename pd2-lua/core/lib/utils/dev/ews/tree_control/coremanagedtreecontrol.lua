@@ -196,10 +196,11 @@ function CoreManagedTreeControl:connect(event_type, script_callback, script_data
 			_script_data = script_data
 		}
 	elseif string.begins(event_type, "EVT_COMMAND_TREE_") then
-
 		local function tree_event_wrapper(data, event, ...)
 			local event_metatable = getmetatable(event) or {}
-			local wrapped_event = setmetatable({}, {__index = event_metatable.__index})
+			local wrapped_event = setmetatable({}, {
+				__index = event_metatable.__index
+			})
 			local item_id = event:get_item()
 			local old_item_id = event:get_old_item()
 
@@ -239,4 +240,3 @@ function CoreManagedTreeControl:disconnect(event_type, script_callback)
 		self._tree_ctrl:disconnect(event_type, script_callback)
 	end
 end
-

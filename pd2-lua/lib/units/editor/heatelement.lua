@@ -67,6 +67,7 @@ function HeatUnitElement:_build_panel(panel, panel_sizer)
 
 	self:add_help_text(help)
 end
+
 HeatTriggerUnitElement = HeatTriggerUnitElement or class(MissionElement)
 
 function HeatTriggerUnitElement:init(unit)
@@ -114,4 +115,3 @@ function HeatTriggerUnitElement:_build_panel(panel, panel_sizer)
 
 	self:add_help_text(help)
 end
-

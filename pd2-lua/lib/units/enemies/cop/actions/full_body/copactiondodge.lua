@@ -166,4 +166,3 @@ end
 function CopActionDodge:accuracy_multiplier()
 	return self._descriptor.shoot_accuracy or 1
 end
-

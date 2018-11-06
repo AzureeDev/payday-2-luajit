@@ -21,4 +21,3 @@ function PrepareLoadingGame:transition()
 		return CoreMenuStateLoadingGame.LoadingGame
 	end
 end
-

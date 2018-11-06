@@ -91,11 +91,11 @@ function CoreShapeUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-
-	self:_build_value_combobox(panel, panel_sizer, "shape_type", {
+	local _, shape_type_params = self:_build_value_combobox(panel, panel_sizer, "shape_type", {
 		"box",
 		"cylinder"
 	}, "Select shape for area")
+	self._shape_type_params = shape_type_params
 
 	if not self._shape then
 		self:_create_shapes()
@@ -214,7 +214,7 @@ function CoreShapeUnitElement:scale_slider(panel, sizer, number_ctrlr_params, va
 end
 
 function CoreShapeUnitElement:set_size(params)
-	local value = (self._hed[params.value] * params.ctrlr:get_value()) / 100
+	local value = self._hed[params.value] * params.ctrlr:get_value() / 100
 
 	self._shape:set_property(params.value, value)
 	self._cylinder_shape:set_property(params.value, value)
@@ -226,4 +226,3 @@ function CoreShapeUnitElement:size_release(params)
 
 	params.ctrlr:set_value(100)
 end
-

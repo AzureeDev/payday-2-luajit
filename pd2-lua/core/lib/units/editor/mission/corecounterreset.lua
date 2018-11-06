@@ -1,5 +1,7 @@
 CoreCounterResetUnitElement = CoreCounterResetUnitElement or class(MissionElement)
-CoreCounterResetUnitElement.LINK_ELEMENTS = {"elements"}
+CoreCounterResetUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 CounterResetUnitElement = CounterResetUnitElement or class(CoreCounterResetUnitElement)
 
 function CounterResetUnitElement:init(...)
@@ -64,7 +66,9 @@ function CoreCounterResetUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_counter/logic_counter"}
+	local names = {
+		"logic_counter/logic_counter"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 
@@ -91,4 +95,3 @@ function CoreCounterResetUnitElement:_build_panel(panel, panel_sizer)
 		ctrlr = counter_target
 	})
 end
-

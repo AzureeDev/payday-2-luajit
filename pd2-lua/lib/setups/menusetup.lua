@@ -79,7 +79,6 @@ function MenuSetup:load_packages()
 			Global._game_base_package_loaded = true
 		end
 	elseif not PackageManager:loaded("packages/game_base_init") then
-
 		local function _load_wip_func()
 			Global._game_base_package_loaded = true
 		end
@@ -194,6 +193,8 @@ function MenuSetup:init_game()
 		else
 			game_state_machine:change_state_by_name("bootup")
 		end
+
+		tweak_data:load_movie_list()
 	end
 
 	return gsm

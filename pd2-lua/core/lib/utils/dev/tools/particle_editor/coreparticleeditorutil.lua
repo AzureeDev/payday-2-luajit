@@ -1,10 +1,8 @@
-
 function set_widget_help(widget, help_text)
 	widget:set_tool_tip(help_text)
 end
 
 function set_widget_box_help(widget, help_header, help_text, view)
-
 	local function on_enter(t, evt)
 		t:set_own_font_weight("FONTWEIGHT_BOLD")
 		t:refresh()
@@ -50,4 +48,3 @@ function dir_name(n)
 		return n
 	end
 end
-

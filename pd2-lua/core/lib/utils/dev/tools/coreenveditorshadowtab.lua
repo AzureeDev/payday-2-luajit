@@ -17,6 +17,7 @@ end
 function ShadowBlock:get(key)
 	return self._parameters[key]
 end
+
 CoreEnvEditor = CoreEnvEditor or class()
 
 function CoreEnvEditor:init_shadow_tab()
@@ -163,4 +164,3 @@ function CoreEnvEditor:create_shadow_tab()
 	panel:set_sizer(panel_box)
 	self._main_notebook:add_page(panel, "Shadow slices", false)
 end
-

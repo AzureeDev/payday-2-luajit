@@ -22,4 +22,3 @@ function PlayerHandStateCuffed:at_exit(next_state)
 	self._cuff_unit:unlink()
 	self._cuff_unit:set_slot(0)
 end
-

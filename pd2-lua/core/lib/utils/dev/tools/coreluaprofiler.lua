@@ -37,6 +37,7 @@ function CoreLuaProfiler:create_main_frame()
 	function self._resource_sort_func(a, b)
 		return a._name:s() < b._name:s()
 	end
+
 	local sort_by_name = self._resource_sort_func
 
 	local function sort_by_mem_use(a, b)
@@ -179,13 +180,22 @@ end
 
 function CoreLuaProfiler:check_news(new_only)
 	local news = nil
-	news = new_only and managers.news:get_news("lua_profiler", self._main_frame) or managers.news:get_old_news("lua_profiler", self._main_frame)
+
+	if new_only then
+		news = managers.news:get_news("lua_profiler", self._main_frame)
+	else
+		news = managers.news:get_old_news("lua_profiler", self._main_frame)
+	end
 
 	if news then
 		local str = nil
 
 		for _, n in ipairs(news) do
-			str = not str and n or str .. "\n" .. n
+			if not str then
+				str = n
+			else
+				str = str .. "\n" .. n
+			end
 		end
 
 		EWS:MessageDialog(self._main_frame, str, "New Features!", "OK,ICON_INFORMATION"):show_modal()
@@ -515,12 +525,15 @@ function CoreLuaProfiler:add_profiler(name)
 
 		rawget(_G, self._class_name)[func_table._name] = function (...)
 			local profiler_id = Profiler:start(func_table._source)
-			local ret_list = {f(...)}
+			local ret_list = {
+				f(...)
+			}
 
 			Profiler:stop(profiler_id)
 
 			return unpack(ret_list)
 		end
+
 		local i = self._main_frame_table._profiler_list_ctrl:append_item(func_table._name)
 
 		self._main_frame_table._profiler_list_ctrl:set_item(i, 1, func_table._source)
@@ -594,7 +607,7 @@ function CoreLuaProfiler:update_profiler_list()
 		local calls = v._calls / self._frames_sample_steps
 		local t = v._time / self._frames_sample_steps
 		local time = t / math.clamp(calls, 1, 1000000) * 1000
-		local cost = (t * 6000) / math.clamp(calls, 1, 1000000)
+		local cost = t * 6000 / math.clamp(calls, 1, 1000000)
 		local total_time = t * 1000
 		local total_cost = t * 6000
 		local i = 0
@@ -747,6 +760,7 @@ function CoreLuaProfiler:on_update_resources()
 	self._resources_frame_table._tree_ctrl:thaw()
 	self._resources_frame_table._tree_ctrl:refresh()
 end
+
 CoreLuaProfilerSampleRateDialog = CoreLuaProfilerSampleRateDialog or class()
 
 function CoreLuaProfilerSampleRateDialog:init(p)
@@ -805,4 +819,3 @@ end
 function CoreLuaProfilerSampleRateDialog:get_value()
 	return math.max(1, tonumber(self._key))
 end
-

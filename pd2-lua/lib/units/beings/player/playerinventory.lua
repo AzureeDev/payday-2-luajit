@@ -406,7 +406,7 @@ function PlayerInventory:_place_selection(selection_index, is_equip)
 			unit:base():on_enabled()
 		end
 
-		local res = self:_link_weapon(unit, align_place)
+		slot7 = self:_link_weapon(unit, align_place)
 	else
 		unit:unlink()
 		unit:base():set_visibility_state(false)
@@ -580,7 +580,9 @@ function PlayerInventory:save(data)
 
 		local rtn = {}
 
-		for _, k in ipairs({...}) do
+		for _, k in ipairs({
+			...
+		}) do
 			if k[1] then
 				local key, func = unpack(k)
 				rtn[key] = func(t[key])
@@ -752,7 +754,13 @@ end
 
 function PlayerInventory:update_mask_offset(mask_data)
 	local char = nil
-	char = mask_data.peer_id and managers.blackmarket:get_real_character(nil, mask_data.peer_id) or managers.blackmarket:get_real_character(mask_data.character_name, nil)
+
+	if mask_data.peer_id then
+		char = managers.blackmarket:get_real_character(nil, mask_data.peer_id)
+	else
+		char = managers.blackmarket:get_real_character(mask_data.character_name, nil)
+	end
+
 	local mask_tweak = tweak_data.blackmarket.masks[mask_data.mask_id]
 
 	if mask_tweak and mask_tweak.offsets and mask_tweak.offsets[char] then
@@ -1055,7 +1063,7 @@ end
 function PlayerInventory:_do_feedback()
 	local t = TimerManager:game():time()
 
-	if not alive(self._unit) or not self._jammer_data or self._jammer_data.t - 0.1 < t then
+	if not alive(self._unit) or not self._jammer_data or t > self._jammer_data.t - 0.1 then
 		self:stop_feedback_effect()
 
 		return
@@ -1069,4 +1077,3 @@ function PlayerInventory:_do_feedback()
 		managers.enemy:add_delayed_clbk(self._jammer_data.feedback_callback_key, callback(self, self, "stop_feedback_effect"), self._jammer_data.t)
 	end
 end
-

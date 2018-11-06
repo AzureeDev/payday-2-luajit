@@ -34,11 +34,21 @@ function MenuSceneManager:init()
 		"husk_rifle1",
 		"husk_rifle2"
 	}
-	self._global_poses.pistol = {"husk_pistol1"}
-	self._global_poses.saw = {"husk_saw1"}
-	self._global_poses.shotgun = {"husk_shotgun1"}
-	self._global_poses.snp = {"husk_bullpup"}
-	self._global_poses.lmg = {"husk_lmg"}
+	self._global_poses.pistol = {
+		"husk_pistol1"
+	}
+	self._global_poses.saw = {
+		"husk_saw1"
+	}
+	self._global_poses.shotgun = {
+		"husk_shotgun1"
+	}
+	self._global_poses.snp = {
+		"husk_bullpup"
+	}
+	self._global_poses.lmg = {
+		"husk_lmg"
+	}
 	self._global_poses.bow = {
 		"husk_bow1",
 		"husk_bow2"
@@ -48,20 +58,32 @@ function MenuSceneManager:init()
 		"husk_infamous3",
 		"husk_infamous4"
 	}
-	self._global_poses.famas = {"husk_bullpup"}
-	self._global_poses.aug = {"husk_bullpup"}
-	self._global_poses.m95 = {"husk_m95"}
-	self._global_poses.r93 = {"husk_r93"}
+	self._global_poses.famas = {
+		"husk_bullpup"
+	}
+	self._global_poses.aug = {
+		"husk_bullpup"
+	}
+	self._global_poses.m95 = {
+		"husk_m95"
+	}
+	self._global_poses.r93 = {
+		"husk_r93"
+	}
 	self._global_poses.huntsman = {
 		"husk_mosconi",
 		"husk_bullpup"
 	}
-	self._global_poses.gre_m79 = {"husk_mosconi"}
+	self._global_poses.gre_m79 = {
+		"husk_mosconi"
+	}
 	self._global_poses.ksg = {
 		"husk_mosconi",
 		"husk_bullpup"
 	}
-	self._global_poses.m249 = {"husk_m249"}
+	self._global_poses.m249 = {
+		"husk_m249"
+	}
 	self._global_poses.jowi = {
 		"husk_akimbo1",
 		"husk_akimbo2"
@@ -90,7 +112,9 @@ function MenuSceneManager:init()
 		"husk_akimbo1",
 		"husk_akimbo2"
 	}
-	self._global_poses.m134 = {"husk_minigun"}
+	self._global_poses.m134 = {
+		"husk_minigun"
+	}
 	self._global_poses.x_sr2 = {
 		"husk_akimbo1",
 		"husk_akimbo2"
@@ -103,12 +127,16 @@ function MenuSceneManager:init()
 		"husk_akimbo1",
 		"husk_akimbo2"
 	}
-	self._global_poses.rota = {"husk_bullpup"}
+	self._global_poses.rota = {
+		"husk_bullpup"
+	}
 	self._global_poses.x_packrat = {
 		"husk_akimbo1",
 		"husk_akimbo2"
 	}
-	self._global_poses.ray = {"husk_ray"}
+	self._global_poses.ray = {
+		"husk_ray"
+	}
 
 	table.insert(self._forced_secondaries, "ray")
 
@@ -271,18 +299,30 @@ end
 function MenuSceneManager:_init_lobby_poses()
 	self._lobby_poses = {
 		generic = {
-			{"lobby_generic_idle1"},
-			{"lobby_generic_idle2"},
-			{"lobby_generic_idle3"},
-			{"lobby_generic_idle4"}
+			{
+				"lobby_generic_idle1"
+			},
+			{
+				"lobby_generic_idle2"
+			},
+			{
+				"lobby_generic_idle3"
+			},
+			{
+				"lobby_generic_idle4"
+			}
 		},
-		m134 = {"lobby_minigun_idle1"}
+		m134 = {
+			"lobby_minigun_idle1"
+		}
 	}
 end
 
 function MenuSceneManager:_setup_gui()
 	self._workspace = managers.gui_data:create_saferect_workspace()
-	self._main_panel = self._workspace:panel():panel({layer = 0})
+	self._main_panel = self._workspace:panel():panel({
+		layer = 0
+	})
 	local scaled_size = managers.gui_data:scaled_size()
 
 	self._main_panel:set_shape(0, 0, scaled_size.width, scaled_size.height)
@@ -308,7 +348,9 @@ function MenuSceneManager:_set_up_templates()
 	local c_ref = self._bg_unit:get_object(Idstring("a_reference"))
 	local target_pos = Vector3(0, 0, ref:position().z)
 	local offset = Vector3(ref:position().x, ref:position().y, 0)
-	self._scene_templates = {standard = {}}
+	self._scene_templates = {
+		standard = {}
+	}
 	self._scene_templates.standard.use_character_grab = true
 	self._scene_templates.standard.character_visible = true
 	self._scene_templates.standard.camera_pos = ref:position()
@@ -506,13 +548,15 @@ function MenuSceneManager:_set_up_templates()
 		lobby_characters_visible = false,
 		hide_menu_logo = true,
 		camera_pos = ref:position(),
-		target_pos = (target_pos - self._camera_start_rot:x() * 40) - self._camera_start_rot:z() * 5,
+		target_pos = target_pos - self._camera_start_rot:x() * 40 - self._camera_start_rot:z() * 5,
 		character_pos = c_ref:position(),
 		remove_infamy_card = true
 	}
-	self._scene_templates.blackmarket_crafting = {camera_pos = Vector3(1500, -2000, 0)}
+	self._scene_templates.blackmarket_crafting = {
+		camera_pos = Vector3(1500, -2000, 0)
+	}
 	self._scene_templates.blackmarket_crafting.target_pos = self._scene_templates.blackmarket_crafting.camera_pos + Vector3(0, 1, 0) * 100
-	local camera_look = (self._scene_templates.blackmarket_crafting.target_pos - self._scene_templates.blackmarket_crafting.camera_pos):normalized()
+	local camera_look = self._scene_templates.blackmarket_crafting.target_pos - self._scene_templates.blackmarket_crafting.camera_pos:normalized()
 
 	mvector3.rotate_with(camera_look, Rotation(4, 2.25, 0))
 
@@ -529,7 +573,9 @@ function MenuSceneManager:_set_up_templates()
 		-- Nothing
 	end
 
-	self._scene_templates.safe = {camera_pos = Vector3(1500, -2000, 0)}
+	self._scene_templates.safe = {
+		camera_pos = Vector3(1500, -2000, 0)
+	}
 	self._scene_templates.safe.target_pos = self._scene_templates.safe.camera_pos + Vector3(0, 1, 0) * 100
 	self._scene_templates.safe.fov = 40
 	self._scene_templates.safe.use_item_grab = true
@@ -568,7 +614,7 @@ function MenuSceneManager:_set_up_templates()
 		camera_pos = Vector3(1500, -2000, 0)
 	}
 	self._scene_templates.blackmarket_customize.target_pos = self._scene_templates.blackmarket_customize.camera_pos + Vector3(0, 1, 0) * 100
-	local camera_look = (self._scene_templates.blackmarket_customize.target_pos - self._scene_templates.blackmarket_customize.camera_pos):normalized()
+	local camera_look = self._scene_templates.blackmarket_customize.target_pos - self._scene_templates.blackmarket_customize.camera_pos:normalized()
 
 	mvector3.rotate_with(camera_look, Rotation(4, 2.25, 0))
 
@@ -615,7 +661,7 @@ function MenuSceneManager:_set_up_templates()
 		camera_pos = Vector3(1420, -2200, 0)
 	}
 	self._scene_templates.blackmarket_armor.target_pos = self._scene_templates.blackmarket_armor.camera_pos + Vector3(0.15, 1, -0.105) * 100
-	local camera_look = (self._scene_templates.blackmarket_armor.target_pos - self._scene_templates.blackmarket_armor.camera_pos):normalized()
+	local camera_look = self._scene_templates.blackmarket_armor.target_pos - self._scene_templates.blackmarket_armor.camera_pos:normalized()
 
 	mvector3.rotate_with(camera_look, Rotation(6, 2.75, 0))
 
@@ -623,11 +669,13 @@ function MenuSceneManager:_set_up_templates()
 	self._scene_templates.blackmarket_armor.environment = "crafting"
 	self._scene_templates.blackmarket_armor.use_workbench_room = true
 	self._scene_templates.blackmarket_armor.remove_infamy_card = true
-	self._scene_templates.blackmarket_armor.lights = {self:_create_light({
-		far_range = 400,
-		color = Vector3(1, 1, 1) * 0.8,
-		position = Vector3(1600, -1750, -25)
-	})}
+	self._scene_templates.blackmarket_armor.lights = {
+		self:_create_light({
+			far_range = 400,
+			color = Vector3(1, 1, 1) * 0.8,
+			position = Vector3(1600, -1750, -25)
+		})
+	}
 	self._scene_templates.blackmarket_armor_workshop = {
 		fov = 20,
 		can_change_fov = true,
@@ -640,7 +688,7 @@ function MenuSceneManager:_set_up_templates()
 		camera_pos = Vector3(1460, -2200, 0)
 	}
 	self._scene_templates.blackmarket_armor_workshop.target_pos = self._scene_templates.blackmarket_armor_workshop.camera_pos + Vector3(0.15, 1, -0.105) * 100
-	local camera_look = (self._scene_templates.blackmarket_armor_workshop.target_pos - self._scene_templates.blackmarket_armor_workshop.camera_pos):normalized()
+	local camera_look = self._scene_templates.blackmarket_armor_workshop.target_pos - self._scene_templates.blackmarket_armor_workshop.camera_pos:normalized()
 
 	mvector3.rotate_with(camera_look, Rotation(6, 2.75, 0))
 
@@ -665,7 +713,7 @@ function MenuSceneManager:_set_up_templates()
 	self._scene_templates.blackmarket_armor_screenshot.can_change_fov = true
 	self._scene_templates.blackmarket_armor_screenshot.use_character_grab2 = true
 	self._scene_templates.blackmarket_armor_screenshot.use_character_pan = true
-	local camera_look = (self._scene_templates.blackmarket_armor_screenshot.target_pos - self._scene_templates.blackmarket_armor_screenshot.camera_pos):normalized()
+	local camera_look = self._scene_templates.blackmarket_armor_screenshot.target_pos - self._scene_templates.blackmarket_armor_screenshot.camera_pos:normalized()
 
 	mvector3.rotate_with(camera_look, Rotation(6, 2.75, 0))
 
@@ -813,10 +861,20 @@ function MenuSceneManager:_set_up_templates()
 			})
 		}
 	}
+	self._scene_templates.movie_theater = {
+		use_character_grab = false,
+		camera_pos = offset:rotate_with(Rotation(90)),
+		target_pos = target_pos,
+		character_visible = false,
+		lobby_characters_visible = false,
+		fov = 40
+	}
 end
 
 function MenuSceneManager:_set_up_environments()
-	self._environments = {standard = {}}
+	self._environments = {
+		standard = {}
+	}
 	self._environments.standard.environment = "environments/env_menu/env_menu"
 	self._environments.standard.color_grading = "color_matrix"
 	self._environments.standard.angle = 0
@@ -995,8 +1053,10 @@ function MenuSceneManager:add_callback(clbk, delay, param)
 	local callbacks = self._delayed_callbacks
 	local i = #callbacks
 
-	while i > 0 and clbk_data[1] < callbacks[i][1] do
-		i = i - 1
+	if i > 0 then
+		while i > 0 and clbk_data[1] < callbacks[i][1] do
+			i = i - 1
+		end
 	end
 
 	table.insert(callbacks, i + 1, clbk_data)
@@ -1068,8 +1128,8 @@ function MenuSceneManager:_set_character_unit(unit_name, unit, pos_override)
 
 	local a = self._bg_unit:get_object(Idstring("a_reference"))
 	unit = World:spawn_unit(Idstring(unit_name), pos_override or pos or a:position(), rot or a:rotation())
-	self._character_yaw = (rot or a:rotation()):yaw()
-	self._character_pitch = (rot or a:rotation()):pitch()
+	self._character_yaw = rot or a:rotation():yaw()
+	self._character_pitch = rot or a:rotation():pitch()
 
 	self:_set_character_unit_pose("husk_rifle1", unit)
 
@@ -1240,7 +1300,12 @@ function MenuSceneManager:_select_henchmen_pose(unit, weapon_id, index)
 	lobby_poses = lobby_poses or self._lobby_poses[category]
 	lobby_poses = lobby_poses or self._lobby_poses.generic
 	local pose = nil
-	pose = type(lobby_poses[1]) == "string" and lobby_poses[math.random(#lobby_poses)] or lobby_poses[index][math.random(#lobby_poses[index])]
+
+	if type(lobby_poses[1]) == "string" then
+		pose = lobby_poses[math.random(#lobby_poses)]
+	else
+		pose = lobby_poses[index][math.random(#lobby_poses[index])]
+	end
 
 	unit:anim_state_machine():set_parameter(state, pose, 1)
 	unit:anim_state_machine():set_animation_time_all_segments(animation_delay)
@@ -2048,6 +2113,7 @@ function MenuSceneManager:_set_unit_enabled_tree(unit, state)
 		self:_set_unit_enabled_tree(child_unit, state)
 	end
 end
+
 local null_vector = Vector3()
 local null_rotation = Rotation()
 
@@ -2270,7 +2336,9 @@ function MenuSceneManager:setup_camera()
 
 	local ref = self._bg_unit:get_object(Idstring("a_camera_reference"))
 	local target_pos = Vector3(0, 0, ref:position().z)
-	self._camera_values = {camera_pos_current = ref:position():rotate_with(Rotation(90))}
+	self._camera_values = {
+		camera_pos_current = ref:position():rotate_with(Rotation(90))
+	}
 	self._camera_values.camera_pos_target = self._camera_values.camera_pos_current
 	self._camera_values.target_pos_current = target_pos
 	self._camera_values.target_pos_target = self._camera_values.target_pos_current
@@ -2760,7 +2828,9 @@ function MenuSceneManager:spawn_grenade_clbk(grenade_id)
 
 	local new_unit = World:spawn_unit(ids_unit_name, self._item_pos, self._item_rot)
 
-	self:_set_item_unit(new_unit, nil, nil, nil, nil, {id = grenade_id})
+	self:_set_item_unit(new_unit, nil, nil, nil, nil, {
+		id = grenade_id
+	})
 	mrotation.set_yaw_pitch_roll(self._item_rot_mod, -90, 0, 0)
 
 	return new_unit
@@ -2810,7 +2880,9 @@ function MenuSceneManager:spawn_melee_weapon_clbk(melee_weapon_id)
 
 	local new_unit = World:spawn_unit(ids_unit_name, self._item_pos, self._item_rot)
 
-	self:_set_item_unit(new_unit, nil, nil, nil, nil, {id = melee_weapon_id})
+	self:_set_item_unit(new_unit, nil, nil, nil, nil, {
+		id = melee_weapon_id
+	})
 
 	if alive(new_unit) and new_unit:damage() and new_unit:damage():has_sequence("menu") then
 		new_unit:damage():run_sequence_simple("menu")
@@ -2960,7 +3032,7 @@ function MenuSceneManager:_set_item_unit(unit, oobb_object, max_mod, type, secon
 	local oobb_size = oobb:size()
 	local max = math.max(oobb_size.x, oobb_size.y)
 	max = math.max(max, oobb_size.z)
-	local offset_dir = (scene_template.target_pos - scene_template.camera_pos):normalized()
+	local offset_dir = scene_template.target_pos - scene_template.camera_pos:normalized()
 	self._item_max_size = math.max(max * (max_mod or 1), 20)
 	local pos = Vector3(self._item_pos.x, self._item_pos.y, self._item_pos.z)
 	pos = pos - offset_dir * (150 - self._item_max_size)
@@ -2989,9 +3061,16 @@ function MenuSceneManager:_spawn_item(unit_name, oobb_object, max_mod, type, mas
 	mrotation.set_zero(self._item_rot)
 
 	local unit = nil
-	unit = type == "mask" and self:_spawn_mask(unit_name, true, self._item_pos, self._item_rot, mask_id) or World:spawn_unit(Idstring(unit_name), self._item_pos, self._item_rot)
 
-	self:_set_item_unit(unit, oobb_object, max_mod, type, nil, {id = mask_id})
+	if type == "mask" then
+		unit = self:_spawn_mask(unit_name, true, self._item_pos, self._item_rot, mask_id)
+	else
+		unit = World:spawn_unit(Idstring(unit_name), self._item_pos, self._item_rot)
+	end
+
+	self:_set_item_unit(unit, oobb_object, max_mod, type, nil, {
+		id = mask_id
+	})
 end
 
 function MenuSceneManager:_set_weapon_upgrades(weapon_id)
@@ -3035,9 +3114,13 @@ function MenuSceneManager:_set_item_offset(oobb, instant)
 		center = math.lerp(self._item_unit.second_unit:oobb():center(), oobb:center(), 0.5)
 	end
 
-	local offset = (self._item_unit.unit:orientation_object():position() - center):rotate_with(self._item_rot:inverse())
+	local offset = self._item_unit.unit:orientation_object():position() - center:rotate_with(self._item_rot:inverse())
 	self._weapon_transition_time = self._weapon_transition_time and (self._weapon_transition_time == 1 and 0 or 1 - self._weapon_transition_time) or 0
-	self._weapon_transition_time = instant and 1
+
+	if instant then
+		self._weapon_transition_time = 1
+	end
+
 	self._item_offset_current = self._item_offset_target or offset
 	self._item_offset_target = offset
 	self._item_offset = self._item_offset or offset
@@ -3180,20 +3263,36 @@ function MenuSceneManager:character_screen_position(peer_id)
 		local peer_3_x_offset = 0
 
 		if peer_id == 3 then
-			peer_3_x_offset = is_me and -20 or -40
+			if is_me then
+				peer_3_x_offset = -20
+			else
+				peer_3_x_offset = -40
+			end
 		end
 
 		local peer_y_offset = 0
 
 		if peer_id == 2 then
-			peer_y_offset = is_me and -3 or 0
+			if is_me then
+				peer_y_offset = -3
+			else
+				peer_y_offset = 0
+			end
 		elseif peer_id == 3 then
-			peer_y_offset = is_me and -7 or 0
+			if is_me then
+				peer_y_offset = -7
+			else
+				peer_y_offset = 0
+			end
 		elseif peer_id == 4 then
-			peer_y_offset = is_me and 5 or 0
+			if is_me then
+				peer_y_offset = 5
+			else
+				peer_y_offset = 0
+			end
 		end
 
-		local spine_pos = unit:get_object(Idstring("Spine")):position() + Vector3(peer_3_x_offset, 0, -5 + 15 * peer_id % 4 + peer_y_offset)
+		local spine_pos = unit:get_object(Idstring("Spine")):position() + Vector3(peer_3_x_offset, 0, -5 + 15 * (peer_id % 4) + peer_y_offset)
 
 		return self._workspace:world_to_screen(self._camera_object, spine_pos)
 	end
@@ -3219,13 +3318,13 @@ function MenuSceneManager:controller_move(x, y)
 		local yaw_cos = math.cos(self._item_yaw)
 		local treshhold = math.sin(45)
 
-		if -treshhold < yaw_cos and yaw_cos < treshhold then
+		if yaw_cos > -treshhold and yaw_cos < treshhold then
 			-- Nothing
 		else
 			self._item_pitch = math.clamp(self._item_pitch + diff * yaw_cos, -30, 30)
 		end
 
-		if -treshhold < yaw_sin and yaw_sin < treshhold then
+		if yaw_sin > -treshhold and yaw_sin < treshhold then
 			-- Nothing
 		else
 			self._item_roll = math.clamp(self._item_roll - diff * yaw_sin, -30, 30)
@@ -3266,6 +3365,7 @@ end
 function MenuSceneManager:stop_controller_zoom()
 	self._character_grabbed = false
 end
+
 local target_pos_vector = Vector3()
 
 function MenuSceneManager:change_fov(zoom, amount)
@@ -3400,11 +3500,11 @@ function MenuSceneManager:mouse_moved(o, x, y)
 			local yaw_cos = math.cos(self._item_yaw)
 			local treshhold = math.sin(45)
 
-			if -treshhold >= yaw_cos or yaw_cos >= treshhold then
+			if yaw_cos <= -treshhold or yaw_cos >= treshhold then
 				self._item_pitch = math.clamp(self._item_pitch + diff * yaw_cos, -30, 30)
 			end
 
-			if -treshhold >= yaw_sin or yaw_sin >= treshhold then
+			if yaw_sin <= -treshhold or yaw_sin >= treshhold then
 				self._item_roll = math.clamp(self._item_roll - diff * yaw_sin, -30, 30)
 			end
 
@@ -3787,7 +3887,7 @@ function MenuSceneManager:_safe_result_recieved(error, items_new, items_removed)
 end
 
 function MenuSceneManager:load_safe_result_content(result, ready_clbk)
-	local item_data = (tweak_data.economy[result.category] or tweak_data.blackmarket[result.category])[result.entry]
+	local item_data = tweak_data.economy[result.category] or tweak_data.blackmarket[result.category][result.entry]
 	self._safe_result_content_data = {
 		result = result,
 		item_data = item_data,
@@ -3807,7 +3907,7 @@ function MenuSceneManager:load_safe_result_content(result, ready_clbk)
 
 		managers.dyn_resource:load(ids_unit, weapon_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, callback(self, self, "_set_safe_result_ready_flag", "weapon_ready"))
 
-		local parts = managers.weapon_factory:preload_blueprint(factory_id, blueprint, false, false, callback(self, self, "_safe_result_parts_loaded"), false)
+		slot8 = managers.weapon_factory:preload_blueprint(factory_id, blueprint, false, false, callback(self, self, "_safe_result_parts_loaded"), false)
 	elseif result.category == "armor_skins" then
 		self._safe_result_content_data.armor_id = result.entry
 
@@ -3815,7 +3915,7 @@ function MenuSceneManager:load_safe_result_content(result, ready_clbk)
 
 		local rarity_data = tweak_data.economy.rarities[item_data.rarity] or {}
 		local random_ang = 15
-		local pos = self._scene_templates.safe.camera_pos + (self._scene_templates.safe.target_pos - self._scene_templates.safe.camera_pos):normalized() * 310 + math.UP * -120
+		local pos = self._scene_templates.safe.camera_pos + self._scene_templates.safe.target_pos - self._scene_templates.safe.camera_pos:normalized() * 310 + math.UP * -120
 		local ang = Rotation(180 + math.random(-random_ang, random_ang), 0, 0)
 		local unit_name = tweak_data.blackmarket.characters[managers.blackmarket:equipped_character()].menu_unit
 		local unit = World:spawn_unit(Idstring(unit_name), pos, ang)
@@ -3833,7 +3933,9 @@ function MenuSceneManager:load_safe_result_content(result, ready_clbk)
 		local armors = managers.blackmarket:get_sorted_armors()
 
 		self:set_character_armor(armors[#armors], unit)
-		managers.menu_scene:preview_character_skin(result.entry, self._economy_character, {done = callback(self, self, "_set_safe_result_ready_flag", "armor_ready")})
+		managers.menu_scene:preview_character_skin(result.entry, self._economy_character, {
+			done = callback(self, self, "_set_safe_result_ready_flag", "armor_ready")
+		})
 	end
 end
 
@@ -3905,7 +4007,7 @@ function MenuSceneManager:_create_safe_result(created_clbk)
 	managers.environment_controller:set_dof_distance(100, true)
 
 	if self._safe_result_content_data.factory_id then
-		local item_pos = self._scene_templates.safe.camera_pos + (self._scene_templates.safe.target_pos - self._scene_templates.safe.camera_pos):normalized() * 200
+		local item_pos = self._scene_templates.safe.camera_pos + self._scene_templates.safe.target_pos - self._scene_templates.safe.camera_pos:normalized() * 200
 		local custom_data = {
 			scene_template = "safe",
 			item_pos = item_pos
@@ -3914,7 +4016,7 @@ function MenuSceneManager:_create_safe_result(created_clbk)
 			id = self._safe_result_content_data.result.entry,
 			quality = self._safe_result_content_data.result.quality
 		}
-		local weapon_unit = self:spawn_item_weapon(self._safe_result_content_data.factory_id, self._safe_result_content_data.blueprint, cosmetics, nil, custom_data)
+		slot5 = self:spawn_item_weapon(self._safe_result_content_data.factory_id, self._safe_result_content_data.blueprint, cosmetics, nil, custom_data)
 	elseif self._safe_result_content_data.armor_id and alive(self._economy_character) then
 		self._economy_character:set_visible(true)
 
@@ -4033,4 +4135,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/MenuSceneManagerVR")
 end
-

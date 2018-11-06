@@ -206,7 +206,9 @@ function ScriptGraph:_load_node_info(node)
 
 				table.insert(info.in_slot_names, name)
 
-				info.in_slots[name] = {col = color}
+				info.in_slots[name] = {
+					col = color
+				}
 			else
 				info.out_slots = info.out_slots or {}
 				info.out_slot_names = info.out_slot_names or {}
@@ -352,4 +354,3 @@ function ScriptGraph:_write_slots(cfg_node, node, id_map)
 		end
 	end
 end
-

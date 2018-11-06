@@ -8,7 +8,11 @@ function FadeoutGuiObject:init(params)
 	params = params or {}
 	local sustain = params.sustain
 	self._fade_out_duration = params.fade_out or 0
-	self._fade_out_duration = sustain or nil
+
+	if not sustain then
+		self._fade_out_duration = nil
+	end
+
 	local fade_color = params.color or Color.black
 	local show_loding_icon = params.show_loading_icon or true
 	local loading_texture = params.loading_texture or "guis/textures/icon_loading"
@@ -65,4 +69,3 @@ end
 function FadeoutGuiObject:fade_out(duration)
 	self._fade_out_duration = duration
 end
-

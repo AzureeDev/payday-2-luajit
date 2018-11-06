@@ -68,6 +68,7 @@ end
 function CoreChangeShadowCutsceneKey:is_valid_name(name)
 	return name and DB:has("environment", name)
 end
+
 CoreChangeShadowCutsceneKey.control_for_name = CoreCutsceneKeyBase.standard_combo_box_control
 
 function CoreChangeShadowCutsceneKey:refresh_control_for_name(control)
@@ -96,4 +97,3 @@ function CoreChangeShadowCutsceneKey:_reset_interface()
 		self._shadow_interface_id_map = nil
 	end
 end
-

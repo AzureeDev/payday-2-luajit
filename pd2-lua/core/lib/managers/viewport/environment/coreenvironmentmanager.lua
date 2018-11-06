@@ -295,7 +295,9 @@ end
 function EnvironmentManager:editor_reload(path)
 	local entry_path = managers.database:entry_relative_path(path .. "." .. extension)
 	local is_new = not managers.database:has(entry_path)
-	local source_files = {entry_path}
+	local source_files = {
+		entry_path
+	}
 
 	for _, old_path in ipairs(managers.database:list_entries_of_type("environment")) do
 		table.insert(source_files, old_path .. "." .. extension)
@@ -394,4 +396,3 @@ function EnvironmentManager:_load_env_data(data_path, env_data, raw_data)
 		end
 	end
 end
-

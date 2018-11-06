@@ -31,4 +31,3 @@ function PlayerIncapacitatedVR:destroy()
 
 	__destroy(self)
 end
-

@@ -3,8 +3,12 @@ SkirmishContractMenuComponent = SkirmishContractMenuComponent or class()
 function SkirmishContractMenuComponent:init(ws, fullscreen_ws, node)
 	self._ws = ws
 	self._fullscreen_ws = fullscreen_ws
-	self._panel = ws:panel():panel({layer = 51})
-	self._fullscreen_panel = fullscreen_ws:panel():panel({layer = 50})
+	self._panel = ws:panel():panel({
+		layer = 51
+	})
+	self._fullscreen_panel = fullscreen_ws:panel():panel({
+		layer = 50
+	})
 	local is_win_32 = SystemInfo:platform() == Idstring("WIN32")
 	local is_nextgen = SystemInfo:platform() == Idstring("PS4") or SystemInfo:platform() == Idstring("XB1")
 	local bg_overlay = BlurSheet:new(self._fullscreen_panel, {
@@ -28,12 +32,14 @@ function SkirmishContractMenuComponent:init(ws, fullscreen_ws, node)
 		h = height
 	})
 
-	BoxGuiObject:new(contract_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(contract_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	contract_panel:set_center(self._panel:width() * 0.5, self._panel:height() * 0.5)
 	title_text:set_leftbottom(contract_panel:lefttop())
 
@@ -49,7 +55,7 @@ function SkirmishContractMenuComponent:init(ws, fullscreen_ws, node)
 		w = text_width
 	})
 	local video_aspect_ratio = 1.7777777777777777
-	local video_width = (width - briefing_text:right()) - 20
+	local video_width = width - briefing_text:right() - 20
 	local video_height = video_width / video_aspect_ratio
 	local video_panel = contract_panel:panel({
 		name = "video_panel",
@@ -70,12 +76,14 @@ function SkirmishContractMenuComponent:init(ws, fullscreen_ws, node)
 		color = tweak_data.screen_colors.button_stage_2
 	})
 
-	BoxGuiObject:new(video_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(video_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	managers.menu_component:disable_crimenet()
 	managers.menu:active_menu().input:deactivate_controller_mouse()
 end
@@ -85,4 +93,3 @@ function SkirmishContractMenuComponent:close()
 	self._fullscreen_ws:panel():remove(self._fullscreen_panel)
 	managers.menu:active_menu().input:activate_controller_mouse()
 end
-

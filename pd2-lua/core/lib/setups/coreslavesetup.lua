@@ -46,7 +46,7 @@ end
 function SetupSlaveSetup:paused_update(t, dt)
 	slave_state_machine:update(t, dt)
 end
+
 slave_setup = slave_setup or SetupSlaveSetup:new()
 
 slave_setup:make_entrypoint()
-

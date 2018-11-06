@@ -24,4 +24,3 @@ end
 function HelperUnitManager:get_units_by_type(type)
 	return self._types[type] or {}
 end
-

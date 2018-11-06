@@ -48,4 +48,3 @@ end
 function Gamemode:setup_gsm(gsm, empty, setup_boot, setup_title)
 	error("Gamemode:setup_gsm not implemented for " .. self._NAME)
 end
-

@@ -39,4 +39,3 @@ function KickedState:_load_start_menu()
 		setup:load_start_menu()
 	end
 end
-

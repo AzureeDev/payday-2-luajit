@@ -28,6 +28,7 @@ function PlayerCharacterTriggerUnitElement:_build_panel(panel, panel_sizer)
 	panel_sizer:add(checkbox_leave, 0, 0, "EXPAND")
 	self:_add_help_text("Set the character that the element should trigger on. Can alternatively fire when the character is removed from the game.")
 end
+
 PlayerCharacterFilterUnitElement = PlayerCharacterFilterUnitElement or class(MissionElement)
 
 function PlayerCharacterFilterUnitElement:init(unit)
@@ -69,4 +70,3 @@ function PlayerCharacterFilterUnitElement:_build_panel(panel, panel_sizer)
 	panel_sizer:add(checkbox_instigator, 0, 0, "EXPAND")
 	self:_add_help_text("Will only execute if the character is/is not in the game.")
 end
-

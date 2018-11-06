@@ -83,4 +83,3 @@ function CoreCollapseBox:_cb()
 	self._parent:thaw()
 	self._parent:refresh()
 end
-

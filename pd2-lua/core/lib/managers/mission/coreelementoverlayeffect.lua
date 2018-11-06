@@ -31,4 +31,3 @@ function ElementOverlayEffect:on_executed(instigator)
 
 	ElementOverlayEffect.super.on_executed(self, instigator)
 end
-

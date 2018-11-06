@@ -1,5 +1,7 @@
 SetOutlineElement = SetOutlineElement or class(MissionElement)
-SetOutlineElement.LINK_ELEMENTS = {"elements"}
+SetOutlineElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function SetOutlineElement:init(unit)
 	SetOutlineElement.super.init(self, unit)
@@ -83,4 +85,3 @@ end
 function SetOutlineElement:add_triggers(vc)
 	vc:add_trigger(Idstring("lmb"), callback(self, self, "add_element"))
 end
-

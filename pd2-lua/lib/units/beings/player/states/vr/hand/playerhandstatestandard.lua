@@ -32,4 +32,3 @@ function PlayerHandStateStandard:update(t, dt)
 		end
 	end
 end
-

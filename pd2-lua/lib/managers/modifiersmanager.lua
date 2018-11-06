@@ -87,4 +87,3 @@ function ModifiersManager:run_func(func_name, ...)
 		end
 	end
 end
-

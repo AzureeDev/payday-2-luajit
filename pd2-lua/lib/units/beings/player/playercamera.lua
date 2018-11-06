@@ -185,7 +185,9 @@ end
 function PlayerCamera:_setup_sound_listener()
 	self._listener_id = managers.listener:add_listener("player_camera", self._camera_object, self._camera_object, nil, false)
 
-	managers.listener:add_set("player_camera", {"player_camera"})
+	managers.listener:add_set("player_camera", {
+		"player_camera"
+	})
 
 	self._listener_activation_id = managers.listener:activate_set("main", "player_camera")
 	self._sound_check_object = managers.sound_environment:add_check_object({
@@ -214,6 +216,7 @@ end
 function PlayerCamera:forward()
 	return self._m_cam_fwd
 end
+
 local camera_mvec = Vector3()
 local reticle_mvec = Vector3()
 
@@ -247,6 +250,7 @@ end
 function PlayerCamera:update_transform()
 	self._camera_object:transform()
 end
+
 local mvec1 = Vector3()
 
 function PlayerCamera:set_rotation(rot)
@@ -280,9 +284,9 @@ function PlayerCamera:set_rotation(rot)
 		sync_yaw = 360 - sync_yaw
 	end
 
-	sync_yaw = math.floor((255 * sync_yaw) / 360)
+	sync_yaw = math.floor(255 * sync_yaw / 360)
 	local sync_pitch = math.clamp(rot:pitch(), -85, 85) + 85
-	sync_pitch = math.floor((127 * sync_pitch) / 170)
+	sync_pitch = math.floor(127 * sync_pitch / 170)
 	local angle_delta = math.abs(self._sync_dir.yaw - sync_yaw) + math.abs(self._sync_dir.pitch - sync_pitch)
 
 	if tweak_data.network then
@@ -339,4 +343,3 @@ end
 function PlayerCamera:shaker()
 	return self._shaker
 end
-

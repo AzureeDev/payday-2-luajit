@@ -14,10 +14,13 @@ function InstigatorUnitElement:_build_panel(panel, panel_sizer)
 
 	self:_add_help_text("This element is a storage for an instigator. It can be used, set, etc from logic_instigator_operator.")
 end
+
 InstigatorOperatorUnitElement = InstigatorOperatorUnitElement or class(MissionElement)
 InstigatorOperatorUnitElement.SAVE_UNIT_POSITION = false
 InstigatorOperatorUnitElement.SAVE_UNIT_ROTATION = false
-InstigatorOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+InstigatorOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function InstigatorOperatorUnitElement:init(unit)
 	InstigatorOperatorUnitElement.super.init(self, unit)
@@ -84,7 +87,9 @@ function InstigatorOperatorUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local exact_names = {"units/dev_tools/mission_elements/logic_instigator/logic_instigator"}
+	local exact_names = {
+		"units/dev_tools/mission_elements/logic_instigator/logic_instigator"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, nil, exact_names)
 	self:_build_value_combobox(panel, panel_sizer, "operation", {
@@ -101,10 +106,13 @@ function InstigatorOperatorUnitElement:_build_panel(panel, panel_sizer)
 	self:_build_value_checkbox(panel, panel_sizer, "keep_on_use")
 	self:_add_help_text("This element is an operator to logic_instigator element.")
 end
+
 InstigatorTriggerUnitElement = InstigatorTriggerUnitElement or class(MissionElement)
 InstigatorTriggerUnitElement.SAVE_UNIT_POSITION = false
 InstigatorTriggerUnitElement.SAVE_UNIT_ROTATION = false
-InstigatorTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+InstigatorTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function InstigatorTriggerUnitElement:init(unit)
 	InstigatorTriggerUnitElement.super.init(self, unit)
@@ -169,7 +177,9 @@ function InstigatorTriggerUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local exact_names = {"units/dev_tools/mission_elements/logic_instigator/logic_instigator"}
+	local exact_names = {
+		"units/dev_tools/mission_elements/logic_instigator/logic_instigator"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, nil, exact_names)
 	self:_build_value_combobox(panel, panel_sizer, "trigger_type", {
@@ -180,4 +190,3 @@ function InstigatorTriggerUnitElement:_build_panel(panel, panel_sizer)
 	}, "Select a trigger type for the selected elements")
 	self:_add_help_text("This element is a trigger to logic_instigator element.")
 end
-

@@ -92,4 +92,3 @@ function RumbleManager:setup_preset_rumbles()
 end
 
 CoreClass.override_class(CoreRumbleManager.RumbleManager, RumbleManager)
-

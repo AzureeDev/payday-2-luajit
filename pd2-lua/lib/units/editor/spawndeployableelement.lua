@@ -22,4 +22,3 @@ function SpawnDeployableUnitElement:_build_panel(panel, panel_sizer)
 		"bodybags_bag"
 	}, "Select a deployable_id to be spawned.")
 end
-

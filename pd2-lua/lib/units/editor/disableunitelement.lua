@@ -138,7 +138,6 @@ function DisableUnitUnitElement:add_triggers(vc)
 end
 
 function DisableUnitUnitElement:add_unit_list_btn()
-
 	local function f(unit)
 		if self._units[unit:unit_data().unit_id] then
 			return false
@@ -157,7 +156,6 @@ function DisableUnitUnitElement:add_unit_list_btn()
 end
 
 function DisableUnitUnitElement:remove_unit_list_btn()
-
 	local function f(unit)
 		return self._units[unit:unit_data().unit_id]
 	end
@@ -185,4 +183,3 @@ function DisableUnitUnitElement:_build_panel(panel, panel_sizer)
 	self._btn_toolbar:realize()
 	panel_sizer:add(self._btn_toolbar, 0, 1, "EXPAND,LEFT")
 end
-

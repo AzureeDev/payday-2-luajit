@@ -11,7 +11,11 @@ function GameStateMachine:init(start_state)
 	self._transitions[init:name()] = self._transitions[init:name()] or {}
 	self._transitions[init:name()][start_state:name()] = init.default_transition
 	self._current_state = init
-	self._queued_transitions = {{start_state}}
+	self._queued_transitions = {
+		{
+			start_state
+		}
+	}
 
 	self:_do_state_change()
 end
@@ -130,4 +134,3 @@ function GameStateMachine:last_queued_state_name()
 		return self:current_state_name()
 	end
 end
-

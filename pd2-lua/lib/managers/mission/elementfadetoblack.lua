@@ -18,4 +18,3 @@ function ElementFadeToBlack:on_executed(instigator)
 	managers.overlay_effect:play_effect(self._values.state and tweak_data.overlay_effects.element_fade_in or tweak_data.overlay_effects.element_fade_out)
 	ElementFadeToBlack.super.on_executed(self, instigator)
 end
-

@@ -29,6 +29,7 @@ function CoreCutsceneEditor:_all_keys_sorted_by_time()
 
 	return cutscene_keys
 end
+
 local commands = CoreCommandRegistry:new()
 
 commands:add({
@@ -262,7 +263,9 @@ commands:add({
 })
 
 local cutscene_key_insertion_commands = {}
-local skipped_key_types = {change_camera = true}
+local skipped_key_types = {
+	change_camera = true
+}
 
 for _, key_type in ipairs(CoreCutsceneKey:types()) do
 	if not skipped_key_types[key_type.ELEMENT_NAME] then
@@ -554,7 +557,6 @@ function CoreCutsceneEditor:_frame_string_for_frame(frame)
 end
 
 function CoreCutsceneEditor:_time_code_string_for_frame(frame)
-
 	local function consume_frames(frames_per_unit)
 		local whole_units = math.floor(frame / frames_per_unit)
 		frame = frame - whole_units * frames_per_unit
@@ -573,7 +575,7 @@ function CoreCutsceneEditor:_create_sequencer(parent_frame)
 	self._sequencer_panel = EWS:Panel(parent_frame)
 	local panel_sizer = EWS:BoxSizer("VERTICAL")
 
-	self._sequencer_panel:set_background_colour((EWS:get_system_colour("3DSHADOW") * 255):unpack())
+	self._sequencer_panel:set_background_colour(EWS:get_system_colour("3DSHADOW") * 255:unpack())
 	self._sequencer_panel:set_sizer(panel_sizer)
 
 	self._sequencer = CoreCutsceneSequencerPanel:new(self._sequencer_panel)
@@ -590,12 +592,12 @@ function CoreCutsceneEditor:_create_attribute_panel(parent_frame)
 	self._attribute_panel = EWS:Panel(parent_frame)
 	local panel_sizer = EWS:BoxSizer("VERTICAL")
 
-	self._attribute_panel:set_background_colour((EWS:get_system_colour("3DSHADOW") * 255):unpack())
+	self._attribute_panel:set_background_colour(EWS:get_system_colour("3DSHADOW") * 255:unpack())
 	self._attribute_panel:set_sizer(panel_sizer)
 
 	self._attribute_panel_area = EWS:ScrolledWindow(self._attribute_panel, "", "")
 
-	self._attribute_panel_area:set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
+	self._attribute_panel_area:set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
 	self:_refresh_attribute_panel()
 	panel_sizer:add(self._attribute_panel_area, 1, 1, "LEFT,BOTTOM,EXPAND")
 end
@@ -679,7 +681,7 @@ end
 
 function CoreCutsceneEditor:_sizer_with_editable_attributes_for_current_context(parent_frame)
 	local selected_keys = self._sequencer:selected_keys()
-	local displayed_item = (#selected_keys == 1 and selected_keys[1] or responder(nil)):metadata()
+	local displayed_item = #selected_keys == 1 and selected_keys[1] or responder(nil):metadata()
 
 	if displayed_item and displayed_item.populate_sizer_with_editable_attributes then
 		local sizer = EWS:BoxSizer("VERTICAL")
@@ -701,7 +703,7 @@ function CoreCutsceneEditor:_create_selected_footage_track(parent_frame)
 	local panel = EWS:Panel(parent_frame)
 	local panel_sizer = EWS:BoxSizer("VERTICAL")
 
-	panel:set_background_colour((EWS:get_system_colour("3DSHADOW") * 255):unpack())
+	panel:set_background_colour(EWS:get_system_colour("3DSHADOW") * 255:unpack())
 	panel:set_sizer(panel_sizer)
 
 	self._selected_footage_track_scrolled_area = EWS:ScrolledWindow(panel, "", "HSCROLL,NO_BORDER,ALWAYS_SHOW_SB")
@@ -1125,7 +1127,7 @@ function CoreCutsceneEditor:update(time, delta_time)
 			self._frame_time = self._frame_time or 0
 			self._frame_time = self._frame_time + TimerManager:game_animation():delta_time()
 
-			if 1 / self:frames_per_second() < self._frame_time then
+			if self._frame_time > 1 / self:frames_per_second() then
 				local frames_to_advance = math.floor(self._frame_time * self:frames_per_second())
 
 				self:set_playhead_position(self:playhead_position() + (self._play_every_frame and 1 or frames_to_advance))
@@ -1178,7 +1180,7 @@ function CoreCutsceneEditor:end_update(time, delta_time)
 		end
 
 		local selected_items = self._sequencer:selected_keys()
-		local selected_item = (#selected_items == 1 and selected_items[1] or responder(nil)):metadata()
+		local selected_item = #selected_items == 1 and selected_items[1] or responder(nil):metadata()
 
 		if selected_item and selected_item.update_gui then
 			selected_item:update_gui(time, delta_time, self._player)
@@ -1360,7 +1362,9 @@ function CoreCutsceneEditor:_on_export_to_game()
 		optimizer:export_to_database(optimized_cutscene_name)
 		self:_refresh_footage_list()
 	else
-		local message = string.join("\n    ", table.list_add({"Unable to export optimized cutscene to the game."}, optimizer:problems()))
+		local message = string.join("\n    ", table.list_add({
+			"Unable to export optimized cutscene to the game."
+		}, optimizer:problems()))
 
 		EWS:MessageDialog(self._window, message, "Export Failed", "OK,ICON_ERROR"):show_modal()
 	end
@@ -2082,7 +2086,7 @@ function CoreCutsceneEditor:_draw_joint(start_object, end_object, radius)
 		if start_position then
 			self:_pen():set(Color(0.5, 0.5, 0.5))
 
-			local joint_normal = (end_position - start_position):normalized()
+			local joint_normal = end_position - start_position:normalized()
 
 			self:_pen():cone(end_position - joint_normal * radius, start_position + joint_normal * radius, radius, 4, 4)
 		else
@@ -2190,4 +2194,3 @@ function CoreCutsceneEditor:_debug_dump_hierarchy(object, indent)
 		self:_debug_dump_hierarchy(child, indent + 1)
 	end
 end
-

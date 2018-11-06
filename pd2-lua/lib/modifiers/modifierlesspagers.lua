@@ -28,4 +28,3 @@ function ModifierLessPagers:init(data)
 	tweak_data.player.alarm_pager.bluff_success_chance = new_pagers_data
 	tweak_data.player.alarm_pager.bluff_success_chance_w_skill = new_pagers_data
 end
-

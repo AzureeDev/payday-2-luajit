@@ -38,8 +38,12 @@ function ContractBrokerGui:init(ws, fullscreen_ws, node)
 	self._fullscreen_ws = managers.gui_data:create_fullscreen_16_9_workspace()
 	self._ws = managers.gui_data:create_saferect_workspace()
 	self._node = node
-	self._fullscreen_panel = self._fullscreen_ws:panel():panel({layer = 1000})
-	self._panel = self._ws:panel():panel({layer = 1100})
+	self._fullscreen_panel = self._fullscreen_ws:panel():panel({
+		layer = 1000
+	})
+	self._panel = self._ws:panel():panel({
+		layer = 1100
+	})
 	self.make_fine_text = BlackMarketGui.make_fine_text
 	self._enabled = true
 	self._current_filter = Global.contract_broker and Global.contract_broker.filter or 1
@@ -106,7 +110,9 @@ function ContractBrokerGui:setup()
 	self:_setup_filters()
 	self:_setup_jobs()
 
-	if managers.menu:is_pc_controller() then
+	local default_to_search = managers.menu:is_pc_controller()
+
+	if default_to_search then
 		self:connect_search_input()
 	else
 		self:_set_selection(1)
@@ -178,12 +184,16 @@ function ContractBrokerGui:_create_panels()
 
 	main_panel:set_center_x(self._panel:w() * 0.5)
 	main_panel:set_top(padding * 2 + tweak_data.menu.pd2_large_font_size * 2)
-	BoxGuiObject:new(main_panel:panel({layer = 100}), {sides = {
-		1,
-		1,
-		2,
-		2
-	}})
+	BoxGuiObject:new(main_panel:panel({
+		layer = 100
+	}), {
+		sides = {
+			1,
+			1,
+			2,
+			2
+		}
+	})
 
 	local jobs_scroll = ScrollablePanel:new(main_panel, "jobs_scroll", {
 		ignore_up_indicator = true,
@@ -252,27 +262,39 @@ function ContractBrokerGui:_create_legend()
 		local legends = {}
 
 		if table.contains(legend_items, "move") then
-			legends[#legends + 1] = {string_id = "menu_legend_preview_move"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_preview_move"
+			}
 		end
 
 		if table.contains(legend_items, "scroll") then
-			legends[#legends + 1] = {string_id = "menu_legend_scroll"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_scroll"
+			}
 		end
 
 		if table.contains(legend_items, "select") then
-			legends[#legends + 1] = {string_id = "menu_legend_select"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_select"
+			}
 		end
 
 		if table.contains(legend_items, "favourite") then
-			legends[#legends + 1] = {string_id = "menu_legend_broker_favorite"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_broker_favorite"
+			}
 		end
 
 		if table.contains(legend_items, "back") then
-			legends[#legends + 1] = {string_id = "menu_legend_back"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_back"
+			}
 		end
 
 		if table.contains(legend_items, "zoom") then
-			legends[#legends + 1] = {string_id = "menu_legend_preview_zoom"}
+			legends[#legends + 1] = {
+				string_id = "menu_legend_preview_zoom"
+			}
 		end
 
 		local legend_text = ""
@@ -598,14 +620,22 @@ end
 
 function ContractBrokerGui:_setup_filter_time()
 	local times = {
-		{"menu_filter_heist_short"},
-		{"menu_filter_heist_medium"},
-		{"menu_filter_heist_long"}
+		{
+			"menu_filter_heist_short"
+		},
+		{
+			"menu_filter_heist_medium"
+		},
+		{
+			"menu_filter_heist_long"
+		}
 	}
 	local last_y = 0
 
 	for _, filter in ipairs(times) do
-		local text = self:_add_filter_button(filter[1], last_y, {extra_h = 4})
+		local text = self:_add_filter_button(filter[1], last_y, {
+			extra_h = 4
+		})
 		last_y = text:bottom() + 1
 	end
 
@@ -615,9 +645,15 @@ end
 
 function ContractBrokerGui:_setup_filter_tactic()
 	local tactics = {
-		{"menu_filter_tactic_loud_only"},
-		{"menu_filter_tactic_stealth_only"},
-		{"menu_filter_tactic_stealthable"}
+		{
+			"menu_filter_tactic_loud_only"
+		},
+		{
+			"menu_filter_tactic_stealth_only"
+		},
+		{
+			"menu_filter_tactic_stealthable"
+		}
 	}
 	local last_y = 0
 
@@ -632,8 +668,12 @@ end
 
 function ContractBrokerGui:_setup_filter_most_played()
 	local played = {
-		{"menu_filter_most_played"},
-		{"menu_filter_least_played"}
+		{
+			"menu_filter_most_played"
+		},
+		{
+			"menu_filter_least_played"
+		}
 	}
 	local last_y = 0
 
@@ -653,7 +693,7 @@ function ContractBrokerGui:_setup_filter_favourite()
 end
 
 function ContractBrokerGui:perform_filter_contact(value)
-	return value == (self._contact_filter_list[self._current_filter] or self._contact_filter_list[1] or {}).id
+	return value == self._contact_filter_list[self._current_filter] or self._contact_filter_list[1] or {}.id
 end
 
 function ContractBrokerGui:perform_filter_time(value)
@@ -868,13 +908,13 @@ function ContractBrokerGui:_setup_jobs()
 			local dlc = job_tweak.dlc
 			dlc = not dlc or managers.dlc:is_dlc_unlocked(dlc)
 			dlc = dlc and not tweak_data.narrative:is_job_locked(job_id)
-			local date_value = job_tweak.date_added and (job_tweak.date_added[1] * 30 * 12 + job_tweak.date_added[2] * 30 + job_tweak.date_added[3]) - date_value or false
+			local date_value = job_tweak.date_added and job_tweak.date_added[1] * 30 * 12 + job_tweak.date_added[2] * 30 + job_tweak.date_added[3] - date_value or false
 
 			table.insert(jobs, {
 				job_id = job_id,
-				enabled = dlc and (job_tweak.jc or 0) + (job_tweak.professional and 10 or 0) <= max_jc,
+				enabled = dlc and max_jc >= (job_tweak.jc or 0) + (job_tweak.professional and 10 or 0),
 				date_value = date_value,
-				is_new = date_value ~= false and -release_window <= date_value
+				is_new = date_value ~= false and date_value >= -release_window
 			})
 		end
 	end
@@ -1160,6 +1200,7 @@ function ContractBrokerGui:back_pressed()
 
 	managers.menu:back(true)
 end
+
 local ids_cancel = Idstring("cancel")
 local ids_favourite = Idstring("menu_toggle_legends")
 local ids_trigger_left = Idstring("trigger_left")
@@ -1218,7 +1259,7 @@ end
 function ContractBrokerGui:next_page()
 	self._current_tab = self._current_tab + 1
 
-	if #self._tab_buttons < self._current_tab then
+	if self._current_tab > #self._tab_buttons then
 		self._current_tab = 1
 	end
 
@@ -1250,10 +1291,11 @@ function ContractBrokerGui:input_focus()
 end
 
 function ContractBrokerGui:save_temporary_data(job_id)
-	Global.contract_broker = {}
-	Global.contract_broker.filter = self._current_filter
-	Global.contract_broker.tab = self._current_tab
-	Global.contract_broker.job_id = job_id
+	Global.contract_broker = {
+		filter = self._current_filter,
+		tab = self._current_tab,
+		job_id = job_id
+	}
 end
 
 function ContractBrokerGui:connect_search_input()
@@ -1507,7 +1549,12 @@ function ContractBrokerGui:update_caret()
 	local x, y, w, h = text:selection_rect()
 
 	if s == 0 and e == 0 then
-		x = text:align() == "center" and text:world_x() + text:w() / 2 or text:world_x() + text:w()
+		if text:align() == "center" then
+			x = text:world_x() + text:w() / 2
+		else
+			x = text:world_x() + text:w()
+		end
+
 		y = text:world_y()
 	end
 
@@ -1529,4 +1576,3 @@ function ContractBrokerGui:update_caret()
 
 	self._search.placeholder:set_visible(#text_s == 0)
 end
-

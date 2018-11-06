@@ -124,6 +124,7 @@ function CoreEffectPropertyContainer:fill_property_container_sheet(window, view)
 	window:thaw()
 	topdown_layout(window)
 end
+
 CoreEffectProperty = CoreEffectProperty or class()
 
 function CoreEffectProperty:init(name, ptype, value, help)
@@ -220,7 +221,6 @@ function CoreEffectProperty:validate()
 	}
 
 	if self._type == "value_list" then
-
 		local function contains(l, v)
 			for _, value in ipairs(l) do
 				if type(value) == "userdata" and type(v) == "string" or type(value) == "string" and type(v) == "userdata" then
@@ -582,7 +582,10 @@ function create_check(parent, view, prop)
 
 	local function on_check(vars)
 		vars.prop._value = "false"
-		vars.prop._value = vars.check:get_value() and "true"
+
+		if vars.check:get_value() then
+			vars.prop._value = "true"
+		end
 
 		vars.view:update_view(false)
 	end
@@ -598,7 +601,6 @@ function create_check(parent, view, prop)
 end
 
 function create_key_curve_widget(parent, view, prop)
-
 	local function refresh_list(vars)
 		local listbox = vars.listbox
 		local prop = vars.prop
@@ -724,12 +726,14 @@ end
 function topdown_layout(w)
 	local q = w
 
-	while q and q.type_name == "EWSPanel" do
-		q:set_sizer_min_size()
-		q:layout()
-		q:refresh()
+	if q then
+		while q and q.type_name == "EWSPanel" do
+			q:set_sizer_min_size()
+			q:layout()
+			q:refresh()
 
-		q = q:parent()
+			q = q:parent()
+		end
 	end
 end
 
@@ -820,7 +824,6 @@ function CoreEffectProperty:create_widget(parent, view)
 
 		self._compound_container:fill_property_container_sheet(widget, view)
 	elseif self._type == "list_objects" then
-
 		local function on_add_object(vars)
 			table.insert(vars.property._list_members, deep_clone(self._list_objects[vars.combo:get_value()]))
 			vars:fill_list()
@@ -947,7 +950,14 @@ function CoreEffectProperty:create_widget(parent, view)
 
 			for _, k in ipairs(keys) do
 				local s = ""
-				s = prop._key_type == "vector2" and k.v.x .. " " .. k.v.y or prop._key_type == "float" and k.v.x .. "" or k.v.x .. " " .. k.v.y .. " " .. k.v.z
+
+				if prop._key_type == "vector2" then
+					s = k.v.x .. " " .. k.v.y
+				elseif prop._key_type == "float" then
+					s = k.v.x .. ""
+				else
+					s = k.v.x .. " " .. k.v.y .. " " .. k.v.z
+				end
 
 				table.insert(prop._keys, {
 					t = k.t,
@@ -971,8 +981,10 @@ function CoreEffectProperty:create_widget(parent, view)
 		if self._presets then
 			widget:set_presets(self._presets)
 		end
+	elseif self._type == "boolean" then
+		widget = create_check(parent, view, self)
 	else
-		widget = self._type == "boolean" and create_check(parent, view, self) or create_text_field(parent, view, self)
+		widget = create_text_field(parent, view, self)
 	end
 
 	return widget
@@ -989,7 +1001,12 @@ function CoreEffectProperty:save(node)
 
 	if self._type == "compound" then
 		local n = nil
-		n = self._save_to_child and node:make_child(self._compound_container:name()) or node
+
+		if self._save_to_child then
+			n = node:make_child(self._compound_container:name())
+		else
+			n = node
+		end
 
 		self._compound_container:save_properties(n)
 	elseif self._type == "box" then
@@ -1069,7 +1086,6 @@ function CoreEffectProperty:load(node)
 		if self._type == "variant" then
 			self._variants[self._value]:load(node)
 		elseif self._type == "value_list" then
-
 			local function contains(l, v)
 				for _, value in ipairs(l) do
 					if type(value) == "userdata" and type(v) == "string" or type(value) == "string" and type(v) == "userdata" then
@@ -1116,4 +1132,3 @@ end
 function CoreEffectProperty:value()
 	return self._value
 end
-

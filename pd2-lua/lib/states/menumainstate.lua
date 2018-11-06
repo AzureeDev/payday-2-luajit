@@ -122,15 +122,17 @@ function MenuMainState:at_enter(old_state)
 
 		if not managers.custom_safehouse:unlocked() then
 			if not Global.mission_manager.has_played_tutorial and not Global.skip_menu_dialogs then
-
 				local function yes_func()
-					MenuCallbackHandler:play_safehouse({skip_question = true})
+					MenuCallbackHandler:play_safehouse({
+						skip_question = true
+					})
 				end
 
-				managers.menu:show_question_start_tutorial({yes_func = yes_func})
+				managers.menu:show_question_start_tutorial({
+					yes_func = yes_func
+				})
 			end
 		elseif not managers.custom_safehouse:has_entered_safehouse() and not Global.skip_menu_dialogs then
-
 			local function yes_func()
 				MenuCallbackHandler:play_single_player()
 				MenuCallbackHandler:start_single_player_job({
@@ -140,9 +142,13 @@ function MenuMainState:at_enter(old_state)
 			end
 
 			if managers.custom_safehouse:is_new_player() then
-				managers.menu:show_question_new_safehouse_new_player({yes_func = yes_func})
+				managers.menu:show_question_new_safehouse_new_player({
+					yes_func = yes_func
+				})
 			else
-				managers.menu:show_question_new_safehouse({yes_func = yes_func})
+				managers.menu:show_question_new_safehouse({
+					yes_func = yes_func
+				})
 			end
 		end
 
@@ -168,6 +174,8 @@ function MenuMainState:at_enter(old_state)
 			difficulty = Global.exe_argument_difficulty
 		})
 	end
+
+	managers.statistics:check_stats()
 end
 
 function MenuMainState:at_exit(new_state)
@@ -204,7 +212,9 @@ function MenuMainState:_create_server_left_dialog()
 		text = managers.localization:text("dialog_ok"),
 		callback_func = callback(self, self, "on_server_left_ok_pressed")
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -216,9 +226,10 @@ end
 
 function MenuMainState:_create_disconnected_dialog()
 	managers.system_menu:close("server_left_dialog")
-	managers.menu:show_mp_disconnected_internet_dialog({ok_func = callback(self, self, "on_server_left_ok_pressed")})
+	managers.menu:show_mp_disconnected_internet_dialog({
+		ok_func = callback(self, self, "on_server_left_ok_pressed")
+	})
 end
 
 function MenuMainState:on_disconnected()
 end
-

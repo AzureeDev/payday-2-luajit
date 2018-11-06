@@ -95,7 +95,9 @@ function TeamAIDamage:damage_melee(attack_data)
 		return
 	end
 
-	local result = {variant = "melee"}
+	local result = {
+		variant = "melee"
+	}
 	local damage_percent, health_subtracted = self:_apply_damage(attack_data, result)
 	local t = TimerManager:game():time()
 	self._next_allowed_dmg_t = t + self._dmg_interval
@@ -119,7 +121,9 @@ function TeamAIDamage:force_bleedout()
 	local attack_data = {
 		damage = 100000,
 		pos = Vector3(),
-		col_ray = {position = Vector3()}
+		col_ray = {
+			position = Vector3()
+		}
 	}
 	local result = {
 		type = "none",
@@ -220,7 +224,9 @@ function TeamAIDamage:damage_explosion(attack_data)
 		return
 	end
 
-	local result = {variant = attack_data.variant}
+	local result = {
+		variant = attack_data.variant
+	}
 	local damage_percent, health_subtracted = self:_apply_damage(attack_data, result)
 
 	if health_subtracted > 0 then
@@ -258,7 +264,9 @@ function TeamAIDamage:damage_fire(attack_data)
 		return
 	end
 
-	local result = {variant = attack_data.variant}
+	local result = {
+		variant = attack_data.variant
+	}
 	local damage_percent, health_subtracted = self:_apply_damage(attack_data, result)
 
 	if health_subtracted > 0 then
@@ -284,7 +292,9 @@ function TeamAIDamage:damage_mission(attack_data)
 	local damage_percent = self._HEALTH_GRANULARITY
 	attack_data.damage = self._health
 	attack_data.variant = "explosion"
-	local result = {variant = attack_data.variant}
+	local result = {
+		variant = attack_data.variant
+	}
 	local damage_percent, health_subtracted = self:_apply_damage(attack_data, result)
 
 	if health_subtracted > 0 then
@@ -315,7 +325,9 @@ function TeamAIDamage:damage_tase(attack_data)
 	self._regenerate_t = nil
 	local damage_info = {
 		variant = "tase",
-		result = {type = "hurt"}
+		result = {
+			type = "hurt"
+		}
 	}
 
 	if self._tase_effect then
@@ -495,6 +507,7 @@ function TeamAIDamage:_check_fatal()
 		PlayerMovement.set_attention_settings(self._unit:brain(), nil, "team_AI")
 	end
 end
+
 TeamAIDamage.get_paused_counter_name_by_peer = PlayerDamage.get_paused_counter_name_by_peer
 
 function TeamAIDamage:pause_bleed_out(peer_id)
@@ -760,7 +773,9 @@ function TeamAIDamage:sync_damage_bullet(attacker_unit, damage, i_body, hit_offs
 
 	local body = self._unit:body(i_body)
 	damage = damage * self._HEALTH_TOTAL_PERCENT
-	local result = {variant = "bullet"}
+	local result = {
+		variant = "bullet"
+	}
 	local hit_pos = mvector3.copy(self._unit:movement():m_pos())
 
 	mvector3.set_z(hit_pos, hit_pos.z + hit_offset_height)
@@ -800,7 +815,9 @@ function TeamAIDamage:sync_damage_explosion(attacker_unit, damage, i_attack_vari
 
 	local variant = CopDamage._ATTACK_VARIANTS[i_attack_variant]
 	damage = damage * self._HEALTH_TOTAL_PERCENT
-	local result = {variant = variant}
+	local result = {
+		variant = variant
+	}
 	local hit_pos = mvector3.copy(self._unit:movement():m_com())
 	local attack_dir = nil
 
@@ -837,7 +854,9 @@ function TeamAIDamage:sync_damage_fire(attacker_unit, damage, i_attack_variant)
 
 	local variant = CopDamage._ATTACK_VARIANTS[i_attack_variant]
 	damage = damage * self._HEALTH_TOTAL_PERCENT
-	local result = {variant = variant}
+	local result = {
+		variant = variant
+	}
 	local hit_pos = mvector3.copy(self._unit:movement():m_com())
 	local attack_dir = nil
 
@@ -874,7 +893,9 @@ function TeamAIDamage:sync_damage_melee(attacker_unit, damage, damage_effect_per
 
 	local body = self._unit:body(i_body)
 	damage = damage * self._HEALTH_TOTAL_PERCENT
-	local result = {variant = "melee"}
+	local result = {
+		variant = "melee"
+	}
 	local hit_pos = mvector3.copy(self._unit:movement():m_pos())
 
 	mvector3.set_z(hit_pos, hit_pos.z + hit_offset_height)
@@ -947,7 +968,9 @@ function TeamAIDamage:revive(reviving_unit)
 
 		self._unit:interaction():set_active(false, false)
 		self._unit:brain():on_recovered(reviving_unit)
-		PlayerMovement.set_attention_settings(self._unit:brain(), {"team_enemy_cbt"}, "team_AI")
+		PlayerMovement.set_attention_settings(self._unit:brain(), {
+			"team_enemy_cbt"
+		}, "team_AI")
 		self._unit:network():send("from_server_unit_recovered")
 		managers.groupai:state():on_criminal_recovered(self._unit)
 		managers.mission:call_global_event("player_revive_ai")
@@ -968,7 +991,9 @@ function TeamAIDamage:revive(reviving_unit)
 		local res = self._unit:movement():action_request(action_data)
 
 		self._unit:brain():on_recovered(reviving_unit)
-		PlayerMovement.set_attention_settings(self._unit:brain(), {"team_enemy_cbt"}, "team_AI")
+		PlayerMovement.set_attention_settings(self._unit:brain(), {
+			"team_enemy_cbt"
+		}, "team_AI")
 		self._unit:network():send("from_server_unit_recovered")
 		managers.groupai:state():on_criminal_recovered(self._unit)
 	end
@@ -1106,7 +1131,9 @@ function TeamAIDamage:_on_incapacitated()
 	self._regenerate_t = nil
 	local dmg_info = {
 		variant = "bleeding",
-		result = {type = "fatal"}
+		result = {
+			type = "fatal"
+		}
 	}
 	self._bleed_out_health = 0
 
@@ -1134,7 +1161,9 @@ function TeamAIDamage:clbk_exit_to_dead()
 
 	local dmg_info = {
 		variant = "bleeding",
-		result = {type = "death"}
+		result = {
+			type = "death"
+		}
 	}
 
 	self:_call_listeners(dmg_info)
@@ -1191,4 +1220,3 @@ function TeamAIDamage:save(data)
 		data.char_dmg.fatal = true
 	end
 end
-

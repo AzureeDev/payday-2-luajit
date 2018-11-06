@@ -37,4 +37,3 @@ function classtable_to_string(ct)
 
 	error("Can't find classtable in module '" .. module_name .. "'")
 end
-

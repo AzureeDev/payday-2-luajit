@@ -131,7 +131,7 @@ function PlayerHandStateMachine:init(hand_unit, hand_id, transition_queue)
 	self:add_transition(cuffed, akimbo, cuffed_func)
 	self:add_transition(driving, idle, driving_func, exit_driving_condition)
 	self:add_transition(driving, weapon, driving_func)
-	self:add_transition(driving, akimbo, driving_func)
+	self:add_transition(driving, akimbo, driving_func, exit_driving_condition)
 	self:set_default_state("idle")
 
 	self._weapon_hand_changed_clbk = callback(self, self, "on_default_weapon_hand_changed")
@@ -263,4 +263,3 @@ end
 function PlayerHandStateMachine:rotation()
 	return self._rotation or self:hand_unit():rotation()
 end
-

@@ -101,4 +101,3 @@ function WaypointExt:load(save_data)
 		end
 	end
 end
-

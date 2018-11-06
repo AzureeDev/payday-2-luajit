@@ -26,4 +26,3 @@ end
 function ExpressionManager:stop(unit)
 	self._units[unit:key()] = nil
 end
-

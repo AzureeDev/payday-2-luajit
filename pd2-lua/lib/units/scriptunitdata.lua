@@ -31,4 +31,3 @@ function ScriptUnitData:remove_destroy_listener(key)
 		self._destroy_listener_holder = nil
 	end
 end
-

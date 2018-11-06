@@ -8,4 +8,3 @@ function MenuItemChat:init(data_node, parameters)
 
 	self._type = MenuItemChat.TYPE
 end
-

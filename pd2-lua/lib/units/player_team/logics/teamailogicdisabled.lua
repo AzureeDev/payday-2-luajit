@@ -8,7 +8,9 @@ function TeamAILogicDisabled.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	my_data.detection = data.char_tweak.detection.combat
 	my_data.enemy_detect_slotmask = managers.slot:get_mask("enemies")
@@ -171,13 +173,18 @@ function TeamAILogicDisabled._upd_aim(data, my_data)
 	else
 		if my_data.shooting then
 			local new_action = nil
-			new_action = data.unit:anim_data().reload and {
-				body_part = 3,
-				type = "reload"
-			} or {
-				body_part = 3,
-				type = "idle"
-			}
+
+			if data.unit:anim_data().reload then
+				new_action = {
+					body_part = 3,
+					type = "reload"
+				}
+			else
+				new_action = {
+					body_part = 3,
+					type = "idle"
+				}
+			end
 
 			data.unit:brain():action_request(new_action)
 		end
@@ -343,4 +350,3 @@ function TeamAILogicDisabled.on_new_objective(data, old_objective)
 		old_objective.fail_clbk(data.unit)
 	end
 end
-

@@ -76,7 +76,7 @@ function NetworkVoiceChatPSN:num_peers()
 			end
 		end
 
-		return #l <= x
+		return x >= #l
 	end
 
 	return true
@@ -239,9 +239,10 @@ function NetworkVoiceChatPSN:_save_globals(disable_voice)
 
 	PSNVoice:assign_callback(f)
 
-	Global.psn.voice = {}
-	Global.psn.voice.started = self._started
-	Global.psn.voice.drop_in = self._drop_in
+	Global.psn.voice = {
+		started = self._started,
+		drop_in = self._drop_in
+	}
 
 	if type(disable_voice) == "boolean" then
 		if disable_voice == true then
@@ -344,7 +345,6 @@ function NetworkVoiceChatPSN:_callback(info)
 		end
 
 		if info.unload_succeeded ~= nil then
-
 			local function f(...)
 			end
 
@@ -421,4 +421,3 @@ function NetworkVoiceChatPSN:set_voicechat(enable)
 	PSNVoice:set_enable(enable)
 	print("set_voicechat( enable ) = ", enable)
 end
-

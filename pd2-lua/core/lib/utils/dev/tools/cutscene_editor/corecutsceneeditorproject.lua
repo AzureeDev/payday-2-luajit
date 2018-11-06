@@ -50,7 +50,9 @@ function CoreCutsceneEditorProject:save(audio_clips, film_clips, cutscene_keys, 
 	for actor_name, patches in pairs(settings.animation_patches or {}) do
 		for blend_set, animation in pairs(patches) do
 			if is_valid(blend_set) and is_valid(animation) then
-				local actor_node = self:child_node("actor", animation_patches_node, {name = tostring(actor_name)}) or animation_patches_node:make_child("actor")
+				local actor_node = self:child_node("actor", animation_patches_node, {
+					name = tostring(actor_name)
+				}) or animation_patches_node:make_child("actor")
 
 				actor_node:set_parameter("name", tostring(actor_name))
 
@@ -202,4 +204,3 @@ function CoreCutsceneEditorProject:child_node(child_name, parent_node, child_pro
 		end
 	end
 end
-

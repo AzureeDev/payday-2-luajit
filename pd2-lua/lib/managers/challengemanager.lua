@@ -13,12 +13,13 @@ function ChallengeManager:_setup()
 	self._default = {}
 
 	if not Global.challenge_manager then
-		Global.challenge_manager = {}
-		Global.challenge_manager.challenges = {}
-		Global.challenge_manager.active_challenges = {}
-		Global.challenge_manager.visited_crimenet = false
-		Global.challenge_manager.retrieving = false
-		Global.challenge_manager.validated = false
+		Global.challenge_manager = {
+			challenges = {},
+			active_challenges = {},
+			visited_crimenet = false,
+			retrieving = false,
+			validated = false
+		}
 
 		self:_load_challenges_from_xml()
 		managers.savefile:add_load_sequence_done_callback_handler(callback(self, self, "_load_done"))
@@ -106,7 +107,7 @@ function ChallengeManager:_fetch_done_clbk(success, s)
 		for key, challenge in pairs(self._global.active_challenges) do
 			is_active = table.contains(all_currently_active_challenges, challenge.id)
 
-			if not is_active and (challenge.completed and challenge.rewarded or challenge.timestamp + challenge.interval < timestamp) then
+			if not is_active and (challenge.completed and challenge.rewarded or timestamp > challenge.timestamp + challenge.interval) then
 				print("[ChallengeManager] Active challenge is invalid", "Challenge id", challenge.id, "Challenge timestamp", challenge.timestamp, "Challenge interval", challenge.interval, "timestamp", timestamp)
 				table.insert(inactive_challenges, key)
 			end
@@ -664,7 +665,9 @@ function ChallengeManager:check_equipped_outfit(equip_data, outfit, character)
 	if not pass_skills then
 		num_skills = 0
 
-		for tree, points in ipairs(outfit.skills.skills or {0}) do
+		for tree, points in ipairs(outfit.skills.skills or {
+			0
+		}) do
 			num_skills = num_skills + (tonumber(points) or 0)
 		end
 
@@ -710,4 +713,3 @@ function ChallengeManager:check_equipped(achievement_data)
 
 	return true
 end
-

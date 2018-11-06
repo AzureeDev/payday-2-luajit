@@ -15,4 +15,3 @@ function None:transition()
 		end
 	end
 end
-

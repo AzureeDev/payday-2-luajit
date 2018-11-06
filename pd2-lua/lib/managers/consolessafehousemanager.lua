@@ -14,10 +14,11 @@ function ConsolesSafehouseManager:_setup()
 	print("[ConsolesSafehouseManager:_setup]")
 
 	if not Global.consoles_safehouse_manager_manager then
-		Global.consoles_safehouse_manager_manager = {}
-		Global.consoles_safehouse_manager_manager.total = Application:digest_value(0, true)
-		Global.consoles_safehouse_manager_manager.total_collected = Application:digest_value(0, true)
-		Global.consoles_safehouse_manager_manager.prev_total = Application:digest_value(0, true)
+		Global.consoles_safehouse_manager_manager = {
+			total = Application:digest_value(0, true),
+			total_collected = Application:digest_value(0, true),
+			prev_total = Application:digest_value(0, true)
+		}
 	end
 
 	self._global = Global.consoles_safehouse_manager_manager
@@ -112,4 +113,3 @@ function ConsolesSafehouseManager:give_upgrade_points(exp)
 	print("[ConsolesSafehouseManager:give_upgrade_points]")
 	self:add_coins(exp / rewards_experience_ratio)
 end
-

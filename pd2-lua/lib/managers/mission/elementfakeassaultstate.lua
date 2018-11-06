@@ -18,4 +18,3 @@ function ElementFakeAssaultState:on_executed(instigator)
 	managers.groupai:state():set_fake_assault_mode(self._values.state)
 	ElementFakeAssaultState.super.on_executed(self, instigator)
 end
-

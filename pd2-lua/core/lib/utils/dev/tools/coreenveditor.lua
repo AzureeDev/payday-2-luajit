@@ -108,13 +108,22 @@ end
 
 function CoreEnvEditor:check_news(new_only)
 	local news = nil
-	news = new_only and managers.news:get_news("env_editor", self._main_frame) or managers.news:get_old_news("env_editor", self._main_frame)
+
+	if new_only then
+		news = managers.news:get_news("env_editor", self._main_frame)
+	else
+		news = managers.news:get_old_news("env_editor", self._main_frame)
+	end
 
 	if news then
 		local str = nil
 
 		for _, n in ipairs(news) do
-			str = not str and n or str .. "\n" .. n
+			if not str then
+				str = n
+			else
+				str = str .. "\n" .. n
+			end
 		end
 
 		EWS:MessageDialog(self._main_frame, str, "New Features!", "OK,ICON_INFORMATION"):show_modal()
@@ -362,7 +371,9 @@ function CoreEnvEditor:retrive_sky_param(node, param)
 end
 
 function CoreEnvEditor:flipp(...)
-	local v = {...}
+	local v = {
+		...
+	}
 
 	if #v > 1 then
 		local a = v[#v]
@@ -376,7 +387,9 @@ function CoreEnvEditor:flipp(...)
 end
 
 function CoreEnvEditor:add_gui_element(gui, tab, ...)
-	local list = {...}
+	local list = {
+		...
+	}
 
 	self:add_box(gui, self._tabs[tab], list, 1)
 end
@@ -422,7 +435,7 @@ function CoreEnvEditor:add_box(gui, parent, list, index)
 	local this = parent.child[list[index]]
 
 	if not this then
-		local this = {
+		this = {
 			child = {},
 			box = EWS:StaticBoxSizer(parent.scrolled_window, "VERTICAL", list[index]),
 			scrolled_window = parent.scrolled_window
@@ -525,7 +538,12 @@ function CoreEnvEditor:write_posteffect(file)
 
 								for param_name, param in pairs(mod.params) do
 									local v = param:get_value()
-									v = getmetatable(v) == _G.Vector3 and "" .. param:get_value().x .. " " .. param:get_value().y .. " " .. param:get_value().z or tostring(param:get_value())
+
+									if getmetatable(v) == _G.Vector3 then
+										v = "" .. param:get_value().x .. " " .. param:get_value().y .. " " .. param:get_value().z
+									else
+										v = tostring(param:get_value())
+									end
 
 									file:print("\t\t\t\t\t\t<param key=\"" .. param_name .. "\" value=\"" .. v .. "\"/>\n")
 								end
@@ -571,7 +589,12 @@ function CoreEnvEditor:write_shadow_params(file)
 
 	for param_name, param in pairs(params) do
 		local v = param
-		v = getmetatable(v) == _G.Vector3 and "" .. param.x .. " " .. param.y .. " " .. param.z or tostring(param)
+
+		if getmetatable(v) == _G.Vector3 then
+			v = "" .. param.x .. " " .. param.y .. " " .. param.z
+		else
+			v = tostring(param)
+		end
 
 		file:print("\t\t\t\t\t\t<param key=\"" .. param_name .. "\" value=\"" .. v .. "\"/>\n")
 	end
@@ -589,7 +612,12 @@ function CoreEnvEditor:write_underlayeffect(file)
 
 			for param_name, param in pairs(material.params) do
 				local v = param:get_value()
-				v = getmetatable(v) == _G.Vector3 and "" .. param:get_value().x .. " " .. param:get_value().y .. " " .. param:get_value().z or tostring(param:get_value())
+
+				if getmetatable(v) == _G.Vector3 then
+					v = "" .. param:get_value().x .. " " .. param:get_value().y .. " " .. param:get_value().z
+				else
+					v = tostring(param:get_value())
+				end
 
 				file:print("\t\t\t\t<param key=\"" .. param_name .. "\" value=\"" .. v .. "\"/>\n")
 			end
@@ -606,7 +634,12 @@ function CoreEnvEditor:write_sky(file)
 
 	for param_name, param in pairs(self._sky.params) do
 		local v = param:get_value()
-		v = getmetatable(v) == _G.Vector3 and "" .. param:get_value().x .. " " .. param:get_value().y .. " " .. param:get_value().z or tostring(param:get_value())
+
+		if getmetatable(v) == _G.Vector3 then
+			v = "" .. param:get_value().x .. " " .. param:get_value().y .. " " .. param:get_value().z
+		else
+			v = tostring(param:get_value())
+		end
 
 		file:print("\t\t\t<param key=\"" .. param_name .. "\" value=\"" .. v .. "\"/>\n")
 	end
@@ -1066,4 +1099,3 @@ function CoreEnvEditor:value_database_lookup(str)
 
 	return value
 end
-

@@ -8,7 +8,7 @@ function IngameContractGuiCrimeSpree:init(ws, node)
 		h = math.round(ws:panel():h() * 1)
 	})
 
-	self._panel:set_y((CoreMenuRenderer.Renderer.border_height + tweak_data.menu.pd2_large_font_size) - 5)
+	self._panel:set_y(CoreMenuRenderer.Renderer.border_height + tweak_data.menu.pd2_large_font_size - 5)
 	self._panel:grow(0, -(self._panel:y() + tweak_data.menu.pd2_medium_font_size))
 
 	self._node = node
@@ -30,7 +30,9 @@ function IngameContractGuiCrimeSpree:init(ws, node)
 		color = tweak_data.screen_colors.text
 	})
 
-	contract_text:set_text(self:get_text("cn_crime_spree_level", {level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")}))
+	contract_text:set_text(self:get_text("cn_crime_spree_level", {
+		level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")
+	}))
 
 	local range = {
 		from = utf8.len(managers.localization:text("cn_crime_spree_level_no_num")),
@@ -104,7 +106,7 @@ function IngameContractGuiCrimeSpree:init(ws, node)
 
 	self._modifiers_panel = self._panel:panel({
 		w = self._panel:w() - padding * 2,
-		h = (self._panel:h() - padding * 2) - modifiers_title:bottom(),
+		h = self._panel:h() - padding * 2 - modifiers_title:bottom(),
 		x = padding,
 		y = modifiers_title:bottom() + padding
 	})
@@ -115,12 +117,14 @@ function IngameContractGuiCrimeSpree:init(ws, node)
 
 	self:_rec_round_object(self._panel)
 
-	self._sides = BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._sides = BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	if not managers.menu:is_pc_controller() then
 		self:_setup_controller_input()
@@ -196,4 +200,3 @@ function IngameContractGuiCrimeSpree:close()
 		self._panel = nil
 	end
 end
-

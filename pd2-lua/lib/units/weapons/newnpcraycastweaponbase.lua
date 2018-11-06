@@ -27,7 +27,9 @@ function NewNPCRaycastWeaponBase:init(unit)
 	self:set_ammo_remaining_in_clip(self:get_ammo_max_per_clip())
 
 	self._damage = tweak_data.weapon[self._name_id].DAMAGE
-	self._shoot_through_data = {from = Vector3()}
+	self._shoot_through_data = {
+		from = Vector3()
+	}
 	self._next_fire_allowed = -1000
 	self._obj_fire = self._unit:get_object(Idstring("fire"))
 	self._sound_fire = SoundDevice:create_source("fire")
@@ -89,7 +91,9 @@ function NewNPCRaycastWeaponBase:init(unit)
 	self._cosmetics_data = nil
 	self._materials = nil
 
-	managers.mission:add_global_event_listener(tostring(self._unit:key()), {"on_peer_removed"}, callback(self, self, "_on_peer_removed"))
+	managers.mission:add_global_event_listener(tostring(self._unit:key()), {
+		"on_peer_removed"
+	}, callback(self, self, "_on_peer_removed"))
 end
 
 function NewNPCRaycastWeaponBase:_on_peer_removed(peer_id)
@@ -228,6 +232,7 @@ function NewNPCRaycastWeaponBase:auto_trigger_held(direction, impact)
 
 	return fired
 end
+
 local mto = Vector3()
 local mfrom = Vector3()
 local mspread = Vector3()
@@ -242,7 +247,7 @@ function NewNPCRaycastWeaponBase:auto_fire_blank(direction, impact)
 	local up = direction:cross(right):normalized()
 
 	if impact and (self._use_trails == nil or self._use_trails == true) then
-		local num_rays = (tweak_data.weapon[self:non_npc_name_id()] or {}).rays or 1
+		local num_rays = tweak_data.weapon[self:non_npc_name_id()] or {}.rays or 1
 
 		if self._ammo_data and self._ammo_data.rays then
 			num_rays = self._ammo_data.rays
@@ -315,7 +320,7 @@ function NewNPCRaycastWeaponBase:fire_blank(direction, impact)
 	local up = direction:cross(right):normalized()
 
 	if impact and (self._use_trails == nil or self._use_trails == true) then
-		local num_rays = (tweak_data.weapon[self:non_npc_name_id()] or {}).rays or 1
+		local num_rays = tweak_data.weapon[self:non_npc_name_id()] or {}.rays or 1
 
 		if self._ammo_data and self._ammo_data.rays then
 			num_rays = self._ammo_data.rays
@@ -469,6 +474,7 @@ end
 function NewNPCRaycastWeaponBase:set_user_is_team_ai(enabled)
 	self._is_team_ai = enabled
 end
+
 local mvec_to = Vector3()
 local mvec_spread = Vector3()
 local mvec1 = Vector3()
@@ -484,7 +490,7 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 
 	local damage = self._damage * (dmg_mul or 1)
 	local ray_from_unit = shoot_through_data and alive(shoot_through_data.ray_from_unit) and shoot_through_data.ray_from_unit or nil
-	local col_ray = (ray_from_unit or World):raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+	local col_ray = ray_from_unit or World:raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
 
 	if shoot_through_data and shoot_through_data.has_hit_wall then
 		if not col_ray then
@@ -523,7 +529,7 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 
 	if not col_ray or col_ray.distance > 600 then
 		local name_id = self.non_npc_name_id and self:non_npc_name_id() or self._name_id
-		local num_rays = (tweak_data.weapon[name_id] or {}).rays or 1
+		local num_rays = tweak_data.weapon[name_id] or {}.rays or 1
 
 		for i = 1, num_rays, 1 do
 			mvector3.set(mvec_spread, direction)
@@ -545,7 +551,9 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 	result.hit_enemy = hit_unit
 
 	if self._alert_events then
-		result.rays = {col_ray}
+		result.rays = {
+			col_ray
+		}
 	end
 
 	if col_ray and col_ray.unit then
@@ -702,4 +710,3 @@ function NewNPCRaycastWeaponBase:set_underbarrel(underbarrel_id, enabled)
 		self._name_id = self.name_id
 	end
 end
-

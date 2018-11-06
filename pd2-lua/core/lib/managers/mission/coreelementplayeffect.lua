@@ -32,7 +32,9 @@ end
 
 function ElementPlayEffect:play_effect()
 	if self._values.effect ~= "none" then
-		local params = {effect = Idstring(self._values.effect)}
+		local params = {
+			effect = Idstring(self._values.effect)
+		}
 		local pos, rot = self:get_orientation()
 		params.position = self._values.screen_space and Vector3() or pos
 		params.rotation = self._values.screen_space and Rotation() or rot
@@ -53,6 +55,7 @@ end
 function ElementPlayEffect:fade_kill()
 	managers.environment_effects:fade_kill_mission_effect(self._id)
 end
+
 ElementStopEffect = ElementStopEffect or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementStopEffect:init(...)
@@ -82,4 +85,3 @@ function ElementStopEffect:on_executed(instigator)
 
 	ElementStopEffect.super.on_executed(self, instigator)
 end
-

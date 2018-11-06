@@ -96,7 +96,6 @@ function LocalizationManager:_localizer_post_process(string)
 end
 
 function LocalizationManager:_text_localize(text)
-
 	local function func(id)
 		return self:exists(id) and self:text(id) or false
 	end
@@ -105,7 +104,6 @@ function LocalizationManager:_text_localize(text)
 end
 
 function LocalizationManager:_text_macroize(text, macros)
-
 	local function func(word)
 		return macros[word] or false
 	end
@@ -127,4 +125,3 @@ function LocalizationManager:_text_format(text, X, Y, func)
 		return X .. self:_text_format(id, X, Y, func) .. Y
 	end)
 end
-

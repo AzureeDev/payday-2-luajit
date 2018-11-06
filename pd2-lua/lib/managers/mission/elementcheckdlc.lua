@@ -12,7 +12,12 @@ function ElementCheckDLC:on_executed(instigator)
 	end
 
 	local can_execute = nil
-	can_execute = self._values.require_all and self:check_all_dlcs_owned(self._values.dlc_ids) or self:check_any_dlc_owned(self._values.dlc_ids)
+
+	if self._values.require_all then
+		can_execute = self:check_all_dlcs_owned(self._values.dlc_ids)
+	else
+		can_execute = self:check_any_dlc_owned(self._values.dlc_ids)
+	end
 
 	if self._values.invert then
 		can_execute = not can_execute
@@ -45,4 +50,3 @@ function ElementCheckDLC:check_all_dlcs_owned(dlc_list)
 
 	return true
 end
-

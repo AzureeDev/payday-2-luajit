@@ -17,7 +17,9 @@ function MaterialsfileDependencyNode:_parse()
 
 	f:close()
 
-	return {xmlnode}
+	return {
+		xmlnode
+	}
 end
 
 function MaterialsfileDependencyNode:_walkxml2dependencies(xmlnode, deps)
@@ -40,4 +42,3 @@ function MaterialsfileDependencyNode:_walkxml2dependencies(xmlnode, deps)
 		end
 	end
 end
-

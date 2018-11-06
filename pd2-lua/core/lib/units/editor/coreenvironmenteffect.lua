@@ -40,4 +40,3 @@ function CoreEnvironmentEffectHubElement:_build_panel(panel, panel_sizer)
 	effect_sizer:add(effects, 3, 0, "EXPAND")
 	self._panel_sizer:add(effect_sizer, 0, 0, "EXPAND")
 end
-

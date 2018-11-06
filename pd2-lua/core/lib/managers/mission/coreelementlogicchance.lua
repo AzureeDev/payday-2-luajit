@@ -64,6 +64,7 @@ function ElementLogicChance:_trigger_outcome(outcome)
 		end
 	end
 end
+
 ElementLogicChanceOperator = ElementLogicChanceOperator or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementLogicChanceOperator:init(...)
@@ -96,6 +97,7 @@ function ElementLogicChanceOperator:on_executed(instigator)
 
 	ElementLogicChanceOperator.super.on_executed(self, instigator)
 end
+
 ElementLogicChanceTrigger = ElementLogicChanceTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementLogicChanceTrigger:init(...)
@@ -120,4 +122,3 @@ function ElementLogicChanceTrigger:on_executed(instigator)
 
 	ElementLogicChanceTrigger.super.on_executed(self, instigator)
 end
-

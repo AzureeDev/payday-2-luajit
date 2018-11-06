@@ -667,4 +667,3 @@ function CoreParticleEditorVisualizers:create_model()
 
 	return visualizer
 end
-

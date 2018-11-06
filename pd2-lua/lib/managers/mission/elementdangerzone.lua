@@ -26,4 +26,3 @@ function ElementDangerZone:on_executed(instigator)
 
 	ElementDangerZone.super.on_executed(self, self._unit or instigator)
 end
-

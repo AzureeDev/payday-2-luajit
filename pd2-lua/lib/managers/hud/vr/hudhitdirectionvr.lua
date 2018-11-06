@@ -82,4 +82,3 @@ function HUDHitDirectionVR:_animate(indicator, data, remove_func)
 
 	remove_func(indicator, data)
 end
-

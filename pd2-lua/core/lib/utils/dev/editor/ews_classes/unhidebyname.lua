@@ -395,6 +395,7 @@ function UnhideByName:recreate()
 	self:fill_unit_list()
 	self._panel:layout()
 end
+
 HideByName = HideByName or class(UnhideByName)
 HideByName.TITLE = "Hide by Name"
 HideByName.BTN_NAME = "Hide"
@@ -419,4 +420,3 @@ end
 function HideByName:deleted_unit(unit)
 	self:_remove_unit_from_list(unit)
 end
-

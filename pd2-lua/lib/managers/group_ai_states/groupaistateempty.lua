@@ -118,4 +118,3 @@ end
 
 function GroupAIStateEmpty:load()
 end
-

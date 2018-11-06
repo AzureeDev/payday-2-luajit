@@ -49,7 +49,12 @@ end
 
 function ElementSecurityCamera:_fetch_unit_by_unit_id(unit_id)
 	local unit = nil
-	unit = Application:editor() and managers.editor:unit_with_id(tonumber(unit_id)) or managers.worlddefinition:get_unit_on_load(tonumber(unit_id), callback(self, self, "_load_unit"))
+
+	if Application:editor() then
+		unit = managers.editor:unit_with_id(tonumber(unit_id))
+	else
+		unit = managers.worlddefinition:get_unit_on_load(tonumber(unit_id), callback(self, self, "_load_unit"))
+	end
 
 	return unit
 end
@@ -83,7 +88,9 @@ end
 
 function ElementSecurityCamera:add_trigger(id, type, callback)
 	self._triggers[type] = self._triggers[type] or {}
-	self._triggers[type][id] = {callback = callback}
+	self._triggers[type][id] = {
+		callback = callback
+	}
 end
 
 function ElementSecurityCamera:remove_trigger(id, type)
@@ -112,4 +119,3 @@ function ElementSecurityCamera:load(data)
 
 	self._values.destroyed = data.destroyed
 end
-

@@ -13,10 +13,18 @@ function FeedBackManager:init()
 end
 
 function FeedBackManager:setup_preset_effects()
-	self._feedback = {mission_triggered = {}}
-	self._feedback.mission_triggered.camera_shake = {name = "mission_triggered"}
-	self._feedback.mission_triggered.rumble = {name = "mission_triggered"}
-	self._feedback.mission_triggered.above_camera_effect = {effect = "none"}
+	self._feedback = {
+		mission_triggered = {}
+	}
+	self._feedback.mission_triggered.camera_shake = {
+		name = "mission_triggered"
+	}
+	self._feedback.mission_triggered.rumble = {
+		name = "mission_triggered"
+	}
+	self._feedback.mission_triggered.above_camera_effect = {
+		effect = "none"
+	}
 end
 
 function FeedBackManager:get_effect_names()
@@ -30,7 +38,9 @@ function FeedBackManager:get_effect_names()
 end
 
 function FeedBackManager:create(feedback, ...)
-	local extra_params = {...}
+	local extra_params = {
+		...
+	}
 	local f = FeedBack:new(feedback, self._feedback[feedback])
 
 	if not f then
@@ -61,6 +71,7 @@ end
 function FeedBackManager:stop_all(name)
 	managers.rumble:stop("all")
 end
+
 FeedBack = FeedBack or class()
 
 function FeedBack:init(effect_name, effect_table)
@@ -121,7 +132,9 @@ function FeedBack:extra_params(effect)
 end
 
 function FeedBack:play(...)
-	local extra_params = {...}
+	local extra_params = {
+		...
+	}
 	self._extra_params = {}
 
 	for i = 1, #extra_params, 3 do
@@ -157,7 +170,9 @@ function FeedBack:play(...)
 end
 
 function FeedBack:stop(effect, ...)
-	local extra_params = {...}
+	local extra_params = {
+		...
+	}
 
 	for i = 1, #extra_params, 2 do
 		if extra_params[i] and extra_params[i + 1] and f["set_" .. extra_params[i]] then
@@ -189,6 +204,7 @@ function FeedBack:is_playing(effect)
 		return self._feedback[effect]:is_playing()
 	end
 end
+
 FeedBackEffect = FeedBackEffect or class()
 
 function FeedBackEffect:init(name)
@@ -243,6 +259,7 @@ end
 function FeedBackEffect:is_playing()
 	return false
 end
+
 FeedBackrumble = FeedBackrumble or class(FeedBackEffect)
 
 function FeedBackrumble:init(name)
@@ -298,6 +315,7 @@ function FeedBackrumble:is_playing()
 
 	return rumble
 end
+
 FeedBackCameraShake = FeedBackCameraShake or class(FeedBackEffect)
 
 function FeedBackCameraShake:init(name)
@@ -382,6 +400,7 @@ function FeedBackCameraShake:is_playing()
 		return false
 	end
 end
+
 FeedBackAboveCameraEffect = FeedBackAboveCameraEffect or class(FeedBackEffect)
 
 function FeedBackAboveCameraEffect:init(name)
@@ -420,4 +439,3 @@ function FeedBackAboveCameraEffect:stop()
 		World:effect_manager():kill(self._id)
 	end
 end
-

@@ -30,4 +30,3 @@ function CoreShakeCameraCutsceneKey:stop()
 		self._shake_abort_func = nil
 	end
 end
-

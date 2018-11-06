@@ -17,13 +17,13 @@ function FireManager:update(t, dt)
 	for index = #self._doted_enemies, 1, -1 do
 		local dot_info = self._doted_enemies[index]
 
-		if dot_info.fire_damage_received_time + self._fire_dot_grace_period < t and dot_info.fire_dot_counter >= 0.5 then
+		if t > dot_info.fire_damage_received_time + self._fire_dot_grace_period and dot_info.fire_dot_counter >= 0.5 then
 			self:_damage_fire_dot(dot_info)
 
 			dot_info.fire_dot_counter = 0
 		end
 
-		if dot_info.fire_damage_received_time + dot_info.dot_length < t then
+		if t > dot_info.fire_damage_received_time + dot_info.dot_length then
 			if dot_info.fire_effects then
 				for _, fire_effect_id in ipairs(dot_info.fire_effects) do
 					World:effect_manager():fade_kill(fire_effect_id)
@@ -173,17 +173,20 @@ function FireManager:start_burn_body_sound(dot_info, delay)
 	dot_info.sound_source = sound_loop_burn_body
 
 	if delay then
-		managers.enemy:add_delayed_clbk("FireBurnBody", callback(self, self, "_stop_burn_body_sound", sound_loop_burn_body), (TimerManager:game():time() + delay) - 0.5)
+		managers.enemy:add_delayed_clbk("FireBurnBody", callback(self, self, "_stop_burn_body_sound", sound_loop_burn_body), TimerManager:game():time() + delay - 0.5)
 	end
 end
 
 function FireManager:_stop_burn_body_sound(sound_source)
 	sound_source:post_event("burn_loop_body_stop")
-	managers.enemy:add_delayed_clbk("FireBurnBodyFade", callback(self, self, "_release_sound_source", {sound_source = sound_source}), TimerManager:game():time() + 0.5)
+	managers.enemy:add_delayed_clbk("FireBurnBodyFade", callback(self, self, "_release_sound_source", {
+		sound_source = sound_source
+	}), TimerManager:game():time() + 0.5)
 end
 
 function FireManager:_release_sound_source(...)
 end
+
 local tmp_used_flame_objects = nil
 
 function FireManager:_start_enemy_fire_effect(dot_info)
@@ -232,7 +235,9 @@ end
 function FireManager:_damage_fire_dot(dot_info)
 	if dot_info.user_unit and dot_info.user_unit == managers.player:player_unit() or not dot_info.user_unit and Network:is_server() then
 		local attacker_unit = managers.player:player_unit()
-		local col_ray = {unit = dot_info.enemy_unit}
+		local col_ray = {
+			unit = dot_info.enemy_unit
+		}
 		local damage = dot_info.dot_damage
 		local ignite_character = false
 		local variant = "fire"
@@ -307,7 +312,9 @@ function FireManager:detect_and_give_dmg(params)
 		alert_unit
 	})
 
-	local splinters = {mvector3.copy(hit_pos)}
+	local splinters = {
+		mvector3.copy(hit_pos)
+	}
 	local dirs = {
 		Vector3(range, 0, 0),
 		Vector3(-range, 0, 0),
@@ -323,7 +330,13 @@ function FireManager:detect_and_give_dmg(params)
 		mvector3.add(pos, hit_pos)
 
 		local splinter_ray = nil
-		splinter_ray = ignore_unit and World:raycast("ray", hit_pos, pos, "ignore_unit", ignore_unit, "slot_mask", slotmask) or World:raycast("ray", hit_pos, pos, "slot_mask", slotmask)
+
+		if ignore_unit then
+			splinter_ray = World:raycast("ray", hit_pos, pos, "ignore_unit", ignore_unit, "slot_mask", slotmask)
+		else
+			splinter_ray = World:raycast("ray", hit_pos, pos, "slot_mask", slotmask)
+		end
+
 		pos = (splinter_ray and splinter_ray.position or pos) - dir:normalized() * math.min(splinter_ray and splinter_ray.distance or 0, 10)
 		local near_splinter = false
 
@@ -555,6 +568,7 @@ end
 
 function FireManager:player_feedback(position, normal, range, custom_params)
 end
+
 local decal_ray_from = Vector3()
 local decal_ray_to = Vector3()
 
@@ -617,7 +631,9 @@ function FireManager:spawn_sound_and_effects(position, normal, range, effect_nam
 			sound_event_duration = sound_event_duration,
 			sound_event_impact_duration = sound_event_impact_duration
 		}), TimerManager:game():time() + sound_event_impact_duration)
-		managers.enemy:add_delayed_clbk("MolotovImpact", callback(GrenadeBase, GrenadeBase, "_dispose_of_sound", {sound_source = sound_source}), TimerManager:game():time() + sound_event_impact_duration)
+		managers.enemy:add_delayed_clbk("MolotovImpact", callback(GrenadeBase, GrenadeBase, "_dispose_of_sound", {
+			sound_source = sound_source
+		}), TimerManager:game():time() + sound_event_impact_duration)
 	end
 
 	self:project_decal(ray, decal_ray_from, decal_ray_to, on_unit and ray and ray.unit, idstr_decal, idstr_effect)
@@ -638,7 +654,7 @@ function FireManager:_dispose_of_impact_sound(custom_params)
 	managers.enemy:add_delayed_clbk("MolotovBurning", callback(FireManager, FireManager, "_fade_out_burn_loop_sound", {
 		position = custom_params.position,
 		sound_source = sound_source_burning_loop
-	}), (TimerManager:game():time() + t) - custom_params.sound_event_impact_duration)
+	}), TimerManager:game():time() + t - custom_params.sound_event_impact_duration)
 end
 
 function FireManager:_fade_out_burn_loop_sound(custom_params)
@@ -652,4 +668,3 @@ function FireManager:on_simulation_ended()
 	self._enemies_on_fire = {}
 	self._dozers_on_fire = {}
 end
-

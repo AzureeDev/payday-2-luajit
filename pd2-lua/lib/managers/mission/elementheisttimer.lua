@@ -21,4 +21,3 @@ function ElementHeistTimer:timer_operation_subtract_time(time)
 	ElementHeistTimer.super.timer_operation_subtract_time(self, time)
 	managers.game_play_central:modify_heist_timer(-time)
 end
-

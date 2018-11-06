@@ -153,6 +153,7 @@ function LocalizationManager:_setup_macros()
 	}
 	self._input_translations.xb1 = table.map_copy(self._input_translations.xbox360)
 end
+
 local is_PS3 = SystemInfo:platform() == Idstring("PS3")
 
 function LocalizationManager:btn_macro(button, to_upper, nil_if_empty)
@@ -209,7 +210,9 @@ function LocalizationManager:debug_file(file)
 
 	for i, ids in ipairs(ids_in_file) do
 		local s = ids:s()
-		local text = self:text(s, {BTN_INTERACT = self:btn_macro("interact")})
+		local text = self:text(s, {
+			BTN_INTERACT = self:btn_macro("interact")
+		})
 		t[s] = text
 	end
 
@@ -268,4 +271,3 @@ function LocalizationManager:set_input_translation(button_name, translation)
 end
 
 CoreClass.override_class(CoreLocalizationManager.LocalizationManager, LocalizationManager)
-

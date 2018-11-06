@@ -44,4 +44,3 @@ function VanSkinsTweakData:init(tweak_data)
 		sequence_name = "mat_chill_halloween"
 	}
 end
-

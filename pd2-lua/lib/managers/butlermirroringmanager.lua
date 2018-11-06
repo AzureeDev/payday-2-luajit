@@ -25,22 +25,41 @@ end
 
 function ButlerMirroringManager:_setup()
 	if not Global.butler_mirroring then
-		Global.butler_mirroring = {}
-		Global.butler_mirroring._queue = {}
-		Global.butler_mirroring._first_load = true
+		Global.butler_mirroring = {
+			_queue = {},
+			_first_load = true
+		}
 	end
 
 	self._global = Global.butler_mirroring
 
-	managers.mission:add_global_event_listener("butler_mirroring_heist_complete", {Message.OnHeistComplete}, callback(self, self, "_on_heist_complete"))
-	managers.mission:add_global_event_listener("butler_mirroring_achievement", {Message.OnAchievement}, callback(self, self, "_on_achievement"))
-	managers.mission:add_global_event_listener("butler_mirroring_weapon_bought", {Message.OnWeaponBought}, callback(self, self, "_on_weapon_bought"))
-	managers.mission:add_global_event_listener("butler_mirroring_safe_house_upgrade", {Message.OnSafeHouseUpgrade}, callback(self, self, "_on_safe_house_upgrade"))
-	managers.mission:add_global_event_listener("butler_mirroring_enter_safehouse", {Message.OnEnterSafeHouse}, callback(self, self, "_on_enter_safe_house"))
-	managers.mission:add_global_event_listener("butler_mirroring_on_mission_end", {Message.OnMissionEnd}, callback(self, self, "_on_mission_end"))
-	managers.mission:add_global_event_listener("butler_mirroring_safe_opened", {Message.OnSafeOpened}, callback(self, self, "_on_safe_opened"))
-	managers.mission:add_global_event_listener("butler_mirroring_days_in_row", {Message.OnDaysInRow}, callback(self, self, "_on_days_in_row"))
-	managers.mission:add_global_event_listener("butler_mirroring_better_crimespree", {Message.OnHighestCrimeSpree}, callback(self, self, "_on_new_crimespree_record"))
+	managers.mission:add_global_event_listener("butler_mirroring_heist_complete", {
+		Message.OnHeistComplete
+	}, callback(self, self, "_on_heist_complete"))
+	managers.mission:add_global_event_listener("butler_mirroring_achievement", {
+		Message.OnAchievement
+	}, callback(self, self, "_on_achievement"))
+	managers.mission:add_global_event_listener("butler_mirroring_weapon_bought", {
+		Message.OnWeaponBought
+	}, callback(self, self, "_on_weapon_bought"))
+	managers.mission:add_global_event_listener("butler_mirroring_safe_house_upgrade", {
+		Message.OnSafeHouseUpgrade
+	}, callback(self, self, "_on_safe_house_upgrade"))
+	managers.mission:add_global_event_listener("butler_mirroring_enter_safehouse", {
+		Message.OnEnterSafeHouse
+	}, callback(self, self, "_on_enter_safe_house"))
+	managers.mission:add_global_event_listener("butler_mirroring_on_mission_end", {
+		Message.OnMissionEnd
+	}, callback(self, self, "_on_mission_end"))
+	managers.mission:add_global_event_listener("butler_mirroring_safe_opened", {
+		Message.OnSafeOpened
+	}, callback(self, self, "_on_safe_opened"))
+	managers.mission:add_global_event_listener("butler_mirroring_days_in_row", {
+		Message.OnDaysInRow
+	}, callback(self, self, "_on_days_in_row"))
+	managers.mission:add_global_event_listener("butler_mirroring_better_crimespree", {
+		Message.OnHighestCrimeSpree
+	}, callback(self, self, "_on_new_crimespree_record"))
 end
 
 function ButlerMirroringManager:has_sound_event()
@@ -53,10 +72,12 @@ function ButlerMirroringManager:get_sound_event()
 	for k, v in pairs(self._global._queue) do
 		if not priority or priority < v.priority then
 			priority = v.priority
-			choosen = {{
-				k,
-				v
-			}}
+			choosen = {
+				{
+					k,
+					v
+				}
+			}
 		elseif v.priority == priority then
 			table.insert(choosen, {
 				k,
@@ -256,21 +277,27 @@ function ButlerMirroringManager:_on_heist_complete(level_id, difficulty_id)
 		self:_set_queue("Message.OnHeistComplete", {
 			debug = "On heist complete VO",
 			forgettable = true,
-			sound_events = {sound_event},
+			sound_events = {
+				sound_event
+			},
 			priority = priorities.heist_result + 0.5
 		}, 1.1, 99)
 	elseif managers.statistics:session_hit_accuracy() > 80 then
 		self:_set_queue("heist_result", {
 			debug = "On won a heist VO",
 			forgettable = true,
-			sound_events = {"Play_btl_acc_80"},
+			sound_events = {
+				"Play_btl_acc_80"
+			},
 			priority = priorities.heist_result + 0.5
 		})
 	else
 		self:_set_queue("heist_result", {
 			debug = "On won a heist VO",
 			forgettable = true,
-			sound_events = {"Play_btl_lvl_won_gen"},
+			sound_events = {
+				"Play_btl_lvl_won_gen"
+			},
 			priority = priorities.heist_result
 		})
 	end
@@ -325,7 +352,9 @@ function ButlerMirroringManager:_on_achievement(id)
 		self:_set_queue("Message.OnAchievement", {
 			debug = "On achievement VO",
 			forgettable = true,
-			sound_events = {sound_event},
+			sound_events = {
+				sound_event
+			},
 			priority = priorities.achievement
 		})
 	else
@@ -337,20 +366,26 @@ function ButlerMirroringManager:_on_achievement(id)
 			self:_set_queue("Message.OnAchievement", {
 				debug = "On all achievements VO",
 				important = true,
-				sound_events = {"Play_btl_ach_total_all"},
+				sound_events = {
+					"Play_btl_ach_total_all"
+				},
 				priority = priorities.achievement + 0.9
 			})
 		elseif at_remark then
 			self:_set_queue("Message.OnAchievement", {
 				debug = "On num achievements VO",
-				sound_events = {at_remark},
+				sound_events = {
+					at_remark
+				},
 				priority = priorities.achievement + 0.2
 			})
 		else
 			self:_set_queue("Message.OnAchievement", {
 				debug = "On generic achievement VO",
 				forgettable = true,
-				sound_events = {"Play_btl_ach_new_01"},
+				sound_events = {
+					"Play_btl_ach_new_01"
+				},
 				priority = priorities.achievement + 0.1
 			})
 		end
@@ -361,7 +396,9 @@ function ButlerMirroringManager:_on_level_up()
 	if math.random() > 0.4 then
 		self:_set_queue("Message.OnLevelUp", {
 			debug = "On level up VO",
-			sound_events = {"Play_btl_lvl"},
+			sound_events = {
+				"Play_btl_lvl"
+			},
 			priority = priorities.new_level
 		}, 1.1, 99)
 	end
@@ -371,7 +408,9 @@ function ButlerMirroringManager:_on_weapon_bought()
 	if math.random() > 0.4 then
 		self:_set_queue("Message.OnWeaponBought", {
 			debug = "On weapon bought VO",
-			sound_events = {"Play_btl_wpn_new"},
+			sound_events = {
+				"Play_btl_wpn_new"
+			},
 			priority = priorities.new_weapon
 		}, 1.1, 99)
 	end
@@ -380,7 +419,9 @@ end
 function ButlerMirroringManager:_on_safe_house_upgrade()
 	self:_set_queue("Message.OnSafeHouseUpgrade", {
 		debug = "on safehouse upgrade VO",
-		sound_events = {"Play_btl_room_updated"},
+		sound_events = {
+			"Play_btl_room_updated"
+		},
 		priority = priorities.room_upgrade
 	}, 1.1, 99)
 end
@@ -410,7 +451,9 @@ end
 
 function ButlerMirroringManager:_on_enter_safe_house()
 	self._global._queue.this_visit = nil
-	local visitor_lines = {vlad = "Play_btl_visit_vlad"}
+	local visitor_lines = {
+		vlad = "Play_btl_visit_vlad"
+	}
 	local found = World:find_units_quick("all", 16)
 	local sound_event, any_visitor = nil
 
@@ -426,7 +469,9 @@ function ButlerMirroringManager:_on_enter_safe_house()
 		self:_set_queue("this_visit", {
 			debug = "on visitor VO",
 			forgettable = true,
-			sound_events = {sound_event},
+			sound_events = {
+				sound_event
+			},
 			priority = priorities.this_visit
 		})
 	end
@@ -450,7 +495,9 @@ function ButlerMirroringManager:_on_enter_safe_house()
 			self:_set_queue("this_visit", {
 				debug = "on time played VO",
 				forgettable = true,
-				sound_events = {sound_event},
+				sound_events = {
+					sound_event
+				},
 				priority = priorities.this_visit
 			})
 		end
@@ -468,7 +515,9 @@ function ButlerMirroringManager:_on_enter_safe_house()
 			self:_set_queue("this_visit", {
 				debug = "on alone VO",
 				forgettable = true,
-				sound_events = {sound_event},
+				sound_events = {
+					sound_event
+				},
 				priority = priorities.this_visit
 			})
 		end
@@ -480,7 +529,9 @@ function ButlerMirroringManager:_on_mission_end(success)
 		self:_set_queue("heist_result", {
 			debug = "on job failed VO",
 			forgettable = true,
-			sound_events = {"Play_btl_lvl_fail_gen"},
+			sound_events = {
+				"Play_btl_lvl_fail_gen"
+			},
 			priority = priorities.heist_result
 		})
 	end
@@ -493,7 +544,9 @@ function ButlerMirroringManager:_on_safe_opened(item)
 
 	self:_set_queue("new_skin", {
 		debug = "on skin gained VO",
-		sound_events = {"Play_btl_wpn_skin"},
+		sound_events = {
+			"Play_btl_wpn_skin"
+		},
 		priority = priorities.new_skin
 	})
 end
@@ -509,7 +562,9 @@ function ButlerMirroringManager:_on_days_in_row(days)
 	if line then
 		self:_set_queue("days_in_row", {
 			debug = "on days in row VO",
-			sound_events = {line},
+			sound_events = {
+				line
+			},
 			priority = priorities.days_in_row
 		})
 	end
@@ -519,8 +574,9 @@ function ButlerMirroringManager:_on_new_crimespree_record(new_record)
 	self:_set_queue("crimespree", {
 		debug = "on crimespree record VO",
 		forgettable = true,
-		sound_events = {"Play_btl_crime_spree_record"},
+		sound_events = {
+			"Play_btl_crime_spree_record"
+		},
 		priority = priorities.crimespree
 	})
 end
-

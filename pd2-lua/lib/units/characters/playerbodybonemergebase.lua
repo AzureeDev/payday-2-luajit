@@ -58,4 +58,3 @@ end
 function PlayerBodyBoneMergeBase:set_allow_invisible(allow)
 	self._allow_invisible = allow
 end
-

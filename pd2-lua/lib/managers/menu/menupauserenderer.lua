@@ -105,11 +105,11 @@ function MenuPauseRenderer:update(t, dt)
 
 	self._menu_bg:set_gradient_points({
 		0,
-		(tweak_data.screen_colors.button_stage_2 / 4):with_alpha(0.75),
+		tweak_data.screen_colors.button_stage_2 / 4:with_alpha(0.75),
 		y,
-		(tweak_data.screen_colors.button_stage_3 / 4):with_alpha(0.65),
+		tweak_data.screen_colors.button_stage_3 / 4:with_alpha(0.65),
 		1,
-		(tweak_data.screen_colors.button_stage_2 / 4):with_alpha(0.75)
+		tweak_data.screen_colors.button_stage_2 / 4:with_alpha(0.75)
 	})
 end
 
@@ -145,4 +145,3 @@ end
 function MenuPauseRenderer:close(...)
 	MenuPauseRenderer.super.close(self, ...)
 end
-

@@ -150,6 +150,7 @@ function MainMenuGui:set_state(state, selected)
 		managers.menu:active_menu().renderer:disable_input(0.2)
 	end
 end
+
 local box_objects = {
 	"text_object",
 	"info_text_object",
@@ -307,7 +308,9 @@ function MainMenuGui:create_box(params, index)
 			unselected_text = unselected_text,
 			selected_color = selected_color,
 			unselected_color = unselected_color,
-			shape = {gui_object:shape()}
+			shape = {
+				gui_object:shape()
+			}
 		}
 	end
 
@@ -346,16 +349,22 @@ function MainMenuGui:create_box(params, index)
 			unselected_text = info_text,
 			selected_color = selected_color,
 			unselected_color = unselected_color,
-			shape = {gui_object:shape()}
+			shape = {
+				gui_object:shape()
+			}
 		}
 	end
 
-	select_object = select_area and panel:panel(select_area) or panel:panel({
-		halign = "scale",
-		align = "scale",
-		vertical = "scale",
-		valign = "scale"
-	})
+	if select_area then
+		select_object = panel:panel(select_area)
+	else
+		select_object = panel:panel({
+			halign = "scale",
+			align = "scale",
+			vertical = "scale",
+			valign = "scale"
+		})
+	end
 
 	if images then
 		local text_vertical = params.text_vertical or "top"
@@ -432,7 +441,9 @@ function MainMenuGui:create_box(params, index)
 					selected_color = selected_color,
 					unselected_color = unselected_color,
 					params = params,
-					shape = {image_panel:shape()}
+					shape = {
+						image_panel:shape()
+					}
 				})
 			end
 		end
@@ -450,23 +461,18 @@ function MainMenuGui:create_box(params, index)
 		local bg_select_area = params.bg_select_area or false
 		local bg_rotation = params.bg_rotation or false
 		local gui_object = nil
-
-		if background_image then
-			gui_object = (bg_select_area and select_object or panel):bitmap({
-				layer = 0,
-				texture = background_image,
-				color = unselected_color,
-				blend_mode = unselected_blend_mode,
-				visible = not selectable
-			})
-		else
-			gui_object = (bg_select_area and select_object or panel):rect({
-				layer = 0,
-				color = unselected_color,
-				blend_mode = unselected_blend_mode,
-				visible = not selectable
-			})
-		end
+		gui_object = (not background_image or bg_select_area and select_object or panel:bitmap({
+			layer = 0,
+			texture = background_image,
+			color = unselected_color,
+			blend_mode = unselected_blend_mode,
+			visible = not selectable
+		})) and bg_select_area and select_object or panel:rect({
+			layer = 0,
+			color = unselected_color,
+			blend_mode = unselected_blend_mode,
+			visible = not selectable
+		})
 
 		if bg_rotation then
 			gui_object:set_rotation(bg_rotation)
@@ -898,16 +904,24 @@ function MainMenuGui:_update_legends(name)
 
 		if not managers.menu:is_pc_controller() then
 			local legends = {
-				[#legends + 1] = {string_id = "menu_legend_rotate"},
-				[#legends + 1] = {string_id = "menu_legend_preview_move"}
+				[#legends + 1] = {
+					string_id = "menu_legend_rotate"
+				},
+				[#legends + 1] = {
+					string_id = "menu_legend_preview_move"
+				}
 			}
 
 			if show_select then
-				legends[#legends + 1] = {string_id = "menu_legend_select"}
+				legends[#legends + 1] = {
+					string_id = "menu_legend_select"
+				}
 			end
 
 			if show_back then
-				legends[#legends + 1] = {string_id = "menu_legend_back"}
+				legends[#legends + 1] = {
+					string_id = "menu_legend_back"
+				}
 			end
 
 			local legend_text = ""
@@ -1168,4 +1182,3 @@ function MainMenuGui:reload()
 	self:close()
 	self:init(self._ws, self._fullscreen_ws, self._node)
 end
-

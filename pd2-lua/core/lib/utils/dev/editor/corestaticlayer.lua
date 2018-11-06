@@ -408,7 +408,12 @@ function StaticLayer:draw_marker(t, dt)
 	end
 
 	local ray = nil
-	ray = alive(self._selected_unit) and self._selected_unit:raycast(self._current_pos + Vector3(0, 0, 2000), self._current_pos + Vector3(0, 0, -500), nil, self._slot_mask) or World:raycast(self._current_pos + Vector3(0, 0, 2000), self._current_pos + Vector3(0, 0, -500), nil, self._slot_mask)
+
+	if alive(self._selected_unit) then
+		ray = self._selected_unit:raycast(self._current_pos + Vector3(0, 0, 2000), self._current_pos + Vector3(0, 0, -500), nil, self._slot_mask)
+	else
+		ray = World:raycast(self._current_pos + Vector3(0, 0, 2000), self._current_pos + Vector3(0, 0, -500), nil, self._slot_mask)
+	end
 
 	if ray and ray.unit then
 		Application:draw_line(self._current_pos - Vector3(0, 0, 2000), self._current_pos + Vector3(0, 0, 2000), 1, 0, 0)
@@ -603,4 +608,3 @@ function StaticLayer:add_triggers()
 		vc:add_trigger(Idstring(k), cb)
 	end
 end
-

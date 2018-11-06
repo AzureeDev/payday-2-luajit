@@ -17,4 +17,3 @@ end
 function NetworkFriend:signin_status()
 	return self._signin_status
 end
-

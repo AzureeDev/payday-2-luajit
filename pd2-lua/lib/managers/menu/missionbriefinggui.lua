@@ -241,7 +241,7 @@ function MissionBriefingTabItem.animate_select(o, center_helper, instant)
 	local center_x, center_y = o:center()
 
 	if alive(center_helper) then
-		local center_x, center_y = center_helper:center()
+		slot6, slot7 = center_helper:center()
 	end
 
 	local aspect = o:texture_width() / math.max(1, o:texture_height())
@@ -279,7 +279,7 @@ function MissionBriefingTabItem.animate_deselect(o, center_helper)
 	local center_x, center_y = o:center()
 
 	if alive(center_helper) then
-		local center_x, center_y = center_helper:center()
+		slot5, slot6 = center_helper:center()
 	end
 
 	local aspect = o:texture_width() / math.max(1, o:texture_height())
@@ -295,6 +295,7 @@ function MissionBriefingTabItem.animate_deselect(o, center_helper)
 		o:set_center(center_x, center_y)
 	end)
 end
+
 DescriptionItem = DescriptionItem or class(MissionBriefingTabItem)
 
 function DescriptionItem:init(panel, text, i, saved_descriptions)
@@ -356,7 +357,11 @@ function DescriptionItem:init(panel, text, i, saved_descriptions)
 	local is_level_ghostable = managers.job:is_level_ghostable(managers.job:current_level_id()) and managers.groupai and managers.groupai:state():whisper_mode()
 
 	if is_level_ghostable and Network:is_server() then
-		desc_string = managers.job:is_level_ghostable_required(managers.job:current_level_id()) and desc_string .. "\n\n" .. managers.localization:text("menu_ghostable_stage_required") or desc_string .. "\n\n" .. managers.localization:text("menu_ghostable_stage")
+		if managers.job:is_level_ghostable_required(managers.job:current_level_id()) then
+			desc_string = desc_string .. "\n\n" .. managers.localization:text("menu_ghostable_stage_required")
+		else
+			desc_string = desc_string .. "\n\n" .. managers.localization:text("menu_ghostable_stage")
+		end
 	end
 
 	local desc_text = self._scroll_panel:text({
@@ -406,12 +411,14 @@ function DescriptionItem:reduce_to_small_font(iteration)
 	local show_scroll_line_bottom = self._scroll_panel:h() < desc_text:bottom()
 
 	if self._scroll_box then
-		self._scroll_box:create_sides(self._scroll_panel, {sides = {
-			0,
-			0,
-			show_scroll_line_top and 2 or 0,
-			show_scroll_line_bottom and 2 or 0
-		}})
+		self._scroll_box:create_sides(self._scroll_panel, {
+			sides = {
+				0,
+				0,
+				show_scroll_line_top and 2 or 0,
+				show_scroll_line_bottom and 2 or 0
+			}
+		})
 	end
 end
 
@@ -423,31 +430,37 @@ function DescriptionItem:_chk_add_scrolling()
 
 	if self._scroll_panel:h() < desc_text:h() and not self._scrolling then
 		self._scrolling = true
-		self._scroll_box = BoxGuiObject:new(self._scroll_panel, {sides = {
-			0,
-			0,
-			0,
-			0
-		}})
+		self._scroll_box = BoxGuiObject:new(self._scroll_panel, {
+			sides = {
+				0,
+				0,
+				0,
+				0
+			}
+		})
 		self._show_scroll_line_top = false
 		self._show_scroll_line_bottom = false
 		local show_scroll_line_top = desc_text:top() < 0
 		local show_scroll_line_bottom = self._scroll_panel:h() < desc_text:bottom()
 
 		if show_scroll_line_top ~= self._show_scroll_line_top or show_scroll_line_bottom ~= self._show_scroll_line_bottom then
-			self._scroll_box:create_sides(self._scroll_panel, {sides = {
-				0,
-				0,
-				show_scroll_line_top and 2 or 0,
-				show_scroll_line_bottom and 2 or 0
-			}})
+			self._scroll_box:create_sides(self._scroll_panel, {
+				sides = {
+					0,
+					0,
+					show_scroll_line_top and 2 or 0,
+					show_scroll_line_bottom and 2 or 0
+				}
+			})
 
 			self._show_scroll_line_top = show_scroll_line_top
 			self._show_scroll_line_bottom = show_scroll_line_bottom
 		end
 
 		if not managers.menu:is_pc_controller() then
-			local legends = {"menu_legend_preview_move"}
+			local legends = {
+				"menu_legend_preview_move"
+			}
 			local t_text = ""
 
 			for i, string_id in ipairs(legends) do
@@ -483,7 +496,11 @@ function DescriptionItem:on_whisper_mode_changed()
 		local is_level_ghostable = managers.job:is_level_ghostable(managers.job:current_level_id()) and managers.groupai and managers.groupai:state():whisper_mode()
 
 		if is_level_ghostable then
-			desc_string = managers.job:is_level_ghostable_required(managers.job:current_level_id()) and desc_string .. "\n\n" .. managers.localization:text("menu_ghostable_stage_required") or desc_string .. "\n\n" .. managers.localization:text("menu_ghostable_stage")
+			if managers.job:is_level_ghostable_required(managers.job:current_level_id()) then
+				desc_string = desc_string .. "\n\n" .. managers.localization:text("menu_ghostable_stage_required")
+			else
+				desc_string = desc_string .. "\n\n" .. managers.localization:text("menu_ghostable_stage")
+			end
 		end
 
 		if managers.skirmish:is_weekly_skirmish() and not Global.statistics_manager.playing_from_start then
@@ -564,12 +581,14 @@ function DescriptionItem:update(t, dt)
 		local show_scroll_line_bottom = self._scroll_panel:h() < desc_text:bottom()
 
 		if show_scroll_line_top ~= self._show_scroll_line_top or show_scroll_line_bottom ~= self._show_scroll_line_bottom then
-			self._scroll_box:create_sides(self._scroll_panel, {sides = {
-				0,
-				0,
-				show_scroll_line_top and 2 or 0,
-				show_scroll_line_bottom and 2 or 0
-			}})
+			self._scroll_box:create_sides(self._scroll_panel, {
+				sides = {
+					0,
+					0,
+					show_scroll_line_top and 2 or 0,
+					show_scroll_line_bottom and 2 or 0
+				}
+			})
 
 			self._show_scroll_line_top = show_scroll_line_top
 			self._show_scroll_line_bottom = show_scroll_line_bottom
@@ -598,6 +617,7 @@ function DescriptionItem:mouse_pressed(button, x, y)
 
 	return inside
 end
+
 AssetsItem = AssetsItem or class(MissionBriefingTabItem)
 
 function AssetsItem:init(panel, text, i, assets_names, max_assets, menu_component_data)
@@ -647,7 +667,9 @@ function AssetsItem:get_requested_textures()
 end
 
 function AssetsItem:add_preplanning_button()
-	local preplanning_panel = self._panel:panel({name = "preplanning"})
+	local preplanning_panel = self._panel:panel({
+		name = "preplanning"
+	})
 
 	preplanning_panel:set_right(0)
 	preplanning_panel:grow(-20, -20)
@@ -753,7 +775,7 @@ function AssetsItem:chk_preplanning_textures_done()
 		text:set_visible(managers.menu:is_pc_controller())
 
 		local level_id = managers.job:current_level_id()
-		local button = preplanning_panel:bitmap({
+		slot4 = preplanning_panel:bitmap({
 			name = "button",
 			alpha = 0.8,
 			blend_mode = "add",
@@ -797,24 +819,30 @@ function AssetsItem:create_assets(assets_names, max_assets)
 		local center_y = self._panel:h() * (i % 2 > 0 and 0.295 or 0.815)
 		local texture = assets_names[i][1]
 		local asset = nil
-		asset = texture and DB:has(Idstring("texture"), texture) and self._panel:bitmap({
-			h = 65,
-			valign = "top",
-			w = 65,
-			layer = 1,
-			name = "asset_" .. tostring(i),
-			texture = texture,
-			rotation = math.random(2) - 1.5
-		}) or self._panel:bitmap({
-			texture = "guis/textures/pd2/endscreen/what_is_this",
-			h = 65,
-			w = 65,
-			alpha = 0,
-			valign = "top",
-			layer = 1,
-			name = "asset_" .. tostring(i),
-			rotation = math.random(2) - 1.5
-		})
+
+		if texture and DB:has(Idstring("texture"), texture) then
+			asset = self._panel:bitmap({
+				h = 65,
+				valign = "top",
+				w = 65,
+				layer = 1,
+				name = "asset_" .. tostring(i),
+				texture = texture,
+				rotation = math.random(2) - 1.5
+			})
+		else
+			asset = self._panel:bitmap({
+				texture = "guis/textures/pd2/endscreen/what_is_this",
+				h = 65,
+				w = 65,
+				alpha = 0,
+				valign = "top",
+				layer = 1,
+				name = "asset_" .. tostring(i),
+				rotation = math.random(2) - 1.5
+			})
+		end
+
 		local aspect = asset:texture_width() / math.max(1, asset:texture_height())
 
 		asset:set_w(asset:h() * aspect)
@@ -918,12 +946,14 @@ function AssetsItem:create_assets(assets_names, max_assets)
 
 		self._select_box_panel:set_shape(first_rect:shape())
 
-		self._select_box = BoxGuiObject:new(self._select_box_panel, {sides = {
-			2,
-			2,
-			2,
-			2
-		}})
+		self._select_box = BoxGuiObject:new(self._select_box_panel, {
+			sides = {
+				2,
+				2,
+				2,
+				2
+			}
+		})
 	end
 
 	self:post_init()
@@ -974,7 +1004,7 @@ function AssetsItem:update_asset_positions_and_text()
 			if asset_text:world_left() < 10 then
 				asset_text:set_world_left(10)
 				asset_text:set_align("left")
-			elseif self._panel:w() - 10 < asset_text:world_right() then
+			elseif asset_text:world_right() > self._panel:w() - 10 then
 				asset_text:set_world_right(self._panel:w() - 10)
 				asset_text:set_align("right")
 			else
@@ -1053,12 +1083,14 @@ function AssetsItem:select_asset(i, instant)
 
 	if rect then
 		self._select_box_panel:set_shape(rect:shape())
-		self._select_box:create_sides(self._select_box_panel, {sides = {
-			2,
-			2,
-			2,
-			2
-		}})
+		self._select_box:create_sides(self._select_box_panel, {
+			sides = {
+				2,
+				2,
+				2,
+				2
+			}
+		})
 	end
 
 	if self._asset_locked[i] then
@@ -1136,8 +1168,8 @@ function AssetsItem:select_asset(i, instant)
 
 			if a_left + asset_text:left() < 12 then
 				asset_text:set_left(12 - a_left)
-			elseif self._panel:w() - 12 < a_left + asset_text:right() then
-				asset_text:set_right((self._panel:w() - 12) - a_left)
+			elseif a_left + asset_text:right() > self._panel:w() - 12 then
+				asset_text:set_right(self._panel:w() - 12 - a_left)
 			end
 		end
 	end
@@ -1314,7 +1346,7 @@ function AssetsItem:move(x, y)
 		local step = 2 * x + (is_top and math.max(y, 0) or math.min(y, 0))
 		new_selected = asset_selected + step
 
-		if #self._assets_list < new_selected then
+		if new_selected > #self._assets_list then
 			local old_page = math.ceil(asset_selected / self._num_items)
 			local new_page = math.ceil(new_selected / self._num_items)
 
@@ -1383,11 +1415,17 @@ function AssetsItem:_return_asset_info(i)
 	if self._asset_locked[i] then
 		local can_unlock = self._assets_names[i][5] and managers.money:can_afford_mission_asset(self._assets_names[i][4])
 		local can_client_unlock = managers.assets.ALLOW_CLIENTS_UNLOCK == true or type(managers.assets.ALLOW_CLIENTS_UNLOCK) == "string" and managers.player:has_team_category_upgrade("player", managers.assets.ALLOW_CLIENTS_UNLOCK)
-		asset_cost = (Network:is_server() or can_client_unlock) and can_unlock and managers.money:get_mission_asset_cost_by_id(self._assets_names[i][4]) or true
+
+		if (Network:is_server() or can_client_unlock) and can_unlock then
+			asset_cost = managers.money:get_mission_asset_cost_by_id(self._assets_names[i][4])
+		else
+			asset_cost = true
+		end
 	end
 
 	return i, asset_cost
 end
+
 LoadoutItem = LoadoutItem or class(AssetsItem)
 
 function LoadoutItem:init(panel, text, i, assets_names, menu_component_data)
@@ -1517,25 +1555,37 @@ function LoadoutItem:open_node(node)
 		self._my_menu_component_data.current_slot = managers.blackmarket:equipped_weapon_slot("primaries")
 
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_primaries_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_primaries_loadout()
+		})
 	elseif node == 2 then
 		self._my_menu_component_data.changing_loadout = "secondary"
 		self._my_menu_component_data.current_slot = managers.blackmarket:equipped_weapon_slot("secondaries")
 
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_secondaries_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_secondaries_loadout()
+		})
 	elseif node == 3 then
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_melee_weapon_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_melee_weapon_loadout()
+		})
 	elseif node == 4 then
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_armor_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_armor_loadout()
+		})
 	elseif node == 5 then
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_deployable_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_deployable_loadout()
+		})
 	elseif node == 6 then
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_grenade_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_grenade_loadout()
+		})
 	end
 
 	managers.menu_component:on_ready_pressed_mission_briefing_gui(false)
@@ -1584,20 +1634,20 @@ function LoadoutItem:populate_category(category, data)
 			guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
 		end
 
-		local new_data = {
+		new_data = {
 			name = crafted.weapon_id,
 			name_localized = managers.weapon_factory:get_weapon_name_by_factory_id(crafted.factory_id),
 			category = category,
 			slot = i,
-			unlocked = managers.blackmarket:weapon_unlocked(crafted.weapon_id)
+			unlocked = managers.blackmarket:weapon_unlocked(crafted.weapon_id),
+			lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level",
+			equipped = crafted.equipped,
+			can_afford = true,
+			skill_based = weapon_data[crafted.weapon_id].skill_based,
+			skill_name = new_data.skill_based and "bm_menu_skill_locked_" .. new_data.name,
+			func_based = weapon_data[crafted.weapon_id].func_based,
+			level = managers.blackmarket:weapon_level(crafted.weapon_id)
 		}
-		new_data.lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level"
-		new_data.equipped = crafted.equipped
-		new_data.can_afford = true
-		new_data.skill_based = weapon_data[crafted.weapon_id].skill_based
-		new_data.skill_name = new_data.skill_based and "bm_menu_skill_locked_" .. new_data.name
-		new_data.func_based = weapon_data[crafted.weapon_id].func_based
-		new_data.level = managers.blackmarket:weapon_level(crafted.weapon_id)
 		local texture_name = tweak_data.weapon[crafted.weapon_id].texture_name or tostring(crafted.weapon_id)
 		new_data.bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/weapons/" .. texture_name
 		new_data.comparision_data = new_data.unlocked and managers.blackmarket:get_weapon_stats(category, i)
@@ -1635,17 +1685,17 @@ function LoadoutItem:populate_category(category, data)
 
 	for i = 1, max_items, 1 do
 		if not data[i] then
-			local new_data = {
+			new_data = {
 				name = "empty_slot",
-				name_localized = managers.localization:text("bm_menu_empty_weapon_slot")
+				name_localized = managers.localization:text("bm_menu_empty_weapon_slot"),
+				name_localized_selected = new_data.name_localized,
+				is_loadout = true,
+				category = category,
+				empty_slot = true,
+				slot = i,
+				unlocked = true,
+				equipped = false
 			}
-			new_data.name_localized_selected = new_data.name_localized
-			new_data.is_loadout = true
-			new_data.category = category
-			new_data.empty_slot = true
-			new_data.slot = i
-			new_data.unlocked = true
-			new_data.equipped = false
 			data[i] = new_data
 		end
 	end
@@ -1675,15 +1725,15 @@ function LoadoutItem:populate_armors(data)
 
 		if bm_data.owned then
 			index = index + 1
-			local new_data = {
+			new_data = {
 				name = tweak_data.blackmarket.armors[armor_id].name_id,
 				category = "armors",
 				slot = index,
-				unlocked = bm_data.unlocked
+				unlocked = bm_data.unlocked,
+				lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level",
+				equipped = bm_data.equipped,
+				bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/armors/" .. armor_id
 			}
-			new_data.lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level"
-			new_data.equipped = bm_data.equipped
-			new_data.bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/armors/" .. armor_id
 
 			if not new_data.equipped then
 				table.insert(new_data, "a_equip")
@@ -1695,7 +1745,7 @@ function LoadoutItem:populate_armors(data)
 
 	for i = 1, 9, 1 do
 		if not data[i] then
-			local new_data = {
+			new_data = {
 				name = "empty",
 				name_localized = "",
 				category = "armors",
@@ -1722,7 +1772,7 @@ function LoadoutItem:populate_deployables(data)
 			guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
 		end
 
-		local new_data = {
+		new_data = {
 			name = deployable,
 			name_localized = managers.localization:text(tweak_data.upgrades.definitions[deployable].name_id),
 			category = "deployables",
@@ -1743,7 +1793,7 @@ function LoadoutItem:populate_deployables(data)
 
 	for i = 1, 9, 1 do
 		if not data[i] then
-			local new_data = {
+			new_data = {
 				name = "empty",
 				name_localized = "",
 				category = "deployables",
@@ -1769,7 +1819,7 @@ function LoadoutItem:populate_grenades(data)
 			guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
 		end
 
-		local new_data = {
+		new_data = {
 			name = grenade,
 			name_localized = managers.localization:text(tweak_data.upgrades.definitions[grenade].name_id),
 			category = "grenades",
@@ -1790,7 +1840,7 @@ function LoadoutItem:populate_grenades(data)
 
 	for i = 1, 9, 1 do
 		if not data[i] then
-			local new_data = {
+			new_data = {
 				name = "empty",
 				name_localized = "",
 				category = "grenades",
@@ -1818,7 +1868,9 @@ function LoadoutItem:create_primaries_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_primaries")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_primaries")
+	}
 
 	return data
 end
@@ -1838,7 +1890,9 @@ function LoadoutItem:create_secondaries_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_secondaries")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_secondaries")
+	}
 
 	return data
 end
@@ -1858,7 +1912,9 @@ function LoadoutItem:create_deployable_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_deployables")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_deployables")
+	}
 
 	return data
 end
@@ -1878,7 +1934,9 @@ function LoadoutItem:create_grenade_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_grenades")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_grenades")
+	}
 
 	return data
 end
@@ -1898,7 +1956,9 @@ function LoadoutItem:create_melee_weapon_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_melee_weapons")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_melee_weapons")
+	}
 
 	return data
 end
@@ -1918,7 +1978,9 @@ function LoadoutItem:create_armor_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_armors")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_armors")
+	}
 
 	return data
 end
@@ -1930,6 +1992,7 @@ end
 function LoadoutItem.animate_deselect(o, center_helper, instant)
 	LoadoutItem.super.animate_deselect(o, center_helper, instant)
 end
+
 TeamLoadoutItem = TeamLoadoutItem or class(MissionBriefingTabItem)
 
 function TeamLoadoutItem:init(panel, text, i)
@@ -1974,12 +2037,14 @@ function TeamLoadoutItem:reduce_to_small_font(iteration)
 
 	for i = 1, tweak_data.max_players, 1 do
 		if self._player_slots[i].box then
-			self._player_slots[i].box:create_sides(self._player_slots[i].panel, {sides = {
-				1,
-				1,
-				1,
-				1
-			}})
+			self._player_slots[i].box:create_sides(self._player_slots[i].panel, {
+				sides = {
+					1,
+					1,
+					1,
+					1
+				}
+			})
 		end
 	end
 end
@@ -2100,8 +2165,18 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 		for _, part_id in ipairs(parts) do
 			stats = factory[part_id] and factory[part_id].stats or false
 			custom_stats = factory[part_id] and factory[part_id].custom_stats or false
-			has_stat = stats and table.size(stats) > 1 and true or false
-			has_team = custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier) and true or false
+
+			if stats and table.size(stats) > 1 then
+				has_stat = true
+			else
+				has_stat = false
+			end
+
+			if custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier) then
+				has_team = true
+			else
+				has_team = false
+			end
 
 			if has_stat then
 				table.insert(textures, "guis/textures/pd2/blackmarket/inv_mod_bonus_stats")
@@ -2114,8 +2189,18 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 
 		if #textures == 0 and outfit.primary.cosmetics and outfit.primary.cosmetics.bonus and not managers.job:is_current_job_competitive() then
 			local bonus_data = tweak_data.economy.bonuses[tweak_data.blackmarket.weapon_skins[outfit.primary.cosmetics.id].bonus]
-			has_stat = bonus_data and bonus_data.stats and true or false
-			has_team = bonus_data and (bonus_data.exp_multiplier or bonus_data.money_multiplier) and true or false
+
+			if bonus_data and bonus_data.stats then
+				has_stat = true
+			else
+				has_stat = false
+			end
+
+			if bonus_data and (bonus_data.exp_multiplier or bonus_data.money_multiplier) then
+				has_team = true
+			else
+				has_team = false
+			end
 
 			if has_stat then
 				table.insert(textures, "guis/textures/pd2/blackmarket/inv_mod_bonus_stats")
@@ -2225,8 +2310,18 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 		for _, part_id in ipairs(parts) do
 			stats = factory[part_id] and factory[part_id].stats or false
 			custom_stats = factory[part_id] and factory[part_id].custom_stats or false
-			has_stat = stats and table.size(stats) > 1 and true or false
-			has_team = custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier) and true or false
+
+			if stats and table.size(stats) > 1 then
+				has_stat = true
+			else
+				has_stat = false
+			end
+
+			if custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier) then
+				has_team = true
+			else
+				has_team = false
+			end
 
 			if has_stat then
 				table.insert(textures, "guis/textures/pd2/blackmarket/inv_mod_bonus_stats")
@@ -2239,8 +2334,18 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 
 		if #textures == 0 and outfit.secondary.cosmetics and outfit.secondary.cosmetics.bonus and not managers.job:is_current_job_competitive() then
 			local bonus_data = tweak_data.economy.bonuses[tweak_data.blackmarket.weapon_skins[outfit.secondary.cosmetics.id].bonus]
-			has_stat = bonus_data and bonus_data.stats and true or false
-			has_team = bonus_data and (bonus_data.exp_multiplier or bonus_data.money_multiplier) and true or false
+
+			if bonus_data and bonus_data.stats then
+				has_stat = true
+			else
+				has_stat = false
+			end
+
+			if bonus_data and (bonus_data.exp_multiplier or bonus_data.money_multiplier) then
+				has_team = true
+			else
+				has_team = false
+			end
 
 			if has_stat then
 				table.insert(textures, "guis/textures/pd2/blackmarket/inv_mod_bonus_stats")
@@ -2387,13 +2492,16 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 		deployable_bitmap:set_center_y(y * 15)
 	end
 
-	player_slot.box = BoxGuiObject:new(player_slot.panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	player_slot.box = BoxGuiObject:new(player_slot.panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 end
+
 NewLoadoutItem = NewLoadoutItem or class()
 
 function NewLoadoutItem:init(panel, columns, rows, x, y, params)
@@ -2408,8 +2516,12 @@ function NewLoadoutItem:init(panel, columns, rows, x, y, params)
 		x = (x - 1) * w + 1,
 		y = (y - 1) * h + 1
 	})
-	self._info_panel = self._panel:panel({h = font_size})
-	self._item_panel = self._panel:panel({h = math.max(0, self._panel:h() - self._info_panel:h())})
+	self._info_panel = self._panel:panel({
+		h = font_size
+	})
+	self._item_panel = self._panel:panel({
+		h = math.max(0, self._panel:h() - self._info_panel:h())
+	})
 
 	self._item_panel:set_position(0, 0)
 	self._info_panel:set_top(self._item_panel:bottom())
@@ -2592,7 +2704,7 @@ function NewLoadoutItem:init(panel, columns, rows, x, y, params)
 						alpha = icon.equipped and 1 or 0.25
 					})
 
-					object:set_center((self._info_icon_panel:right() - (index - 1) * 18) - 9, self._info_icon_panel:h() / 2)
+					object:set_center(self._info_icon_panel:right() - (index - 1) * 18 - 9, self._info_icon_panel:h() / 2)
 
 					if split and when_to_split < index then
 						object:move(18 * when_to_split, -18)
@@ -2667,6 +2779,7 @@ function NewLoadoutItem:deselect_item()
 		self._info_icon_panel:set_visible(true)
 	end
 end
+
 NewLoadoutTab = NewLoadoutTab or class(MissionBriefingTabItem)
 NewLoadoutTab.columns = 3
 NewLoadoutTab.rows = 2
@@ -2842,21 +2955,21 @@ function NewLoadoutTab:populate_category(data)
 		crafted = crafted_category[index]
 
 		if crafted then
-			local new_data = {
+			new_data = {
 				name = crafted.weapon_id,
 				name_localized = managers.blackmarket:get_weapon_name_by_category_slot(category, index),
 				category = category,
 				custom_name_text = managers.blackmarket:get_crafted_custom_name(category, index, true),
 				slot = index,
-				unlocked = managers.blackmarket:weapon_unlocked(crafted.weapon_id)
+				unlocked = managers.blackmarket:weapon_unlocked(crafted.weapon_id),
+				lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level",
+				equipped = crafted.equipped,
+				can_afford = true,
+				skill_based = weapon_data[crafted.weapon_id].skill_based,
+				skill_name = new_data.skill_based and "bm_menu_skill_locked_" .. new_data.name,
+				func_based = weapon_data[crafted.weapon_id].func_based,
+				level = managers.blackmarket:weapon_level(crafted.weapon_id)
 			}
-			new_data.lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level"
-			new_data.equipped = crafted.equipped
-			new_data.can_afford = true
-			new_data.skill_based = weapon_data[crafted.weapon_id].skill_based
-			new_data.skill_name = new_data.skill_based and "bm_menu_skill_locked_" .. new_data.name
-			new_data.func_based = weapon_data[crafted.weapon_id].func_based
-			new_data.level = managers.blackmarket:weapon_level(crafted.weapon_id)
 			local texture_name, bg_texture = managers.blackmarket:get_weapon_icon_path(crafted.weapon_id, crafted.cosmetics)
 			new_data.bitmap_texture = texture_name
 			new_data.bg_texture = bg_texture
@@ -2896,21 +3009,20 @@ function NewLoadoutTab:populate_category(data)
 
 	for i = 1, max_items, 1 do
 		if not data[i] then
-			local new_data = {
+			new_data = {
 				name = "empty_slot",
-				name_localized = managers.localization:text("bm_menu_empty_weapon_slot")
+				name_localized = managers.localization:text("bm_menu_empty_weapon_slot"),
+				name_localized_selected = new_data.name_localized,
+				is_loadout = true,
+				category = category,
+				empty_slot = true,
+				slot = i,
+				unlocked = true,
+				equipped = false,
+				mid_text = {}
 			}
-			new_data.name_localized_selected = new_data.name_localized
-			new_data.is_loadout = true
-			new_data.category = category
-			new_data.empty_slot = true
-			new_data.slot = i
-			new_data.unlocked = true
-			new_data.equipped = false
-			new_data.mid_text = {
-				noselected_text = new_data.name_localized,
-				noselected_color = tweak_data.screen_colors.button_stage_3
-			}
+			new_data.mid_text.noselected_text = new_data.name_localized
+			new_data.mid_text.noselected_color = tweak_data.screen_colors.button_stage_3
 			new_data.mid_text.selected_text = new_data.mid_text.noselected_text
 			new_data.mid_text.selected_color = new_data.mid_text.noselected_color
 			new_data.mid_text.is_lock_same_color = true
@@ -2943,15 +3055,15 @@ function NewLoadoutTab:populate_armors(data)
 
 		if bm_data.owned then
 			index = index + 1
-			local new_data = {
+			new_data = {
 				name = tweak_data.blackmarket.armors[armor_id].name_id,
 				category = "armors",
 				slot = index,
-				unlocked = bm_data.unlocked
+				unlocked = bm_data.unlocked,
+				lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level",
+				equipped = bm_data.equipped,
+				bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/armors/" .. armor_id
 			}
-			new_data.lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level"
-			new_data.equipped = bm_data.equipped
-			new_data.bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/armors/" .. armor_id
 
 			if not new_data.equipped then
 				table.insert(new_data, "a_equip")
@@ -2963,7 +3075,7 @@ function NewLoadoutTab:populate_armors(data)
 
 	for i = 1, 9, 1 do
 		if not data[i] then
-			local new_data = {
+			new_data = {
 				name = "empty",
 				name_localized = "",
 				category = "armors",
@@ -2990,7 +3102,7 @@ function NewLoadoutTab:populate_deployables(data)
 			guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
 		end
 
-		local new_data = {
+		new_data = {
 			name = deployable,
 			name_localized = managers.localization:text(tweak_data.upgrades.definitions[deployable].name_id),
 			category = "deployables",
@@ -3011,7 +3123,7 @@ function NewLoadoutTab:populate_deployables(data)
 
 	for i = 1, 9, 1 do
 		if not data[i] then
-			local new_data = {
+			new_data = {
 				name = "empty",
 				name_localized = "",
 				category = "deployables",
@@ -3026,7 +3138,9 @@ end
 
 function NewLoadoutTab:create_weapon_loadout(category)
 	local crafted_category = managers.blackmarket:get_crafted_category(category) or {}
-	local new_node_data = {category = category}
+	local new_node_data = {
+		category = category
+	}
 	local rows = tweak_data.gui.WEAPON_ROWS_PER_PAGE or 3
 	local columns = tweak_data.gui.WEAPON_COLUMNS_PER_PAGE or 3
 	local max_pages = tweak_data.gui.MAX_WEAPON_PAGES or 8
@@ -3047,7 +3161,9 @@ function NewLoadoutTab:create_weapon_loadout(category)
 			end
 		end
 
-		local name_id = managers.localization:to_upper_text("bm_menu_page", {page = tostring(page)})
+		local name_id = managers.localization:to_upper_text("bm_menu_page", {
+			page = tostring(page)
+		})
 
 		table.insert(new_node_data, {
 			prev_node_data = false,
@@ -3070,7 +3186,9 @@ function NewLoadoutTab:create_weapon_loadout(category)
 	new_node_data.selected_tab = selected_tab
 	new_node_data.scroll_tab_anywhere = true
 	new_node_data.topic_id = "menu_loadout_blackmarket"
-	new_node_data.topic_params = {category = managers.localization:text("bm_menu_" .. category)}
+	new_node_data.topic_params = {
+		category = managers.localization:text("bm_menu_" .. category)
+	}
 
 	return new_node_data
 end
@@ -3098,7 +3216,9 @@ function NewLoadoutTab:create_deployable_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_deployables")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_deployables")
+	}
 	data.is_loadout = true
 
 	return data
@@ -3121,7 +3241,9 @@ function NewLoadoutTab:create_melee_weapon_loadout()
 			end
 		end
 
-		local name_id = managers.localization:to_upper_text("bm_menu_page", {page = tostring(page)})
+		local name_id = managers.localization:to_upper_text("bm_menu_page", {
+			page = tostring(page)
+		})
 
 		table.insert(new_node_data, {
 			prev_node_data = false,
@@ -3143,7 +3265,9 @@ function NewLoadoutTab:create_melee_weapon_loadout()
 	new_node_data.is_loadout = true
 	new_node_data.scroll_tab_anywhere = true
 	new_node_data.topic_id = "bm_menu_melee_weapons"
-	new_node_data.topic_params = {weapon_category = managers.localization:text("bm_menu_melee_weapons")}
+	new_node_data.topic_params = {
+		weapon_category = managers.localization:text("bm_menu_melee_weapons")
+	}
 
 	return new_node_data
 end
@@ -3163,7 +3287,9 @@ function NewLoadoutTab:create_grenade_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_grenades")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_grenades")
+	}
 	data.is_loadout = true
 
 	return data
@@ -3184,7 +3310,9 @@ function NewLoadoutTab:create_armor_loadout()
 	})
 
 	data.topic_id = "menu_loadout_blackmarket"
-	data.topic_params = {category = managers.localization:text("bm_menu_armors")}
+	data.topic_params = {
+		category = managers.localization:text("bm_menu_armors")
+	}
 	data.is_loadout = true
 
 	return data
@@ -3199,29 +3327,42 @@ function NewLoadoutTab:open_node(node)
 		self._my_menu_component_data.current_slot = managers.blackmarket:equipped_weapon_slot("primaries")
 
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_primaries_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_primaries_loadout()
+		})
 	elseif node == 2 then
 		self._my_menu_component_data.changing_loadout = "secondary"
 		self._my_menu_component_data.current_slot = managers.blackmarket:equipped_weapon_slot("secondaries")
 
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_secondaries_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_secondaries_loadout()
+		})
 	elseif node == 3 then
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_melee_weapon_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_melee_weapon_loadout()
+		})
 	elseif node == 4 then
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_grenade_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_grenade_loadout()
+		})
 	elseif node == 5 then
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_armor_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_armor_loadout()
+		})
 	elseif node == 6 then
 		managers.menu_component:post_event("menu_enter")
-		managers.menu:open_node("loadout", {self:create_deployable_loadout()})
+		managers.menu:open_node("loadout", {
+			self:create_deployable_loadout()
+		})
 	end
 
 	managers.menu_component:on_ready_pressed_mission_briefing_gui(false)
 end
+
 MutatorsItem = MutatorsItem or class(MissionBriefingTabItem)
 
 function MutatorsItem:init(panel, text, i)
@@ -3281,6 +3422,7 @@ function MutatorsItem:init(panel, text, i)
 		_y = mutator_text:bottom() + 2
 	end
 end
+
 MissionBriefingGui = MissionBriefingGui or class()
 
 function MissionBriefingGui:init(saferect_ws, fullrect_ws, node)
@@ -3484,12 +3626,14 @@ function MissionBriefingGui:init(saferect_ws, fullrect_ws, node)
 	local box_panel = self._panel:panel()
 
 	box_panel:set_shape(self._items[1]:panel():shape())
-	BoxGuiObject:new(box_panel, {sides = {
-		1,
-		1,
-		2,
-		1
-	}})
+	BoxGuiObject:new(box_panel, {
+		sides = {
+			1,
+			1,
+			2,
+			1
+		}
+	})
 
 	if managers.assets:is_all_textures_loaded() or #managers.assets:get_all_asset_ids(true) == 0 then
 		self:create_asset_tab()
@@ -3634,7 +3778,9 @@ function MissionBriefingGui:flash_ready()
 end
 
 function MissionBriefingGui:open_asset_buy(i, id, is_gage_asset)
-	local params = {asset_id = id}
+	local params = {
+		asset_id = id
+	}
 
 	if is_gage_asset then
 		if managers.crime_spree:can_unlock_asset() then
@@ -3746,7 +3892,6 @@ function MissionBriefingGui:open_asset(asset_index)
 	local fullscreen_asset = self._fullscreen_assets_list[self._displaying_asset]
 
 	if fullscreen_asset and alive(fullscreen_asset) then
-
 		local function animate_show(o)
 			local start_alpha = o:alpha()
 
@@ -3775,7 +3920,9 @@ function MissionBriefingGui:open_asset(asset_index)
 end
 
 function MissionBriefingGui:open_gage_asset(asset_id)
-	local params = {asset_id = asset_id}
+	local params = {
+		asset_id = asset_id
+	}
 
 	managers.menu:show_gage_asset_desc(params)
 end
@@ -3788,7 +3935,6 @@ function MissionBriefingGui:close_asset()
 	local fullscreen_asset = self._fullscreen_assets_list[self._displaying_asset]
 
 	if fullscreen_asset and alive(fullscreen_asset) then
-
 		local function animate_hide(o)
 			local start_alpha = o:alpha()
 
@@ -4066,7 +4212,13 @@ function MissionBriefingGui:on_ready_pressed(ready)
 	end
 
 	local ready_changed = true
-	self._ready = ready ~= nil and (self._ready ~= ready or ready) or not self._ready
+
+	if ready ~= nil then
+		ready_changed = self._ready ~= ready
+		self._ready = ready
+	else
+		self._ready = not self._ready
+	end
 
 	managers.network:session():local_peer():set_waiting_for_player_ready(self._ready)
 	managers.network:session():chk_send_local_player_ready()
@@ -4450,6 +4602,7 @@ function MissionBriefingGui:reload()
 	self:close()
 	MissionBriefingGui.init(self, self._safe_workspace, self._full_workspace, self._node)
 end
+
 JukeboxItem = JukeboxItem or class(MissionBriefingTabItem)
 
 function JukeboxItem:init(panel, text, i, assets_names, max_assets, menu_component_data)
@@ -4505,4 +4658,3 @@ function JukeboxItem:set_enabled(state)
 		end
 	end
 end
-

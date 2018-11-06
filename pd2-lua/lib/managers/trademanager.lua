@@ -697,8 +697,10 @@ function TradeManager:_get_megaphone_sound_source()
 		pos = Vector3(0, 0, 0)
 
 		Application:error("[TradeManager:_get_megaphone_sound_source] This level has no megaphone position!")
+	elseif not tweak_data.levels[level_id].megaphone_pos then
+		pos = Vector3(0, 0, 0)
 	else
-		pos = not tweak_data.levels[level_id].megaphone_pos and Vector3(0, 0, 0) or tweak_data.levels[level_id].megaphone_pos
+		pos = tweak_data.levels[level_id].megaphone_pos
 	end
 
 	local sound_source = SoundDevice:create_source("megaphone")
@@ -765,7 +767,18 @@ function TradeManager:clbk_begin_hostage_trade_dialog(i)
 		end
 	else
 		local ssuffix = managers.criminals:character_static_data_by_name(respawn_criminal.id).ssuffix
-		char_sync_index = ssuffix == "a" and 2 or ssuffix == "b" and 3 or ssuffix == "c" and 4 or ssuffix == "d" and 5 or 7
+
+		if ssuffix == "a" then
+			char_sync_index = 2
+		elseif ssuffix == "b" then
+			char_sync_index = 3
+		elseif ssuffix == "c" then
+			char_sync_index = 4
+		elseif ssuffix == "d" then
+			char_sync_index = 5
+		else
+			char_sync_index = 7
+		end
 
 		self:sync_hostage_trade_dialog(char_sync_index)
 
@@ -809,13 +822,17 @@ function TradeManager:begin_hostage_trade(position, rotation, hostage, is_instan
 		self._trading_hostage = true
 		self._hostage_to_trade = hostage
 
-		hostage.unit:brain():set_logic("trade", {skip_hint = skip_hint or false})
+		hostage.unit:brain():set_logic("trade", {
+			skip_hint = skip_hint or false
+		})
 
 		if not hostage.initialized then
 			self._hostage_to_trade.death_clbk_key = clbk_key
 			self._hostage_to_trade.destroyed_clbk_key = clbk_key
 
-			hostage.unit:character_damage():add_listener(clbk_key, {"death"}, callback(self, self, "clbk_hostage_died"))
+			hostage.unit:character_damage():add_listener(clbk_key, {
+				"death"
+			}, callback(self, self, "clbk_hostage_died"))
 			hostage.unit:base():add_destroy_listener(clbk_key, callback(self, self, "clbk_hostage_destroyed"))
 
 			hostage.initialized = true
@@ -1139,4 +1156,3 @@ function TradeManager:get_guard_hostage_time()
 		return guard_time
 	end
 end
-

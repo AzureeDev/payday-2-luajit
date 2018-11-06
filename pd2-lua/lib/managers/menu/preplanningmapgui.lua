@@ -1,9 +1,10 @@
-
 local function debug_assert(chk, ...)
 	if not chk then
 		local s = ""
 
-		for i, text in ipairs({...}) do
+		for i, text in ipairs({
+			...
+		}) do
 			s = s .. "  " .. text
 		end
 
@@ -47,7 +48,7 @@ function PrePlanningPoint:init(map_panel, element, shape, rotation, active_node,
 	local ly = mvector3.y(element_position)
 	local x, y, w, h = unpack(shape)
 	local raw_x = (lx - x) / w - 0.5
-	local raw_y = (1 - (ly - y) / h) - 0.5
+	local raw_y = 1 - (ly - y) / h - 0.5
 	local ax = math.cos(rotation) * raw_x - math.sin(rotation) * raw_y + 0.5
 	local ay = math.sin(rotation) * raw_x + math.cos(rotation) * raw_y + 0.5
 	self._active_node = active_node
@@ -130,7 +131,9 @@ function PrePlanningPoint:init(map_panel, element, shape, rotation, active_node,
 					color:with_alpha(0.01)
 				})
 			elseif key == "plan" then
-				local vote_panel = self._extras[type]:panel({name = "plan"})
+				local vote_panel = self._extras[type]:panel({
+					name = "plan"
+				})
 				local new_icon = nil
 				local x = 0
 
@@ -195,6 +198,9 @@ function PrePlanningPoint:init(map_panel, element, shape, rotation, active_node,
 					wall:set_bottom(panel:h() / 2 + value.bottom)
 				elseif value.y or value.top then
 					wall:set_top(panel:h() / 2 + (value.y or value.top))
+				end
+			elseif false then
+				if false then
 				end
 			end
 		end
@@ -332,7 +338,9 @@ function PrePlanningPoint:set_color(color)
 end
 
 function PrePlanningPoint:set_state(...)
-	local states = {...}
+	local states = {
+		...
+	}
 
 	debug_assert(#states % 2 == 0, "[PrePlanningPoint:set_state] State is missing value", inspect(states))
 
@@ -350,7 +358,6 @@ end
 
 function PrePlanningPoint:flash()
 	if alive(self._box) and alive(self._bg) then
-
 		local function flash_anim(panel)
 			local start_color = tweak_data.screen_colors.text
 			local s = 0
@@ -525,7 +532,20 @@ function PrePlanningPoint:_update_extra()
 		else
 			is_current_type = self._active_node.current_type == type
 			is_reserved = self._viewing_only or self._reserved_data and self._reserved_data.pack[1] == type
-			alpha = is_selected and (is_current_type and 0.75 or 0) or is_reserved and 0.5 or is_current_type and 0.1 or 0
+
+			if is_selected then
+				if is_current_type then
+					alpha = 0.75
+				else
+					alpha = 0
+				end
+			elseif is_reserved then
+				alpha = 0.5
+			elseif is_current_type then
+				alpha = 0.1
+			else
+				alpha = 0
+			end
 		end
 
 		extra:set_alpha(alpha)
@@ -921,6 +941,7 @@ function PrePlanningPoint:mouse_released(x, y)
 
 	return true
 end
+
 PrePlanningCustomPoint = PrePlanningCustomPoint or class(PrePlanningPoint)
 
 function PrePlanningCustomPoint:init(map_panel, data, texture_width, texture_height, location_rotation, active_node, name)
@@ -1173,6 +1194,7 @@ function PrePlanningCustomPoint:stop_custom_talk()
 		self._talk_icon:stop()
 	end
 end
+
 PrePlanningLocation = PrePlanningLocation or class()
 
 function PrePlanningLocation:init(panel, index, size, active_node)
@@ -1519,6 +1541,7 @@ end
 function PrePlanningLocation:set_selected_point(element_id)
 	self:update_me()
 end
+
 PrePlanningMapGui = PrePlanningMapGui or class()
 
 function PrePlanningMapGui:init(saferect_ws, fullscreen_ws, node)
@@ -1540,7 +1563,9 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 	})
 	self._text_buttons = {}
 	self._is_pc_controller = managers.menu:is_pc_controller()
-	self._active_node = {node = node}
+	self._active_node = {
+		node = node
+	}
 
 	self:_setup_blackborders()
 
@@ -1676,7 +1701,9 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 		y = 10,
 		x = 10,
 		layer = 15,
-		text = managers.localization:to_upper_text("menu_preplanning_title", {level = managers.localization:text(managers.job:current_level_data().name_id)}),
+		text = managers.localization:to_upper_text("menu_preplanning_title", {
+			level = managers.localization:text(managers.job:current_level_data().name_id)
+		}),
 		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size,
 		color = tweak_data.screen_colors.text
@@ -1709,7 +1736,9 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 		name = "total_cost",
 		blend_mode = "add",
 		layer = 15,
-		text = managers.localization:to_upper_text("menu_pp_total_cost", {money = managers.experience:cash_string(managers.money:get_preplanning_total_cost())}),
+		text = managers.localization:to_upper_text("menu_pp_total_cost", {
+			money = managers.experience:cash_string(managers.money:get_preplanning_total_cost())
+		}),
 		font = tweak_data.menu.pd2_small_font,
 		font_size = tweak_data.menu.pd2_small_font_size,
 		color = tweak_data.screen_colors.text
@@ -1723,7 +1752,9 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 		left = 10,
 		top = total_cost:bottom() + 10,
 		clbk = callback(self, self, "toggle_breakdown"),
-		text = managers.localization:to_upper_text("menu_pp_show_breakdown", {BTN_X = managers.localization:btn_macro("menu_toggle_pp_breakdown")})
+		text = managers.localization:to_upper_text("menu_pp_show_breakdown", {
+			BTN_X = managers.localization:btn_macro("menu_toggle_pp_breakdown")
+		})
 	})
 	self._breakdown_button = button
 
@@ -1752,12 +1783,14 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 		layer = 0,
 		color = Color.black
 	})
-	BoxGuiObject:new(breakdown_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(breakdown_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	breakdown_panel:set_position(button:left(), button:bottom())
 	breakdown_panel:hide()
 	self:_update_breakdown()
@@ -1830,8 +1863,8 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 		li = li + 1
 		gw = gw + w
 		gh = gh + h
-		grid_width = math.max(grid_width, math.abs(x - center_x), math.abs((x + w) - center_x))
-		grid_height = math.max(grid_height, math.abs(y - center_y), math.abs((y + h) - center_y))
+		grid_width = math.max(grid_width, math.abs(x - center_x), math.abs(x + w - center_x))
+		grid_height = math.max(grid_height, math.abs(y - center_y), math.abs(y + h - center_y))
 	end
 
 	gw = li > 0 and gw / li or 0
@@ -1845,12 +1878,12 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 	local M = grid_width
 	local L = self._location_size
 	local C = 1280
-	tw = (M * C) / L
+	tw = M * C / L
 	tx = -(tw - C) / 2
 	local M = grid_height
 	local L = self._location_size
 	local C = 1280
-	th = (M * C) / L
+	th = M * C / L
 	ty = -(th - C) / 2
 	local grid_texture_rect = {
 		tx,
@@ -1883,7 +1916,13 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 	local safe_scaled_size = managers.gui_data:corner_scaled_size()
 	local min_zoom = location_data.min_zoom or 1
 	local max_zoom = location_data.max_zoom or 5
-	min_zoom = grid_height < grid_width / ratio and (self._location_size + safe_scaled_size.y * 2) / grid_height or (self._location_size + safe_scaled_size.x * 2) / (grid_width / ratio)
+
+	if grid_height < grid_width / ratio then
+		min_zoom = (self._location_size + safe_scaled_size.y * 2) / grid_height
+	else
+		min_zoom = (self._location_size + safe_scaled_size.x * 2) / (grid_width / ratio)
+	end
+
 	self._min_zoom = math.lerp(min_zoom, 1, math.clamp(location_data.min_zoom or 0.5, 0, 1))
 	self._max_zoom = max_zoom
 	self._num_draw_points = 0
@@ -1914,7 +1953,9 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 		left = cx and cx + cw + 5 or 10,
 		bottom = self._panel:h() - 10,
 		clbk = callback(self, self, "toggle_drawboard"),
-		text = managers.localization:to_upper_text("menu_pp_show_drawboard", {BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")})
+		text = managers.localization:to_upper_text("menu_pp_show_drawboard", {
+			BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")
+		})
 	})
 
 	self._drawboard_button:hide()
@@ -2136,7 +2177,11 @@ function PrePlanningMapGui:hide_drawboard()
 		if self._drawboard_button then
 			local text = self._drawboard_button:child("button_text")
 
-			text:set_text(self._drawing_panel:visible() and managers.localization:to_upper_text("menu_pp_hide_drawboard", {BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")}) or managers.localization:to_upper_text("menu_pp_show_drawboard", {BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")}))
+			text:set_text(self._drawing_panel:visible() and managers.localization:to_upper_text("menu_pp_hide_drawboard", {
+				BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")
+			}) or managers.localization:to_upper_text("menu_pp_show_drawboard", {
+				BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")
+			}))
 			make_fine_text(text)
 			self._drawboard_button:set_size(text:size())
 		end
@@ -2149,7 +2194,11 @@ function PrePlanningMapGui:toggle_drawboard(button)
 	if self._drawboard_button then
 		local text = self._drawboard_button:child("button_text")
 
-		text:set_text(self._drawing_panel:visible() and managers.localization:to_upper_text("menu_pp_hide_drawboard", {BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")}) or managers.localization:to_upper_text("menu_pp_show_drawboard", {BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")}))
+		text:set_text(self._drawing_panel:visible() and managers.localization:to_upper_text("menu_pp_hide_drawboard", {
+			BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")
+		}) or managers.localization:to_upper_text("menu_pp_show_drawboard", {
+			BTN_Y = managers.localization:btn_macro("menu_toggle_pp_drawboard")
+		}))
 		make_fine_text(text)
 		self._drawboard_button:set_size(text:size())
 	end
@@ -2171,7 +2220,9 @@ function PrePlanningMapGui:_update_drawboard()
 			button.panel:set_visible(not not peer)
 
 			if peer then
-				button.name = managers.localization:text(button.panel:visible() and "menu_pp_draw_hide" or "menu_pp_draw_show", {name = peer:name()})
+				button.name = managers.localization:text(button.panel:visible() and "menu_pp_draw_hide" or "menu_pp_draw_show", {
+					name = peer:name()
+				})
 
 				if button.highlighted then
 					self:set_draw_tooltip_clbk(button)
@@ -2233,7 +2284,11 @@ function PrePlanningMapGui:toggle_breakdown(button)
 	local breakdown_panel = self._panel:child("breakdown_panel")
 
 	breakdown_panel:set_visible(not breakdown_panel:visible())
-	button.text:set_text(breakdown_panel:visible() and managers.localization:to_upper_text("menu_pp_hide_breakdown", {BTN_X = managers.localization:btn_macro("menu_toggle_pp_breakdown")}) or managers.localization:to_upper_text("menu_pp_show_breakdown", {BTN_X = managers.localization:btn_macro("menu_toggle_pp_breakdown")}))
+	button.text:set_text(breakdown_panel:visible() and managers.localization:to_upper_text("menu_pp_hide_breakdown", {
+		BTN_X = managers.localization:btn_macro("menu_toggle_pp_breakdown")
+	}) or managers.localization:to_upper_text("menu_pp_show_breakdown", {
+		BTN_X = managers.localization:btn_macro("menu_toggle_pp_breakdown")
+	}))
 	make_fine_text(button.text)
 	button.panel:set_size(button.text:size())
 
@@ -2364,12 +2419,14 @@ function PrePlanningMapGui:_update_breakdown()
 		layer = -1,
 		color = Color.black
 	})
-	BoxGuiObject:new(breakdown_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(breakdown_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	breakdown_panel:set_alpha(width > 0 and 1 or 0)
 end
 
@@ -2577,6 +2634,7 @@ function PrePlanningMapGui:toggle_drawing(peer_id)
 
 	return false
 end
+
 local seconds_per_draw = 0.016666666666666666
 
 function PrePlanningMapGui:update_drawing(t, dt)
@@ -2798,7 +2856,9 @@ function PrePlanningMapGui:update_element(type, id)
 		total = string.format("%.2d", total_budget)
 	}))
 	make_fine_text(self._panel:child("budget_text"))
-	self._panel:child("total_cost"):set_text(managers.localization:to_upper_text("menu_pp_total_cost", {money = managers.experience:cash_string(managers.money:get_preplanning_total_cost())}))
+	self._panel:child("total_cost"):set_text(managers.localization:to_upper_text("menu_pp_total_cost", {
+		money = managers.experience:cash_string(managers.money:get_preplanning_total_cost())
+	}))
 	make_fine_text(self._panel:child("total_cost"))
 	self:_update_drawboard()
 	self:_update_breakdown()
@@ -3072,7 +3132,7 @@ function PrePlanningMapGui:update(t, dt)
 	if self._scanline then
 		self._scanline:move(0, 50 * dt)
 
-		if self._fullscreen_panel:h() + 25 <= self._scanline:top() then
+		if self._scanline:top() >= self._fullscreen_panel:h() + 25 then
 			self._scanline:set_bottom(-25)
 		end
 	end
@@ -3088,9 +3148,9 @@ function PrePlanningMapGui:update(t, dt)
 		right = self._panel:w() * 1
 		top = self._panel:h() * 0
 		bottom = self._panel:h() * 1
-		mleft = -((left - self._grid_panel:left()) - safe_scaled_size.x)
+		mleft = -(left - self._grid_panel:left() - safe_scaled_size.x)
 		mright = -(right - self._grid_panel:right() + safe_scaled_size.x)
-		mtop = -((top - self._grid_panel:top()) - safe_scaled_size.y)
+		mtop = -(top - self._grid_panel:top() - safe_scaled_size.y)
 		mbottom = -(bottom - self._grid_panel:bottom() + safe_scaled_size.y)
 
 		if self._lerp_map then
@@ -3170,7 +3230,7 @@ function PrePlanningMapGui:update(t, dt)
 		local step = dt * speed
 		local padding = 25
 
-		if -padding < mleft then
+		if mleft > -padding then
 			local mx = math.lerp(0, -padding - mleft, step)
 
 			self:_move_map_position(mx, 0)
@@ -3190,7 +3250,7 @@ function PrePlanningMapGui:update(t, dt)
 			end
 		end
 
-		if -padding < mtop then
+		if mtop > -padding then
 			local my = math.lerp(0, -padding - mtop, step)
 
 			self:_move_map_position(0, my)
@@ -3273,16 +3333,16 @@ function PrePlanningMapGui:_set_map_position(x, y, location)
 	local bottom = self._panel:h() * 1
 	local safe_scaled_size = managers.gui_data:corner_scaled_size()
 
-	if (left - self._grid_panel:left()) - safe_scaled_size.x < 0 then
-		self._map_panel:move((left - self._grid_panel:left()) - safe_scaled_size.x, 0)
+	if left - self._grid_panel:left() - safe_scaled_size.x < 0 then
+		self._map_panel:move(left - self._grid_panel:left() - safe_scaled_size.x, 0)
 	end
 
 	if right - self._grid_panel:right() + safe_scaled_size.x > 0 then
 		self._map_panel:move(right - self._grid_panel:right() + safe_scaled_size.x, 0)
 	end
 
-	if (top - self._grid_panel:top()) - safe_scaled_size.y < 0 then
-		self._map_panel:move(0, (top - self._grid_panel:top()) - safe_scaled_size.y)
+	if top - self._grid_panel:top() - safe_scaled_size.y < 0 then
+		self._map_panel:move(0, top - self._grid_panel:top() - safe_scaled_size.y)
 	end
 
 	if bottom - self._grid_panel:bottom() + safe_scaled_size.y > 0 then
@@ -3634,4 +3694,3 @@ function PrePlanningMapGui:close()
 		managers.viewport:remove_resolution_changed_func(self._resolution_changed_callback_id)
 	end
 end
-

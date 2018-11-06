@@ -356,4 +356,3 @@ function MenuNodeTableGui:resolution_changed()
 
 	local safe_rect_pixels = self:_scaled_size()
 end
-

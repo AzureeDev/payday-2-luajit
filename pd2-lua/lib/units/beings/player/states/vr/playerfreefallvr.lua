@@ -6,6 +6,7 @@ function PlayerFreefallVR:init(...)
 
 	self._comfort_screen_setting_changed_clbk = callback(self, self, "_on_comfort_screen_setting_changed")
 end
+
 local __enter = PlayerFreefall.enter
 
 function PlayerFreefallVR:enter(...)
@@ -20,6 +21,7 @@ function PlayerFreefallVR:enter(...)
 
 	managers.vr:add_setting_changed_callback("zipline_screen", self._comfort_screen_setting_changed_clbk)
 end
+
 local __exit = PlayerFreefall.exit
 
 function PlayerFreefallVR:exit(...)
@@ -38,6 +40,7 @@ end
 function PlayerFreefallVR:_update_variables(t, dt)
 	self._current_height = self._ext_movement:hmd_position().z
 end
+
 local __update_movement = PlayerFreefall._update_movement
 
 function PlayerFreefallVR:_update_movement(t, dt)
@@ -58,4 +61,3 @@ function PlayerFreefallVR:_on_comfort_screen_setting_changed(setting, old, new)
 		self._comfort_screen_active = false
 	end
 end
-

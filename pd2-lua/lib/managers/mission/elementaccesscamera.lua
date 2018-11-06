@@ -13,7 +13,12 @@ function ElementAccessCamera:on_script_activated()
 	if self._values.camera_u_id then
 		local id = self._values.camera_u_id
 		local unit = nil
-		unit = Global.running_simulation and managers.editor:unit_with_id(id) or managers.worlddefinition:get_unit_on_load(id, callback(self, self, "_load_unit"))
+
+		if Global.running_simulation then
+			unit = managers.editor:unit_with_id(id)
+		else
+			unit = managers.worlddefinition:get_unit_on_load(id, callback(self, self, "_load_unit"))
+		end
 
 		if unit then
 			unit:base():set_access_camera_mission_element(self)
@@ -52,7 +57,9 @@ end
 
 function ElementAccessCamera:add_trigger(id, type, callback)
 	self._triggers[type] = self._triggers[type] or {}
-	self._triggers[type][id] = {callback = callback}
+	self._triggers[type][id] = {
+		callback = callback
+	}
 end
 
 function ElementAccessCamera:remove_trigger(id, type)
@@ -166,6 +173,7 @@ function ElementAccessCamera:load(data)
 		self:on_script_activated()
 	end
 end
+
 ElementAccessCameraOperator = ElementAccessCameraOperator or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementAccessCameraOperator:init(...)
@@ -191,6 +199,7 @@ function ElementAccessCameraOperator:on_executed(instigator)
 
 	ElementAccessCameraOperator.super.on_executed(self, instigator)
 end
+
 ElementAccessCameraTrigger = ElementAccessCameraTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementAccessCameraTrigger:init(...)
@@ -215,4 +224,3 @@ function ElementAccessCameraTrigger:on_executed(instigator)
 
 	ElementAccessCameraTrigger.super.on_executed(self, instigator)
 end
-

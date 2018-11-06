@@ -177,6 +177,7 @@ function ElementTimer:enable_trigger(id)
 		self._triggers[id].disabled = false
 	end
 end
+
 ElementTimerOperator = ElementTimerOperator or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementTimerOperator:init(...)
@@ -215,6 +216,7 @@ function ElementTimerOperator:on_executed(instigator)
 
 	ElementTimerOperator.super.on_executed(self, instigator)
 end
+
 ElementTimerTrigger = ElementTimerTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementTimerTrigger:init(...)
@@ -257,4 +259,3 @@ function ElementTimerTrigger:set_enabled(enabled)
 		element:enable_trigger(self._id)
 	end
 end
-

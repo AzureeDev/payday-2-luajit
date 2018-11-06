@@ -27,11 +27,19 @@ function LuaProfilerViewer:_create_main_frame()
 
 	self:_create_menu(self._frame)
 
-	self._treeview = CoreLuaProfilerTreeBox.LuaProfilerTreeBox:new({parent = splitter1})
-	self._gridview = CoreLuaProfilerGridBox.LuaProfilerGridBox:new({parent = splitter1})
+	self._treeview = CoreLuaProfilerTreeBox.LuaProfilerTreeBox:new({
+		parent = splitter1
+	})
+	self._gridview = CoreLuaProfilerGridBox.LuaProfilerGridBox:new({
+		parent = splitter1
+	})
 
-	self._treeview:set_gridview({gridview = self._gridview})
-	self._gridview:set_treeview({treeview = self._treeview})
+	self._treeview:set_gridview({
+		gridview = self._gridview
+	})
+	self._gridview:set_treeview({
+		treeview = self._treeview
+	})
 
 	self._displayformat = DEFAULT_FORMAT
 	self._capturecounter = 0
@@ -207,10 +215,16 @@ function LuaProfilerViewer:_on_percent()
 				lpd = self._lpd,
 				displayformat = self._displayformat
 			})
-			self._gridview:set_displayformat({displayformat = self._displayformat})
+			self._gridview:set_displayformat({
+				displayformat = self._displayformat
+			})
 		else
-			self._treeview:set_displayformat({displayformat = self._displayformat})
-			self._gridview:set_displayformat({displayformat = self._displayformat})
+			self._treeview:set_displayformat({
+				displayformat = self._displayformat
+			})
+			self._gridview:set_displayformat({
+				displayformat = self._displayformat
+			})
 		end
 	end
 end
@@ -226,10 +240,16 @@ function LuaProfilerViewer:_on_seconds()
 				lpd = self._lpd,
 				displayformat = self._displayformat
 			})
-			self._gridview:set_displayformat({displayformat = self._displayformat})
+			self._gridview:set_displayformat({
+				displayformat = self._displayformat
+			})
 		else
-			self._treeview:set_displayformat({displayformat = self._displayformat})
-			self._gridview:set_displayformat({displayformat = self._displayformat})
+			self._treeview:set_displayformat({
+				displayformat = self._displayformat
+			})
+			self._gridview:set_displayformat({
+				displayformat = self._displayformat
+			})
 		end
 	end
 end
@@ -248,7 +268,9 @@ function LuaProfilerViewer:_on_custom(diffpeak)
 				displayformat = self._displayformat
 			})
 		else
-			self._treeview:set_displayformat({displayformat = self._displayformat})
+			self._treeview:set_displayformat({
+				displayformat = self._displayformat
+			})
 		end
 	end
 end
@@ -284,4 +306,3 @@ end
 function LuaProfilerViewer:_on_capture()
 	self._capturecounter = 6
 end
-

@@ -31,4 +31,3 @@ end
 
 function CivilianBase:default_weapon_name()
 end
-

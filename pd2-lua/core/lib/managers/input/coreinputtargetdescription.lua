@@ -17,4 +17,3 @@ end
 function TargetDescription:target_type_name()
 	return self._type_name
 end
-

@@ -37,4 +37,3 @@ function ExplosionDamageUnitElement:_build_panel(panel, panel_sizer)
 		max = 100
 	}, "The damage from the explosion")
 end
-

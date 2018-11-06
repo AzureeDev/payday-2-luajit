@@ -150,4 +150,3 @@ function MenuNodeButtonLayoutGui:close(...)
 	self._blur:parent():remove(self._blur)
 	MenuNodeButtonLayoutGui.super.close(self, ...)
 end
-

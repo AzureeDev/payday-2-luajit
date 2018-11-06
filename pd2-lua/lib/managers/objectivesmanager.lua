@@ -62,7 +62,9 @@ function ObjectivesManager:_parse_objective(data)
 
 	if level_id then
 		self._objectives_level_id[level_id] = self._objectives_level_id[level_id] or {}
-		self._objectives_level_id[level_id][id] = {xp_weight = xp_weight or 0}
+		self._objectives_level_id[level_id][id] = {
+			xp_weight = xp_weight or 0
+		}
 	end
 end
 
@@ -124,7 +126,9 @@ function ObjectivesManager:get_stinger_id()
 end
 
 function ObjectivesManager:update_objective(id, load_data)
-	self:activate_objective(id, load_data, {title_message = managers.localization:text("mission_objective_updated")})
+	self:activate_objective(id, load_data, {
+		title_message = managers.localization:text("mission_objective_updated")
+	})
 end
 
 function ObjectivesManager:complete_and_activate_objective(id, load_data, data)
@@ -209,7 +213,9 @@ function ObjectivesManager:activate_objective(id, load_data, data)
 	end
 
 	self._active_objectives[id] = objective
-	self._remind_objectives[id] = {next_t = Application:time() + self.REMINDER_INTERVAL}
+	self._remind_objectives[id] = {
+		next_t = Application:time() + self.REMINDER_INTERVAL
+	}
 end
 
 function ObjectivesManager:activate_objective_countdown(id, load_data, data)
@@ -269,7 +275,9 @@ function ObjectivesManager:activate_objective_countdown(id, load_data, data)
 	end
 
 	self._active_objectives[id] = objective
-	self._remind_objectives[id] = {next_t = Application:time() + self.REMINDER_INTERVAL}
+	self._remind_objectives[id] = {
+		next_t = Application:time() + self.REMINDER_INTERVAL
+	}
 end
 
 function ObjectivesManager:remove_objective(id, load_data)
@@ -700,4 +708,3 @@ end
 function ObjectivesManager:is_read(id)
 	return self._read_objectives[id]
 end
-

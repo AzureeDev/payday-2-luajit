@@ -8,7 +8,9 @@ MutatorCloakerEffect.reductions = {
 	exp = 0
 }
 MutatorCloakerEffect.disables_achievements = true
-MutatorCloakerEffect.categories = {"enemies"}
+MutatorCloakerEffect.categories = {
+	"enemies"
+}
 MutatorCloakerEffect.icon_coords = {
 	2,
 	2
@@ -148,6 +150,7 @@ function MutatorCloakerEffect:effect_explode(unit)
 		managers.network:session():send_to_peers_synched("sync_explosion_to_client", unit, pos, normal, ply_damage, range, curve_pow)
 	end
 end
+
 MutatorCloakerEffect.random_effects = {
 	"effect_smoke",
 	"effect_fire",
@@ -217,4 +220,3 @@ function MutatorCloakerEffect:cloaker_fire_small()
 
 	return params
 end
-

@@ -3,7 +3,9 @@ core:import("CoreControllerWrapper")
 
 ControllerWrapperVR = ControllerWrapperVR or class(CoreControllerWrapper.ControllerWrapper)
 ControllerWrapperVR.TYPE = "vr"
-ControllerWrapperVR.CONTROLLER_TYPE_LIST = {"vr_controller"}
+ControllerWrapperVR.CONTROLLER_TYPE_LIST = {
+	"vr_controller"
+}
 
 function ControllerWrapperVR:init(manager, id, name, controller, setup, debug, skip_virtual_controller)
 	local func_map = {}
@@ -12,8 +14,11 @@ function ControllerWrapperVR:init(manager, id, name, controller, setup, debug, s
 		keyboard = Input:keyboard(),
 		mouse = Input:mouse(),
 		vr = controller
-	}, "vr", setup, debug, skip_virtual_controller, {vr = func_map})
+	}, "vr", setup, debug, skip_virtual_controller, {
+		vr = func_map
+	})
 end
+
 local disabled_connections = {
 	"confirm",
 	"menu_up",
@@ -70,4 +75,3 @@ function ControllerWrapperVR:get_input_axis(connection)
 
 	return ControllerWrapperVR.super.get_input_axis(self, connection)
 end
-

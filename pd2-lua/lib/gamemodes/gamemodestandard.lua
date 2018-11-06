@@ -361,4 +361,3 @@ function GamemodeStandard:setup_gsm(gsm, empty, setup_boot, setup_title)
 	gsm:add_transition(empty, ingame_parachuting, empty_func)
 	gsm:add_transition(empty, ingame_freefall, empty_func)
 end
-

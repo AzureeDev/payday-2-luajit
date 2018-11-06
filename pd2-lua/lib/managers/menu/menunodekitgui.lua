@@ -20,4 +20,3 @@ function MenuNodeKitGui:resolution_changed()
 	self:_update_scaled_values()
 	MenuNodeKitGui.super.resolution_changed(self)
 end
-

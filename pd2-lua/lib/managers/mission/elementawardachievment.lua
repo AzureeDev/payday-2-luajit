@@ -25,11 +25,15 @@ function ElementAwardAchievment:on_executed(instigator)
 		local local_player = managers.player:local_player()
 		award_achievement = alive(local_player) and local_player == instigator
 
-		if not award_achievement and instigator:vehicle_driving() then
-			local seat = instigator:vehicle_driving():find_seat_for_player(local_player)
+		if not award_achievement then
+			if instigator:vehicle_driving() then
+				local seat = instigator:vehicle_driving():find_seat_for_player(local_player)
 
-			if seat and seat.driving then
-				award_achievement = true
+				if seat and seat.driving then
+					award_achievement = true
+				end
+			elseif false then
+				-- Nothing
 			end
 		end
 	end
@@ -45,4 +49,3 @@ function ElementAwardAchievment:on_executed(instigator)
 
 	ElementAwardAchievment.super.on_executed(self, instigator)
 end
-

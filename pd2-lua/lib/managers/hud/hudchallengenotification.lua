@@ -136,7 +136,7 @@ end
 local function wait_global(seconds)
 	local t = 0
 
-	while t < seconds do
+	while seconds > t do
 		coroutine.yield()
 
 		local dt = TimerManager:main():delta_time()
@@ -268,7 +268,7 @@ function HudChallengeNotification:init(title, text, icon, rewards, queue)
 	self:set_w(total_w)
 	self:set_h(self._box:bottom())
 	self:set_center_x(self:parent():w() / 2)
-	self:set_bottom((self:parent():h() * 5) / 7)
+	self:set_bottom(self:parent():h() * 5 / 7)
 
 	self._box_bg = self:panel()
 
@@ -300,4 +300,3 @@ function HudChallengeNotification:close()
 		HudChallengeNotification:new(unpack(self._queue[1]))
 	end
 end
-

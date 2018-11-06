@@ -192,7 +192,12 @@ function LootManager:_count_achievement_secured(achievement, secured_data)
 
 			total_amount = total_amount + 1
 			local is_small_loot = not not tweak_data.carry.small_loot[carry_id]
-			value = is_small_loot and value + self:get_real_value(carry_id, data.multiplier) or value + managers.money:get_secured_bonus_bag_value(carry_id, data.multiplier)
+
+			if is_small_loot then
+				value = value + self:get_real_value(carry_id, data.multiplier)
+			else
+				value = value + managers.money:get_secured_bonus_bag_value(carry_id, data.multiplier)
+			end
 		end
 	end
 
@@ -254,7 +259,9 @@ function LootManager:check_achievements(carry_id, multiplier)
 
 				managers.job:set_memory(achievement, memory, achievement_data.is_shortterm)
 			else
-				memory = {new_memory}
+				memory = {
+					new_memory
+				}
 
 				managers.job:set_memory(achievement, memory, achievement_data.is_shortterm)
 			end
@@ -281,7 +288,9 @@ function LootManager:secure_small_loot(type, multiplier_level, peer_id)
 end
 
 function LootManager:show_small_loot_taken_hint(type, multiplier)
-	managers.hint:show_hint("grabbed_small_loot", 2, nil, {MONEY = managers.experience:cash_string(self:get_real_value(type, multiplier))})
+	managers.hint:show_hint("grabbed_small_loot", 2, nil, {
+		MONEY = managers.experience:cash_string(self:get_real_value(type, multiplier))
+	})
 end
 
 function LootManager:set_mandatory_bags_data(carry_id, amount)
@@ -542,7 +551,13 @@ end
 function LootManager:_present(carry_id, multiplier)
 	local real_value = 0
 	local is_small_loot = not not tweak_data.carry.small_loot[carry_id]
-	real_value = is_small_loot and self:get_real_value(carry_id, multiplier) or managers.money:get_secured_bonus_bag_value(carry_id, multiplier)
+
+	if is_small_loot then
+		real_value = self:get_real_value(carry_id, multiplier)
+	else
+		real_value = managers.money:get_secured_bonus_bag_value(carry_id, multiplier)
+	end
+
 	local carry_data = tweak_data.carry[carry_id]
 	local title = managers.localization:text("hud_loot_secured_title")
 	local type_text = carry_data.name_id and managers.localization:text(carry_data.name_id)
@@ -575,4 +590,3 @@ function LootManager:sync_load(data)
 		end
 	end
 end
-

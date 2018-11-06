@@ -108,7 +108,9 @@ function TweakData:digest_recursive(key, parent)
 end
 
 function TweakData:get_value(...)
-	local arg = {...}
+	local arg = {
+		...
+	}
 	local value = self
 
 	for _, v in ipairs(arg) do
@@ -131,7 +133,9 @@ function TweakData:get_value(...)
 end
 
 function TweakData:get_raw_value(...)
-	local arg = {...}
+	local arg = {
+		...
+	}
 	local value = self
 	local v = nil
 
@@ -666,17 +670,19 @@ function TweakData:init()
 
 	self.hud_icons = HudIconsTweakData:new()
 	self.weapon = WeaponTweakData:new(self)
-	local weapon_tweak_meta = {__index = function (table, key)
-		if key == "category" then
-			local categories = rawget(table, "categories")
+	local weapon_tweak_meta = {
+		__index = function (table, key)
+			if key == "category" then
+				local categories = rawget(table, "categories")
 
-			return categories and categories[1]
-		elseif key == "sub_category" then
-			local categories = rawget(table, "categories")
+				return categories and categories[1]
+			elseif key == "sub_category" then
+				local categories = rawget(table, "categories")
 
-			return categories and categories[2]
+				return categories and categories[2]
+			end
 		end
-	end}
+	}
 
 	for key, table in pairs(self.weapon) do
 		if not getmetatable(table) then
@@ -757,7 +763,9 @@ function TweakData:init()
 		revive_distance_autopickup = 300,
 		death_distance_teleport = 300
 	}
-	self.custom_colors = {defaults = {}}
+	self.custom_colors = {
+		defaults = {}
+	}
 	self.custom_colors.defaults.laser = Color(0, 0.4, 0)
 	self.custom_colors.defaults.flashlight = Color(1, 1, 1)
 	self.custom_colors.defaults.laser_alpha = 0.2
@@ -834,7 +842,9 @@ function TweakData:init()
 			bg_dallas = "guis/textures/menu/zombie_theme/bg_dallas"
 		}
 	}
-	self.states = {title = {}}
+	self.states = {
+		title = {}
+	}
 	self.states.title.ATTRACT_VIDEO_DELAY = 90
 	self.menu = {
 		BRIGHTNESS_CHANGE = 0.05,
@@ -929,7 +939,9 @@ function TweakData:init()
 			value = "color_payday",
 			text_id = "menu_color_off"
 		},
-		{text_id = "menu_color_default"},
+		{
+			text_id = "menu_color_default"
+		},
 		{
 			value = "color_heat",
 			text_id = "menu_color_heat"
@@ -1026,6 +1038,41 @@ function TweakData:init()
 			fade_in = 1,
 			fade_out = 1,
 			color = Color(1, 0, 0, 0),
+			timer = TimerManager:main()
+		},
+		white_fade_in = {
+			blend_mode = "add",
+			sustain = 0,
+			play_paused = true,
+			fade_in = 0,
+			fade_out = 3,
+			color = Color(1, 1, 1, 1),
+			timer = TimerManager:main()
+		},
+		white_fade_out = {
+			blend_mode = "add",
+			sustain = 30,
+			play_paused = true,
+			fade_in = 3,
+			fade_out = 0,
+			color = Color(1, 1, 1, 1),
+			timer = TimerManager:main()
+		},
+		white_fade_out_permanent = {
+			blend_mode = "add",
+			fade_out = 0,
+			play_paused = true,
+			fade_in = 1,
+			color = Color(1, 1, 1, 1),
+			timer = TimerManager:main()
+		},
+		white_fade_out_in = {
+			blend_mode = "add",
+			sustain = 1,
+			play_paused = true,
+			fade_in = 1,
+			fade_out = 1,
+			color = Color(1, 1, 1, 1),
 			timer = TimerManager:main()
 		},
 		element_fade_in = {
@@ -1210,8 +1257,12 @@ Play the full version soon to get your full PAYDAY!]],
 		[Idstring("ice"):key()] = "ice_thick",
 		[Idstring("aim_debug"):key()] = "aim_debug"
 	}
-	self.screen = {fadein_delay = 1}
-	self.experience_manager = {values = {}}
+	self.screen = {
+		fadein_delay = 1
+	}
+	self.experience_manager = {
+		values = {}
+	}
 	self.experience_manager.values.size02 = 0
 	self.experience_manager.values.size03 = 10
 	self.experience_manager.values.size04 = 15
@@ -1312,15 +1363,33 @@ Play the full version soon to get your full PAYDAY!]],
 	self.experience_manager.total_objectives_finished = 500
 	local multiplier = 1
 	self.experience_manager.levels = {
-		{points = 900 * multiplier},
-		{points = 1250 * multiplier},
-		{points = 1550 * multiplier},
-		{points = 1850 * multiplier},
-		{points = 2200 * multiplier},
-		{points = 2600 * multiplier},
-		{points = 3000 * multiplier},
-		{points = 3500 * multiplier},
-		{points = 4000 * multiplier}
+		{
+			points = 900 * multiplier
+		},
+		{
+			points = 1250 * multiplier
+		},
+		{
+			points = 1550 * multiplier
+		},
+		{
+			points = 1850 * multiplier
+		},
+		{
+			points = 2200 * multiplier
+		},
+		{
+			points = 2600 * multiplier
+		},
+		{
+			points = 3000 * multiplier
+		},
+		{
+			points = 3500 * multiplier
+		},
+		{
+			points = 4000 * multiplier
+		}
 	}
 	local exp_step_start = 10
 	local exp_step_end = 100
@@ -1329,7 +1398,9 @@ Play the full version soon to get your full PAYDAY!]],
 	local exp_step_curve = 3
 
 	for i = exp_step_start, exp_step_end, 1 do
-		self.experience_manager.levels[i] = {points = math.round((1000000 - exp_step_last_points) * math.pow(exp_step * (i - exp_step_start), exp_step_curve) + exp_step_last_points) * multiplier}
+		self.experience_manager.levels[i] = {
+			points = math.round((1000000 - exp_step_last_points) * math.pow(exp_step * (i - exp_step_start), exp_step_curve) + exp_step_last_points) * multiplier
+		}
 	end
 
 	local exp_step_start = 5
@@ -1337,22 +1408,48 @@ Play the full version soon to get your full PAYDAY!]],
 	local exp_step = 1 / (exp_step_end - exp_step_start)
 
 	for i = 146, exp_step_end, 1 do
-		self.experience_manager.levels[i] = {points = math.round(22000 * exp_step * (i - exp_step_start) - 6000) * multiplier}
+		self.experience_manager.levels[i] = {
+			points = math.round(22000 * exp_step * (i - exp_step_start) - 6000) * multiplier
+		}
 	end
 
 	self.pickups = {
-		ammo = {unit = Idstring("units/pickups/ammo/ammo_pickup")},
-		bank_manager_key = {unit = Idstring("units/pickups/pickup_bank_manager_key/pickup_bank_manager_key")},
-		chavez_key = {unit = Idstring("units/pickups/pickup_chavez_key/pickup_chavez_key")},
-		gen_fbi_usb_stick = {unit = Idstring("units/pd2_dlc_friend/props/sfm_fbi_usb_stick/sfm_fbi_usb_stick")},
-		sfm_fbi_usb_stick = {unit = Idstring("units/pd2_dlc_friend/props/sfm_fbi_usb_stick/sfm_fbi_usb_stick")},
-		drill = {unit = Idstring("units/pickups/pickup_drill/pickup_drill")},
-		keycard = {unit = Idstring("units/payday2/pickups/gen_pku_keycard/gen_pku_keycard")},
-		keycard_outlined = {unit = Idstring("units/pd2_dlc_red/pickups/gen_pku_keycard_outlined/gen_pku_keycard_outlined")},
-		keycard_standard_outlined = {unit = Idstring("units/payday2/pickups/gen_pku_keycard_standard_outline/gen_pku_keycard_standard_outline")},
-		hotel_room_key = {unit = Idstring("units/pd2_dlc_casino/props/cas_prop_keycard/cas_prop_keycard")},
-		pku_rambo = {unit = Idstring("units/pd2_dlc_jolly/pickups/gen_pku_rambo/gen_pku_rambo")},
-		keycard_outlined_waypoint = {unit = Idstring("units/pd2_dlc_red/pickups/gen_pku_keycard_outlined_waypoint/gen_pku_keycard_outlined_waypoint")}
+		ammo = {
+			unit = Idstring("units/pickups/ammo/ammo_pickup")
+		},
+		bank_manager_key = {
+			unit = Idstring("units/pickups/pickup_bank_manager_key/pickup_bank_manager_key")
+		},
+		chavez_key = {
+			unit = Idstring("units/pickups/pickup_chavez_key/pickup_chavez_key")
+		},
+		gen_fbi_usb_stick = {
+			unit = Idstring("units/pd2_dlc_friend/props/sfm_fbi_usb_stick/sfm_fbi_usb_stick")
+		},
+		sfm_fbi_usb_stick = {
+			unit = Idstring("units/pd2_dlc_friend/props/sfm_fbi_usb_stick/sfm_fbi_usb_stick")
+		},
+		drill = {
+			unit = Idstring("units/pickups/pickup_drill/pickup_drill")
+		},
+		keycard = {
+			unit = Idstring("units/payday2/pickups/gen_pku_keycard/gen_pku_keycard")
+		},
+		keycard_outlined = {
+			unit = Idstring("units/pd2_dlc_red/pickups/gen_pku_keycard_outlined/gen_pku_keycard_outlined")
+		},
+		keycard_standard_outlined = {
+			unit = Idstring("units/payday2/pickups/gen_pku_keycard_standard_outline/gen_pku_keycard_standard_outline")
+		},
+		hotel_room_key = {
+			unit = Idstring("units/pd2_dlc_casino/props/cas_prop_keycard/cas_prop_keycard")
+		},
+		pku_rambo = {
+			unit = Idstring("units/pd2_dlc_jolly/pickups/gen_pku_rambo/gen_pku_rambo")
+		},
+		keycard_outlined_waypoint = {
+			unit = Idstring("units/pd2_dlc_red/pickups/gen_pku_keycard_outlined_waypoint/gen_pku_keycard_outlined_waypoint")
+		}
 	}
 	self.danger_zones = {
 		0.6,
@@ -1360,7 +1457,9 @@ Play the full version soon to get your full PAYDAY!]],
 		0.35,
 		0.1
 	}
-	self.contour = {character = {}}
+	self.contour = {
+		character = {}
+	}
 	self.contour.character.standard_color = Vector3(0.1, 1, 0.5)
 	self.contour.character.friendly_color = Vector3(0.2, 0.8, 1)
 	self.contour.character.downed_color = Vector3(1, 0.5, 0)
@@ -1407,7 +1506,9 @@ Play the full version soon to get your full PAYDAY!]],
 		standard_color = Vector3(0, 0, 0),
 		selected_color = Vector3(1, 1, 1)
 	}
-	self.music = {hit = {}}
+	self.music = {
+		hit = {}
+	}
 	self.music.hit.intro = "music_hit_setup"
 	self.music.hit.anticipation = "music_hit_anticipation"
 	self.music.hit.assault = "music_hit_assault"
@@ -1443,19 +1544,37 @@ Play the full version soon to get your full PAYDAY!]],
 	}
 	self.music.default = deep_clone(self.music.heist)
 	self.music.track_list = {
-		{track = "track_01"},
-		{track = "track_02"},
-		{track = "track_03"},
-		{track = "track_04"},
-		{track = "track_05"},
-		{track = "track_06"},
-		{track = "track_07"},
-		{track = "track_08"},
+		{
+			track = "track_01"
+		},
+		{
+			track = "track_02"
+		},
+		{
+			track = "track_03"
+		},
+		{
+			track = "track_04"
+		},
+		{
+			track = "track_05"
+		},
+		{
+			track = "track_06"
+		},
+		{
+			track = "track_07"
+		},
+		{
+			track = "track_08"
+		},
 		{
 			track = "track_09",
 			lock = "armored"
 		},
-		{track = "track_10"},
+		{
+			track = "track_10"
+		},
 		{
 			track = "track_11",
 			lock = "infamy"
@@ -1464,13 +1583,19 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_12",
 			lock = "deathwish"
 		},
-		{track = "track_13"},
+		{
+			track = "track_13"
+		},
 		{
 			track = "track_14",
 			lock = "bigbank"
 		},
-		{track = "track_15"},
-		{track = "track_16"},
+		{
+			track = "track_15"
+		},
+		{
+			track = "track_16"
+		},
 		{
 			track = "track_17",
 			lock = "assault"
@@ -1483,10 +1608,18 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_19",
 			lock = "miami"
 		},
-		{track = "track_20"},
-		{track = "track_21"},
-		{track = "track_22"},
-		{track = "track_23"},
+		{
+			track = "track_20"
+		},
+		{
+			track = "track_21"
+		},
+		{
+			track = "track_22"
+		},
+		{
+			track = "track_23"
+		},
 		{
 			track = "track_24",
 			lock = "diamond"
@@ -1495,17 +1628,31 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_25",
 			lock = "thebomb"
 		},
-		{track = "track_26"},
-		{track = "track_27"},
-		{track = "track_28"},
+		{
+			track = "track_26"
+		},
+		{
+			track = "track_27"
+		},
+		{
+			track = "track_28"
+		},
 		{
 			track = "track_29",
 			lock = "kenaz"
 		},
-		{track = "track_30"},
-		{track = "track_31"},
-		{track = "track_35"},
-		{track = "track_36"},
+		{
+			track = "track_30"
+		},
+		{
+			track = "track_31"
+		},
+		{
+			track = "track_35"
+		},
+		{
+			track = "track_36"
+		},
 		{
 			track = "track_37",
 			lock = "berry"
@@ -1514,7 +1661,9 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_38",
 			lock = "berry"
 		},
-		{track = "track_39"},
+		{
+			track = "track_39"
+		},
 		{
 			track = "track_40",
 			lock = "peta"
@@ -1531,7 +1680,9 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_43",
 			lock = "pal"
 		},
-		{track = "track_44"},
+		{
+			track = "track_44"
+		},
 		{
 			track = "track_45",
 			lock = "born"
@@ -1540,9 +1691,15 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_46",
 			lock = "born"
 		},
-		{track = "track_47_gen"},
-		{track = "track_48"},
-		{track = "track_49"},
+		{
+			track = "track_47_gen"
+		},
+		{
+			track = "track_48"
+		},
+		{
+			track = "track_49"
+		},
 		{
 			track = "track_50",
 			lock = "friend"
@@ -1551,19 +1708,54 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_51",
 			lock = "spa"
 		},
-		{track = "track_52"},
-		{track = "track_53"},
-		{track = "track_54"},
-		{track = "track_55"},
-		{track = "track_56"},
-		{track = "track_57"},
-		{track = "track_58"},
-		{track = "track_59"},
-		{track = "track_60"},
-		{track = "track_61"},
-		{track = "track_32_lcv"},
-		{track = "track_33_lcv"},
-		{track = "track_34_lcv"},
+		{
+			track = "track_52"
+		},
+		{
+			track = "track_53"
+		},
+		{
+			track = "track_54"
+		},
+		{
+			track = "track_55"
+		},
+		{
+			track = "track_56"
+		},
+		{
+			track = "track_57"
+		},
+		{
+			track = "track_58"
+		},
+		{
+			track = "track_59"
+		},
+		{
+			track = "track_60"
+		},
+		{
+			track = "track_61"
+		},
+		{
+			track = "track_62_lcv"
+		},
+		{
+			track = "track_63"
+		},
+		{
+			track = "track_64_lcv"
+		},
+		{
+			track = "track_32_lcv"
+		},
+		{
+			track = "track_33_lcv"
+		},
+		{
+			track = "track_34_lcv"
+		},
 		{
 			track = "track_pth_01",
 			lock = "payday"
@@ -1602,16 +1794,36 @@ Play the full version soon to get your full PAYDAY!]],
 		}
 	}
 	self.music.track_menu_list = {
-		{track = "menu_music"},
-		{track = "loadout_music"},
-		{track = "music_loot_drop"},
-		{track = "resultscreen_win"},
-		{track = "resultscreen_lose"},
-		{track = "preplanning_music"},
-		{track = "preplanning_music_old"},
-		{track = "lets_go_shopping_menu"},
-		{track = "this_is_our_time"},
-		{track = "criminals_ambition"},
+		{
+			track = "menu_music"
+		},
+		{
+			track = "loadout_music"
+		},
+		{
+			track = "music_loot_drop"
+		},
+		{
+			track = "resultscreen_win"
+		},
+		{
+			track = "resultscreen_lose"
+		},
+		{
+			track = "preplanning_music"
+		},
+		{
+			track = "preplanning_music_old"
+		},
+		{
+			track = "lets_go_shopping_menu"
+		},
+		{
+			track = "this_is_our_time"
+		},
+		{
+			track = "criminals_ambition"
+		},
 		{
 			track = "criminals_ambition_instrumental",
 			lock = "soundtrack"
@@ -1636,7 +1848,9 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "im_a_wild_one",
 			lock = "soundtrack"
 		},
-		{track = "the_flames_of_love"},
+		{
+			track = "the_flames_of_love"
+		},
 		{
 			track = "alesso_payday",
 			lock = "alesso"
@@ -1657,8 +1871,12 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "pb_take_me_down",
 			lock = "berry"
 		},
-		{track = "biting_elbows_bad_motherfucker"},
-		{track = "biting_elbows_for_the_kill"},
+		{
+			track = "biting_elbows_bad_motherfucker"
+		},
+		{
+			track = "biting_elbows_for_the_kill"
+		},
 		{
 			track = "half_passed_wicked",
 			lock = "born_wild"
@@ -1807,8 +2025,12 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "xmas13_deck_the_safe_house_instrumental",
 			lock = "xmas"
 		},
-		{track = "its_payday"},
-		{track = "music_tag"}
+		{
+			track = "its_payday"
+		},
+		{
+			track = "music_tag"
+		}
 	}
 	self.music.soundbank_list = {
 		"soundbanks/music",
@@ -1958,8 +2180,12 @@ Play the full version soon to get your full PAYDAY!]],
 			explosion = false,
 			fire = false
 		},
-		environment_fire = {fire = false},
-		dynamite = {fire = false},
+		environment_fire = {
+			fire = false
+		},
+		dynamite = {
+			fire = false
+		},
 		launcher_frag_arbiter = {
 			explosion = false,
 			fire = false
@@ -1969,7 +2195,9 @@ Play the full version soon to get your full PAYDAY!]],
 			fire = false
 		}
 	}
-	self.projectiles = {frag = {}}
+	self.projectiles = {
+		frag = {}
+	}
 	self.projectiles.frag.damage = 160
 	self.projectiles.frag.curve_pow = 0.1
 	self.projectiles.frag.player_damage = 10
@@ -2148,7 +2376,9 @@ Play the full version soon to get your full PAYDAY!]],
 		mass_look_up_modifier = 1,
 		name_id = "bm_prj_four",
 		push_at_body_index = 0,
-		dot_data = {type = "poison"},
+		dot_data = {
+			type = "poison"
+		},
 		bullet_class = "ProjectilesPoisonBulletBase",
 		sounds = {}
 	}
@@ -2304,17 +2534,33 @@ Play the full version soon to get your full PAYDAY!]],
 	self.projectiles.ecp_arrow_exp.damage = 55
 	self.projectiles.ecp_arrow_exp.bullet_class = "InstantExplosiveBulletBase"
 	self.projectiles.ecp_arrow_exp.remove_on_impact = true
+	self.projectiles.elastic_arrow = {
+		damage = 200,
+		launch_speed = 3500,
+		adjust_z = -130,
+		mass_look_up_modifier = 1,
+		push_at_body_index = 0
+	}
+	self.projectiles.elastic_arrow_poison = deep_clone(self.projectiles.elastic_arrow)
+	self.projectiles.elastic_arrow_poison.damage = 30
+	self.projectiles.elastic_arrow_poison.bullet_class = "PoisonBulletBase"
+	self.projectiles.elastic_arrow_exp = deep_clone(self.projectiles.elastic_arrow)
+	self.projectiles.elastic_arrow_exp.damage = 140
+	self.projectiles.elastic_arrow_exp.bullet_class = "InstantExplosiveBulletBase"
+	self.projectiles.elastic_arrow_exp.remove_on_impact = true
 	self.voting = {
 		timeout = 30,
 		cooldown = 50,
 		restart_delay = 5
 	}
-	self.dot_types = {poison = {
-		damage_class = "PoisonBulletBase",
-		dot_damage = 25,
-		dot_length = 6,
-		hurt_animation_chance = 1
-	}}
+	self.dot_types = {
+		poison = {
+			damage_class = "PoisonBulletBase",
+			dot_damage = 25,
+			dot_length = 6,
+			hurt_animation_chance = 1
+		}
+	}
 	self.quickplay = {
 		default_level_diff = {
 			15,
@@ -2331,7 +2577,9 @@ Play the full version soon to get your full PAYDAY!]],
 	self.quickplay.stealth_levels.cage = true
 	self.quickplay.stealth_levels.fish = true
 	self.quickplay.stealth_levels.tag = true
-	self.team_ai = {stop_action = {}}
+	self.team_ai = {
+		stop_action = {}
+	}
 	self.team_ai.stop_action.delay = 0.8
 	self.team_ai.stop_action.distance = 3000
 	self.team_ai.stop_action.teleport_distance = 5000
@@ -2339,34 +2587,38 @@ Play the full version soon to get your full PAYDAY!]],
 		radius = 400,
 		cooldown = 3,
 		debug_drawing = false,
-		disabled_units = {"spooc"}
-	}
-	self.spotlights = {helicopter_1 = {
-		tracking_speed = 1.2,
-		objects = {
-			"g_light_cone",
-			"g_spotlight",
-			"align_spotlight_effect",
-			"ls_spotlight"
-		},
-		wiggle = {
-			ang = {
-				2,
-				6
-			},
-			speed = {
-				50,
-				80
-			}
-		},
-		neutral_direction = Vector3(0, 1, -0.7),
-		targetting = {
-			search_t = 3,
-			slot = 12,
-			body = "a_body",
-			max_distance = math.pow(4000, 2)
+		disabled_units = {
+			"spooc"
 		}
-	}}
+	}
+	self.spotlights = {
+		helicopter_1 = {
+			tracking_speed = 1.2,
+			objects = {
+				"g_light_cone",
+				"g_spotlight",
+				"align_spotlight_effect",
+				"ls_spotlight"
+			},
+			wiggle = {
+				ang = {
+					2,
+					6
+				},
+				speed = {
+					50,
+					80
+				}
+			},
+			neutral_direction = Vector3(0, 1, -0.7),
+			targetting = {
+				search_t = 3,
+				slot = 12,
+				body = "a_body",
+				max_distance = math.pow(4000, 2)
+			}
+		}
+	}
 	self.promos = PromotionalMenusTweakData:new(self)
 	self.vr = TweakDataVR:new(self)
 
@@ -2377,6 +2629,23 @@ Play the full version soon to get your full PAYDAY!]],
 
 	self:set_mode()
 	self:digest_tweak_data()
+end
+
+function TweakData:load_movie_list()
+	local CONFIG_PATH = "gamedata/movie_theater"
+	local FILE_EXTENSION = "movie_theater"
+	self.movies = {}
+	local movie_data = PackageManager:xml_data(FILE_EXTENSION:id(), CONFIG_PATH:id())
+
+	if movie_data then
+		for i = 0, movie_data:num_children() - 1, 1 do
+			local item = movie_data:child(i):parameter_map()
+
+			if item.file and DB:has(Idstring("movie"), item.file) then
+				table.insert(self.movies, item)
+			end
+		end
+	end
 end
 
 function TweakData:init_screen_colors()
@@ -2748,6 +3017,12 @@ function TweakData:set_menu_scale()
 	self.menu.pd2_tiny_font = "fonts/font_small_mf"
 	self.menu.pd2_tiny_font_id = Idstring(self.menu.pd2_tiny_font)
 	self.menu.pd2_tiny_font_size = 16
+	self.menu.uno_vessel_font = "fonts/font_vessel"
+	self.menu.uno_vessel_font_id = Idstring(self.menu.uno_vessel_font)
+	self.menu.uno_vessel_font_size = 20
+	self.menu.uno_vessel_ext_font = "fonts/font_vessel_ext"
+	self.menu.uno_vessel_ext_font_id = Idstring(self.menu.uno_vessel_ext_font)
+	self.menu.uno_vessel_ext_font_size = 20
 	self.menu.default_font_size = 24 * scale_multiplier
 	self.menu.default_font_row_item_color = Color.white
 	self.menu.default_hightlight_row_item_color = Color(1, 0, 0, 0)
@@ -2784,7 +3059,9 @@ function TweakData:set_menu_scale()
 	self.menu.border_pad = 8 * self.scale.menu_border_multiplier
 	self.menu.kit_description_font_size = 14 * self.scale.kit_description_multiplier
 	self.load_level = {
-		briefing_text = {h = 192 * self.scale.briefing_text_h_multiplier},
+		briefing_text = {
+			h = 192 * self.scale.briefing_text_h_multiplier
+		},
 		upper_saferect_border = self.menu.upper_saferect_border,
 		border_pad = self.menu.border_pad,
 		stonecold_small_logo = "guis/textures/game_small_logo"
@@ -3813,4 +4090,3 @@ function TweakData:get_controller_help_coords()
 
 	return coords
 end
-

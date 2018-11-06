@@ -15,4 +15,3 @@ end
 function IngameHost:at_exit()
 	print("[IngameHost] Exit")
 end
-

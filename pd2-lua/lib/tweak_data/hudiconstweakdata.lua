@@ -1359,6 +1359,15 @@ function HudIconsTweakData:init()
 			32
 		}
 	}
+	self.equipment_key_chain = {
+		texture = "guis/textures/pd2/hud_pickups",
+		texture_rect = {
+			128,
+			160,
+			32,
+			32
+		}
+	}
 	self.equipment_hand = {
 		texture = "guis/textures/pd2/hud_pickups",
 		texture_rect = {
@@ -1422,6 +1431,24 @@ function HudIconsTweakData:init()
 			32
 		}
 	}
+	self.equipment_bloodvial = {
+		texture = "guis/dlcs/nmh/textures/pd2/hud_pickups_bloodvial",
+		texture_rect = {
+			0,
+			0,
+			32,
+			32
+		}
+	}
+	self.equipment_bloodvialok = {
+		texture = "guis/dlcs/nmh/textures/pd2/hud_pickups_bloodvial",
+		texture_rect = {
+			32,
+			0,
+			32,
+			32
+		}
+	}
 	self.equipment_chimichanga = {
 		texture = "guis/dlcs/tag/textures/pd2/hud_pickups_tag",
 		texture_rect = {
@@ -1480,6 +1507,15 @@ function HudIconsTweakData:init()
 		texture = "guis/dlcs/des/textures/pd2/hud_pickups_des",
 		texture_rect = {
 			64,
+			0,
+			32,
+			32
+		}
+	}
+	self.equipment_mayan_gold = {
+		texture = "guis/dlcs/uno/textures/pd2/hud_pickups_uno",
+		texture_rect = {
+			0,
 			0,
 			32,
 			32
@@ -12790,6 +12826,393 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
+	self.C_Bain_H_NoMercy_AllDiffs_D0 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			89,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_AllDiffs_D1 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			176,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_AllDiffs_D2 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			2,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_AllDiffs_D3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			89,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_AllDiffs_D4 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			176,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_AllDiffs_D5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			263,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_AllDiffs_D6 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			2,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_AllDiffs_OD_D6 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			89,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_KeepingTheCool = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			2,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_Nyctophobia = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			2,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_NoMercy_OrWasIt = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
+		texture_rect = {
+			2,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_AllDiffs_D0 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			2,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_AllDiffs_D1 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			2,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_AllDiffs_D2 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			89,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_AllDiffs_D3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			2,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_AllDiffs_D4 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			89,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_AllDiffs_D5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			176,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_AllDiffs_D6 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			2,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_AllDiffs_OD_D6 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			176,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_Another = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			263,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_Beacon = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			89,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HellsIsland_PrisonRules = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_bph",
+		texture_rect = {
+			2,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_AllDiffs_D0 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			2,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_AllDiffs_D1 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			2,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_AllDiffs_D2 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			89,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_AllDiffs_D3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			2,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_AllDiffs_D4 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			89,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_AllDiffs_D5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			176,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_AllDiffs_D6 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			2,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_AllDiffs_OD_D6 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			89,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_BigBrother = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			263,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_HeistToRemember = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			176,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_President = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_vit",
+		texture_rect = {
+			2,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_BankAny_AGoodHaul = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			263,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_DiamondStore_Hostage = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			350,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_Mallcrasher_SelfCheck = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			2,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Butcher_H_Scarface_Setting = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			263,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_GreenBridge_Attacked = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			176,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Hector_H_Watchdogs_OutOf = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			176,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_HenrysRock_Hack = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			89,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_Nightclub_LetThem = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			2,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_XMas_Whats = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
+		texture_rect = {
+			89,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Locke_H_WhiteHouse_Finale = {
+		texture = "guis/dlcs/trk/atlases/fin_1",
+		texture_rect = {
+			0,
+			0,
+			85,
+			85
+		}
+	}
 
 	TextureCorrectionTweakData:new(self)
 
@@ -12803,6 +13226,7 @@ function HudIconsTweakData:init()
 		}
 	}
 end
+
 local atlas_data = nil
 
 function HudIconsTweakData:create_grid_atlas(image_name, tex_w, tex_h, grid_w, grid_h)
@@ -12874,4 +13298,3 @@ function HudIconsTweakData:get_texture(texture_path)
 
 	return icon_data.texture, icon_data.texture_rect
 end
-

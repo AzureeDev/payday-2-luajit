@@ -42,7 +42,9 @@ function CopLogicPhalanxVip.enter(data, new_logic_name, enter_params)
 	print("CopLogicPhalanxVip.enter")
 	CopLogicBase.enter(data, new_logic_name, enter_params)
 
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	local is_cool = data.unit:movement():cool()
 	my_data.detection = data.char_tweak.detection.combat
 	local old_internal_data = data.internal_data
@@ -76,9 +78,13 @@ function CopLogicPhalanxVip.enter(data, new_logic_name, enter_params)
 	CopLogicPhalanxVip._chk_has_old_action(data, my_data)
 
 	if is_cool then
-		data.unit:brain():set_attention_settings({peaceful = true})
+		data.unit:brain():set_attention_settings({
+			peaceful = true
+		})
 	else
-		data.unit:brain():set_attention_settings({cbt = true})
+		data.unit:brain():set_attention_settings({
+			cbt = true
+		})
 	end
 
 	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
@@ -277,4 +283,3 @@ function CopLogicPhalanxVip.on_criminal_neutralized(data, criminal_key)
 		data.unit:sound():say("cpw_a02", true, true)
 	end
 end
-

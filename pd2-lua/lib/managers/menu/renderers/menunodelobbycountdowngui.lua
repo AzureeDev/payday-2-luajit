@@ -217,19 +217,21 @@ function MenuNodeLobbyCountdownGui:_setup_item_panel(safe_rect, res)
 		max_name_w = math.max(max_name_w, w)
 	end
 
-	local name_expand_w = math.max((max_name_w - self._countdown_panel:w()) - 30, 0)
+	local name_expand_w = math.max(max_name_w - self._countdown_panel:w() - 30, 0)
 
 	self.box_panel:grow(name_expand_w, 0)
 	self._peers_panel:grow(name_expand_w, 0)
 	self.box_panel:set_center(self.box_panel:parent():w() * 0.5, self.box_panel:parent():h() * 0.5)
 	self.item_panel:set_right(self.box_panel:right() - 10)
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_clipping(false)
 	self.boxgui:set_layer(1000)
@@ -347,11 +349,10 @@ function MenuNodeLobbyCountdownGui.animate_flash_text(text)
 	local dur = 0.5
 	local t = 0
 
-	while t < dur do
+	while dur > t do
 		local dt = coroutine.yield()
 		t = t + dt
 
 		text:set_color(math.lerp(tweak_data.screen_colors.button_stage_2, tweak_data.screen_colors.text, t / dur))
 	end
 end
-

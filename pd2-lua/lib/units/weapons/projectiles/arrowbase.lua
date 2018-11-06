@@ -133,6 +133,7 @@ function ArrowBase:add_damage_result(unit, is_dead, damage_percent)
 
 	GrenadeBase._check_achievements(self, unit, true, 1, 1, 1)
 end
+
 local tmp_vel = Vector3()
 
 function ArrowBase:update(unit, t, dt)
@@ -178,6 +179,7 @@ function ArrowBase:update(unit, t, dt)
 		Application:draw_cone(tip, base, 3, 0, 0, 1)
 	end
 end
+
 local tmp_vec1 = Vector3()
 
 function ArrowBase:_calculate_autohit_direction()
@@ -320,7 +322,7 @@ function ArrowBase:_attach_to_hit_unit(is_remote, dynamic_pickup_wanted)
 						global_pos = projected_pos + max_dist_from_segment * dir_from_segment
 					end
 
-					local_pos = (global_pos - parent_pos):rotate_with(parent_obj:rotation():inverse())
+					local_pos = global_pos - parent_pos:rotate_with(parent_obj:rotation():inverse())
 				end
 			end
 
@@ -330,18 +332,20 @@ function ArrowBase:_attach_to_hit_unit(is_remote, dynamic_pickup_wanted)
 		elseif damage_ext and damage_ext.can_attach_projectiles and not damage_ext:can_attach_projectiles() then
 			switch_to_dynamic_pickup = true
 		elseif not alive(self._col_ray.body) or not self._col_ray.body:enabled() then
-			local_pos = (global_pos - hit_unit:position()):rotate_with(hit_unit:rotation():inverse())
+			local_pos = global_pos - hit_unit:position():rotate_with(hit_unit:rotation():inverse())
 			switch_to_dynamic_pickup = true
 		else
 			parent_body = self._col_ray.body
 			parent_obj = self._col_ray.body:root_object()
-			local_pos = (global_pos - parent_obj:position()):rotate_with(parent_obj:rotation():inverse())
+			local_pos = global_pos - parent_obj:position():rotate_with(parent_obj:rotation():inverse())
 		end
 
 		if damage_ext and not damage_ext:dead() and damage_ext.add_listener and not self._death_listener_id then
 			self._death_listener_id = "ArrowBase_death" .. tostring(self._unit:key())
 
-			damage_ext:add_listener(self._death_listener_id, {"death"}, callback(self, self, "clbk_hit_unit_death"))
+			damage_ext:add_listener(self._death_listener_id, {
+				"death"
+			}, callback(self, self, "clbk_hit_unit_death"))
 		end
 
 		local hit_base = hit_unit:base()
@@ -453,8 +457,12 @@ function ArrowBase:sync_attach_to_unit(instant_dynamic_pickup, parent_unit, pare
 	if drop_in then
 		world_position = self._unit:position()
 		dir = self._unit:rotation():y()
+	elseif parent_obj then
+		world_position = local_pos:rotate_with(parent_obj:rotation()) + parent_obj:position()
+	elseif alive(parent_unit) and parent_body then
+		world_position = local_pos:rotate_with(parent_unit:rotation()) + parent_unit:position()
 	else
-		world_position = parent_obj and local_pos:rotate_with(parent_obj:rotation()) + parent_obj:position() or alive(parent_unit) and parent_body and local_pos:rotate_with(parent_unit:rotation()) + parent_unit:position() or local_pos
+		world_position = local_pos
 	end
 
 	self._col_ray = {
@@ -533,6 +541,7 @@ function ArrowBase:clbk_hit_unit_destroyed()
 
 	self:_switch_to_pickup(true)
 end
+
 ArrowBase.DEFUALT_SOUNDS = {
 	impact = "arrow_impact_gen",
 	flyby_stop = "arrow_flyby_stop",
@@ -572,7 +581,9 @@ function ArrowBase:save(data)
 
 			managers.enemy:add_delayed_clbk("delay_sync_attach" .. tostring(self._unit:key()), callback(self, self, "_delay_sync_attach", peer), TimerManager:game():time() + 0.1)
 		else
-			state.sync_attach_data = {parent_unit_id = self._sync_attach_data.parent_unit_id}
+			state.sync_attach_data = {
+				parent_unit_id = self._sync_attach_data.parent_unit_id
+			}
 
 			if self._sync_attach_data.parent_body then
 				state.sync_attach_data.parent_body_index = self._sync_attach_data.parent_unit:get_body_index(self._sync_attach_data.parent_body:name())
@@ -601,7 +612,6 @@ function ArrowBase:load(data)
 		print(inspect(state.sync_attach_data))
 
 		if state.sync_attach_data then
-
 			local function _dropin_attach(parent_unit)
 				local parent_body = parent_unit:body(state.sync_attach_data.parent_body_index)
 				local parent_obj = parent_body:root_object()
@@ -712,4 +722,3 @@ function ArrowBase:reload_contour()
 		end
 	end
 end
-

@@ -38,12 +38,14 @@ function ScrollablePanel:init(parent_panel, name, data)
 			w = self:canvas():w()
 		})
 
-		BoxGuiObject:new(scroll_up_indicator_shade, {sides = {
-			0,
-			0,
-			2,
-			0
-		}}):set_aligns("scale", "scale")
+		BoxGuiObject:new(scroll_up_indicator_shade, {
+			sides = {
+				0,
+				0,
+				2,
+				0
+			}
+		}):set_aligns("scale", "scale")
 	end
 
 	if data.ignore_down_indicator == nil or not data.ignore_down_indicator then
@@ -59,12 +61,14 @@ function ScrollablePanel:init(parent_panel, name, data)
 			h = self:panel():h() - self:y_padding() * 2
 		})
 
-		BoxGuiObject:new(scroll_down_indicator_shade, {sides = {
-			0,
-			0,
-			0,
-			2
-		}}):set_aligns("scale", "scale")
+		BoxGuiObject:new(scroll_down_indicator_shade, {
+			sides = {
+				0,
+				0,
+				0,
+				2
+			}
+		}):set_aligns("scale", "scale")
 	end
 
 	local texture, rect = tweak_data.hud_icons:get_icon_data("scrollbar_arrow")
@@ -94,7 +98,7 @@ function ScrollablePanel:init(parent_panel, name, data)
 		color = Color.white
 	})
 
-	scroll_down_indicator_arrow:set_bottom((self:panel():h() - self:y_padding()) - 6)
+	scroll_down_indicator_arrow:set_bottom(self:panel():h() - self:y_padding() - 6)
 	scroll_down_indicator_arrow:set_right(self:panel():w() - self:scrollbar_x_padding())
 
 	if data.left_scrollbar then
@@ -110,12 +114,14 @@ function ScrollablePanel:init(parent_panel, name, data)
 		layer = layer - 1,
 		h = bar_h
 	})
-	self._scroll_bar_box_class = BoxGuiObject:new(self._scroll_bar, {sides = {
-		2,
-		2,
-		0,
-		0
-	}})
+	self._scroll_bar_box_class = BoxGuiObject:new(self._scroll_bar, {
+		sides = {
+			2,
+			2,
+			0,
+			0
+		}
+	})
 
 	self._scroll_bar_box_class:set_aligns("scale", "scale")
 	self._scroll_bar:set_w(8)
@@ -187,7 +193,7 @@ function ScrollablePanel:set_size(w, h)
 
 	local scroll_down_indicator_arrow = self:panel():child("scroll_down_indicator_arrow")
 
-	scroll_down_indicator_arrow:set_bottom((self:panel():h() - self:y_padding()) - 6)
+	scroll_down_indicator_arrow:set_bottom(self:panel():h() - self:y_padding() - 6)
 	scroll_down_indicator_arrow:set_right(self:panel():w() - self:scrollbar_x_padding())
 	self._scroll_bar:set_bottom(scroll_down_indicator_arrow:top())
 	self._scroll_bar:set_center_x(scroll_down_indicator_arrow:center_x())
@@ -202,7 +208,7 @@ function ScrollablePanel:canvas_max_width()
 end
 
 function ScrollablePanel:canvas_scroll_width()
-	return (self:scroll_panel():w() - self:x_padding()) - 5
+	return self:scroll_panel():w() - self:x_padding() - 5
 end
 
 function ScrollablePanel:canvas_scroll_height()
@@ -348,7 +354,7 @@ function ScrollablePanel:scroll_with_bar(target_y, current_y)
 
 		current_y = target_y
 	elseif current_y < target_y then
-		if scroll_panel:world_y() + arrow_size < target_y then
+		if target_y > scroll_panel:world_y() + arrow_size then
 			local mul = (scroll_panel:h() - arrow_size * 2) / canvas:h()
 
 			self:perform_scroll((target_y - current_y) / mul, -1)
@@ -373,7 +379,7 @@ function ScrollablePanel:_set_scroll_indicator()
 	local bar_h = self:panel():child("scroll_down_indicator_arrow"):top() - self:panel():child("scroll_up_indicator_arrow"):bottom()
 
 	if self:canvas():h() ~= 0 then
-		self._scroll_bar:set_h(math.max((bar_h * self:scroll_panel():h()) / self:canvas():h(), self._bar_minimum_size))
+		self._scroll_bar:set_h(math.max(bar_h * self:scroll_panel():h() / self:canvas():h(), self._bar_minimum_size))
 	end
 end
 
@@ -393,7 +399,7 @@ function ScrollablePanel:_check_scroll_indicator_states()
 	local down_arrow = self:panel():child("scroll_down_indicator_arrow")
 	local canvas_h = self:canvas():h() ~= 0 and self:canvas():h() or 1
 	local at = self:canvas():top() / (self:scroll_panel():h() - canvas_h)
-	local max = (down_arrow:top() - up_arrow:bottom()) - self._scroll_bar:h()
+	local max = down_arrow:top() - up_arrow:bottom() - self._scroll_bar:h()
 
 	self._scroll_bar:set_top(up_arrow:bottom() + max * at)
 end
@@ -463,4 +469,3 @@ end
 function ScrollablePanel:mouse_released(button, x, y)
 	return self:release_scroll_bar()
 end
-

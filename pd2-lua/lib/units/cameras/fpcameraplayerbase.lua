@@ -55,14 +55,18 @@ function FPCameraPlayerBase:init(unit)
 		distance_to_aim_line = 0,
 		is_sticky = true
 	}
-	self._fov = {fov = 75}
+	self._fov = {
+		fov = 75
+	}
 	self._input = {}
 	self._tweak_data = tweak_data.input.gamepad
 	self._camera_properties.look_speed_current = self._tweak_data.look_speed_standard
 	self._camera_properties.look_speed_transition_timer = 0
 	self._camera_properties.target_tilt = 0
 	self._camera_properties.current_tilt = 0
-	self._recoil_kick = {h = {}}
+	self._recoil_kick = {
+		h = {}
+	}
 	self._episilon = 1e-05
 
 	self:check_flashlight_enabled()
@@ -217,6 +221,7 @@ function FPCameraPlayerBase:recoil_kick(up, down, left, right)
 	local h = math.lerp(left, right, math.random())
 	self._recoil_kick.h.accumulated = (self._recoil_kick.h.accumulated or 0) + h
 end
+
 local bezier_values = {
 	0,
 	0,
@@ -303,6 +308,7 @@ function FPCameraPlayerBase:_update_stance(t, dt)
 		self._fov.dirty = true
 	end
 end
+
 local mrot1 = Rotation()
 local mrot2 = Rotation()
 local mrot3 = Rotation()
@@ -390,6 +396,7 @@ function FPCameraPlayerBase:_update_movement(t, dt)
 	self:set_position(new_shoulder_pos)
 	self:set_rotation(new_shoulder_rot)
 end
+
 local mvec1 = Vector3()
 
 function FPCameraPlayerBase:_update_rot(axis, unscaled_axis)
@@ -557,7 +564,7 @@ function FPCameraPlayerBase:_set_camera_position_in_vehicle()
 	local stance = managers.player:local_player():movement():current_state():stance()
 
 	if stance == PlayerDriving.STANCE_SHOOTING then
-		mvector3.add(obj_pos, seat.shooting_pos:rotate_with(vehicle:rotation()))
+		mvector3.add(obj_pos, seat.shooting_pos:rotate_with(obj_rot))
 	end
 
 	local camera_rot = mrot3
@@ -578,8 +585,8 @@ function FPCameraPlayerBase:_set_camera_position_in_vehicle()
 		target_camera = target_camera + vehicle_ext._tweak_data.driver_camera_offset
 	end
 
-	mvector3.rotate_with(target, vehicle:rotation())
-	mvector3.rotate_with(target_camera, vehicle:rotation())
+	mvector3.rotate_with(target, obj_rot)
+	mvector3.rotate_with(target_camera, obj_rot)
 
 	local pos = obj_pos + target
 	local camera_pos = obj_pos + target_camera
@@ -594,6 +601,17 @@ function FPCameraPlayerBase:_set_camera_position_in_vehicle()
 		mrotation.multiply(camera_rot, self._output_data.rotation)
 		mvector3.set(self._output_data.mover_position, mvec1 + target)
 		self._unit:parent():set_position(seat.object:position())
+
+		local new_head_pos = mvec1
+		local hmd_position = mvec2
+
+		self._parent_unit:m_position(new_head_pos)
+		mvector3.set(hmd_position, self._parent_movement_ext:hmd_position())
+		mvector3.set_x(hmd_position, 0)
+		mvector3.set_y(hmd_position, 0)
+		mvector3.rotate_with(hmd_position, obj_rot)
+		mvector3.add(new_head_pos, hmd_position)
+		mvector3.set(self._output_data.position, new_head_pos)
 	end
 
 	if _G.IS_VR or seat.driving then
@@ -725,7 +743,7 @@ function FPCameraPlayerBase:_pc_look_function(stick_input, stick_input_multiplie
 end
 
 function FPCameraPlayerBase:_gamepad_look_function(stick_input, stick_input_multiplier, dt)
-	if self._tweak_data.look_speed_dead_zone * stick_input_multiplier.x < mvector3.length(stick_input) then
+	if mvector3.length(stick_input) > self._tweak_data.look_speed_dead_zone * stick_input_multiplier.x then
 		local x = stick_input.x
 		local y = stick_input.y
 		stick_input = Vector3(x / (1.3 - 0.3 * (1 - math.abs(y))), y / (1.3 - 0.3 * (1 - math.abs(x))), 0)
@@ -738,6 +756,7 @@ function FPCameraPlayerBase:_gamepad_look_function(stick_input, stick_input_mult
 
 	return 0, 0
 end
+
 local multiplier = Vector3()
 
 function FPCameraPlayerBase:_gamepad_look_function_ctl(stick_input, stick_input_multiplier, dt, unscaled_stick_input)
@@ -757,11 +776,11 @@ function FPCameraPlayerBase:_gamepad_look_function_ctl(stick_input, stick_input_
 		mvector3.set(multiplier, stick_input_multiplier)
 
 		if multiplier.x - 1 > 0.001 then
-			mvector3.set_x(multiplier, 1 + (1.6 * (multiplier.x - 1)) / ((tweak_data.player.camera.MAX_SENSITIVITY - tweak_data.player.camera.MIN_SENSITIVITY) * 0.5))
+			mvector3.set_x(multiplier, 1 + 1.6 * (multiplier.x - 1) / ((tweak_data.player.camera.MAX_SENSITIVITY - tweak_data.player.camera.MIN_SENSITIVITY) * 0.5))
 		end
 
 		if multiplier.y - 1 > 0.001 then
-			mvector3.set_y(multiplier, 1 + (1.6 * (multiplier.y - 1)) / ((tweak_data.player.camera.MAX_SENSITIVITY - tweak_data.player.camera.MIN_SENSITIVITY) * 0.5))
+			mvector3.set_y(multiplier, 1 + 1.6 * (multiplier.y - 1) / ((tweak_data.player.camera.MAX_SENSITIVITY - tweak_data.player.camera.MIN_SENSITIVITY) * 0.5))
 		end
 
 		if aim_assist then
@@ -812,7 +831,7 @@ function FPCameraPlayerBase:_gamepad_look_function_ctl(stick_input, stick_input_
 end
 
 function FPCameraPlayerBase:_steampad_look_function(stick_input, stick_input_multiplier, dt)
-	if self._tweak_data.look_speed_dead_zone * stick_input_multiplier.x < mvector3.length(stick_input) then
+	if mvector3.length(stick_input) > self._tweak_data.look_speed_dead_zone * stick_input_multiplier.x then
 		local x = stick_input.x
 		local y = stick_input.y
 		local look_speed = self._tweak_data.look_speed_standard * (alive(self._parent_unit) and self._parent_unit:base():controller():get_input_bool("change_sensitivity") and 1 or 0.5)
@@ -830,7 +849,7 @@ function FPCameraPlayerBase:_get_look_speed(stick_input, stick_input_multiplier,
 		return self._tweak_data.look_speed_steel_sight
 	end
 
-	if self._tweak_data.look_speed_transition_occluder * stick_input_multiplier.x >= mvector3.length(stick_input) or self._tweak_data.look_speed_transition_zone * stick_input_multiplier.x >= math.abs(stick_input.x) then
+	if mvector3.length(stick_input) <= self._tweak_data.look_speed_transition_occluder * stick_input_multiplier.x or math.abs(stick_input.x) <= self._tweak_data.look_speed_transition_zone * stick_input_multiplier.x then
 		self._camera_properties.look_speed_transition_timer = 0
 
 		return self._tweak_data.look_speed_standard
@@ -1336,7 +1355,7 @@ function FPCameraPlayerBase:get_weapon_offsets()
 	local weapon = self._parent_unit:inventory():equipped_unit()
 	local object = weapon:get_object(Idstring("a_sight"))
 
-	print((object:position() - self._unit:position()):rotate_HP(self._unit:rotation():inverse()))
+	print(object:position() - self._unit:position():rotate_HP(self._unit:rotation():inverse()))
 	print(self._unit:rotation():inverse() * object:rotation())
 end
 
@@ -1438,20 +1457,20 @@ function FPCameraPlayerBase:play_anim_melee_item(tweak_name)
 		return
 	end
 
-	if self._melee_item_anim then
-		for _, unit in ipairs(self._melee_item_units) do
-			unit:anim_stop(self._melee_item_anim)
-		end
-
-		self._melee_item_anim = nil
-	end
-
 	local melee_entry = managers.blackmarket:equipped_melee_weapon()
 	local anims = tweak_data.blackmarket.melee_weapons[melee_entry].anims
 	local anim_data = anims and anims[tweak_name]
 
 	if not anim_data then
 		return
+	end
+
+	if self._melee_item_anim then
+		for _, unit in ipairs(self._melee_item_units) do
+			unit:anim_stop(self._melee_item_anim)
+		end
+
+		self._melee_item_anim = nil
 	end
 
 	local ids = anim_data.anim and Idstring(anim_data.anim)
@@ -1480,7 +1499,9 @@ function FPCameraPlayerBase:spawn_melee_item()
 	local unit_name = tweak_data.blackmarket.melee_weapons[melee_entry].unit
 
 	if unit_name then
-		local aligns = tweak_data.blackmarket.melee_weapons[melee_entry].align_objects or {"a_weapon_left"}
+		local aligns = tweak_data.blackmarket.melee_weapons[melee_entry].align_objects or {
+			"a_weapon_left"
+		}
 		local graphic_objects = tweak_data.blackmarket.melee_weapons[melee_entry].graphic_objects or {}
 		self._melee_item_units = {}
 
@@ -1489,6 +1510,7 @@ function FPCameraPlayerBase:spawn_melee_item()
 			local align_obj = self._unit:get_object(align_obj_name)
 			local unit = World:spawn_unit(Idstring(unit_name), align_obj:position(), align_obj:rotation())
 
+			unit:anim_stop()
 			self._unit:link(align_obj:name(), unit, unit:orientation_object():name())
 
 			for a_object, g_object in pairs(graphic_objects) do
@@ -1906,7 +1928,7 @@ function FPCameraPlayerBase:update_tilt_smooth(direction, max_tilt, tilt_speed, 
 end
 
 function FPCameraPlayerBase:catmullrom(t, p0, p1, p2, p3)
-	return 0.5 * (2 * p1 + (-p0 + p2) * t + ((2 * p0 - 5 * p1 + 4 * p2) - p3) * t * t + ((-p0 + 3 * p1) - 3 * p2 + p3) * t * t * t)
+	return 0.5 * (2 * p1 + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t + (-p0 + 3 * p1 - 3 * p2 + p3) * t * t * t)
 end
 
 function FPCameraPlayerBase:smoothstep(a, b, step, n)
@@ -1953,4 +1975,3 @@ end
 function FPCameraPlayerBase:enter_vehicle()
 	self._initial_hmd_rotation = VRManager:hmd_rotation()
 end
-

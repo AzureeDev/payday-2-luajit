@@ -36,8 +36,7 @@ end
 function LoadingGame:transition()
 	local current_time = self.game_state._session_manager:_debug_time()
 
-	if self._debug_time + 2 < current_time then
+	if current_time > self._debug_time + 2 then
 		return CoreGameStateInGame.InGame, self._level_handler
 	end
 end
-

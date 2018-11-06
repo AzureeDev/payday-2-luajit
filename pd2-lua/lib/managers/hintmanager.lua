@@ -5,7 +5,9 @@ HintManager.FULL_PATH = HintManager.PATH .. "." .. HintManager.FILE_EXTENSION
 
 function HintManager:init()
 	if not Global.hint_manager then
-		Global.hint_manager = {hints = {}}
+		Global.hint_manager = {
+			hints = {}
+		}
 
 		self:_parse_hints()
 	end
@@ -135,7 +137,9 @@ function HintManager:on_simulation_ended()
 end
 
 function HintManager:save(data)
-	local state = {hints = deep_clone(Global.hint_manager.hints)}
+	local state = {
+		hints = deep_clone(Global.hint_manager.hints)
+	}
 	data.HintManager = state
 end
 
@@ -143,4 +147,3 @@ function HintManager:load(data)
 	local state = data.HintManager
 	Global.hint_manager.hints = deep_clone(state.hints)
 end
-

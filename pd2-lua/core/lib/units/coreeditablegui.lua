@@ -106,7 +106,7 @@ function CoreEditableGui:set_font_size(font_size)
 	self._font_size = font_size or self._font_size
 
 	for _, gui in ipairs(self._guis) do
-		gui.gui:child("std_text"):set_font_size(self._font_size * (10 * gui.gui:child("std_text"):height()) / 100)
+		gui.gui:child("std_text"):set_font_size(self._font_size * 10 * gui.gui:child("std_text"):height() / 100)
 	end
 end
 
@@ -257,4 +257,3 @@ function CoreEditableGui:destroy()
 
 	self._guis = nil
 end
-

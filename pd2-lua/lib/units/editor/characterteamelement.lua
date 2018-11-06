@@ -1,7 +1,9 @@
 CharacterTeamElement = CharacterTeamElement or class(MissionElement)
 CharacterTeamElement.SAVE_UNIT_POSITION = false
 CharacterTeamElement.SAVE_UNIT_ROTATION = false
-CharacterTeamElement.LINK_ELEMENTS = {"elements"}
+CharacterTeamElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function CharacterTeamElement:init(unit)
 	MissionElement.init(self, unit)
@@ -116,4 +118,3 @@ function CharacterTeamElement:_build_panel(panel, panel_sizer)
 		ctrlr = team_combo_box
 	})
 end
-

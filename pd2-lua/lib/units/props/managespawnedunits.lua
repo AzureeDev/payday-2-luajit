@@ -33,6 +33,16 @@ function ManageSpawnedUnits:spawn_unit(unit_id, align_obj_name, unit)
 
 	self._unit:link(Idstring(align_obj_name), spawn_unit, spawn_unit:orientation_object():name())
 
+	local contour_ext = self._unit:contour()
+	local spawned_contour_ext = spawn_unit:contour()
+
+	if contour_ext and spawned_contour_ext then
+		for _, contour in ipairs(contour_ext:contour_list()) do
+			spawned_contour_ext:add(contour.type)
+			spawned_contour_ext:change_color(contour.type, contour.color)
+		end
+	end
+
 	local unit_entry = {
 		align_obj_name = align_obj_name,
 		unit = spawn_unit
@@ -189,10 +199,10 @@ function ManageSpawnedUnits:local_push_child_unit(unit_id, mass, pow, vec3_a, ve
 	end
 end
 
-function ManageSpawnedUnits:remove_unit(unit_id)
+function ManageSpawnedUnits:remove_unit(unit_id, allow_client_removal)
 	local entry = self._spawned_units[unit_id]
 
-	if Network:is_server() and alive(entry.unit) then
+	if (Network:is_server() or allow_client_removal) and entry and alive(entry.unit) then
 		entry.unit:set_slot(0)
 	end
 
@@ -214,7 +224,9 @@ function ManageSpawnedUnits:save(data)
 		return
 	end
 
-	data.managed_spawned_units = {linked_joints = self._sync_spawn_and_link}
+	data.managed_spawned_units = {
+		linked_joints = self._sync_spawn_and_link
+	}
 
 	for sync_id, unit_entry in pairs(self._spawned_units) do
 		if alive(unit_entry.unit) and sync_id ~= -1 then
@@ -298,4 +310,3 @@ function ManageSpawnedUnits:get_unit(unit_id)
 
 	return entry.unit
 end
-

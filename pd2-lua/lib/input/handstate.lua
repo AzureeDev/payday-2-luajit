@@ -71,4 +71,3 @@ function HandState:apply(hand, key_map)
 		end
 	end
 end
-

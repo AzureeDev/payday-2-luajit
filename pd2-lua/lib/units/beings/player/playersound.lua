@@ -140,4 +140,3 @@ end
 function PlayerSound:set_voice(voice)
 	self._unit:sound_source():set_switch("robber", voice)
 end
-

@@ -47,4 +47,3 @@ function PointPicker:_mouse_left_down(raycast)
 	self:_send_event("EVT_FINISHED_PICKING", raycast)
 	self:stop_picking()
 end
-

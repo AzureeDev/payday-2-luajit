@@ -137,7 +137,6 @@ function MissionLoadDelayedElement:add_triggers(vc)
 end
 
 function MissionLoadDelayedElement:add_unit_list_btn()
-
 	local function filter_p(unit)
 		if self._units[unit:unit_data().unit_id] then
 			return false
@@ -160,7 +159,6 @@ function MissionLoadDelayedElement:add_unit_list_btn()
 end
 
 function MissionLoadDelayedElement:remove_unit_list_btn()
-
 	local function filter_p(unit)
 		return self._units[unit:unit_data().unit_id]
 	end
@@ -188,4 +186,3 @@ function MissionLoadDelayedElement:_build_panel(panel, panel_sizer)
 	self._btn_toolbar:realize()
 	panel_sizer:add(self._btn_toolbar, 0, 1, "EXPAND,LEFT")
 end
-

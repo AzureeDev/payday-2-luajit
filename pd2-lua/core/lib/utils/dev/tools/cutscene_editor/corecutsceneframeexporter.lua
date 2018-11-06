@@ -87,4 +87,3 @@ function CoreCutsceneFrameExporter:_disable_visual_aids()
 		managers.editor._show_center = false
 	end
 end
-

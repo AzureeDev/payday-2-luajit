@@ -27,4 +27,3 @@ end
 function ElementBlurZone:operation_remove()
 	managers.environment_controller:set_blurzone(self._id, -1)
 end
-

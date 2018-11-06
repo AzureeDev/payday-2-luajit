@@ -83,7 +83,9 @@ function PlayerBipod:exit(state_data, new_state_name)
 	self._unit:camera():camera_unit():base():remove_limits()
 
 	self._unit:camera():camera_unit():base().bipod_location = nil
-	local exit_data = {skip_equip = true}
+	local exit_data = {
+		skip_equip = true
+	}
 	self._dye_risk = nil
 
 	self:set_animation_state("standard")
@@ -92,7 +94,9 @@ function PlayerBipod:exit(state_data, new_state_name)
 	local peer_id = managers.network:session():peer_by_unit(self._unit):id()
 
 	Application:trace("PlayerBipod:exit: ", peer_id)
-	managers.player:set_bipod_data_for_peer({peer_id = peer_id})
+	managers.player:set_bipod_data_for_peer({
+		peer_id = peer_id
+	})
 
 	self._state_data.previous_state = "bipod"
 
@@ -127,7 +131,7 @@ function PlayerBipod:update(t, dt)
 	PlayerBipod.super.update(self, t, dt)
 
 	local deploy_valid = self._equipped_unit:base():is_bipod_usable()
-	local movement_distance = (self._unit_deploy_position - managers.player:player_unit():position()):length()
+	local movement_distance = self._unit_deploy_position - managers.player:player_unit():position():length()
 
 	if not managers.player:player_unit():mover():standing() or movement_distance > 10 or not deploy_valid then
 		self:exit(nil, "standard")
@@ -397,4 +401,3 @@ end
 function PlayerBipod:_get_walk_headbob(...)
 	return 0
 end
-

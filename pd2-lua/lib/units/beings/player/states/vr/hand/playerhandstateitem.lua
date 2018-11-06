@@ -81,7 +81,9 @@ function PlayerHandStateItem:_prompt(prompt)
 	end
 
 	managers.hud:link_watch_prompt_as_hand(self._hand_unit, hand_id, offset)
-	managers.hud:show_interact({text = text})
+	managers.hud:show_interact({
+		text = text
+	})
 	managers.hud:watch_prompt_panel():show()
 end
 
@@ -358,4 +360,3 @@ function PlayerHandStateItem:swipe_transition(next_state, params)
 	self:at_exit(next_state, true)
 	next_state:at_enter(self, params)
 end
-

@@ -17,6 +17,7 @@ function OverlayEffectManager:init()
 		self:add_preset(name, setting)
 	end
 end
+
 local zero_rotation = Rotation(0, 0, 0)
 local zero_vector3 = Vector3(0, 0, 0)
 
@@ -66,4 +67,3 @@ function OverlayEffectManager:viewport()
 end
 
 CoreClass.override_class(CoreOverlayEffectManager.OverlayEffectManager, OverlayEffectManager)
-

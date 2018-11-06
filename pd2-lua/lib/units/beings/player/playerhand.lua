@@ -208,6 +208,7 @@ end
 function PlayerHand:set_custom_belt_height_ratio(height)
 	self._custom_belt_height_ratio = height
 end
+
 local pen = Draw:pen()
 local prints = 20
 
@@ -232,12 +233,26 @@ function PlayerHand:_update_controllers(t, dt)
 		local precision_mode = self._precision_mode
 
 		if precision_mode then
-			self._precision_mode_t = self._precision_mode_t or t
+			if not self._precision_mode_t then
+				slot7 = t
+			end
+
+			self._precision_mode_t = slot7
 		elseif self._precision_mode_t and t - self._precision_mode_t > 0.7 then
 			self._precision_mode_t = nil
 		end
 
-		precision_mode = precision_mode and t - self._precision_mode_t > 0.7 and not self._precision_mode_block_t
+		if precision_mode then
+			if t - self._precision_mode_t > 0.7 then
+				precision_mode = not self._precision_mode_block_t
+			else
+				precision_mode = false
+
+				if false then
+					precision_mode = true
+				end
+			end
+		end
 
 		if self._precision_mode_block_t and t - self._precision_mode_block_t > 0.7 then
 			self._precision_mode_block_t = nil
@@ -260,7 +275,7 @@ function PlayerHand:_update_controllers(t, dt)
 				end
 
 				if deg < 2 then
-					local t_slerp = math.min((math.lerp(2, 5, self._precision_mode_length) * 20 * dt) / deg, 1)
+					local t_slerp = math.min(math.lerp(2, 5, self._precision_mode_length) * 20 * dt / deg, 1)
 
 					mrotation.slerp(rot, controller.prev_rotation, rot, t_slerp)
 				end
@@ -348,8 +363,11 @@ function PlayerHand:_update_controllers(t, dt)
 	end
 
 	local belt_rot = Rotation(self._belt_yaw, 0, 0)
+	slot18 = 0
+	slot19 = managers.vr:get_setting("belt_distance")
+	slot20 = self._custom_belt_height_ratio or managers.vr:get_setting("belt_height_ratio")
 
-	self._belt_unit:set_position(ghost_position + Vector3(0, managers.vr:get_setting("belt_distance"), current_height * (self._custom_belt_height_ratio or managers.vr:get_setting("belt_height_ratio"))):rotate_with(belt_rot))
+	self._belt_unit:set_position(ghost_position + Vector3(0, slot19, current_height * slot20):rotate_with(belt_rot))
 	self._belt_unit:set_rotation(belt_rot)
 
 	local wanted_float_rot = Rotation(rot:yaw())
@@ -379,6 +397,7 @@ function PlayerHand:_update_controllers(t, dt)
 		self:set_belt_active(found, i)
 	end
 end
+
 local tablet_normal = Vector3(-1, 0, 0)
 local rotated_tablet_normal = Vector3(0, 0, 0)
 
@@ -389,7 +408,7 @@ function PlayerHand:update(unit, t, dt)
 
 	self:_update_controllers(t, dt)
 
-	local hmd_forward = (self._base_rotation * VRManager:hmd_rotation()):y()
+	local hmd_forward = self._base_rotation * VRManager:hmd_rotation():y()
 	local weapon_hand_id = self:get_active_hand_id("weapon")
 
 	if weapon_hand_id then
@@ -402,10 +421,22 @@ function PlayerHand:update(unit, t, dt)
 end
 
 function PlayerHand:update_tablet(t, dt, hmd_forward)
-	local default_tablet_hand = self.hand_id(managers.vr:get_setting("default_tablet_hand") or "left")
+	slot4 = self.hand_id
+
+	if not managers.vr:get_setting("default_tablet_hand") then
+		slot5 = "left"
+	end
+
+	local default_tablet_hand = slot4(slot5)
 	local other_hand = self.other_hand_id(default_tablet_hand)
 	local current = self:current_hand_state(other_hand)
-	local swiping = current:name(default_tablet_hand) == "swipe"
+
+	if current:name(default_tablet_hand) ~= "swipe" then
+		slot7 = false
+	else
+		local swiping = true
+	end
+
 	local hand_unit = self:hand_unit(other_hand)
 	local pos = hand_unit:base():finger_position()
 	local hand_rotation = hand_unit:base():rotation()
@@ -430,7 +461,12 @@ function PlayerHand:update_tablet(t, dt, hmd_forward)
 	local y_len = mvector3.dot(dir, y)
 	local inside = false
 	local tablet = tweak_data.vr.tablet
-	local looking_at_tablet = mvector3.dot(up, hmd_forward) < tablet.view_angle_th
+
+	if mvector3.dot(up, hmd_forward) >= tablet.view_angle_th then
+		slot26 = false
+	else
+		local looking_at_tablet = true
+	end
 
 	if not swiping then
 		local vol = tweak_data.vr.tablet.interaction_volume_start
@@ -494,7 +530,13 @@ function PlayerHand:hand_unit(hand)
 end
 
 function PlayerHand:mask_hand_id()
-	local default_tablet_hand = self.hand_id(managers.vr:get_setting("default_tablet_hand") or "left")
+	slot1 = self.hand_id
+
+	if not managers.vr:get_setting("default_tablet_hand") then
+		slot2 = "left"
+	end
+
+	local default_tablet_hand = slot1(slot2)
 
 	return self.other_hand_id(default_tablet_hand)
 end
@@ -504,7 +546,13 @@ function PlayerHand:mask_hand_unit()
 end
 
 function PlayerHand:link_mask(mask_unit)
-	local default_weapon_hand = self.hand_id(managers.vr:get_setting("default_weapon_hand") or "right")
+	slot2 = self.hand_id
+
+	if not managers.vr:get_setting("default_weapon_hand") then
+		slot3 = "right"
+	end
+
+	local default_weapon_hand = slot2(slot3)
 
 	self._hand_data[default_weapon_hand].state_machine:set_default_state("idle")
 	self:_set_hand_state(self:mask_hand_id(), "item", {
@@ -512,7 +560,9 @@ function PlayerHand:link_mask(mask_unit)
 		unit = mask_unit,
 		prompt = {
 			text_id = "hud_instruct_mask_on",
-			macros = {BTN_USE_ITEM = managers.localization:btn_macro("use_item")}
+			macros = {
+				BTN_USE_ITEM = managers.localization:btn_macro("use_item")
+			}
 		}
 	})
 	self:_set_hand_state(self.other_hand_id(self:mask_hand_id()), "idle")
@@ -521,7 +571,13 @@ function PlayerHand:link_mask(mask_unit)
 end
 
 function PlayerHand:unlink_mask(next_state)
-	local default_weapon_hand = self.hand_id(managers.vr:get_setting("default_weapon_hand") or "right")
+	slot2 = self.hand_id
+
+	if not managers.vr:get_setting("default_weapon_hand") then
+		slot3 = "right"
+	end
+
+	local default_weapon_hand = slot2(slot3)
 	self._mask_unit = nil
 
 	self._hand_data[default_weapon_hand].state_machine:set_default_state("weapon")
@@ -530,10 +586,18 @@ function PlayerHand:unlink_mask(next_state)
 end
 
 function PlayerHand:set_point_at_tablet(point)
-	local non_tablet_hand_id = self.other_hand_id(managers.vr:get_setting("default_tablet_hand") or "left")
+	slot2 = self.other_hand_id
+
+	if not managers.vr:get_setting("default_tablet_hand") then
+		slot3 = "left"
+	end
+
+	local non_tablet_hand_id = slot2(slot3)
 
 	if point then
-		self:_set_hand_state(non_tablet_hand_id, "swipe", {flick_callback = callback(managers.hud, managers.hud, "on_flick")})
+		self:_set_hand_state(non_tablet_hand_id, "swipe", {
+			flick_callback = callback(managers.hud, managers.hud, "on_flick")
+		})
 	else
 		local current = self:current_hand_state(non_tablet_hand_id)
 
@@ -589,7 +653,9 @@ function PlayerHand:interaction_ids()
 		if other_hand_state == "point" or other_hand_state == "weapon_assist" then
 			return {}
 		else
-			return {self.other_hand_id(weapon_hand_id)}
+			return {
+				self.other_hand_id(weapon_hand_id)
+			}
 		end
 	else
 		return {
@@ -637,7 +703,17 @@ function PlayerHand:set_carry(carry, skip_hand)
 	self._carry = carry
 
 	if carry then
-		managers.hud:belt():set_state("bag", skip_hand and "default" or "active")
+		slot4 = managers.hud:belt()
+		slot3 = managers.hud.belt().set_state
+		slot5 = "bag"
+
+		if skip_hand then
+			slot6 = "default"
+		else
+			slot6 = "active"
+		end
+
+		slot3(slot4, slot5, slot6)
 
 		if not skip_hand then
 			local carry_id = managers.player:get_my_carry_data().carry_id
@@ -650,7 +726,10 @@ function PlayerHand:set_carry(carry, skip_hand)
 				unit_name = "units/pd2_dlc_vr/equipment/gen_pku_lootbag_vr"
 			end
 
-			local hand_id = self._unit_movement_ext:current_state()._interact_hand or self:interaction_ids()[1]
+			if not self._unit_movement_ext:current_state()._interact_hand then
+				local hand_id = self:interaction_ids()[1]
+			end
+
 			local hand_unit = self:hand_unit(hand_id)
 			local unit = World:spawn_unit(Idstring(unit_name), hand_unit:position(), hand_unit:rotation() * Rotation(0, 0, -90))
 
@@ -661,7 +740,9 @@ function PlayerHand:set_carry(carry, skip_hand)
 				offset = Vector3(0, 15, 0),
 				prompt = {
 					text_id = "hud_instruct_throw_bag",
-					btn_macros = {BTN_USE_ITEM = "use_item_vr"}
+					btn_macros = {
+						BTN_USE_ITEM = "use_item_vr"
+					}
 				}
 			})
 		end
@@ -701,7 +782,16 @@ function PlayerHand:apply_weapon_kick(amount, akimbo)
 		amount = amount * tweak_data.vr.weapon_kick.precision_multiplier
 	end
 
-	local id = self:get_active_hand_id(akimbo and "akimbo" or "weapon")
+	slot4 = self
+	slot3 = self.get_active_hand_id
+
+	if akimbo then
+		slot5 = "akimbo"
+	else
+		slot5 = "weapon"
+	end
+
+	local id = slot3(slot4, slot5)
 
 	if id then
 		self:current_hand_state(id):set_wanted_weapon_kick(amount)
@@ -761,39 +851,84 @@ function PlayerHand:check_hand_through_wall(hand, custom_obj)
 	local hand_unit = self:hand_unit(hand)
 	local head_pos = self._unit_movement_ext:m_head_pos()
 	local hand_pos = hand_unit:position()
-	local custom_pos = alive(custom_obj) and custom_obj:position()
+
+	if alive(custom_obj) then
+		local custom_pos = custom_obj:position()
+	end
+
 	local ray = nil
-	local raycasts = {
-		{ray = {
-			custom_pos or hand_pos,
-			head_pos
-		}},
-		{points = {
-			custom_pos or hand_pos,
-			hand_pos - hand_unit:rotation():y() * 50,
-			head_pos
-		}},
-		{points = {
-			custom_pos or hand_pos,
-			hand_pos - hand_unit:rotation():y() * 30 + hand_unit:rotation():x() * 30,
-			head_pos
-		}},
-		{points = {
-			custom_pos or hand_pos,
-			(hand_pos - hand_unit:rotation():y() * 30) - hand_unit:rotation():x() * 30,
-			head_pos
-		}},
-		{points = {
-			custom_pos or hand_pos,
-			hand_pos - hand_unit:rotation():y() * 30 + hand_unit:rotation():z() * 30,
-			head_pos
-		}},
-		{points = {
-			custom_pos or hand_pos,
-			(hand_pos - hand_unit:rotation():y() * 30) - hand_unit:rotation():z() * 30,
-			head_pos
-		}}
-	}
+	local raycasts = {}
+	slot9 = {}
+	slot10 = {}
+
+	if not custom_pos then
+		slot11 = hand_pos
+	end
+
+	slot10[1] = slot11
+	slot10[2] = head_pos
+	slot9.ray = slot10
+	raycasts[1] = slot9
+	slot9 = {}
+	slot10 = {}
+
+	if not custom_pos then
+		slot11 = hand_pos
+	end
+
+	slot10[1] = slot11
+	slot10[2] = hand_pos - hand_unit:rotation():y() * 50
+	slot10[3] = head_pos
+	slot9.points = slot10
+	raycasts[2] = slot9
+	slot9 = {}
+	slot10 = {}
+
+	if not custom_pos then
+		slot11 = hand_pos
+	end
+
+	slot10[1] = slot11
+	slot10[2] = hand_pos - hand_unit:rotation():y() * 30 + hand_unit:rotation():x() * 30
+	slot10[3] = head_pos
+	slot9.points = slot10
+	raycasts[3] = slot9
+	slot9 = {}
+	slot10 = {}
+
+	if not custom_pos then
+		slot11 = hand_pos
+	end
+
+	slot10[1] = slot11
+	slot10[2] = hand_pos - hand_unit:rotation():y() * 30 - hand_unit:rotation():x() * 30
+	slot10[3] = head_pos
+	slot9.points = slot10
+	raycasts[4] = slot9
+	slot9 = {}
+	slot10 = {}
+
+	if not custom_pos then
+		slot11 = hand_pos
+	end
+
+	slot10[1] = slot11
+	slot10[2] = hand_pos - hand_unit:rotation():y() * 30 + hand_unit:rotation():z() * 30
+	slot10[3] = head_pos
+	slot9.points = slot10
+	raycasts[5] = slot9
+	slot9 = {}
+	slot10 = {}
+
+	if not custom_pos then
+		slot11 = hand_pos
+	end
+
+	slot10[1] = slot11
+	slot10[2] = hand_pos - hand_unit:rotation():y() * 30 - hand_unit:rotation():z() * 30
+	slot10[3] = head_pos
+	slot9.points = slot10
+	raycasts[6] = slot9
 
 	for _, cast in ipairs(raycasts) do
 		if cast.ray then
@@ -813,7 +948,11 @@ function PlayerHand:check_hand_through_wall(hand, custom_obj)
 		end
 	end
 
-	self._scheculed_wall_checks = self._scheculed_wall_checks or {}
+	if not self._scheculed_wall_checks then
+		slot9 = {}
+	end
+
+	self._scheculed_wall_checks = slot9
 	self._scheculed_wall_checks[hand] = {
 		t = TimerManager:game():time() + tweak_data.vr.wall_check_delay,
 		custom_obj = custom_obj
@@ -825,8 +964,15 @@ function PlayerHand:check_hand_through_wall(hand, custom_obj)
 end
 
 function PlayerHand:warp_hand()
-	local hand_index = self._hand_state_machine:hand_from_connection("warp") or PlayerHand.other_hand_id(managers.vr:get_setting("default_weapon_hand"))
+	if not self._hand_state_machine:hand_from_connection("warp") then
+		local hand_index = PlayerHand.other_hand_id(managers.vr:get_setting("default_weapon_hand"))
+	end
 
-	return hand_index == PlayerHand.RIGHT and "right" or "left"
+	if hand_index == PlayerHand.RIGHT then
+		slot2 = "right"
+	else
+		slot2 = "left"
+	end
+
+	return slot2
 end
-

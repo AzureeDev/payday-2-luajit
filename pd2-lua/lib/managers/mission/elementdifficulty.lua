@@ -17,4 +17,3 @@ function ElementDifficulty:on_executed(instigator)
 	managers.groupai:state():set_difficulty(self._values.difficulty)
 	ElementDifficulty.super.on_executed(self, instigator)
 end
-

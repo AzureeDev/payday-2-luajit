@@ -95,7 +95,6 @@ function EnableSoundEnvironmentElement:add_triggers(vc)
 end
 
 function EnableSoundEnvironmentElement:add_unit_list_btn()
-
 	local function f(unit)
 		return unit:type() == Idstring("sound")
 	end
@@ -124,4 +123,3 @@ function EnableSoundEnvironmentElement:_add_or_remove_graph(id)
 		table.insert(self._hed.elements, id)
 	end
 end
-

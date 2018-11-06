@@ -88,4 +88,3 @@ end
 function GameState:request_front_end()
 	self._front_end_requester:request()
 end
-

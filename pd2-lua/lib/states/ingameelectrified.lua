@@ -54,4 +54,3 @@ end
 function IngameElectrifiedState:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

@@ -339,6 +339,7 @@ end
 function UiPlacer:most_leftbottom()
 	return self._most.left, self._most.bottom
 end
+
 BranchPlacer = BranchPlacer or class(UiPlacer)
 
 function BranchPlacer:init(placer)
@@ -349,6 +350,7 @@ function BranchPlacer:_update_most(a, b, c, d, branch)
 	self._from:_update_most(a, b, c, d, true)
 	BranchPlacer.super._update_most(a, b, c, d, branch)
 end
+
 ResizingPlacer = ResizingPlacer or class(UiPlacer)
 
 function ResizingPlacer:init(panel, config)
@@ -384,4 +386,3 @@ function ResizingPlacer:_update_most(...)
 		self._panel:set_size(self._most.right + self._border_padding_x, self._most.bottom + self._border_padding_y)
 	end
 end
-

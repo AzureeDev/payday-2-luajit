@@ -1,9 +1,9 @@
 CarryData = CarryData or class()
 CarryData.EVENT_IDS = {
 	explode = 2,
-	will_explode = 1
+	will_explode = 1,
+	poof = 3
 }
-CarryData.EVENT_IDS.poof = 3
 
 function CarryData:init(unit)
 	self._unit = unit
@@ -57,6 +57,7 @@ function CarryData:_update_unlink_check(unit, t, dt)
 		self:unlink()
 	end
 end
+
 local ids_g_bag = Idstring("g_bag")
 local ids_g_canvasbag = Idstring("g_canvasbag")
 local ids_g_g = Idstring("g_g")
@@ -283,6 +284,7 @@ function CarryData:disarm()
 	self._explode_t = nil
 	self._disarmed = true
 end
+
 CarryData.EXPLOSION_SETTINGS = {
 	damage = 40,
 	range = 1000,
@@ -342,10 +344,13 @@ function CarryData:_explode()
 		end
 	end
 
-	QuickFlashGrenade:make_flash(pos, range, {self._unit})
+	QuickFlashGrenade:make_flash(pos, range, {
+		self._unit
+	})
 	managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "carry_data", CarryData.EVENT_IDS.explode)
 	self._unit:set_slot(0)
 end
+
 CarryData.POOF_SETTINGS = {
 	curve_pow = 3,
 	range = 1000
@@ -386,7 +391,9 @@ function CarryData:sync_net_event(event_id)
 		local range = CarryData.EXPLOSION_SETTINGS.range
 
 		self:_local_player_explosion_damage()
-		QuickFlashGrenade:make_flash(self._unit:position(), range, {self._unit})
+		QuickFlashGrenade:make_flash(self._unit:position(), range, {
+			self._unit
+		})
 		managers.explosion:explode_on_client(self._unit:position(), math.UP, nil, CarryData.EXPLOSION_SETTINGS.damage, range, CarryData.EXPLOSION_SETTINGS.curve_pow, CarryData.EXPLOSION_CUSTOM_PARAMS)
 	elseif event_id == CarryData.EVENT_IDS.will_explode then
 		self:_start_explosion()
@@ -478,7 +485,9 @@ function CarryData:set_dye_pack_data(dye_initiated, has_dye_pack, dye_value_mult
 	end
 
 	if self._has_dye_pack then
-		self._dye_risk = {next_t = Application:time() + 2 + math.random(3)}
+		self._dye_risk = {
+			next_t = Application:time() + 2 + math.random(3)
+		}
 	end
 end
 
@@ -538,7 +547,9 @@ function CarryData:_chk_register_steal_SO()
 	local body = self._unit:body("hinge_body_1") or self._unit:body(0)
 
 	if not self._has_body_activation_clbk then
-		self._has_body_activation_clbk = {[body:key()] = true}
+		self._has_body_activation_clbk = {
+			[body:key()] = true
+		}
 
 		self._unit:add_body_activation_callback(callback(self, self, "clbk_body_active_state"))
 		body:set_activate_tag(Idstring("bag_moving"))
@@ -769,7 +780,7 @@ function CarryData:link_to(parent_unit, keep_collisions)
 
 	local parent_obj = parent_unit:get_object(parent_obj_name)
 	local parent_obj_rot = parent_obj:rotation()
-	local world_pos = (parent_obj:position() - parent_obj_rot:z() * 30) - parent_obj_rot:y() * 10
+	local world_pos = parent_obj:position() - parent_obj_rot:z() * 30 - parent_obj_rot:y() * 10
 
 	self._unit:set_position(world_pos)
 
@@ -1028,4 +1039,3 @@ function CarryData:set_position_and_throw(position, direction, force)
 		managers.network:session():send_to_peers("sync_carry_set_position_and_throw", self._unit, position, direction, force)
 	end
 end
-

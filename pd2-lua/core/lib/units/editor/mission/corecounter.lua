@@ -1,10 +1,12 @@
 CoreCounterUnitElement = CoreCounterUnitElement or class(MissionElement)
 CoreCounterUnitElement.SAVE_UNIT_POSITION = false
 CoreCounterUnitElement.SAVE_UNIT_ROTATION = false
-CoreCounterUnitElement.INSTANCE_VAR_NAMES = {{
-	value = "counter_target",
-	type = "number"
-}}
+CoreCounterUnitElement.INSTANCE_VAR_NAMES = {
+	{
+		value = "counter_target",
+		type = "number"
+	}
+}
 CounterUnitElement = CounterUnitElement or class(CoreCounterUnitElement)
 
 function CounterUnitElement:init(...)
@@ -180,14 +182,19 @@ function CoreCounterUnitElement:_build_panel(panel, panel_sizer)
 	}, "Specifies how many times the counter should be executed before running its on executed")
 	self:_add_help_text("Units with number gui extension can have their value updated from a counter.")
 end
+
 CoreCounterOperatorUnitElement = CoreCounterOperatorUnitElement or class(MissionElement)
 CoreCounterOperatorUnitElement.SAVE_UNIT_POSITION = false
 CoreCounterOperatorUnitElement.SAVE_UNIT_ROTATION = false
-CoreCounterOperatorUnitElement.INSTANCE_VAR_NAMES = {{
-	value = "amount",
-	type = "number"
-}}
-CoreCounterOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+CoreCounterOperatorUnitElement.INSTANCE_VAR_NAMES = {
+	{
+		value = "amount",
+		type = "number"
+	}
+}
+CoreCounterOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 CounterOperatorUnitElement = CounterOperatorUnitElement or class(CoreCounterOperatorUnitElement)
 
 function CounterOperatorUnitElement:init(...)
@@ -259,7 +266,9 @@ function CoreCounterOperatorUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_counter/logic_counter"}
+	local names = {
+		"logic_counter/logic_counter"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "operation", {
@@ -275,10 +284,13 @@ function CoreCounterOperatorUnitElement:_build_panel(panel, panel_sizer)
 	}, "Amount to add, subtract or set to the counters.")
 	self:_add_help_text("This element can modify logic_counter element. Select counters to modify using insert and clicking on the elements.")
 end
+
 CoreCounterTriggerUnitElement = CoreCounterTriggerUnitElement or class(MissionElement)
 CoreCounterTriggerUnitElement.SAVE_UNIT_POSITION = false
 CoreCounterTriggerUnitElement.SAVE_UNIT_ROTATION = false
-CoreCounterTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+CoreCounterTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 CounterTriggerUnitElement = CounterTriggerUnitElement or class(CoreCounterTriggerUnitElement)
 
 function CounterTriggerUnitElement:init(...)
@@ -350,7 +362,9 @@ function CoreCounterTriggerUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_counter/logic_counter"}
+	local names = {
+		"logic_counter/logic_counter"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "trigger_type", {
@@ -361,13 +375,18 @@ function CoreCounterTriggerUnitElement:_build_panel(panel, panel_sizer)
 		"reset",
 		"set"
 	}, "Select a trigger type for the selected elements")
-	self:_build_value_number(panel, panel_sizer, "amount", {floats = 0}, "Specify value to trigger on.")
+	self:_build_value_number(panel, panel_sizer, "amount", {
+		floats = 0
+	}, "Specify value to trigger on.")
 	self:_add_help_text("This element is a trigger to logic_counter element.")
 end
+
 CoreCounterFilterUnitElement = CoreCounterFilterUnitElement or class(MissionElement)
 CoreCounterFilterUnitElement.SAVE_UNIT_POSITION = false
 CoreCounterFilterUnitElement.SAVE_UNIT_ROTATION = false
-CoreCounterFilterUnitElement.LINK_ELEMENTS = {"elements"}
+CoreCounterFilterUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 CounterFilterUnitElement = CounterFilterUnitElement or class(CoreCounterFilterUnitElement)
 
 function CounterFilterUnitElement:init(...)
@@ -441,14 +460,18 @@ function CoreCounterFilterUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_counter/logic_counter"}
+	local names = {
+		"logic_counter/logic_counter"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "needed_to_execute", {
 		"all",
 		"any"
 	}, "Select how many elements are needed to execute")
-	self:_build_value_number(panel, panel_sizer, "value", {floats = 0}, "Specify value to trigger on.")
+	self:_build_value_number(panel, panel_sizer, "value", {
+		floats = 0
+	}, "Specify value to trigger on.")
 	self:_build_value_combobox(panel, panel_sizer, "check_type", {
 		"equal",
 		"less_than",
@@ -460,4 +483,3 @@ function CoreCounterFilterUnitElement:_build_panel(panel, panel_sizer)
 	}, "Select which check operation to perform")
 	self:_add_help_text("This element is a filter to logic_counter element.")
 end
-

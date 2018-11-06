@@ -17,4 +17,3 @@ function EnvironmentControllerManager:set_dof_setting(setting)
 end
 
 CoreClass.override_class(CoreEnvironmentControllerManager, EnvironmentControllerManager)
-

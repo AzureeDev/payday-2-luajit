@@ -55,4 +55,3 @@ function ElementVehicleOperator:on_executed(instigator)
 
 	ElementVehicleOperator.super.on_executed(self, instigator)
 end
-

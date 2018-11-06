@@ -60,7 +60,9 @@ function AlertTriggerElement:_build_panel(panel, panel_sizer)
 	}
 	local filter_preset = CoreEWS.combobox(filter_preset_params)
 
-	filter_preset:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "apply_preset"), {ctrlr = filter_preset})
+	filter_preset:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "apply_preset"), {
+		ctrlr = filter_preset
+	})
 
 	local filter_sizer = EWS:BoxSizer("HORIZONTAL")
 	local opt1_sizer = EWS:BoxSizer("VERTICAL")
@@ -160,4 +162,3 @@ function AlertTriggerElement:on_alert_type_checkbox_changed(params)
 		table.delete(self._hed.alert_types, params.name)
 	end
 end
-

@@ -65,7 +65,9 @@ function AIAttentionObject:setup_attention_positions()
 		self._attention_obj = self._unit:orientation_object()
 	end
 
-	self._observer_info = {m_pos = self._attention_obj:position()}
+	self._observer_info = {
+		m_pos = self._attention_obj:position()
+	}
 end
 
 function AIAttentionObject:attention_data()
@@ -102,7 +104,7 @@ function AIAttentionObject:remove_attention(id)
 		self._attention_data[id] = nil
 
 		if not next(self._attention_data) then
-			managers.groupai:state():unregister_AI_attention_object((self._parent_unit or self._unit):key())
+			managers.groupai:state():unregister_AI_attention_object(self._parent_unit or self._unit:key())
 
 			self._attention_data = nil
 		end
@@ -114,17 +116,21 @@ end
 function AIAttentionObject:set_attention(settings, id)
 	if self._attention_data then
 		if settings then
-			self._attention_data = {[id or settings.id] = settings}
+			self._attention_data = {
+				[id or settings.id] = settings
+			}
 		else
 			self._attention_data = nil
 
-			managers.groupai:state():unregister_AI_attention_object((self._parent_unit or self._unit):key())
+			managers.groupai:state():unregister_AI_attention_object(self._parent_unit or self._unit:key())
 		end
 
 		self:_call_listeners()
 	elseif settings then
 		self._attention_data = {}
-		self._attention_data = {[id or settings.id] = settings}
+		self._attention_data = {
+			[id or settings.id] = settings
+		}
 
 		self:_register()
 		self:_call_listeners()
@@ -163,7 +169,11 @@ function AIAttentionObject:get_attention(filter, min, max, team)
 	local settings_match, relation = nil
 
 	if team and self._team then
-		relation = team.foes[self._team.id] and "foe" or "friend"
+		if team.foes[self._team.id] then
+			relation = "foe"
+		else
+			relation = "friend"
+		end
 	end
 
 	for id, settings in pairs(self._attention_data) do
@@ -214,7 +224,7 @@ function AIAttentionObject:remove_listener(key)
 end
 
 function AIAttentionObject:_call_listeners()
-	local u_key = (self._parent_unit or self._unit):key()
+	local u_key = self._parent_unit or self._unit:key()
 
 	managers.groupai:state():on_AI_attention_changed(u_key)
 	self._listener_holder:call(u_key)
@@ -300,7 +310,12 @@ function AIAttentionObject:load(data)
 	end
 
 	local parent_unit = nil
-	parent_unit = Application:editor() and managers.editor:unit_with_id(data.parent_u_id) or managers.worlddefinition:get_unit_on_load(data.parent_u_id, callback(self, self, "clbk_load_parent_unit"))
+
+	if Application:editor() then
+		parent_unit = managers.editor:unit_with_id(data.parent_u_id)
+	else
+		parent_unit = managers.worlddefinition:get_unit_on_load(data.parent_u_id, callback(self, self, "clbk_load_parent_unit"))
+	end
 
 	if parent_unit then
 		self:link(parent_unit, data.parent_obj_name, data.local_pos)
@@ -330,4 +345,3 @@ function AIAttentionObject:destroy()
 		self._unit:base():pre_destroy(self._unit)
 	end
 end
-

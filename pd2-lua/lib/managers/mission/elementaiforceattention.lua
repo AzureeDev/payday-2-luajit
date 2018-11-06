@@ -75,4 +75,3 @@ function ElementAIForceAttention:_register_force_attention_unit(unit)
 		include_all_force_spawns = self._values.include_all_force_spawns
 	})
 end
-

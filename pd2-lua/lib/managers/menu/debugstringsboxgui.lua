@@ -7,7 +7,7 @@ function DebugStringsBoxGui:init(ws, title, text, content_data, config, file)
 	config.w = 300
 	local x, y = ws:size()
 	config.x = x - config.w
-	config.y = (y - config.h) - CoreMenuRenderer.Renderer.border_height + 10
+	config.y = y - config.h - CoreMenuRenderer.Renderer.border_height + 10
 	config.no_close_legend = true
 	config.no_scroll_legend = true
 	self._default_font_size = tweak_data.menu.default_font_size
@@ -60,7 +60,7 @@ function DebugStringsBoxGui:_create_text_box(ws, title, text, content_data, conf
 			name = "bg",
 			layer = 1,
 			halign = "grow",
-			color = (even and Color.white / 1.5 or Color.white / 2):with_alpha(0.25)
+			color = even and Color.white / 1.5 or Color.white / 2:with_alpha(0.25)
 		})
 
 		local text_id = string_panel:text({
@@ -153,4 +153,3 @@ function DebugStringsBoxGui:close()
 	print("DebugStringsBoxGui:close()")
 	DebugStringsBoxGui.super.close(self)
 end
-

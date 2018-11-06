@@ -71,6 +71,7 @@ else
 
 	function PlayerHand:destroy()
 	end
+
 	PlayerWarp = PlayerWarp or class()
 
 	function PlayerWarp:init(unit)
@@ -78,6 +79,7 @@ else
 
 	function PlayerWarp:destroy()
 	end
+
 	HandMelee = HandMelee or class()
 
 	function HandMelee:init(unit)
@@ -236,6 +238,9 @@ require("lib/units/props/ZipLine")
 require("lib/units/props/TextTemplateBase")
 require("lib/units/props/ExplodingProp")
 require("lib/units/props/SafehouseVaultMoneyStacks")
+require("lib/units/props/UnoPuzzleDoorBase")
+require("lib/units/props/UnoDeviceBase")
+require("lib/units/props/UnoPianoBase")
 require("lib/units/characters/PlayerBodyBoneMergeBase")
 require("lib/units/SyncMaterials")
 require("lib/managers/menu/FadeoutGuiObject")
@@ -578,15 +583,13 @@ function GameSetup:init_finalize()
 	self._keyboard = Input:keyboard()
 
 	managers.network.account:set_playing(true)
-
-	if Network:is_server() and managers.job:current_job_id() == "chill" then
-		managers.custom_safehouse:send_room_tiers()
-	end
+	managers.custom_safehouse:init_finalize()
 end
 
 function GameSetup:update(t, dt)
 	Setup.update(self, t, dt)
 	managers.interaction:update(t, dt)
+	managers.dialog:update(t, dt)
 	managers.enemy:update(t, dt)
 	managers.groupai:update(t, dt)
 	managers.spawn:update(t, dt)

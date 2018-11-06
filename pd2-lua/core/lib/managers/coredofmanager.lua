@@ -28,7 +28,9 @@ end
 
 function DOFManager:save(data)
 	if next(self._queued_effects) then
-		local state = {queued_effects = clone(self._queued_effects)}
+		local state = {
+			queued_effects = clone(self._queued_effects)
+		}
 		data.DOFManager = state
 	end
 end
@@ -126,7 +128,7 @@ function DOFManager:remove_expired_effects(t, dt)
 
 	while id do
 		if effect.prog_data.finish_t then
-			local eff_t = (effect.preset.timer or self._game_timer):time()
+			local eff_t = effect.preset.timer or self._game_timer:time()
 
 			if effect.prog_data.finish_t <= eff_t then
 				self:intern_remove_effect(id)
@@ -230,26 +232,32 @@ function DOFManager:play(dof_data, amplitude_multiplier)
 	local t = timer:time()
 	local prog_data = {
 		clamp = amplitude_multiplier and dof_data.clamp * amplitude_multiplier or dof_data.clamp,
-		fade_in_end = dof_data.fade_in and t + dof_data.fade_in or t
+		fade_in_end = dof_data.fade_in and t + dof_data.fade_in or t,
+		sustain_end = dof_data.sustain and prog_data.fade_in_end + dof_data.sustain,
+		finish_t = prog_data.sustain_end and prog_data.sustain_end + (dof_data.fade_out or 0),
+		start_t = t
 	}
-	prog_data.sustain_end = dof_data.sustain and prog_data.fade_in_end + dof_data.sustain
-	prog_data.finish_t = prog_data.sustain_end and prog_data.sustain_end + (dof_data.fade_out or 0)
-	prog_data.start_t = t
 	local cur_values = nil
 	local near_min, near_max, far_min, far_max, clamp = self:get_dof_values()
-	cur_values = clamp > 0 and {
-		near_min = near_min,
-		near_max = near_max,
-		far_min = far_min,
-		far_max = far_max,
-		clamp = clamp
-	} or {
-		clamp = 0,
-		far_min = 0,
-		far_max = 0,
-		near_max = 0,
-		near_min = 0
-	}
+
+	if clamp > 0 then
+		cur_values = {
+			near_min = near_min,
+			near_max = near_max,
+			far_min = far_min,
+			far_max = far_max,
+			clamp = clamp
+		}
+	else
+		cur_values = {
+			clamp = 0,
+			far_min = 0,
+			far_max = 0,
+			near_max = 0,
+			near_min = 0
+		}
+	end
+
 	local target_values = {}
 
 	for _, v in pairs(self._var_map) do
@@ -314,7 +322,7 @@ function DOFManager:stop(id, instant)
 				self._current_effect = nil
 			end
 		else
-			local t = (effect.preset.timer or self._game_timer):time()
+			local t = effect.preset.timer or self._game_timer:time()
 			effect.prog_data.sustain_end = t
 			effect.prog_data.finish_t = t + (effect.preset.fade_out or 0)
 		end
@@ -399,4 +407,3 @@ function DOFManager:set_effect_parameters(id, params, clamp)
 		return true
 	end
 end
-

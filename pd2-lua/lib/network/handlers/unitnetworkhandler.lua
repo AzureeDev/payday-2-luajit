@@ -95,7 +95,7 @@ function UnitNetworkHandler:set_look_dir(unit, yaw_in, pitch_in, sender)
 	end
 
 	local dir = Vector3()
-	local yaw = (360 * yaw_in) / 255
+	local yaw = 360 * yaw_in / 255
 	local pitch = math.lerp(-85, 85, pitch_in / 127)
 	local rot = Rotation(yaw, pitch, 0)
 
@@ -111,20 +111,20 @@ function UnitNetworkHandler:action_walk_start(unit, first_nav_point, nav_link_ya
 	local end_rot = nil
 
 	if end_yaw ~= 0 then
-		end_rot = Rotation((360 * (end_yaw - 1)) / 254, 0, 0)
+		end_rot = Rotation(360 * (end_yaw - 1) / 254, 0, 0)
 	end
 
 	local nav_path = {}
 
 	if nav_link_act_index ~= 0 then
-		local nav_link_rot = (360 * nav_link_yaw) / 255
+		local nav_link_rot = 360 * nav_link_yaw / 255
 		local nav_link = unit:movement()._actions.walk.synthesize_nav_link(first_nav_point, nav_link_rot, unit:movement()._actions.act:_get_act_name_from_index(nav_link_act_index), from_idle)
 
-		nav_link.element.value = function (element, name)
+		function nav_link.element.value(element, name)
 			return element[name]
 		end
 
-		nav_link.element.nav_link_wants_align_pos = function (element)
+		function nav_link.element.nav_link_wants_align_pos(element)
 			return element.from_idle
 		end
 
@@ -217,7 +217,7 @@ function UnitNetworkHandler:action_walk_nav_link(unit, pos, yaw, anim_index, fro
 		return
 	end
 
-	local rot = (360 * yaw) / 255
+	local rot = 360 * yaw / 255
 
 	unit:movement():sync_action_walk_nav_link(pos, rot, anim_index, from_idle)
 end
@@ -240,7 +240,9 @@ function UnitNetworkHandler:action_spooc_start(unit, target_u_pos, flying_strike
 		type = "spooc",
 		path_index = 1,
 		body_part = 1,
-		nav_path = {unit:position()},
+		nav_path = {
+			unit:position()
+		},
 		target_u_pos = target_u_pos,
 		flying_strike = flying_strike,
 		action_id = action_id,
@@ -295,7 +297,7 @@ function UnitNetworkHandler:action_warp_start(unit, has_pos, pos, has_rot, yaw, 
 		body_part = 1,
 		type = "warp",
 		position = has_pos and pos,
-		rotation = has_rot and Rotation((360 * (yaw - 1)) / 254, 0, 0)
+		rotation = has_rot and Rotation(360 * (yaw - 1) / 254, 0, 0)
 	}
 
 	unit:movement():action_request(action_desc)
@@ -1067,7 +1069,14 @@ function UnitNetworkHandler:alarm_pager_interaction(u_id, tweak_table, status, s
 
 		if peer then
 			local status_str = nil
-			status_str = status == 1 and "started" or status == 2 and "interrupted" or "complete"
+
+			if status == 1 then
+				status_str = "started"
+			elseif status == 2 then
+				status_str = "interrupted"
+			else
+				status_str = "complete"
+			end
 
 			unit_data.unit:interaction():sync_interacted(peer, nil, status_str)
 		end
@@ -1173,7 +1182,7 @@ function UnitNetworkHandler:action_act_start_align(unit, act_index, blocks_hurt,
 	local start_rot = nil
 
 	if start_yaw and start_yaw ~= 0 then
-		start_rot = Rotation((360 * (start_yaw - 1)) / 254, 0, 0)
+		start_rot = Rotation(360 * (start_yaw - 1) / 254, 0, 0)
 	end
 
 	unit:movement():sync_action_act_start(act_index, blocks_hurt, clamp_to_graph, needs_full_blend, start_rot, start_pos)
@@ -1248,7 +1257,12 @@ function UnitNetworkHandler:alert(alerted_unit, aggressor)
 	end
 
 	local aggressor_pos = nil
-	aggressor_pos = aggressor:movement() and aggressor:movement().m_head_pos and aggressor:movement():m_head_pos() or aggressor:position()
+
+	if aggressor:movement() and aggressor:movement().m_head_pos then
+		aggressor_pos = aggressor:movement():m_head_pos()
+	else
+		aggressor_pos = aggressor:position()
+	end
 
 	alerted_unit:brain():on_alert({
 		"aggression",
@@ -1676,7 +1690,9 @@ function UnitNetworkHandler:from_server_sentry_gun_place_result(owner_peer_id, e
 	local spread_mul = SentryGunBase.SPREAD_MUL[spread_level]
 	local setup_data = {
 		spread_mul = spread_mul,
-		ignore_units = {sentry_gun_unit}
+		ignore_units = {
+			sentry_gun_unit
+		}
 	}
 
 	sentry_gun_unit:weapon():setup(setup_data)
@@ -2882,7 +2898,9 @@ function UnitNetworkHandler:statistics_tied(name, sender)
 		return
 	end
 
-	managers.statistics:tied({name = name})
+	managers.statistics:tied({
+		name = name
+	})
 end
 
 function UnitNetworkHandler:bain_comment(bain_line, sender)
@@ -3018,7 +3036,13 @@ function UnitNetworkHandler:suspicion(suspect_peer_id, susp_value, sender)
 		return
 	end
 
-	susp_value = (susp_value ~= 0 or false) and (susp_value == 255 and true or susp_value / 254)
+	if susp_value == 0 then
+		susp_value = false
+	elseif susp_value == 255 then
+		susp_value = true
+	else
+		susp_value = susp_value / 254
+	end
 
 	suspect_unit:movement():on_suspicion(nil, susp_value)
 end
@@ -3157,14 +3181,14 @@ function UnitNetworkHandler:suppression(unit, ratio, sender)
 		return
 	end
 
-	local amount_max = (sup_tweak.brown_point or sup_tweak.react_point)[2]
+	local amount_max = sup_tweak.brown_point or sup_tweak.react_point[2]
 	local amount, panic_chance = nil
 
 	if ratio == 16 then
 		amount = "max"
 		panic_chance = -1
 	else
-		amount = ratio == 15 and "max" or amount_max > 0 and (amount_max * ratio) / 15 or "max"
+		amount = ratio == 15 and "max" or amount_max > 0 and amount_max * ratio / 15 or "max"
 	end
 
 	unit:character_damage():build_suppression(amount, panic_chance)
@@ -3183,8 +3207,8 @@ function UnitNetworkHandler:camera_yaw_pitch(cam_unit, yaw_255, pitch_255)
 		return
 	end
 
-	local yaw = (360 * yaw_255) / 255 - 180
-	local pitch = (180 * pitch_255) / 255 - 90
+	local yaw = 360 * yaw_255 / 255 - 180
+	local pitch = 180 * pitch_255 / 255 - 90
 
 	cam_unit:base():apply_rotations(yaw, pitch)
 end
@@ -3657,7 +3681,9 @@ function UnitNetworkHandler:sync_friendly_fire_damage(peer_id, unit, damage, var
 				attacker_unit = unit,
 				damage = damage,
 				variant = variant,
-				col_ray = {position = unit:position()},
+				col_ray = {
+					position = unit:position()
+				},
 				push_vel = Vector3()
 			}
 
@@ -4017,4 +4043,3 @@ function UnitNetworkHandler:sync_damage_absorption_hud(absorption_amount, sender
 		teammate_panel:set_absorb_active(absorption_amount)
 	end
 end
-

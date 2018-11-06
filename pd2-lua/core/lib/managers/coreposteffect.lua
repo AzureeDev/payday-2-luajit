@@ -96,6 +96,7 @@ function CorePostEffectModifier:database_lookup(str)
 
 	return value
 end
+
 CorePostProcessor = CorePostProcessor or class()
 
 function CorePostProcessor:init()
@@ -195,6 +196,7 @@ function CorePostProcessor:value(modifier, key)
 		return nil
 	end
 end
+
 CorePostEffect = CorePostEffect or class()
 
 function CorePostEffect:init()
@@ -319,4 +321,3 @@ function CorePostEffect:value(processor, modifier, key)
 		return nil
 	end
 end
-

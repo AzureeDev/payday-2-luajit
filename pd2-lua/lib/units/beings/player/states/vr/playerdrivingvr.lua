@@ -47,7 +47,9 @@ function PlayerDrivingVR:_setup_help_text(is_driver)
 		local throttle = driving_tweak.throttle
 
 		if type(driving_tweak.steering_pos) ~= "table" or not driving_tweak.steering_pos then
-			local steering = {driving_tweak.steering_pos}
+			local steering = {
+				driving_tweak.steering_pos
+			}
 		end
 
 		for key, offset in pairs(steering) do
@@ -115,12 +117,14 @@ function PlayerDrivingVR:_add_help_text(tweak, type, subtype)
 	})
 
 	panel:set_center(ws:panel():w() / 2, ws:panel():h() / 2)
-	BoxGuiObject:new(panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	if type == "throttle" then
 		self._throttle_panel = ws:panel()
@@ -206,6 +210,7 @@ function PlayerDrivingVR:set_help_text(id, type)
 
 	ws:panel():child(id):child("text"):set_text(text)
 end
+
 local __exit = PlayerDriving.exit
 
 function PlayerDrivingVR:exit(...)
@@ -238,6 +243,7 @@ function PlayerDrivingVR:_postion_player_on_seat(seat)
 	self._initial_hmd_rotation_inv = Rotation(VRManager:hmd_rotation():yaw(), 0, 0):inverse()
 	self._hmd_delta = Vector3()
 end
+
 local __update = PlayerDriving.update
 local hmd_delta = Vector3()
 local ghost_pos = Vector3()
@@ -294,7 +300,6 @@ function PlayerDrivingVR:set_throttle(value)
 	self._throttle_value = value
 
 	if self._throttle_arrows then
-
 		local function stretch_value(val, range)
 			if val == 0 then
 				return 0
@@ -334,6 +339,7 @@ function PlayerDrivingVR:set_throttle(value)
 		end
 	end
 end
+
 local __get_drive_axis = PlayerDriving._get_drive_axis
 
 function PlayerDrivingVR:_get_drive_axis()
@@ -349,4 +355,3 @@ function PlayerDrivingVR:_get_drive_axis()
 
 	return drive_axis
 end
-

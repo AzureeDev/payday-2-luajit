@@ -34,7 +34,9 @@ function InventoryIconCreator:_create_weapon(factory_id, blueprint, weapon_skin)
 	self:destroy_items()
 
 	self._current_texture_name = factory_id .. (weapon_skin and " " .. weapon_skin or "")
-	local cosmetics = weapon_skin and {id = weapon_skin} or nil
+	local cosmetics = weapon_skin and {
+		id = weapon_skin
+	} or nil
 	local unit_name = tweak_data.weapon.factory[factory_id].unit
 
 	managers.dyn_resource:load(Idstring("unit"), Idstring(unit_name), DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
@@ -128,12 +130,18 @@ function InventoryIconCreator:start_all_weapons_skin(test)
 	end
 
 	local weapons = {}
-	weapons = test and {
-		"wpn_fps_rpg7",
-		"wpn_fps_snp_r93",
-		"wpn_fps_pis_x_g17",
-		"wpn_fps_ass_74"
-	} or self:_get_all_weapons()
+
+	if test then
+		weapons = {
+			"wpn_fps_rpg7",
+			"wpn_fps_snp_r93",
+			"wpn_fps_pis_x_g17",
+			"wpn_fps_ass_74"
+		}
+	else
+		weapons = self:_get_all_weapons()
+	end
+
 	local jobs = {}
 	local search_string = "_" .. filter .. "$"
 
@@ -179,11 +187,17 @@ function InventoryIconCreator:start_all_weapons(test)
 	end
 
 	local weapons = {}
-	weapons = test and {
-		"wpn_fps_rpg7",
-		"wpn_fps_snp_r93",
-		"wpn_fps_pis_x_g17"
-	} or self:_get_all_weapons()
+
+	if test then
+		weapons = {
+			"wpn_fps_rpg7",
+			"wpn_fps_snp_r93",
+			"wpn_fps_pis_x_g17"
+		}
+	else
+		weapons = self:_get_all_weapons()
+	end
+
 	local jobs = {}
 
 	for _, factory_id in ipairs(weapons) do
@@ -204,7 +218,15 @@ function InventoryIconCreator:start_all_weapon_skins()
 	local jobs = {}
 
 	for _, weapon_skin in ipairs(self:_get_weapon_skins()) do
-		weapon_skin = weapon_skin ~= "none" and false
+		if weapon_skin ~= "none" then
+			-- Nothing
+		else
+			weapon_skin = false
+
+			if false then
+				weapon_skin = true
+			end
+		end
 
 		if weapon_skin then
 			blueprint = tweak_data.blackmarket.weapon_skins[weapon_skin].default_blueprint or blueprint
@@ -223,21 +245,43 @@ end
 function InventoryIconCreator:start_one_weapon()
 	local factory_id = self._ctrlrs.weapon.factory_id:get_value()
 	local weapon_skin = self._ctrlrs.weapon.weapon_skin:get_value()
-	weapon_skin = weapon_skin ~= "none" and false
+
+	if weapon_skin ~= "none" then
+		-- Nothing
+	else
+		weapon_skin = false
+
+		if false then
+			weapon_skin = true
+		end
+	end
+
 	local blueprint = weapon_skin and tweak_data.blackmarket.weapon_skins[weapon_skin].default_blueprint
 	blueprint = blueprint or self:_get_blueprint_from_ui()
 
-	self:start_jobs({{
-		factory_id = factory_id,
-		blueprint = blueprint,
-		weapon_skin = weapon_skin
-	}})
+	self:start_jobs({
+		{
+			factory_id = factory_id,
+			blueprint = blueprint,
+			weapon_skin = weapon_skin
+		}
+	})
 end
 
 function InventoryIconCreator:preview_one_weapon()
 	local factory_id = self._ctrlrs.weapon.factory_id:get_value()
 	local weapon_skin = self._ctrlrs.weapon.weapon_skin:get_value()
-	weapon_skin = weapon_skin ~= "none" and false
+
+	if weapon_skin ~= "none" then
+		-- Nothing
+	else
+		weapon_skin = false
+
+		if false then
+			weapon_skin = true
+		end
+	end
+
 	local blueprint = weapon_skin and tweak_data.blackmarket.weapon_skins[weapon_skin].default_blueprint
 	blueprint = blueprint or self:_get_blueprint_from_ui()
 
@@ -275,7 +319,9 @@ end
 function InventoryIconCreator:_get_weapon_skins()
 	local factory_id = self._ctrlrs.weapon.factory_id:get_value()
 	local weapon_id = managers.weapon_factory:get_weapon_id_by_factory_id(factory_id)
-	local t = {"none"}
+	local t = {
+		"none"
+	}
 
 	for name, item_data in pairs(tweak_data.blackmarket.weapon_skins) do
 		local match_weapon_id = item_data.weapon_id or item_data.weapons[1]
@@ -295,16 +341,23 @@ function InventoryIconCreator:start_all_masks(with_blueprint)
 		return
 	end
 
-	masks = {} or {
-		"troll",
-		"mr_sinister",
-		"baby_cry",
-		"pazuzu",
-		"anubis",
-		"infamy_lurker",
-		"plague",
-		"robo_santa"
-	} or self:_get_all_masks()
+	local masks = {}
+
+	if false then
+		masks = {
+			"troll",
+			"mr_sinister",
+			"baby_cry",
+			"pazuzu",
+			"anubis",
+			"infamy_lurker",
+			"plague",
+			"robo_santa"
+		}
+	else
+		masks = self:_get_all_masks()
+	end
+
 	local blueprint = with_blueprint and self:_get_mask_blueprint_from_ui() or nil
 	local jobs = {}
 
@@ -322,10 +375,12 @@ function InventoryIconCreator:start_one_mask(with_blueprint)
 	local mask_id = self._ctrlrs.mask.mask_id:get_value()
 	local blueprint = with_blueprint and self:_get_mask_blueprint_from_ui() or nil
 
-	self:start_jobs({{
-		mask_id = mask_id,
-		blueprint = blueprint
-	}})
+	self:start_jobs({
+		{
+			mask_id = mask_id,
+			blueprint = blueprint
+		}
+	})
 end
 
 function InventoryIconCreator:preview_one_mask(with_blueprint)
@@ -341,7 +396,9 @@ function InventoryIconCreator:_get_mask_blueprint_from_ui()
 	for type, ctrlr in pairs(self._ctrlrs.mask) do
 		if type ~= "mask_id" then
 			local id = ctrlr:get_value()
-			blueprint[type] = {id = id}
+			blueprint[type] = {
+				id = id
+			}
 		end
 	end
 
@@ -372,7 +429,9 @@ function InventoryIconCreator:start_all_melee()
 	local jobs = {}
 
 	for _, melee_id in ipairs(self:_get_all_melee()) do
-		table.insert(jobs, {melee_id = melee_id})
+		table.insert(jobs, {
+			melee_id = melee_id
+		})
 	end
 
 	self:start_jobs(jobs)
@@ -381,7 +440,11 @@ end
 function InventoryIconCreator:start_one_melee()
 	local melee_id = self._ctrlrs.melee.melee_id:get_value()
 
-	self:start_jobs({{melee_id = melee_id}})
+	self:start_jobs({
+		{
+			melee_id = melee_id
+		}
+	})
 end
 
 function InventoryIconCreator:preview_one_melee()
@@ -416,7 +479,9 @@ function InventoryIconCreator:start_all_throwable()
 	local jobs = {}
 
 	for _, throwable_id in ipairs(self:_get_all_throwable()) do
-		table.insert(jobs, {throwable_id = throwable_id})
+		table.insert(jobs, {
+			throwable_id = throwable_id
+		})
 	end
 
 	self:start_jobs(jobs)
@@ -425,7 +490,11 @@ end
 function InventoryIconCreator:start_one_throwable()
 	local throwable_id = self._ctrlrs.throwable.throwable_id:get_value()
 
-	self:start_jobs({{throwable_id = throwable_id}})
+	self:start_jobs({
+		{
+			throwable_id = throwable_id
+		}
+	})
 end
 
 function InventoryIconCreator:preview_one_throwable()
@@ -472,7 +541,7 @@ function InventoryIconCreator:check_next_job()
 
 	self._current_job = self._current_job + 1
 
-	if #self._jobs < self._current_job then
+	if self._current_job > #self._jobs then
 		managers.editor:remove_tool_updator("InventoryIconCreator")
 
 		return
@@ -569,7 +638,7 @@ function InventoryIconCreator:_setup_camera()
 	end
 
 	if not self._custom_ctrlrs.use_camera_setting:get_value() then
-		local oobb = (self._weapon_unit or self._mask_unit or self._melee_unit or self._throwable_unit):oobb()
+		local oobb = self._weapon_unit or self._mask_unit or self._melee_unit or self._throwable_unit:oobb()
 		local center = oobb:center()
 
 		managers.editor:set_camera(Vector3(job_setting.pos.x, center.y, center.z), job_setting.rot)
@@ -590,7 +659,7 @@ end
 function InventoryIconCreator:_next_step()
 	self._current_step = self._current_step + 1
 
-	if #self._steps < self._current_step then
+	if self._current_step > #self._steps then
 		return
 	end
 
@@ -721,7 +790,9 @@ function InventoryIconCreator:create_ews()
 end
 
 function InventoryIconCreator:_create_custom_job(panel, sizer)
-	self._custom_ctrlrs = {resolution = {}}
+	self._custom_ctrlrs = {
+		resolution = {}
+	}
 	local checkbox = EWS:CheckBox(panel, "Use current camera setting", "")
 
 	checkbox:set_value(false)
@@ -1418,4 +1489,3 @@ function InventoryIconCreator:close_ews()
 		self._main_frame = nil
 	end
 end
-

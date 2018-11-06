@@ -154,4 +154,3 @@ function CoreCutsceneAnimationPatchesPanel:_absolute_dir_and_path(relative_path)
 		return nil, nil
 	end
 end
-

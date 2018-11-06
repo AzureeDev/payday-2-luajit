@@ -34,4 +34,3 @@ end
 function Stack:push_input_context(input_context)
 	self._active_input_context:push(input_context)
 end
-

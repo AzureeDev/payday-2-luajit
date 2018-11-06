@@ -136,12 +136,14 @@ function MenuNodeBaseGui:create_gui_box(panel, params)
 		return
 	end
 
-	local box = BoxGuiObject:new(panel, params or {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	local box = BoxGuiObject:new(panel, params or {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	local name = params and params.name or panel:name()
 
 	if name and name ~= "" then
@@ -324,4 +326,3 @@ function MenuNodeBaseGui:close()
 	self:unretrieve_textures()
 	MenuNodeBaseGui.super.close(self)
 end
-

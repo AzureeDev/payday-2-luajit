@@ -25,8 +25,11 @@ function CoreLogicChanceUnitElement:_build_panel(panel, panel_sizer)
 		max = 100
 	}, "Specifies chance that this element will call its on executed elements (in percent)")
 end
+
 CoreLogicChanceOperatorUnitElement = CoreLogicChanceOperatorUnitElement or class(MissionElement)
-CoreLogicChanceOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+CoreLogicChanceOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 LogicChanceOperatorUnitElement = LogicChanceOperatorUnitElement or class(CoreLogicChanceOperatorUnitElement)
 
 function LogicChanceOperatorUnitElement:init(...)
@@ -98,7 +101,9 @@ function CoreLogicChanceOperatorUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_chance/logic_chance"}
+	local names = {
+		"logic_chance/logic_chance"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "operation", {
@@ -115,8 +120,11 @@ function CoreLogicChanceOperatorUnitElement:_build_panel(panel, panel_sizer)
 	}, "Amount of chance to add, subtract or set to the logic chance elements.")
 	self:_add_help_text("This element can modify logic_chance element. Select logic chance elements to modify using insert and clicking on the elements.")
 end
+
 CoreLogicChanceTriggerUnitElement = CoreLogicChanceTriggerUnitElement or class(MissionElement)
-CoreLogicChanceTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+CoreLogicChanceTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 LogicChanceTriggerUnitElement = LogicChanceTriggerUnitElement or class(CoreLogicChanceTriggerUnitElement)
 
 function LogicChanceTriggerUnitElement:init(...)
@@ -186,7 +194,9 @@ function CoreLogicChanceTriggerUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"logic_chance/logic_chance"}
+	local names = {
+		"logic_chance/logic_chance"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "outcome", {
@@ -195,4 +205,3 @@ function CoreLogicChanceTriggerUnitElement:_build_panel(panel, panel_sizer)
 	}, "Select an outcome to trigger on")
 	self:_add_help_text("This element is a trigger to logic_chance element.")
 end
-

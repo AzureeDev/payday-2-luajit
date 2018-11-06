@@ -80,4 +80,3 @@ function HUDDriving:set_vehicle_state(speed, rpm, gear)
 	self._hud_panel:child("value_RPM"):set_text(rpm .. " rpm")
 	self._hud_panel:child("value_gear"):set_text(gear)
 end
-

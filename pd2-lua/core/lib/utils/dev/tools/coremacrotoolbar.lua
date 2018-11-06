@@ -29,7 +29,9 @@ function CoreMacroToolbar:reload_macros()
 			end
 
 			local name = macro:parameter("name")
-			self._macros[name] = {_ews = EWS:BitmapButton(self._toolbar_panel, icon_path, "", "")}
+			self._macros[name] = {
+				_ews = EWS:BitmapButton(self._toolbar_panel, icon_path, "", "")
+			}
 
 			self._macros[name]._ews:set_tool_tip(name)
 
@@ -55,4 +57,3 @@ function CoreMacroToolbar:trigger_event(event_name)
 		end
 	end
 end
-

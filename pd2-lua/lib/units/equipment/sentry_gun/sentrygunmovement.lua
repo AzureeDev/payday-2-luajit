@@ -398,7 +398,13 @@ function SentryGunMovement:_upd_movement(dt)
 		local sign_err = math.sign(err)
 		local abs_err = math.abs(err)
 		local wanted_vel = nil
-		wanted_vel = abs_err < slowdown_at and math.lerp(min_vel, max_vel, abs_err / slowdown_at) * sign_err or max_vel * sign_err
+
+		if abs_err < slowdown_at then
+			wanted_vel = math.lerp(min_vel, max_vel, abs_err / slowdown_at) * sign_err
+		else
+			wanted_vel = max_vel * sign_err
+		end
+
 		local err_vel = wanted_vel - vel
 		local sign_err_vel = math.sign(err_vel)
 		local abs_err_vel = math.abs(err_vel)
@@ -423,7 +429,7 @@ function SentryGunMovement:_upd_movement(dt)
 	spin_end, new_vel, new_spin = _ramp_value(fwd_polar.spin, error_polar.spin, self._vel.spin, self._tweak.SLOWDOWN_ANGLE_SPIN, self._tweak.MAX_VEL_SPIN * self._rot_speed_mul, self._tweak.MIN_VEL_SPIN, self._tweak.ACC_SPIN * self._rot_speed_mul)
 	self._vel.spin = new_vel
 	local new_vel_abs = math.abs(new_vel)
-	local vel_ratio = math.clamp((1.5 * (new_vel_abs - self._tweak.MIN_VEL_SPIN)) / (self._tweak.MAX_VEL_SPIN - self._tweak.MIN_VEL_SPIN), 0, 1)
+	local vel_ratio = math.clamp(1.5 * (new_vel_abs - self._tweak.MIN_VEL_SPIN) / (self._tweak.MAX_VEL_SPIN - self._tweak.MIN_VEL_SPIN), 0, 1)
 
 	if vel_ratio > 0.5 then
 		if not self._motor_sound then
@@ -556,7 +562,7 @@ function SentryGunMovement:_get_target_dir(attention, dt)
 			target_pos = attention.pos
 		end
 
-		if attention.unit and self._m_last_attention_pos and self._last_attention_snapshot_t + self._tweak.VELOCITY_COMPENSATION.SNAPSHOT_INTERVAL < TimerManager:game():time() then
+		if attention.unit and self._m_last_attention_pos and TimerManager:game():time() > self._last_attention_snapshot_t + self._tweak.VELOCITY_COMPENSATION.SNAPSHOT_INTERVAL then
 			mvector3.set(self._m_last_attention_vel, self._m_last_attention_pos)
 
 			if attention.handler then
@@ -633,7 +639,9 @@ function SentryGunMovement:save(save_data)
 			my_save_data.attention = self._attention
 		elseif self._attention.unit:id() == -1 then
 			local attention_pos = self._attention.handler and self._attention.handler:get_detection_m_pos() or self._attention.unit:movement() and self._attention.unit:movement():m_com() or self._unit:position()
-			my_save_data.attention = {pos = attention_pos}
+			my_save_data.attention = {
+				pos = attention_pos
+			}
 		else
 			managers.enemy:add_delayed_clbk("clbk_sync_attention" .. tostring(self._unit:key()), callback(self, CopMovement, "clbk_sync_attention", self._attention), TimerManager:game():time() + 0.1)
 		end
@@ -667,7 +675,9 @@ function SentryGunMovement:load(save_data)
 
 	self._team = managers.groupai:state():team_data(my_save_data.team)
 
-	managers.groupai:state():add_listener("SentryGunMovement_team_def_" .. tostring(self._unit:key()), {"team_def"}, callback(self, self, "clbk_team_def"))
+	managers.groupai:state():add_listener("SentryGunMovement_team_def_" .. tostring(self._unit:key()), {
+		"team_def"
+	}, callback(self, self, "clbk_team_def"))
 	self:_set_state(my_save_data.state)
 	self._unit:weapon():update_laser()
 end
@@ -783,4 +793,3 @@ function SentryGunMovement:pre_destroy()
 		self._pos_reservation = nil
 	end
 end
-

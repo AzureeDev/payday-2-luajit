@@ -37,4 +37,3 @@ end
 
 function AnimatedCamera:destroy()
 end
-

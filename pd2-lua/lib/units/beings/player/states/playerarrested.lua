@@ -10,7 +10,9 @@ end
 function PlayerArrested:enter(state_data, enter_data)
 	PlayerArrested.super.enter(self, state_data, enter_data)
 
-	self._revive_SO_data = {unit = self._unit}
+	self._revive_SO_data = {
+		unit = self._unit
+	}
 	local projectile_entry = managers.blackmarket:equipped_projectile()
 
 	if tweak_data.blackmarket.projectiles[projectile_entry].is_a_grenade then
@@ -27,7 +29,9 @@ function PlayerArrested:enter(state_data, enter_data)
 	self._old_selection = self._unit:inventory():equipped_selection()
 
 	self:_start_action_handcuffed(managers.player:player_timer():time())
-	self:_start_action_unequip_weapon(managers.player:player_timer():time(), {selection_wanted = 1})
+	self:_start_action_unequip_weapon(managers.player:player_timer():time(), {
+		selection_wanted = 1
+	})
 
 	self._timer_finished = false
 
@@ -86,7 +90,9 @@ function PlayerArrested:exit(state_data, new_state_name)
 	managers.network:session():send_to_peers_synched("sync_contour_state", self._unit, -1, table.index_of(ContourExt.indexed_types, "teammate_cuffed"), false, 1)
 
 	if not self._unequip_weapon_expire_t and not self._timer_finished then
-		local exit_data = {equip_weapon = self._old_selection}
+		local exit_data = {
+			equip_weapon = self._old_selection
+		}
 
 		return exit_data
 	end
@@ -124,7 +130,7 @@ function PlayerArrested:_update_check_actions(t, dt)
 		self._equip_weapon_expire_t = nil
 	end
 
-	if self._unequip_weapon_expire_t and self._unequip_weapon_expire_t + 0.5 <= t then
+	if self._unequip_weapon_expire_t and t >= self._unequip_weapon_expire_t + 0.5 then
 		self._unequip_weapon_expire_t = nil
 
 		self._unit:camera():play_redirect(self._ids_cuffed)
@@ -253,4 +259,3 @@ end
 function PlayerArrested:destroy()
 	PlayerBleedOut._unregister_revive_SO(self)
 end
-

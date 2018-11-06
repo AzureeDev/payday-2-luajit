@@ -12,7 +12,7 @@ function CircleGuiObject:init(panel, config)
 end
 
 function CircleGuiObject:_create_triangles(config)
-	local amount = (360 * (config.current or 1)) / (config.total or 1)
+	local amount = 360 * (config.current or 1) / (config.total or 1)
 	local s = self._radius
 	local triangles = {}
 	local step = 360 / self._sides
@@ -60,6 +60,7 @@ end
 function CircleGuiObject:remove()
 	self._panel:remove(self._circle)
 end
+
 CircleBitmapGuiObject = CircleBitmapGuiObject or class()
 
 function CircleBitmapGuiObject:init(panel, config)
@@ -183,10 +184,13 @@ function CircleBitmapGuiObject:remove()
 end
 
 function CircleBitmapGuiObject:set_depth_mode(mode)
-	self._circle:configure({depth_mode = mode})
+	self._circle:configure({
+		depth_mode = mode
+	})
 
 	if self._bg_circle then
-		self._bg_circle:configure({depth_mode = mode})
+		self._bg_circle:configure({
+			depth_mode = mode
+		})
 	end
 end
-

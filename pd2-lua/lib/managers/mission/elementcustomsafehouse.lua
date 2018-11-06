@@ -59,6 +59,7 @@ function ElementCustomSafehouseFilter:_check_value(value)
 		return self._tier_value < value
 	end
 end
+
 ElementCustomSafehouseTrophyFilter = ElementCustomSafehouseTrophyFilter or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementCustomSafehouseTrophyFilter:on_script_activated()
@@ -89,6 +90,7 @@ function ElementCustomSafehouseTrophyFilter:on_executed(instigator)
 		ElementCustomSafehouseTrophyFilter.super.on_executed(self, self._unit or instigator)
 	end
 end
+
 ElementCustomSafehouseAwardTrophy = ElementCustomSafehouseAwardTrophy or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementCustomSafehouseAwardTrophy:client_on_executed_end_screen(...)
@@ -110,11 +112,15 @@ function ElementCustomSafehouseAwardTrophy:on_executed(instigator)
 		local local_player = managers.player:local_player()
 		award_trophy = alive(local_player) and local_player == instigator
 
-		if not award_trophy and instigator:vehicle_driving() then
-			local seat = instigator:vehicle_driving():find_seat_for_player(local_player)
+		if not award_trophy then
+			if instigator:vehicle_driving() then
+				local seat = instigator:vehicle_driving():find_seat_for_player(local_player)
 
-			if seat and seat.driving then
-				award_trophy = true
+				if seat and seat.driving then
+					award_trophy = true
+				end
+			elseif false then
+				-- Nothing
 			end
 		end
 	end
@@ -129,4 +135,3 @@ function ElementCustomSafehouseAwardTrophy:on_executed(instigator)
 
 	ElementCustomSafehouseAwardTrophy.super.on_executed(self, self._unit or instigator)
 end
-

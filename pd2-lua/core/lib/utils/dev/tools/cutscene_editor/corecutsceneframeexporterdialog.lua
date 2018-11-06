@@ -8,7 +8,7 @@ function CoreCutsceneFrameExporterDialog:init(editor_self, editor_callback, pare
 	self.__window = EWS:Frame("Export to Playblast", Vector3(100, 500, 0), Vector3(300, 180, 0), "DEFAULT_DIALOG_STYLE,FRAME_FLOAT_ON_PARENT", parent_window)
 
 	self.__window:set_icon(CoreEWS.image_path("film_reel_16x16.png"))
-	self.__window:set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
+	self.__window:set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
 	self.__window:connect("EVT_CLOSE_WINDOW", callback(self, self, "_on_exit"))
 
 	local sizer = EWS:BoxSizer("VERTICAL")
@@ -158,4 +158,3 @@ function CoreCutsceneFrameExporterDialog:_start_end_frame_input()
 
 	return start_frame, end_frame
 end
-

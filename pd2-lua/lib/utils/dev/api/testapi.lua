@@ -96,11 +96,15 @@ function TestAPIHelper.register_API_function(name, category, args_str, func, des
 				locals[arg_name] = arg_val
 			end
 
-			ret = {func()}
+			ret = {
+				func()
+			}
 
 			setmetatable(_G, old_mt)
 		else
-			ret = {func()}
+			ret = {
+				func()
+			}
 		end
 
 		if not async then
@@ -109,6 +113,7 @@ function TestAPIHelper.register_API_function(name, category, args_str, func, des
 
 		return unpack(ret)
 	end
+
 	Global.test_api.commands = Global.test_api.commands or {}
 	Global.test_api.commands[category] = Global.test_api.commands[category] or {}
 	Global.test_api.commands[category][name] = {
@@ -152,6 +157,7 @@ function TestAPIHelper.update(t, dt)
 		end
 	end
 end
+
 Global.test_api.commands = Global.test_api.commands or {}
 Global.test_api.commands.internal = Global.test_api.commands.internal or {}
 Global.test_api.commands.internal.setup_call_queue = {
@@ -191,9 +197,9 @@ local function center(text, w, delimeter)
 	delimeter = delimeter or " "
 	local mid = w / 2
 	local offset = math.ceil(string.len(text) / 2)
-	local ret = string.rep(delimeter, (mid - offset) - 1) .. " " .. text
+	local ret = string.rep(delimeter, mid - offset - 1) .. " " .. text
 
-	return ret .. " " .. string.rep(delimeter, (w - string.len(ret)) - 1)
+	return ret .. " " .. string.rep(delimeter, w - string.len(ret) - 1)
 end
 
 function TestAPI.help()
@@ -239,7 +245,9 @@ TestAPIHelper.register_API_function("get_jobs", "jobs", "", function ()
 		})
 	end
 
-	return {jobs = jobs}
+	return {
+		jobs = jobs
+	}
 end, "Returns a table with all available jobs.")
 
 local function start(job_id, difficulty, stage)
@@ -385,7 +393,9 @@ TestAPIHelper.register_API_function("exit_to_menu", "ingame", "", function ()
 
 	managers.platform:set_playing(false)
 	managers.job:clear_saved_ghost_bonus()
-	managers.statistics:stop_session({quit = true})
+	managers.statistics:stop_session({
+		quit = true
+	})
 	managers.savefile:save_progress()
 	managers.job:deactivate_current_job()
 	managers.gage_assignment:deactivate_assignments()
@@ -425,7 +435,8 @@ TestAPIHelper.register_API_function("fire", "ingame", "", function ()
 		state:force_input({
 			btn_primary_attack_state = true,
 			btn_primary_attack_press = true
-		}, {btn_primary_attack_release = true})
+		}, {
+			btn_primary_attack_release = true
+		})
 	end
 end, "Fires the equipped weapon once.")
-

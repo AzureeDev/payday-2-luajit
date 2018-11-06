@@ -123,4 +123,3 @@ function ElementDialogue:_can_play()
 		return true
 	end
 end
-

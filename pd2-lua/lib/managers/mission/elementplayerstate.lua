@@ -38,6 +38,7 @@ function ElementPlayerState:on_executed(instigator)
 
 	ElementPlayerState.super.on_executed(self, self._unit or instigator)
 end
+
 ElementPlayerStateTrigger = ElementPlayerStateTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementPlayerStateTrigger:init(...)
@@ -45,7 +46,9 @@ function ElementPlayerStateTrigger:init(...)
 end
 
 function ElementPlayerStateTrigger:on_script_activated()
-	managers.player:add_listener(self._id, {self._values.state}, callback(self, self, Network:is_client() and "send_to_host" or "on_executed"))
+	managers.player:add_listener(self._id, {
+		self._values.state
+	}, callback(self, self, Network:is_client() and "send_to_host" or "on_executed"))
 end
 
 function ElementPlayerStateTrigger:send_to_host(instigator)
@@ -61,4 +64,3 @@ function ElementPlayerStateTrigger:on_executed(instigator)
 
 	ElementPlayerStateTrigger.super.on_executed(self, self._unit or instigator)
 end
-

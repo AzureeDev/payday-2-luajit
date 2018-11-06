@@ -3,7 +3,7 @@ local distance2 = require("lib/utils/Bezier3Point").distance2
 local min = math.min
 local max = math.max
 local curve_recursion_limit = 64
-local curve_flatness_epsilon = 1 * 2 ^ (-curve_recursion_limit - 1)
+local curve_flatness_epsilon = 1 * 2^(-curve_recursion_limit - 1)
 local bezier3_to_bezier5, bezier5_roots, bezier5_crossing_count, bezier5_flat_enough, bezier5_split_in_half = nil
 
 function bezier3.hit(x0, y0, x1, y1, x2, y2, x3, y3, x4, y4)
@@ -47,6 +47,7 @@ function bezier3.hit(x0, y0, x1, y1, x2, y2, x3, y3, x4, y4)
 
 	return mind, minx, miny, mint
 end
+
 local cubicz11 = 1
 local cubicz12 = 0.6
 local cubicz13 = 0.3
@@ -162,7 +163,7 @@ function bezier5_split_in_half(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6)
 end
 
 function bezier5_crossing_count(y1, y2, y3, y4, y5, y6)
-	return (y1 < 0 ~= y2 < 0 and 1 or 0) + (y2 < 0 ~= y3 < 0 and 1 or 0) + (y3 < 0 ~= y4 < 0 and 1 or 0) + (y4 < 0 ~= y5 < 0 and 1 or 0) + (y5 < 0 ~= y6 < 0 and 1 or 0)
+	return (y1 < 0 ~= (y2 < 0) and 1 or 0) + (y2 < 0 ~= (y3 < 0) and 1 or 0) + (y3 < 0 ~= (y4 < 0) and 1 or 0) + (y4 < 0 ~= (y5 < 0) and 1 or 0) + (y5 < 0 ~= (y6 < 0) and 1 or 0)
 end
 
 function bezier5_flat_enough(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6)
@@ -208,4 +209,3 @@ function bezier5_xintercept(x1, y1, x6, y6)
 
 	return X
 end
-

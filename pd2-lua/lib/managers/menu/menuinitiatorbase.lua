@@ -12,7 +12,9 @@ function MenuInitiatorBase:create_divider(node, id, text_id, size, color)
 		size = size or 8,
 		color = color
 	}
-	local data_node = {type = "MenuItemDivider"}
+	local data_node = {
+		type = "MenuItemDivider"
+	}
 	local new_item = node:create_item(data_node, params)
 
 	node:add_item(new_item)
@@ -80,7 +82,9 @@ function MenuInitiatorBase:create_multichoice(node, choices, params, index)
 		return
 	end
 
-	local data_node = {type = "MenuItemMultiChoice"}
+	local data_node = {
+		type = "MenuItemMultiChoice"
+	}
 
 	for _, choice in ipairs(choices) do
 		table.insert(data_node, choice)
@@ -116,7 +120,9 @@ function MenuInitiatorBase:create_slider(node, params)
 end
 
 function MenuInitiatorBase:create_input(node, params)
-	local data_node = {type = "MenuItemInput"}
+	local data_node = {
+		type = "MenuItemInput"
+	}
 	local new_item = node:create_item(data_node, params)
 
 	new_item:set_enabled(params.enabled)
@@ -126,7 +132,9 @@ function MenuInitiatorBase:create_input(node, params)
 end
 
 function MenuInitiatorBase:create_textbox(node, params)
-	local data_node = {type = "MenuItemTextBox"}
+	local data_node = {
+		type = "MenuItemTextBox"
+	}
 	local new_item = node:create_item(data_node, params)
 
 	new_item:set_enabled(params.enabled)
@@ -152,4 +160,3 @@ function MenuInitiatorBase:add_back_button(node)
 
 	return new_item
 end
-

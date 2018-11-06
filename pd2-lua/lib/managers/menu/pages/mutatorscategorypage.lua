@@ -28,15 +28,19 @@ function MutatorsCategoryPage:_setup_mutators_list()
 	self._items = {}
 	self._buttons = {}
 	local mutators_list = {}
-	local scroll = ScrollablePanel:new(self:panel(), "MutatorsPanel", {padding = 0})
+	local scroll = ScrollablePanel:new(self:panel(), "MutatorsPanel", {
+		padding = 0
+	})
 
 	scroll:on_canvas_updated_callback(callback(self, self, "_on_mutators_panel_updated"))
-	BoxGuiObject:new(scroll:panel(), {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(scroll:panel(), {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	table.insert(self._scrollable_panels, scroll)
 
 	self._mutators_scroll = scroll
@@ -248,12 +252,14 @@ function MutatorsCategoryPage:_setup_help_panel()
 	self._buttons = {}
 	self._controllers_pc_mapping = {}
 	self._controllers_mapping = {}
-	local buttons = {{
-		btn = "BTN_Y",
-		name_id = "menu_mutators_reset_all",
-		pc_btn = "menu_modify_item",
-		callback = callback(self, self, "_reset_mutators")
-	}}
+	local buttons = {
+		{
+			btn = "BTN_Y",
+			name_id = "menu_mutators_reset_all",
+			pc_btn = "menu_modify_item",
+			callback = callback(self, self, "_reset_mutators")
+		}
+	}
 
 	if not managers.menu:is_pc_controller() then
 		table.insert(buttons, {
@@ -270,7 +276,7 @@ function MutatorsCategoryPage:_setup_help_panel()
 	end
 
 	table.sort(buttons, function (a, b)
-		return (b.prio or 0) < (a.prio or 0)
+		return (a.prio or 0) > (b.prio or 0)
 	end)
 
 	local btn_x = 10
@@ -285,20 +291,24 @@ function MutatorsCategoryPage:_setup_help_panel()
 	end
 
 	self:buttons_panel():set_h(table.size(buttons) * tweak_data.menu.pd2_small_font_size + 20)
-	self:help_text_panel():set_h((self:help_text_panel():h() - self:buttons_panel():h()) - 10)
+	self:help_text_panel():set_h(self:help_text_panel():h() - self:buttons_panel():h() - 10)
 	self:buttons_panel():set_top(self:help_text_panel():bottom() + 10)
-	BoxGuiObject:new(self:help_text_panel(), {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
-	BoxGuiObject:new(self:buttons_panel(), {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self:help_text_panel(), {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
+	BoxGuiObject:new(self:buttons_panel(), {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 end
 
 function MutatorsCategoryPage:refresh()
@@ -318,7 +328,9 @@ function MutatorsCategoryPage:refresh()
 		compatible, incompatible_mutator = managers.mutators:can_enable_mutator(self._selected_item:mutator())
 
 		if not compatible then
-			self._incompatibilities_text:set_text(managers.localization:text("menu_mutators_incompatibilities", {mutators = incompatible_mutator:name()}))
+			self._incompatibilities_text:set_text(managers.localization:text("menu_mutators_incompatibilities", {
+				mutators = incompatible_mutator:name()
+			}))
 			self._incompatibilities_text:set_visible(true)
 
 			local _, _, _, h = self._incompatibilities_text:text_rect()
@@ -334,7 +346,7 @@ function MutatorsCategoryPage:refresh()
 
 	if self._achievements_text then
 		self._achievements_text:set_visible(managers.mutators:are_mutators_enabled())
-		self._achievements_text:set_top((not compatible and self._incompatibilities_text or self._mutator_longdesc):bottom() + PANEL_PADDING)
+		self._achievements_text:set_top(not compatible and self._incompatibilities_text or self._mutator_longdesc:bottom() + PANEL_PADDING)
 	end
 
 	if self._reduction_text then
@@ -410,7 +422,9 @@ function MutatorsCategoryPage:mouse_moved(button, x, y)
 
 	for i, panel in pairs(self._scrollable_panels) do
 		if panel then
-			local values = {panel:mouse_moved(button, x, y)}
+			local values = {
+				panel:mouse_moved(button, x, y)
+			}
 
 			if values[1] ~= nil then
 				return unpack(values)
@@ -450,7 +464,9 @@ function MutatorsCategoryPage:mouse_pressed(button, x, y)
 
 	for i, panel in pairs(self._scrollable_panels) do
 		if panel then
-			local values = {panel:mouse_pressed(button, x, y)}
+			local values = {
+				panel:mouse_pressed(button, x, y)
+			}
 
 			if values[1] ~= nil then
 				return unpack(values)
@@ -482,7 +498,9 @@ function MutatorsCategoryPage:mouse_released(button, x, y)
 
 	for i, panel in pairs(self._scrollable_panels) do
 		if panel then
-			local values = {panel:mouse_released(button, x, y)}
+			local values = {
+				panel:mouse_released(button, x, y)
+			}
 
 			if values[1] ~= nil then
 				self._prevent_click = (self._prevent_click or 0) + 1
@@ -500,7 +518,9 @@ function MutatorsCategoryPage:mouse_wheel_up(x, y)
 
 	for i, panel in pairs(self._scrollable_panels) do
 		if panel then
-			local values = {panel:scroll(x, y, 1)}
+			local values = {
+				panel:scroll(x, y, 1)
+			}
 
 			if values[1] ~= nil then
 				return unpack(values)
@@ -516,7 +536,9 @@ function MutatorsCategoryPage:mouse_wheel_down(x, y)
 
 	for i, panel in pairs(self._scrollable_panels) do
 		if panel then
-			local values = {panel:scroll(x, y, -1)}
+			local values = {
+				panel:scroll(x, y, -1)
+			}
 
 			if values[1] ~= nil then
 				return unpack(values)
@@ -559,6 +581,7 @@ function MutatorsCategoryPage:_scroll(target)
 		end
 	end
 end
+
 MutatorItem = class(MenuGuiItem)
 
 function MutatorItem:init(parent_panel, mutator, index)
@@ -580,12 +603,14 @@ function MutatorItem:init(parent_panel, mutator, index)
 		h = self._panel:h()
 	})
 
-	BoxGuiObject:new(self._icon_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._icon_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local tex, rect = mutator:icon()
 	self._icon = self._icon_panel:bitmap({
@@ -656,16 +681,18 @@ function MutatorItem:init(parent_panel, mutator, index)
 			halign = "right",
 			w = option_size,
 			h = option_size,
-			x = (self._panel:w() - option_size) - spacing,
+			x = self._panel:w() - option_size - spacing,
 			y = spacing
 		})
 
-		BoxGuiObject:new(self._option_panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(self._option_panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 
 		local icon_size = MutatorsManager._icon_size
 		self._options_icon = self._option_panel:bitmap({
@@ -749,7 +776,9 @@ function MutatorItem:trigger_options()
 		return false
 	end
 
-	managers.menu:open_node("mutators_options", {self:mutator()})
+	managers.menu:open_node("mutators_options", {
+		self:mutator()
+	})
 end
 
 function MutatorItem:top()
@@ -833,4 +862,3 @@ function MutatorItem:get_link(position)
 
 	return self._links[position]
 end
-

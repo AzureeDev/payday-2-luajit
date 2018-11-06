@@ -72,4 +72,3 @@ function CoreSimpleAnimationCutsceneKey:refresh_control_for_group(control)
 
 	control:thaw()
 end
-

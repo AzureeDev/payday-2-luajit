@@ -136,4 +136,3 @@ function M79GrenadeBase:_detonate()
 	GrenadeBase._detect_and_give_dmg(self, expl_pos)
 	managers.network:session():send_to_peers_synched("m79grenade_explode_on_client", expl_pos, expl_normal, self._user, self._damage, self._range, self._curve_pow)
 end
-

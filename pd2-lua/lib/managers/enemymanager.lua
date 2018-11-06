@@ -186,7 +186,11 @@ function EnemyManager:_update_gfx_lod()
 									t_ins(imp_wgt_list, i_wgt, my_wgt)
 									t_ins(imp_i_list, i_wgt, i)
 
-									lod_stage = i_wgt <= nr_lod_1 and 1 or 2
+									if i_wgt <= nr_lod_1 then
+										lod_stage = 1
+									else
+										lod_stage = 2
+									end
 								else
 									lod_stage = 3
 
@@ -206,7 +210,11 @@ function EnemyManager:_update_gfx_lod()
 						end
 					end
 
-					i = i == nr_entries and 1 or i + 1
+					if i == nr_entries then
+						i = 1
+					else
+						i = i + 1
+					end
 				until i == start_i
 			end
 		end
@@ -362,7 +370,9 @@ function EnemyManager:_init_enemy_data()
 	enemy_data.nr_corpses = 0
 	enemy_data.shields = {}
 	enemy_data.nr_shields = 0
-	self._civilian_data = {unit_data = {}}
+	self._civilian_data = {
+		unit_data = {}
+	}
 	self._queued_tasks = {}
 	self._queued_task_executed = nil
 	self._delayed_clbks = {}
@@ -545,8 +555,10 @@ function EnemyManager:add_delayed_clbk(id, clbk, execute_t)
 	local all_clbks = self._delayed_clbks
 	local i = #all_clbks
 
-	while i > 0 and execute_t < all_clbks[i][2] do
-		i = i - 1
+	if i > 0 then
+		while i > 0 and execute_t < all_clbks[i][2] do
+			i = i - 1
+		end
 	end
 
 	table.insert(all_clbks, i + 1, clbk_data)
@@ -596,8 +608,10 @@ function EnemyManager:reschedule_delayed_clbk(id, execute_t)
 		clbk_data[2] = execute_t
 		local i = #all_clbks
 
-		while i > 0 and execute_t < all_clbks[i][2] do
-			i = i - 1
+		if i > 0 then
+			while i > 0 and execute_t < all_clbks[i][2] do
+				i = i - 1
+			end
 		end
 
 		table.insert(all_clbks, i + 1, clbk_data)
@@ -680,7 +694,9 @@ function EnemyManager:on_enemy_died(dead_unit, damage_info)
 	local enemy_data = self._enemy_data
 
 	if not enemy_data.unit_data[u_key] then
-		local u_data = {unit = dead_unit}
+		local u_data = {
+			unit = dead_unit
+		}
 	end
 
 	self:on_enemy_unregistered(dead_unit)
@@ -881,7 +897,7 @@ function EnemyManager:_upd_corpse_disposal()
 		end
 	end
 
-	if #to_dispose < disposals_needed then
+	if disposals_needed > #to_dispose then
 		if cam_pos then
 			for u_key, u_data in pairs(corpses) do
 				local u_pos = u_data.m_pos
@@ -953,7 +969,7 @@ function EnemyManager:_upd_shield_disposal()
 	local to_dispose = {}
 	local nr_found = 0
 
-	if #to_dispose < disposals_needed then
+	if disposals_needed > #to_dispose then
 		if cam_pos then
 			for u_key, u_data in pairs(shields) do
 				local dispose = false
@@ -961,7 +977,7 @@ function EnemyManager:_upd_shield_disposal()
 				if alive(u_data.unit) then
 					local u_pos = u_data.unit:position()
 
-					if not to_dispose[u_key] and mvec3_dis(cam_pos, u_pos) > 300 and mvector3.dot(cam_fwd, u_pos - cam_pos) < 0 and u_data.death_t + self._shield_disposal_lifetime < t then
+					if not to_dispose[u_key] and mvec3_dis(cam_pos, u_pos) > 300 and mvector3.dot(cam_fwd, u_pos - cam_pos) < 0 and t > u_data.death_t + self._shield_disposal_lifetime then
 						dispose = true
 					end
 				else
@@ -1217,4 +1233,3 @@ function EnemyManager:cleanup_magazines()
 		table.remove(self._magazines, 1)
 	end
 end
-

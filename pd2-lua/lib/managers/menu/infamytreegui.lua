@@ -63,23 +63,29 @@ function InfamyTreeGui:_setup()
 	self._tree_main_panel = self._panel:panel({})
 
 	self._tree_main_panel:set_w(math.round(self._panel:w() * WIDTH_MULTIPLIER - 10))
-	self._tree_main_panel:set_h(math.round(((self._panel:h() - title_text:bottom()) - 70) - 4))
+	self._tree_main_panel:set_h(math.round(self._panel:h() - title_text:bottom() - 70 - 4))
 	self._tree_main_panel:set_top(title_text:bottom() + 2)
 
-	self._tree_panel = self._tree_main_panel:panel({name = "tree_panel"})
+	self._tree_panel = self._tree_main_panel:panel({
+		name = "tree_panel"
+	})
 	local size = math.min(self._tree_main_panel:w(), self._tree_main_panel:h())
 
-	BoxGuiObject:new(self._tree_panel, {sides = {
-		0,
-		0,
-		0,
-		0
-	}})
+	BoxGuiObject:new(self._tree_panel, {
+		sides = {
+			0,
+			0,
+			0,
+			0
+		}
+	})
 
-	self._description_panel = self._panel:panel({name = "description_panel"})
+	self._description_panel = self._panel:panel({
+		name = "description_panel"
+	})
 
 	self._description_panel:set_w(math.round(self._panel:w() * (1 - WIDTH_MULTIPLIER)))
-	self._description_panel:set_h(math.round(((self._panel:h() - title_text:bottom()) - 70) - 4))
+	self._description_panel:set_h(math.round(self._panel:h() - title_text:bottom() - 70 - 4))
 	self._description_panel:set_top(title_text:bottom() + 2)
 	self._description_panel:set_right(self._panel:w())
 	self._description_panel:text({
@@ -131,12 +137,14 @@ function InfamyTreeGui:_setup()
 		color = tweak_data.screen_colors.text,
 		h = tweak_data.menu.pd2_small_font_size + 10
 	})
-	BoxGuiObject:new(self._description_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._description_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local tree_rows = tweak_data.infamy.tree_rows or 3
 	local tree_cols = tweak_data.infamy.tree_cols or 3
@@ -158,12 +166,14 @@ function InfamyTreeGui:_setup()
 	local texture_rect_x, texture_rect_y = nil
 
 	for count = 1, tree_rows * tree_cols, 1 do
-		item = {panel = self._tree_panel:panel({
-			x = x,
-			y = y,
-			w = item_width,
-			h = item_height
-		})}
+		item = {
+			panel = self._tree_panel:panel({
+				x = x,
+				y = y,
+				w = item_width,
+				h = item_height
+			})
+		}
 
 		table.insert(self._tree_items, item)
 
@@ -326,7 +336,7 @@ function InfamyTreeGui:_setup()
 				text = "",
 				x = 0,
 				layer = 1,
-				y = (item_height - tweak_data.menu.pd2_small_font_size) - border_size,
+				y = item_height - tweak_data.menu.pd2_small_font_size - border_size,
 				w = item_width,
 				font = tweak_data.menu.pd2_small_font,
 				font_size = tweak_data.menu.pd2_small_font_size
@@ -488,19 +498,21 @@ function InfamyTreeGui:_setup()
 				text = "",
 				x = 0,
 				layer = 1,
-				y = (item_height - tweak_data.menu.pd2_small_font_size) - border_size,
+				y = item_height - tweak_data.menu.pd2_small_font_size - border_size,
 				w = item_width,
 				font = tweak_data.menu.pd2_small_font,
 				font_size = tweak_data.menu.pd2_small_font_size
 			})
 		end
 
-		item.border = BoxGuiObject:new(item.panel, {sides = {
-			0,
-			0,
-			0,
-			0
-		}})
+		item.border = BoxGuiObject:new(item.panel, {
+			sides = {
+				0,
+				0,
+				0,
+				0
+			}
+		})
 	end
 
 	local points_text = self._panel:text({
@@ -509,7 +521,9 @@ function InfamyTreeGui:_setup()
 		wrap = false,
 		align = "center",
 		layer = 1,
-		text = utf8.to_upper(managers.localization:text("st_menu_infamy_available_points", {points = managers.infamy:points()})),
+		text = utf8.to_upper(managers.localization:text("st_menu_infamy_available_points", {
+			points = managers.infamy:points()
+		})),
 		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size,
 		color = tweak_data.screen_colors.text
@@ -655,7 +669,9 @@ function InfamyTreeGui:_update_description(name, unlocked)
 				end
 			end
 
-			local _, infamous_base_chance, infamous_mod = managers.lootdrop:infamous_chance({disable_difficulty = true})
+			local _, infamous_base_chance, infamous_mod = managers.lootdrop:infamous_chance({
+				disable_difficulty = true
+			})
 			local infamous_chance = items_total > 0 and infamous_base_chance * items_infamous / items_total or 0
 			local mult = 10
 			local base_text = math.floor(infamous_chance * 100 * mult + 0.5) / mult
@@ -671,7 +687,9 @@ function InfamyTreeGui:_update_description(name, unlocked)
 
 			if index > 0 then
 				local tier = math.floor((index + 2) / InfamyTreeGui.tree_cols)
-				title_text = managers.localization:to_upper_text("st_menu_tier", {tier = string.format("%02d", tier)}) .. ": " .. title_text
+				title_text = managers.localization:to_upper_text("st_menu_tier", {
+					tier = string.format("%02d", tier)
+				}) .. ": " .. title_text
 			end
 		end
 
@@ -700,7 +718,9 @@ function InfamyTreeGui:_update_description(name, unlocked)
 	desc_text:set_top(desc_warning:bottom() + (is_win_32 and 5 or 0))
 
 	if name then
-		desc_upgrade = self._description_panel:panel({name = "description_upgrade"})
+		desc_upgrade = self._description_panel:panel({
+			name = "description_upgrade"
+		})
 		local infamy_tweak = tweak_data.infamy.items[name]
 		local category_list = {
 			texture = "textures",
@@ -788,7 +808,9 @@ function InfamyTreeGui:_update_description(name, unlocked)
 							w = icon_size,
 							h = icon_size
 						})
-						local texture_count = managers.menu_component:request_texture(icon_texture, callback(self, self, "_texture_done_clbk", {panel = panel}))
+						local texture_count = managers.menu_component:request_texture(icon_texture, callback(self, self, "_texture_done_clbk", {
+							panel = panel
+						}))
 
 						table.insert(self._requested_textures, {
 							texture_count = texture_count,
@@ -902,12 +924,14 @@ function InfamyTreeGui:_select_item(index)
 			local selected_item = self._tree_items[self._selected_item]
 
 			selected_item.panel:stop()
-			selected_item.border:create_sides(selected_item.panel, {sides = {
-				0,
-				0,
-				0,
-				0
-			}})
+			selected_item.border:create_sides(selected_item.panel, {
+				sides = {
+					0,
+					0,
+					0,
+					0
+				}
+			})
 			selected_item.panel:child("image"):set_color(self._tree_items[self._selected_item].owned and tweak_data.screen_colors.item_stage_1 or self._tree_items[self._selected_item].unlocked and tweak_data.screen_colors.item_stage_2 or tweak_data.screen_colors.item_stage_3)
 			selected_item.panel:child("text"):set_text("")
 			selected_item.panel:child("text"):set_alpha(0)
@@ -918,16 +942,20 @@ function InfamyTreeGui:_select_item(index)
 		local item = self._tree_items[index]
 		local text = infamy_name and (item.owned and "st_menu_skill_owned" or item.unlocked and "st_menu_point" or "st_menu_skill_locked") or "st_menu_infamy_secret"
 
-		item.panel:child("text"):set_text(utf8.to_upper(managers.localization:text(text, {points = infamy_name and Application:digest_value(tweak_data.infamy.items[infamy_name].cost, false) or 0})))
+		item.panel:child("text"):set_text(utf8.to_upper(managers.localization:text(text, {
+			points = infamy_name and Application:digest_value(tweak_data.infamy.items[infamy_name].cost, false) or 0
+		})))
 		item.panel:child("text"):set_color(tweak_data.screen_colors.text)
 		item.panel:child("text"):set_alpha(0)
 		item.panel:child("image"):set_color(tweak_data.screen_colors.item_stage_1)
-		item.border:create_sides(item.panel, {sides = {
-			0,
-			0,
-			0,
-			0
-		}})
+		item.border:create_sides(item.panel, {
+			sides = {
+				0,
+				0,
+				0,
+				0
+			}
+		})
 		self:_update_description(infamy_name, item.unlocked)
 	end
 end
@@ -943,7 +971,9 @@ function InfamyTreeGui:_dialog_confirm_yes(index)
 	infamy_item.panel:child("image"):set_color(tweak_data.screen_colors.item_stage_1)
 	managers.menu_component:post_event("menu_skill_investment")
 	SimpleGUIEffectSpewer.infamous_up(infamy_item.panel:child("image"):center_x(), infamy_item.panel:child("image"):center_y(), infamy_item.panel)
-	self._panel:child("points"):set_text(utf8.to_upper(managers.localization:text("st_menu_infamy_available_points", {points = managers.infamy:points()})))
+	self._panel:child("points"):set_text(utf8.to_upper(managers.localization:text("st_menu_infamy_available_points", {
+		points = managers.infamy:points()
+	})))
 
 	if self._selected_item == index then
 		infamy_item.panel:child("text"):set_text(utf8.to_upper(managers.localization:text("st_menu_skill_owned")))
@@ -1144,4 +1174,3 @@ function InfamyTreeGui:close()
 	self._ws:panel():remove(self._panel)
 	self._fullscreen_ws:panel():remove(self._fullscreen_panel)
 end
-

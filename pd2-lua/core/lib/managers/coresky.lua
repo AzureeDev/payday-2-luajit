@@ -81,4 +81,3 @@ function CoreSky:database_lookup(str)
 
 	return value
 end
-

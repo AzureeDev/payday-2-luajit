@@ -347,4 +347,3 @@ end
 function SideJobGenericDLCManager:any_challenge_completed()
 	return self._has_completed_mission
 end
-

@@ -30,4 +30,3 @@ function ElementOperator:on_executed(instigator)
 
 	ElementOperator.super.on_executed(self, instigator)
 end
-

@@ -4,7 +4,9 @@ function TankCopLogicAttack.enter(data, new_logic_name, enter_params)
 	CopLogicBase.enter(data, new_logic_name, enter_params)
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	my_data.detection = data.char_tweak.detection.combat
 
@@ -35,7 +37,9 @@ function TankCopLogicAttack.enter(data, new_logic_name, enter_params)
 		return
 	end
 
-	data.unit:brain():set_attention_settings({cbt = true})
+	data.unit:brain():set_attention_settings({
+		cbt = true
+	})
 end
 
 function TankCopLogicAttack.exit(data, new_logic_name, enter_params)
@@ -267,10 +271,11 @@ function TankCopLogicAttack.is_advancing(data)
 end
 
 function TankCopLogicAttack._get_all_paths(data)
-	return {chase_path = data.internal_data.chase_path}
+	return {
+		chase_path = data.internal_data.chase_path
+	}
 end
 
 function TankCopLogicAttack._set_verified_paths(data, verified_paths)
 	data.internal_data.chase_path = verified_paths.chase_path
 end
-

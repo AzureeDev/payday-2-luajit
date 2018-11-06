@@ -35,6 +35,7 @@ function FilterProfileUnitElement:_build_panel(panel, panel_sizer)
 		floats = 0,
 		max = 1000000
 	}, "Set money offshore filter, in thousands.")
-	self:_build_value_combobox(panel, panel_sizer, "achievement", table.list_add({"none"}, table.map_keys(managers.achievment.achievments)), "Select an achievement to filter on")
+	self:_build_value_combobox(panel, panel_sizer, "achievement", table.list_add({
+		"none"
+	}, table.map_keys(managers.achievment.achievments)), "Select an achievement to filter on")
 end
-

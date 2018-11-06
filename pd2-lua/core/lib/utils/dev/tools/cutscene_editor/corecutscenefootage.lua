@@ -120,7 +120,6 @@ function CoreCutsceneFootage:_camera_cut_list()
 		self._camera_cut_cache = {}
 
 		if self._cutscene:has_cameras() then
-
 			local function add_camera_cut(start_frame, end_frame, camera)
 				if start_frame < end_frame then
 					table.insert(self._camera_cut_cache, {
@@ -152,4 +151,3 @@ end
 function CoreCutsceneFootage:prime_cast(cast)
 	cast:prime(self._cutscene)
 end
-

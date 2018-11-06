@@ -6,7 +6,7 @@ function ProfileBoxGui:init(ws, title, text, content_data, config)
 	config.w = config.w or 280
 	local x, y = ws:size()
 	config.x = config.x or 0
-	config.y = config.y or (y - config.h) - CoreMenuRenderer.Renderer.border_height
+	config.y = config.y or y - config.h - CoreMenuRenderer.Renderer.border_height
 	config.no_close_legend = true
 	config.no_scroll_legend = true
 	config.use_minimize_legend = true
@@ -91,7 +91,7 @@ function ProfileBoxGui:_create_text_box(ws, title, text, content_data, config)
 
 	local name_panel = profile_panel:panel({
 		name = "name_panel",
-		w = (self._panel:w() - (avatar:right() + 16)) - 64
+		w = self._panel:w() - (avatar:right() + 16) - 64
 	})
 
 	name_panel:set_left(avatar:right() + 16)
@@ -225,7 +225,7 @@ function ProfileBoxGui:_add_stats(params)
 	panel:set_h(math.ceil(h))
 
 	if params.type == "text" then
-		local text = panel:text({
+		slot10 = panel:text({
 			name = "text",
 			halign = "right",
 			align = "right",
@@ -276,7 +276,7 @@ function ProfileBoxGui:_add_stats(params)
 			w = (bg:w() - 4) * params.data,
 			h = bg:h() - 4
 		})
-		local text = panel:text({
+		slot12 = panel:text({
 			name = "bar_text",
 			halign = "right",
 			align = "right",
@@ -395,6 +395,7 @@ end
 function ProfileBoxGui:close()
 	ProfileBoxGui.super.close(self)
 end
+
 LobbyProfileBoxGui = LobbyProfileBoxGui or class(ProfileBoxGui)
 
 function LobbyProfileBoxGui:init(ws, title, text, content_data, config, peer_id)
@@ -437,6 +438,7 @@ end
 
 function LobbyProfileBoxGui:_add_statistics()
 end
+
 ViewCharacterProfileBoxGui = ViewCharacterProfileBoxGui or class(ProfileBoxGui)
 
 function ViewCharacterProfileBoxGui:init(ws, title, text, content_data, config, user)
@@ -467,4 +469,3 @@ end
 
 function ViewCharacterProfileBoxGui:_add_statistics()
 end
-

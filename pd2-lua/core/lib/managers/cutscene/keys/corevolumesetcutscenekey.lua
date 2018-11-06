@@ -29,7 +29,9 @@ function CoreVolumeSetCutsceneKey:play(player, undo, fast_forward)
 	end
 
 	if undo then
-		local preceeding_key = self:preceeding_key({name = self:name()})
+		local preceeding_key = self:preceeding_key({
+			name = self:name()
+		})
 
 		if preceeding_key == nil or preceeding_key:action() == self:inverse_action() then
 			self:_perform_action(self:inverse_action())
@@ -77,4 +79,3 @@ function CoreVolumeSetCutsceneKey:refresh_control_for_name(control)
 
 	control:thaw()
 end
-

@@ -35,6 +35,7 @@ function EditorCommand:value(val, default)
 		return default
 	end
 end
+
 ReferenceUnitCommand = ReferenceUnitCommand or class(EditorCommand)
 ReferenceUnitCommand.__type = ReferenceUnitCommand
 ReferenceUnitCommand.UnitValues = {
@@ -77,6 +78,7 @@ function ReferenceUnitCommand:get_saved_units()
 
 	return reference_unit, units
 end
+
 MoveUnitCommand = MoveUnitCommand or class(ReferenceUnitCommand)
 MoveUnitCommand.__type = MoveUnitCommand
 MoveUnitCommand.UnitValues = {
@@ -124,7 +126,9 @@ function MoveUnitCommand:perform_move(pos, reference, units)
 	end
 
 	if reselect then
-		local select_units = {reference}
+		local select_units = {
+			reference
+		}
 
 		for _, unit in ipairs(units) do
 			table.insert(select_units, unit)
@@ -151,6 +155,7 @@ end
 function MoveUnitCommand:__tostring()
 	return string.format("[Command MoveUnit target: %s]", tostring(self:value("target_pos")))
 end
+
 RotateUnitCommand = RotateUnitCommand or class(ReferenceUnitCommand)
 RotateUnitCommand.__type = RotateUnitCommand
 RotateUnitCommand.UnitValues = {
@@ -202,9 +207,12 @@ end
 function RotateUnitCommand:__tostring()
 	return string.format("[Command RotateUnit target: %s]", tostring(self:value("rot_add")))
 end
+
 HideUnitsCommand = HideUnitsCommand or class(EditorCommand)
 HideUnitsCommand.__type = HideUnitsCommand
-HideUnitsCommand.UnitValues = {"units"}
+HideUnitsCommand.UnitValues = {
+	"units"
+}
 
 function HideUnitsCommand:execute(units, hidden)
 	if not self._values.units then
@@ -241,9 +249,12 @@ end
 function HideUnitsCommand:__tostring()
 	return string.format("[Command HideUnits hidden: %s]", tostring(self:value("hide")))
 end
+
 SpawnUnitCommand = SpawnUnitCommand or class(EditorCommand)
 SpawnUnitCommand.__type = SpawnUnitCommand
-SpawnUnitCommand.UnitValues = {"spawned_unit"}
+SpawnUnitCommand.UnitValues = {
+	"spawned_unit"
+}
 
 function SpawnUnitCommand:execute(name, pos, rot, to_continent_name, prefered_id)
 	if name and pos and rot then
@@ -280,10 +291,13 @@ end
 function SpawnUnitCommand:__tostring()
 	return string.format("[Command SpawnUnit %s]", tostring(self._values.args[1]))
 end
+
 DeleteStaticUnitCommand = DeleteStaticUnitCommand or class(EditorCommand)
 DeleteStaticUnitCommand.__type = DeleteStaticUnitCommand
 DeleteStaticUnitCommand.__priority = 1000000
-DeleteStaticUnitCommand.UnitValues = {"unit"}
+DeleteStaticUnitCommand.UnitValues = {
+	"unit"
+}
 DeleteStaticUnitCommand.IgnoredRestoreKeys = {
 	"id",
 	"name_id",
@@ -335,6 +349,7 @@ end
 function DeleteStaticUnitCommand:__tostring()
 	return string.format("[Command DeleteStaticUnit %s(%s)]", tostring(self._values.name), tostring(self._values.id))
 end
+
 MissionElementEditorCommand = MissionElementEditorCommand or class(EditorCommand)
 MissionElementEditorCommand.__type = MissionElementEditorCommand
 
@@ -347,6 +362,7 @@ end
 function MissionElementEditorCommand:get_self_mission_element()
 	return managers.editor:unit_with_id(self._values.element_id):mission_element()
 end
+
 DeleteMissionElementCommand = DeleteMissionElementCommand or class(MissionElementEditorCommand)
 DeleteMissionElementCommand.__type = DeleteMissionElementCommand
 DeleteMissionElementCommand.__priority = 100000
@@ -376,6 +392,7 @@ end
 function DeleteMissionElementCommand:__tostring()
 	return string.format("[Command DeleteMissionElement %s]", tostring(self._values.element_id))
 end
+
 MissionElementAddOnExecutedCommand = MissionElementAddOnExecutedCommand or class(MissionElementEditorCommand)
 MissionElementAddOnExecutedCommand.__type = MissionElementAddOnExecutedCommand
 
@@ -411,6 +428,7 @@ end
 function MissionElementAddOnExecutedCommand:__tostring()
 	return string.format("[Command AddOnExecuted %s]", tostring(self._values.element_id))
 end
+
 MissionElementRemoveOnExecutedCommand = MissionElementRemoveOnExecutedCommand or class(MissionElementEditorCommand)
 MissionElementRemoveOnExecutedCommand.__type = MissionElementRemoveOnExecutedCommand
 
@@ -449,6 +467,7 @@ end
 function MissionElementRemoveOnExecutedCommand:__tostring()
 	return string.format("[Command RemoveOnExecuted %s]", tostring(self._values.element_id))
 end
+
 MissionElementAddLinkElementCommand = MissionElementAddLinkElementCommand or class(MissionElementEditorCommand)
 MissionElementAddLinkElementCommand.__type = MissionElementAddLinkElementCommand
 
@@ -479,6 +498,7 @@ end
 function MissionElementAddLinkElementCommand:__tostring()
 	return string.format("[Command AddLinkElement [%s %s]]", tostring(self:value("link_name")), tostring(self:value("unit_id")))
 end
+
 MissionElementRemoveLinkElementCommand = MissionElementRemoveLinkElementCommand or class(MissionElementEditorCommand)
 MissionElementRemoveLinkElementCommand.__type = MissionElementRemoveLinkElementCommand
 
@@ -509,4 +529,3 @@ end
 function MissionElementRemoveLinkElementCommand:__tostring()
 	return string.format("[Command RemoveLinkElement [%s %s]]", tostring(self:value("link_name")), tostring(self:value("unit_id")))
 end
-

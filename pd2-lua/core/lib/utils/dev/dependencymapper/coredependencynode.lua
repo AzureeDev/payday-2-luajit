@@ -111,7 +111,9 @@ function DependencyNodeBase:_parse()
 
 	local xmlnode = self._database:load_node(entry)
 
-	return {xmlnode}
+	return {
+		xmlnode
+	}
 end
 
 function DependencyNodeBase:_walkxml(xmlnode)
@@ -131,6 +133,7 @@ end
 function DependencyNodeBase:_walkxml2dependencies(xmlnode, deps)
 	error("Not Implemented")
 end
+
 _Deps = _Deps or CoreClass.class()
 
 function _Deps:init()
@@ -144,4 +147,3 @@ end
 function _Deps:get_pairs()
 	return ipairs(self._dnlist)
 end
-

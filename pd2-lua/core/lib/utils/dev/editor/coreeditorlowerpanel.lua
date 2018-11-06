@@ -70,19 +70,33 @@ function CoreEditor:add_open_unit_file_buttons()
 	self._open_unit_file_buttons = {}
 
 	self._unit_info_toolbar:add_tool("LTB_OPEN_UNIT_XML", "Open unit file", CoreEWS.image_path("world_editor\\unit_file_unit_16x16.png"), "Open unit file")
-	self._unit_info_toolbar:connect("LTB_OPEN_UNIT_XML", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {type = "unit"})
+	self._unit_info_toolbar:connect("LTB_OPEN_UNIT_XML", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {
+		type = "unit"
+	})
 	self._unit_info_toolbar:add_tool("LTB_OPEN_OBJECT_XML", "Open object file", CoreEWS.image_path("world_editor\\unit_file_object_16x16.png"), "Open unit file")
-	self._unit_info_toolbar:connect("LTB_OPEN_OBJECT_XML", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {type = "object"})
+	self._unit_info_toolbar:connect("LTB_OPEN_OBJECT_XML", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {
+		type = "object"
+	})
 	self._unit_info_toolbar:add_tool("LTB_OPEN_MATERIAL_XML", "Open material file", CoreEWS.image_path("world_editor\\unit_file_material_16x16.png"), "Open material file")
-	self._unit_info_toolbar:connect("LTB_OPEN_MATERIAL_XML", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {type = "material_config"})
+	self._unit_info_toolbar:connect("LTB_OPEN_MATERIAL_XML", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {
+		type = "material_config"
+	})
 	self._unit_info_toolbar:add_tool("LTB_OPEN_SEQUECNCE_XML", "Open sequence file", CoreEWS.image_path("world_editor\\unit_file_sequence_16x16.png"), "Open sequence file")
-	self._unit_info_toolbar:connect("LTB_OPEN_SEQUECNCE_XML", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {type = "sequence_manager"})
+	self._unit_info_toolbar:connect("LTB_OPEN_SEQUECNCE_XML", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {
+		type = "sequence_manager"
+	})
 	self._unit_info_toolbar:add_tool("LTB_OPEN_LAST_EXPORTED", "Open source file", CoreEWS.image_path("world_editor\\unit_file_max_16x16.png"), "Open source 3Dsmax file")
-	self._unit_info_toolbar:connect("LTB_OPEN_LAST_EXPORTED", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {type = "max"})
+	self._unit_info_toolbar:connect("LTB_OPEN_LAST_EXPORTED", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {
+		type = "max"
+	})
 	self._unit_info_toolbar:add_tool("LTB_OPEN_FOLDER_EXPORTED", "Open content folder", CoreEWS.image_path("folder_open_16x16.png"), "Open content folder")
-	self._unit_info_toolbar:connect("LTB_OPEN_FOLDER_EXPORTED", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {type = "folder"})
+	self._unit_info_toolbar:connect("LTB_OPEN_FOLDER_EXPORTED", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {
+		type = "folder"
+	})
 	self._unit_info_toolbar:add_tool("LTB_OPEN_FOLDER_SOURCE", "Open source folder", CoreEWS.image_path("folder_open_source_16x16.png"), "Open source folder")
-	self._unit_info_toolbar:connect("LTB_OPEN_FOLDER_SOURCE", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {type = "folder_source"})
+	self._unit_info_toolbar:connect("LTB_OPEN_FOLDER_SOURCE", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_open_unit_file"), {
+		type = "folder_source"
+	})
 	table.insert(self._open_unit_file_buttons, "LTB_OPEN_UNIT_XML")
 	table.insert(self._open_unit_file_buttons, "LTB_OPEN_OBJECT_XML")
 	table.insert(self._open_unit_file_buttons, "LTB_OPEN_MATERIAL_XML")
@@ -154,7 +168,12 @@ function CoreEditor:sequence_file(unit)
 	if alive(unit) then
 		local object_file = CoreEngineAccess._editor_unit_data(unit:name():id()):model()
 		local node = nil
-		node = DB:has("object", object_file) and DB:load_node("object", object_file) or SystemFS:parse_xml("data/objects" .. object_file:s())
+
+		if DB:has("object", object_file) then
+			node = DB:load_node("object", object_file)
+		else
+			node = SystemFS:parse_xml("data/objects" .. object_file:s())
+		end
 
 		for child in node:children() do
 			if child:name() == "sequence_manager" then
@@ -274,4 +293,3 @@ function CoreEditor:_unit_materials(unit)
 
 	return names
 end
-

@@ -28,4 +28,3 @@ function ElementDebug:on_executed(instigator)
 	managers.mission:add_fading_debug_output(text, color, self._values.as_subtitle)
 	ElementDebug.super.on_executed(self, instigator)
 end
-

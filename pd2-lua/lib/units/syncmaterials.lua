@@ -50,4 +50,3 @@ function SyncMaterials:load(data)
 		end
 	end
 end
-

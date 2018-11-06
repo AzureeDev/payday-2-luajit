@@ -6,7 +6,9 @@ end
 
 function ElementVehicleTrigger:on_script_activated()
 	if Network:is_server() then
-		managers.vehicle:add_listener(self._id, {self._values.event}, callback(self, self, "on_executed"))
+		managers.vehicle:add_listener(self._id, {
+			self._values.event
+		}, callback(self, self, "on_executed"))
 	end
 end
 
@@ -35,4 +37,3 @@ function ElementVehicleTrigger:on_executed(instigator)
 
 	ElementVehicleTrigger.super.on_executed(self, self._unit or instigator)
 end
-

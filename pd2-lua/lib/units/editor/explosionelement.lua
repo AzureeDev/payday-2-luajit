@@ -34,7 +34,9 @@ function ExplosionUnitElement:_build_panel(panel, panel_sizer)
 		floats = 0,
 		min = 0
 	}, "The player damage from the explosion")
-	self:_build_value_combobox(panel, panel_sizer, "explosion_effect", table.list_add({"none"}, self:_effect_options()), "Select and explosion effect")
+	self:_build_value_combobox(panel, panel_sizer, "explosion_effect", table.list_add({
+		"none"
+	}, self:_effect_options()), "Select and explosion effect")
 	self:_build_value_combobox(panel, panel_sizer, "sound_event", {
 		"no_sound",
 		"trip_mine_explode"
@@ -54,4 +56,3 @@ function ExplosionUnitElement:add_to_mission_package()
 		})
 	end
 end
-

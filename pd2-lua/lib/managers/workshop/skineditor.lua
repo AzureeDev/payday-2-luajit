@@ -6,8 +6,9 @@ SkinEditor.allowed_extensions = {
 }
 
 function SkinEditor:init()
-	Global.skin_editor = {}
-	Global.skin_editor.skins = {}
+	Global.skin_editor = {
+		skins = {}
+	}
 	self._global = Global.skin_editor
 	self._current_skin = 1
 	self._active = false
@@ -120,7 +121,9 @@ function SkinEditor:select_skin(local_skin_id)
 	end
 
 	managers.blackmarket:preload_weapon_blueprint("preview", crafted_item.factory_id, crafted_item.blueprint, true)
-	table.insert(managers.blackmarket._preloading_list, {done_cb = cb})
+	table.insert(managers.blackmarket._preloading_list, {
+		done_cb = cb
+	})
 	managers.menu:active_menu().logic:get_node("skin_editor")
 end
 
@@ -161,11 +164,17 @@ function SkinEditor:publish_skin(skin, title, desc, changelog, callb)
 				Steam:overlay_activate("url", "steam://url/CommunityFilePage/" .. id)
 			end
 		else
-			local dialog_data = {title = managers.localization:text("dialog_error_title")}
+			local dialog_data = {
+				title = managers.localization:text("dialog_error_title")
+			}
 			local result_text = managers.localization:exists(result) and managers.localization:text(result) or result
 			dialog_data.text = managers.localization:text("debug_wskn_submit_failed") .. "\n" .. result_text
-			local ok_button = {text = managers.localization:text("dialog_ok")}
-			dialog_data.button_list = {ok_button}
+			local ok_button = {
+				text = managers.localization:text("dialog_ok")
+			}
+			dialog_data.button_list = {
+				ok_button
+			}
 
 			managers.system_menu:show(dialog_data)
 		end
@@ -284,7 +293,6 @@ function SkinEditor:publish_skin(skin, title, desc, changelog, callb)
 end
 
 function SkinEditor:enter_screenshot_mode()
-
 	local function cb()
 		local weapon = managers.blackmarket:get_crafted_category_slot(self:category_slot())
 
@@ -316,7 +324,9 @@ function SkinEditor:enter_screenshot_mode()
 	local weapon = managers.blackmarket:get_crafted_category_slot(self:category_slot())
 
 	managers.blackmarket:preload_weapon_blueprint("preview", weapon.factory_id, weapon.blueprint, true)
-	table.insert(managers.blackmarket._preloading_list, {done_cb = cb})
+	table.insert(managers.blackmarket._preloading_list, {
+		done_cb = cb
+	})
 end
 
 function SkinEditor:set_screenshot_color(color)
@@ -596,7 +606,9 @@ end
 
 function SkinEditor:remove_texture_by_name(skin, texture_name)
 	local original = deep_clone(skin:config().data)
-	local to_process = {skin:config().data}
+	local to_process = {
+		skin:config().data
+	}
 
 	while #to_process > 0 do
 		local data = table.remove(to_process)
@@ -651,7 +663,9 @@ end
 
 function SkinEditor:get_all_applied_textures(skin)
 	local textures = {}
-	local to_process = {skin:config().data}
+	local to_process = {
+		skin:config().data
+	}
 
 	while #to_process > 0 do
 		local data = table.remove(to_process)
@@ -675,7 +689,9 @@ end
 
 function SkinEditor:remove_literal_paths(skin)
 	local original = deep_clone(skin:config().data)
-	local to_process = {skin:config().data}
+	local to_process = {
+		skin:config().data
+	}
 
 	while #to_process > 0 do
 		local data = table.remove(to_process)
@@ -694,13 +710,17 @@ end
 
 function SkinEditor:add_literal_paths(skin)
 	local add_type = self:has_texture_folders(skin)
-	local to_process = {skin:config().data}
+	local to_process = {
+		skin:config().data
+	}
 
 	while #to_process > 0 do
 		local data = table.remove(to_process)
 
 		if type(data) == "string" then
-			data = {data}
+			data = {
+				data
+			}
 		end
 
 		local it_data = deep_clone(data)
@@ -836,4 +856,3 @@ function SkinEditor:get_excluded_type_categories()
 		"extra"
 	}
 end
-

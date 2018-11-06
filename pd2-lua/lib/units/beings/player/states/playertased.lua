@@ -76,7 +76,9 @@ function PlayerTased:enter(state_data, enter_data)
 		managers.player:register_message(Message.EscapeTase, "escape_tase", clbk)
 	end
 
-	CopDamage.register_listener("on_criminal_tased", {"on_criminal_tased"}, callback(self, self, "_on_tased_event"))
+	CopDamage.register_listener("on_criminal_tased", {
+		"on_criminal_tased"
+	}, callback(self, self, "_on_tased_event"))
 end
 
 function PlayerTased:_enter(enter_data)
@@ -563,4 +565,3 @@ function PlayerTased:_on_malfunction_to_taser_event()
 
 	self._taser_unit:character_damage():damage_melee(action_data)
 end
-

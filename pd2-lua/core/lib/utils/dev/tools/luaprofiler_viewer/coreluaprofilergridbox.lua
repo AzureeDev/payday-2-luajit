@@ -47,7 +47,9 @@ function LuaProfilerGridBox:init(...)
 end
 
 function LuaProfilerGridBox:set_treeview(...)
-	self._treeview = parse_kwargs({...}, "table:treeview")
+	self._treeview = parse_kwargs({
+		...
+	}, "table:treeview")
 end
 
 function LuaProfilerGridBox:destroy()
@@ -62,7 +64,9 @@ function LuaProfilerGridBox:destroy()
 end
 
 function LuaProfilerGridBox:set_profilerdata(...)
-	self._lpd, self._displayformat = parse_kwargs({...}, "userdata:lpd", "number:displayformat")
+	self._lpd, self._displayformat = parse_kwargs({
+		...
+	}, "userdata:lpd", "number:displayformat")
 	self._highlightedfuncnode = nil
 	self._item2fnid = {}
 
@@ -87,16 +91,18 @@ function LuaProfilerGridBox:set_profilerdata(...)
 end
 
 function LuaProfilerGridBox:set_displayformat(...)
-	self._displayformat = parse_kwargs({...}, "number:displayformat")
+	self._displayformat = parse_kwargs({
+		...
+	}, "number:displayformat")
 
 	if self._lpd ~= nil then
 		local frametime = self._lpd:frametime()
 
 		for i, fnid in ipairs(self._item2fnid) do
 			if self._displayformat ~= SECONDS then
-				self._listctrl:set_item(i - 1, 3, string.format("%6.3f %%", (100 * self._lpd:fn_total_time(fnid)) / frametime))
-				self._listctrl:set_item(i - 1, 4, string.format("%6.3f %%", (100 * self._lpd:fn_local_time(fnid)) / frametime))
-				self._listctrl:set_item(i - 1, 5, string.format("%6.3f %%", (100 * self._lpd:fn_children_time(fnid)) / frametime))
+				self._listctrl:set_item(i - 1, 3, string.format("%6.3f %%", 100 * self._lpd:fn_total_time(fnid) / frametime))
+				self._listctrl:set_item(i - 1, 4, string.format("%6.3f %%", 100 * self._lpd:fn_local_time(fnid) / frametime))
+				self._listctrl:set_item(i - 1, 5, string.format("%6.3f %%", 100 * self._lpd:fn_children_time(fnid) / frametime))
 			else
 				self._listctrl:set_item(i - 1, 3, string.format("%8.3f ms", 1000 * self._lpd:fn_total_time(fnid)))
 				self._listctrl:set_item(i - 1, 4, string.format("%8.3f ms", 1000 * self._lpd:fn_local_time(fnid)))
@@ -119,9 +125,9 @@ function LuaProfilerGridBox:_redraw()
 			self._listctrl:set_item(i - 1, 2, self._lpd:fn_line(fnid))
 
 			if self._displayformat ~= SECONDS then
-				self._listctrl:set_item(i - 1, 3, string.format("%6.3f %%", (100 * self._lpd:fn_total_time(fnid)) / frametime))
-				self._listctrl:set_item(i - 1, 4, string.format("%6.3f %%", (100 * self._lpd:fn_local_time(fnid)) / frametime))
-				self._listctrl:set_item(i - 1, 5, string.format("%6.3f %%", (100 * self._lpd:fn_children_time(fnid)) / frametime))
+				self._listctrl:set_item(i - 1, 3, string.format("%6.3f %%", 100 * self._lpd:fn_total_time(fnid) / frametime))
+				self._listctrl:set_item(i - 1, 4, string.format("%6.3f %%", 100 * self._lpd:fn_local_time(fnid) / frametime))
+				self._listctrl:set_item(i - 1, 5, string.format("%6.3f %%", 100 * self._lpd:fn_children_time(fnid) / frametime))
 			else
 				self._listctrl:set_item(i - 1, 3, string.format("%8.3f ms", 1000 * self._lpd:fn_total_time(fnid)))
 				self._listctrl:set_item(i - 1, 4, string.format("%8.3f ms", 1000 * self._lpd:fn_local_time(fnid)))
@@ -151,52 +157,49 @@ function LuaProfilerGridBox:_sort_funcnodes()
 	local convert = nil
 
 	if self._sortcolumn == 1 then
-
 		function convert(fnid)
 			return string.lower(self._lpd:fn_func(fnid))
 		end
 	elseif self._sortcolumn == 2 then
-
 		function convert(fnid)
 			return string.lower(self._lpd:fn_file(fnid))
 		end
 	elseif self._sortcolumn == 3 then
-
 		function convert(fnid)
 			return tonumber(self._lpd:fn_line(fnid))
 		end
 	elseif self._sortcolumn == 4 then
-
 		function convert(fnid)
 			return self._lpd:fn_total_time(fnid)
 		end
 	elseif self._sortcolumn == 5 then
-
 		function convert(fnid)
 			return self._lpd:fn_local_time(fnid)
 		end
 	elseif self._sortcolumn == 6 then
-
 		function convert(fnid)
 			return self._lpd:fn_children_time(fnid)
 		end
 	elseif self._sortcolumn == 7 then
-
 		function convert(fnid)
 			return self._lpd:fn_num_calls(fnid)
 		end
 	elseif self._sortcolumn == 8 then
-
 		function convert(fnid)
 			return self._lpd:fn_num_sub_calls(fnid)
 		end
 	else
 		local i = self._sortcolumn - 9
 		local index = math.floor(i / 2)
-		convert = i % 2 == 0 and function (fnid)
-			return self._lpd:fn_diff(fnid, index)
-		end or function (fnid)
-			return self._lpd:fn_peak(fnid, index)
+
+		if i % 2 == 0 then
+			function convert(fnid)
+				return self._lpd:fn_diff(fnid, index)
+			end
+		else
+			function convert(fnid)
+				return self._lpd:fn_peak(fnid, index)
+			end
 		end
 	end
 
@@ -212,7 +215,9 @@ function LuaProfilerGridBox:_sort_funcnodes()
 end
 
 function LuaProfilerGridBox:deselect_and_highlight(...)
-	local fnid = parse_kwargs({...}, "number:fnid")
+	local fnid = parse_kwargs({
+		...
+	}, "number:fnid")
 
 	self._listctrl:set_item_selected(self._listctrl:selected_item(), false)
 	self:_highlight(fnid)
@@ -233,14 +238,18 @@ end
 function LuaProfilerGridBox:_on_select()
 	local i = self._listctrl:selected_item()
 
-	self._treeview:deselect_and_highlight({fnid = self._item2fnid[i + 1]})
+	self._treeview:deselect_and_highlight({
+		fnid = self._item2fnid[i + 1]
+	})
 	self:_highlight(self._item2fnid[i + 1])
 end
 
 function LuaProfilerGridBox:_on_activate()
 	local i = self._listctrl:selected_item()
 
-	self._treeview:deselect_and_expand({fnid = self._item2fnid[i + 1]})
+	self._treeview:deselect_and_expand({
+		fnid = self._item2fnid[i + 1]
+	})
 end
 
 function LuaProfilerGridBox:_on_column(id, f)
@@ -255,4 +264,3 @@ function LuaProfilerGridBox:_on_column(id, f)
 
 	self:_redraw()
 end
-

@@ -19,7 +19,7 @@ function CoreAiArea:spawn(unit_name, spawn_point_name)
 	if spawn_point_name ~= "" then
 		spawn_point = self._unit:get_object(Idstring(spawn_point_name))
 	else
-		if #self._spawn_points < self._spawn_point_index then
+		if self._spawn_point_index > #self._spawn_points then
 			return
 		end
 
@@ -52,6 +52,7 @@ function CoreAiArea:find_spawnpoints(xml)
 		end
 	end
 end
+
 CoreSpawnSystem = CoreSpawnSystem or class()
 
 function CoreSpawnSystem:init(unit)
@@ -349,4 +350,3 @@ function CoreSpawnSystem:get_socket_nodes(socket_name, unit_name)
 		end
 	end
 end
-

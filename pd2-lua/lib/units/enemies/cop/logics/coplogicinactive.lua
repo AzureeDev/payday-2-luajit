@@ -67,7 +67,9 @@ end
 function CopLogicInactive.on_enemy_weapons_hot(data)
 	local my_data = data.internal_data
 
-	data.unit:brain():set_attention_settings({corpse_cbt = true})
+	data.unit:brain():set_attention_settings({
+		corpse_cbt = true
+	})
 
 	if data.unit:interaction():active() then
 		data.unit:interaction():set_active(false, true, true)
@@ -77,9 +79,13 @@ end
 function CopLogicInactive._register_attention(data, my_data)
 	if data.unit:character_damage():dead() then
 		if managers.groupai:state():enemy_weapons_hot() then
-			data.unit:brain():set_attention_settings({corpse_cbt = true})
+			data.unit:brain():set_attention_settings({
+				corpse_cbt = true
+			})
 		else
-			data.unit:brain():set_attention_settings({corpse_sneak = true})
+			data.unit:brain():set_attention_settings({
+				corpse_sneak = true
+			})
 		end
 	else
 		data.unit:brain():set_attention_settings(nil)
@@ -108,4 +114,3 @@ function CopLogicInactive.on_new_objective(data, old_objective)
 		old_objective.fail_clbk(data.unit)
 	end
 end
-

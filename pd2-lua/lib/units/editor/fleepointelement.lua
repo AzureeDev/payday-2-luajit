@@ -20,4 +20,3 @@ function FleePointElement:_build_panel(panel, panel_sizer)
 		"loot_drop"
 	}, "Select the functionality of the point")
 end
-

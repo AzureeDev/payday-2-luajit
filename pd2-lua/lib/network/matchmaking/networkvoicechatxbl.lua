@@ -258,9 +258,10 @@ function NetworkVoiceChatXBL:_save_globals()
 	cat_print("lobby", "Voice: NetworkVoiceChatXBL:_save_globals ")
 
 	Global.xvoice = nil
-	Global.xvoice = {}
-	Global.xvoice.peers = self._peers
-	Global.xvoice.team = self._team
+	Global.xvoice = {
+		peers = self._peers,
+		team = self._team
+	}
 
 	self:pause()
 end
@@ -437,7 +438,12 @@ function NetworkVoiceChatXBL:info_engine()
 
 	for k, v in pairs(talkers) do
 		local info = nil
-		info = type(v) == "number" and "      " .. tostring(v) .. " - Local Player" or "      " .. tostring(v) .. " - " .. self:playerid_to_name(v)
+
+		if type(v) == "number" then
+			info = "      " .. tostring(v) .. " - Local Player"
+		else
+			info = "      " .. tostring(v) .. " - " .. self:playerid_to_name(v)
+		end
 
 		cat_print("lobby", info)
 	end
@@ -453,7 +459,7 @@ function NetworkVoiceChatXBL:info_engine()
 
 		local PeerNumber = 0
 
-		while PeerNumber < num_peers do
+		while num_peers > PeerNumber do
 			local ip = v:ip_at_index(PeerNumber)
 
 			cat_print("lobby", "         " .. tostring(ip) .. " - " .. self:ip_to_name(ip))
@@ -462,4 +468,3 @@ function NetworkVoiceChatXBL:info_engine()
 		end
 	end
 end
-

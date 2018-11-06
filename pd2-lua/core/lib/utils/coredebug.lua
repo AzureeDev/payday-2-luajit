@@ -58,19 +58,27 @@ end
 function out(...)
 	local CAT_TYPE = "debug"
 	local NO_CAT = "spam"
-	local args = {...}
+	local args = {
+		...
+	}
 
 	local function correct_spaces(...)
-		local args = {...}
-		local sel = {select(2, ...)}
-		sel[1] = args[1] .. " " .. tostring(sel[1])
+		local args = {
+			...
+		}
+		local sel = {
+			args[1] .. " " .. tostring(sel[1]),
+			select(2, ...)
+		}
 
 		return unpack(sel)
 	end
 
 	local function do_print(c, ...)
 		local cat = CAT_TYPE
-		local args = {...}
+		local args = {
+			...
+		}
 
 		for k, _ in pairs(Global.category_print) do
 			if k == c then
@@ -121,7 +129,9 @@ end
 
 function cat_print_inspect(cat, ...)
 	if Global.category_print[cat] then
-		for _, var in ipairs({...}) do
+		for _, var in ipairs({
+			...
+		}) do
 			cat_print(cat, CoreCode.inspect(var))
 		end
 	end
@@ -129,14 +139,18 @@ end
 
 function cat_debug_inspect(cat, ...)
 	if Global.category_print[cat] then
-		for _, var in ipairs({...}) do
+		for _, var in ipairs({
+			...
+		}) do
 			cat_debug(cat, "\n" .. tostring(CoreCode.inspect(var)))
 		end
 	end
 end
 
 function catprint_save()
-	local data = {_meta = "categories"}
+	local data = {
+		_meta = "categories"
+	}
 
 	for name, allow_print in pairs(Global.category_print) do
 		if Global.original_category_print[name] ~= allow_print then
@@ -186,7 +200,6 @@ function print_console_result(...)
 end
 
 function compile_and_reload()
-
 	local function root_path()
 		local path = Application:base_path() .. (CoreApp.arg_value("-assetslocation") or "../../")
 		local f = nil
@@ -288,7 +301,9 @@ function trace_ref(class_name, init_name, destroy_name)
 		rawset(class_mt, destroy_name, function (...)
 			ref()
 
-			local p = {...}
+			local p = {
+				...
+			}
 			local o = p[2]
 
 			if not o or o.alive and not o:alive() then
@@ -377,4 +392,3 @@ function get_n_value(t, n)
 		end
 	end
 end
-

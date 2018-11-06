@@ -63,6 +63,7 @@ require("lib/managers/menu/SkirmishContractMenuComponent")
 require("lib/managers/menu/SkirmishWeeklyContractMenuComponent")
 require("lib/managers/menu/SkirmishContractBoxGui")
 require("lib/managers/menu/IngameContractGuiSkirmish")
+require("lib/managers/menu/MovieTheaterGui")
 
 MenuComponentManager = MenuComponentManager or class()
 
@@ -256,7 +257,9 @@ function MenuComponentManager:init()
 			create = callback(self, self, "create_crime_spree_forced_modifiers_gui"),
 			close = callback(self, self, "close_crime_spree_forced_modifiers_gui")
 		},
-		crime_spree_forced_modifiers_dummy = {create = callback(self, self, "check_crime_spree_forced_modifiers")},
+		crime_spree_forced_modifiers_dummy = {
+			create = callback(self, self, "check_crime_spree_forced_modifiers")
+		},
 		crime_spree_rewards = {
 			create = callback(self, self, "create_crime_spree_rewards_gui"),
 			close = callback(self, self, "close_crime_spree_rewards_gui")
@@ -317,7 +320,11 @@ function MenuComponentManager:init()
 			create = callback(self, self, "create_skirmish_contract_join_gui"),
 			close = callback(self, self, "close_skirmish_contract_join_gui")
 		},
-		weekly_skirmish_rewards = self:create_component_callback("SkirmishWeeklyRewardsMenuComponent", "weekly_skirmish_rewards")
+		weekly_skirmish_rewards = self:create_component_callback("SkirmishWeeklyRewardsMenuComponent", "weekly_skirmish_rewards"),
+		movie_theater = {
+			create = callback(self, self, "create_movie_theater_gui"),
+			close = callback(self, self, "close_movie_theater_gui")
+		}
 	}
 	self._alive_components = {}
 
@@ -381,7 +388,9 @@ end
 function MenuComponentManager:run_return_on_all_live_components(func, ...)
 	for idx, comp_data in ipairs(self._alive_components) do
 		if comp_data.component[func] then
-			local data = {comp_data.component[func](comp_data.component, ...)}
+			local data = {
+				comp_data.component[func](comp_data.component, ...)
+			}
 
 			if data[1] ~= nil then
 				return true, data
@@ -597,10 +606,20 @@ function MenuComponentManager:make_color_text(text_object, color)
 	end
 end
 
-function MenuComponentManager:on_job_updated()
+function MenuComponentManager:_update_contract_box_gui()
 	if self._contract_gui then
-		self._contract_gui:refresh()
+		local current_class = getmetatable(self._contract_gui)
+
+		if current_class == self:_contract_gui_class() then
+			self._contract_gui:refresh()
+		else
+			self:create_contract_gui()
+		end
 	end
+end
+
+function MenuComponentManager:on_job_updated()
+	self:_update_contract_box_gui()
 end
 
 function MenuComponentManager:update(t, dt)
@@ -2284,13 +2303,17 @@ function MenuComponentManager:create_weapon_box(w_id, params)
 	}
 
 	if self._weapon_text_box then
-		self._weapon_text_box:recreate_text_box(self._ws, title, text, {stats_list = stats_list}, {
+		self._weapon_text_box:recreate_text_box(self._ws, title, text, {
+			stats_list = stats_list
+		}, {
 			no_close_legend = true,
 			use_minimize_legend = true,
 			type = "weapon_stats"
 		})
 	else
-		self._weapon_text_box = TextBoxGui:new(self._ws, title, text, {stats_list = stats_list}, {
+		self._weapon_text_box = TextBoxGui:new(self._ws, title, text, {
+			stats_list = stats_list
+		}, {
 			no_close_legend = true,
 			use_minimize_legend = true,
 			type = "weapon_stats"
@@ -2932,7 +2955,9 @@ function MenuComponentManager:create_mission_briefing_gui(node)
 		if managers.groupai and managers.groupai:state() and not self._whisper_listener then
 			self._whisper_listener = "MenuComponentManager_whisper_mode"
 
-			managers.groupai:state():add_listener(self._whisper_listener, {"whisper_mode"}, callback(self, self, "on_whisper_mode_changed"))
+			managers.groupai:state():add_listener(self._whisper_listener, {
+				"whisper_mode"
+			}, callback(self, self, "on_whisper_mode_changed"))
 		end
 	else
 		self._mission_briefing_gui:reload_loadout()
@@ -3107,16 +3132,18 @@ function MenuComponentManager:create_lootdrop_casino_gui(node)
 	if not self._lootdrop_casino_gui then
 		local casino_data = node:parameters().menu_component_data or {}
 		local card_secured = casino_data.secure_cards or 0
-		local card_drops = {math.random(3) <= card_secured and casino_data.preferred_item}
+		local card_drops = {
+			math.random(3) <= card_secured and casino_data.preferred_item
+		}
 
 		if card_drops[1] then
-			card_secured = card_secured - 1 or card_secured
+			card_secured = card_secured - 1
 		end
 
 		card_drops[2] = card_secured == 2 and managers.lootdrop:specific_fake_loot_pc(casino_data.preferred_item) or card_secured == 1 and card_secured == math.random(3) and managers.lootdrop:specific_fake_loot_pc(casino_data.preferred_item)
 
 		if card_drops[2] then
-			card_secured = card_secured - 1 or card_secured
+			card_secured = card_secured - 1
 		end
 
 		card_drops[3] = card_secured > 0 and managers.lootdrop:specific_fake_loot_pc(casino_data.preferred_item)
@@ -3162,7 +3189,9 @@ function MenuComponentManager:create_lootdrop_casino_gui(node)
 			card_left_pc,
 			card_right_pc
 		}
-		local selected_card = {[peer and peer:id() or 1] = 2}
+		local selected_card = {
+			[peer and peer:id() or 1] = 2
+		}
 		local parent_layer = managers.menu:active_menu() and managers.menu:active_menu().renderer:selected_node() and managers.menu:active_menu().renderer:selected_node():layer() or 100
 		self._lootscreen_casino_hud = HUDLootScreen:new(nil, self._fullscreen_ws, nil, selected_card)
 
@@ -3582,20 +3611,24 @@ function MenuComponentManager:get_texture_from_mod_type(type, sub_type, gadget, 
 			local part_id = mods[1][1]
 			type = weapon_factory_tweak_data[part_id].type
 			sub_type = weapon_factory_tweak_data[part_id].sub_type
-			texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
+			slot13 = "guis/textures/pd2/blackmarket/inv_mod_"
+			slot14 = tostring
+
+			if not sub_type then
+				slot15 = type
+			end
+
+			texture = slot13 .. slot14(slot15)
 		end
 
 		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
 	elseif type == "bonus" then
-		if equipped then
-			texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
-		else
-			texture = "guis/textures/pd2/blackmarket/inv_mod_bonus"
-		end
-
+		texture = equipped and "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type) or "guis/textures/pd2/blackmarket/inv_mod_bonus"
 		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
+	elseif type == "vertical_grip" then
+		texture = "guis/textures/pd2/blackmarket/inv_mod_vertical_grip"
 	else
-		texture = type == "vertical_grip" and "guis/textures/pd2/blackmarket/inv_mod_vertical_grip" or "guis/textures/pd2/blackmarket/inv_mod_" .. type
+		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. type
 	end
 
 	return texture
@@ -3698,7 +3731,10 @@ function MenuComponentManager:create_weapon_mod_icon_list(weapon, category, fact
 						end
 
 						silencer = false
-						silencer = true
+
+						if false then
+							silencer = true
+						end
 
 						break
 					end
@@ -4283,7 +4319,7 @@ function MenuComponentManager:add_minimized(config)
 		layer = 0
 	})
 
-	unselected:set_h((64 * panel:h()) / 32)
+	unselected:set_h(64 * panel:h() / 32)
 	unselected:set_center_y(panel:center_y())
 
 	local selected = panel:bitmap({
@@ -4292,7 +4328,7 @@ function MenuComponentManager:add_minimized(config)
 		layer = 1
 	})
 
-	selected:set_h((64 * panel:h()) / 32)
+	selected:set_h(64 * panel:h() / 32)
 	selected:set_center_y(panel:center_y())
 	panel:set_bottom(self._main_panel:h() - CoreMenuRenderer.Renderer.border_height)
 
@@ -4394,7 +4430,9 @@ function MenuComponentManager:request_texture(texture, done_cb)
 	end
 
 	local index = entry.next_index
-	entry.owners[index] = {clbk = done_cb}
+	entry.owners[index] = {
+		clbk = done_cb
+	}
 	local next_index = index + 1
 
 	while entry.owners[next_index] do
@@ -4439,7 +4477,9 @@ end
 function MenuComponentManager:add_colors_to_text_object(text_object, ...)
 	local text = text_object:text()
 	local unchanged_text = text
-	local colors = {...}
+	local colors = {
+		...
+	}
 	local default_color = #colors == 1 and colors[1] or tweak_data.screen_colors.text
 	local start_ci, end_ci, first_ci = nil
 	local text_dissected = utf8.characters(text)
@@ -4489,6 +4529,7 @@ function MenuComponentManager:add_colors_to_text_object(text_object, ...)
 		end
 	end
 end
+
 MenuComponentPostEventInstance = MenuComponentPostEventInstance or class()
 
 function MenuComponentPostEventInstance:init(sound_source)
@@ -4502,7 +4543,10 @@ function MenuComponentPostEventInstance:post_event(event)
 	end
 
 	self._post_event = false
-	self._post_event = alive(self._sound_source) and self._sound_source:post_event(event)
+
+	if alive(self._sound_source) then
+		self._post_event = self._sound_source:post_event(event)
+	end
 end
 
 function MenuComponentPostEventInstance:stop_event()
@@ -4649,7 +4693,9 @@ end
 function MenuComponentManager:test_camera_shutter_tech()
 	if not self._tcst then
 		self._tcst = managers.gui_data:create_fullscreen_16_9_workspace()
-		local o = self._tcst:panel():panel({layer = 10000})
+		local o = self._tcst:panel():panel({
+			layer = 10000
+		})
 		local b = o:rect({
 			valign = "scale",
 			name = "black",
@@ -4736,7 +4782,9 @@ function MenuComponentManager:create_ingame_custom_safehouse_menu(node, category
 
 	category = category or "primaries"
 	local crafted_category = managers.blackmarket:get_crafted_category(category) or {}
-	local new_node_data = {category = category}
+	local new_node_data = {
+		category = category
+	}
 	local rows = tweak_data.gui.WEAPON_ROWS_PER_PAGE or 3
 	local columns = tweak_data.gui.WEAPON_COLUMNS_PER_PAGE or 3
 	local max_pages = tweak_data.gui.MAX_WEAPON_PAGES or 8
@@ -4757,7 +4805,9 @@ function MenuComponentManager:create_ingame_custom_safehouse_menu(node, category
 			end
 		end
 
-		local name_id = managers.localization:to_upper_text("bm_menu_page", {page = tostring(page)})
+		local name_id = managers.localization:to_upper_text("bm_menu_page", {
+			page = tostring(page)
+		})
 		local data = {
 			prev_node_data = false,
 			allow_buy = false,
@@ -4786,9 +4836,13 @@ function MenuComponentManager:create_ingame_custom_safehouse_menu(node, category
 	new_node_data.selected_tab = selected_tab
 	new_node_data.scroll_tab_anywhere = true
 	new_node_data.topic_id = "bm_menu_" .. category
-	new_node_data.topic_params = {weapon_category = managers.localization:text("bm_menu_weapons")}
+	new_node_data.topic_params = {
+		weapon_category = managers.localization:text("bm_menu_weapons")
+	}
 
-	managers.menu:open_node("blackmarket_node", {new_node_data})
+	managers.menu:open_node("blackmarket_node", {
+		new_node_data
+	})
 end
 
 function MenuComponentManager:close_custom_safehouse_primaries()
@@ -5256,3 +5310,28 @@ function MenuComponentManager:skirmish_contract_join_gui()
 	return self._skirmish_contract_join_gui
 end
 
+function MenuComponentManager:create_movie_theater_gui(node)
+	if not node then
+		return
+	end
+
+	self:close_movie_theater_gui()
+
+	self._movie_theater_gui = MovieTheaterGui:new(self._ws, self._fullscreen_ws, node)
+
+	self:register_component("movie_theater_gui", self._movie_theater_gui)
+end
+
+function MenuComponentManager:close_movie_theater_gui()
+	if self._movie_theater_gui then
+		self._movie_theater_gui:close()
+
+		self._movie_theater_gui = nil
+
+		self:unregister_component("movie_theater_gui")
+	end
+end
+
+function MenuComponentManager:movie_theater_gui()
+	return self._movie_theater_gui
+end

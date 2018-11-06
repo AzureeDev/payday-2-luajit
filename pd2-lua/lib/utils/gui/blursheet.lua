@@ -29,4 +29,3 @@ function BlurSheet:init(parent, config)
 	})
 	BlurSheet.super.init(self, gui_obj)
 end
-

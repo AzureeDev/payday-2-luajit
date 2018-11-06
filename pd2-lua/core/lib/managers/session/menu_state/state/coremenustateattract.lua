@@ -20,4 +20,3 @@ function Attract:transition()
 		return CoreMenuStateStart.Start
 	end
 end
-

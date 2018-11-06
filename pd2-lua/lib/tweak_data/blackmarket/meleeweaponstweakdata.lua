@@ -1,6 +1,7 @@
-
 function BlackMarketTweakData:_init_melee_weapons(tweak_data)
-	self.melee_weapons = {weapon = {}}
+	self.melee_weapons = {
+		weapon = {}
+	}
 	self.melee_weapons.weapon.name_id = "bm_melee_weapon"
 	self.melee_weapons.weapon.type = "weapon"
 	self.melee_weapons.weapon.unit = nil
@@ -162,7 +163,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.tomahawk.texture_bundle_folder = "gage_pack_shotgun"
 	self.melee_weapons.tomahawk.anim_global_param = "melee_axe"
 	self.melee_weapons.tomahawk.type = "axe"
-	self.melee_weapons.tomahawk.align_objects = {"a_weapon_right"}
+	self.melee_weapons.tomahawk.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.tomahawk.unit = "units/pd2_dlc_gage_shot/weapons/wpn_fps_mel_tomahawk/wpn_fps_mel_tomahawk"
 	self.melee_weapons.tomahawk.third_unit = "units/pd2_dlc_gage_shot/weapons/wpn_third_mel_tomahawk/wpn_third_mel_tomahawk"
 	self.melee_weapons.tomahawk.stats.weapon_type = "sharp"
@@ -207,7 +210,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.shovel.name_id = "bm_melee_shovel"
 	self.melee_weapons.shovel.unit = "units/pd2_dlc_gage_shot/weapons/wpn_fps_mel_combat/wpn_fps_mel_combat"
 	self.melee_weapons.shovel.third_unit = "units/pd2_dlc_gage_shot/weapons/wpn_third_mel_combat/wpn_third_mel_combat"
-	self.melee_weapons.shovel.align_objects = {"a_weapon_right"}
+	self.melee_weapons.shovel.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.shovel.stats.weapon_type = "blunt"
 	self.melee_weapons.shovel.stats.min_damage = 2
 	self.melee_weapons.shovel.stats.max_damage = 4
@@ -250,7 +255,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.moneybundle.free = nil
 	self.melee_weapons.moneybundle.anim_global_param = "melee_axe"
 	self.melee_weapons.moneybundle.type = "axe"
-	self.melee_weapons.moneybundle.align_objects = {"a_weapon_right"}
+	self.melee_weapons.moneybundle.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.moneybundle.unit = "units/pd2_million/weapons/wpn_fps_mel_moneybundle/wpn_fps_mel_moneybundle"
 	self.melee_weapons.moneybundle.third_unit = "units/pd2_million/weapons/wpn_third_mel_moneybundle/wpn_third_mel_moneybundle"
 	self.melee_weapons.moneybundle.stats.weapon_type = "blunt"
@@ -276,7 +283,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.barbedwire.free = nil
 	self.melee_weapons.barbedwire.anim_global_param = "melee_baseballbat"
 	self.melee_weapons.barbedwire.type = "axe"
-	self.melee_weapons.barbedwire.align_objects = {"a_weapon_left"}
+	self.melee_weapons.barbedwire.align_objects = {
+		"a_weapon_left"
+	}
 	self.melee_weapons.barbedwire.unit = "units/pd2_washington_reveal/weapons/wpn_fps_mel_barbedwire/wpn_fps_mel_barbedwire"
 	self.melee_weapons.barbedwire.third_unit = "units/pd2_washington_reveal/weapons/wpn_fps_mel_barbedwire/wpn_third_mel_barbedwire"
 	self.melee_weapons.barbedwire.stats.weapon_type = "blunt"
@@ -302,7 +311,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.x46.type = "knife"
 	self.melee_weapons.x46.dlc = "gage_pack_assault"
 	self.melee_weapons.x46.texture_bundle_folder = "gage_pack_assault"
-	self.melee_weapons.x46.align_objects = {"a_weapon_left"}
+	self.melee_weapons.x46.align_objects = {
+		"a_weapon_left"
+	}
 	self.melee_weapons.x46.unit = "units/pd2_dlc_gage_assault/weapons/wpn_fps_mel_x46/wpn_fps_mel_x46"
 	self.melee_weapons.x46.third_unit = "units/pd2_dlc_gage_assault/weapons/wpn_fps_mel_x46/wpn_third_mel_x46"
 	self.melee_weapons.x46.stats.min_damage = 3
@@ -318,7 +329,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.dingdong.type = "axe"
 	self.melee_weapons.dingdong.dlc = "gage_pack_assault"
 	self.melee_weapons.dingdong.texture_bundle_folder = "gage_pack_assault"
-	self.melee_weapons.dingdong.align_objects = {"a_weapon_right"}
+	self.melee_weapons.dingdong.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.dingdong.unit = "units/pd2_dlc_gage_assault/weapons/wpn_fps_mel_dingdong/wpn_fps_mel_dingdong"
 	self.melee_weapons.dingdong.third_unit = "units/pd2_dlc_gage_assault/weapons/wpn_fps_mel_dingdong/wpn_third_mel_dingdong"
 	self.melee_weapons.dingdong.stats.weapon_type = "blunt"
@@ -344,7 +357,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.bayonet.type = "knife"
 	self.melee_weapons.bayonet.dlc = "gage_pack_assault"
 	self.melee_weapons.bayonet.texture_bundle_folder = "gage_pack_assault"
-	self.melee_weapons.bayonet.align_objects = {"a_weapon_left"}
+	self.melee_weapons.bayonet.align_objects = {
+		"a_weapon_left"
+	}
 	self.melee_weapons.bayonet.unit = "units/pd2_dlc_gage_assault/weapons/wpn_fps_mel_bayonet/wpn_fps_mel_bayonet"
 	self.melee_weapons.bayonet.third_unit = "units/pd2_dlc_gage_assault/weapons/wpn_fps_mel_bayonet/wpn_third_mel_bayonet"
 	self.melee_weapons.bayonet.anim_global_param = "melee_knife2"
@@ -363,7 +378,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.bullseye.type = "axe"
 	self.melee_weapons.bullseye.dlc = "gage_pack_assault"
 	self.melee_weapons.bullseye.texture_bundle_folder = "gage_pack_assault"
-	self.melee_weapons.bullseye.align_objects = {"a_weapon_right"}
+	self.melee_weapons.bullseye.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.bullseye.unit = "units/pd2_dlc_gage_assault/weapons/wpn_fps_mel_bullseye/wpn_fps_mel_bullseye"
 	self.melee_weapons.bullseye.third_unit = "units/pd2_dlc_gage_assault/weapons/wpn_fps_mel_bullseye/wpn_third_mel_bullseye"
 	self.melee_weapons.bullseye.sounds = {
@@ -386,7 +403,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.baseballbat.dlc = "hl_miami"
 	self.melee_weapons.baseballbat.texture_bundle_folder = "hl_miami"
 	self.melee_weapons.baseballbat.type = "axe"
-	self.melee_weapons.baseballbat.align_objects = {"a_weapon_left"}
+	self.melee_weapons.baseballbat.align_objects = {
+		"a_weapon_left"
+	}
 	self.melee_weapons.baseballbat.unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_baseballbat/wpn_fps_mel_baseballbat"
 	self.melee_weapons.baseballbat.third_unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_baseballbat/wpn_third_mel_baseballbat"
 	self.melee_weapons.baseballbat.sounds = {
@@ -412,7 +431,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.cleaver.dlc = "hl_miami"
 	self.melee_weapons.cleaver.texture_bundle_folder = "hl_miami"
 	self.melee_weapons.cleaver.type = "axe"
-	self.melee_weapons.cleaver.align_objects = {"a_weapon_left"}
+	self.melee_weapons.cleaver.align_objects = {
+		"a_weapon_left"
+	}
 	self.melee_weapons.cleaver.unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_cleaver/wpn_fps_mel_cleaver"
 	self.melee_weapons.cleaver.third_unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_cleaver/wpn_third_mel_cleaver"
 	self.melee_weapons.cleaver.sounds = {
@@ -435,7 +456,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.fireaxe.dlc = "hl_miami"
 	self.melee_weapons.fireaxe.texture_bundle_folder = "hl_miami"
 	self.melee_weapons.fireaxe.type = "axe"
-	self.melee_weapons.fireaxe.align_objects = {"a_weapon_right"}
+	self.melee_weapons.fireaxe.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.fireaxe.unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_fireaxe/wpn_fps_mel_fireaxe"
 	self.melee_weapons.fireaxe.third_unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_fireaxe/wpn_third_mel_fireaxe"
 	self.melee_weapons.fireaxe.sounds = {
@@ -461,7 +484,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.machete.dlc = "hl_miami"
 	self.melee_weapons.machete.texture_bundle_folder = "hl_miami"
 	self.melee_weapons.machete.type = "axe"
-	self.melee_weapons.machete.align_objects = {"a_weapon_right"}
+	self.melee_weapons.machete.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.machete.unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_machete/wpn_fps_mel_machete"
 	self.melee_weapons.machete.third_unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_machete/wpn_third_mel_machete"
 	self.melee_weapons.machete.sounds = {
@@ -486,7 +511,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.briefcase.dlc = "hlm_game"
 	self.melee_weapons.briefcase.texture_bundle_folder = "hl_miami"
 	self.melee_weapons.briefcase.type = "axe"
-	self.melee_weapons.briefcase.align_objects = {"a_weapon_right"}
+	self.melee_weapons.briefcase.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.briefcase.unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_briefcase/wpn_fps_mel_briefcase"
 	self.melee_weapons.briefcase.third_unit = "units/pd2_dlc_miami/weapons/wpn_fps_mel_briefcase/wpn_third_mel_briefcase"
 	self.melee_weapons.briefcase.sounds = {
@@ -531,7 +558,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.toothbrush.free = nil
 	self.melee_weapons.toothbrush.anim_global_param = "melee_stab"
 	self.melee_weapons.toothbrush.type = "knife"
-	self.melee_weapons.toothbrush.align_objects = {"a_weapon_right"}
+	self.melee_weapons.toothbrush.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.toothbrush.unit = "units/pd2_crimefest_2014/oct27/weapons/wpn_fps_mel_toothbrush_shiv/wpn_fps_mel_toothbrush_shiv"
 	self.melee_weapons.toothbrush.third_unit = "units/pd2_crimefest_2014/oct27/weapons/wpn_fps_mel_toothbrush_shiv/wpn_third_mel_toothbrush_shiv"
 	self.melee_weapons.toothbrush.stats.weapon_type = "sharp"
@@ -557,7 +586,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.chef.free = nil
 	self.melee_weapons.chef.anim_global_param = "melee_psycho"
 	self.melee_weapons.chef.type = "knife"
-	self.melee_weapons.chef.align_objects = {"a_weapon_right"}
+	self.melee_weapons.chef.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.chef.unit = "units/pd2_halloween/weapons/wpn_fps_mel_chef/wpn_fps_mel_chef"
 	self.melee_weapons.chef.third_unit = "units/pd2_halloween/weapons/wpn_fps_mel_chef/wpn_third_mel_chef"
 	self.melee_weapons.chef.stats.weapon_type = "sharp"
@@ -583,7 +614,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.fairbair.free = nil
 	self.melee_weapons.fairbair.anim_global_param = "melee_stab"
 	self.melee_weapons.fairbair.type = "knife"
-	self.melee_weapons.fairbair.align_objects = {"a_weapon_right"}
+	self.melee_weapons.fairbair.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.fairbair.unit = "units/pd2_dlc_gage_historical/weapons/wpn_fps_mel_fairbair/wpn_fps_mel_fairbair"
 	self.melee_weapons.fairbair.third_unit = "units/pd2_dlc_gage_historical/weapons/wpn_fps_mel_fairbair/wpn_third_mel_fairbair"
 	self.melee_weapons.fairbair.stats.weapon_type = "sharp"
@@ -609,7 +642,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.freedom.free = nil
 	self.melee_weapons.freedom.anim_global_param = "melee_freedom"
 	self.melee_weapons.freedom.type = "flag"
-	self.melee_weapons.freedom.align_objects = {"a_weapon_left"}
+	self.melee_weapons.freedom.align_objects = {
+		"a_weapon_left"
+	}
 	self.melee_weapons.freedom.unit = "units/pd2_dlc_gage_historical/weapons/wpn_fps_mel_freedom/wpn_fps_mel_freedom"
 	self.melee_weapons.freedom.third_unit = "units/pd2_dlc_gage_historical/weapons/wpn_third_mel_freedom/wpn_third_mel_freedom"
 	self.melee_weapons.freedom.stats.weapon_type = "sharp"
@@ -637,7 +672,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.model24.free = nil
 	self.melee_weapons.model24.anim_global_param = "melee_axe"
 	self.melee_weapons.model24.type = "knife"
-	self.melee_weapons.model24.align_objects = {"a_weapon_right"}
+	self.melee_weapons.model24.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.model24.unit = "units/pd2_dlc_gage_historical/weapons/wpn_fps_mel_model24/wpn_fps_mel_model24"
 	self.melee_weapons.model24.third_unit = "units/pd2_dlc_gage_historical/weapons/wpn_fps_mel_model24/wpn_third_mel_model24"
 	self.melee_weapons.model24.stats.weapon_type = "sharp"
@@ -663,7 +700,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.swagger.free = nil
 	self.melee_weapons.swagger.anim_global_param = "melee_axe"
 	self.melee_weapons.swagger.type = "knife"
-	self.melee_weapons.swagger.align_objects = {"a_weapon_right"}
+	self.melee_weapons.swagger.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.swagger.unit = "units/pd2_dlc_gage_historical/weapons/wpn_fps_mel_swagger/wpn_fps_mel_swagger"
 	self.melee_weapons.swagger.third_unit = "units/pd2_dlc_gage_historical/weapons/wpn_third_mel_swagger/wpn_third_mel_swagger"
 	self.melee_weapons.swagger.stats.weapon_type = "sharp"
@@ -689,7 +728,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.alien_maul.texture_bundle_folder = "alienware_alpha"
 	self.melee_weapons.alien_maul.dlc = "alienware_alpha_promo"
 	self.melee_weapons.alien_maul.free = nil
-	self.melee_weapons.alien_maul.align_objects = {"a_weapon_right"}
+	self.melee_weapons.alien_maul.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.alien_maul.unit = "units/pd2_dlc_alienware/weapons/wpn_fps_mel_maul/wpn_fps_mel_maul"
 	self.melee_weapons.alien_maul.third_unit = "units/pd2_dlc_alienware/weapons/wpn_fps_mel_maul/wpn_third_mel_maul"
 	self.melee_weapons.alien_maul.stats.weapon_type = "blunt"
@@ -717,7 +758,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.shillelagh.free = nil
 	self.melee_weapons.shillelagh.anim_global_param = "melee_axe"
 	self.melee_weapons.shillelagh.type = "axe"
-	self.melee_weapons.shillelagh.align_objects = {"a_weapon_right"}
+	self.melee_weapons.shillelagh.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.shillelagh.unit = "units/pd2_dlc_clover/weapons/wpn_fps_mel_shillelagh/wpn_fps_mel_shillelagh"
 	self.melee_weapons.shillelagh.third_unit = "units/pd2_dlc_clover/weapons/wpn_fps_mel_shillelagh/wpn_third_mel_shillelagh"
 	self.melee_weapons.shillelagh.stats.weapon_type = "sharp"
@@ -776,7 +819,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.meat_cleaver.dlc = "character_pack_dragan"
 	self.melee_weapons.meat_cleaver.texture_bundle_folder = "character_pack_dragan"
 	self.melee_weapons.meat_cleaver.type = "axe"
-	self.melee_weapons.meat_cleaver.align_objects = {"a_weapon_right"}
+	self.melee_weapons.meat_cleaver.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.meat_cleaver.unit = "units/pd2_dlc_dragan/weapons/wpn_fps_mel_meat_cleaver/wpn_fps_mel_meat_cleaver"
 	self.melee_weapons.meat_cleaver.third_unit = "units/pd2_dlc_dragan/weapons/wpn_fps_mel_meat_cleaver/wpn_third_mel_meat_cleaver"
 	self.melee_weapons.meat_cleaver.sounds = {
@@ -800,7 +845,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.hammer.free = nil
 	self.melee_weapons.hammer.anim_global_param = "melee_axe"
 	self.melee_weapons.hammer.type = "axe"
-	self.melee_weapons.hammer.align_objects = {"a_weapon_right"}
+	self.melee_weapons.hammer.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.hammer.unit = "units/pd2_dlc_hotline2/weapons/wpn_fps_mel_hammer/wpn_fps_mel_hammer"
 	self.melee_weapons.hammer.third_unit = "units/pd2_dlc_hotline2/weapons/wpn_fps_mel_hammer/wpn_third_mel_hammer"
 	self.melee_weapons.hammer.stats.weapon_type = "blunt"
@@ -826,7 +873,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.whiskey.free = nil
 	self.melee_weapons.whiskey.anim_global_param = "melee_axe"
 	self.melee_weapons.whiskey.type = "axe"
-	self.melee_weapons.whiskey.align_objects = {"a_weapon_right"}
+	self.melee_weapons.whiskey.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.whiskey.unit = "units/pd2_dlc_bonnie/weapons/wpn_fps_mel_whiskey/wpn_fps_mel_whiskey"
 	self.melee_weapons.whiskey.third_unit = "units/pd2_dlc_bonnie/weapons/wpn_fps_mel_whiskey/wpn_third_mel_whiskey"
 	self.melee_weapons.whiskey.stats.weapon_type = "blunt"
@@ -856,7 +905,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.fork.texture_bundle_folder = "bbq"
 	self.melee_weapons.fork.anim_global_param = "melee_stab"
 	self.melee_weapons.fork.type = "axe"
-	self.melee_weapons.fork.align_objects = {"a_weapon_right"}
+	self.melee_weapons.fork.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.fork.unit = "units/pd2_dlc_bbq/weapons/fork/wpn_fps_mel_fork"
 	self.melee_weapons.fork.third_unit = "units/pd2_dlc_bbq/weapons/fork/wpn_third_mel_fork"
 	self.melee_weapons.fork.stats.weapon_type = "sharp"
@@ -881,7 +932,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.poker.texture_bundle_folder = "bbq"
 	self.melee_weapons.poker.anim_global_param = "melee_blunt"
 	self.melee_weapons.poker.type = "axe"
-	self.melee_weapons.poker.align_objects = {"a_weapon_right"}
+	self.melee_weapons.poker.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.poker.unit = "units/pd2_dlc_bbq/weapons/poker/wpn_fps_mel_poker"
 	self.melee_weapons.poker.third_unit = "units/pd2_dlc_bbq/weapons/poker/wpn_third_mel_poker"
 	self.melee_weapons.poker.stats.weapon_type = "blunt"
@@ -906,7 +959,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.spatula.texture_bundle_folder = "bbq"
 	self.melee_weapons.spatula.anim_global_param = "melee_axe"
 	self.melee_weapons.spatula.type = "axe"
-	self.melee_weapons.spatula.align_objects = {"a_weapon_right"}
+	self.melee_weapons.spatula.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.spatula.unit = "units/pd2_dlc_bbq/weapons/spatula/wpn_fps_mel_spatula"
 	self.melee_weapons.spatula.third_unit = "units/pd2_dlc_bbq/weapons/spatula/wpn_third_mel_spatula"
 	self.melee_weapons.spatula.stats.weapon_type = "blunt"
@@ -931,7 +986,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.tenderizer.texture_bundle_folder = "bbq"
 	self.melee_weapons.tenderizer.anim_global_param = "melee_axe"
 	self.melee_weapons.tenderizer.type = "axe"
-	self.melee_weapons.tenderizer.align_objects = {"a_weapon_right"}
+	self.melee_weapons.tenderizer.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.tenderizer.unit = "units/pd2_dlc_bbq/weapons/wpn_mel_tenderizer/wpn_fps_mel_tenderizer"
 	self.melee_weapons.tenderizer.third_unit = "units/pd2_dlc_bbq/weapons/wpn_mel_tenderizer/wpn_third_mel_tenderizer"
 	self.melee_weapons.tenderizer.stats.weapon_type = "blunt"
@@ -956,7 +1013,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.scalper.texture_bundle_folder = "west"
 	self.melee_weapons.scalper.anim_global_param = "melee_axe"
 	self.melee_weapons.scalper.type = "axe"
-	self.melee_weapons.scalper.align_objects = {"a_weapon_right"}
+	self.melee_weapons.scalper.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.scalper.unit = "units/pd2_dlc_west/weapons/wpn_fps_mel_scalper/wpn_fps_mel_scalper"
 	self.melee_weapons.scalper.third_unit = "units/pd2_dlc_west/weapons/wpn_third_mel_scalper/wpn_third_mel_scalper"
 	self.melee_weapons.scalper.stats.weapon_type = "sharp"
@@ -983,7 +1042,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.mining_pick.texture_bundle_folder = "west"
 	self.melee_weapons.mining_pick.anim_global_param = "melee_pickaxe"
 	self.melee_weapons.mining_pick.type = "axe"
-	self.melee_weapons.mining_pick.align_objects = {"a_weapon_left"}
+	self.melee_weapons.mining_pick.align_objects = {
+		"a_weapon_left"
+	}
 	self.melee_weapons.mining_pick.unit = "units/pd2_dlc_west/weapons/wpn_fps_mel_miningpick/wpn_fps_mel_miningpick"
 	self.melee_weapons.mining_pick.third_unit = "units/pd2_dlc_west/weapons/wpn_third_mel_miningpick/wpn_third_mel_miningpick"
 	self.melee_weapons.mining_pick.stats.weapon_type = "sharp"
@@ -1010,7 +1071,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.branding_iron.texture_bundle_folder = "west"
 	self.melee_weapons.branding_iron.anim_global_param = "melee_axe"
 	self.melee_weapons.branding_iron.type = "axe"
-	self.melee_weapons.branding_iron.align_objects = {"a_weapon_right"}
+	self.melee_weapons.branding_iron.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.branding_iron.unit = "units/pd2_dlc_west/weapons/wpn_fps_mel_branding/wpn_fps_mel_branding"
 	self.melee_weapons.branding_iron.third_unit = "units/pd2_dlc_west/weapons/wpn_third_mel_branding/wpn_third_mel_branding"
 	self.melee_weapons.branding_iron.stats.weapon_type = "sharp"
@@ -1037,7 +1100,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.bowie.texture_bundle_folder = "west"
 	self.melee_weapons.bowie.anim_global_param = "melee_knife"
 	self.melee_weapons.bowie.type = "knife"
-	self.melee_weapons.bowie.align_objects = {"a_weapon_left"}
+	self.melee_weapons.bowie.align_objects = {
+		"a_weapon_left"
+	}
 	self.melee_weapons.bowie.unit = "units/pd2_dlc_west/weapons/wpn_fps_mel_bowie/wpn_fps_mel_bowie"
 	self.melee_weapons.bowie.third_unit = "units/pd2_dlc_west/weapons/wpn_third_mel_bowie/wpn_third_mel_bowie"
 	self.melee_weapons.bowie.stats.weapon_type = "sharp"
@@ -1069,7 +1134,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.microphone.texture_bundle_folder = "dlc_arena"
 	self.melee_weapons.microphone.anim_global_param = "melee_axe"
 	self.melee_weapons.microphone.type = "axe"
-	self.melee_weapons.microphone.align_objects = {"a_weapon_right"}
+	self.melee_weapons.microphone.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.microphone.unit = "units/pd2_dlc_arena/weapons/wpn_fps_mel_microphone/wpn_fps_mel_microphone"
 	self.melee_weapons.microphone.third_unit = "units/pd2_dlc_arena/weapons/wpn_third_mel_microphone/wpn_third_mel_microphone"
 	self.melee_weapons.microphone.stats.weapon_type = "sharp"
@@ -1096,7 +1163,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.detector.texture_bundle_folder = "dlc_arena"
 	self.melee_weapons.detector.anim_global_param = "melee_axe"
 	self.melee_weapons.detector.type = "axe"
-	self.melee_weapons.detector.align_objects = {"a_weapon_right"}
+	self.melee_weapons.detector.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.detector.unit = "units/pd2_dlc_arena/weapons/wpn_fps_mel_detector/wpn_fps_mel_detector"
 	self.melee_weapons.detector.third_unit = "units/pd2_dlc_arena/weapons/wpn_third_mel_detector/wpn_third_mel_detector"
 	self.melee_weapons.detector.stats.weapon_type = "sharp"
@@ -1123,7 +1192,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.micstand.texture_bundle_folder = "dlc_arena"
 	self.melee_weapons.micstand.anim_global_param = "melee_axe"
 	self.melee_weapons.micstand.type = "axe"
-	self.melee_weapons.micstand.align_objects = {"a_weapon_right"}
+	self.melee_weapons.micstand.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.micstand.unit = "units/pd2_dlc_arena/weapons/wpn_fps_mel_micstand/wpn_fps_mel_micstand"
 	self.melee_weapons.micstand.third_unit = "units/pd2_dlc_arena/weapons/wpn_third_mel_micstand/wpn_third_mel_micstand"
 	self.melee_weapons.micstand.stats.weapon_type = "sharp"
@@ -1150,7 +1221,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.oldbaton.texture_bundle_folder = "dlc_arena"
 	self.melee_weapons.oldbaton.anim_global_param = "melee_axe"
 	self.melee_weapons.oldbaton.type = "axe"
-	self.melee_weapons.oldbaton.align_objects = {"a_weapon_right"}
+	self.melee_weapons.oldbaton.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.oldbaton.unit = "units/pd2_dlc_arena/weapons/wpn_fps_mel_oldbaton/wpn_fps_mel_oldbaton"
 	self.melee_weapons.oldbaton.third_unit = "units/pd2_dlc_arena/weapons/wpn_third_mel_oldbaton/wpn_third_mel_oldbaton"
 	self.melee_weapons.oldbaton.stats.weapon_type = "sharp"
@@ -1177,7 +1250,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.hockey.texture_bundle_folder = "character_pack_sokol"
 	self.melee_weapons.hockey.anim_global_param = "melee_axe"
 	self.melee_weapons.hockey.type = "axe"
-	self.melee_weapons.hockey.align_objects = {"a_weapon_right"}
+	self.melee_weapons.hockey.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.hockey.unit = "units/pd2_dlc_character_sokol/weapons/wpn_fps_mel_hockey/wpn_fps_mel_hockey"
 	self.melee_weapons.hockey.third_unit = "units/pd2_dlc_character_sokol/weapons/wpn_third_mel_hockey/wpn_third_mel_hockey"
 	self.melee_weapons.hockey.stats.weapon_type = "sharp"
@@ -1204,7 +1279,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.switchblade.dlc = "kenaz"
 	self.melee_weapons.switchblade.texture_bundle_folder = "kenaz"
 	self.melee_weapons.switchblade.type = "knife"
-	self.melee_weapons.switchblade.align_objects = {"a_weapon_right"}
+	self.melee_weapons.switchblade.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.switchblade.unit = "units/pd2_dlc_casino/weapons/wpn_fps_mel_switchblade/wpn_fps_mel_switchblade"
 	self.melee_weapons.switchblade.third_unit = "units/pd2_dlc_casino/weapons/wpn_third_mel_switchblade/wpn_third_mel_switchblade"
 	self.melee_weapons.switchblade.sounds = {
@@ -1232,7 +1309,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.taser.texture_bundle_folder = "kenaz"
 	self.melee_weapons.taser.type = "knife"
 	self.melee_weapons.taser.special_weapon = "taser"
-	self.melee_weapons.taser.align_objects = {"a_weapon_right"}
+	self.melee_weapons.taser.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.taser.unit = "units/pd2_dlc_casino/weapons/wpn_fps_mel_taser/wpn_fps_mel_taser"
 	self.melee_weapons.taser.third_unit = "units/pd2_dlc_casino/weapons/wpn_third_mel_taser/wpn_third_mel_taser"
 	self.melee_weapons.taser.sounds = {
@@ -1258,7 +1337,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.slot_lever.dlc = "kenaz"
 	self.melee_weapons.slot_lever.texture_bundle_folder = "kenaz"
 	self.melee_weapons.slot_lever.type = "knife"
-	self.melee_weapons.slot_lever.align_objects = {"a_weapon_right"}
+	self.melee_weapons.slot_lever.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.slot_lever.unit = "units/pd2_dlc_casino/weapons/wpn_fps_mel_slot_lever/wpn_fps_mel_slot_lever"
 	self.melee_weapons.slot_lever.third_unit = "units/pd2_dlc_casino/weapons/wpn_third_mel_slot_lever/wpn_third_mel_slot_lever"
 	self.melee_weapons.slot_lever.sounds = {
@@ -1284,7 +1365,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.croupier_rake.dlc = "kenaz"
 	self.melee_weapons.croupier_rake.texture_bundle_folder = "kenaz"
 	self.melee_weapons.croupier_rake.type = "knife"
-	self.melee_weapons.croupier_rake.align_objects = {"a_weapon_right"}
+	self.melee_weapons.croupier_rake.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.croupier_rake.unit = "units/pd2_dlc_casino/weapons/wpn_fps_mel_croupier_rake/wpn_fps_mel_croupier_rake"
 	self.melee_weapons.croupier_rake.third_unit = "units/pd2_dlc_casino/weapons/wpn_third_mel_croupier_rake/wpn_third_mel_croupier_rake"
 	self.melee_weapons.croupier_rake.sounds = {
@@ -1377,7 +1460,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.cqc.free = nil
 	self.melee_weapons.cqc.anim_global_param = "melee_stab"
 	self.melee_weapons.cqc.type = "knife"
-	self.melee_weapons.cqc.align_objects = {"a_weapon_right"}
+	self.melee_weapons.cqc.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.cqc.unit = "units/pd2_dlc_turtles/weapons/wpn_fps_mel_cqc/wpn_fps_mel_cqc"
 	self.melee_weapons.cqc.third_unit = "units/pd2_dlc_turtles/weapons/wpn_fps_mel_cqc/wpn_third_mel_cqc"
 	self.melee_weapons.cqc.dot_data = {
@@ -1445,7 +1530,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "dragon",
 		texture_bundle_folder = "dragon",
 		type = "axe",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_dragon/weapons/wpn_fps_mel_sandsteel/wpn_fps_mel_sandsteel",
 		third_unit = "units/pd2_dlc_dragon/weapons/wpn_fps_mel_sandsteel/wpn_third_mel_sandsteel",
 		sounds = {}
@@ -1482,7 +1569,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "steel",
 		texture_bundle_folder = "steel",
 		type = "sword",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_steel/weapons/wpn_fps_mel_great/wpn_fps_mel_great",
 		third_unit = "units/pd2_dlc_steel/weapons/wpn_fps_mel_great/wpn_third_mel_great",
 		sounds = {}
@@ -1518,7 +1607,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "steel",
 		texture_bundle_folder = "steel",
 		type = "axe",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_steel/weapons/wpn_fps_mel_beardy/wpn_fps_mel_beardy",
 		third_unit = "units/pd2_dlc_steel/weapons/wpn_fps_mel_beardy/wpn_third_mel_beardy",
 		sounds = {}
@@ -1553,7 +1644,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "steel",
 		texture_bundle_folder = "steel",
 		type = "axe",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_steel/weapons/wpn_fps_mel_buck/wpn_fps_mel_buck",
 		third_unit = "units/pd2_dlc_steel/weapons/wpn_fps_mel_buck/wpn_third_mel_buck",
 		sounds = {}
@@ -1590,7 +1683,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "steel",
 		texture_bundle_folder = "steel",
 		type = "axe",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_steel/weapons/wpn_fps_mel_morning/wpn_fps_mel_morning",
 		third_unit = "units/pd2_dlc_steel/weapons/wpn_fps_mel_morning/wpn_third_mel_morning",
 		sounds = {}
@@ -1627,7 +1722,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		texture_bundle_folder = "nails",
 		free = nil,
 		type = "axe",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_nails/weapons/wpn_fps_mel_cutters/wpn_fps_mel_cutters",
 		third_unit = "units/pd2_dlc_nails/weapons/wpn_fps_mel_cutters/wpn_third_mel_cutters",
 		sounds = {}
@@ -1664,7 +1761,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		texture_bundle_folder = "rip",
 		free = nil,
 		type = "knife",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_rip/weapons/wpn_fps_mel_boxcutter/wpn_fps_mel_boxcutter",
 		third_unit = "units/pd2_dlc_rip/weapons/wpn_fps_mel_boxcutter/wpn_third_mel_boxcutter",
 		sounds = {}
@@ -1759,7 +1858,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.pugio.dlc = "berry"
 	self.melee_weapons.pugio.texture_bundle_folder = "berry"
 	self.melee_weapons.pugio.type = "knife"
-	self.melee_weapons.pugio.align_objects = {"a_weapon_right"}
+	self.melee_weapons.pugio.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.pugio.unit = "units/pd2_dlc_berry/weapons/wpn_fps_mel_pugio/wpn_fps_mel_pugio"
 	self.melee_weapons.pugio.third_unit = "units/pd2_dlc_berry/weapons/wpn_fps_mel_pugio/wpn_third_mel_pugio"
 	self.melee_weapons.pugio.sounds = {
@@ -1792,7 +1893,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "peta",
 		texture_bundle_folder = "peta",
 		type = "knife",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_peta/weapons/wpn_fps_mel_shawn/wpn_fps_mel_shawn",
 		third_unit = "units/pd2_dlc_peta/weapons/wpn_fps_mel_shawn/wpn_third_mel_shawn",
 		sounds = {}
@@ -1828,7 +1931,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "peta",
 		texture_bundle_folder = "peta",
 		type = "blunt",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_peta/weapons/wpn_fps_mel_stick/wpn_fps_mel_stick",
 		third_unit = "units/pd2_dlc_peta/weapons/wpn_fps_mel_stick/wpn_third_mel_stick",
 		sounds = {}
@@ -1865,7 +1970,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "peta",
 		texture_bundle_folder = "peta",
 		type = "flag",
-		align_objects = {"a_weapon_left"},
+		align_objects = {
+			"a_weapon_left"
+		},
 		unit = "units/pd2_dlc_peta/weapons/wpn_fps_mel_fork/wpn_fps_mel_pitchfork",
 		third_unit = "units/pd2_dlc_peta/weapons/wpn_fps_mel_fork/wpn_third_mel_pitchfork",
 		sounds = {}
@@ -1902,7 +2009,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "peta",
 		texture_bundle_folder = "peta",
 		type = "knife",
-		align_objects = {"a_weapon_left"},
+		align_objects = {
+			"a_weapon_left"
+		},
 		unit = "units/pd2_dlc_peta/weapons/wpn_fps_mel_scoutknife/wpn_fps_mel_scoutknife",
 		third_unit = "units/pd2_dlc_peta/weapons/wpn_third_mel_scoutknife/wpn_third_mel_scoutknife",
 		sounds = {}
@@ -1939,7 +2048,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "pal",
 		texture_bundle_folder = "lupus",
 		type = "knife",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_lupus/weapons/wpn_fps_mel_nin/wpn_fps_mel_nin",
 		third_unit = "units/pd2_dlc_lupus/weapons/wpn_fps_mel_nin/wpn_third_mel_nin",
 		sounds = {}
@@ -2031,7 +2142,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "opera",
 		texture_bundle_folder = "opera",
 		type = "knife",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_opera/weapons/wpn_fps_mel_wing/wpn_fps_mel_wing",
 		third_unit = "units/pd2_dlc_opera/weapons/wpn_fps_mel_wing/wpn_third_mel_wing",
 		sounds = {}
@@ -2072,15 +2185,27 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.wing.expire_t = 1.2
 	self.melee_weapons.wing.melee_damage_delay = 0.1
 	self.melee_weapons.wing.anims = {
-		var1_attack = {anim = "var1"},
-		var2_attack = {anim = "var2"},
-		var3_attack = {anim = "var3"},
-		var4_attack = {anim = "var4"},
+		var1_attack = {
+			anim = "var1"
+		},
+		var2_attack = {
+			anim = "var2"
+		},
+		var3_attack = {
+			anim = "var3"
+		},
+		var4_attack = {
+			anim = "var4"
+		},
 		charge = {
 			loop = true,
 			anim = "charge"
 		}
 	}
+	self.melee_weapons.wing.anims.var1_attack_hit = self.melee_weapons.wing.anims.var1_attack
+	self.melee_weapons.wing.anims.var2_attack_hit = self.melee_weapons.wing.anims.var2_attack
+	self.melee_weapons.wing.anims.var3_attack_hit = self.melee_weapons.wing.anims.var3_attack
+	self.melee_weapons.wing.anims.var4_attack_hit = self.melee_weapons.wing.anims.var4_attack
 	self.melee_weapons.road = {
 		name_id = "bm_melee_road",
 		animation = nil,
@@ -2094,7 +2219,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "wild",
 		texture_bundle_folder = "wild",
 		type = "axe",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_wild/weapons/wpn_fps_mel_road/wpn_fps_mel_road",
 		third_unit = "units/pd2_dlc_wild/weapons/wpn_fps_mel_road/wpn_third_mel_road",
 		sounds = {}
@@ -2119,10 +2246,18 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.road.expire_t = 1.2
 	self.melee_weapons.road.melee_damage_delay = 0.4
 	self.melee_weapons.road.anims = {
-		var1_attack = {anim = "var1"},
-		var2_attack = {anim = "var2"},
-		var3_attack = {anim = "var1"},
-		var4_attack = {anim = "var2"},
+		var1_attack = {
+			anim = "var1"
+		},
+		var2_attack = {
+			anim = "var2"
+		},
+		var3_attack = {
+			anim = "var1"
+		},
+		var4_attack = {
+			anim = "var2"
+		},
 		charge = {
 			loop = true,
 			anim = "charge"
@@ -2141,7 +2276,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "chico",
 		texture_bundle_folder = "chico",
 		type = "blunt",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_chico/weapons/wpn_fps_mel_cs/wpn_fps_mel_cs",
 		third_unit = "units/pd2_dlc_chico/weapons/wpn_fps_mel_cs/wpn_third_mel_cs",
 		sounds = {}
@@ -2178,7 +2315,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "friend",
 		texture_bundle_folder = "friend",
 		type = "blunt",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_friend/weapons/wpn_fps_mel_brick/wpn_fps_mel_brick",
 		third_unit = "units/pd2_dlc_friend/weapons/wpn_fps_mel_brick/wpn_third_mel_brick",
 		sounds = {}
@@ -2261,7 +2400,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "spa",
 		texture_bundle_folder = "spa",
 		type = "knife",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_spa/weapons/wpn_fps_mel_catch/wpn_fps_mel_catch",
 		third_unit = "units/pd2_dlc_spa/weapons/wpn_fps_mel_catch/wpn_third_mel_catch",
 		sounds = {}
@@ -2313,7 +2454,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.sword.texture_bundle_folder = "pn2"
 	self.melee_weapons.sword.anim_global_param = "melee_stab"
 	self.melee_weapons.sword.type = "knife"
-	self.melee_weapons.sword.align_objects = {"a_weapon_right"}
+	self.melee_weapons.sword.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.sword.unit = "units/pd2_dlc_pn2/weapons/wpn_fps_mel_sword/wpn_fps_mel_sword"
 	self.melee_weapons.sword.third_unit = "units/pd2_dlc_pn2/weapons/wpn_fps_mel_sword/wpn_third_mel_sword"
 	self.melee_weapons.sword.stats.weapon_type = "sharp"
@@ -2343,7 +2486,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.agave.anim_global_param = "melee_agave"
 	self.melee_weapons.agave.name_id = "bm_melee_agave"
 	self.melee_weapons.agave.type = "knife"
-	self.melee_weapons.agave.align_objects = {"a_weapon_right"}
+	self.melee_weapons.agave.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.agave.unit = "units/pd2_dlc_max/weapons/wpn_fps_mel_agave/wpn_fps_mel_agave"
 	self.melee_weapons.agave.third_unit = "units/pd2_dlc_max/weapons/wpn_fps_mel_agave/wpn_third_mel_agave"
 	self.melee_weapons.agave.dlc = nil
@@ -2368,7 +2513,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.happy = deep_clone(self.melee_weapons.tomahawk)
 	self.melee_weapons.happy.name_id = "bm_melee_happy"
 	self.melee_weapons.happy.type = "blunt"
-	self.melee_weapons.happy.align_objects = {"a_weapon_right"}
+	self.melee_weapons.happy.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.happy.unit = "units/pd2_dlc_joy/weapons/wpn_fps_mel_happy/wpn_fps_mel_happy"
 	self.melee_weapons.happy.third_unit = "units/pd2_dlc_joy/weapons/wpn_fps_mel_happy/wpn_third_mel_happy"
 	self.melee_weapons.happy.animation = nil
@@ -2386,10 +2533,7 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		weapon_type = "blunt"
 	}
 	self.melee_weapons.happy.anim_attack_vars = {
-		"var1",
-		"var2",
-		"var3",
-		"var4"
+		"var1"
 	}
 	self.melee_weapons.happy.repeat_expire_t = 0.6
 	self.melee_weapons.happy.expire_t = 0.7
@@ -2402,7 +2546,14 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		charge = "baton_charge"
 	}
 	self.melee_weapons.happy.stats.concealment = 30
-	self.melee_weapons.happy.anims = {charge = {anim = "charge"}}
+	self.melee_weapons.happy.anims = {
+		var1_attack = {
+			anim = "var1"
+		},
+		charge = {
+			anim = "charge"
+		}
+	}
 	self.melee_weapons.push = deep_clone(self.melee_weapons.fists)
 	self.melee_weapons.push.name_id = "bm_melee_push"
 	self.melee_weapons.push.free = nil
@@ -2435,7 +2586,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		loop = false,
 		start_time = -1
 	}
-	self.melee_weapons.push.locks = {func = "has_unlocked_push"}
+	self.melee_weapons.push.locks = {
+		func = "has_unlocked_push"
+	}
 	self.melee_weapons.grip = deep_clone(self.melee_weapons.fists)
 	self.melee_weapons.grip.name_id = "bm_melee_grip"
 	self.melee_weapons.grip.free = nil
@@ -2469,7 +2622,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.grip.sounds.charge = "knife_charge"
 	self.melee_weapons.grip.stats.concealment = 30
 	self.melee_weapons.grip.dlc = "raidww2_clan"
-	self.melee_weapons.grip.locks = {dlc = "raidww2_clan"}
+	self.melee_weapons.grip.locks = {
+		dlc = "raidww2_clan"
+	}
 	self.melee_weapons.grip.texture_bundle_folder = "old"
 	self.melee_weapons.grip.graphic_objects = {
 		a_weapon_right = "g_grip",
@@ -2513,7 +2668,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "rvd",
 		texture_bundle_folder = "rvd",
 		type = "knife",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_rvd/weapons/wpn_fps_mel_clean/wpn_fps_mel_clean",
 		third_unit = "units/pd2_dlc_rvd/weapons/wpn_fps_mel_clean/wpn_third_mel_clean",
 		sounds = {}
@@ -2543,8 +2700,12 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		start_time = -1
 	}
 	self.melee_weapons.clean.anims = {
-		var1_attack = {anim = "var1"},
-		var2_attack = {anim = "var1"},
+		var1_attack = {
+			anim = "var1"
+		},
+		var2_attack = {
+			anim = "var1"
+		},
 		charge = {
 			loop = false,
 			anim = "charge"
@@ -2563,7 +2724,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 		dlc = "ecp",
 		texture_bundle_folder = "ecp",
 		type = "sword",
-		align_objects = {"a_weapon_right"},
+		align_objects = {
+			"a_weapon_right"
+		},
 		unit = "units/pd2_dlc_ecp/weapons/wpn_fps_mel_meter/wpn_fps_mel_meter",
 		third_unit = "units/pd2_dlc_ecp/weapons/wpn_fps_mel_meter/wpn_third_mel_meter",
 		sounds = {}
@@ -2593,7 +2756,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.aziz.texture_bundle_folder = "flm"
 	self.melee_weapons.aziz.anim_global_param = "melee_psycho"
 	self.melee_weapons.aziz.type = "blunt"
-	self.melee_weapons.aziz.align_objects = {"a_weapon_right"}
+	self.melee_weapons.aziz.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.aziz.unit = "units/pd2_dlc_flm/weapons/wpn_fps_mel_aziz/wpn_fps_mel_aziz"
 	self.melee_weapons.aziz.third_unit = "units/pd2_dlc_flm/weapons/wpn_fps_mel_aziz/wpn_third_mel_aziz"
 	self.melee_weapons.aziz.stats.weapon_type = "blunt"
@@ -2613,14 +2778,60 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	}
 	self.melee_weapons.aziz.repeat_expire_t = 0.36
 	self.melee_weapons.aziz.stats.concealment = 29
+	self.melee_weapons.hauteur = {
+		name_id = "bm_melee_hauteur",
+		animation = nil,
+		anim_attack_vars = {
+			"var1"
+		},
+		anim_global_param = "melee_hauteur",
+		texture_bundle_folder = "ktm",
+		type = "knife",
+		align_objects = {
+			"a_weapon_right"
+		},
+		unit = "units/pd2_dlc_ktm/weapons/wpn_fps_mel_hauteur/wpn_fps_mel_hauteur",
+		third_unit = "units/pd2_dlc_ktm/weapons/wpn_fps_mel_hauteur/wpn_third_mel_hauteur",
+		sounds = {}
+	}
+	self.melee_weapons.hauteur.sounds.equip = "hauteur_equip"
+	self.melee_weapons.hauteur.sounds.hit_air = "hauteur_hit_air"
+	self.melee_weapons.hauteur.sounds.hit_gen = "hauteur_hit_gen"
+	self.melee_weapons.hauteur.sounds.hit_body = "hauteur_hit_body"
+	self.melee_weapons.hauteur.sounds.charge = "hauteur_charge"
+	self.melee_weapons.hauteur.melee_charge_shaker = "player_melee_charge_wing"
+	self.melee_weapons.hauteur.stats = {
+		weapon_type = "sharp",
+		min_damage = 7,
+		max_damage = 45,
+		min_damage_effect = 1,
+		max_damage_effect = 1,
+		charge_time = 3.5,
+		range = 150,
+		concealment = 30,
+		remove_weapon_movement_penalty = true
+	}
+	self.melee_weapons.hauteur.repeat_expire_t = 0.6
+	self.melee_weapons.hauteur.expire_t = 1.1
+	self.melee_weapons.hauteur.melee_damage_delay = 0.13
+	self.melee_weapons.hauteur.menu_scene_anim = "menu"
+	self.melee_weapons.hauteur.anims = {
+		var1_attack = {
+			anim = "var1"
+		}
+	}
 	self.melee_weapons.shock = deep_clone(self.melee_weapons.kabar)
 	self.melee_weapons.shock.name_id = "bm_melee_shock"
 	self.melee_weapons.shock.dlc = nil
-	self.melee_weapons.shock.locks = {func = "has_unlocked_shock"}
+	self.melee_weapons.shock.locks = {
+		func = "has_unlocked_shock"
+	}
 	self.melee_weapons.shock.texture_bundle_folder = "apa"
 	self.melee_weapons.shock.anim_global_param = "melee_axe"
 	self.melee_weapons.shock.type = "blunt"
-	self.melee_weapons.shock.align_objects = {"a_weapon_right"}
+	self.melee_weapons.shock.align_objects = {
+		"a_weapon_right"
+	}
 	self.melee_weapons.shock.unit = "units/pd2_dlc_apa/weapons/wpn_fps_mel_shock/wpn_fps_mel_shock"
 	self.melee_weapons.shock.third_unit = "units/pd2_dlc_apa/weapons/wpn_fps_mel_shock/wpn_third_mel_shock"
 	self.melee_weapons.shock.stats.weapon_type = "blunt"
@@ -2639,6 +2850,65 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	}
 	self.melee_weapons.shock.repeat_expire_t = 0.8
 	self.melee_weapons.shock.stats.concealment = 28
+	self.melee_weapons.fear = {
+		name_id = "bm_melee_fear",
+		hit_pre_calculation = true,
+		anim_attack_vars = {
+			"var1",
+			"var2"
+		},
+		anim_global_param = "melee_fear",
+		dlc = nil,
+		texture_bundle_folder = "ssm",
+		type = "knife",
+		align_objects = {
+			"a_weapon_right"
+		},
+		unit = "units/pd2_dlc_ssm/weapons/wpn_fps_mel_fear/wpn_fps_mel_fear",
+		third_unit = "units/pd2_dlc_ssm/weapons/wpn_fps_mel_fear/wpn_third_mel_fear",
+		sounds = {}
+	}
+	self.melee_weapons.fear.sounds.equip = "cqc_equip"
+	self.melee_weapons.fear.sounds.hit_air = "cqc_hit_air"
+	self.melee_weapons.fear.sounds.hit_gen = "cqc_hit_gen"
+	self.melee_weapons.fear.sounds.hit_body = "cqc_hit_body"
+	self.melee_weapons.fear.sounds.charge = "cqc_charge"
+	self.melee_weapons.fear.melee_charge_shaker = "player_melee_charge_wing"
+	self.melee_weapons.fear.dot_data = {
+		type = "poison",
+		custom_data = {
+			dot_length = 1,
+			hurt_animation_chance = 0.7
+		}
+	}
+	self.melee_weapons.fear.stats = {
+		weapon_type = "sharp",
+		min_damage = 3,
+		max_damage = 8,
+		min_damage_effect = 1,
+		max_damage_effect = 1,
+		charge_time = 1.5,
+		range = 150,
+		concealment = 30,
+		remove_weapon_movement_penalty = true
+	}
+	self.melee_weapons.fear.repeat_expire_t = 0.65
+	self.melee_weapons.fear.expire_t = 1.2
+	self.melee_weapons.fear.melee_damage_delay = 0.29
+	self.melee_weapons.fear.anims = {
+		var1_attack = {
+			anim = "var1"
+		},
+		var2_attack = {
+			anim = "var2"
+		},
+		charge = {
+			loop = false,
+			anim = "charge"
+		}
+	}
+	self.melee_weapons.fear.anims.var1_attack_hit = self.melee_weapons.fear.anims.var1_attack
+	self.melee_weapons.fear.anims.var2_attack_hit = self.melee_weapons.fear.anims.var2_attack
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.melee_weapons) do
@@ -2649,4 +2919,3 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 
 	self:_add_desc_from_name_macro(self.melee_weapons)
 end
-

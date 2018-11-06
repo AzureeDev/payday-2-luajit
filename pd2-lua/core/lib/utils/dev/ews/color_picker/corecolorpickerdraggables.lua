@@ -30,7 +30,7 @@ function ColorPickerDraggables:panel()
 end
 
 function ColorPickerDraggables:color()
-	return (self._alpha_slider or self._value_slider or self._spectrum):color()
+	return self._alpha_slider or self._value_slider or self._spectrum:color()
 end
 
 function ColorPickerDraggables:set_color(color)
@@ -110,7 +110,7 @@ function ColorPickerDraggables:_update_ui_except(sender)
 	end
 
 	if sender ~= self._alpha_slider and self._alpha_slider ~= nil then
-		local opaque_color = (self._value_slider or self._spectrum):color()
+		local opaque_color = self._value_slider or self._spectrum:color()
 
 		self._alpha_slider:set_top_color(opaque_color)
 		self._alpha_slider:set_bottom_color(opaque_color:with_alpha(0))
@@ -152,4 +152,3 @@ function ColorPickerDraggables:_on_drag_stop(sender, event)
 
 	self._dragged_control = nil
 end
-

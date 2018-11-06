@@ -8,7 +8,9 @@ function OverlayPresenterVR:_clear_workspace()
 	end
 
 	self.__ws = managers.gui_data:create_saferect_workspace("mid")
-	self.__subtitle_panel = self.__ws:panel():panel({layer = 150})
+	self.__subtitle_panel = self.__ws:panel():panel({
+		layer = 150
+	})
 
 	self:_on_resolution_changed()
 end
@@ -53,7 +55,9 @@ function IngamePresenterVR:_clear_workspace()
 	if alive(self.__ws) then
 		self.__ws:panel():clear()
 
-		self.__subtitle_panel = self.__ws:panel():panel({layer = 150})
+		self.__subtitle_panel = self.__ws:panel():panel({
+			layer = 150
+		})
 
 		self:_on_resolution_changed()
 	end
@@ -98,4 +102,3 @@ function IngamePresenterVR:show_text(...)
 	_G.VRManagerPD2.overlay_helper(self.__subtitle_panel)
 	_G.VRManagerPD2.depth_disable_helper(self.__subtitle_panel)
 end
-

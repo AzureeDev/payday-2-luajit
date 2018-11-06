@@ -8,7 +8,9 @@ end
 
 function CivilianLogicInactive._register_attention(data, my_data)
 	if data.unit:character_damage():dead() and managers.groupai:state():whisper_mode() then
-		data.unit:brain():set_attention_settings({"civ_enemy_corpse_sneak"})
+		data.unit:brain():set_attention_settings({
+			"civ_enemy_corpse_sneak"
+		})
 	else
 		data.unit:brain():set_attention_settings(nil)
 	end
@@ -20,4 +22,3 @@ function CivilianLogicInactive._set_interaction(data, my_data)
 		data.unit:interaction():set_active(true, true, true)
 	end
 end
-

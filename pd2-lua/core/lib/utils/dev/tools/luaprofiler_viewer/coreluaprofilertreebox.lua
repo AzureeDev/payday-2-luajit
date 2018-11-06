@@ -35,7 +35,9 @@ function LuaProfilerTreeBox:init(...)
 end
 
 function LuaProfilerTreeBox:set_gridview(...)
-	self._gridview = parse_kwargs({...}, "table:gridview")
+	self._gridview = parse_kwargs({
+		...
+	}, "table:gridview")
 end
 
 function LuaProfilerTreeBox:destroy()
@@ -49,16 +51,19 @@ function LuaProfilerTreeBox:destroy()
 end
 
 function LuaProfilerTreeBox:set_profilerdata(...)
-	self._lpd, self._displayformat = parse_kwargs({...}, "userdata:lpd", "number:displayformat")
+	self._lpd, self._displayformat = parse_kwargs({
+		...
+	}, "userdata:lpd", "number:displayformat")
 
 	self:_redraw()
 end
 
 function LuaProfilerTreeBox:set_displayformat(...)
-	self._displayformat = parse_kwargs({...}, "number:displayformat")
+	self._displayformat = parse_kwargs({
+		...
+	}, "number:displayformat")
 
 	if self._lpd then
-
 		function relabel(cnid)
 			if self._lpd:cn_treenodeid(cnid) ~= -1 then
 				local label = self:_makelabel(cnid)
@@ -99,7 +104,6 @@ function LuaProfilerTreeBox:_redraw()
 end
 
 function LuaProfilerTreeBox:_clear()
-
 	local function clear_treenodeid(cnid)
 		if self._lpd:cn_treenodeid(cnid) ~= -1 then
 			self._lpd:cn_settreenodeid(cnid, -1)
@@ -178,7 +182,7 @@ function LuaProfilerTreeBox:_makelabel(cnid)
 
 	if cnid == self._lpd:rootcallnode() then
 		if self._displayformat == PERCENT then
-			label = label .. string.format("%6.2f%% LUA", (100 * self._lpd:cn_value(cnid)) / frametime)
+			label = label .. string.format("%6.2f%% LUA", 100 * self._lpd:cn_value(cnid) / frametime)
 		elseif self._displayformat == SECONDS then
 			label = label .. string.format("%6.2fms LUA", 1000 * self._lpd:cn_value(cnid))
 		elseif self._displayformat == PLAIN then
@@ -186,7 +190,7 @@ function LuaProfilerTreeBox:_makelabel(cnid)
 		end
 	else
 		if self._displayformat == PERCENT then
-			label = label .. string.format("%6.3f%%  ", (100 * self._lpd:cn_value(cnid)) / frametime)
+			label = label .. string.format("%6.3f%%  ", 100 * self._lpd:cn_value(cnid) / frametime)
 		elseif self._displayformat == SECONDS then
 			label = label .. string.format("%6.3fms  ", 1000 * self._lpd:cn_value(cnid))
 		elseif self._displayformat == PLAIN then
@@ -205,7 +209,9 @@ function LuaProfilerTreeBox:_makelabel(cnid)
 end
 
 function LuaProfilerTreeBox:deselect_and_expand(...)
-	local fnid = parse_kwargs({...}, "number:fnid")
+	local fnid = parse_kwargs({
+		...
+	}, "number:fnid")
 
 	self._treectrl:disconnect("EVT_COMMAND_TREE_ITEM_EXPANDED", self.__on_item_expanded_cb)
 	self:_collapse_all()
@@ -225,7 +231,6 @@ function LuaProfilerTreeBox:deselect_and_expand(...)
 end
 
 function LuaProfilerTreeBox:_collapse_all()
-
 	function collapse(cnid)
 		tnid = self._lpd:cn_treenodeid(cnid)
 
@@ -252,14 +257,15 @@ function LuaProfilerTreeBox:_expand_path(cnid)
 end
 
 function LuaProfilerTreeBox:deselect_and_highlight(...)
-	local fnid = parse_kwargs({...}, "number:fnid")
+	local fnid = parse_kwargs({
+		...
+	}, "number:fnid")
 
 	self._treectrl:unselect_all_items()
 	self:_highlight_funcnode(fnid)
 end
 
 function LuaProfilerTreeBox:_clear_highlights()
-
 	function clear_highlight(cnid)
 		local tnid = self._lpd:cn_treenodeid(cnid)
 
@@ -303,7 +309,8 @@ function LuaProfilerTreeBox:_on_select()
 		local fnid = self._lpd:cn_funcnode(cnid)
 
 		self:_highlight_funcnode(fnid)
-		self._gridview:deselect_and_highlight({fnid = fnid})
+		self._gridview:deselect_and_highlight({
+			fnid = fnid
+		})
 	end
 end
-

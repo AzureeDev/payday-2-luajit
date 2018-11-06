@@ -31,7 +31,9 @@ function IngameBleedOutState:at_enter()
 		end
 	end
 
-	managers.statistics:downed({bleed_out = true})
+	managers.statistics:downed({
+		bleed_out = true
+	})
 
 	local player = managers.player:player_unit()
 
@@ -67,4 +69,3 @@ end
 function IngameBleedOutState:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

@@ -360,7 +360,7 @@ function CopActionShoot:update(t)
 						self._ext_movement:play_redirect("recoil_auto")
 					end
 
-					if not self._autofiring or self._autofiring - 1 <= self._autoshots_fired then
+					if not self._autofiring or self._autoshots_fired >= self._autofiring - 1 then
 						self._autofiring = nil
 						self._autoshots_fired = nil
 
@@ -417,8 +417,10 @@ function CopActionShoot:update(t)
 				end
 
 				self._last_vis_check_status = shoot
+			elseif self._shooting_husk_player then
+				shoot = self._last_vis_check_status
 			else
-				shoot = self._shooting_husk_player and self._last_vis_check_status or true
+				shoot = true
 			end
 
 			if self._common_data.char_tweak.no_move_and_shoot and self._common_data.ext_anim and self._common_data.ext_anim.move then
@@ -846,10 +848,13 @@ function CopActionShoot:_chk_start_melee(target_vec, target_dis, autotarget, tar
 
 	if state then
 		if not is_weapon then
-			local anim_attack_vars = self._common_data.char_tweak.melee_anims or {
-				"var1",
-				"var2"
-			}
+			if not self._common_data.char_tweak.melee_anims then
+				local anim_attack_vars = {
+					"var1",
+					"var2"
+				}
+			end
+
 			local melee_var = self:_pseudorandom(#anim_attack_vars)
 
 			self._common_data.machine:set_parameter(state, anim_attack_vars[melee_var], 1)
@@ -942,4 +947,3 @@ function CopActionShoot:anim_clbk_melee_strike()
 		return
 	end
 end
-

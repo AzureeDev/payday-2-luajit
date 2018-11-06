@@ -9,7 +9,9 @@ function TeamAIMovement:_post_init()
 		if not self._heat_listener_clbk and Network:is_server() then
 			self._heat_listener_clbk = "TeamAIMovement" .. tostring(self._unit:key())
 
-			managers.groupai:state():add_listener(self._heat_listener_clbk, {"whisper_mode"}, callback(self, self, "heat_clbk"))
+			managers.groupai:state():add_listener(self._heat_listener_clbk, {
+				"whisper_mode"
+			}, callback(self, self, "heat_clbk"))
 		end
 
 		self._unit:base():set_slot(self._unit, 24)
@@ -57,11 +59,11 @@ function TeamAIMovement:add_weapons()
 			self._unit:inventory():add_unit_by_factory_name(loadout.primary, false, false, nil, "")
 		else
 			local weapon = self._ext_base:default_weapon_name("primary")
-			local _ = weapon and self._unit:inventory():add_unit_by_factory_name(weapon, false, false, nil, "")
+			slot5 = weapon and self._unit:inventory():add_unit_by_factory_name(weapon, false, false, nil, "")
 		end
 
 		local sec_weap_name = self._ext_base:default_weapon_name("secondary")
-		local _ = sec_weap_name and self._unit:inventory():add_unit_by_name(sec_weap_name)
+		slot5 = sec_weap_name and self._unit:inventory():add_unit_by_name(sec_weap_name)
 	else
 		TeamAIMovement.super.add_weapons(self)
 	end
@@ -138,7 +140,11 @@ function TeamAIMovement:downed()
 end
 
 function TeamAIMovement:set_cool(state)
-	state = state and true or false
+	if state then
+		state = true
+	else
+		state = false
+	end
 
 	if state == self._cool then
 		return
@@ -152,7 +158,9 @@ function TeamAIMovement:set_cool(state)
 		if not self._heat_listener_clbk and Network:is_server() then
 			self._heat_listener_clbk = "TeamAIMovement" .. tostring(self._unit:key())
 
-			managers.groupai:state():add_listener(self._heat_listener_clbk, {"whisper_mode"}, callback(self, self, "heat_clbk"))
+			managers.groupai:state():add_listener(self._heat_listener_clbk, {
+				"whisper_mode"
+			}, callback(self, self, "heat_clbk"))
 		end
 
 		self._unit:base():set_slot(self._unit, 24)
@@ -162,6 +170,7 @@ function TeamAIMovement:set_cool(state)
 		end
 
 		self:set_stance_by_code(1)
+		self._unit:inventory():set_visibility_state(false)
 	else
 		self._not_cool_t = TimerManager:game():time()
 
@@ -405,22 +414,17 @@ function TeamAIMovement:update(...)
 			self._left_hand_obj = self._unit:get_object(Idstring("LeftHandMiddle1"))
 		end
 
-		if alive(self._left_hand_obj) then
-			if self._left_hand_pos then
-				self._left_hand_direction = self._left_hand_direction or Vector3()
+		self._left_hand_direction = self._left_hand_direction or Vector3()
 
-				mvec3_set(self._left_hand_direction, self._left_hand_pos)
-				mvec3_sub(self._left_hand_direction, self._left_hand_obj:position())
+		mvec3_set(self._left_hand_direction, self._left_hand_pos)
+		mvec3_sub(self._left_hand_direction, self._left_hand_obj:position())
 
-				self._left_hand_velocity = mvec3_len(self._left_hand_direction)
+		self._left_hand_velocity = mvec3_len(self._left_hand_direction)
 
-				mvec3_norm(self._left_hand_direction)
-			end
+		mvec3_norm(self._left_hand_direction)
 
-			self._left_hand_pos = self._left_hand_pos or Vector3()
+		self._left_hand_pos = self._left_hand_pos or Vector3()
 
-			mvec3_set(self._left_hand_pos, self._left_hand_obj:position())
-		end
+		mvec3_set(self._left_hand_pos, self._left_hand_obj:position())
 	end
 end
-

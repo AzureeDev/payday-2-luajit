@@ -12,4 +12,3 @@ function Init:transition()
 		return CoreSessionStateFindSession.FindSession
 	end
 end
-

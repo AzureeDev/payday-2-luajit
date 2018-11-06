@@ -308,6 +308,7 @@ function MissionDoor:destroy()
 		end
 	end
 end
+
 MissionDoorDevice = MissionDoorDevice or class()
 
 function MissionDoorDevice:init(unit)
@@ -383,4 +384,3 @@ end
 
 function MissionDoorDevice:destroy()
 end
-

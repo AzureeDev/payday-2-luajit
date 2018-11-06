@@ -24,4 +24,3 @@ end
 function DialogState:transition()
 	self._state:transition()
 end
-

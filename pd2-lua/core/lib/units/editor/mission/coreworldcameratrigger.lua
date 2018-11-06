@@ -97,4 +97,3 @@ function CoreWorldCameraTriggerUnitElement:_build_panel(panel, panel_sizer)
 	after_clip_sizer:add(self._after_clip, 3, 0, "EXPAND")
 	self._panel_sizer:add(after_clip_sizer, 0, 0, "EXPAND")
 end
-

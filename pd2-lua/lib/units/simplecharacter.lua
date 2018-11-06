@@ -66,4 +66,3 @@ function SimpleCharacter:move(t, dt)
 
 	self._unit:move(move_vec)
 end
-

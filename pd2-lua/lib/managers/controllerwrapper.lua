@@ -45,4 +45,3 @@ function ControllerWrapper:clear_input_pressed_state(connection_name)
 end
 
 CoreClass.override_class(CoreControllerWrapper.ControllerWrapper, ControllerWrapper)
-

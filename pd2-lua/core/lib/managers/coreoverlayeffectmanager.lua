@@ -119,7 +119,7 @@ function OverlayEffectManager:progress_effects(t, dt, paused)
 					effect.rectangle:set_color(data.color:with_alpha(new_alpha))
 				end
 
-				effect.text:set_color((data.text_color or Color.white):with_alpha(new_alpha * (data.text_color and data.text_color.alpha or 1)))
+				effect.text:set_color(data.text_color or Color.white:with_alpha(new_alpha * (data.text_color and data.text_color.alpha or 1)))
 			end
 		end
 	end
@@ -156,17 +156,22 @@ function OverlayEffectManager:play_effect(data)
 	if data then
 		local spawn_alpha = data.color.alpha * (data.fade_in > 0 and 0 or 1)
 		local rectangle = nil
-		rectangle = data.gradient_points and self._ws:panel():gradient({
-			w = RenderSettings.resolution.x,
-			h = RenderSettings.resolution.y,
-			color = data.color:with_alpha(spawn_alpha),
-			gradient_points = data.gradient_points,
-			orientation = data.orientation
-		}) or self._ws:panel():rect({
-			w = RenderSettings.resolution.x,
-			h = RenderSettings.resolution.y,
-			color = data.color:with_alpha(spawn_alpha)
-		})
+
+		if data.gradient_points then
+			rectangle = self._ws:panel():gradient({
+				w = RenderSettings.resolution.x,
+				h = RenderSettings.resolution.y,
+				color = data.color:with_alpha(spawn_alpha),
+				gradient_points = data.gradient_points,
+				orientation = data.orientation
+			})
+		else
+			rectangle = self._ws:panel():rect({
+				w = RenderSettings.resolution.x,
+				h = RenderSettings.resolution.y,
+				color = data.color:with_alpha(spawn_alpha)
+			})
+		end
 
 		rectangle:set_layer(self._default_layer)
 		rectangle:set_blend_mode(data.blend_mode)
@@ -186,7 +191,7 @@ function OverlayEffectManager:play_effect(data)
 			font = data.font or "core/fonts/system_font",
 			font_size = data.font_size or 21,
 			blend_mode = data.text_blend_mode or data.blend_mode or "normal",
-			color = (data.text_color or Color.white):with_alpha(spawn_alpha * (data.text_color and data.text_color.alpha or 1)),
+			color = data.text_color or Color.white:with_alpha(spawn_alpha * (data.text_color and data.text_color.alpha or 1)),
 			layer = self._default_layer + 1
 		})
 
@@ -197,7 +202,7 @@ function OverlayEffectManager:play_effect(data)
 		local effect = {
 			rectangle = rectangle,
 			text = text,
-			start_t = (data.timer or TimerManager:game()):time(),
+			start_t = data.timer or TimerManager:game():time(),
 			data = {},
 			current_alpha = spawn_alpha,
 			gradient_points = data.gradient_points
@@ -266,14 +271,14 @@ function OverlayEffectManager:fade_out_effect(id)
 		local effect = self._playing_effects[id]
 
 		if effect then
-			effect.start_t = (effect.data.timer or TimerManager:game()):time()
+			effect.start_t = effect.data.timer or TimerManager:game():time()
 			effect.data.sustain = 0
 			effect.data.fade_in = 0
 			effect.data.color = effect.data.color:with_alpha(effect.current_alpha)
 		end
 	else
 		for key, effect in pairs(self._playing_effects) do
-			effect.start_t = (effect.data.timer or TimerManager:game()):time()
+			effect.start_t = effect.data.timer or TimerManager:game():time()
 			effect.data.sustain = 0
 			effect.data.fade_in = 0
 			effect.data.color = effect.data.color:with_alpha(effect.current_alpha)
@@ -291,4 +296,3 @@ function OverlayEffectManager:change_resolution()
 		})
 	end
 end
-

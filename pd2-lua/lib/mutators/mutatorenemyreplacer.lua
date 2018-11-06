@@ -1,4 +1,6 @@
-local access_type_walk_only = {walk = true}
+local access_type_walk_only = {
+	walk = true
+}
 local access_type_all = {
 	acrobatic = true,
 	walk = true
@@ -17,8 +19,12 @@ MutatorEnemyReplacer.reductions = {
 	exp = 0.35
 }
 MutatorEnemyReplacer.disables_achievements = true
-MutatorEnemyReplacer.categories = {"enemies"}
-MutatorEnemyReplacer.incompatibility_tags = {"replaces_units"}
+MutatorEnemyReplacer.categories = {
+	"enemies"
+}
+MutatorEnemyReplacer.incompatibility_tags = {
+	"replaces_units"
+}
 MutatorEnemyReplacer.icon_coords = {
 	6,
 	1
@@ -212,8 +218,12 @@ function MutatorEnemyReplacer:_get_unit_group_shield(difficulty_index)
 			self._groups.shield = {
 				special_type = "shield",
 				unit_types = {
-					america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield")},
-					russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_dw_sr2_smg/ene_akan_fbi_shield_dw_sr2_smg")}
+					america = {
+						Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield")
+					},
+					russia = {
+						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_dw_sr2_smg/ene_akan_fbi_shield_dw_sr2_smg")
+					}
 				},
 				access = access_type_all
 			}
@@ -228,8 +238,12 @@ function MutatorEnemyReplacer:_get_unit_group_taser(difficulty_index)
 		self._groups.taser = {
 			special_type = "taser",
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_tazer_1/ene_tazer_1")},
-				russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass")}
+				america = {
+					Idstring("units/payday2/characters/ene_tazer_1/ene_tazer_1")
+				},
+				russia = {
+					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass")
+				}
 			},
 			access = access_type_all
 		}
@@ -244,8 +258,12 @@ function MutatorEnemyReplacer:_get_unit_group_spooc(difficulty_index)
 			self._groups.spooc = {
 				special_type = "spooc",
 				unit_types = {
-					america = {Idstring("units/payday2/characters/ene_spook_1/ene_spook_1")},
-					russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")}
+					america = {
+						Idstring("units/payday2/characters/ene_spook_1/ene_spook_1")
+					},
+					russia = {
+						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")
+					}
 				},
 				access = access_type_all
 			}
@@ -253,8 +271,12 @@ function MutatorEnemyReplacer:_get_unit_group_spooc(difficulty_index)
 			self._groups.spooc = {
 				special_type = "spooc",
 				unit_types = {
-					america = {Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker")},
-					russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")}
+					america = {
+						Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker")
+					},
+					russia = {
+						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")
+					}
 				},
 				access = access_type_all
 			}
@@ -284,6 +306,7 @@ function MutatorEnemyReplacer:_get_unit_group_medic(difficulty_index)
 
 	return self._groups.medic
 end
+
 MutatorMediDozer = MutatorMediDozer or class(BaseMutator)
 MutatorMediDozer._type = "MutatorMediDozer"
 MutatorMediDozer.name_id = "mutator_medidozer"
@@ -293,8 +316,12 @@ MutatorMediDozer.reductions = {
 	exp = 0
 }
 MutatorMediDozer.disables_achievements = true
-MutatorMediDozer.categories = {"enemies"}
-MutatorMediDozer.incompatibility_tags = {"replaces_units"}
+MutatorMediDozer.categories = {
+	"enemies"
+}
+MutatorMediDozer.incompatibility_tags = {
+	"replaces_units"
+}
 MutatorMediDozer.icon_coords = {
 	8,
 	1
@@ -359,6 +386,7 @@ function MutatorMediDozer:modify_unit_categories(group_ai_tweak, difficulty_inde
 		end
 	end
 end
+
 MutatorTitandozers = MutatorTitandozers or class(BaseMutator)
 MutatorTitandozers._type = "MutatorTitandozers"
 MutatorTitandozers.name_id = "mutator_titandozers"
@@ -368,7 +396,9 @@ MutatorTitandozers.reductions = {
 	exp = 0
 }
 MutatorTitandozers.disables_achievements = true
-MutatorTitandozers.categories = {"enemies"}
+MutatorTitandozers.categories = {
+	"enemies"
+}
 MutatorTitandozers.incompatibility_tags = {}
 MutatorTitandozers.icon_coords = {
 	1,
@@ -402,8 +432,12 @@ function MutatorTitandozers:_get_unit_group_titandozer(difficulty_index)
 		self._groups.tank = {
 			special_type = "tank",
 			unit_types = {
-				america = {Idstring("units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4")},
-				russia = {Idstring("units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4")}
+				america = {
+					Idstring("units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4")
+				},
+				russia = {
+					Idstring("units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4")
+				}
 			},
 			access = access_type_all
 		}
@@ -411,4 +445,3 @@ function MutatorTitandozers:_get_unit_group_titandozer(difficulty_index)
 
 	return self._groups.tank
 end
-

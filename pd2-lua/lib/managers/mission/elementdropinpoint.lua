@@ -28,4 +28,3 @@ function ElementDropInPoint:on_executed(instigator)
 
 	ElementDropInPoint.super.on_executed(self, instigator)
 end
-

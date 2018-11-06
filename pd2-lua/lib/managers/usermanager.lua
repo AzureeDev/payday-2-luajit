@@ -8,8 +8,9 @@ UserManager.PLATFORM_CLASS_MAP = {}
 function UserManager:new(...)
 	local platform = SystemInfo:platform()
 
-	return (self.PLATFORM_CLASS_MAP[platform:key()] or GenericUserManager):new(...)
+	return self.PLATFORM_CLASS_MAP[platform:key()] or GenericUserManager:new(...)
 end
+
 GenericUserManager = GenericUserManager or class()
 GenericUserManager.STORE_SETTINGS_ON_PROFILE = false
 GenericUserManager.CAN_SELECT_USER = false
@@ -45,6 +46,7 @@ end
 function GenericUserManager:is_global_initialized()
 	return Global.user_manager and not Global.user_manager.initializing
 end
+
 local is_ps3 = SystemInfo:platform() == Idstring("PS3")
 local is_x360 = SystemInfo:platform() == Idstring("X360")
 local is_ps4 = SystemInfo:platform() == Idstring("PS4")
@@ -496,8 +498,12 @@ function GenericUserManager:active_user_change_state(old_user_data, user_data)
 			text = managers.localization:text("dialog_signin_change"),
 			id = "user_changed"
 		}
-		local ok_button = {text = managers.localization:text("dialog_ok")}
-		dialog_data.button_list = {ok_button}
+		local ok_button = {
+			text = managers.localization:text("dialog_ok")
+		}
+		dialog_data.button_list = {
+			ok_button
+		}
 
 		managers.system_menu:add_init_show(dialog_data)
 		self:perform_load_start_menu()
@@ -709,7 +715,6 @@ function GenericUserManager:check_storage(callback_func, auto_select)
 			callback_func(true)
 		end
 	else
-
 		local function wrapped_callback_func(success, result, ...)
 			if success then
 				self:update_all_users()
@@ -798,6 +803,7 @@ function GenericUserManager:sanitize_settings()
 		self:set_setting("video_color_grading", nil)
 	end
 end
+
 Xbox360UserManager = Xbox360UserManager or class(GenericUserManager)
 Xbox360UserManager.NOT_SIGNED_IN_STATE = "not_signed_in"
 Xbox360UserManager.STORE_SETTINGS_ON_PROFILE = true
@@ -809,7 +815,9 @@ Xbox360UserManager.CAN_CHANGE_STORAGE_ONLY_ONCE = false
 UserManager.PLATFORM_CLASS_MAP[Idstring("X360"):key()] = Xbox360UserManager
 
 function Xbox360UserManager:init()
-	self._platform_setting_conversion_func_map = {gamer_control_sensitivity = callback(self, self, "convert_gamer_control_sensitivity")}
+	self._platform_setting_conversion_func_map = {
+		gamer_control_sensitivity = callback(self, self, "convert_gamer_control_sensitivity")
+	}
 
 	GenericUserManager.init(self)
 	managers.platform:add_event_callback("signin_changed", callback(self, self, "signin_changed_callback"))
@@ -965,7 +973,7 @@ function Xbox360UserManager:save_setting_map(callback_func)
 	local setting_count = 1
 	local max_char_count = self.CUSTOM_PROFILE_VARIABLE_COUNT * self.CUSTOM_PROFILE_VARIABLE_CHAR_COUNT
 
-	if max_char_count < char_count then
+	if char_count > max_char_count then
 		Application:stack_dump_error("[UserManager] Exceeded (" .. char_count .. ") maximum character count that can be stored in the profile (" .. max_char_count .. ").")
 		callback_func(false)
 
@@ -976,7 +984,7 @@ function Xbox360UserManager:save_setting_map(callback_func)
 
 	repeat
 		local setting_name = "title_specific" .. setting_count
-		local end_char = math.min((current_char + self.CUSTOM_PROFILE_VARIABLE_CHAR_COUNT) - 1, char_count)
+		local end_char = math.min(current_char + self.CUSTOM_PROFILE_VARIABLE_CHAR_COUNT - 1, char_count)
 		local setting_value = string.sub(complete_setting_value, current_char, end_char)
 
 		cat_print("save_manager", "[UserManager] Saving profile setting \"" .. setting_name .. "\" (" .. current_char .. " to " .. end_char .. " of " .. char_count .. " characters).")
@@ -1001,7 +1009,9 @@ function Xbox360UserManager:_save_setting_map_callback(callback_func, success)
 end
 
 function Xbox360UserManager:signin_changed_callback(...)
-	for user_index, signed_in in ipairs({...}) do
+	for user_index, signed_in in ipairs({
+		...
+	}) do
 		local was_signed_in = self:is_signed_in(user_index)
 		Global.user_manager.user_map[user_index].has_signed_out = was_signed_in and not signed_in
 
@@ -1080,6 +1090,7 @@ function Xbox360UserManager:invite_accepted_by_inactive_user()
 	self:perform_load_start_menu()
 	managers.menu:reset_all_loaded_data()
 end
+
 PS3UserManager = PS3UserManager or class(GenericUserManager)
 UserManager.PLATFORM_CLASS_MAP[Idstring("PS3"):key()] = PS3UserManager
 
@@ -1106,6 +1117,7 @@ function PS3UserManager:set_index(user_index)
 
 	GenericUserManager.set_index(self, user_index)
 end
+
 PS4UserManager = PS4UserManager or class(GenericUserManager)
 UserManager.PLATFORM_CLASS_MAP[Idstring("PS4"):key()] = PS4UserManager
 
@@ -1145,6 +1157,7 @@ function PS4UserManager:set_index(user_index)
 
 	GenericUserManager.set_index(self, user_index)
 end
+
 WinUserManager = WinUserManager or class(GenericUserManager)
 UserManager.PLATFORM_CLASS_MAP[Idstring("WIN32"):key()] = WinUserManager
 
@@ -1175,6 +1188,7 @@ function WinUserManager:set_index(user_index)
 
 	GenericUserManager.set_index(self, user_index)
 end
+
 XB1UserManager = XB1UserManager or class(GenericUserManager)
 XB1UserManager.NOT_SIGNED_IN_STATE = "not_signed_in"
 XB1UserManager.STORE_SETTINGS_ON_PROFILE = false
@@ -1186,7 +1200,9 @@ XB1UserManager.CAN_CHANGE_STORAGE_ONLY_ONCE = false
 UserManager.PLATFORM_CLASS_MAP[Idstring("XB1"):key()] = XB1UserManager
 
 function XB1UserManager:init()
-	self._platform_setting_conversion_func_map = {gamer_control_sensitivity = callback(self, self, "convert_gamer_control_sensitivity")}
+	self._platform_setting_conversion_func_map = {
+		gamer_control_sensitivity = callback(self, self, "convert_gamer_control_sensitivity")
+	}
 
 	GenericUserManager.init(self)
 	managers.platform:add_event_callback("signin_changed", callback(self, self, "signin_changed_callback"))
@@ -1349,7 +1365,7 @@ function XB1UserManager:save_setting_map(callback_func)
 	local setting_count = 1
 	local max_char_count = self.CUSTOM_PROFILE_VARIABLE_COUNT * self.CUSTOM_PROFILE_VARIABLE_CHAR_COUNT
 
-	if max_char_count < char_count then
+	if char_count > max_char_count then
 		Application:stack_dump_error("[UserManager] Exceeded (" .. char_count .. ") maximum character count that can be stored in the profile (" .. max_char_count .. ").")
 		callback_func(false)
 
@@ -1360,7 +1376,7 @@ function XB1UserManager:save_setting_map(callback_func)
 
 	repeat
 		local setting_name = "title_specific" .. setting_count
-		local end_char = math.min((current_char + self.CUSTOM_PROFILE_VARIABLE_CHAR_COUNT) - 1, char_count)
+		local end_char = math.min(current_char + self.CUSTOM_PROFILE_VARIABLE_CHAR_COUNT - 1, char_count)
 		local setting_value = string.sub(complete_setting_value, current_char, end_char)
 
 		cat_print("save_manager", "[UserManager] Saving profile setting \"" .. setting_name .. "\" (" .. current_char .. " to " .. end_char .. " of " .. char_count .. " characters).")
@@ -1510,4 +1526,3 @@ function XB1UserManager:set_index(user_index)
 
 	XB1UserManager.super.set_index(self, user_index_str)
 end
-

@@ -24,4 +24,3 @@ function Worksheet:to_xml(f)
 
 	f:write(EMPTY_WORKSHEET_XML2)
 end
-

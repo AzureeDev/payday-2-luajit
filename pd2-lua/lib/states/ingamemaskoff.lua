@@ -63,4 +63,3 @@ end
 function IngameMaskOffState:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

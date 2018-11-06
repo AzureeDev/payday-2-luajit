@@ -153,14 +153,18 @@ function VehicleManager:update_vehicles_data_to_peer(peer)
 			while loot_index <= #stored_loot do
 				local loot1 = stored_loot[loot_index]
 				loot_index = loot_index + 1
-				local loot2 = {multiplier = 0}
+				local loot2 = {
+					multiplier = 0
+				}
 
 				if loot_index <= #stored_loot then
 					loot2 = stored_loot[loot_index]
 				end
 
 				loot_index = loot_index + 1
-				local loot3 = {multiplier = 0}
+				local loot3 = {
+					multiplier = 0
+				}
 
 				if loot_index <= #stored_loot then
 					loot3 = stored_loot[loot_index]
@@ -351,4 +355,3 @@ function VehicleManager:update(t, dt)
 		end
 	end
 end
-

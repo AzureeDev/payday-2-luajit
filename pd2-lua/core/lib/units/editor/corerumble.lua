@@ -116,4 +116,3 @@ function CoreRumbleHubElement:_build_panel(panel, panel_sizer)
 	rumble_sizer:add(ctrlr_sizer, 2, 0, "EXPAND")
 	panel_sizer:add(rumble_sizer, 0, 0, "EXPAND")
 end
-

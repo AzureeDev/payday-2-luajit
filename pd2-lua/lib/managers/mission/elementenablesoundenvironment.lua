@@ -21,4 +21,3 @@ function ElementEnableSoundEnvironment:on_executed(instigator)
 
 	ElementEnableSoundEnvironment.super.on_executed(self, instigator)
 end
-

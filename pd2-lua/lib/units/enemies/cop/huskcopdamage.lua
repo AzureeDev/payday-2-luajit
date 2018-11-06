@@ -34,4 +34,3 @@ function HuskCopDamage:die(variant)
 
 	self:_on_death()
 end
-

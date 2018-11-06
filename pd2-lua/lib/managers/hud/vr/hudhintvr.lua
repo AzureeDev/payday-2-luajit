@@ -12,4 +12,3 @@ function HUDHintVR:init(hud)
 
 	VRManagerPD2.overlay_helper(managers.hud:prompt_panel())
 end
-

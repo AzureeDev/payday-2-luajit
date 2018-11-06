@@ -13,7 +13,9 @@ function DoctorBagBase.spawn(pos, rot, bits, peer_id)
 end
 
 function DoctorBagBase:set_server_information(peer_id)
-	self._server_information = {owner_peer_id = peer_id}
+	self._server_information = {
+		owner_peer_id = peer_id
+	}
 
 	managers.network:session():peer(peer_id):set_used_deployable(true)
 end
@@ -211,7 +213,7 @@ end
 
 function DoctorBagBase:_get_upgrade_levels(bits)
 	local dmg_reduction = Bitwise:rshift(bits, DoctorBagBase.damage_reduce_lvl_shift)
-	local amount_lvl = Bitwise:rshift(bits, DoctorBagBase.amount_upgrade_lvl_shift) % 2 ^ DoctorBagBase.amount_upgrade_lvl_shift
+	local amount_lvl = Bitwise:rshift(bits, DoctorBagBase.amount_upgrade_lvl_shift) % 2^DoctorBagBase.amount_upgrade_lvl_shift
 
 	return amount_lvl, dmg_reduction
 end
@@ -244,6 +246,7 @@ function DoctorBagBase:destroy()
 		self._validate_clbk_id = nil
 	end
 end
+
 CustomDoctorBagBase = CustomDoctorBagBase or class(DoctorBagBase)
 
 function CustomDoctorBagBase:init(unit)
@@ -271,4 +274,3 @@ function CustomDoctorBagBase:_set_empty()
 		self._unit:damage():run_sequence_simple("empty")
 	end
 end
-

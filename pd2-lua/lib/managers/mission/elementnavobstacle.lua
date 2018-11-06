@@ -10,10 +10,12 @@ end
 
 function ElementNavObstacle:on_script_activated()
 	if not self._values.obstacle_list then
-		self._values.obstacle_list = {{
-			unit_id = self._values.obstacle_unit_id,
-			obj_name = self._values.obstacle_obj_name
-		}}
+		self._values.obstacle_list = {
+			{
+				unit_id = self._values.obstacle_unit_id,
+				obj_name = self._values.obstacle_obj_name
+			}
+		}
 	end
 
 	for _, data in ipairs(self._values.obstacle_list) do
@@ -79,4 +81,3 @@ function ElementNavObstacle:load(data)
 		self:on_script_activated()
 	end
 end
-

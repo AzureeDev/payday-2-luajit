@@ -28,6 +28,7 @@ function PlayerBleedOutVR:destroy()
 
 	__destroy(self)
 end
+
 local mvec_pos_new = Vector3()
 local mvec_hmd_delta = Vector3()
 local mvec_hmd_pos = Vector3()
@@ -135,4 +136,3 @@ function PlayerBleedOutVR:set_belt_and_hands_enabled(enabled)
 		end
 	end
 end
-

@@ -24,4 +24,3 @@ end
 
 function ElementEnemyDummyTrigger:load()
 end
-

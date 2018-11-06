@@ -82,4 +82,3 @@ function AimCameraNode:_update_pitch_offset(parent_position, parent_rotation)
 
 	return self:local_position()
 end
-

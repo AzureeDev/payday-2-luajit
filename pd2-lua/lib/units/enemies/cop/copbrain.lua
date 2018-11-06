@@ -18,19 +18,21 @@ require("lib/units/enemies/spooc/logics/SpoocLogicAttack")
 require("lib/units/enemies/taser/logics/TaserLogicAttack")
 
 CopBrain = CopBrain or class()
-local logic_variants = {security = {
-	idle = CopLogicIdle,
-	attack = CopLogicAttack,
-	travel = CopLogicTravel,
-	inactive = CopLogicInactive,
-	intimidated = CopLogicIntimidated,
-	arrest = CopLogicArrest,
-	guard = CopLogicGuard,
-	flee = CopLogicFlee,
-	sniper = CopLogicSniper,
-	trade = CopLogicTrade,
-	phalanx = CopLogicPhalanxMinion
-}}
+local logic_variants = {
+	security = {
+		idle = CopLogicIdle,
+		attack = CopLogicAttack,
+		travel = CopLogicTravel,
+		inactive = CopLogicInactive,
+		intimidated = CopLogicIntimidated,
+		arrest = CopLogicArrest,
+		guard = CopLogicGuard,
+		flee = CopLogicFlee,
+		sniper = CopLogicSniper,
+		trade = CopLogicTrade,
+		phalanx = CopLogicPhalanxMinion
+	}
+}
 local security_variant = logic_variants.security
 logic_variants.gensec = security_variant
 logic_variants.cop = security_variant
@@ -70,7 +72,8 @@ for _, tweak_table_name in pairs({
 	"shield",
 	"tank",
 	"spooc",
-	"taser"
+	"taser",
+	"shadow_spooc"
 }) do
 	logic_variants[tweak_table_name] = clone(security_variant)
 end
@@ -85,6 +88,8 @@ logic_variants.tank.attack = TankCopLogicAttack
 logic_variants.tank_hw = logic_variants.tank
 logic_variants.spooc.idle = SpoocLogicIdle
 logic_variants.spooc.attack = SpoocLogicAttack
+logic_variants.shadow_spooc.idle = SpoocLogicIdle
+logic_variants.shadow_spooc.attack = SpoocLogicAttack
 logic_variants.taser.attack = TaserLogicAttack
 logic_variants.tank_medic = logic_variants.tank
 logic_variants.tank_mini = logic_variants.tank
@@ -132,7 +137,9 @@ function CopBrain:post_init()
 		"taser_tased",
 		"concussion"
 	}, callback(self, self, "clbk_damage"))
-	self._unit:character_damage():add_listener("CopBrain_death" .. my_key, {"death"}, callback(self, self, "clbk_death"))
+	self._unit:character_damage():add_listener("CopBrain_death" .. my_key, {
+		"death"
+	}, callback(self, self, "clbk_death"))
 	self:_setup_attention_handler()
 
 	if not self._current_logic then
@@ -148,7 +155,9 @@ function CopBrain:post_init()
 		if not managers.groupai:state():enemy_weapons_hot() then
 			self._enemy_weapons_hot_listen_id = "CopBrain" .. my_key
 
-			managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {"enemy_weapons_hot"}, callback(self, self, "clbk_enemy_weapons_hot"))
+			managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {
+				"enemy_weapons_hot"
+			}, callback(self, self, "clbk_enemy_weapons_hot"))
 		end
 	end
 
@@ -400,7 +409,9 @@ function CopBrain:search_for_coarse_path(search_id, to_seg, verify_clbk, access_
 	local params = {
 		from_tracker = self._unit:movement():nav_tracker(),
 		to_seg = to_seg,
-		access = {"walk"},
+		access = {
+			"walk"
+		},
 		id = search_id,
 		results_clbk = callback(self, self, "clbk_coarse_pathing_results", search_id),
 		verify_clbk = verify_clbk,
@@ -751,10 +762,14 @@ function CopBrain:set_attention_settings(params)
 
 	if params then
 		if params.peaceful then
-			att_settings = {"enemy_team_idle"}
+			att_settings = {
+				"enemy_team_idle"
+			}
 		elseif params.cbt then
 			if managers.groupai:state():enemy_weapons_hot() then
-				att_settings = {"enemy_team_cbt"}
+				att_settings = {
+					"enemy_team_cbt"
+				}
 			else
 				att_settings = {
 					"enemy_team_cbt",
@@ -763,7 +778,9 @@ function CopBrain:set_attention_settings(params)
 				}
 			end
 		elseif params.corpse_cbt then
-			att_settings = {"enemy_combatant_corpse_cbt"}
+			att_settings = {
+				"enemy_combatant_corpse_cbt"
+			}
 		elseif params.corpse_sneak then
 			att_settings = {
 				"enemy_law_corpse_sneak",
@@ -1133,7 +1150,13 @@ function CopBrain:on_alarm_pager_interaction(status, player)
 	elseif status == "complete" then
 		local nr_previous_bluffs = managers.groupai:state():get_nr_successful_alarm_pager_bluffs()
 		local has_upgrade = nil
-		has_upgrade = player:base().is_local_player and managers.player:has_category_upgrade("player", "corpse_alarm_pager_bluff") or player:base():upgrade_value("player", "corpse_alarm_pager_bluff")
+
+		if player:base().is_local_player then
+			has_upgrade = managers.player:has_category_upgrade("player", "corpse_alarm_pager_bluff")
+		else
+			has_upgrade = player:base():upgrade_value("player", "corpse_alarm_pager_bluff")
+		end
+
 		local chance_table = tweak_data.player.alarm_pager[has_upgrade and "bluff_success_chance_w_skill" or "bluff_success_chance"]
 		local chance_index = math.min(nr_previous_bluffs + 1, #chance_table)
 		local is_last = chance_table[math.min(chance_index + 1, #chance_table)] == 0
@@ -1329,4 +1352,3 @@ if reload then
 		clbk()
 	end
 end
-

@@ -1,6 +1,6 @@
 NetworkMatchMakingSTEAM = NetworkMatchMakingSTEAM or class()
 NetworkMatchMakingSTEAM.OPEN_SLOTS = tweak_data.max_players
-NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "payday2_v1.92.676"
+NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "payday2_v1.92.760"
 
 function NetworkMatchMakingSTEAM:init()
 	cat_print("lobby", "matchmake = NetworkMatchMakingSTEAM")
@@ -73,15 +73,16 @@ function NetworkMatchMakingSTEAM:_save_globals()
 		Global.steam = {}
 	end
 
-	Global.steam.match = {}
-	Global.steam.match.lobby_handler = self.lobby_handler
-	Global.steam.match.lobby_attributes = self._lobby_attributes
-	Global.steam.match.try_re_enter_lobby = self._try_re_enter_lobby
-	Global.steam.match.server_rpc = self._server_rpc
-	Global.steam.match.lobby_filters = self._lobby_filters
-	Global.steam.match.distance_filter = self._distance_filter
-	Global.steam.match.difficulty_filter = self._difficulty_filter
-	Global.steam.match.lobby_return_count = self._lobby_return_count
+	Global.steam.match = {
+		lobby_handler = self.lobby_handler,
+		lobby_attributes = self._lobby_attributes,
+		try_re_enter_lobby = self._try_re_enter_lobby,
+		server_rpc = self._server_rpc,
+		lobby_filters = self._lobby_filters,
+		distance_filter = self._distance_filter,
+		difficulty_filter = self._difficulty_filter,
+		lobby_return_count = self._lobby_return_count
+	}
 end
 
 function NetworkMatchMakingSTEAM:load_user_filters()
@@ -223,7 +224,7 @@ function NetworkMatchMakingSTEAM:get_friends_lobbies()
 
 		num_updated_lobbies = num_updated_lobbies + 1
 
-		if #lobbies <= num_updated_lobbies then
+		if num_updated_lobbies >= #lobbies then
 			local info = {
 				room_list = {},
 				attribute_list = {}
@@ -369,14 +370,19 @@ function NetworkMatchMakingSTEAM:search_lobby(friends_only, no_filters)
 		return
 	end
 
-	local function is_key_valid(key)
-		return key ~= "value_missing" and key ~= "value_pending"
+	local function validated_value(lobby, key)
+		local value = lobby:key_value(key)
+
+		if value ~= "value_missing" and value ~= "value_pending" then
+			return value
+		end
+
+		return nil
 	end
 
 	if friends_only then
 		self:get_friends_lobbies()
 	else
-
 		local function refresh_lobby()
 			if not self.browser then
 				return
@@ -400,33 +406,15 @@ function NetworkMatchMakingSTEAM:search_lobby(friends_only, no_filters)
 
 						local attributes_data = {
 							numbers = self:_lobby_to_numbers(lobby),
-							mutators = self:_get_mutators_from_lobby(lobby)
+							mutators = self:_get_mutators_from_lobby(lobby),
+							crime_spree = tonumber(validated_value(lobby, "crime_spree")),
+							crime_spree_mission = validated_value(lobby, "crime_spree_mission"),
+							mods = validated_value(lobby, "mods"),
+							one_down = tonumber(validated_value(lobby, "one_down")),
+							skirmish = tonumber(validated_value(lobby, "skirmish")),
+							skirmish_wave = tonumber(validated_value(lobby, "skirmish_wave")),
+							skirmish_weekly_modifiers = validated_value(lobby, "skirmish_weekly_modifiers")
 						}
-						local crime_spree_key = lobby:key_value("crime_spree")
-
-						if is_key_valid(crime_spree_key) then
-							attributes_data.crime_spree = tonumber(crime_spree_key)
-							attributes_data.crime_spree_mission = lobby:key_value("crime_spree_mission")
-						end
-
-						local mods_key = lobby:key_value("mods")
-
-						if is_key_valid(mods_key) then
-							attributes_data.mods = mods_key
-						end
-
-						local lobby_one_down = lobby:key_value("one_down")
-
-						if is_key_valid(lobby_one_down) then
-							attributes_data.one_down = tonumber(lobby_one_down)
-						end
-
-						local skirmish_key = lobby:key_value("skirmish")
-
-						if is_key_valid(skirmish_key) then
-							attributes_data.skirmish = tonumber(skirmish_key)
-							attributes_data.skirmish_wave = lobby:key_value("skirmish_wave")
-						end
 
 						table.insert(info.attribute_list, attributes_data)
 					end
@@ -493,9 +481,7 @@ function NetworkMatchMakingSTEAM:search_lobby(friends_only, no_filters)
 		if not no_filters then
 			if false then
 				-- Nothing
-			end
-
-			if Global.game_settings.gamemode_filter == GamemodeCrimeSpree.id then
+			elseif Global.game_settings.gamemode_filter == GamemodeCrimeSpree.id then
 				local min_level = 0
 
 				if Global.game_settings.crime_spree_max_lobby_diff >= 0 then
@@ -607,6 +593,13 @@ function NetworkMatchMakingSTEAM:is_server_ok(friends_only, room, attributes_lis
 		return false, 5
 	end
 
+	local lobby = Steam:lobby(room)
+	local lobby_crime_spree = tonumber(lobby:key_value("crime_spree"))
+
+	if lobby_crime_spree and lobby_crime_spree > 0 and not managers.crime_spree:unlocked() then
+		return false, 6
+	end
+
 	if permission == "public" then
 		return true
 	end
@@ -640,7 +633,9 @@ function NetworkMatchMakingSTEAM:join_server_with_check(room_id, is_invite)
 			end
 		end
 
-		local server_ok, ok_error = self:is_server_ok(nil, room_id, {numbers = attributes}, is_invite)
+		local server_ok, ok_error = self:is_server_ok(nil, room_id, {
+			numbers = attributes
+		}, is_invite)
 
 		if server_ok then
 			self:join_server(room_id, true)
@@ -657,6 +652,8 @@ function NetworkMatchMakingSTEAM:join_server_with_check(room_id, is_invite)
 				managers.menu:show_does_not_own_heist()
 			elseif ok_error == 5 then
 				managers.menu:show_heist_is_locked_dialog()
+			elseif ok_error == 6 then
+				managers.menu:show_crime_spree_locked_dialog()
 			end
 
 			self:search_lobby(self:search_friends_only())
@@ -750,9 +747,11 @@ function NetworkMatchMakingSTEAM:join_server(room_id, skip_showing_dialog)
 
 			self.lobby_handler:setup_callbacks(NetworkMatchMakingSTEAM._on_memberstatus_change, NetworkMatchMakingSTEAM._on_data_update, NetworkMatchMakingSTEAM._on_chat_message)
 			managers.network:start_client()
-			managers.menu:show_waiting_for_server_response({cancel_func = function ()
-				managers.network:session():on_join_request_cancelled()
-			end})
+			managers.menu:show_waiting_for_server_response({
+				cancel_func = function ()
+					managers.network:session():on_join_request_cancelled()
+				end
+			})
 
 			local lobby_data = self.lobby_handler:get_lobby_data()
 
@@ -903,7 +902,11 @@ function NetworkMatchMakingSTEAM:create_lobby(settings)
 			local dialog_data = {
 				title = title,
 				text = managers.localization:text("dialog_err_failed_creating_lobby"),
-				button_list = {{text = managers.localization:text("dialog_ok")}}
+				button_list = {
+					{
+						text = managers.localization:text("dialog_ok")
+					}
+				}
 			}
 
 			managers.system_menu:show(dialog_data)
@@ -1075,4 +1078,3 @@ function NetworkMatchMakingSTEAM:from_host_lobby_re_opened(status)
 		end
 	end
 end
-

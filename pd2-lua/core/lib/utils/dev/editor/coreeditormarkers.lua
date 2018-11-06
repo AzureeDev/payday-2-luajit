@@ -1,4 +1,3 @@
-
 function CoreEditor:build_marker_panel()
 	self._marker_panel = EWS:Panel(self._ews_editor_frame, "Markers", "TAB_TRAVERSAL")
 	local marker_sizer = EWS:BoxSizer("VERTICAL")
@@ -139,6 +138,7 @@ function CoreEditor:clear_markers()
 
 	self._markers = {}
 end
+
 Marker = Marker or class()
 
 function Marker:init(name, pos, rot)
@@ -168,4 +168,3 @@ function Marker:save(file, t)
 
 	file:puts(t .. "<marker name=\"" .. self._name .. "\" pos=\"" .. self._pos.x .. " " .. self._pos.y .. " " .. self._pos.z .. "\" rot=\"" .. self._rot:yaw() .. " " .. self._rot:pitch() .. " " .. self._rot:roll() .. "\"/>")
 end
-

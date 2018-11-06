@@ -17,4 +17,3 @@ function VanSkinExt:init(unit)
 		end
 	end
 end
-

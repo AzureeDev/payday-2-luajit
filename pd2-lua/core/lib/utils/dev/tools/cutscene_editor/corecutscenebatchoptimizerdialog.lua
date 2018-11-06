@@ -45,7 +45,7 @@ function CoreCutsceneBatchOptimizerDialog:init(parent_window)
 
 	self.__window:set_icon(CoreEWS.image_path("film_reel_16x16.png"))
 	self.__window:set_min_size(Vector3(400, 321, 0))
-	self.__window:set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
+	self.__window:set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
 	self.__window:connect("EVT_CLOSE_WINDOW", callback(self, self, "_on_exit"))
 
 	local function connect_command(command_id, callback_name, callback_data)
@@ -301,4 +301,3 @@ function CoreCutsceneBatchOptimizerDialog:_verify_user_intent(operation)
 
 	return true
 end
-

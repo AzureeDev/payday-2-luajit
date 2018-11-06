@@ -565,7 +565,12 @@ function SentryGunDamage:update_shield_smoke_level(ratio, up)
 	ratio = math.clamp(ratio, 0, 1)
 	local num_shield_smoke_levels = self._num_shield_smoke_levels
 	local new_smoke_level = num_shield_smoke_levels - ratio * num_shield_smoke_levels
-	new_smoke_level = up and math.ceil(new_smoke_level) or math.floor(new_smoke_level)
+
+	if up then
+		new_smoke_level = math.ceil(new_smoke_level)
+	else
+		new_smoke_level = math.floor(new_smoke_level)
+	end
 
 	if new_smoke_level ~= self._shield_smoke_level then
 		self._shield_smoke_level = new_smoke_level
@@ -638,4 +643,3 @@ end
 function SentryGunDamage:set_parent_unit(unit)
 	self._parent_unit = unit
 end
-

@@ -46,4 +46,3 @@ end
 
 function UnitCamera:apply_camera(camera_manager)
 end
-

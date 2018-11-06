@@ -136,4 +136,3 @@ function MaskExt:destroy(unit)
 
 	self._textures = {}
 end
-

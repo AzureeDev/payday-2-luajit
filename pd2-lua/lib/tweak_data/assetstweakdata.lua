@@ -229,7 +229,8 @@ function AssetsTweakData:_init_assets(tweak_data)
 			"fish",
 			"dah",
 			"tag",
-			"sah"
+			"sah",
+			"vit"
 		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_bodybags_bag_desc",
@@ -310,7 +311,10 @@ function AssetsTweakData:_init_assets(tweak_data)
 			"hvh",
 			"brb",
 			"des",
-			"sah"
+			"sah",
+			"bph",
+			"vit",
+			"nmh"
 		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_grenade_crate_desc",
@@ -362,7 +366,10 @@ function AssetsTweakData:_init_assets(tweak_data)
 			"hvh",
 			"brb",
 			"des",
-			"sah"
+			"sah",
+			"bph",
+			"vit",
+			"nmh"
 		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_ammo_desc",
@@ -411,7 +418,10 @@ function AssetsTweakData:_init_assets(tweak_data)
 			"hvh",
 			"brb",
 			"des",
-			"sah"
+			"sah",
+			"bph",
+			"vit",
+			"nmh"
 		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_health_desc",
@@ -447,7 +457,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.sniper_spot_election1 = {
 		name_id = "menu_asset_sniper_spot",
 		texture = "guis/textures/pd2/mission_briefing/assets/election_day/day1/sniper_spot_election1",
-		stages = {"election_day_1"},
+		stages = {
+			"election_day_1"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_sniper_spot_desc",
 		no_mystery = true,
@@ -458,7 +470,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.sniper_spot_election2 = {
 		name_id = "menu_asset_sniper_spot",
 		texture = "guis/textures/pd2/mission_briefing/assets/election_day/day2/sniper_spot_election2",
-		stages = {"election_day_2"},
+		stages = {
+			"election_day_2"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_sniper_spot_desc",
 		no_mystery = true,
@@ -484,7 +498,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.sniper_spot_rats3 = {
 		name_id = "menu_asset_sniper_spot",
 		texture = "guis/textures/pd2/mission_briefing/assets/rat/day3/sniper_spot_rats3",
-		stages = {"alex_3"},
+		stages = {
+			"alex_3"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_sniper_spot_desc",
 		no_mystery = true,
@@ -495,7 +511,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.sniper_spot_firestarter1 = {
 		name_id = "menu_asset_sniper_spot",
 		texture = "guis/textures/pd2/mission_briefing/assets/firestarter/day1/sniper_spot_firestarter1",
-		stages = {"firestarter_1"},
+		stages = {
+			"firestarter_1"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_sniper_spot_desc",
 		no_mystery = true,
@@ -506,18 +524,24 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.ukrainian_job_tiara = {
 		name_id = "menu_asset_test_jewelry_store_tiara",
 		texture = "guis/textures/pd2/mission_briefing/assets/ukranian_job/asset01",
-		stages = {"ukrainian_job"},
+		stages = {
+			"ukrainian_job"
+		},
 		no_mystery = true
 	}
 	self.ukrainian_job_front = {
 		name_id = "menu_asset_test_jewelry_store_front",
 		texture = "guis/textures/pd2/mission_briefing/assets/ukranian_job/asset02",
-		stages = {"ukrainian_job"}
+		stages = {
+			"ukrainian_job"
+		}
 	}
 	self.ukrainian_job_cam = {
 		name_id = "menu_asset_cam",
 		texture = "guis/textures/pd2/mission_briefing/assets/ukranian_job/asset07",
-		stages = {"ukrainian_job"},
+		stages = {
+			"ukrainian_job"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_cam_desc",
 		no_mystery = true,
@@ -526,68 +550,88 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.ukrainian_job_metal_detector = {
 		name_id = "menu_asset_test_jewelry_store_blueprint",
 		texture = "guis/textures/pd2/mission_briefing/assets/ukranian_job/asset05",
-		stages = {"ukrainian_job"}
+		stages = {
+			"ukrainian_job"
+		}
 	}
 	self.ukrainian_job_shutter = {
 		name_id = "menu_asset_test_jewelry_store_code",
 		unlock_desc_id = "menu_asset_ukrainian_job_shutter_desc",
 		texture = "guis/textures/pd2/mission_briefing/assets/ukranian_job/asset06",
-		stages = {"ukrainian_job"},
+		stages = {
+			"ukrainian_job"
+		},
 		no_mystery = true,
 		money_lock = tweak_data:get_value("money_manager", "mission_asset_cost_small", 3)
 	}
 	self.security_safe_05x05 = {
 		name_id = "menu_asset_test_jewelry_store_safe",
 		texture = "guis/textures/pd2/mission_briefing/assets/ukranian_job/asset04",
-		stages = {"ukrainian_job"}
+		stages = {
+			"ukrainian_job"
+		}
 	}
 	self.welcome_to_the_jungle_keycard = {
 		name_id = "menu_asset_welcome_to_the_jungle_keycard",
 		unlock_desc_id = "menu_asset_welcome_to_the_jungle_keycard_desc",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset07",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		job_lock = "keycard"
 	}
 	self.welcome_to_the_jungle_shuttercode = {
 		name_id = "menu_asset_welcome_to_the_jungle_shuttercode",
 		unlock_desc_id = "menu_asset_welcome_to_the_jungle_shuttercode_desc",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset02",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		job_lock = "shuttercode"
 	}
 	self.welcome_to_the_jungle_plane_keys = {
 		name_id = "menu_asset_welcome_to_the_jungle_plane_keys",
 		unlock_desc_id = "menu_asset_welcome_to_the_jungle_plane_keys_desc",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset05",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		job_lock = "planekeys"
 	}
 	self.welcome_to_the_jungle_blueprints = {
 		name_id = "menu_asset_welcome_to_the_jungle_blueprints",
 		unlock_desc_id = "menu_asset_welcome_to_the_jungle_blueprints_desc",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset09",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		job_lock = "blueprints"
 	}
 	self.welcome_to_the_jungle_fusion = {
 		name_id = "menu_asset_welcome_to_the_jungle_fusion",
 		unlock_desc_id = "menu_asset_welcome_to_the_jungle_fusion_desc",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset08",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		job_lock = "fusion"
 	}
 	self.welcome_to_the_jungle_guards = {
 		name_id = "menu_asset_welcome_to_the_jungle_guards",
 		unlock_desc_id = "menu_asset_welcome_to_the_jungle_guards_desc",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset06",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		job_lock = "guards"
 	}
 	self.welcome_to_the_jungle_rossy = {
 		name_id = "menu_asset_welcome_to_the_jungle_rossy",
 		unlock_desc_id = "menu_asset_welcome_to_the_jungle_rossy_desc",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset04",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		job_lock = "rossy"
 	}
 	self.watchdogs_1_ammo = {
@@ -665,7 +709,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.firestarter_1_ammo = {
 		name_id = "menu_asset_ammo",
 		texture = "guis/textures/pd2/mission_briefing/assets/watch_dogs/day1/asset01",
-		stages = {"firestarter_1"},
+		stages = {
+			"firestarter_1"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_ammo_desc",
 		no_mystery = true,
@@ -674,7 +720,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.firestarter_1_health = {
 		name_id = "menu_asset_health",
 		texture = "guis/textures/pd2/mission_briefing/assets/watch_dogs/day1/asset02",
-		stages = {"firestarter_1"},
+		stages = {
+			"firestarter_1"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_health_desc",
 		no_mystery = true,
@@ -683,7 +731,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.firestarter_2_cam = {
 		name_id = "menu_asset_cam",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset03",
-		stages = {"firestarter_2"},
+		stages = {
+			"firestarter_2"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_cam_desc",
 		no_mystery = true,
@@ -692,7 +742,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.firestarter_3_insiderinfo = {
 		name_id = "menu_asset_branchbank_insiderinfo",
 		texture = "guis/textures/pd2/mission_briefing/assets/bank/assets_bank_insiderinfo",
-		stages = {"firestarter_3"},
+		stages = {
+			"firestarter_3"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_branchbank_insiderinfo_desc",
 		no_mystery = true,
@@ -701,7 +753,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.firestarter_3_map_basic = {
 		name_id = "menu_asset_branchbank_blueprint",
 		texture = "guis/textures/pd2/mission_briefing/assets/bank/assets_bank_blueprint",
-		stages = {"firestarter_3"},
+		stages = {
+			"firestarter_3"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_branchbank_blueprint_unlock_desc",
 		no_mystery = true
@@ -721,7 +775,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.election_day_1_keycard = {
 		name_id = "menu_asset_election1_keycard",
 		texture = "guis/textures/pd2/mission_briefing/assets/election_day/day1/assets_election_day_1_keycard",
-		stages = {"election_day_1"},
+		stages = {
+			"election_day_1"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_election1_keycard_desc",
 		no_mystery = true,
@@ -730,7 +786,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.election_day_2_ladder = {
 		name_id = "menu_asset_election2_ladder",
 		texture = "guis/textures/pd2/mission_briefing/assets/election_day/day2/assets_election_day_2_ladder",
-		stages = {"election_day_2"},
+		stages = {
+			"election_day_2"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_election2_ladder_desc",
 		no_mystery = true,
@@ -739,7 +797,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.election_day_2_keycard = {
 		name_id = "menu_asset_election2_keycard",
 		texture = "guis/textures/pd2/mission_briefing/assets/election_day/day2/assets_election_day_2_keycard",
-		stages = {"election_day_2"},
+		stages = {
+			"election_day_2"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_election2_keycard_desc",
 		no_mystery = true,
@@ -759,7 +819,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.jungle_2_gas = {
 		name_id = "menu_asset_jungle_2_gas",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset01",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_jungle_2_gas_desc",
 		no_mystery = true,
@@ -768,7 +830,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.jungle_2_cam = {
 		name_id = "menu_asset_cam",
 		texture = "guis/textures/pd2/mission_briefing/assets/big_oil/day2/asset03",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_cam_desc",
 		no_mystery = true,
@@ -777,7 +841,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.jungle_2_ammo = {
 		name_id = "menu_asset_jungle_2_ammo",
 		texture = "guis/textures/pd2/mission_briefing/assets/watch_dogs/day1/asset01",
-		stages = {"welcome_to_the_jungle_2"},
+		stages = {
+			"welcome_to_the_jungle_2"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_jungle_2_ammo_desc",
 		no_mystery = true,
@@ -824,7 +890,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.rat_3_pilot = {
 		name_id = "menu_asset_pilot",
 		texture = "guis/textures/pd2/mission_briefing/assets/rat/day3/asset01",
-		stages = {"alex_3"},
+		stages = {
+			"alex_3"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_pilot_desc",
 		no_mystery = true,
@@ -833,7 +901,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.mallcrasher_ammo = {
 		name_id = "menu_asset_ammo",
 		texture = "guis/textures/pd2/mission_briefing/assets/watch_dogs/day1/asset01",
-		stages = {"mallcrasher"},
+		stages = {
+			"mallcrasher"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_ammo_desc",
 		no_mystery = true,
@@ -842,7 +912,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.mallcrasher_health = {
 		name_id = "menu_asset_health",
 		texture = "guis/textures/pd2/mission_briefing/assets/watch_dogs/day1/asset02",
-		stages = {"mallcrasher"},
+		stages = {
+			"mallcrasher"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_health_desc",
 		no_mystery = true,
@@ -851,7 +923,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.mallcrasher_gascan_south = {
 		name_id = "menu_asset_mallcrasher_gascan_south",
 		texture = "guis/textures/pd2/mission_briefing/assets/mallcrasher/asset01",
-		stages = {"mallcrasher"},
+		stages = {
+			"mallcrasher"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_mallcrasher_gascan_south_desc",
 		no_mystery = true,
@@ -860,7 +934,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.mallcrasher_gascan_north = {
 		name_id = "menu_asset_mallcrasher_gascan_north",
 		texture = "guis/textures/pd2/mission_briefing/assets/mallcrasher/asset02",
-		stages = {"mallcrasher"},
+		stages = {
+			"mallcrasher"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_mallcrasher_gascan_north_desc",
 		no_mystery = true,
@@ -869,7 +945,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.nightclub_ammo = {
 		name_id = "menu_asset_ammo",
 		texture = "guis/textures/pd2/mission_briefing/assets/watch_dogs/day1/asset01",
-		stages = {"nightclub"},
+		stages = {
+			"nightclub"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_ammo_desc",
 		no_mystery = true,
@@ -878,7 +956,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.nightclub_health = {
 		name_id = "menu_asset_health",
 		texture = "guis/textures/pd2/mission_briefing/assets/watch_dogs/day1/asset02",
-		stages = {"nightclub"},
+		stages = {
+			"nightclub"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_health_desc",
 		no_mystery = true,
@@ -887,7 +967,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.nightclub_fire1 = {
 		name_id = "menu_asset_nightclub_fire1",
 		texture = "guis/textures/pd2/mission_briefing/assets/nightclub/asset04",
-		stages = {"nightclub"},
+		stages = {
+			"nightclub"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_nightclub_fire1_desc",
 		no_mystery = true,
@@ -896,7 +978,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.nightclub_fire2 = {
 		name_id = "menu_asset_nightclub_fire2",
 		texture = "guis/textures/pd2/mission_briefing/assets/nightclub/asset03",
-		stages = {"nightclub"},
+		stages = {
+			"nightclub"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_nightclub_fire2_desc",
 		no_mystery = true,
@@ -905,7 +989,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.nightclub_badmusic = {
 		name_id = "menu_asset_nightclub_badmusic",
 		texture = "guis/textures/pd2/mission_briefing/assets/nightclub/asset02",
-		stages = {"nightclub"},
+		stages = {
+			"nightclub"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_nightclub_badmusic_desc",
 		no_mystery = true,
@@ -914,7 +1000,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.nightclub_lootpickup = {
 		name_id = "menu_asset_nightclub_lootpickup",
 		texture = "guis/textures/pd2/mission_briefing/assets/nightclub/asset01",
-		stages = {"nightclub"},
+		stages = {
+			"nightclub"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_nightclub_lootpickup_desc",
 		no_mystery = true,
@@ -923,12 +1011,16 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.four_stores_overview = {
 		name_id = "menu_asset_four_stores_overview",
 		texture = "guis/textures/pd2/mission_briefing/assets/four_stores/asset01",
-		stages = {"four_stores"}
+		stages = {
+			"four_stores"
+		}
 	}
 	self.arm_for_info = {
 		name_id = "menu_asset_arm_info",
 		texture = "guis/dlcs/dlc1/textures/pd2/mission_briefing/assets/train_01",
-		stages = {"arm_for"}
+		stages = {
+			"arm_for"
+		}
 	}
 	self.arm_for_ammo = {
 		name_id = "menu_asset_ammo",
@@ -963,32 +1055,44 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.arm_cro_info = {
 		name_id = "menu_asset_arm_location",
 		texture = "guis/dlcs/dlc1/textures/pd2/mission_briefing/assets/arm/crossroads",
-		stages = {"arm_cro"}
+		stages = {
+			"arm_cro"
+		}
 	}
 	self.arm_fac_info = {
 		name_id = "menu_asset_arm_location",
 		texture = "guis/dlcs/dlc1/textures/pd2/mission_briefing/assets/arm/harbor",
-		stages = {"arm_fac"}
+		stages = {
+			"arm_fac"
+		}
 	}
 	self.arm_par_info = {
 		name_id = "menu_asset_arm_location",
 		texture = "guis/dlcs/dlc1/textures/pd2/mission_briefing/assets/arm/park",
-		stages = {"arm_par"}
+		stages = {
+			"arm_par"
+		}
 	}
 	self.arm_hcm_info = {
 		name_id = "menu_asset_arm_location",
 		texture = "guis/dlcs/dlc1/textures/pd2/mission_briefing/assets/arm/downtown",
-		stages = {"arm_hcm"}
+		stages = {
+			"arm_hcm"
+		}
 	}
 	self.arm_und_info = {
 		name_id = "menu_asset_arm_location",
 		texture = "guis/dlcs/dlc1/textures/pd2/mission_briefing/assets/arm/underpass",
-		stages = {"arm_und"}
+		stages = {
+			"arm_und"
+		}
 	}
 	self.roberts_pilot = {
 		name_id = "menu_asset_roberts_pilot",
 		texture = "guis/textures/pd2/mission_briefing/assets/roberts/asset_pilot_amateur",
-		stages = {"roberts"},
+		stages = {
+			"roberts"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_roberts_pilot_desc",
 		no_mystery = true,
@@ -997,49 +1101,63 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.roberts_plan_a = {
 		name_id = "menu_asset_roberts_plan_a",
 		texture = "guis/textures/pd2/mission_briefing/assets/roberts/asset_plan_a",
-		stages = {"roberts"},
+		stages = {
+			"roberts"
+		},
 		visible_if_locked = true,
 		no_mystery = true
 	}
 	self.roberts_plan_b = {
 		name_id = "menu_asset_roberts_plan_b",
 		texture = "guis/textures/pd2/mission_briefing/assets/roberts/asset_plan_b",
-		stages = {"roberts"},
+		stages = {
+			"roberts"
+		},
 		visible_if_locked = true,
 		no_mystery = true
 	}
 	self.hox_1 = {
 		name_id = "heist_hox_1_asset_armoredcar",
 		texture = "guis/textures/pd2/mission_briefing/assets/hoxtonbreakout/assets_hox01_armoredcar",
-		stages = {"hox_1"},
+		stages = {
+			"hox_1"
+		},
 		visible_if_locked = true,
 		no_mystery = true
 	}
 	self.hox_2 = {
 		name_id = "heist_hox_2_asset_hooverbuilding",
 		texture = "guis/textures/pd2/mission_briefing/assets/hoxtonbreakout/assets_hox02_bldg",
-		stages = {"hox_2"},
+		stages = {
+			"hox_2"
+		},
 		visible_if_locked = true,
 		no_mystery = true
 	}
 	self.crojob1_plan = {
 		name_id = "menu_asset_arm_info",
 		texture = "guis/textures/pd2/mission_briefing/assets/crojob/stage_1/assets_crojob_insiderinfo_bomb",
-		stages = {"crojob1"},
+		stages = {
+			"crojob1"
+		},
 		visible_if_locked = true,
 		no_mystery = true
 	}
 	self.crojob2_plan_a = {
 		name_id = "menu_asset_roberts_plan_a",
 		texture = "guis/textures/pd2/mission_briefing/assets/crojob/stage_2/assets_crojob_insiderinfo_stealth",
-		stages = {"crojob2"},
+		stages = {
+			"crojob2"
+		},
 		visible_if_locked = true,
 		no_mystery = true
 	}
 	self.crojob2_plan_b = {
 		name_id = "menu_asset_roberts_plan_b",
 		texture = "guis/textures/pd2/mission_briefing/assets/crojob/stage_2/assets_crojob_insiderinfo_loud",
-		stages = {"crojob2"},
+		stages = {
+			"crojob2"
+		},
 		visible_if_locked = true,
 		no_mystery = true
 	}
@@ -1056,7 +1174,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.dumpsters = {
 		name_id = "menu_asset_dumpsters",
 		texture = "guis/textures/pd2/mission_briefing/assets/carshop/asset_carshop_dumpster",
-		stages = {"cage"},
+		stages = {
+			"cage"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_dumpsters_desc",
 		no_mystery = true,
@@ -1065,14 +1185,18 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.hox_3_alarm = {
 		name_id = "heist_hox_3_alarm",
 		texture = "guis/textures/pd2/mission_briefing/assets/hox3/asset_hox3_alertbox",
-		stages = {"hox_3"},
+		stages = {
+			"hox_3"
+		},
 		visible_if_locked = true,
 		no_mystery = true
 	}
 	self.extra_cutter = {
 		name_id = "menu_asset_extra_cutter",
 		texture = "guis/dlcs/dlc_arena/textures/pd2/mission_briefing/assets/asset_arena_metal_cutter",
-		stages = {"arena"},
+		stages = {
+			"arena"
+		},
 		visible_if_locked = true,
 		server_lock = true,
 		no_mystery = true,
@@ -1082,7 +1206,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.planks = {
 		name_id = "menu_asset_planks",
 		texture = "guis/dlcs/peta/textures/pd2/mission_briefing/assets/asset_barn_planks",
-		stages = {"peta2"},
+		stages = {
+			"peta2"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_planks_desc",
 		no_mystery = true,
@@ -1091,27 +1217,37 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.mad_briefcase = {
 		name_id = "menu_asset_mad_briefcase",
 		texture = "guis/dlcs/mad/textures/pd2/mission_briefing/assets/mad_briefcase",
-		stages = {"mad"}
+		stages = {
+			"mad"
+		}
 	}
 	self.mad_russian_merc_cameras = {
 		name_id = "menu_asset_mad_russian_merc",
 		texture = "guis/dlcs/mad/textures/pd2/mission_briefing/assets/mad_russian_merc",
-		stages = {"mad"}
+		stages = {
+			"mad"
+		}
 	}
 	self.dark_emp = {
 		name_id = "menu_asset_dark_emp",
 		texture = "guis/dlcs/mad/textures/pd2/mission_briefing/assets/dark_emp",
-		stages = {"dark"}
+		stages = {
+			"dark"
+		}
 	}
 	self.dark_drone = {
 		name_id = "menu_asset_dark_drone",
 		texture = "guis/dlcs/mad/textures/pd2/mission_briefing/assets/dark_drone",
-		stages = {"dark"}
+		stages = {
+			"dark"
+		}
 	}
 	self.dark_additional_cameras = {
 		name_id = "menu_asset_dark_additional_cameras",
 		texture = "guis/dlcs/mad/textures/pd2/mission_briefing/assets/dark_additional_cameras",
-		stages = {"dark"},
+		stages = {
+			"dark"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_dark_additional_cameras_desc",
 		no_mystery = true,
@@ -1120,7 +1256,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.sniper_spot_born = {
 		name_id = "menu_asset_sniper_spot_born",
 		texture = "guis/dlcs/born/textures/pd2/mission_briefing/assets/assets_born_snipernest",
-		stages = {"born"},
+		stages = {
+			"born"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_sniper_spot_born_desc",
 		no_mystery = true,
@@ -1129,32 +1267,44 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.flat_chavez = {
 		name_id = "menu_asset_flat_chavez",
 		texture = "guis/dlcs/flat/textures/pd2/mission_briefing/assets/flat_chavez",
-		stages = {"flat"}
+		stages = {
+			"flat"
+		}
 	}
 	self.flat_panic_room_blueprint = {
 		name_id = "menu_asset_flat_panic_room_blueprint",
 		texture = "guis/dlcs/flat/textures/pd2/mission_briefing/assets/flat_panic_room_blueprint",
-		stages = {"flat"}
+		stages = {
+			"flat"
+		}
 	}
 	self.flat_recon_photos = {
 		name_id = "menu_asset_recon_photos",
 		texture = "guis/dlcs/help/textures/pd2/mission_briefing/assets/recon_photos",
-		stages = {"help"}
+		stages = {
+			"help"
+		}
 	}
 	self.moon_security_camera = {
 		name_id = "menu_asset_moon_security_camera",
 		texture = "guis/dlcs/moon/textures/pd2/mission_briefing/assets/moon_security_camera",
-		stages = {"moon"}
+		stages = {
+			"moon"
+		}
 	}
 	self.moon_mall_pamflet = {
 		name_id = "menu_asset_moon_mall_pamflet",
 		texture = "guis/dlcs/moon/textures/pd2/mission_briefing/assets/moon_mall_pamflet",
-		stages = {"moon"}
+		stages = {
+			"moon"
+		}
 	}
 	self.recon_intel = {
 		name_id = "menu_asset_recon_intel",
 		texture = "guis/dlcs/friend/textures/pd2/mission_briefing/assets/recon_intel",
-		stages = {"friend"},
+		stages = {
+			"friend"
+		},
 		money_lock = tweak_data:get_value("money_manager", "mission_asset_cost_small", 1),
 		no_mystery = true
 	}
@@ -1162,50 +1312,66 @@ function AssetsTweakData:_init_assets(tweak_data)
 		name_id = "menu_asset_rope_ladder",
 		unlock_desc_id = "menu_asset_rope_ladder_desc",
 		texture = "guis/dlcs/friend/textures/pd2/mission_briefing/assets/rope_ladder",
-		stages = {"friend"},
+		stages = {
+			"friend"
+		},
 		money_lock = tweak_data:get_value("money_manager", "mission_asset_cost_small", 2),
 		no_mystery = true
 	}
 	self.potential_location = {
 		name_id = "menu_asset_potential_location",
 		texture = "guis/dlcs/fish/textures/pd2/mission_briefing/assets/potential_location",
-		stages = {"fish"},
+		stages = {
+			"fish"
+		},
 		no_mystery = true
 	}
 	self.colored_tags = {
 		name_id = "menu_asset_colored_tags",
 		texture = "guis/dlcs/fish/textures/pd2/mission_briefing/assets/colored_tags",
-		stages = {"fish"},
+		stages = {
+			"fish"
+		},
 		no_mystery = true
 	}
 	self.laptop = {
 		name_id = "menu_asset_laptop",
 		texture = "guis/dlcs/fish/textures/pd2/mission_briefing/assets/laptop",
-		stages = {"fish"},
+		stages = {
+			"fish"
+		},
 		no_mystery = true
 	}
 	self.charon = {
 		name_id = "menu_asset_charon",
 		texture = "guis/dlcs/spa/textures/pd2/mission_briefing/assets/charon",
-		stages = {"spa"},
+		stages = {
+			"spa"
+		},
 		no_mystery = true
 	}
 	self.location = {
 		name_id = "menu_asset_location",
 		texture = "guis/dlcs/run/textures/pd2/mission_briefing/assets/location",
-		stages = {"run"},
+		stages = {
+			"run"
+		},
 		no_mystery = true
 	}
 	self.prison_transport_trucks = {
 		name_id = "menu_asset_prison_transport_trucks",
 		texture = "guis/dlcs/glace/textures/pd2/mission_briefing/assets/prison_transport_trucks",
-		stages = {"glace"},
+		stages = {
+			"glace"
+		},
 		no_mystery = true
 	}
 	self.asset_sah_ladder = {
 		name_id = "menu_asset_sah_ladder",
 		texture = "guis/dlcs/sah/textures/pd2/mission_briefing/assets/asset_sah_ladder_df",
-		stages = {"sah"},
+		stages = {
+			"sah"
+		},
 		visible_if_locked = true,
 		unlock_desc_id = "menu_asset_sah_ladder_desc",
 		no_mystery = true,
@@ -1214,7 +1380,9 @@ function AssetsTweakData:_init_assets(tweak_data)
 	self.sah_cutter = {
 		name_id = "menu_asset_sah_cutter",
 		texture = "guis/dlcs/dlc_arena/textures/pd2/mission_briefing/assets/asset_arena_metal_cutter",
-		stages = {"sah"},
+		stages = {
+			"sah"
+		},
 		visible_if_locked = true,
 		no_mystery = true,
 		unlock_desc_id = "menu_asset_sah_cutter_desc",
@@ -1227,46 +1395,60 @@ function AssetsTweakData:_init_debug_assets(tweak_data)
 		name_id = "debug_1",
 		texture = "guis/textures/pd2/blackmarket/icons/armors/level_1",
 		money_lock = 10,
-		stages = {"safehouse"},
+		stages = {
+			"safehouse"
+		},
 		visible_if_locked = true
 	}
 	self.debug_2 = {
 		name_id = "debug_2",
 		texture = "guis/textures/pd2/blackmarket/icons/armors/level_2",
-		stages = {"safehouse"},
+		stages = {
+			"safehouse"
+		},
 		money_lock = 20000
 	}
 	self.debug_3 = {
 		name_id = "debug_3",
 		texture = "guis/textures/pd2/blackmarket/icons/armors/level_3",
-		stages = {"safehouse"},
+		stages = {
+			"safehouse"
+		},
 		money_lock = 30,
 		visible_if_locked = false
 	}
 	self.debug_4 = {
 		name_id = "debug_4",
 		texture = "guis/textures/pd2/blackmarket/icons/armors/level_4",
-		stages = {"safehouse"},
+		stages = {
+			"safehouse"
+		},
 		money_lock = 4000000,
 		visible_if_locked = true
 	}
 	self.debug_5 = {
 		name_id = "debug_5",
 		texture = "guis/textures/pd2/blackmarket/icons/armors/level_5",
-		stages = {"safehouse"},
+		stages = {
+			"safehouse"
+		},
 		money_lock = 50
 	}
 	self.debug_6 = {
 		name_id = "debug_6",
 		texture = "guis/textures/pd2/blackmarket/icons/armors/level_6",
-		stages = {"safehouse"},
+		stages = {
+			"safehouse"
+		},
 		money_lock = 60000000,
 		visible_if_locked = true
 	}
 	self.debug_7 = {
 		name_id = "debug_7",
 		texture = "guis/textures/pd2/blackmarket/icons/armors/level_7",
-		stages = {"safehouse"},
+		stages = {
+			"safehouse"
+		},
 		money_lock = 700,
 		visible_if_locked = true
 	}
@@ -1313,4 +1495,3 @@ function AssetsTweakData:debug_assets()
 
 	print(inspect(asset_levels))
 end
-

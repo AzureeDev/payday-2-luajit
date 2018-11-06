@@ -96,4 +96,3 @@ function SpecializationDialog:remove_mouse()
 		self._mouse_id = nil
 	end
 end
-

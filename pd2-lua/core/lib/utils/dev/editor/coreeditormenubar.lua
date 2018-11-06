@@ -364,8 +364,12 @@ function CoreEditor:build_menubar()
 	hide_menu:append_separator()
 	hide_menu:append_check_item("RENDER_EFFECTS", "Render Effects", "Toggle rendering of effects on and off")
 	hide_menu:set_checked("RENDER_EFFECTS", true)
-	Global.frame:connect("HIDE HELPERS", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_hide_helper_units"), {vis = false})
-	Global.frame:connect("UNHIDE HELPERS", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_hide_helper_units"), {vis = true})
+	Global.frame:connect("HIDE HELPERS", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_hide_helper_units"), {
+		vis = false
+	})
+	Global.frame:connect("UNHIDE HELPERS", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_hide_helper_units"), {
+		vis = true
+	})
 	Global.frame:connect("HIDE HELPERS EXCEPT LIGHTS", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_hide_helper_units"), {
 		vis = false,
 		skip_lights = true
@@ -537,7 +541,11 @@ function CoreEditor:on_save()
 	if self._lastfile then
 		self:do_save(self._lastfile, self._lastdir)
 
-		local rules = {ignore = {dds = true}}
+		local rules = {
+			ignore = {
+				dds = true
+			}
+		}
 
 		self:copy_incremental(self:create_temp_saves("incremental"), self._lastdir, rules)
 	else
@@ -958,11 +966,13 @@ function CoreEditor:on_check_duality()
 				rot = rot
 			})
 		else
-			units[unit:name():s()] = {{
-				unit = unit,
-				pos = pos,
-				rot = rot
-			}}
+			units[unit:name():s()] = {
+				{
+					unit = unit,
+					pos = pos,
+					rot = rot
+				}
+			}
 		end
 	end
 
@@ -991,6 +1001,7 @@ end
 function CoreEditor:on_show_unit_breakdown()
 	self:show_dialog("unit_breakdown", "UnitBreakdownView")
 end
+
 local leveltools_ids = Idstring("leveltools")
 
 function CoreEditor:on_hide_helper_units(data)
@@ -1045,10 +1056,10 @@ end
 function CoreEditor:on_about()
 	EWS:MessageDialog(Global.frame_panel, self._editor_name .. [[
 
+
 "And the Earth Was Without Form and Void.."
 
 Copyright 2007-~ GRiN, Inc.
 
 http://ganon/ or http://www.grin.se]], "About...", "OK,ICON_INFORMATION"):show_modal()
 end
-

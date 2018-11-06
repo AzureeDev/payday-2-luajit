@@ -80,6 +80,7 @@ function WeaponFlashLight:destroy(unit)
 		self._light_effect = nil
 	end
 end
+
 local mvec1 = Vector3()
 local mrot1 = Rotation()
 local mrot2 = Rotation()
@@ -228,6 +229,7 @@ function WeaponFlashLight:update_frozen(t, dt)
 		self._frozen_t = nil
 	end
 end
+
 WeaponFlashLight.EFFECT_OPACITY_MAX = 16
 WeaponFlashLight.NPC_GLOW_OPACITY_MAX = 100
 WeaponFlashLight.NPC_CONE_OPACITY_MAX = 8
@@ -269,4 +271,3 @@ function WeaponFlashLight:color()
 
 	return Color(col.x, col.y, col.z)
 end
-

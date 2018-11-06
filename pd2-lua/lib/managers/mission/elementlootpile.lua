@@ -257,4 +257,3 @@ function ElementLootPile:on_pickup_SO_administered(loot_index, thief)
 		self._steal_SO_data[loot_index].SO_registered = false
 	end
 end
-

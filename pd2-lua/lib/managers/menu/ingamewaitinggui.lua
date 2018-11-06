@@ -125,41 +125,53 @@ function IngameWaitingGui:init(ws)
 		y = self._loadout_bottom + PADDING,
 		h = text_font_size
 	})
-	self._peer_btns_panel = self._button_panel:panel({w = 0})
+	self._peer_btns_panel = self._button_panel:panel({
+		w = 0
+	})
 	self._peer_btns = {
 		self:add_button(self._peer_btns_panel, "hud_waiting_accept", "drop_in_accept", "spawn", 30),
 		self:add_button(self._peer_btns_panel, "hud_waiting_return", "drop_in_return", "return_back", 30),
 		self:add_button(self._peer_btns_panel, "hud_waiting_kick", "drop_in_kick", "kick")
 	}
-	self._left_btns_panel = self._button_panel:panel({w = 0})
-	self._left_btns = {self:add_button(self._left_btns_panel, "hud_waiting_ok", "drop_in_accept", "left_ok")}
+	self._left_btns_panel = self._button_panel:panel({
+		w = 0
+	})
+	self._left_btns = {
+		self:add_button(self._left_btns_panel, "hud_waiting_ok", "drop_in_accept", "left_ok")
+	}
 
 	self._content_panel:set_h(self._button_panel:bottom() + PADDING)
 	self._content_panel:set_w(self._loadout_width + PADDING * 2)
-	BoxGuiObject:new(self._content_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._content_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self._prev_panel = self._content_panel:panel()
 	self._next_panel = self._content_panel:panel()
 	self._prev_arrow = IngameWaitingButton:new(self._prev_panel, "<", nil, callback(self, self, "next_page"))
 	self._next_arrow = IngameWaitingButton:new(self._next_panel, ">", nil, callback(self, self, "prev_page"))
 
-	BoxGuiObject:new(self._prev_panel, {sides = {
-		2,
-		0,
-		0,
-		0
-	}})
-	BoxGuiObject:new(self._next_panel, {sides = {
-		0,
-		2,
-		0,
-		0
-	}})
+	BoxGuiObject:new(self._prev_panel, {
+		sides = {
+			2,
+			0,
+			0,
+			0
+		}
+	})
+	BoxGuiObject:new(self._next_panel, {
+		sides = {
+			0,
+			2,
+			0,
+			0
+		}
+	})
 	self._prev_arrow:panel():set_top(self._button_panel:top())
 	self._next_arrow:panel():set_top(self._button_panel:top())
 	self._prev_arrow:panel():set_left(PADDING)
@@ -284,7 +296,9 @@ function IngameWaitingGui:check_remove_panel(slot_id)
 end
 
 function IngameWaitingGui:add_button(panel, text, binding, func_name, padding)
-	local params = {MY_BTN = managers.localization:btn_macro(binding, true, true) or ""}
+	local params = {
+		MY_BTN = managers.localization:btn_macro(binding, true, true) or ""
+	}
 	text = managers.localization:text(text, params)
 	local btn, btn_panel = IngameWaitingButton:new(panel, text, binding, callback(self, self, func_name))
 
@@ -319,6 +333,7 @@ function IngameWaitingGui:try_get_dummy()
 
 	return self._dummy_item
 end
+
 IngameWaitingGui.game_state_blacklist = {
 	victoryscreen = true,
 	gameoverscreen = true
@@ -385,7 +400,9 @@ function IngameWaitingGui:set_panel_for(peer_id)
 
 	if not self._peer or not managers.wait:is_waiting(self._peer:id()) and not peer_id == 1 then
 		local name = self._saved_names[peer_id] or "N/A"
-		local str = managers.localization:text("menu_waiting_peer_left", {name = name})
+		local str = managers.localization:text("menu_waiting_peer_left", {
+			name = name
+		})
 		self._loadout_panel = self._content_panel:panel()
 
 		self._detection:set_visible(false)
@@ -499,12 +516,14 @@ function IngameWaitingGui:set_panel_for(peer_id)
 	deploy_panel:set_lefttop(throw_panel:righttop())
 	self._loadout_panel:set_w(deploy_panel:right())
 	self._loadout_panel:set_h(primary_panel:bottom())
-	BoxGuiObject:new(self._loadout_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._loadout_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	return true
 end
@@ -521,7 +540,7 @@ function IngameWaitingGui:create_item(panel, outfit_item, tweak_data, folder)
 			guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
 		end
 
-		local item_bitmap = panel:bitmap({
+		slot9 = panel:bitmap({
 			alpha = 0.8,
 			texture = guis_catalog .. folder .. outfit_item,
 			w = w,
@@ -630,8 +649,18 @@ function IngameWaitingGui:create_weapon(weapon, panel)
 		for _, part_id in ipairs(parts) do
 			stats = factory[part_id] and factory[part_id].stats or false
 			custom_stats = factory[part_id] and factory[part_id].custom_stats or false
-			has_stat = stats and table.size(stats) > 1 and true or false
-			has_team = custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier) and true or false
+
+			if stats and table.size(stats) > 1 then
+				has_stat = true
+			else
+				has_stat = false
+			end
+
+			if custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier) then
+				has_team = true
+			else
+				has_team = false
+			end
 
 			if has_stat then
 				table.insert(textures, "guis/textures/pd2/blackmarket/inv_mod_bonus_stats")
@@ -644,8 +673,18 @@ function IngameWaitingGui:create_weapon(weapon, panel)
 
 		if #textures == 0 and weapon.cosmetics and weapon.cosmetics.bonus and not managers.job:is_current_job_competitive() then
 			local bonus_data = tweak_data.economy.bonuses[tweak_data.blackmarket.weapon_skins[weapon.cosmetics.id].bonus]
-			has_stat = bonus_data and bonus_data.stats and true or false
-			has_team = bonus_data and (bonus_data.exp_multiplier or bonus_data.money_multiplier) and true or false
+
+			if bonus_data and bonus_data.stats then
+				has_stat = true
+			else
+				has_stat = false
+			end
+
+			if bonus_data and (bonus_data.exp_multiplier or bonus_data.money_multiplier) then
+				has_team = true
+			else
+				has_team = false
+			end
 
 			if has_stat then
 				table.insert(textures, "guis/textures/pd2/blackmarket/inv_mod_bonus_stats")
@@ -732,6 +771,7 @@ function IngameWaitingGui:prev_page()
 
 	return false
 end
+
 IngameWaitingGui.previous_page = IngameWaitingGui.prev_page
 
 function IngameWaitingGui:next_page()
@@ -821,6 +861,7 @@ function IngameWaitingGui:set_current_button(index)
 	local t1 = current and current:set_highlighted(false)
 	local t0 = target and target:set_highlighted(self._highlighted)
 end
+
 IngameWaitingButton = IngameWaitingButton or class()
 
 function IngameWaitingButton:init(parent_panel, text, binding, callback)
@@ -855,4 +896,3 @@ function IngameWaitingButton:trigger()
 		self._callback()
 	end
 end
-

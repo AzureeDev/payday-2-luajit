@@ -27,6 +27,7 @@ end
 function Done:destroy()
 	self._is_destroyed = true
 end
+
 DoneOrFinished = DoneOrFinished or class(Done)
 DoneOrFinished.FINISHED = 2
 
@@ -37,4 +38,3 @@ end
 function DoneOrFinished:is_finished()
 	return self:_is_response_value(DoneOrFinished.FINISHED)
 end
-

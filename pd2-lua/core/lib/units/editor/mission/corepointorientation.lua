@@ -27,4 +27,3 @@ function CorePointOrientationUnitElement:_draw_orientation()
 	Application:draw_arrow(self._unit:position(), self._unit:position() + self._unit:rotation():y() * len, 0, 1, 0, scale)
 	Application:draw_arrow(self._unit:position(), self._unit:position() + self._unit:rotation():z() * len, 0, 0, 1, scale)
 end
-

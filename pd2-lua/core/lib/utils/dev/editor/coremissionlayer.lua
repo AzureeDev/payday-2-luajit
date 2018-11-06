@@ -10,7 +10,9 @@ core:import("CoreEditorCommand")
 MissionLayer = MissionLayer or class(CoreStaticLayer.StaticLayer)
 
 function MissionLayer:init(owner)
-	local types = CoreEditorUtils.layer_type("mission") or {"mission_element"}
+	local types = CoreEditorUtils.layer_type("mission") or {
+		"mission_element"
+	}
 
 	MissionLayer.super.init(self, owner, "mission", types, "mission_elements")
 
@@ -77,7 +79,9 @@ function MissionLayer:save()
 		local t = {
 			entry = "mission_scripts",
 			continent = data.continent,
-			data = {[name] = data}
+			data = {
+				[name] = data
+			}
 		}
 
 		managers.editor:add_save_data(t)
@@ -99,7 +103,9 @@ function MissionLayer:save_mission(params)
 		local script_units = all_script_units[script] or {}
 
 		if not params.name or params.name and self._scripts[script].continent == params.name then
-			scripts[script] = {activate_on_parsed = self._scripts[script].activate_on_parsed}
+			scripts[script] = {
+				activate_on_parsed = self._scripts[script].activate_on_parsed
+			}
 			local elements = {}
 
 			for _, unit in ipairs(script_units) do
@@ -403,13 +409,18 @@ function MissionLayer:update(time, rel_time)
 			end
 
 			if distance < 2250000 then
-				local a = distance < 1000000 and 1 or ((2250000 - distance) / 250000) / 5
+				local a = distance < 1000000 and 1 or (2250000 - distance) / 250000 / 5
 				local color = selected_unit and Color(a, 0, 1, 0) or Color(a, 1, 1, 1)
 
 				self._name_brush:set_color(color)
 
 				local offset = nil
-				offset = unit:mission_element()._icon_ws and cam_up * unit:bounding_sphere_radius() or Vector3(0, 0, unit:bounding_sphere_radius())
+
+				if unit:mission_element()._icon_ws then
+					offset = cam_up * unit:bounding_sphere_radius()
+				else
+					offset = Vector3(0, 0, unit:bounding_sphere_radius())
+				end
 
 				self._name_brush:center_text(unit:position() + offset, utf8.from_latin1(unit:unit_data().name_id), cam_right, -cam_up)
 			end
@@ -647,7 +658,9 @@ function MissionLayer:add_btns_to_toolbar(...)
 	})
 	self._btn_toolbar:add_check_tool("PERSISTENT_DEBUG", "Turns on screen debug information on/off", CoreEws.image_path("world_editor\\mission_persistent_debug_16x16.png"), "Turns on screen debug information on/off")
 	self._btn_toolbar:set_tool_state("PERSISTENT_DEBUG", managers.mission:persistent_debug_enabled())
-	self._btn_toolbar:connect("PERSISTENT_DEBUG", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "toggle_persistent_debug"), {toolbar = "_btn_toolbar"})
+	self._btn_toolbar:connect("PERSISTENT_DEBUG", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "toggle_persistent_debug"), {
+		toolbar = "_btn_toolbar"
+	})
 	self._btn_toolbar:add_check_tool("VISUALIZE_FLOW", "Visualize flow", CoreEws.image_path("toolbar\\find_16x16.png"), "Visualize flow")
 	self._btn_toolbar:set_tool_state("VISUALIZE_FLOW", self._visualize_flow)
 	self._btn_toolbar:connect("VISUALIZE_FLOW", "EVT_COMMAND_MENU_SELECTED", callback(nil, CoreEditorUtils, "toolbar_toggle"), {
@@ -774,7 +787,9 @@ function MissionLayer:_reset_scripts()
 
 	self._scripts = {}
 
-	self:_create_script(self._default_script_name, {activate_on_parsed = true})
+	self:_create_script(self._default_script_name, {
+		activate_on_parsed = true
+	})
 end
 
 function MissionLayer:_create_script(name, values)
@@ -1045,4 +1060,3 @@ function MissionLayer:break_links()
 
 	managers.editor:thaw_gui_lists()
 end
-

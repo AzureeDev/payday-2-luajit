@@ -10,6 +10,7 @@ function HUDChatVR:init(ws, hud)
 
 	hud.panel = old_panel
 end
+
 HUDChatVR.default_layout_output_panel = HUDChat._layout_output_panel
 
 function HUDChatVR:_layout_output_panel()
@@ -23,4 +24,3 @@ end
 function HUDChatVR:_animate_show_component(o)
 	o:set_alpha(1)
 end
-

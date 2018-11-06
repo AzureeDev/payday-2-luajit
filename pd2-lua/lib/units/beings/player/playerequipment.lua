@@ -88,6 +88,7 @@ function PlayerEquipment:valid_placement(equipment_data)
 
 	return valid
 end
+
 local ids_contour_color = Idstring("contour_color")
 local ids_contour_opacity = Idstring("contour_opacity")
 local ids_material = Idstring("material")
@@ -117,7 +118,7 @@ function PlayerEquipment:use_ammo_bag()
 		if Network:is_client() then
 			managers.network:session():send_to_host("place_ammo_bag", pos, rot, ammo_upgrade_lvl, bullet_storm_level)
 		else
-			local unit = AmmoBagBase.spawn(pos, rot, ammo_upgrade_lvl, managers.network:session():local_peer():id(), bullet_storm_level)
+			slot6 = AmmoBagBase.spawn(pos, rot, ammo_upgrade_lvl, managers.network:session():local_peer():id(), bullet_storm_level)
 		end
 
 		return true
@@ -152,7 +153,7 @@ function PlayerEquipment:use_doctor_bag()
 		if Network:is_client() then
 			managers.network:session():send_to_host("place_deployable_bag", "DoctorBagBase", pos, rot, bits)
 		else
-			local unit = DoctorBagBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
+			slot7 = DoctorBagBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
 		end
 
 		return true
@@ -179,7 +180,7 @@ function PlayerEquipment:use_first_aid_kit()
 		if Network:is_client() then
 			managers.network:session():send_to_host("place_deployable_bag", "FirstAidKitBase", pos, rot, bits)
 		else
-			local unit = FirstAidKitBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
+			slot7 = FirstAidKitBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
 		end
 
 		return true
@@ -189,7 +190,6 @@ function PlayerEquipment:use_first_aid_kit()
 end
 
 function PlayerEquipment:use_armor_kit()
-
 	local function redirect()
 		if Network:is_client() then
 			managers.network:session():send_to_host("used_deployable")
@@ -228,7 +228,7 @@ function PlayerEquipment:use_bodybags_bag()
 		if Network:is_client() then
 			managers.network:session():send_to_host("place_deployable_bag", "BodyBagsBagBase", pos, rot, amount_upgrade_lvl)
 		else
-			local unit = BodyBagsBagBase.spawn(pos, rot, amount_upgrade_lvl, managers.network:session():local_peer():id())
+			slot5 = BodyBagsBagBase.spawn(pos, rot, amount_upgrade_lvl, managers.network:session():local_peer():id())
 		end
 
 		return true
@@ -573,4 +573,3 @@ end
 if _G.IS_VR then
 	require("lib/units/beings/player/PlayerEquipmentVR")
 end
-

@@ -100,6 +100,7 @@ end
 
 function ChatManager:load(data)
 end
+
 ChatBase = ChatBase or class()
 
 function ChatBase:init()
@@ -107,6 +108,7 @@ end
 
 function ChatBase:receive_message(name, message, color, icon)
 end
+
 ChatGui = ChatGui or class(ChatBase)
 ChatGui.line_height = 22
 
@@ -148,7 +150,9 @@ function ChatGui:init(ws)
 
 	self:set_leftbottom(0, 70)
 
-	local chat_blur = self._panel:panel({name = "chat_blur"})
+	local chat_blur = self._panel:panel({
+		name = "chat_blur"
+	})
 	local blur = chat_blur:bitmap({
 		texture = "guis/textures/test_blur_df",
 		name = "chat_blur",
@@ -164,12 +168,14 @@ function ChatGui:init(ws)
 	chat_blur:set_bottom(self._panel:h())
 	chat_blur:hide()
 
-	self._chat_blur_box = BoxGuiObject:new(chat_blur, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._chat_blur_box = BoxGuiObject:new(chat_blur, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	local chat_bg = self._panel:rect({
 		name = "chat_bg",
 		valign = "grow",
@@ -202,12 +208,14 @@ function ChatGui:init(ws)
 		h = 10,
 		w = self._output_width
 	})
-	self._scroll_indicator_box_class = BoxGuiObject:new(output_panel, {sides = {
-		0,
-		0,
-		0,
-		0
-	}})
+	self._scroll_indicator_box_class = BoxGuiObject:new(output_panel, {
+		sides = {
+			0,
+			0,
+			0,
+			0
+		}
+	})
 	local scroll_up_indicator_shade = output_panel:bitmap({
 		texture = "guis/textures/headershadow",
 		name = "scroll_up_indicator_shade",
@@ -257,21 +265,27 @@ function ChatGui:init(ws)
 		x = 5,
 		valign = "scale"
 	})
-	self._scroll_bar_box_class = BoxGuiObject:new(scroll_bar_box_panel, {sides = {
-		2,
-		2,
-		0,
-		0
-	}})
+	self._scroll_bar_box_class = BoxGuiObject:new(scroll_bar_box_panel, {
+		sides = {
+			2,
+			2,
+			0,
+			0
+		}
+	})
 	self._enabled = true
 
 	if MenuCallbackHandler:is_win32() then
-		local chat_button_panel = self._hud_panel:panel({name = "chat_button_panel"})
+		local chat_button_panel = self._hud_panel:panel({
+			name = "chat_button_panel"
+		})
 		local chat_button = chat_button_panel:text({
 			name = "chat_button",
 			blend_mode = "add",
 			layer = 40,
-			text = managers.localization:to_upper_text("menu_cn_chat_show", {BTN_BACK = managers.localization:btn_macro("toggle_chat")}),
+			text = managers.localization:to_upper_text("menu_cn_chat_show", {
+				BTN_BACK = managers.localization:btn_macro("toggle_chat")
+			}),
 			font_size = tweak_data.menu.pd2_small_font_size,
 			font = tweak_data.menu.pd2_small_font,
 			color = tweak_data.screen_colors.button_stage_3
@@ -315,7 +329,6 @@ function ChatGui:init(ws)
 end
 
 function ChatGui:start_hud_blur()
-
 	local function func(o)
 		over(0.6, function (p)
 			o:set_alpha(math.lerp(0, 1, p))
@@ -380,44 +393,48 @@ function ChatGui:set_max_lines(max_lines)
 	chat_blur:set_shape(self._panel:shape())
 	chat_blur:set_h(math.round(ChatGui.line_height * self._max_lines) + 24)
 	chat_blur:set_bottom(self._panel:h())
-	self._chat_blur_box:create_sides(chat_blur, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._chat_blur_box:create_sides(chat_blur, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local chat_bg = self._panel:child("chat_bg")
 
 	chat_bg:set_shape(chat_blur:shape())
 end
-ChatGui.PRESETS = {}
-ChatGui.PRESETS.default = {
-	left = 0,
-	bottom = 70,
-	layer = 20
-}
-ChatGui.PRESETS.lobby = {
-	left = 0,
-	bottom = 50,
-	layer = 20
-}
-ChatGui.PRESETS.crimenet = {
-	chat_blur = true,
-	left = 0,
-	is_crimenet_chat = true,
-	chat_bg_alpha = 0.25,
-	bottom = 0,
-	layer = tweak_data.gui.CRIMENET_CHAT_LAYER
-}
-ChatGui.PRESETS.preplanning = {
-	chat_blur = true,
-	left = 10,
-	is_crimenet_chat = true,
-	chat_bg_alpha = 0.25,
-	chat_button_align = "left",
-	bottom = 0,
-	layer = tweak_data.gui.CRIMENET_CHAT_LAYER
+
+ChatGui.PRESETS = {
+	default = {
+		left = 0,
+		bottom = 70,
+		layer = 20
+	},
+	lobby = {
+		left = 0,
+		bottom = 50,
+		layer = 20
+	},
+	crimenet = {
+		chat_blur = true,
+		left = 0,
+		is_crimenet_chat = true,
+		chat_bg_alpha = 0.25,
+		bottom = 0,
+		layer = tweak_data.gui.CRIMENET_CHAT_LAYER
+	},
+	preplanning = {
+		chat_blur = true,
+		left = 10,
+		is_crimenet_chat = true,
+		chat_bg_alpha = 0.25,
+		chat_button_align = "left",
+		bottom = 0,
+		layer = tweak_data.gui.CRIMENET_CHAT_LAYER
+	}
 }
 
 function ChatGui:set_params(params)
@@ -450,7 +467,10 @@ function ChatGui:set_params(params)
 	hud_blur:set_visible(params.hud_blur)
 
 	self._chat_button_align = nil
-	self._chat_button_align = params.chat_button_align and params.chat_button_align
+
+	if params.chat_button_align then
+		self._chat_button_align = params.chat_button_align
+	end
 
 	if params.is_crimenet_chat then
 		self:enable_crimenet_chat()
@@ -559,7 +579,9 @@ function ChatGui:_show_crimenet_chat()
 	local chat_button_panel = self._hud_panel:child("chat_button_panel")
 	local chat_button = chat_button_panel:child("chat_button")
 
-	chat_button:set_text(managers.localization:to_upper_text("menu_cn_chat_hide", {BTN_BACK = managers.localization:btn_macro("toggle_chat")}))
+	chat_button:set_text(managers.localization:to_upper_text("menu_cn_chat_hide", {
+		BTN_BACK = managers.localization:btn_macro("toggle_chat")
+	}))
 
 	local _, _, w, h = chat_button:text_rect()
 
@@ -605,7 +627,9 @@ function ChatGui:_hide_crimenet_chat()
 	local chat_button_panel = self._hud_panel:child("chat_button_panel")
 	local chat_button = chat_button_panel:child("chat_button")
 
-	chat_button:set_text(managers.localization:to_upper_text("menu_cn_chat_show", {BTN_BACK = managers.localization:btn_macro("toggle_chat")}))
+	chat_button:set_text(managers.localization:to_upper_text("menu_cn_chat_show", {
+		BTN_BACK = managers.localization:btn_macro("toggle_chat")
+	}))
 
 	local _, _, w, h = chat_button:text_rect()
 
@@ -690,13 +714,21 @@ function ChatGui:esc_key_callback()
 
 	self:_loose_focus()
 end
+
 local command_list = nil
-command_list = SystemInfo:platform() == Idstring("WIN32") and {
-	[Idstring("ready"):key()] = true,
-	[Idstring("fbi_files"):key()] = true,
-	[Idstring("fbi_inspect"):key()] = true,
-	[Idstring("fbi_search"):key()] = true
-} or {[Idstring("ready"):key()] = true}
+
+if SystemInfo:platform() == Idstring("WIN32") then
+	command_list = {
+		[Idstring("ready"):key()] = true,
+		[Idstring("fbi_files"):key()] = true,
+		[Idstring("fbi_inspect"):key()] = true,
+		[Idstring("fbi_search"):key()] = true
+	}
+else
+	command_list = {
+		[Idstring("ready"):key()] = true
+	}
+end
 
 function ChatGui:enter_key_callback()
 	if not self._enabled then
@@ -918,21 +950,23 @@ function ChatGui:set_scroll_indicators(force_update_scroll_indicators)
 	if scroll_panel:h() ~= 0 then
 		local old_h = scroll_bar:h()
 
-		scroll_bar:set_h((bar_h * output_panel:h()) / scroll_panel:h())
+		scroll_bar:set_h(bar_h * output_panel:h() / scroll_panel:h())
 
 		if old_h ~= scroll_bar:h() then
-			self._scroll_bar_box_class:create_sides(scroll_bar:child("scroll_bar_box_panel"), {sides = {
-				2,
-				2,
-				0,
-				0
-			}})
+			self._scroll_bar_box_class:create_sides(scroll_bar:child("scroll_bar_box_panel"), {
+				sides = {
+					2,
+					2,
+					0,
+					0
+				}
+			})
 		end
 	end
 
 	local sh = scroll_panel:h() ~= 0 and scroll_panel:h() or 1
 
-	scroll_bar:set_y(scroll_up_indicator_arrow:bottom() - (scroll_panel:y() * (output_panel:h() - scroll_up_indicator_arrow:h() * 2)) / sh)
+	scroll_bar:set_y(scroll_up_indicator_arrow:bottom() - scroll_panel:y() * (output_panel:h() - scroll_up_indicator_arrow:h() * 2) / sh)
 	scroll_bar:set_center_x(scroll_up_indicator_arrow:center_x())
 
 	local visible = output_panel:h() < scroll_panel:h()
@@ -959,12 +993,14 @@ function ChatGui:set_scroll_indicators(force_update_scroll_indicators)
 	end
 
 	if update_scroll_indicator_box then
-		self._scroll_indicator_box_class:create_sides(output_panel, {sides = {
-			0,
-			0,
-			scroll_up_visible and 2 or 0,
-			scroll_dn_visible and 2 or 0
-		}})
+		self._scroll_indicator_box_class:create_sides(output_panel, {
+			sides = {
+				0,
+				0,
+				scroll_up_visible and 2 or 0,
+				scroll_dn_visible and 2 or 0
+			}
+		})
 	end
 end
 
@@ -1404,7 +1440,12 @@ function ChatGui:update_caret()
 	local x, y, w, h = text:selection_rect()
 
 	if s == 0 and e == 0 then
-		x = text:align() == "center" and text:world_x() + text:w() / 2 or text:world_x()
+		if text:align() == "center" then
+			x = text:world_x() + text:w() / 2
+		else
+			x = text:world_x()
+		end
+
 		y = text:world_y()
 	end
 
@@ -1703,14 +1744,14 @@ function ChatGui:_animate_fade_output()
 	local fade_t = 1
 	local t = 0
 
-	while t < wait_t do
+	while wait_t > t do
 		local dt = coroutine.yield()
 		t = t + dt
 	end
 
 	local t = 0
 
-	while t < fade_t do
+	while fade_t > t do
 		local dt = coroutine.yield()
 		t = t + dt
 
@@ -1779,4 +1820,3 @@ function ChatGui:close(...)
 	self._hud_panel:remove(self._hud_panel:child("chat_button_panel"))
 	managers.chat:unregister_receiver(self._channel_id, self)
 end
-

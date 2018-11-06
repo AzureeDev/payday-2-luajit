@@ -165,4 +165,3 @@ function CoreWorldCameraUnitElement:_build_panel(panel, panel_sizer)
 	worldcamera_sizer:add(toolbar, 0, 1, "EXPAND,LEFT")
 	self._panel_sizer:add(worldcamera_sizer, 0, 0, "EXPAND")
 end
-

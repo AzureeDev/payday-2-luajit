@@ -72,8 +72,12 @@ function BoxGuiObject:_create_side(panel, side, type, texture)
 	if type == 0 then
 		return
 	elseif type == 1 or type == 3 or type == 4 then
-		local one = side_panel:bitmap({texture = texture or "guis/textures/pd2/shared_lines"})
-		local two = side_panel:bitmap({texture = texture or "guis/textures/pd2/shared_lines"})
+		local one = side_panel:bitmap({
+			texture = texture or "guis/textures/pd2/shared_lines"
+		})
+		local two = side_panel:bitmap({
+			texture = texture or "guis/textures/pd2/shared_lines"
+		})
 		local x = math.random(1, 255)
 		local y = math.random(0, one:texture_height() / 2 - 1) * 2
 		local tw = math.min(10, w)
@@ -265,4 +269,3 @@ function BoxGuiObject:close()
 		self._panel:parent():remove(self._panel)
 	end
 end
-

@@ -68,4 +68,3 @@ function CoreMusicUnitElement:_build_panel(panel, panel_sizer)
 
 	self:_build_value_checkbox(panel, panel_sizer, "use_instigator")
 end
-

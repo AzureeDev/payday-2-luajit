@@ -105,4 +105,3 @@ function Manager:leave_level_handler(level_handler)
 		user:leave_level(level_handler)
 	end
 end
-

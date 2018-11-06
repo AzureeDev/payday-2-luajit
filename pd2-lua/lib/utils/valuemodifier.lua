@@ -35,4 +35,3 @@ function ValueModifier:modify_value(type, base_value, ...)
 
 	return new_value
 end
-

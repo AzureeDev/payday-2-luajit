@@ -296,7 +296,9 @@ end
 function CoreCutsceneKeyBase:attribute_affects(changed, ...)
 	local class_table = self
 	class_table.__control_dependencies = class_table.__control_dependencies or {}
-	local affected_attribute_names = table.list_union(class_table.__control_dependencies[changed] or {}, {...})
+	local affected_attribute_names = table.list_union(class_table.__control_dependencies[changed] or {}, {
+		...
+	})
 	class_table.__control_dependencies[changed] = affected_attribute_names
 end
 
@@ -309,7 +311,12 @@ function CoreCutsceneKeyBase:populate_sizer_with_editable_attributes(grid_sizer,
 
 			if value_is_valid then
 				local value = control:get_value()
-				value = value == nil and "" or tostring(value)
+
+				if value == nil then
+					value = ""
+				else
+					value = tostring(value)
+				end
 
 				self:set_attribute_value_from_string(attribute_name, value)
 				self:refresh_controls_dependent_on(attribute_name)
@@ -437,7 +444,7 @@ function CoreCutsceneKeyBase:validate_control_for_attribute(attribute_name)
 	local value_is_valid = self:is_valid_attribute_value(attribute_name, self:attribute_value_from_string(attribute_name, control:get_value()))
 	local colour = value_is_valid and EWS:get_system_colour("WINDOW") or Color("ff9999")
 
-	control:set_background_colour((colour * 255):unpack())
+	control:set_background_colour(colour * 255:unpack())
 
 	if type_name(control) ~= "table" then
 		control:refresh()
@@ -465,7 +472,6 @@ function CoreCutsceneKeyBase:standard_combo_box_control(parent_frame, callback_f
 end
 
 function CoreCutsceneKeyBase:standard_combo_box_control_refresh(attribute_name, values)
-
 	local function refresh_func(self, control)
 		control:freeze()
 		control:clear()
@@ -499,7 +505,6 @@ function CoreCutsceneKeyBase:standard_percentage_slider_control(parent_frame, ca
 end
 
 function CoreCutsceneKeyBase:standard_percentage_slider_control_refresh(attribute_name)
-
 	local function refresh_func(self, control)
 		local attribute_value = self:attribute_value(attribute_name)
 
@@ -508,6 +513,7 @@ function CoreCutsceneKeyBase:standard_percentage_slider_control_refresh(attribut
 
 	return refresh_func
 end
+
 CoreCutsceneKeyBase.control_for_unit_name = CoreCutsceneKeyBase.standard_combo_box_control
 CoreCutsceneKeyBase.control_for_object_name = CoreCutsceneKeyBase.standard_combo_box_control
 
@@ -578,25 +584,30 @@ function CoreCutsceneKeyBase:TRUE()
 end
 
 function CoreCutsceneKeyBase.string_to_vector(string_value)
-	local xyz_strings = {string.match(string_value, "Vector3%((%-?[%d%.]+), (%-?[%d%.]+), (%-?[%d%.]+)%)")}
+	local xyz_strings = {
+		string.match(string_value, "Vector3%((%-?[%d%.]+), (%-?[%d%.]+), (%-?[%d%.]+)%)")
+	}
 	local xyz_numbers = table.collect(xyz_strings, tonumber)
 
 	return #xyz_numbers == 3 and Vector3(unpack(xyz_numbers)) or nil
 end
 
 function CoreCutsceneKeyBase.string_to_rotation(string_value)
-	local xyz_strings = {string.match(string_value, "Rotation%((%-?[%d%.]+), (%-?[%d%.]+), (%-?[%d%.]+)%)")}
+	local xyz_strings = {
+		string.match(string_value, "Rotation%((%-?[%d%.]+), (%-?[%d%.]+), (%-?[%d%.]+)%)")
+	}
 	local xyz_numbers = table.collect(xyz_strings, tonumber)
 
 	return #xyz_numbers == 3 and Rotation(unpack(xyz_numbers)) or nil
 end
 
 function CoreCutsceneKeyBase.string_to_color(string_value)
-	local argb_strings = {string.match(string_value, "Color%(([%d%.]+) %* %(([%d%.]+), ([%d%.]+), ([%d%.]+)%)%)")}
+	local argb_strings = {
+		string.match(string_value, "Color%(([%d%.]+) %* %(([%d%.]+), ([%d%.]+), ([%d%.]+)%)%)")
+	}
 	local argb_numbers = table.collect(argb_strings, tonumber)
 
 	return #argb_numbers == 4 and Color(unpack(argb_numbers)) or nil
 end
 
 CoreCutsceneKeyBase:attribute_affects("unit_name", "object_name")
-

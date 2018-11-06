@@ -28,6 +28,7 @@ function InstanceInputUnitElement:_build_panel(panel, panel_sizer)
 		ctrlr = event
 	})
 end
+
 CoreInstanceOutputUnitElement = CoreInstanceOutputUnitElement or class(MissionElement)
 InstanceOutputUnitElement = InstanceOutputUnitElement or class(CoreInstanceOutputUnitElement)
 InstanceOutputUnitElement.SAVE_UNIT_POSITION = false
@@ -58,6 +59,7 @@ function InstanceOutputUnitElement:_build_panel(panel, panel_sizer)
 		ctrlr = event
 	})
 end
+
 CoreInstanceEventUnitElement = CoreInstanceEventUnitElement or class(MissionElement)
 InstanceEventUnitElement = InstanceEventUnitElement or class(CoreInstanceEventUnitElement)
 InstanceEventUnitElement.SAVE_UNIT_POSITION = false
@@ -244,7 +246,6 @@ function InstanceEventUnitElement:_get_guis_by_event_list_data(event_list_data)
 end
 
 function InstanceEventUnitElement:remove_entry(event_list_data)
-
 	local function _remove_guis(guis)
 		if guis then
 			guis.instance_name_ctrlr:destroy()
@@ -275,7 +276,9 @@ function InstanceEventUnitElement:destroy_panel(...)
 end
 
 function InstanceEventUnitElement:_on_gui_select_instance_list()
-	local settings = {list_style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING"}
+	local settings = {
+		list_style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING"
+	}
 	local names = managers.world_instance:instance_names_by_script(self._unit:mission_element_data().script)
 	local dialog = SelectNameModal:new("Select instances", names, settings)
 
@@ -310,18 +313,21 @@ end
 function InstanceEventUnitElement:add_triggers(vc)
 	vc:add_trigger(Idstring("lmb"), callback(self, self, "_set_instance_by_raycast"))
 end
+
 CoreInstanceInputEventUnitElement = CoreInstanceInputEventUnitElement or class(InstanceEventUnitElement)
 InstanceInputEventUnitElement = InstanceInputEventUnitElement or class(CoreInstanceInputEventUnitElement)
 
 function InstanceInputEventUnitElement:init(...)
 	InstanceInputEventUnitElement.super.init(self, "input", ...)
 end
+
 CoreInstanceOutputEventUnitElement = CoreInstanceOutputEventUnitElement or class(InstanceEventUnitElement)
 InstanceOutputEventUnitElement = InstanceOutputEventUnitElement or class(CoreInstanceOutputEventUnitElement)
 
 function InstanceOutputEventUnitElement:init(...)
 	InstanceOutputEventUnitElement.super.init(self, "output", ...)
 end
+
 CoreInstancePointUnitElement = CoreInstancePointUnitElement or class(MissionElement)
 InstancePointUnitElement = InstancePointUnitElement or class(CoreInstancePointUnitElement)
 
@@ -426,6 +432,7 @@ end
 function InstancePointUnitElement:add_triggers(vc)
 	vc:add_trigger(Idstring("lmb"), callback(self, self, "_set_instance_by_raycast"))
 end
+
 CoreInstanceParamsUnitElement = CoreInstanceParamsUnitElement or class(MissionElement)
 CoreInstanceParamsUnitElement.TYPES = {
 	"number",
@@ -653,6 +660,7 @@ function InstanceParamsUnitElement:_build_panel(panel, panel_sizer)
 		self:_build_var_panel(data)
 	end
 end
+
 CoreInstanceSetParamsUnitElement = CoreInstanceSetParamsUnitElement or class(MissionElement)
 InstanceSetParamsUnitElement = InstanceSetParamsUnitElement or class(CoreInstanceSetParamsUnitElement)
 
@@ -1002,4 +1010,3 @@ end
 function InstanceSetParamsUnitElement:add_triggers(vc)
 	vc:add_trigger(Idstring("lmb"), callback(self, self, "_set_instance_by_raycast"))
 end
-

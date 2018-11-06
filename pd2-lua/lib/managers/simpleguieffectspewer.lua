@@ -12,7 +12,12 @@ function SimpleGUIEffectSpewer:_particles_update(t, dt)
 
 	for key, particle_data in pairs(self.__living_particles) do
 		particle_data.pt = particle_data.pt + dt
-		particle_live_p = particle_data.plive_time == 0 and 1 or particle_data.pt / particle_data.plive_time
+
+		if particle_data.plive_time == 0 then
+			particle_live_p = 1
+		else
+			particle_live_p = particle_data.pt / particle_data.plive_time
+		end
 
 		particle_data.particle:set_alpha(math.clamp(math.sin((particle_live_p + 0.2) * 150), 0, 1))
 
@@ -67,7 +72,7 @@ function SimpleGUIEffectSpewer:_particles_update(t, dt)
 			local ex, ey = particle_data.particle:center()
 			local dir_x = ex - sx
 			local dir_y = ey - sy
-			local magnitude = (dir_x * dir_x + dir_y * dir_y) ^ 0.5
+			local magnitude = (dir_x * dir_x + dir_y * dir_y)^0.5
 			local rotation = particle_data.particle:rotation()
 			local can_rotate = false
 
@@ -331,7 +336,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_flip_card(panel)
 		particle_colors = particle_colors,
 		particle_w = panel:h() * 6,
 		particle_h = panel:h() * 6,
-		particle_textures = {"guis/dlcs/infamous/textures/pd2/infamous_tree/spinner_01_df"},
+		particle_textures = {
+			"guis/dlcs/infamous/textures/pd2/infamous_tree/spinner_01_df"
+		},
 		layer = panel:world_layer() - 1,
 		parent_panel = panel
 	})
@@ -347,7 +354,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_flip_card(panel)
 		particle_colors = particle_colors,
 		particle_w = panel:h() * 6,
 		particle_h = panel:h() * 6,
-		particle_textures = {"guis/dlcs/infamous/textures/pd2/infamous_tree/spinner_02_df"},
+		particle_textures = {
+			"guis/dlcs/infamous/textures/pd2/infamous_tree/spinner_02_df"
+		},
 		layer = panel:world_layer() - 1,
 		parent_panel = panel
 	})
@@ -392,7 +401,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_show_item(panel)
 			spawn_interval = 0.09,
 			particle_sway_speed = 180,
 			particle_colors = particle_colors,
-			particle_textures = {"guis/textures/pd2/particles/bulb"},
+			particle_textures = {
+				"guis/textures/pd2/particles/bulb"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -414,7 +425,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_show_item(panel)
 			spawn_interval = 0.09,
 			particle_sway_speed = 180,
 			particle_colors = particle_colors,
-			particle_textures = {"guis/textures/pd2/particles/bulb"},
+			particle_textures = {
+				"guis/textures/pd2/particles/bulb"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -429,7 +442,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_show_item(panel)
 			max_particle_speed = 605,
 			max_plive_time = 0.45,
 			particle_colors = particle_colors,
-			particle_textures = {"guis/textures/pd2/particles/spark"},
+			particle_textures = {
+				"guis/textures/pd2/particles/spark"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -444,7 +459,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_show_item(panel)
 			max_particle_speed = 505,
 			max_plive_time = 0.35,
 			particle_colors = particle_colors,
-			particle_textures = {"guis/textures/pd2/particles/spark"},
+			particle_textures = {
+				"guis/textures/pd2/particles/spark"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -459,7 +476,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_show_item(panel)
 			particle_colors = particle_colors,
 			particle_w = panel:h() * 2.5,
 			particle_h = panel:h() * 2.5,
-			particle_textures = {"guis/textures/pd2/particles/fill"},
+			particle_textures = {
+				"guis/textures/pd2/particles/fill"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -474,7 +493,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_show_item(panel)
 			particle_colors = particle_colors,
 			particle_w = panel:h() * 1.55,
 			particle_h = panel:h() * 1.55,
-			particle_textures = {"guis/textures/pd2/particles/fill"},
+			particle_textures = {
+				"guis/textures/pd2/particles/fill"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -489,7 +510,9 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_show_item(panel)
 			particle_colors = particle_colors,
 			particle_w = panel:h() * 4,
 			particle_h = panel:h() * 4,
-			particle_textures = {"guis/textures/pd2/particles/fill"},
+			particle_textures = {
+				"guis/textures/pd2/particles/fill"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -516,7 +539,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_flip_card(panel)
 		particle_colors = particle_colors,
 		particle_w = panel:h() * 4,
 		particle_h = panel:h() * 4,
-		particle_textures = {"guis/dlcs/infamous/textures/pd2/infamous_tree/spinner_01_df"},
+		particle_textures = {
+			"guis/dlcs/infamous/textures/pd2/infamous_tree/spinner_01_df"
+		},
 		layer = panel:world_layer() - 1,
 		parent_panel = panel
 	})
@@ -532,7 +557,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_flip_card(panel)
 		particle_colors = particle_colors,
 		particle_w = panel:h() * 4,
 		particle_h = panel:h() * 4,
-		particle_textures = {"guis/dlcs/infamous/textures/pd2/infamous_tree/spinner_02_df"},
+		particle_textures = {
+			"guis/dlcs/infamous/textures/pd2/infamous_tree/spinner_02_df"
+		},
 		layer = panel:world_layer() - 1,
 		parent_panel = panel
 	})
@@ -575,7 +602,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_show_item(panel)
 			spawn_interval = 0.09,
 			particle_sway_speed = 180,
 			particle_colors = particle_colors,
-			particle_textures = {"guis/textures/pd2/particles/bulb"},
+			particle_textures = {
+				"guis/textures/pd2/particles/bulb"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -597,7 +626,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_show_item(panel)
 			spawn_interval = 0.09,
 			particle_sway_speed = 180,
 			particle_colors = particle_colors,
-			particle_textures = {"guis/textures/pd2/particles/bulb"},
+			particle_textures = {
+				"guis/textures/pd2/particles/bulb"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -612,7 +643,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_show_item(panel)
 			max_particle_speed = 605,
 			max_plive_time = 0.45,
 			particle_colors = particle_colors,
-			particle_textures = {"guis/textures/pd2/particles/spark"},
+			particle_textures = {
+				"guis/textures/pd2/particles/spark"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -627,7 +660,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_show_item(panel)
 			max_particle_speed = 505,
 			max_plive_time = 0.35,
 			particle_colors = particle_colors,
-			particle_textures = {"guis/textures/pd2/particles/spark"},
+			particle_textures = {
+				"guis/textures/pd2/particles/spark"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -642,7 +677,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_show_item(panel)
 			particle_colors = particle_colors,
 			particle_w = panel:h() * 2.5,
 			particle_h = panel:h() * 2.5,
-			particle_textures = {"guis/textures/pd2/particles/fill"},
+			particle_textures = {
+				"guis/textures/pd2/particles/fill"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -657,7 +694,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_show_item(panel)
 			particle_colors = particle_colors,
 			particle_w = panel:h() * 1.55,
 			particle_h = panel:h() * 1.55,
-			particle_textures = {"guis/textures/pd2/particles/fill"},
+			particle_textures = {
+				"guis/textures/pd2/particles/fill"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -672,7 +711,9 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_show_item(panel)
 			particle_colors = particle_colors,
 			particle_w = panel:h() * 4,
 			particle_h = panel:h() * 4,
-			particle_textures = {"guis/textures/pd2/particles/fill"},
+			particle_textures = {
+				"guis/textures/pd2/particles/fill"
+			},
 			parent_panel = panel,
 			layer = panel:world_layer() + 10
 		})
@@ -708,7 +749,9 @@ function SimpleGUIEffectSpewer.get_sample_boom()
 				0.1
 			}
 		},
-		particle_textures = {"guis/textures/pd2/particles/bulb"}
+		particle_textures = {
+			"guis/textures/pd2/particles/bulb"
+		}
 	}, {
 		particle_w = 16,
 		max_num_particles = 20,
@@ -733,7 +776,9 @@ function SimpleGUIEffectSpewer.get_sample_boom()
 				0.1
 			}
 		},
-		particle_textures = {"guis/textures/pd2/particles/spark"}
+		particle_textures = {
+			"guis/textures/pd2/particles/spark"
+		}
 	}, {
 		spawn_interval = 0.1,
 		plive_time = 1.6,
@@ -750,7 +795,9 @@ function SimpleGUIEffectSpewer.get_sample_boom()
 		},
 		particle_w = ws:panel():h() / 2,
 		particle_h = ws:panel():h() / 2,
-		particle_textures = {"guis/textures/pd2/particles/fill"}
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		}
 	}, {
 		spawn_interval = 0.1,
 		plive_time = 1.5,
@@ -767,7 +814,9 @@ function SimpleGUIEffectSpewer.get_sample_boom()
 		},
 		particle_w = ws:panel():h(),
 		particle_h = ws:panel():h(),
-		particle_textures = {"guis/textures/pd2/particles/fill"}
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		}
 	}, {
 		spawn_interval = 0.1,
 		plive_time = 0.8,
@@ -784,12 +833,16 @@ function SimpleGUIEffectSpewer.get_sample_boom()
 		},
 		particle_w = ws:panel():h(),
 		particle_h = ws:panel():h(),
-		particle_textures = {"guis/textures/pd2/particles/fill"}
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		}
 	}
 end
 
 function SimpleGUIEffectSpewer.sample_boom()
-	local spewers = {SimpleGUIEffectSpewer.get_sample_boom()}
+	local spewers = {
+		SimpleGUIEffectSpewer.get_sample_boom()
+	}
 
 	for i, spewer in ipairs(spewers) do
 		SimpleGUIEffectSpewer:new(spewer)
@@ -830,7 +883,9 @@ function SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel, color)
 		spawn_interval = 0.06,
 		particle_colors = colors,
 		particle_alpha = skill_color.alpha,
-		particle_textures = {"guis/textures/pd2/particles/bulb"},
+		particle_textures = {
+			"guis/textures/pd2/particles/bulb"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -848,7 +903,9 @@ function SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel, color)
 		spawn_interval = 0.05,
 		particle_colors = colors,
 		particle_alpha = skill_color.alpha,
-		particle_textures = {"guis/textures/pd2/particles/spark"},
+		particle_textures = {
+			"guis/textures/pd2/particles/spark"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -865,7 +922,9 @@ function SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel, color)
 		particle_w = ws:panel():h() * 0.25,
 		particle_h = ws:panel():h() * 0.25,
 		particle_alpha = skill_color.alpha * 0.8,
-		particle_textures = {"guis/textures/pd2/particles/fill"},
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -882,7 +941,9 @@ function SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel, color)
 		particle_alpha = skill_color.alpha * 0.8,
 		particle_w = ws:panel():h() * 0.35,
 		particle_h = ws:panel():h() * 0.35,
-		particle_textures = {"guis/textures/pd2/particles/fill"},
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -899,7 +960,9 @@ function SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel, color)
 		particle_alpha = skill_color.alpha * 0.8,
 		particle_w = ws:panel():h() * 0.45,
 		particle_h = ws:panel():h() * 0.45,
-		particle_textures = {"guis/textures/pd2/particles/fill"},
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -924,32 +987,36 @@ function SimpleGUIEffectSpewer.item_sell(x, y, layer)
 			skill_color.blue + 0.1
 		}
 	}
-	local spewers = {{
-		max_particle_w = 32,
-		min_particle_w = -32,
-		min_particle_speed = 125,
-		spew_time = 0.35,
-		min_particle_flip_speed = 125,
-		max_num_particles = 35,
-		particle_flip_dimension = 32,
-		max_particle_speed = 195,
-		max_spew_angle = 0,
-		ws_converter = "safe_to_full_16_9",
-		max_plive_time = 0.9,
-		gravity = 325,
-		particle_h = 32,
-		particle_blend_mode = "normal",
-		min_plive_time = 0.7,
-		max_particle_flip_speed = 225,
-		spawn_interval = 0.015,
-		min_spew_angle = -180,
-		x = x,
-		y = y,
-		particle_colors = colors,
-		particle_alpha = skill_color.alpha,
-		particle_textures = {"guis/textures/pd2/particles/bulb"},
-		layer = layer
-	}}
+	local spewers = {
+		{
+			max_particle_w = 32,
+			min_particle_w = -32,
+			min_particle_speed = 125,
+			spew_time = 0.35,
+			min_particle_flip_speed = 125,
+			max_num_particles = 35,
+			particle_flip_dimension = 32,
+			max_particle_speed = 195,
+			max_spew_angle = 0,
+			ws_converter = "safe_to_full_16_9",
+			max_plive_time = 0.9,
+			gravity = 325,
+			particle_h = 32,
+			particle_blend_mode = "normal",
+			min_plive_time = 0.7,
+			max_particle_flip_speed = 225,
+			spawn_interval = 0.015,
+			min_spew_angle = -180,
+			x = x,
+			y = y,
+			particle_colors = colors,
+			particle_alpha = skill_color.alpha,
+			particle_textures = {
+				"guis/textures/pd2/particles/bulb"
+			},
+			layer = layer
+		}
+	}
 
 	for i, spewer in ipairs(spewers) do
 		SimpleGUIEffectSpewer:new(spewer)
@@ -957,7 +1024,9 @@ function SimpleGUIEffectSpewer.item_sell(x, y, layer)
 end
 
 function SimpleGUIEffectSpewer.skill_up(x, y, panel)
-	local spewers = {SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel)}
+	local spewers = {
+		SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel)
+	}
 
 	for i, spewer in ipairs(spewers) do
 		SimpleGUIEffectSpewer:new(spewer)
@@ -965,7 +1034,9 @@ function SimpleGUIEffectSpewer.skill_up(x, y, panel)
 end
 
 function SimpleGUIEffectSpewer.infamous_up(x, y, panel)
-	local spewers = {SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel)}
+	local spewers = {
+		SimpleGUIEffectSpewer.get_skill_spewers(x, y, panel)
+	}
 
 	for i, spewer in ipairs(spewers) do
 		spewer.particle_w = spewer.particle_w and math.floor(spewer.particle_w * 1.4)
@@ -1009,7 +1080,9 @@ function SimpleGUIEffectSpewer.get_daily_reward_spewers(x, y, panel, color)
 		spawn_interval = 0.02,
 		particle_colors = colors,
 		particle_alpha = skill_color.alpha,
-		particle_textures = {"guis/textures/pd2/particles/bulb"},
+		particle_textures = {
+			"guis/textures/pd2/particles/bulb"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -1027,7 +1100,9 @@ function SimpleGUIEffectSpewer.get_daily_reward_spewers(x, y, panel, color)
 		spawn_interval = 0.05,
 		particle_colors = colors,
 		particle_alpha = skill_color.alpha,
-		particle_textures = {"guis/textures/pd2/particles/spark"},
+		particle_textures = {
+			"guis/textures/pd2/particles/spark"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -1044,7 +1119,9 @@ function SimpleGUIEffectSpewer.get_daily_reward_spewers(x, y, panel, color)
 		particle_w = ws:panel():h() * 0.25,
 		particle_h = ws:panel():h() * 0.25,
 		particle_alpha = skill_color.alpha * 0.8,
-		particle_textures = {"guis/textures/pd2/particles/fill"},
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -1061,7 +1138,9 @@ function SimpleGUIEffectSpewer.get_daily_reward_spewers(x, y, panel, color)
 		particle_alpha = skill_color.alpha * 0.8,
 		particle_w = ws:panel():h() * 0.35,
 		particle_h = ws:panel():h() * 0.35,
-		particle_textures = {"guis/textures/pd2/particles/fill"},
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -1078,7 +1157,9 @@ function SimpleGUIEffectSpewer.get_daily_reward_spewers(x, y, panel, color)
 		particle_alpha = skill_color.alpha * 0.8,
 		particle_w = ws:panel():h() * 0.45,
 		particle_h = ws:panel():h() * 0.45,
-		particle_textures = {"guis/textures/pd2/particles/fill"},
+		particle_textures = {
+			"guis/textures/pd2/particles/fill"
+		},
 		x = x,
 		y = y,
 		parent_panel = panel,
@@ -1087,7 +1168,9 @@ function SimpleGUIEffectSpewer.get_daily_reward_spewers(x, y, panel, color)
 end
 
 function SimpleGUIEffectSpewer.claim_daily_reward(x, y, panel)
-	local spewers = {SimpleGUIEffectSpewer.get_daily_reward_spewers(x, y, panel, Color(255, 255, 168, 0) / 255 * 0.8)}
+	local spewers = {
+		SimpleGUIEffectSpewer.get_daily_reward_spewers(x, y, panel, Color(255, 255, 168, 0) / 255 * 0.8)
+	}
 
 	for i, spewer in ipairs(spewers) do
 		spewer.particle_w = spewer.particle_w and math.floor(spewer.particle_w * 1.4)
@@ -1096,4 +1179,3 @@ function SimpleGUIEffectSpewer.claim_daily_reward(x, y, panel)
 		SimpleGUIEffectSpewer:new(spewer)
 	end
 end
-

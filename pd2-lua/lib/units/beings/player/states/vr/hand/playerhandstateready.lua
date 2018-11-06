@@ -43,4 +43,3 @@ function PlayerHandStateReady:update(t, dt)
 		end
 	end
 end
-

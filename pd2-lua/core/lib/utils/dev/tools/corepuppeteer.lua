@@ -125,4 +125,3 @@ function CorePuppeteer:_on_selected_unit_changed(selected_unit)
 		self._drive_movement_checkbox:set_value(selected_unit and selected_unit:driving() == "animation")
 	end
 end
-

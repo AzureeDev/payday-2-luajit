@@ -14,13 +14,22 @@ end
 
 function CoreXMLEditor:check_news(new_only)
 	local news = nil
-	news = new_only and managers.news:get_news("xml_editor", self._main_frame_table._main_frame) or managers.news:get_old_news("xml_editor", self._main_frame_table._main_frame)
+
+	if new_only then
+		news = managers.news:get_news("xml_editor", self._main_frame_table._main_frame)
+	else
+		news = managers.news:get_old_news("xml_editor", self._main_frame_table._main_frame)
+	end
 
 	if news then
 		local str = nil
 
 		for _, n in ipairs(news) do
-			str = not str and n or str .. "\n" .. n
+			if not str then
+				str = n
+			else
+				str = str .. "\n" .. n
+			end
 		end
 
 		EWS:MessageDialog(self._main_frame_table._main_frame, str, "New Features!", "OK,ICON_INFORMATION"):show_modal()
@@ -44,7 +53,9 @@ function CoreXMLEditor:check_open()
 end
 
 function CoreXMLEditor:create_main_frame()
-	self._main_frame_table = {_main_frame = EWS:Frame("XML Editor", Vector3(-1, -1, 0), Vector3(1000, 800, 0), "FRAME_FLOAT_ON_PARENT,DEFAULT_FRAME_STYLE", Global.frame)}
+	self._main_frame_table = {
+		_main_frame = EWS:Frame("XML Editor", Vector3(-1, -1, 0), Vector3(1000, 800, 0), "FRAME_FLOAT_ON_PARENT,DEFAULT_FRAME_STYLE", Global.frame)
+	}
 
 	self._main_frame_table._main_frame:set_icon(CoreEWS.image_path("xml_editor_16x16.png"))
 
@@ -250,6 +261,7 @@ function CoreXMLEditor:close()
 		self._browse = nil
 	end
 end
+
 CoreXMLEditorNewDialog = CoreXMLEditorNewDialog or class()
 
 function CoreXMLEditorNewDialog:init(p)
@@ -315,4 +327,3 @@ end
 function CoreXMLEditorNewDialog:get_value()
 	return self._type, self._name
 end
-

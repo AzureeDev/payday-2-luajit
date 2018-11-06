@@ -53,7 +53,9 @@ function CopLogicFlee.enter(data, new_logic_name, enter_params)
 		return
 	end
 
-	data.unit:brain():set_attention_settings({cbt = true})
+	data.unit:brain():set_attention_settings({
+		cbt = true
+	})
 end
 
 function CopLogicFlee.exit(data, new_logic_name, enter_params)
@@ -192,7 +194,9 @@ function CopLogicFlee.update(data)
 
 							managers.navigation:reserve_cover(cover, data.pos_rsrv_id)
 
-							my_data.moving_to_cover = {cover}
+							my_data.moving_to_cover = {
+								cover
+							}
 							my_data.best_cover = my_data.moving_to_cover
 							to_pos = cover[1]
 						else
@@ -272,7 +276,11 @@ function CopLogicFlee._update_enemy_detection(data)
 		my_data.want_cover = nil
 	end
 
-	delay = data.important and 0 or 0.5 + delay * 1.5
+	if data.important then
+		delay = 0
+	else
+		delay = 0.5 + delay * 1.5
+	end
 
 	CopLogicBase.queue_task(my_data, my_data.detection_task_key, CopLogicFlee._update_enemy_detection, data, data.t + delay)
 	CopLogicBase._report_detections(data.detected_attention_objects)
@@ -527,7 +535,9 @@ function CopLogicFlee._update_cover(data)
 				local found_cover = managers.navigation:find_cover_near_pos_1(data.m_pos, threat_pos, max_near_dis, min_threat_dis)
 
 				if found_cover then
-					better_cover = {found_cover}
+					better_cover = {
+						found_cover
+					}
 				end
 			end
 
@@ -638,10 +648,11 @@ function CopLogicFlee.on_intimidated(data, amount, aggressor_unit)
 end
 
 function CopLogicFlee._get_all_paths(data)
-	return {flee_path = data.internal_data.flee_path}
+	return {
+		flee_path = data.internal_data.flee_path
+	}
 end
 
 function CopLogicFlee._set_verified_paths(data, verified_paths)
 	data.internal_data.flee_path = verified_paths.flee_path
 end
-

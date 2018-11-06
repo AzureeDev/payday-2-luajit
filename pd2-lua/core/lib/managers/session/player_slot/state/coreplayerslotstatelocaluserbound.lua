@@ -15,4 +15,3 @@ function LocalUserBound:transition()
 		return CorePlayerSlotStateInit.Init
 	end
 end
-

@@ -27,4 +27,3 @@ function Xbox360AchievementsDialog:done_callback()
 
 	AchievementsDialog.done_callback(self)
 end
-

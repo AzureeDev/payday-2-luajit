@@ -145,4 +145,3 @@ function ElementInventoryDummy:_destroy_mask()
 		managers.dyn_resource:unload(Idstring("unit"), name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
 	end
 end
-

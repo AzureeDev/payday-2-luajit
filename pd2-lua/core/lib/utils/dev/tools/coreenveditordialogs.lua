@@ -7,7 +7,9 @@ TemplateMixerDummy = TemplateMixerDummy or class()
 
 function TemplateMixerDummy:init(editor, ...)
 	self._editor = editor
-	self._args = {...}
+	self._args = {
+		...
+	}
 
 	if #self._args == 1 then
 		self._param = self._args[1]
@@ -69,12 +71,15 @@ function TemplateMixerDummy:update_mix(env1, env2, blend)
 end
 
 function TemplateMixerDummy:args()
-	local v = {unpack(self._args)}
+	local v = {
+		unpack(self._args)
+	}
 
 	table.insert(v, self)
 
 	return unpack(v)
 end
+
 FormulaMixerDummy = FormulaMixerDummy or class()
 FormulaMixerDummy.STD_TOL = 0.01
 
@@ -83,7 +88,9 @@ function FormulaMixerDummy:init(editor, master, tol, formula, ...)
 	self._master = master
 	self._formula = formula
 	self._tol = tol
-	self._params = {...}
+	self._params = {
+		...
+	}
 	self._value = formula(master:get_value(), unpack(self._params))
 
 	self._editor:add_updator(self)
@@ -101,10 +108,11 @@ function FormulaMixerDummy:update(t, dt)
 	local value = self._formula(self._master:get_value(), unpack(self._params))
 	local t = type(value)
 
-	if t == "string" and value ~= self._value or t == "number" and self._tol < math.abs(value - self._value) or t == "userdata" and self._tol < (value - self._value):length() then
+	if t == "string" and value ~= self._value or t == "number" and self._tol < math.abs(value - self._value) or t == "userdata" and self._tol < value - self._value:length() then
 		self._value = value
 	end
 end
+
 DummyWidget = DummyWidget or class()
 
 function DummyWidget:init(t)
@@ -118,6 +126,7 @@ end
 function DummyWidget:set_value(v)
 	self._val = v
 end
+
 Vector2Slider = Vector2Slider or class()
 
 function Vector2Slider:init(editor, p, name, picker_bottom, picker_top, min, max, scale, display_scale)
@@ -236,7 +245,7 @@ function Vector2Slider:on_update_textctrl()
 		g = 0
 	end
 
-	self:set_value(Vector3((r * self._display_scale) / self._scale, (g * self._display_scale) / self._scale, 0))
+	self:set_value(Vector3(r * self._display_scale / self._scale, g * self._display_scale / self._scale, 0))
 	self._editor:value_is_changed()
 end
 
@@ -250,6 +259,7 @@ function Vector2Slider:set_value(v)
 	self._slider_g:set_value(v.y * self._scale)
 	self:set_text()
 end
+
 DBDropdown = DBDropdown or class()
 
 function DBDropdown:init(editor, p, name, db_key)
@@ -312,6 +322,7 @@ function DBDropdown:set_value(v)
 		self._combobox:set_value(value_key)
 	end
 end
+
 SingelSlider = SingelSlider or class()
 
 function SingelSlider:init(editor, p, name, picker, min, max, scale, display_scale, picky)
@@ -404,7 +415,7 @@ function SingelSlider:on_update_textctrl()
 		n = 0
 	end
 
-	self:set_value((n * self._display_scale) / self._scale)
+	self:set_value(n * self._display_scale / self._scale)
 	self._editor:value_is_changed()
 end
 
@@ -416,6 +427,7 @@ function SingelSlider:set_value(v)
 	self._slider:set_value(v * self._scale)
 	self:set_text()
 end
+
 EnvironmentEditorEnvMixer = EnvironmentEditorEnvMixer or class()
 
 function EnvironmentEditorEnvMixer:init(editor, p, name)
@@ -452,7 +464,7 @@ function EnvironmentEditorEnvMixer:on_slider_change()
 	local i2 = fval + 2
 	local blend = val - fval
 
-	if #self._editor._template_environment_names < i2 then
+	if i2 > #self._editor._template_environment_names then
 		i1 = i1 - 1
 		i2 = i2 - 1
 		blend = 1
@@ -472,6 +484,7 @@ end
 function EnvironmentEditorEnvMixer:set_value(v)
 	self._slider:set_value(tonumber(string.match(v, "[%w_.]+")) * self._editor.MIX_MUL)
 end
+
 RgbBox = RgbBox or class()
 
 function RgbBox:init(editor, p, name)
@@ -601,6 +614,7 @@ function RgbBox:set_value(v)
 	self._slider_g:set_value(self._color.y * 255)
 	self._slider_b:set_value(self._color.z * 255)
 end
+
 EnvEdColorBox = EnvEdColorBox or class()
 
 function EnvEdColorBox:init(editor, p, name, no_value)
@@ -637,6 +651,7 @@ function EnvEdColorBox:set_value(v)
 
 	self._picker_panel:set_color(Color(v.x, v.y, v.z))
 end
+
 EnvEdEditBox = EnvEdEditBox or class()
 
 function EnvEdEditBox:init(editor, p, name, no_value)
@@ -664,6 +679,7 @@ function EnvEdEditBox:set_value(value)
 
 	self._textctrl:set_value(value)
 end
+
 PathBox = PathBox or class()
 
 function PathBox:init(editor, p, name)
@@ -702,6 +718,7 @@ function PathBox:set_value(v)
 
 	self._path_text:set_label(self._path)
 end
+
 DBPickDialog = DBPickDialog or class()
 
 function DBPickDialog:init(editor, p, name, pick_type)
@@ -745,6 +762,7 @@ function DBPickDialog:set_value(v)
 
 	self._path_text:set_label(self._path)
 end
+
 CustomCheckBox = CustomCheckBox or class()
 
 function CustomCheckBox:init(editor, p, text)
@@ -773,6 +791,7 @@ end
 function CustomCheckBox:set_value(v)
 	self._check_box:set_value(v > 0)
 end
+
 ConnectDialog = ConnectDialog or class()
 
 function ConnectDialog:init(p)
@@ -838,4 +857,3 @@ end
 function ConnectDialog:get_port()
 	return tonumber(self._port_text_ctrl:get_value())
 end
-

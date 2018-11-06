@@ -22,4 +22,3 @@ function MissionEndUnitElement:_build_panel(panel, panel_sizer)
 		"leave_safehouse"
 	})
 end
-

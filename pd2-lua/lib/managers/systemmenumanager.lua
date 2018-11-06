@@ -24,8 +24,9 @@ SystemMenuManager.PLATFORM_CLASS_MAP = {}
 function SystemMenuManager:new(...)
 	local platform = SystemInfo:platform()
 
-	return (self.PLATFORM_CLASS_MAP[platform:key()] or GenericSystemMenuManager):new(...)
+	return self.PLATFORM_CLASS_MAP[platform:key()] or GenericSystemMenuManager:new(...)
 end
+
 GenericSystemMenuManager = GenericSystemMenuManager or class()
 GenericSystemMenuManager.DIALOG_CLASS = GenericDialog
 GenericSystemMenuManager.GENERIC_DIALOG_CLASS = GenericDialog
@@ -570,6 +571,7 @@ function GenericSystemMenuManager:event_active_changed(active)
 
 	self._active_changed_callback_handler:dispatch(active)
 end
+
 WinSystemMenuManager = WinSystemMenuManager or class(GenericSystemMenuManager)
 SystemMenuManager.PLATFORM_CLASS_MAP[Idstring("win32"):key()] = WinSystemMenuManager
 Xbox360SystemMenuManager = Xbox360SystemMenuManager or class(GenericSystemMenuManager)
@@ -597,6 +599,7 @@ function Xbox360SystemMenuManager:is_active(skip_block_exec)
 
 	return dialog_block and (GenericSystemMenuManager.is_active(self) or Application:is_showing_system_dialog())
 end
+
 XB1SystemMenuManager = XB1SystemMenuManager or class(GenericSystemMenuManager)
 XB1SystemMenuManager.KEYBOARD_INPUT_DIALOG = Xbox360KeyboardInputDialog
 XB1SystemMenuManager.GENERIC_KEYBOARD_INPUT_DIALOG = Xbox360KeyboardInputDialog
@@ -619,6 +622,7 @@ function XB1SystemMenuManager:is_active(skip_block_exec)
 
 	return dialog_block and (GenericSystemMenuManager.is_active(self) or Application:is_showing_system_dialog())
 end
+
 PS3SystemMenuManager = PS3SystemMenuManager or class(GenericSystemMenuManager)
 PS3SystemMenuManager.DELETE_FILE_DIALOG_CLASS = PS3DeleteFileDialog
 PS3SystemMenuManager.GENERIC_DELETE_FILE_DIALOG_CLASS = PS3DeleteFileDialog
@@ -645,6 +649,7 @@ end
 function PS3SystemMenuManager:is_active()
 	return GenericSystemMenuManager.is_active(self) or PS3:is_displaying_box() or self._is_ps_button_menu_visible
 end
+
 PS4SystemMenuManager = PS4SystemMenuManager or class(GenericSystemMenuManager)
 PS4SystemMenuManager.DELETE_FILE_DIALOG_CLASS = PS3DeleteFileDialog
 PS4SystemMenuManager.GENERIC_DELETE_FILE_DIALOG_CLASS = PS3DeleteFileDialog
@@ -671,4 +676,3 @@ end
 function PS4SystemMenuManager:is_active()
 	return GenericSystemMenuManager.is_active(self) or PS3:is_displaying_box() or self._is_ps_button_menu_visible
 end
-

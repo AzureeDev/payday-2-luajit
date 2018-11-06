@@ -18,4 +18,3 @@ end
 function SelectUserDialog:to_string()
 	return string.format("%s, Count: %s", tostring(BaseDialog.to_string(self)), tostring(self._data.count))
 end
-

@@ -38,6 +38,7 @@ function CoreDBDialog:destroy()
 		self._window:close()
 	end
 end
+
 CoreDatabaseBrowser = CoreDatabaseBrowser or class()
 CoreDatabaseBrowser.LC_BUGFIX = true
 
@@ -309,13 +310,22 @@ end
 
 function CoreDatabaseBrowser:check_news(new_only)
 	local news = nil
-	news = new_only and managers.news:get_news("database_browser", self._main_frame) or managers.news:get_old_news("database_browser", self._main_frame)
+
+	if new_only then
+		news = managers.news:get_news("database_browser", self._main_frame)
+	else
+		news = managers.news:get_old_news("database_browser", self._main_frame)
+	end
 
 	if news then
 		local str = nil
 
 		for _, n in ipairs(news) do
-			str = not str and n or str .. "\n" .. n
+			if not str then
+				str = n
+			else
+				str = str .. "\n" .. n
+			end
 		end
 
 		EWS:MessageDialog(self._main_frame, str, "New Features!", "OK,ICON_INFORMATION"):show_modal()
@@ -632,7 +642,10 @@ function CoreDatabaseBrowser:on_read_database()
 		data_table, database_type = apply_type_filter(self._tree_box.type_combobox, self._search_box.type_combobox)
 	end
 
-	for _, entry in ipairs(data_table or {}) do
+	slot5 = ipairs
+	slot6 = data_table or {}
+
+	for _, entry in slot5(slot6) do
 		if not self._browser_data or entry:num_properties() == 0 or database_type ~= "texture" then
 			self._entrys[self:create_unique_name(entry)] = entry
 		end
@@ -676,7 +689,11 @@ function CoreDatabaseBrowser:on_view_metadata()
 				local entry = self._active_database:lookup(self._entrys[selected]:type(), self._entrys[selected]:name(), self._entrys[selected]:properties())
 
 				for k, v in pairs(entry:metadatas()) do
-					str = (str or "") .. k .. "->" .. v .. "\n"
+					if not str then
+						slot13 = ""
+					end
+
+					str = slot13 .. k .. "->" .. v .. "\n"
 				end
 			end
 		end
@@ -689,13 +706,21 @@ function CoreDatabaseBrowser:on_view_metadata()
 				local entry = self._active_database:lookup(self._entrys[selected]:type(), self._entrys[selected]:name(), self._entrys[selected]:properties())
 
 				for k, v in pairs(entry:metadatas()) do
-					str = (str or "") .. k .. "->" .. v .. "\n"
+					if not str then
+						slot14 = ""
+					end
+
+					str = slot14 .. k .. "->" .. v .. "\n"
 				end
 			end
 		end
 	end
 
-	EWS:MessageDialog(self._main_frame, str or "No metadata!", "Metadata", "OK,ICON_INFORMATION"):show_modal()
+	slot2 = EWS.MessageDialog
+	slot4 = self._main_frame
+	slot5 = str or "No metadata!"
+
+	EWS:MessageDialog(slot4, slot5, "Metadata", "OK,ICON_INFORMATION"):show_modal()
 end
 
 function CoreDatabaseBrowser:on_set_metadata()
@@ -868,9 +893,16 @@ function CoreDatabaseBrowser:find_node(node, name, key, value)
 end
 
 function CoreDatabaseBrowser:update_preview(entry)
-
 	local function valid_node(node)
-		return node and node:to_xml() ~= "</>\n"
+		if node then
+			if node:to_xml() == "</>\n" then
+				slot1 = false
+			else
+				slot1 = true
+			end
+		end
+
+		return slot1
 	end
 
 	local function preview_model_xml(self, node, valid_node)
@@ -1111,7 +1143,12 @@ function CoreDatabaseBrowser:on_search()
 					if folder ~= "" then
 						self:build_tree(folder)
 
-						local expand = search_str ~= ""
+						if search_str == "" then
+							slot9 = false
+						else
+							local expand = true
+						end
+
 						local folder_id = self:get_tree_id(folder, expand)
 
 						self._tree_box.tree_ctrl:append(folder_id, key)
@@ -1199,7 +1236,10 @@ end
 function CoreDatabaseBrowser:_rename_and_transfer_metadata(entry, new_name)
 	local old_name = entry:name()
 	local old_ref = self._active_database:lookup(entry:type(), old_name, entry:properties())
-	local metadatas = old_ref and old_ref:metadatas() or {}
+
+	if not old_ref or not old_ref:metadatas() then
+		local metadatas = {}
+	end
 
 	for k, _ in pairs(metadatas) do
 		self._active_database:clear_metadata(old_ref, k)
@@ -1337,7 +1377,12 @@ function CoreDatabaseBrowser:convert_to_ps3(entry)
 
 		prop.platform = "ps3"
 		local str = "imageexportertool -d \"" .. Application:base_path() .. "db\" -sn " .. raw_texture:name() .. self:unpack_prop(raw_texture:properties(), "sp") .. "-qpf A8L8"
-		str = Application:system(str, true, true) == 0 and "imageexportertool -d \"" .. Application:base_path() .. "db\" -sn " .. raw_texture:name() .. self:unpack_prop(raw_texture:properties(), "sp") .. "-dn " .. raw_texture:name() .. self:unpack_prop(prop, "dp") .. "-f gtf -p DXT5_NM" or "imageexportertool -d \"" .. Application:base_path() .. "db\" -sn " .. raw_texture:name() .. self:unpack_prop(raw_texture:properties(), "sp") .. "-dn " .. raw_texture:name() .. self:unpack_prop(prop, "dp") .. "-f gtf"
+
+		if Application:system(str, true, true) == 0 then
+			str = "imageexportertool -d \"" .. Application:base_path() .. "db\" -sn " .. raw_texture:name() .. self:unpack_prop(raw_texture:properties(), "sp") .. "-dn " .. raw_texture:name() .. self:unpack_prop(prop, "dp") .. "-f gtf -p DXT5_NM"
+		else
+			str = "imageexportertool -d \"" .. Application:base_path() .. "db\" -sn " .. raw_texture:name() .. self:unpack_prop(raw_texture:properties(), "sp") .. "-dn " .. raw_texture:name() .. self:unpack_prop(prop, "dp") .. "-f gtf"
+		end
 
 		cat_print("debug", "[CoreDatabaseBrowser] " .. str)
 		Application:system(str, true, true)
@@ -1346,6 +1391,7 @@ function CoreDatabaseBrowser:convert_to_ps3(entry)
 		return self._active_database:lookup("texture", raw_texture:name(), prop)
 	end
 end
+
 CoreDatabaseBrowserMoveDialog = CoreDatabaseBrowserMoveDialog or class()
 
 function CoreDatabaseBrowserMoveDialog:init(editor, p)
@@ -1403,6 +1449,7 @@ end
 function CoreDatabaseBrowserMoveDialog:get_value()
 	return self._resault
 end
+
 CoreDatabaseBrowserImportDialog = CoreDatabaseBrowserImportDialog or class()
 
 function CoreDatabaseBrowserImportDialog:init(editor, p)
@@ -1470,6 +1517,7 @@ end
 function CoreDatabaseBrowserImportDialog:get_value()
 	return self._type, self._name
 end
+
 CoreDatabaseBrowserMetadataDialog = CoreDatabaseBrowserMetadataDialog or class()
 
 function CoreDatabaseBrowserMetadataDialog:init(p)
@@ -1537,6 +1585,7 @@ end
 function CoreDatabaseBrowserMetadataDialog:get_value()
 	return self._key, self._value
 end
+
 CoreDatabaseBrowserInputDialog = CoreDatabaseBrowserInputDialog or class()
 
 function CoreDatabaseBrowserInputDialog:init(p)
@@ -1596,6 +1645,7 @@ end
 function CoreDatabaseBrowserInputDialog:get_value()
 	return self._key
 end
+
 CoreDatabaseBrowserRenameDialog = CoreDatabaseBrowserRenameDialog or class()
 
 function CoreDatabaseBrowserRenameDialog:init(p)
@@ -1657,4 +1707,3 @@ end
 function CoreDatabaseBrowserRenameDialog:set_value(str)
 	self._key_text_ctrl:set_value(str)
 end
-

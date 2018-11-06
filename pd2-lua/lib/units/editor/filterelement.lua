@@ -227,4 +227,3 @@ function FilterUnitElement:_build_panel(panel, panel_sizer)
 	})
 	mode_sizer:add(mode_assault, 0, 0, "EXPAND")
 end
-

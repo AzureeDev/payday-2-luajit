@@ -86,7 +86,9 @@ function CoreCutsceneExporter:_problem_map()
 		local previous_clip = responder_map({
 			end_time = 0,
 			start_time = 0,
-			metadata = responder_map({is_valid = true})
+			metadata = responder_map({
+				is_valid = true
+			})
 		})
 
 		for _, clip in ipairs(self.__clips) do
@@ -162,7 +164,9 @@ function CoreCutsceneExporter:_all_controlled_unit_names(include_cameras)
 end
 
 function CoreCutsceneExporter:_get_final_animation(unit_name)
-	self.__final_animation_cache = self.__final_animation_cache or setmetatable({}, {__mode = "v"})
+	self.__final_animation_cache = self.__final_animation_cache or setmetatable({}, {
+		__mode = "v"
+	})
 	local final_animation = self.__final_animation_cache[unit_name]
 
 	if not alive(final_animation) then
@@ -212,7 +216,9 @@ function CoreCutsceneExporter:_get_final_animation(unit_name)
 end
 
 function CoreCutsceneExporter:_get_joined_animation(unit_name_or_func)
-	self.__joined_animation_cache = self.__joined_animation_cache or setmetatable({}, {__mode = "v"})
+	self.__joined_animation_cache = self.__joined_animation_cache or setmetatable({}, {
+		__mode = "v"
+	})
 	local unit_name_func = type(unit_name_or_func) ~= "function" and function ()
 		return tostring(unit_name_or_func)
 	end or unit_name_or_func
@@ -237,7 +243,9 @@ function CoreCutsceneExporter:_get_joined_camera_animation()
 end
 
 function CoreCutsceneExporter:_get_footage_animation(cutscene, unit_name)
-	self.__footage_animation_cache = self.__footage_animation_cache or setmetatable({}, {__mode = "v"})
+	self.__footage_animation_cache = self.__footage_animation_cache or setmetatable({}, {
+		__mode = "v"
+	})
 	local key = cutscene:name() .. ":" .. unit_name
 	local footage_animation = self.__footage_animation_cache[key]
 
@@ -353,4 +361,3 @@ function CoreCutsceneExporter:_assert_is_valid()
 		error("Cutscene project is invalid: ", string.join(" ", problems))
 	end
 end
-

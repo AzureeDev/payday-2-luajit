@@ -32,4 +32,3 @@ function TextureCorrectionTweakData:set(hud_icons, str, rect)
 		texture_rect = rect
 	}
 end
-

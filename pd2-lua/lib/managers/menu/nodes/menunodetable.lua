@@ -29,4 +29,3 @@ end
 function MenuNodeTable:columns()
 	return self._columns
 end
-

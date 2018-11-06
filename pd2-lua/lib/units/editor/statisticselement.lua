@@ -19,4 +19,3 @@ function StatisticsElement:_build_panel(panel, panel_sizer)
 
 	self:_build_value_combobox(panel, panel_sizer, "name", tweak_data.statistics:mission_statistics_table(), "Select an mission statistics from the combobox")
 end
-

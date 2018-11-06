@@ -27,6 +27,7 @@ function InitState:default_transition(next_state)
 	self:at_exit(next_state)
 	next_state:at_enter(self)
 end
+
 StateMachineTransitionQueue = StateMachineTransitionQueue or class()
 
 function StateMachineTransitionQueue:init()
@@ -112,7 +113,9 @@ function StateMachine:init(start_state, shared_queue)
 	local init = InitState:new(self)
 	self._states[init:name()] = init
 	self._transitions[init] = self._transitions[init] or {}
-	self._transitions[init][start_state] = {init.default_transition}
+	self._transitions[init][start_state] = {
+		init.default_transition
+	}
 	self._current_state = init
 	self._transition_queue = shared_queue or StateMachineTransitionQueue:new()
 
@@ -197,4 +200,3 @@ end
 function StateMachine:last_queued_state_name()
 	return self._transition_queue:last_queued_state_name(self) or self:current_state_name()
 end
-

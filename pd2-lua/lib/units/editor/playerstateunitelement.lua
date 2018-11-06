@@ -16,7 +16,9 @@ function PlayerStateUnitElement:_build_panel(panel, panel_sizer)
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
 
-	self:_build_value_combobox(panel, panel_sizer, "state", mixin_add(managers.player:player_states(), {"electrocution"}), "Select a state from the combobox")
+	self:_build_value_combobox(panel, panel_sizer, "state", mixin_add(managers.player:player_states(), {
+		"electrocution"
+	}), "Select a state from the combobox")
 	self:_build_value_checkbox(panel, panel_sizer, "use_instigator", "On instigator")
 
 	local help = {
@@ -27,4 +29,3 @@ function PlayerStateUnitElement:_build_panel(panel, panel_sizer)
 
 	self:add_help_text(help)
 end
-

@@ -139,4 +139,3 @@ function CameraDataInterpreter:interpolate_to_target(cud_target, fraction)
 	self._dof_far_min = self._dof_far_min + (cud_target._dof_far_min - self._dof_far_min) * fraction
 	self._dof_far_max = self._dof_far_max + (cud_target._dof_far_max - self._dof_far_max) * fraction
 end
-

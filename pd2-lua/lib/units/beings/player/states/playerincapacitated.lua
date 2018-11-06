@@ -21,7 +21,9 @@ function PlayerIncapacitated:enter(state_data, enter_data)
 
 	self:_interupt_action_charging_weapon(managers.player:player_timer():time())
 
-	self._revive_SO_data = {unit = self._unit}
+	self._revive_SO_data = {
+		unit = self._unit
+	}
 
 	self:_start_action_incapacitated(managers.player:player_timer():time())
 	self._unit:base():set_slot(self._unit, 4)
@@ -45,15 +47,20 @@ end
 
 function PlayerIncapacitated:_enter(enter_data)
 	local preset = nil
-	preset = managers.groupai:state():whisper_mode() and {
-		"pl_mask_on_friend_combatant_whisper_mode",
-		"pl_mask_on_friend_non_combatant_whisper_mode",
-		"pl_mask_on_foe_combatant_whisper_mode_crouch",
-		"pl_mask_on_foe_non_combatant_whisper_mode_crouch"
-	} or {
-		"pl_friend_combatant_cbt",
-		"pl_friend_non_combatant_cbt"
-	}
+
+	if managers.groupai:state():whisper_mode() then
+		preset = {
+			"pl_mask_on_friend_combatant_whisper_mode",
+			"pl_mask_on_friend_non_combatant_whisper_mode",
+			"pl_mask_on_foe_combatant_whisper_mode_crouch",
+			"pl_mask_on_foe_non_combatant_whisper_mode_crouch"
+		}
+	else
+		preset = {
+			"pl_friend_combatant_cbt",
+			"pl_friend_non_combatant_cbt"
+		}
+	end
 
 	self._ext_movement:set_attention_settings(preset)
 
@@ -69,7 +76,9 @@ function PlayerIncapacitated:exit(state_data, new_state_name)
 	PlayerBleedOut._unregister_revive_SO(self)
 	managers.network:session():send_to_peers_synched("sync_contour_state", self._unit, -1, table.index_of(ContourExt.indexed_types, "teammate_downed"), false, 1)
 
-	return {equip_weapon = self._reequip_weapon}
+	return {
+		equip_weapon = self._reequip_weapon
+	}
 end
 
 function PlayerIncapacitated:interaction_blocked()
@@ -170,4 +179,3 @@ function PlayerIncapacitated:destroy(unit)
 	PlayerBleedOut._unregister_revive_SO(self)
 	managers.environment_controller:set_taser_value(1)
 end
-

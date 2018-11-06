@@ -212,4 +212,3 @@ end
 function InteractionEditorUI:want_to_save(path)
 	return EWS:message_box(self._main_frame, path .. " has changed.\nDo you want to save it?", "Save Changes", "ICON_WARNING,YES_DEFAULT,YES_NO,CANCEL", Vector3(-1, -1, -1))
 end
-

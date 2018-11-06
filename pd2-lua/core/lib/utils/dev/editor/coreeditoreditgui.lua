@@ -11,7 +11,9 @@ function EditGui:init(parent, toolbar, btn, name)
 
 	self._toolbar = toolbar
 	self._btn = btn
-	self._ctrls = {unit = nil}
+	self._ctrls = {
+		unit = nil
+	}
 
 	self:set_visible(false)
 end
@@ -48,4 +50,3 @@ end
 function EditGui:get_panel()
 	return self._panel
 end
-

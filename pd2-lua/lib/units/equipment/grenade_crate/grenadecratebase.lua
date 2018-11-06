@@ -10,7 +10,9 @@ function GrenadeCrateBase.spawn(pos, rot)
 end
 
 function GrenadeCrateBase:set_server_information(peer_id)
-	self._server_information = {owner_peer_id = peer_id}
+	self._server_information = {
+		owner_peer_id = peer_id
+	}
 end
 
 function GrenadeCrateBase:server_information()
@@ -199,6 +201,7 @@ end
 
 function GrenadeCrateBase:destroy()
 end
+
 CustomGrenadeCrateBase = CustomGrenadeCrateBase or class(GrenadeCrateBase)
 
 function CustomGrenadeCrateBase:init(unit)
@@ -222,6 +225,7 @@ function CustomGrenadeCrateBase:_set_empty()
 		self._unit:damage():run_sequence_simple("empty")
 	end
 end
+
 GrenadeCrateSync = GrenadeCrateSync or class()
 
 function GrenadeCrateSync:init(unit)
@@ -263,4 +267,3 @@ function GrenadeCrateSync:_clbk_validate()
 		peer:mark_cheater(VoteManager.REASON.many_assets)
 	end
 end
-

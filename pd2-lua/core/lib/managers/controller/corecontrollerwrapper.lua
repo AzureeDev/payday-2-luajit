@@ -332,7 +332,7 @@ function ControllerWrapper:setup_connection(connection_name, connection, control
 					for _, input_name in ipairs(input_name_list) do
 						if delay_input_name == input_name then
 							if not delay_data then
-								local delay_data = {
+								delay_data = {
 									delay_time_map = {},
 									connection = connection
 								}
@@ -679,7 +679,9 @@ end
 function ControllerWrapper:queue_delay_trigger(connection_name, func, ...)
 	self._delay_trigger_queue[connection_name] = {
 		func = func,
-		func_params = {...}
+		func_params = {
+			...
+		}
 	}
 end
 
@@ -863,6 +865,7 @@ function ControllerWrapper:get_any_input_released()
 
 	return self._input_any_released_cache
 end
+
 local id_strings = {}
 
 function ControllerWrapper:get_input_pressed(connection_name)
@@ -1214,4 +1217,3 @@ end
 function ControllerWrapper.change_mode(controller, mode)
 	return nil
 end
-

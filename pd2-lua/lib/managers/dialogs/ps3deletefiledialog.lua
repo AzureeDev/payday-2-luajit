@@ -9,4 +9,3 @@ function PS3DeleteFileDialog:show()
 
 	return true
 end
-

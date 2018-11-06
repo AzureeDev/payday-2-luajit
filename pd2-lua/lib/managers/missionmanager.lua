@@ -127,7 +127,10 @@ require("lib/managers/mission/ElementMotionpathMarker")
 require("lib/managers/mission/ElementVehicleTrigger")
 require("lib/managers/mission/ElementVehicleOperator")
 require("lib/managers/mission/ElementVehicleSpawner")
+require("lib/managers/mission/ElementVehicleBoarding")
 require("lib/managers/mission/ElementEnvironmentOperator")
+require("lib/managers/mission/ElementAreaDespawn")
+require("lib/managers/mission/ElementTerminateAssault")
 
 MissionManager = MissionManager or class(CoreMissionManager.MissionManager)
 
@@ -226,17 +229,20 @@ function MissionManager:init(...)
 		"pku_jewelry_instant",
 		"pku_black_tablet",
 		"pku_german_folder",
-		"pku_old_wine"
+		"pku_old_wine",
+		"uno_access_granted",
+		"uno_access_denied"
 	})
 
 	self._mission_filter = {}
 
 	if not Global.mission_manager then
-		Global.mission_manager = {}
-		Global.mission_manager.stage_job_values = {}
-		Global.mission_manager.job_values = {}
-		Global.mission_manager.saved_job_values = {}
-		Global.mission_manager.has_played_tutorial = false
+		Global.mission_manager = {
+			stage_job_values = {},
+			job_values = {},
+			saved_job_values = {},
+			has_played_tutorial = false
+		}
 	end
 end
 
@@ -425,4 +431,3 @@ function MissionScript:activate(...)
 end
 
 CoreClass.override_class(CoreMissionManager.MissionScript, MissionScript)
-

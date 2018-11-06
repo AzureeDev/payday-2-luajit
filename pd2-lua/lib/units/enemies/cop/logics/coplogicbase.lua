@@ -50,7 +50,9 @@ function CopLogicBase.on_criminal_neutralized(data, criminal_key)
 end
 
 function CopLogicBase._set_attention_on_unit(data, attention_unit)
-	local attention_data = {unit = attention_unit}
+	local attention_data = {
+		unit = attention_unit
+	}
 
 	data.unit:movement():set_attention(attention_data)
 end
@@ -67,7 +69,9 @@ function CopLogicBase._set_attention(data, attention_info, reaction)
 end
 
 function CopLogicBase._set_attention_on_pos(data, pos)
-	local attention_data = {pos = pos}
+	local attention_data = {
+		pos = pos
+	}
 
 	data.unit:movement():set_attention(attention_data)
 end
@@ -198,7 +202,9 @@ function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap)
 
 		qd_tasks[id] = true
 	else
-		internal_data.queued_tasks = {[id] = true}
+		internal_data.queued_tasks = {
+			[id] = true
+		}
 	end
 
 	managers.enemy:queue_task(id, func, data, exec_t, callback(CopLogicBase, CopLogicBase, "on_queued_task", internal_data), asap)
@@ -268,7 +274,9 @@ function CopLogicBase.add_delayed_clbk(internal_data, id, clbk, exec_t)
 
 		clbks[id] = true
 	else
-		internal_data.delayed_clbks = {[id] = true}
+		internal_data.delayed_clbks = {
+			[id] = true
+		}
 	end
 
 	managers.enemy:add_delayed_clbk(id, clbk, exec_t)
@@ -409,7 +417,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		local angle = mvector3.angle(my_head_fwd, tmp_vec1)
 		local angle_max = math.lerp(180, my_data.detection.angle_max, math.clamp((dis - 150) / 700, 0, 1))
 
-		if angle * strictness < angle_max then
+		if angle_max > angle * strictness then
 			return true
 		end
 	end
@@ -494,7 +502,13 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 
 		local weight = mvector3.direction(tmp_vec1, attention_info.m_head_pos, my_pos)
 		local e_fwd = nil
-		e_fwd = attention_info.is_husk_player and attention_info.unit:movement():detect_look_dir() or attention_info.unit:movement():m_head_rot():y()
+
+		if attention_info.is_husk_player then
+			e_fwd = attention_info.unit:movement():detect_look_dir()
+		else
+			e_fwd = attention_info.unit:movement():m_head_rot():y()
+		end
+
 		local dot = mvector3.dot(e_fwd, tmp_vec1)
 		weight = weight * weight * (1 - dot)
 
@@ -521,7 +535,13 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 
 		local weight = mvector3.direction(tmp_vec1, attention_info.handler:get_detection_m_pos(), my_pos)
 		local e_fwd = nil
-		e_fwd = is_husk_player and attention_info.unit:movement():detect_look_dir() or attention_info.unit:movement():m_head_rot():y()
+
+		if is_husk_player then
+			e_fwd = attention_info.unit:movement():detect_look_dir()
+		else
+			e_fwd = attention_info.unit:movement():m_head_rot():y()
+		end
+
 		local dot = mvector3.dot(e_fwd, tmp_vec1)
 		weight = weight * weight * (1 - dot)
 
@@ -1053,7 +1073,6 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 end
 
 function CopLogicBase._upd_suspicion(data, my_data, attention_obj)
-
 	local function _exit_func()
 		attention_obj.unit:movement():on_uncovered(data.unit)
 
@@ -1099,7 +1118,7 @@ function CopLogicBase._upd_suspicion(data, my_data, attention_obj)
 			local range_max = (attention_obj.settings.suspicion_range - (attention_obj.settings.uncover_range or 0)) * susp_settings.range_mul
 			local range_min = (attention_obj.settings.uncover_range or 0) * susp_settings.range_mul
 			local mul = 1 - (dis - range_min) / range_max
-			local progress = (dt * mul * susp_settings.buildup_mul) / attention_obj.settings.suspicion_duration
+			local progress = dt * mul * susp_settings.buildup_mul / attention_obj.settings.suspicion_duration
 			attention_obj.uncover_progress = (attention_obj.uncover_progress or 0) + progress
 
 			if attention_obj.uncover_progress < 1 then
@@ -1403,7 +1422,7 @@ function CopLogicBase._evaluate_reason_to_surrender(data, my_data, aggressor_uni
 		surrender_chk[reason](reason_data)
 	end
 
-	if 1 - (surrender_tweak.significant_chance or 0) <= hold_chance then
+	if hold_chance >= 1 - (surrender_tweak.significant_chance or 0) then
 		return 1
 	end
 
@@ -1577,7 +1596,11 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 	local dodge_side = nil
 
 	if face_attention then
-		dodge_side = dodge_dir_reversed and "l" or "r"
+		if dodge_dir_reversed then
+			dodge_side = "l"
+		else
+			dodge_side = "r"
+		end
 	else
 		local fwd_dot = mvec3_dot(dodge_dir, data.unit:movement():m_fwd())
 		local my_right = tmp_vec1
@@ -1585,7 +1608,18 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 		mrotation.x(data.unit:movement():m_rot(), my_right)
 
 		local right_dot = mvec3_dot(dodge_dir, my_right)
-		dodge_side = math.abs(fwd_dot) > 0.7071067690849 and (fwd_dot > 0 and "fwd" or "bwd") or right_dot > 0 and "r" or "l"
+
+		if math.abs(fwd_dot) > 0.7071067690849 then
+			if fwd_dot > 0 then
+				dodge_side = "fwd"
+			else
+				dodge_side = "bwd"
+			end
+		elseif right_dot > 0 then
+			dodge_side = "r"
+		else
+			dodge_side = "l"
+		end
 	end
 
 	local body_part = 1
@@ -1678,10 +1712,9 @@ function CopLogicBase._chk_alert_obstructed(my_listen_pos, alert_data)
 			local effective_dis_sq = alert_data[3] * dampening
 			effective_dis_sq = effective_dis_sq * effective_dis_sq
 
-			if effective_dis_sq < my_dis_sq then
+			if my_dis_sq > effective_dis_sq then
 				return true
 			end
 		end
 	end
 end
-

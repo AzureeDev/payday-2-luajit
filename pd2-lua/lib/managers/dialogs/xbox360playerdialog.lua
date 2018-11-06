@@ -34,4 +34,3 @@ function Xbox360PlayerDialog:done_callback()
 
 	PlayerDialog.done_callback(self)
 end
-

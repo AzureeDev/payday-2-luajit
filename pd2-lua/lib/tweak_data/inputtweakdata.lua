@@ -63,4 +63,3 @@ function InputTweakData:init(tweak_data)
 	valid_range(self.gamepad, "aim_assist_move_th_max", 0, 1, false, false)
 	print("[InputTweakData] Init")
 end
-

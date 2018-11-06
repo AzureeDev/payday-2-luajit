@@ -111,4 +111,3 @@ function User:update(t, dt)
 
 	self._local_user_handler:update(t, dt)
 end
-

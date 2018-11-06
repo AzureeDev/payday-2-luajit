@@ -13,4 +13,3 @@ end
 function EditorState:at_exit()
 	cat_print("game_state_machine", "GAME STATE EditorState ENTER")
 end
-

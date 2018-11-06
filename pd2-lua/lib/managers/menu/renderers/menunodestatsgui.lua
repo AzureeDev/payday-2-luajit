@@ -75,7 +75,9 @@ function MenuNodeStatsGui:_setup_stats(node)
 		end
 
 		local safe_rect = managers.viewport:get_safe_rect_pixels()
-		local panel = self._item_panel_parent:panel({y = y})
+		local panel = self._item_panel_parent:panel({
+			y = y
+		})
 		local text = panel:text({
 			halign = "center",
 			vertical = "center",
@@ -104,7 +106,9 @@ function MenuNodeStatsGui:_add_stats(params)
 		y = y + panel:h() + self.spacing
 	end
 
-	local panel = self._item_panel_parent:panel({y = y})
+	local panel = self._item_panel_parent:panel({
+		y = y
+	})
 	local topic = panel:text({
 		halign = "right",
 		vertical = "center",
@@ -125,7 +129,7 @@ function MenuNodeStatsGui:_add_stats(params)
 	panel:set_h(h)
 
 	if params.type == "text" then
-		local text = panel:text({
+		slot9 = panel:text({
 			halign = "left",
 			vertical = "center",
 			align = "left",
@@ -170,7 +174,7 @@ function MenuNodeStatsGui:_add_stats(params)
 			h = bg:h() - 4,
 			layer = self.layers.items
 		})
-		local text = panel:text({
+		slot11 = panel:text({
 			y = 0,
 			vertical = "center",
 			align = "center",
@@ -206,4 +210,3 @@ end
 function MenuNodeStatsGui:resolution_changed()
 	MenuNodeStatsGui.super.resolution_changed(self)
 end
-

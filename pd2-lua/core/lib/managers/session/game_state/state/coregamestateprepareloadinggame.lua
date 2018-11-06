@@ -22,4 +22,3 @@ function PrepareLoadingGame:transition()
 		return CoreGameStateLoadingGame.LoadingGame
 	end
 end
-

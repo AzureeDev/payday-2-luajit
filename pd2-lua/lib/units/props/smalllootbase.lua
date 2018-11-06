@@ -45,4 +45,3 @@ end
 
 function SmallLootBase:destroy()
 end
-

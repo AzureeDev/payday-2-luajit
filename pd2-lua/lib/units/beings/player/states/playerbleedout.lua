@@ -7,7 +7,9 @@ end
 function PlayerBleedOut:enter(state_data, enter_data)
 	PlayerBleedOut.super.enter(self, state_data, enter_data)
 
-	self._revive_SO_data = {unit = self._unit}
+	self._revive_SO_data = {
+		unit = self._unit
+	}
 
 	self:_start_action_bleedout(managers.player:player_timer():time())
 
@@ -25,7 +27,9 @@ function PlayerBleedOut:enter(state_data, enter_data)
 
 		self._old_selection = self._unit:inventory():equipped_selection()
 
-		self:_start_action_unequip_weapon(managers.player:player_timer():time(), {selection_wanted = 1})
+		self:_start_action_unequip_weapon(managers.player:player_timer():time(), {
+			selection_wanted = 1
+		})
 		self._unit:inventory():unit_by_selection(1):base():on_reload()
 	end
 
@@ -62,17 +66,22 @@ function PlayerBleedOut:_enter(enter_data)
 	end
 
 	local preset = nil
-	preset = managers.groupai:state():whisper_mode() and {
-		"pl_mask_on_friend_combatant_whisper_mode",
-		"pl_mask_on_friend_non_combatant_whisper_mode",
-		"pl_mask_on_foe_combatant_whisper_mode_crouch",
-		"pl_mask_on_foe_non_combatant_whisper_mode_crouch"
-	} or {
-		"pl_friend_combatant_cbt",
-		"pl_friend_non_combatant_cbt",
-		"pl_foe_combatant_cbt_crouch",
-		"pl_foe_non_combatant_cbt_crouch"
-	}
+
+	if managers.groupai:state():whisper_mode() then
+		preset = {
+			"pl_mask_on_friend_combatant_whisper_mode",
+			"pl_mask_on_friend_non_combatant_whisper_mode",
+			"pl_mask_on_foe_combatant_whisper_mode_crouch",
+			"pl_mask_on_foe_non_combatant_whisper_mode_crouch"
+		}
+	else
+		preset = {
+			"pl_friend_combatant_cbt",
+			"pl_friend_non_combatant_cbt",
+			"pl_foe_combatant_cbt_crouch",
+			"pl_foe_non_combatant_cbt_crouch"
+		}
+	end
 
 	self._ext_movement:set_attention_settings(preset)
 end
@@ -83,7 +92,9 @@ function PlayerBleedOut:exit(state_data, new_state_name)
 	self._unit:camera():camera_unit():base():set_target_tilt(0)
 
 	self._tilt_wait_t = nil
-	local exit_data = {equip_weapon = self._old_selection}
+	local exit_data = {
+		equip_weapon = self._old_selection
+	}
 
 	if Network:is_server() then
 		if new_state_name == "fatal" then
@@ -343,7 +354,9 @@ function PlayerBleedOut:call_civilian(line, t, no_gesture, skip_alert, revive_SO
 
 			self:_do_action_intimidate(t, not no_gesture and "cmd_come" or nil, queue_name, skip_alert)
 
-			if Network:is_server() and prime_target.unit:brain():is_available_for_assignment({type = "revive"}) then
+			if Network:is_server() and prime_target.unit:brain():is_available_for_assignment({
+				type = "revive"
+			}) then
 				local followup_objective = {
 					interrupt_health = 1,
 					interrupt_dis = -1,
@@ -591,4 +604,3 @@ function PlayerBleedOut:destroy()
 		self:_unregister_revive_SO()
 	end
 end
-

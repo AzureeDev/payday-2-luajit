@@ -28,4 +28,3 @@ function ElementSpawnDeployable:on_executed(instigator)
 
 	ElementSpawnDeployable.super.on_executed(self, instigator)
 end
-

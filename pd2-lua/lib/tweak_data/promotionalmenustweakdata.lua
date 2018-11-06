@@ -33,7 +33,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font_size = "large",
 					color = Color(1, 0, 0, 0)
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/play_raid_header_df"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/play_raid_header_df"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuButton",
@@ -57,7 +59,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font_size = "small",
 					color = Color(1, 0, 0, 0)
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/preorder"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/preorder"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuButton",
@@ -80,7 +84,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font = "small",
 					font_size = "small"
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/pd2_weaponpack_df"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/pd2_weaponpack_df"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuButton",
@@ -103,7 +109,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font = "small",
 					font_size = "small"
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/cinematic_trailer_df"},
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/cinematic_trailer_df"
+				},
 				overlay = {
 					w = 102.4,
 					image = "guis/dlcs/aru/textures/pd2/play_button",
@@ -135,7 +143,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font = "small",
 					font_size = "small"
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/dev_diary"},
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/dev_diary"
+				},
 				overlay = {
 					w = 102.4,
 					image = "guis/dlcs/aru/textures/pd2/play_button",
@@ -167,7 +177,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font = "small",
 					font_size = "small"
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/meet_the_gang"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/meet_the_gang"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuButton",
@@ -190,7 +202,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font = "small",
 					font_size = "small"
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/feedback"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/feedback"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuButton",
@@ -213,7 +227,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font = "small",
 					font_size = "small"
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/gameplay_trailer"},
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/gameplay_trailer"
+				},
 				overlay = {
 					w = 102.4,
 					image = "guis/dlcs/aru/textures/pd2/play_button",
@@ -245,7 +261,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font = "small",
 					font_size = "small"
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/special_edition"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/special_edition"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuButton",
@@ -268,7 +286,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					font = "small",
 					font_size = "small"
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/twitch"},
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/twitch"
+				},
 				overlay = {
 					w = 64,
 					image = "guis/dlcs/aru/textures/pd2/twitch_overlay",
@@ -329,7 +349,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					align = "left",
 					color = Color(1, 1, 1, 1)
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/weapon_ching"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/weapon_ching"
+				}
 			},
 			{
 				type = "PromotionalMenuSeperatorRaid",
@@ -372,7 +394,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					align = "left",
 					color = Color(1, 1, 1, 1)
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/weapon_erma"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/weapon_erma"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuButton",
@@ -393,7 +417,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					align = "left",
 					color = Color(1, 1, 1, 1)
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/weapon_breech"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/weapon_breech"
+				}
 			},
 			{
 				type = "PromotionalMenuSeperatorRaid",
@@ -436,7 +462,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					align = "left",
 					color = Color(1, 1, 1, 1)
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/weapon_push"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/weapon_push"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuButton",
@@ -465,7 +493,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 						6
 					}
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/weapon_grip"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/weapon_grip"
+				}
 			}
 		}
 	}
@@ -495,7 +525,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					128,
 					128
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/preorder_now_button"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/preorder_now_button"
+				}
 			},
 			{
 				type = "PromotionalMenuUnselectableButton",
@@ -509,7 +541,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					1,
 					1
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/preorder_special_edition"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/preorder_special_edition"
+				}
 			}
 		}
 	}
@@ -532,7 +566,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					1,
 					1
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/raid_preorder"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/raid_preorder"
+				}
 			},
 			{
 				type = "RaidPromotionalMenuFloatingButton",
@@ -553,7 +589,9 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 					256,
 					64
 				},
-				background = {image = "guis/dlcs/aru/textures/pd2/raid_preorder_button"}
+				background = {
+					image = "guis/dlcs/aru/textures/pd2/raid_preorder_button"
+				}
 			}
 		}
 	}
@@ -609,12 +647,14 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 		},
 		selection_corners = Color(255, 222, 74, 62) / 255,
 		selection_outline = Color(255, 222, 74, 62) / 255,
-		selection_outline_sides = {sides = {
-			2,
-			2,
-			2,
-			2
-		}},
+		selection_outline_sides = {
+			sides = {
+				2,
+				2,
+				2,
+				2
+			}
+		},
 		background_unselected = Color(100, 43, 48, 55) / 255,
 		background_selected = Color(200, 59, 64, 68) / 255,
 		title = Color(255, 222, 74, 62) / 255,
@@ -633,4 +673,3 @@ function PromotionalMenusTweakData:_init_raid(tweak_data)
 		}
 	}
 end
-

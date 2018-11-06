@@ -290,7 +290,6 @@ function CoreMissionElement:build_default_gui(panel, sizer)
 	self:set_on_executed_element()
 
 	local function refresh_list_flow_cbk(ctrlr)
-
 		local function f()
 			managers.editor:layer("Mission"):refresh_list_flow()
 		end
@@ -388,7 +387,9 @@ end
 function CoreMissionElement:_build_instance_var_names(panel)
 	local sizer = EWS:StaticBoxSizer(panel, "VERTICAL", "Instance variables")
 	local options = {}
-	local func_instance_params_units = managers.editor:layer("Mission"):get_created_unit_by_pattern({"func_instance_params"})
+	local func_instance_params_units = managers.editor:layer("Mission"):get_created_unit_by_pattern({
+		"func_instance_params"
+	})
 
 	for _, unit in ipairs(func_instance_params_units) do
 		for _, param in ipairs(unit:mission_element_data().params) do
@@ -476,7 +477,9 @@ function CoreMissionElement:_add_panel(parent, parent_sizer)
 	panel:set_sizer(panel_sizer)
 	parent_sizer:add(panel, 1, 0, "EXPAND")
 	panel:set_visible(false)
-	panel:set_extension({alive = true})
+	panel:set_extension({
+		alive = true
+	})
 	self:build_default_gui(panel, panel_sizer)
 
 	return panel, panel_sizer
@@ -503,7 +506,6 @@ function CoreMissionElement:_add_help_text(text)
 end
 
 function CoreMissionElement:_on_toolbar_add_element()
-
 	local function f(unit)
 		return unit:type() == Idstring("mission_element") and unit ~= self._unit
 	end
@@ -1491,7 +1493,9 @@ function CoreMissionElement:_build_add_remove_unit_from_list(panel, sizer, eleme
 		exact_names = exact_names
 	})
 	toolbar:add_tool("REMOVE_UNIT_LIST", "Remove unit from unit list", CoreEws.image_path("toolbar\\delete_16x16.png"), nil)
-	toolbar:connect("REMOVE_UNIT_LIST", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "_remove_unit_list_btn"), {elements = elements})
+	toolbar:connect("REMOVE_UNIT_LIST", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "_remove_unit_list_btn"), {
+		elements = elements
+	})
 	toolbar:realize()
 	sizer:add(toolbar, 0, 1, "EXPAND,LEFT")
 end
@@ -1581,7 +1585,7 @@ function CoreMissionElement:_build_add_remove_static_unit_from_list(panel, sizer
 end
 
 function CoreMissionElement:_add_static_unit_list_btn(params)
-	local dialog = (params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal):new("Add Unit", params.add_filter)
+	local dialog = params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal:new("Add Unit", params.add_filter)
 
 	for _, unit in ipairs(dialog:selected_units()) do
 		local id = unit:unit_data().unit_id
@@ -1591,7 +1595,7 @@ function CoreMissionElement:_add_static_unit_list_btn(params)
 end
 
 function CoreMissionElement:_remove_static_unit_list_btn(params)
-	local dialog = (params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal):new("Remove Unit", params.remove_filter)
+	local dialog = params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal:new("Remove Unit", params.remove_filter)
 
 	for _, unit in ipairs(dialog:selected_units()) do
 		params.remove_result(unit)
@@ -1648,4 +1652,3 @@ function CoreMissionElement:_get_links_of_type_from_elements(elements, type, to_
 		end
 	end
 end
-

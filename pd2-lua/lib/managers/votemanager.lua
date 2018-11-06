@@ -154,7 +154,9 @@ function VoteManager:_host_start(vote_type, voter_peer_id, kicked_peer_id)
 	self._timeout = TimerManager:wall():time() + tweak_data.voting.timeout
 	self._vote_cooldown = self._vote_cooldown or {}
 	self._vote_cooldown[voter_peer_id] = TimerManager:wall():time() + tweak_data.voting.cooldown
-	self._vote_response = {[managers.network:session():local_peer():id()] = self.VOTES.none}
+	self._vote_response = {
+		[managers.network:session():local_peer():id()] = self.VOTES.none
+	}
 
 	for id, peer in pairs(managers.network:session():peers()) do
 		if not peer:loading() and id ~= kicked_peer_id then
@@ -269,7 +271,7 @@ function VoteManager:_host_count(abort)
 			end
 		end
 
-		success = amount / 2 < yes_count
+		success = yes_count > amount / 2
 	elseif self._type == "restart" then
 		success = yes_count == amount
 	end
@@ -317,7 +319,9 @@ function VoteManager:_message(response, peer_id, kick_peer_id)
 	end
 
 	if response == self.VOTES.cancel then
-		managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_vote_cancel", {name = peer:name()}))
+		managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_vote_cancel", {
+			name = peer:name()
+		}))
 	else
 		local kick_peer = kick_peer_id and managers.network:session():peer(kick_peer_id)
 
@@ -328,10 +332,14 @@ function VoteManager:_message(response, peer_id, kick_peer_id)
 					kick_name = kick_peer:name()
 				}))
 			else
-				managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text(response == self.VOTES.yes and "menu_chat_vote_kick_yes_unknown" or "menu_chat_vote_kick_no_unknown", {name = peer:name()}))
+				managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text(response == self.VOTES.yes and "menu_chat_vote_kick_yes_unknown" or "menu_chat_vote_kick_no_unknown", {
+					name = peer:name()
+				}))
 			end
 		elseif self._type == "restart" then
-			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text(response == self.VOTES.yes and "menu_chat_vote_restart_yes" or "menu_chat_vote_restart_no", {name = peer:name()}))
+			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text(response == self.VOTES.yes and "menu_chat_vote_restart_yes" or "menu_chat_vote_restart_no", {
+				name = peer:name()
+			}))
 		end
 	end
 end
@@ -350,7 +358,9 @@ end
 
 function VoteManager:help_text()
 	if not self:available() and self._cooldown then
-		return managers.localization:text("menu_vote_kick_cooldown", {time = math.ceil(self._cooldown - TimerManager:wall():time())})
+		return managers.localization:text("menu_vote_kick_cooldown", {
+			time = math.ceil(self._cooldown - TimerManager:wall():time())
+		})
 	end
 
 	return ""
@@ -393,7 +403,9 @@ function VoteManager:network_package(type, value, result, peer_id)
 		local peer = managers.network:session():peer(value)
 
 		if peer and result ~= 0 then
-			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text(self:kick_reason_to_string(result), {name = peer:name()}))
+			managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text(self:kick_reason_to_string(result), {
+				name = peer:name()
+			}))
 		end
 	elseif type == self.VOTE_EVENT.instant_restart then
 		self:_restart_counter()
@@ -447,8 +459,10 @@ function VoteManager:update(t, dt)
 		if self._callback_type == "restart" then
 			self._callback_counter_print = self._callback_counter_print or tweak_data.voting.restart_delay
 
-			if self._callback_counter - current_time < self._callback_counter_print then
-				managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_restart_timer", {time = self._callback_counter_print}))
+			if self._callback_counter_print > self._callback_counter - current_time then
+				managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_restart_timer", {
+					time = self._callback_counter_print
+				}))
 
 				self._callback_counter_print = self._callback_counter_print - 1
 			end
@@ -496,14 +510,20 @@ function VoteManager:message_vote()
 
 	local count = math.ceil(self._timeout - TimerManager:wall():time())
 	local message = nil
-	local dialog_data = {id = "vote_data"}
+	local dialog_data = {
+		id = "vote_data"
+	}
 	local peer = self._peer_to_exclude and managers.network:session():peer(self._peer_to_exclude)
-	local yes_button = {callback_func = function ()
-		self:response(self.VOTES.yes)
-	end}
-	local no_button = {callback_func = function ()
-		self:response(self.VOTES.no)
-	end}
+	local yes_button = {
+		callback_func = function ()
+			self:response(self.VOTES.yes)
+		end
+	}
+	local no_button = {
+		callback_func = function ()
+			self:response(self.VOTES.no)
+		end
+	}
 	local cancel_button = {
 		text = managers.localization:text("dialog_vote_cancel"),
 		callback_func = function ()
@@ -514,7 +534,12 @@ function VoteManager:message_vote()
 	local timeout_choice = nil
 
 	if self._type == "kick" then
-		message = peer and "dialog_mp_vote_kick_message" or "dialog_mp_vote_kick_unknown_message"
+		if peer then
+			message = "dialog_mp_vote_kick_message"
+		else
+			message = "dialog_mp_vote_kick_unknown_message"
+		end
+
 		dialog_data.title = managers.localization:text("dialog_mp_vote_kick_response_title")
 		yes_button.text = managers.localization:text("dialog_vote_kick_yes")
 		no_button.text = managers.localization:text("dialog_vote_kick_no")
@@ -568,7 +593,9 @@ end
 function VoteManager:message_host_kick(peer)
 	local dialog_data = {
 		title = managers.localization:text("dialog_mp_kick_player_title"),
-		text = managers.localization:text("dialog_mp_kick_player_message", {PLAYER = peer:name()})
+		text = managers.localization:text("dialog_mp_kick_player_message", {
+			PLAYER = peer:name()
+		})
 	}
 	local yes_button = {
 		text = managers.localization:text("dialog_yes"),
@@ -618,4 +645,3 @@ end
 function VoteManager:option_host_restart()
 	return (Network:is_server() and Global.game_settings.kick_option or Global.game_settings.kick_option_synced) == 1
 end
-

@@ -30,8 +30,12 @@ ContourExt._types = {
 		material_swap_required = true,
 		color = tweak_data.contour.character.friendly_color
 	},
-	drunk_pilot = {priority = 5},
-	boris = {priority = 5},
+	drunk_pilot = {
+		priority = 5
+	},
+	boris = {
+		priority = 5
+	},
 	taxman = {
 		priority = 5,
 		color = tweak_data.contour.character_interactable.standard_color
@@ -173,6 +177,10 @@ function ContourExt:init(unit)
 	end
 end
 
+function ContourExt:contour_list()
+	return self._contour_list
+end
+
 function ContourExt:apply_to_linked(func_name, ...)
 	if self._unit.spawn_manager and self._unit:spawn_manager() and self._unit:spawn_manager():linked_units() then
 		for unit_id, _ in pairs(self._unit:spawn_manager():linked_units()) do
@@ -242,8 +250,10 @@ function ContourExt:add(type, sync, multiplier)
 	local old_preset_type = self._contour_list[1] and self._contour_list[1].type
 	local i = 1
 
-	while self._contour_list[i] and self._types[self._contour_list[i].type].priority <= data.priority do
-		i = i + 1
+	if self._contour_list[i] then
+		while self._contour_list[i] and self._types[self._contour_list[i].type].priority <= data.priority do
+			i = i + 1
+		end
 	end
 
 	table.insert(self._contour_list, i, setup)
@@ -447,48 +457,50 @@ end
 function ContourExt:update(unit, t, dt)
 	local index = 1
 
-	while self._contour_list and index <= #self._contour_list do
-		local setup = self._contour_list[index]
-		local data = self._types[setup.type]
-		local is_current = index == 1
+	if self._contour_list then
+		while self._contour_list and index <= #self._contour_list do
+			local setup = self._contour_list[index]
+			local data = self._types[setup.type]
+			local is_current = index == 1
 
-		if data.ray_check and unit:movement() then
-			local turn_on = nil
+			if data.ray_check and unit:movement() then
+				local turn_on = nil
 
-			if is_current then
-				local cam_pos = managers.viewport:get_current_camera_position()
+				if is_current then
+					local cam_pos = managers.viewport:get_current_camera_position()
 
-				if cam_pos then
-					turn_on = mvector3.distance_sq(cam_pos, unit:movement():m_com()) > 16000000
-					turn_on = turn_on or unit:raycast("ray", unit:movement():m_com(), cam_pos, "slot_mask", self._slotmask_world_geometry, "report")
-				end
-
-				if turn_on then
-					self:_upd_opacity(1)
-
-					setup.last_turned_on_t = t
-				elseif not setup.last_turned_on_t or data.persistence < t - setup.last_turned_on_t then
-					if is_current then
-						self:_upd_opacity(0)
+					if cam_pos then
+						turn_on = mvector3.distance_sq(cam_pos, unit:movement():m_com()) > 16000000
+						turn_on = turn_on or unit:raycast("ray", unit:movement():m_com(), cam_pos, "slot_mask", self._slotmask_world_geometry, "report")
 					end
 
-					setup.last_turned_on_t = nil
+					if turn_on then
+						self:_upd_opacity(1)
+
+						setup.last_turned_on_t = t
+					elseif not setup.last_turned_on_t or data.persistence < t - setup.last_turned_on_t then
+						if is_current then
+							self:_upd_opacity(0)
+						end
+
+						setup.last_turned_on_t = nil
+					end
 				end
 			end
-		end
 
-		if setup.flash_t and setup.flash_t < t then
-			setup.flash_t = t + setup.flash_frequency
-			setup.flash_on = not setup.flash_on
+			if setup.flash_t and setup.flash_t < t then
+				setup.flash_t = t + setup.flash_frequency
+				setup.flash_on = not setup.flash_on
 
-			self:_upd_opacity(setup.flash_on and 1 or 0)
-		end
+				self:_upd_opacity(setup.flash_on and 1 or 0)
+			end
 
-		if setup.fadeout_t and setup.fadeout_t < t then
-			self:_remove(index)
-			self:_chk_update_state()
-		else
-			index = index + 1
+			if setup.fadeout_t and setup.fadeout_t < t then
+				self:_remove(index)
+				self:_chk_update_state()
+			else
+				index = index + 1
+			end
 		end
 	end
 end
@@ -648,4 +660,3 @@ function ContourExt:load(data)
 		self:add(data.highlight_character.type)
 	end
 end
-

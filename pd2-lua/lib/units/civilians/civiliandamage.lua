@@ -145,7 +145,9 @@ function CivilianDamage:stun_hit(attack_data)
 end
 
 function CivilianDamage:_lie_down_clbk(attacker_unit)
-	local params = {force_lie_down = true}
+	local params = {
+		force_lie_down = true
+	}
 
 	self._unit:brain():set_logic("surrender", params)
 
@@ -183,4 +185,3 @@ function CivilianDamage:damage_tase(attack_data)
 
 	return CopDamage.damage_tase(self, attack_data)
 end
-

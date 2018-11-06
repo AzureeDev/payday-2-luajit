@@ -26,7 +26,6 @@ function LinkedStackMap:get(link_id)
 end
 
 function LinkedStackMap:iterator()
-
 	local function func(map, key)
 		local id, link = next(map, key)
 
@@ -37,7 +36,6 @@ function LinkedStackMap:iterator()
 end
 
 function LinkedStackMap:top_bottom_iterator()
-
 	local function func(map, link_id)
 		if link_id then
 			local link = map[link_id].previous
@@ -58,7 +56,6 @@ function LinkedStackMap:top_bottom_iterator()
 end
 
 function LinkedStackMap:bottom_top_iterator()
-
 	local function func(map, link_id)
 		if link_id then
 			local link = map[link_id].next
@@ -130,10 +127,14 @@ function LinkedStackMap:to_string()
 	local link = self._top_link
 
 	while link do
-		string = string == "" and tostring(link.value) or string .. ", " .. tostring(link.value)
+		if string == "" then
+			string = tostring(link.value)
+		else
+			string = string .. ", " .. tostring(link.value)
+		end
+
 		link = link.previous
 	end
 
 	return string
 end
-

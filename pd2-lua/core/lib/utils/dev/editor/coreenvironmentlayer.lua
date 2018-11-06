@@ -10,7 +10,9 @@ EnvironmentLayer = EnvironmentLayer or class(CoreStaticLayer.StaticLayer)
 EnvironmentLayer.ENABLE_PERMANENT = false
 
 function EnvironmentLayer:init(owner)
-	EnvironmentLayer.super.init(self, owner, "environment", {"environment"}, "environment_layer")
+	EnvironmentLayer.super.init(self, owner, "environment", {
+		"environment"
+	}, "environment_layer")
 
 	self._environment_values = {}
 
@@ -1197,4 +1199,3 @@ end
 function EnvironmentLayer:clear_triggers()
 	self._editor_data.virtual_controller:clear_triggers()
 end
-

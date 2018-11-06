@@ -12,4 +12,3 @@ end
 function ModelDependencyNode:_parse()
 	return {}
 end
-

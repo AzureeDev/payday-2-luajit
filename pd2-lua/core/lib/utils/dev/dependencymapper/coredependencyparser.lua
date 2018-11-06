@@ -53,7 +53,9 @@ function DependencyParser:_key(type_, name)
 end
 
 function DependencyParser:_dn(...)
-	local name, type_ = parse_kwargs({...}, "string:name", "number:type_")
+	local name, type_ = parse_kwargs({
+		...
+	}, "string:name", "number:type_")
 	local key = self:_key(type_, name)
 
 	return self._key2node[key]
@@ -351,4 +353,3 @@ function generate_FAITH_report(filepath)
 
 	generate_report(filepath, prot, dp)
 end
-

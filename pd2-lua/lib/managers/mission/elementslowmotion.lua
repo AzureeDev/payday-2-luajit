@@ -20,4 +20,3 @@ function ElementSlowMotion:on_executed(instigator)
 	managers.time_speed:play_effect(eff_id, eff_desc)
 	ElementSlowMotion.super.on_executed(self, instigator)
 end
-

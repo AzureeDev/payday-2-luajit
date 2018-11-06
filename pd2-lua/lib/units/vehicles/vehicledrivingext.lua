@@ -190,7 +190,9 @@ function VehicleDrivingExt:update(unit, t, dt)
 	end
 
 	for _, seat in pairs(self._seats) do
-		if alive(seat.occupant) and seat.occupant:brain() then
+		local is_ai = alive(seat.occupant) and seat.occupant:brain() ~= nil
+
+		if is_ai then
 			if seat.occupant:character_damage():is_downed() then
 				self:_evacuate_seat(seat)
 			else
@@ -634,18 +636,7 @@ function VehicleDrivingExt:reserve_seat(player, position, seat_name)
 
 	seat.occupant = player
 
-	if seat.drive_SO_data then
-		local SO_data = seat.drive_SO_data
-		seat.drive_SO_data = nil
-
-		if SO_data.SO_registered then
-			managers.groupai:state():remove_special_objective(SO_data.SO_id)
-		end
-
-		if alive(SO_data.unit) then
-			SO_data.unit:brain():set_objective(nil)
-		end
-	end
+	self:_unregister_drive_SO(seat)
 
 	return seat
 end
@@ -692,8 +683,19 @@ function VehicleDrivingExt:place_player_on_seat(player, seat_name)
 	end
 end
 
+function VehicleDrivingExt:disable_player_exit()
+	self._manual_exit_disabled = true
+end
+
+function VehicleDrivingExt:enable_player_exit()
+	self._manual_exit_disabled = nil
+end
+
 function VehicleDrivingExt:allow_exit()
-	return self._current_state:allow_exit()
+	local allowed = self._current_state:allow_exit()
+	allowed = allowed and not self._manual_exit_disabled
+
+	return allowed
 end
 
 function VehicleDrivingExt:exit_vehicle(player)
@@ -706,7 +708,7 @@ function VehicleDrivingExt:exit_vehicle(player)
 	seat.occupant = nil
 	local count = self:_number_in_the_vehicle()
 
-	self:_unregister_drive_SO()
+	self:_unregister_drive_SO_all()
 
 	self._interaction_enter_vehicle = true
 
@@ -726,7 +728,7 @@ function VehicleDrivingExt:_evacuate_vehicle()
 		end
 	end
 
-	self:_unregister_drive_SO()
+	self:_unregister_drive_SO_all()
 	self._unit:attention():set_attention(nil, nil)
 end
 
@@ -821,6 +823,14 @@ function VehicleDrivingExt:get_object_placement(player)
 	print("[VehicleDrivingExt:get_object_placement] Seat not found for player!")
 
 	return nil, nil
+end
+
+function VehicleDrivingExt:get_seat_by_name(seat_name)
+	for name, seat in pairs(self._seats) do
+		if name == seat_name then
+			return seat
+		end
+	end
 end
 
 function VehicleDrivingExt:get_available_seat(position)
@@ -1081,7 +1091,7 @@ function VehicleDrivingExt:_detect_npc_collisions()
 			local nr_u_bodies = unit:num_bodies()
 			local i_u_body = 0
 
-			while i_u_body < nr_u_bodies do
+			while nr_u_bodies > i_u_body do
 				local u_body = unit:body(i_u_body)
 
 				if u_body:enabled() and u_body:dynamic() then
@@ -1101,7 +1111,7 @@ function VehicleDrivingExt:_detect_collisions(t, dt)
 
 	if dt ~= 0 and self._vehicle:is_active() then
 		local dv = self._old_speed - current_speed
-		local gforce = math.abs((dv:length() / 100) / dt) / 9.81
+		local gforce = math.abs(dv:length() / 100 / dt) / 9.81
 
 		if gforce > 15 then
 			local ray_from = self._seats.driver.object:position() + Vector3(0, 0, 100)
@@ -1219,7 +1229,11 @@ function VehicleDrivingExt:respawn_vehicle(auto_respawn)
 	local counter = self._position_counter - 4
 
 	if counter < 0 then
-		counter = self._position_counter_turnover and 20 + counter or 0
+		if self._position_counter_turnover then
+			counter = 20 + counter
+		else
+			counter = 0
+		end
 	end
 
 	self._position_counter = self._position_counter - 1
@@ -1416,19 +1430,23 @@ function VehicleDrivingExt:stop_all_sound_events()
 	self._playing_slip_sound_dt = 0
 end
 
-function VehicleDrivingExt:_unregister_drive_SO()
+function VehicleDrivingExt:_unregister_drive_SO_all()
 	for _, seat in pairs(self._seats) do
-		if seat.drive_SO_data then
-			local SO_data = seat.drive_SO_data
-			seat.drive_SO_data = nil
+		self:_unregister_drive_SO(seat)
+	end
+end
 
-			if SO_data.SO_registered then
-				managers.groupai:state():remove_special_objective(SO_data.SO_id)
-			end
+function VehicleDrivingExt:_unregister_drive_SO(seat)
+	if seat.drive_SO_data then
+		local SO_data = seat.drive_SO_data
+		seat.drive_SO_data = nil
 
-			if alive(SO_data.unit) then
-				SO_data.unit:brain():set_objective(nil)
-			end
+		if SO_data.SO_registered then
+			managers.groupai:state():remove_special_objective(SO_data.SO_id)
+		end
+
+		if alive(SO_data.unit) then
+			SO_data.unit:brain():set_objective(nil)
 		end
 	end
 end
@@ -1439,15 +1457,13 @@ function VehicleDrivingExt:_chk_register_drive_SO()
 	end
 
 	for _, seat in pairs(self._seats) do
-		if seat.drive_SO_data then
-			debug_pause("[VehicleDrivingExt:_chk_register_drive_SO] Seat already has a SO!!!!", seat.name)
-		elseif not seat.driving and not alive(seat.occupant) then
-			self:_cereate_seat_SO(seat)
+		if not seat.driving and not alive(seat.occupant) then
+			self:_create_seat_SO(seat)
 		end
 	end
 end
 
-function VehicleDrivingExt:_cereate_seat_SO(seat)
+function VehicleDrivingExt:_create_seat_SO(seat, dont_register)
 	if seat.drive_SO_data then
 		return
 	end
@@ -1498,13 +1514,15 @@ function VehicleDrivingExt:_cereate_seat_SO(seat)
 	}
 	local SO_id = "ride_" .. tostring(self._unit:key()) .. seat.name
 	seat.drive_SO_data = {
-		SO_registered = true,
 		SO_id = SO_id,
+		SO_registered = not dont_register,
 		align_area = align_area,
 		ride_objective = ride_objective
 	}
 
-	managers.groupai:state():add_special_objective(SO_id, SO_descriptor)
+	if not dont_register then
+		managers.groupai:state():add_special_objective(SO_id, SO_descriptor)
+	end
 end
 
 function VehicleDrivingExt:clbk_drive_SO_verification(candidate_unit)
@@ -1566,7 +1584,7 @@ function VehicleDrivingExt:on_drive_SO_failed(seat, unit)
 
 	seat.drive_SO_data = nil
 
-	self:_cereate_seat_SO(seat)
+	self:_create_seat_SO(seat)
 end
 
 function VehicleDrivingExt:sync_ai_vehicle_action(action, seat_name, unit)
@@ -1591,7 +1609,9 @@ end
 
 function VehicleDrivingExt:collision_callback(tag, unit, body, other_unit, other_body, position, normal, velocity, ...)
 	if other_unit and other_unit:npc_vehicle_driving() then
-		local attack_data = {damage = 1}
+		local attack_data = {
+			damage = 1
+		}
 
 		other_unit:character_damage():damage_collision(attack_data)
 	elseif other_unit and other_unit:damage() and other_body and other_body:extension() then
@@ -1683,4 +1703,3 @@ end
 function VehicleDrivingExt:destroy()
 	managers.hud:_remove_name_label(self._unit:unit_data().name_label_id)
 end
-

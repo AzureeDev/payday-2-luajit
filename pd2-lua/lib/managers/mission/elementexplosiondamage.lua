@@ -27,4 +27,3 @@ function ElementExplosionDamage:on_executed(instigator)
 
 	ElementExplosionDamage.super.on_executed(self, instigator)
 end
-

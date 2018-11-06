@@ -8,7 +8,9 @@ function AiDataManager:init()
 end
 
 function AiDataManager:_setup()
-	self._data = {patrol_paths = {}}
+	self._data = {
+		patrol_paths = {}
+	}
 end
 
 function AiDataManager:add_patrol_path(name)
@@ -18,7 +20,9 @@ function AiDataManager:add_patrol_path(name)
 		return false
 	end
 
-	self._data.patrol_paths[name] = {points = {}}
+	self._data.patrol_paths[name] = {
+		points = {}
+	}
 
 	return true
 end
@@ -105,10 +109,14 @@ function AiDataManager:patrol_path_names()
 end
 
 function AiDataManager:destination_path(position, rotation)
-	return {points = {{
-		position = position,
-		rotation = rotation
-	}}}
+	return {
+		points = {
+			{
+				position = position,
+				rotation = rotation
+			}
+		}
+	}
 end
 
 function AiDataManager:clear()
@@ -148,4 +156,3 @@ function AiDataManager:load_units(units)
 		end
 	end
 end
-

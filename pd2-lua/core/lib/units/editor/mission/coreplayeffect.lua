@@ -48,7 +48,9 @@ function CorePlayEffectUnitElement:stop_test_element()
 end
 
 function CorePlayEffectUnitElement:_effect_options()
-	local effect_options = {"none"}
+	local effect_options = {
+		"none"
+	}
 
 	for _, name in ipairs(managers.database:list_entries_of_type("effect")) do
 		table.insert(effect_options, name)
@@ -101,8 +103,11 @@ function CorePlayEffectUnitElement:add_to_mission_package()
 		})
 	end
 end
+
 CoreStopEffectUnitElement = CoreStopEffectUnitElement or class(MissionElement)
-CoreStopEffectUnitElement.LINK_ELEMENTS = {"elements"}
+CoreStopEffectUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 StopEffectUnitElement = StopEffectUnitElement or class(CoreStopEffectUnitElement)
 
 function StopEffectUnitElement:init(...)
@@ -172,7 +177,9 @@ function CoreStopEffectUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"env_effect_play"}
+	local names = {
+		"env_effect_play"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_combobox(panel, panel_sizer, "operation", {
@@ -180,4 +187,3 @@ function CoreStopEffectUnitElement:_build_panel(panel, panel_sizer)
 		"fade_kill"
 	}, "Select a kind of operation to perform on the added effects")
 end
-

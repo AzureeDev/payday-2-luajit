@@ -294,7 +294,14 @@ function MenuItemTextBox:_update_caret(row_item)
 	local x, y, w, h = text:selection_rect()
 
 	if s == 0 and e == 0 then
-		x = text:align() == "center" and text:world_x() + text:w() / 2 or text:align() == "right" and text:world_right() or text:world_left()
+		if text:align() == "center" then
+			x = text:world_x() + text:w() / 2
+		elseif text:align() == "right" then
+			x = text:world_right()
+		else
+			x = text:world_left()
+		end
+
 		y = text:world_y()
 	end
 
@@ -429,7 +436,7 @@ end
 function MenuItemTextBox:find_first_non_letter(str)
 	local latin_str = utf8.to_latin1(str)
 
-	return string.find(latin_str, utf8.to_latin1("[^A-Za-z0-9≈ƒ÷Â‰ˆ¡…”⁄Õ›·ÈÛ˙Ì˝¬ €Œ‘‚Í˚ÓÙ√’—„ıÒ‹À¸Î]"))
+	return string.find(latin_str, utf8.to_latin1("[^A-Za-z0-9√Ö√Ñ√ñ√•√§√∂√Å√â√ì√ö√ç√ù√°√©√≥√∫√≠√Ω√Ç√ä√õ√é√î√¢√™√ª√Æ√¥√É√ï√ë√£√µ√±√ú√ã√º√´]"))
 end
 
 function MenuItemTextBox:find_last_non_letter(str)
@@ -447,7 +454,12 @@ function MenuItemTextBox:handle_key(row_item, o, k)
 			if self:_ctrl() then
 				local prev_text = utf8.sub(text:text(), 1, s)
 				local index = self:find_last_non_letter(prev_text)
-				index = index and index - 1 or s
+
+				if index then
+					index = index - 1
+				else
+					index = s
+				end
 
 				if index == 0 then
 					index = index + 1
@@ -465,7 +477,12 @@ function MenuItemTextBox:handle_key(row_item, o, k)
 			if self:_ctrl() then
 				local next_text = utf8.sub(text:text(), s + 1)
 				local index = self:find_first_non_letter(next_text)
-				index = index and index - 1 or n - s
+
+				if index then
+					index = index - 1
+				else
+					index = n - s
+				end
 
 				if index == 0 then
 					index = index + 1
@@ -493,7 +510,12 @@ function MenuItemTextBox:handle_key(row_item, o, k)
 			if self:_ctrl() then
 				local prev_text = utf8.sub(text:text(), 1, s)
 				local index = self:find_last_non_letter(prev_text)
-				index = index and index - 1 or s
+
+				if index then
+					index = index - 1
+				else
+					index = s
+				end
 
 				if index == 0 then
 					index = index + 1
@@ -511,7 +533,12 @@ function MenuItemTextBox:handle_key(row_item, o, k)
 			if self:_ctrl() then
 				local next_text = utf8.sub(text:text(), s + 1)
 				local index = self:find_first_non_letter(next_text)
-				index = index and index - 1 or n - s
+
+				if index then
+					index = index - 1
+				else
+					index = n - s
+				end
 
 				if index == 0 then
 					index = index + 1
@@ -536,7 +563,7 @@ function MenuItemTextBox:handle_key(row_item, o, k)
 				if e <= lb then
 					local line_end = line_breaks[i - 1]
 					local prev_line_end = line_breaks[i - 2]
-					local new_index = math.min((prev_line_end + e) - line_end, line_end)
+					local new_index = math.min(prev_line_end + e - line_end, line_end)
 
 					text:set_selection(new_index, new_index)
 
@@ -634,14 +661,14 @@ end
 
 function MenuItemTextBox:scroll_to_line(row_item, line, direction)
 	local scroll_pos_abs = math.abs(self._scroll_pos)
-	direction = direction or line * row_item.gui_text:line_height() < scroll_pos_abs and "up" or "down"
+	direction = direction or scroll_pos_abs > line * row_item.gui_text:line_height() and "up" or "down"
 
 	print(direction)
 
 	if direction == "up" then
 		local scroll_pos = line * row_item.gui_text:line_height()
 
-		if scroll_pos < scroll_pos_abs then
+		if scroll_pos_abs > scroll_pos then
 			self:set_scroll_pos(row_item, -scroll_pos)
 		end
 	elseif direction == "down" then
@@ -685,4 +712,3 @@ function MenuItemTextBox:set_scroll_pos(row_item, pos)
 
 	self:_layout(row_item)
 end
-

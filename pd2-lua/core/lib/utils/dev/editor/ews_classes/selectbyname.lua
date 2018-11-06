@@ -57,4 +57,3 @@ function SelectByName:_on_select_unit()
 
 	self._blocked = false
 end
-

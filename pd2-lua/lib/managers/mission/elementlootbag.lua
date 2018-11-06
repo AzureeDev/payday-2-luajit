@@ -52,7 +52,9 @@ end
 
 function ElementLootBag:add_trigger(id, type, callback)
 	self._triggers[type] = self._triggers[type] or {}
-	self._triggers[type][id] = {callback = callback}
+	self._triggers[type][id] = {
+		callback = callback
+	}
 end
 
 function ElementLootBag:_check_triggers(type, instigator)
@@ -68,6 +70,7 @@ end
 function ElementLootBag:trigger(type, instigator)
 	self:_check_triggers(type, instigator)
 end
+
 ElementLootBagTrigger = ElementLootBagTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementLootBagTrigger:init(...)
@@ -92,4 +95,3 @@ function ElementLootBagTrigger:on_executed(instigator)
 
 	ElementLootBagTrigger.super.on_executed(self, instigator)
 end
-

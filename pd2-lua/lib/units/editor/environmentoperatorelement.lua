@@ -37,4 +37,3 @@ function EnvironmentOperatorElement:_build_panel(panel, panel_sizer)
 		min = 0
 	}, "How long this environment should blend in over")
 end
-

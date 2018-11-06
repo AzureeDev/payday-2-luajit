@@ -9,4 +9,3 @@ function ElementArcadeState:on_executed(instigator)
 
 	ElementArcadeState.super.on_executed(self, instigator)
 end
-

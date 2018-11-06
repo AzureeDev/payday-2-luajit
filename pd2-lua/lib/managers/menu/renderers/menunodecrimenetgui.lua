@@ -32,12 +32,18 @@ function MenuNodeCrimenetGui:_setup_item_panel(safe_rect, res)
 
 	if SystemInfo:platform() ~= Idstring("WIN32") then
 		width = 900
-		height = is_nextgen and 570 or 525
+
+		if is_nextgen then
+			height = 570
+		else
+			height = 525
+		end
 	end
 
-	self.item_panel:set_rightbottom((self.item_panel:parent():w() * 0.5 + width / 2) - 10, (self.item_panel:parent():h() * 0.5 + height / 2) - 10)
+	self.item_panel:set_rightbottom(self.item_panel:parent():w() * 0.5 + width / 2 - 10, self.item_panel:parent():h() * 0.5 + height / 2 - 10)
 	self:_set_topic_position()
 end
+
 MenuNodeCrimenetFiltersGui = MenuNodeCrimenetFiltersGui or class(MenuNodeGui)
 
 function MenuNodeCrimenetFiltersGui:init(node, layer, parameters)
@@ -77,8 +83,7 @@ function MenuNodeCrimenetFiltersGui:_setup_item_panel(safe_rect, res)
 		max_layer = math.max(max_layer, child_layer)
 	end
 
-	for _, child in ipairs(self.item_panel:children()) do
-		-- Nothing
+	for slot9, slot10 in ipairs(self.item_panel:children()) do
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -116,12 +121,14 @@ function MenuNodeCrimenetFiltersGui:_setup_item_panel(safe_rect, res)
 	self.box_panel:move(-10, -10)
 	self.box_panel:set_layer(51)
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_clipping(false)
 	self.boxgui:set_layer(1000)
@@ -196,6 +203,7 @@ end
 function MenuNodeCrimenetFiltersGui:_highlight_row_item(row_item, mouse_over)
 	MenuNodeCrimenetFiltersGui.super._highlight_row_item(self, row_item, mouse_over)
 end
+
 MenuNodeCrimenetSpecialGui = MenuNodeCrimenetSpecialGui or class(MenuNodeCrimenetFiltersGui)
 
 function MenuNodeCrimenetSpecialGui:_setup_item_panel(safe_rect, res)
@@ -257,6 +265,7 @@ function MenuNodeCrimenetSpecialGui:close()
 		active_menu.input:set_force_input(false)
 	end
 end
+
 MenuNodeCrimenetSmartMatchmakingGui = MenuNodeCrimenetSmartMatchmakingGui or class(MenuNodeCrimenetSpecialGui)
 MenuNodeCrimenetSmartMatchmakingGui.title_id = "menu_cn_smart_matchmaking_title"
 MenuNodeCrimenetCasinoGui = MenuNodeCrimenetCasinoGui or class(MenuNodeGui)
@@ -282,14 +291,14 @@ function MenuNodeCrimenetCasinoGui:_setup_item_panel(safe_rect, res)
 	local width, height, space_x, space_y, start_x = self:_get_sizes(safe_rect.width, safe_rect.height)
 
 	self.item_panel:set_right(start_x + width)
-	self.item_panel:set_bottom((self.item_panel:parent():h() - space_y) - tweak_data.menu.pd2_large_font_size)
+	self.item_panel:set_bottom(self.item_panel:parent():h() - space_y - tweak_data.menu.pd2_large_font_size)
 end
 
 function MenuNodeCrimenetCasinoGui:_get_sizes(safe_width, safe_height)
 	local space_x = safe_width * 0.05
 	local space_y = safe_width * 0.05
 	local width = safe_width * 0.42
-	local height = (safe_height - tweak_data.menu.pd2_large_font_size * 2) - space_y * 2
+	local height = safe_height - tweak_data.menu.pd2_large_font_size * 2 - space_y * 2
 	local start_x = safe_width - (width + space_x) * 2
 
 	return width, height, space_x, space_y, start_x
@@ -306,13 +315,13 @@ function MenuNodeCrimenetCasinoGui:_set_cards(amount, card)
 
 	if amount == 0 then
 		height = self._betting_cards_panel:h() * 0.6
-		x_offset = math.round((0.7111111111111111 * height) / 2)
+		x_offset = math.round(0.7111111111111111 * height / 2)
 		y_offset = (self._betting_cards_panel:h() - height) / 2
 	else
 		height = self._betting_cards_panel:h()
 	end
 
-	local x = self._betting_cards_panel:w() / 2 - (count * (width + offset)) / 2
+	local x = self._betting_cards_panel:w() / 2 - count * (width + offset) / 2
 	local flip_cards = nil
 
 	if amount > 0 or self._current_amount ~= amount then
@@ -364,7 +373,9 @@ end
 
 function MenuNodeCrimenetCasinoGui:_setup_layout()
 	local parent_layer = managers.menu:active_menu().renderer:selected_node():layer()
-	self._panel = self.ws:panel():panel({layer = parent_layer + 1})
+	self._panel = self.ws:panel():panel({
+		layer = parent_layer + 1
+	})
 	local width, height, space_x, space_y, start_x = self:_get_sizes(self._panel:w(), self._panel:h())
 	local large_font = tweak_data.menu.pd2_large_font
 	local medium_font = tweak_data.menu.pd2_medium_font
@@ -410,12 +421,14 @@ function MenuNodeCrimenetCasinoGui:_setup_layout()
 	})
 
 	self._betting_panel:set_x(text_betting:x())
-	BoxGuiObject:new(self._betting_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._betting_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local text_options = self._main_panel:panel({
 		layer = 1,
@@ -439,8 +452,12 @@ function MenuNodeCrimenetCasinoGui:_setup_layout()
 			id = "safecards",
 			text = "menu_casino_option_safecard_title"
 		},
-		{skip = true},
-		{skip = true}
+		{
+			skip = true
+		},
+		{
+			skip = true
+		}
 	}
 	self._betting_titles = {}
 	local i = 1
@@ -515,12 +532,14 @@ function MenuNodeCrimenetCasinoGui:_setup_layout()
 	})
 
 	self._stats_panel:set_x(self._betting_panel:right() + space_x)
-	BoxGuiObject:new(self._stats_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._stats_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local text_stats = self._main_panel:text({
 		blend_mode = "add",
@@ -718,7 +737,9 @@ function MenuNodeCrimenetCasinoGui:_setup_layout()
 		end
 	end
 
-	local _, infamous_base_chance, infamous_mod = managers.lootdrop:infamous_chance({disable_difficulty = true})
+	local _, infamous_base_chance, infamous_mod = managers.lootdrop:infamous_chance({
+		disable_difficulty = true
+	})
 	local infamous_chance = items_total > 0 and infamous_base_chance * items_infamous / items_total or 0
 	self._infamous_chance = {
 		base = infamous_chance,
@@ -736,17 +757,19 @@ function MenuNodeCrimenetCasinoGui:_setup_layout()
 	self._breakdown_panel = self._main_panel:panel({
 		layer = 1,
 		w = width,
-		h = (self._betting_panel:h() - self._stats_panel:h()) - space_y
+		h = self._betting_panel:h() - self._stats_panel:h() - space_y
 	})
 
 	self._breakdown_panel:set_x(self._stats_panel:x())
 	self._breakdown_panel:set_top(self._stats_panel:bottom() + space_y)
-	BoxGuiObject:new(self._breakdown_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._breakdown_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local text_breakdown = self._main_panel:text({
 		blend_mode = "add",
@@ -795,7 +818,9 @@ function MenuNodeCrimenetCasinoGui:_setup_layout()
 	local secured_cards = 0
 	local increase_infamous = false
 	local preferred_card = "none"
-	local text_string = managers.localization:to_upper_text("menu_casino_total_bet", {casino_bet = managers.experience:cash_string(managers.money:get_cost_of_casino_fee(secured_cards, increase_infamous, preferred_card))})
+	local text_string = managers.localization:to_upper_text("menu_casino_total_bet", {
+		casino_bet = managers.experience:cash_string(managers.money:get_cost_of_casino_fee(secured_cards, increase_infamous, preferred_card))
+	})
 	self._total_bet = self._panel:text({
 		blend_mode = "add",
 		align = "right",
@@ -837,7 +862,9 @@ function MenuNodeCrimenetCasinoGui:set_update_values(preferred_card, secured_car
 	self._breakdown_titles:set_text(breakdown_titles)
 	self._breakdown_costs:set_text(breakdown_costs)
 
-	local text_string = managers.localization:to_upper_text("menu_casino_total_bet", {casino_bet = managers.experience:cash_string(managers.money:get_cost_of_casino_fee(secured_cards, increase_infamous, preferred_card))})
+	local text_string = managers.localization:to_upper_text("menu_casino_total_bet", {
+		casino_bet = managers.experience:cash_string(managers.money:get_cost_of_casino_fee(secured_cards, increase_infamous, preferred_card))
+	})
 
 	self._total_bet:set_text(text_string)
 
@@ -908,6 +935,7 @@ end
 function MenuNodeCrimenetCasinoGui:set_offshore_text()
 	self._offshore_text:set_text(managers.localization:to_upper_text("menu_offshore_account") .. ": " .. managers.experience:cash_string(managers.money:offshore()))
 end
+
 MenuNodeCrimenetContactInfoGui = MenuNodeCrimenetContactInfoGui or class(MenuNodeGui)
 MenuNodeCrimenetContactInfoGui.WIDTH = 600
 MenuNodeCrimenetContactInfoGui.HEIGHT = 465
@@ -967,13 +995,13 @@ function MenuNodeCrimenetContactInfoGui:init(node, layer, parameters)
 end
 
 function MenuNodeCrimenetContactInfoGui:_setup_item_panel_parent(safe_rect, shape)
-	local x = (safe_rect.x + safe_rect.width / 2) - self.WIDTH / 2 + self.PADDING
-	local y = (safe_rect.y + safe_rect.height / 2) - self.HEIGHT / 2 + self.PADDING
+	local x = safe_rect.x + safe_rect.width / 2 - self.WIDTH / 2 + self.PADDING
+	local y = safe_rect.y + safe_rect.height / 2 - self.HEIGHT / 2 + self.PADDING
 	shape = shape or {}
 	shape.x = shape.x or x
 	shape.y = shape.y or y
 	shape.w = shape.w or self.MENU_WIDTH
-	shape.h = shape.h or (self.HEIGHT - 2 * self.PADDING) - tweak_data.menu.pd2_small_font_size
+	shape.h = shape.h or self.HEIGHT - 2 * self.PADDING - tweak_data.menu.pd2_small_font_size
 
 	MenuNodeCrimenetContactInfoGui.super._setup_item_panel_parent(self, safe_rect, shape)
 end
@@ -1379,8 +1407,12 @@ function MenuNodeCrimenetContactInfoGui:_setup_layout()
 		ws:panel():remove(ws:panel():child("main_panel"))
 	end
 
-	local panel = ws:panel():panel({name = "main_panel"})
-	self._fullscreen_panel = mc_full_ws:panel():panel({layer = 50})
+	local panel = ws:panel():panel({
+		name = "main_panel"
+	})
+	self._fullscreen_panel = mc_full_ws:panel():panel({
+		layer = 50
+	})
 	local blur = self._fullscreen_panel:bitmap({
 		texture = "guis/textures/test_blur_df",
 		render_template = "VertexColorTexturedBlur3D",
@@ -1412,12 +1444,14 @@ function MenuNodeCrimenetContactInfoGui:_setup_layout()
 		layer = 0,
 		color = Color.black
 	})
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local title_text = panel:text({
 		name = "title_text",
@@ -1448,19 +1482,21 @@ function MenuNodeCrimenetContactInfoGui:_setup_layout()
 	local video_panel = self._panel:panel({
 		name = "video_panel",
 		layer = 2,
-		w = (self.WIDTH - self.MENU_WIDTH) - self.PADDING * 5
+		w = self.WIDTH - self.MENU_WIDTH - self.PADDING * 5
 	})
 
 	video_panel:set_h(video_panel:w() / 1.7777777777777777)
 	video_panel:set_top(contact_title_text:bottom() + self.PADDING)
 	video_panel:set_left(contact_title_text:left())
 
-	local box = BoxGuiObject:new(video_panel, {sides = {
-		2,
-		2,
-		2,
-		2
-	}})
+	local box = BoxGuiObject:new(video_panel, {
+		sides = {
+			2,
+			2,
+			2,
+			2
+		}
+	})
 
 	box:set_color(Color(0.2, 1, 1, 1))
 	box:set_blend_mode("add")
@@ -1502,7 +1538,7 @@ function MenuNodeCrimenetContactInfoGui:_setup_layout()
 	contact_desc_text:set_left(files_menu:left())
 	contact_desc_text:set_top(files_menu:bottom())
 	contact_desc_text:set_w(video_panel:w())
-	contact_desc_text:set_h((self._panel:h() - self.PADDING) - contact_desc_text:top())
+	contact_desc_text:set_h(self._panel:h() - self.PADDING - contact_desc_text:top())
 
 	self._init_finish = true
 
@@ -1515,7 +1551,9 @@ function MenuNodeCrimenetContactInfoGui:gui_node_custom(row_item)
 		h = 3,
 		layer = self.layers.items
 	})
-	row_item.gui_pd2_panel = self.ws:panel():panel({layer = self.layers.items})
+	row_item.gui_pd2_panel = self.ws:panel():panel({
+		layer = self.layers.items
+	})
 	local row_item_panel = row_item.gui_pd2_panel
 	row_item.gui_text = row_item_panel:text({
 		blend_mode = "add",
@@ -1544,8 +1582,8 @@ function MenuNodeCrimenetContactInfoGui:_align_marker(row_item)
 		self._marker_data.marker:set_visible(true)
 		self._marker_data.gradient:set_visible(true)
 		self._marker_data.gradient:set_rotation(360)
-		self._marker_data.marker:set_height((64 * row_item.gui_text:height()) / 32)
-		self._marker_data.gradient:set_height((64 * row_item.gui_text:height()) / 32)
+		self._marker_data.marker:set_height(64 * row_item.gui_text:height() / 32)
+		self._marker_data.gradient:set_height(64 * row_item.gui_text:height() / 32)
 		self._marker_data.marker:set_w(self.MENU_WIDTH)
 		self._marker_data.gradient:set_w(self._marker_data.marker:w())
 		self._marker_data.marker:set_left(row_item.menu_unselected:x())
@@ -1575,6 +1613,7 @@ function MenuNodeCrimenetContactInfoGui:close()
 	MenuNodeCrimenetContactInfoGui.super.close(self)
 	managers.menu_component:enable_crimenet()
 end
+
 MenuNodeCrimenetContactShortGui = MenuNodeCrimenetContactShortGui or class(MenuNodeGui)
 MenuNodeCrimenetContactShortGui.WIDTH = 700
 MenuNodeCrimenetContactShortGui.HEIGHT = 250
@@ -1606,13 +1645,13 @@ function MenuNodeCrimenetContactShortGui:init(node, layer, parameters)
 end
 
 function MenuNodeCrimenetContactShortGui:_setup_item_panel_parent(safe_rect, shape)
-	local x = (safe_rect.x + safe_rect.width / 2) - self.WIDTH / 2 + self.PADDING
-	local y = (safe_rect.y + safe_rect.height / 2) - self.HEIGHT / 2 + self.PADDING
+	local x = safe_rect.x + safe_rect.width / 2 - self.WIDTH / 2 + self.PADDING
+	local y = safe_rect.y + safe_rect.height / 2 - self.HEIGHT / 2 + self.PADDING
 	shape = shape or {}
 	shape.x = shape.x or x
 	shape.y = shape.y or y
 	shape.w = shape.w or self.MENU_WIDTH
-	shape.h = shape.h or (self.HEIGHT - 2 * self.PADDING) - tweak_data.menu.pd2_small_font_size
+	shape.h = shape.h or self.HEIGHT - 2 * self.PADDING - tweak_data.menu.pd2_small_font_size
 
 	MenuNodeCrimenetContactShortGui.super._setup_item_panel_parent(self, safe_rect, shape)
 end
@@ -1858,8 +1897,12 @@ function MenuNodeCrimenetContactShortGui:_setup_layout()
 		ws:panel():remove(ws:panel():child("main_panel"))
 	end
 
-	local panel = ws:panel():panel({name = "main_panel"})
-	self._fullscreen_panel = mc_full_ws:panel():panel({layer = 50})
+	local panel = ws:panel():panel({
+		name = "main_panel"
+	})
+	self._fullscreen_panel = mc_full_ws:panel():panel({
+		layer = 50
+	})
 	local blur = self._fullscreen_panel:bitmap({
 		texture = "guis/textures/test_blur_df",
 		render_template = "VertexColorTexturedBlur3D",
@@ -1891,12 +1934,14 @@ function MenuNodeCrimenetContactShortGui:_setup_layout()
 		layer = 0,
 		color = Color.black
 	})
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local header_panel = self._panel:panel({
 		layer = 51,
@@ -1945,7 +1990,7 @@ function MenuNodeCrimenetContactShortGui:_setup_layout()
 		w = width / 2 + reward_panel_w_offs
 	})
 
-	reward_panel:set_left((width - width / 2) - reward_panel_w_offs)
+	reward_panel:set_left(width - width / 2 - reward_panel_w_offs)
 	reward_panel:set_top(reward_panel_h_offs)
 
 	local reward_text = reward_panel:text({
@@ -2089,7 +2134,9 @@ function MenuNodeCrimenetContactShortGui:gui_node_custom(row_item)
 		h = 3,
 		layer = self.layers.items
 	})
-	row_item.gui_pd2_panel = self.ws:panel():panel({layer = self.layers.items})
+	row_item.gui_pd2_panel = self.ws:panel():panel({
+		layer = self.layers.items
+	})
 	local row_item_panel = row_item.gui_pd2_panel
 	row_item.gui_text = row_item_panel:text({
 		blend_mode = "add",
@@ -2118,8 +2165,8 @@ function MenuNodeCrimenetContactShortGui:_align_marker(row_item)
 		self._marker_data.marker:set_visible(true)
 		self._marker_data.gradient:set_visible(true)
 		self._marker_data.gradient:set_rotation(360)
-		self._marker_data.marker:set_height((64 * row_item.gui_text:height()) / 32)
-		self._marker_data.gradient:set_height((64 * row_item.gui_text:height()) / 32)
+		self._marker_data.marker:set_height(64 * row_item.gui_text:height() / 32)
+		self._marker_data.gradient:set_height(64 * row_item.gui_text:height() / 32)
 		self._marker_data.marker:set_w(self.MENU_WIDTH)
 		self._marker_data.gradient:set_w(self._marker_data.marker:w())
 		self._marker_data.marker:set_left(row_item.menu_unselected:x())
@@ -2147,6 +2194,7 @@ function MenuNodeCrimenetContactShortGui:close()
 	MenuNodeCrimenetContactShortGui.super.close(self)
 	managers.menu_component:enable_crimenet()
 end
+
 MenuNodeCrimenetContactChillGui = MenuNodeCrimenetContactChillGui or class(MenuNodeGui)
 MenuNodeCrimenetContactChillGui.WIDTH = 700
 MenuNodeCrimenetContactChillGui.HEIGHT = 250
@@ -2178,8 +2226,8 @@ function MenuNodeCrimenetContactChillGui:init(node, layer, parameters)
 end
 
 function MenuNodeCrimenetContactChillGui:_setup_item_panel_parent(safe_rect, shape)
-	local x = (safe_rect.x + safe_rect.width / 2) - self.WIDTH / 2 + self.PADDING
-	local y = (safe_rect.y + safe_rect.height / 2) - self.HEIGHT / 2 + self.PADDING
+	local x = safe_rect.x + safe_rect.width / 2 - self.WIDTH / 2 + self.PADDING
+	local y = safe_rect.y + safe_rect.height / 2 - self.HEIGHT / 2 + self.PADDING
 	shape = shape or {}
 	shape.x = shape.x or x
 	shape.y = shape.y or y
@@ -2404,8 +2452,12 @@ function MenuNodeCrimenetContactChillGui:_setup_layout()
 		ws:panel():remove(ws:panel():child("main_panel"))
 	end
 
-	local panel = ws:panel():panel({name = "main_panel"})
-	self._fullscreen_panel = mc_full_ws:panel():panel({layer = 50})
+	local panel = ws:panel():panel({
+		name = "main_panel"
+	})
+	self._fullscreen_panel = mc_full_ws:panel():panel({
+		layer = 50
+	})
 	local blur = self._fullscreen_panel:bitmap({
 		texture = "guis/textures/test_blur_df",
 		render_template = "VertexColorTexturedBlur3D",
@@ -2437,12 +2489,14 @@ function MenuNodeCrimenetContactChillGui:_setup_layout()
 		layer = 0,
 		color = Color.black
 	})
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local reward_panel_w_offs = -50
 	local reward_panel_h_offs = 20
@@ -2653,6 +2707,7 @@ function MenuNodeCrimenetContactChillGui:close()
 	MenuNodeCrimenetContactChillGui.super.close(self)
 	managers.menu_component:enable_crimenet()
 end
+
 MenuNodeCrimenetGageAssignmentGui = MenuNodeCrimenetGageAssignmentGui or class(MenuNodeCrimenetContactInfoGui)
 MenuNodeCrimenetGageAssignmentGui.WIDTH = 1000
 MenuNodeCrimenetGageAssignmentGui.HEIGHT = 530
@@ -2673,7 +2728,7 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 
 	if tweak_data.gage_assignment:exists(id) then
 		local right_width = (self._info_panel:w() - self.PADDING * (num_assignments - 1)) / num_assignments
-		local left_width = (self._info_panel:w() - self.PADDING) - right_width
+		local left_width = self._info_panel:w() - self.PADDING - right_width
 		local left_panel = self._info_panel:panel({
 			name = "left_panel",
 			x = 0,
@@ -2702,7 +2757,9 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 				w = reward_width,
 				h = reward_height
 			})
-			local item_panel = panel:panel({h = panel:w() * 0.5})
+			local item_panel = panel:panel({
+				h = panel:w() * 0.5
+			})
 
 			item_panel:set_center_y(panel:h() * 0.25)
 
@@ -2717,7 +2774,7 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 				color = tweak_data.screen_colors.text
 			})
 
-			item_text:set_shape(0, item_panel:bottom() + self.PADDING / 2, panel:w(), (panel:h() - item_panel:bottom()) - self.PADDING / 2)
+			item_text:set_shape(0, item_panel:bottom() + self.PADDING / 2, panel:w(), panel:h() - item_panel:bottom() - self.PADDING / 2)
 
 			local part_name_id = tweak_data.blackmarket[data[2]][data[3]].name_id
 			local text_sting = managers.localization:text(part_name_id)
@@ -2818,20 +2875,24 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 		end
 
 		self:create_insigna(right_panel, id)
-		BoxGuiObject:new(left_panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
-		BoxGuiObject:new(right_panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(left_panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
+		BoxGuiObject:new(right_panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 	elseif ids == Idstring("_introduction") then
-		local introduction_text = self._info_panel:text({
+		slot7 = self._info_panel:text({
 			name = "introduction_text",
 			wrap = true,
 			word_wrap = true,
@@ -2843,14 +2904,18 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 	elseif ids == Idstring("_summary") then
 		local width = (self._info_panel:w() - self.PADDING * (num_assignments - 1)) / num_assignments
 		local x = 0
-		local summary_panel = self._info_panel:panel({name = "summary_panel"})
+		local summary_panel = self._info_panel:panel({
+			name = "summary_panel"
+		})
 
 		summary_panel:set_h(width * 1.75)
 		summary_panel:set_bottom(self._info_panel:h())
 
 		for i, node in ipairs(self.node:items()) do
 			if tweak_data.gage_assignment:exists(node:parameters().name) then
-				local panel = summary_panel:panel({name = node:parameters().name})
+				local panel = summary_panel:panel({
+					name = node:parameters().name
+				})
 
 				panel:set_w(width)
 				panel:set_x(x)
@@ -2871,12 +2936,14 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 		})
 
 		summary_text:set_h(summary_panel:top() - self.PADDING)
-		BoxGuiObject:new(summary_panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(summary_panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 	elseif ids == Idstring("_video") then
 		local video_panel = self._info_panel:panel()
 
@@ -2903,12 +2970,14 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 
 		video_panel:set_size(sw, sh)
 		video:play()
-		BoxGuiObject:new(video_panel, {sides = {
-			2,
-			2,
-			2,
-			2
-		}})
+		BoxGuiObject:new(video_panel, {
+			sides = {
+				2,
+				2,
+				2,
+				2
+			}
+		})
 	end
 
 	local contact_title_text = self._panel:child("contact_title_text")
@@ -2947,12 +3016,12 @@ function MenuNodeCrimenetGageAssignmentGui:create_insigna(panel, assignment)
 	local step = 2
 	local x = self.PADDING
 	local max_aquire = tweak_data.gage_assignment:get_max_aquire()
-	local w = ((panel:w() - x * 2) - step * (max_aquire - 1)) / max_aquire
+	local w = (panel:w() - x * 2 - step * (max_aquire - 1)) / max_aquire
 	local rounded_width = math.max(math.round(w), 1)
 	local diff = panel:w() - (w * max_aquire + step * (max_aquire - 1) + x * 2)
 	x = math.clamp(math.round(x + diff / 2), 0, panel:w())
 	local padding = x
-	local w = math.max(((panel:w() - x * 2) - step * (to_aquire - 1)) / to_aquire, 1)
+	local w = math.max((panel:w() - x * 2 - step * (to_aquire - 1)) / to_aquire, 1)
 	local rounded_width = math.round(w)
 	local estimated_width = x * 2 + step * (to_aquire - 1) + rounded_width * to_aquire
 	diff = panel:w() - (w * to_aquire + x * 2)
@@ -2961,7 +3030,7 @@ function MenuNodeCrimenetGageAssignmentGui:create_insigna(panel, assignment)
 		step = math.clamp(diff / (to_aquire - 1), 0, 2)
 	end
 
-	local w = math.max(((panel:w() - x * 2) - step * (to_aquire - 1)) / to_aquire, 1)
+	local w = math.max((panel:w() - x * 2 - step * (to_aquire - 1)) / to_aquire, 1)
 	local rounded_width = math.round(w)
 	local pin_bottom = progress_text:top() - self.PADDING / 2
 	local pin, is_progressed = nil
@@ -3076,7 +3145,9 @@ function MenuNodeCrimenetGageAssignmentGui:populate_item_panel(item_panel, item_
 			})
 		else
 			Application:error("[MenuNodeCrimenetGageAssignmentGui]", item_id, "Texture not in DB", texture_path)
-			item_panel:rect({color = Color.red})
+			item_panel:rect({
+				color = Color.red
+			})
 		end
 	end
 end
@@ -3148,8 +3219,12 @@ function MenuNodeCrimenetGageAssignmentGui:_setup_layout()
 		ws:panel():remove(ws:panel():child("main_panel"))
 	end
 
-	local panel = ws:panel():panel({name = "main_panel"})
-	self._fullscreen_panel = mc_full_ws:panel():panel({layer = 50})
+	local panel = ws:panel():panel({
+		name = "main_panel"
+	})
+	self._fullscreen_panel = mc_full_ws:panel():panel({
+		layer = 50
+	})
 	local width = self.WIDTH
 	local height = self.HEIGHT
 	self._panel = panel:panel({
@@ -3164,12 +3239,14 @@ function MenuNodeCrimenetGageAssignmentGui:_setup_layout()
 		layer = 0,
 		color = Color.black
 	})
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local title_text = panel:text({
 		name = "title_text",
@@ -3203,8 +3280,8 @@ function MenuNodeCrimenetGageAssignmentGui:_setup_layout()
 		y = contact_title_text:bottom() + self.PADDING
 	})
 
-	self._info_panel:set_w((self._panel:w() - self._info_panel:x()) - self.PADDING)
-	self._info_panel:set_h((self._panel:h() - self._info_panel:y()) - self.PADDING)
+	self._info_panel:set_w(self._panel:w() - self._info_panel:x() - self.PADDING)
+	self._info_panel:set_h(self._panel:h() - self._info_panel:y() - self.PADDING)
 	self:_setup_blur()
 
 	self._init_finish = true
@@ -3242,6 +3319,7 @@ function MenuNodeCrimenetGageAssignmentGui:close()
 	self:unretrieve_textures()
 	MenuNodeCrimenetGageAssignmentGui.super.close(self)
 end
+
 MenuNodeCrimenetChallengeGui = MenuNodeCrimenetChallengeGui or class(MenuNodeCrimenetGageAssignmentGui)
 MenuNodeCrimenetChallengeGui.WIDTH = 900
 MenuNodeCrimenetChallengeGui.HEIGHT = 500
@@ -3275,16 +3353,23 @@ function MenuNodeCrimenetChallengeGui:_create_timestamp_string_extended(timestam
 	local minutes = 59 - tonumber(Application:date("%M"))
 	local seconds = 59 - tonumber(Application:date("%S"))
 	local expire_string = ""
-	expire_string = timestamp >= 24 and managers.localization:text("menu_challenge_expire_time_extended_with_days", {
-		days = math.floor(timestamp / 24),
-		hours = timestamp % 24,
-		minutes = minutes,
-		seconds = seconds
-	}) or timestamp >= 0 and managers.localization:text("menu_challenge_expire_time_extended", {
-		hours = timestamp,
-		minutes = minutes,
-		seconds = seconds
-	}) or managers.localization:text("menu_challenge_about_to_expire_extended")
+
+	if timestamp >= 24 then
+		expire_string = managers.localization:text("menu_challenge_expire_time_extended_with_days", {
+			days = math.floor(timestamp / 24),
+			hours = timestamp % 24,
+			minutes = minutes,
+			seconds = seconds
+		})
+	elseif timestamp >= 0 then
+		expire_string = managers.localization:text("menu_challenge_expire_time_extended", {
+			hours = timestamp,
+			minutes = minutes,
+			seconds = seconds
+		})
+	else
+		expire_string = managers.localization:text("menu_challenge_about_to_expire_extended")
+	end
 
 	return expire_string
 end
@@ -3318,7 +3403,9 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 		self._file_alphas = self._file_alphas_single
 		self._set_file_on_mouse_over = challenge.reward_type == "single"
 		self._confirm_reward = challenge.reward_type == "single"
-		contact_title = managers.localization:text("menu_challenge_title_" .. (challenge.category or "daily"), {name = name})
+		contact_title = managers.localization:text("menu_challenge_title_" .. (challenge.category or "daily"), {
+			name = name
+		})
 		local desc_text = self._info_panel:text({
 			name = "desc_text",
 			wrap = true,
@@ -3375,36 +3462,34 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 		end
 
 		for _, objective in ipairs(challenge.objectives or {}) do
-			if objective.desc_s or objective.desc_id then
-				local name_text = self._info_panel:text({
-					blend_mode = "add",
-					name = "name_text_objective_" .. tostring(_),
-					text = objective.name_s or objective.name_id and managers.localization:text(objective.name_id) or "",
-					font = tweak_data.menu.pd2_small_font,
-					font_size = tweak_data.menu.pd2_small_font_size,
-					color = tweak_data.screen_colors.text
-				})
-				local desc_text = self._info_panel:text({
-					blend_mode = "add",
-					name = "desc_text_objective_" .. tostring(_),
-					text = objective.desc_s or objective.desc_id and managers.localization:text(objective.desc_id, {
-						progress = objective.progress and managers.money:add_decimal_marks_to_string(tostring(objective.progress)),
-						max_progress = objective.max_progress and managers.money:add_decimal_marks_to_string(tostring(objective.max_progress))
-					}) or "",
-					font = tweak_data.menu.pd2_small_font,
-					font_size = tweak_data.menu.pd2_small_font_size,
-					color = tweak_data.screen_colors.text
-				})
+			local name_text = self._info_panel:text({
+				blend_mode = "add",
+				name = "name_text_objective_" .. tostring(_),
+				text = objective.name_s or objective.name_id and managers.localization:text(objective.name_id) or "",
+				font = tweak_data.menu.pd2_small_font,
+				font_size = tweak_data.menu.pd2_small_font_size,
+				color = tweak_data.screen_colors.text
+			})
+			local desc_text = self._info_panel:text({
+				blend_mode = "add",
+				name = "desc_text_objective_" .. tostring(_),
+				text = managers.localization:text(objective.desc_id, {
+					progress = objective.progress and managers.money:add_decimal_marks_to_string(tostring(objective.progress)),
+					max_progress = objective.max_progress and managers.money:add_decimal_marks_to_string(tostring(objective.max_progress))
+				}) or "",
+				font = tweak_data.menu.pd2_small_font,
+				font_size = tweak_data.menu.pd2_small_font_size,
+				color = tweak_data.screen_colors.text
+			})
 
-				make_fine_text(name_text)
-				make_fine_text(desc_text)
-				name_text:set_left(objective_title_text:left() + 15)
-				name_text:set_top(y)
-				desc_text:set_left(name_text:right())
-				desc_text:set_top(y)
+			make_fine_text(name_text)
+			make_fine_text(desc_text)
+			name_text:set_left(objective_title_text:left() + 15)
+			name_text:set_top(y)
+			desc_text:set_left(name_text:right())
+			desc_text:set_top(y)
 
-				y = math.max(name_text:bottom(), desc_text:bottom())
-			end
+			y = math.max(name_text:bottom(), desc_text:bottom())
 		end
 
 		local rewards_panel = nil
@@ -3412,7 +3497,7 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 		if challenge.rewards and #challenge.rewards > 0 then
 			local x = self.PADDING
 			local min_height = 64
-			local height = math.clamp((((self._info_panel:h() - y) - self.PADDING * 2) - tweak_data.menu.pd2_small_font_size) - 0, min_height, 128)
+			local height = math.clamp(self._info_panel:h() - y - self.PADDING * 2 - tweak_data.menu.pd2_small_font_size - 0, min_height, 128)
 			local width = math.min((self._info_panel:w() - self.PADDING * (#challenge.rewards - 1)) / #challenge.rewards, height)
 			rewards_panel = self._info_panel:panel({
 				layer = 10,
@@ -3424,7 +3509,9 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 			rewards_panel:set_bottom(self._info_panel:h() - 0)
 			rewards_panel:set_right(self._info_panel:w())
 
-			local files_menu = rewards_panel:panel({name = "files_menu"})
+			local files_menu = rewards_panel:panel({
+				name = "files_menu"
+			})
 			local locked = nil
 			local unavailable = not challenge.completed
 			local next_x = nil
@@ -3456,12 +3543,14 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 			self._files_menu = files_menu
 
 			self:set_file(1)
-			BoxGuiObject:new(rewards_panel, {sides = {
-				1,
-				1,
-				1,
-				1
-			}})
+			BoxGuiObject:new(rewards_panel, {
+				sides = {
+					1,
+					1,
+					1,
+					1
+				}
+			})
 		end
 
 		if challenge.reward_s or challenge.reward_id then
@@ -3541,7 +3630,7 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 			self._expire_text = expire_text
 		end
 	elseif ids == Idstring("_introduction") then
-		local introduction_text = self._info_panel:text({
+		slot8 = self._info_panel:text({
 			name = "introduction_text",
 			wrap = true,
 			word_wrap = true,
@@ -3552,7 +3641,7 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 			color = tweak_data.screen_colors.text
 		})
 	elseif ids == Idstring("_summary") then
-		local summary_text = self._info_panel:text({
+		slot8 = self._info_panel:text({
 			name = "summary_text",
 			wrap = true,
 			word_wrap = true,
@@ -3687,7 +3776,7 @@ function MenuNodeCrimenetChallengeGui:create_reward(panel, reward, challenge)
 	})
 
 	make_fine_text(reward_text)
-	reward_text:set_top((reward_panel:bottom() + tweak_data.menu.pd2_small_font_size * 0.5) - self.PADDING)
+	reward_text:set_top(reward_panel:bottom() + tweak_data.menu.pd2_small_font_size * 0.5 - self.PADDING)
 	reward_text:set_center_x(reward_panel:center_x())
 	reward_text:set_visible(true)
 
@@ -3710,7 +3799,9 @@ function MenuNodeCrimenetChallengeGui:create_reward(panel, reward, challenge)
 		})
 	end
 
-	panel:set_script({texture_path = texture_path})
+	panel:set_script({
+		texture_path = texture_path
+	})
 end
 
 function MenuNodeCrimenetChallengeGui:_highlight_row_item(row_item, mouse_over)
@@ -3974,8 +4065,8 @@ function MenuNodeCrimenetChallengeGui:_align_marker(row_item)
 		self._marker_data.marker:set_visible(true)
 		self._marker_data.gradient:set_visible(true)
 		self._marker_data.gradient:set_rotation(360)
-		self._marker_data.marker:set_height((64 * row_item.gui_text:height()) / 32)
-		self._marker_data.gradient:set_height((64 * row_item.gui_text:height()) / 32)
+		self._marker_data.marker:set_height(64 * row_item.gui_text:height() / 32)
+		self._marker_data.gradient:set_height(64 * row_item.gui_text:height() / 32)
 		self._marker_data.marker:set_w(self.MENU_WIDTH)
 		self._marker_data.gradient:set_w(self._marker_data.marker:w())
 		self._marker_data.marker:set_left(row_item.menu_unselected:x())
@@ -4023,13 +4114,13 @@ function MenuNodeCrimenetChallengeGui:_clear_gui()
 end
 
 function MenuNodeCrimenetChallengeGui:_setup_item_panel_parent(safe_rect, shape)
-	local x = (safe_rect.x + safe_rect.width / 2) - self.WIDTH / 2 + self.PADDING
-	local y = (safe_rect.y + safe_rect.height / 2) - self.HEIGHT / 2 + self.PADDING
+	local x = safe_rect.x + safe_rect.width / 2 - self.WIDTH / 2 + self.PADDING
+	local y = safe_rect.y + safe_rect.height / 2 - self.HEIGHT / 2 + self.PADDING
 	shape = shape or {}
 	shape.x = shape.x or x
 	shape.y = shape.y or y
 	shape.w = shape.w or self.MENU_WIDTH
-	shape.h = shape.h or (self.HEIGHT - 2 * self.PADDING) - tweak_data.menu.pd2_small_font_size
+	shape.h = shape.h or self.HEIGHT - 2 * self.PADDING - tweak_data.menu.pd2_small_font_size
 
 	MenuNodeCrimenetChallengeGui.super._setup_item_panel_parent(self, safe_rect, shape)
 end
@@ -4093,6 +4184,7 @@ function MenuNodeCrimenetChallengeGui:_setup_menu()
 	self._list_arrows.down:set_world_bottom(self._align_data.panel:world_bottom())
 	self._list_arrows.down:set_width(self._item_panel_parent:w())
 end
+
 MenuNodeChooseWeaponRewardGui = MenuNodeChooseWeaponRewardGui or class(MenuNodeCrimenetFiltersGui)
 
 function MenuNodeChooseWeaponRewardGui:init(node, layer, parameters)
@@ -4146,8 +4238,7 @@ function MenuNodeChooseWeaponRewardGui:_setup_item_panel(safe_rect, res)
 		max_layer = math.max(max_layer, child_layer)
 	end
 
-	for _, child in ipairs(self.item_panel:children()) do
-		-- Nothing
+	for slot9, slot10 in ipairs(self.item_panel:children()) do
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -4185,12 +4276,14 @@ function MenuNodeChooseWeaponRewardGui:_setup_item_panel(safe_rect, res)
 	self.box_panel:move(-106, -10)
 	self.box_panel:set_layer(51)
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_clipping(false)
 	self.boxgui:set_layer(1000)
@@ -4255,6 +4348,7 @@ function MenuNodeChooseWeaponRewardGui:_reposition_items(highlighted_row_item)
 		self._owned_text:set_world_left(self.row_items[3].gui_text:world_left())
 	end
 end
+
 MenuNodeChooseWeaponCosmeticGui = MenuNodeChooseWeaponCosmeticGui or class(MenuNodeCrimenetFiltersGui)
 
 function MenuNodeChooseWeaponCosmeticGui:init(node, layer, parameters)
@@ -4290,8 +4384,7 @@ function MenuNodeChooseWeaponCosmeticGui:_setup_item_panel(safe_rect, res)
 		max_layer = math.max(max_layer, child_layer)
 	end
 
-	for _, child in ipairs(self.item_panel:children()) do
-		-- Nothing
+	for slot9, slot10 in ipairs(self.item_panel:children()) do
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -4330,12 +4423,14 @@ function MenuNodeChooseWeaponCosmeticGui:_setup_item_panel(safe_rect, res)
 	self.box_panel:move(-10, -10)
 	self.box_panel:set_layer(51)
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_clipping(false)
 	self.boxgui:set_layer(1000)
@@ -4356,7 +4451,7 @@ function MenuNodeChooseWeaponCosmeticGui:_setup_item_panel(safe_rect, res)
 		texture = "guis/textures/test_blur_df",
 		render_template = "VertexColorTexturedBlur3D",
 		w = self.box_panel:w(),
-		h = (self.blur_panel:h() - 70) - self.box_panel:top()
+		h = self.blur_panel:h() - 70 - self.box_panel:top()
 	})
 
 	blur:set_top(self.box_panel:top())
@@ -4410,6 +4505,7 @@ function MenuNodeChooseWeaponCosmeticGui:close(...)
 	MenuNodeEconomySafe.super.close(self, ...)
 	managers.environment_controller:set_dof_distance(10, false)
 end
+
 MenuNodeDOFGui = MenuNodeDOFGui or class(MenuNodeGui)
 
 function MenuNodeDOFGui:init(...)
@@ -4422,6 +4518,7 @@ function MenuNodeDOFGui:close(...)
 	MenuNodeDOFGui.super.close(self, ...)
 	managers.environment_controller:set_dof_distance(10, false)
 end
+
 MenuNodeOpenContainerGui = MenuNodeOpenContainerGui or class(MenuNodeBaseGui)
 
 function MenuNodeOpenContainerGui:init(node, layer, parameters)
@@ -4458,7 +4555,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	local content_padding = 1
 
 	if self._drill_amount == drill_amount and self._safe_amount == safe_amount then
-		self.item_panel:set_world_left((self._safe_panel:world_right() + padding) - self.node:parameters().align_line_proportions * self.item_panel:w())
+		self.item_panel:set_world_left(self._safe_panel:world_right() + padding - self.node:parameters().align_line_proportions * self.item_panel:w())
 		self.item_panel:set_world_center_y(self._safe_panel:world_center_y())
 
 		return
@@ -4487,8 +4584,8 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 		layer = 151,
 		name = "open_safe_panel"
 	})
-	local safe_w = (self._panel:w() - 20) - 40
-	local safe_h = (self._panel:h() - 20) - 40
+	local safe_w = self._panel:w() - 20 - 40
+	local safe_h = self._panel:h() - 20 - 40
 	local wanted_width = (3 * safe_h - padding) / 2.5
 	local wanted_height = (2.5 * safe_w + padding) / 3
 	local w = safe_w
@@ -4529,12 +4626,14 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	info_panel:set_top(self._panel:top())
 	self._panel:set_right(info_panel:left() - 10)
 
-	self.boxgui = BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self._panel:rect({
 		alpha = 0.75,
@@ -4549,7 +4648,9 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 		w = self._panel:w() - 20,
 		h = self._panel:h() - 20
 	})
-	self._legend_panel = panel:panel({h = tweak_data.menu.pd2_medium_font_size})
+	self._legend_panel = panel:panel({
+		h = tweak_data.menu.pd2_medium_font_size
+	})
 	local title_text = container_data.show_only and managers.localization:to_upper_text("menu_steam_market_content_" .. container_data.content) or managers.localization:to_upper_text("menu_ti_steam_open_safe_title", {
 		name = managers.localization:text(tweak_data.economy.safes[data.safe].name_id),
 		type = managers.localization:text("bm_menu_safe")
@@ -4566,7 +4667,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	}))
 
 	local content_height = w / 2
-	local drill_safe_size = (h - content_height) - padding
+	local drill_safe_size = h - content_height - padding
 
 	if not tweak_data.economy.safes[container_data.safe].free then
 		local drill_panel = panel:panel({
@@ -4594,7 +4695,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 		if not managers.blackmarket:have_inventory_tradable_item("drills", data.drill) then
 			drill_bitmap_panel:set_alpha(0.5)
 
-			local blend_mode = "add"
+			slot31 = "add"
 		end
 
 		self:request_texture(bitmap_texture, drill_bitmap_panel, true, blend_mode)
@@ -4659,8 +4760,8 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	local x_td, y_td, x_rtd, y_rtd = nil
 
 	local function sort_func(x, y)
-		x_td = (x.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[x.category])[x.entry]
-		y_td = (y.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[y.category])[y.entry]
+		x_td = x.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[x.category][x.entry]
+		y_td = y.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[y.category][y.entry]
 		x_rtd = tweak_data.economy.rarities[x_td.rarity or "common"]
 		y_rtd = tweak_data.economy.rarities[y_td.rarity or "common"]
 
@@ -4681,7 +4782,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	content_panel:set_top(safe_panel:bottom() + padding)
 
 	local num_of_items = #contents
-	local num_per_row = math.ceil(num_of_items ^ 0.5)
+	local num_per_row = math.ceil(num_of_items^0.5)
 	local size = (content_panel:w() - (num_per_row + 1) * content_padding) / num_per_row
 	local x = content_padding
 	local y = content_padding
@@ -4692,7 +4793,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 		local show_skins = is_weapon_skin
 		local is_armor_skin = content.category == "armor_skins"
 		show_skins = show_skins or is_armor_skin
-		c_td = (content.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[content.category])[content.entry]
+		c_td = content.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[content.category][content.entry]
 		new_content = content_panel:panel({
 			layer = 1,
 			name = i,
@@ -4706,7 +4807,9 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 			local texture_path, rarity_path = nil
 
 			if is_weapon_skin then
-				texture_path, rarity_path = managers.blackmarket:get_weapon_icon_path(c_td.weapon_id, {id = content.entry})
+				texture_path, rarity_path = managers.blackmarket:get_weapon_icon_path(c_td.weapon_id, {
+					id = content.entry
+				})
 
 				self:request_texture(texture_path, new_content, true)
 			elseif is_armor_skin then
@@ -4760,12 +4863,14 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 			rarity_bitmap:set_center(new_content:w() * 0.5, new_content:h() * 0.5)
 
 			local select_box_panel = new_content:panel()
-			local select_box = BoxGuiObject:new(select_box_panel, {sides = {
-				2,
-				2,
-				2,
-				2
-			}})
+			local select_box = BoxGuiObject:new(select_box_panel, {
+				sides = {
+					2,
+					2,
+					2,
+					2
+				}
+			})
 
 			select_box:set_color(Color(0, 0, 0, 0))
 
@@ -4811,13 +4916,15 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	})
 
 	divider_panel:set_top(safe_panel:bottom() + padding)
-	BoxGuiObject:new(divider_panel, {sides = {
-		0,
-		0,
-		2,
-		0
-	}})
-	self.item_panel:set_world_left((safe_panel:world_right() + padding) - self.node:parameters().align_line_proportions * self.item_panel:w())
+	BoxGuiObject:new(divider_panel, {
+		sides = {
+			0,
+			0,
+			2,
+			0
+		}
+	})
+	self.item_panel:set_world_left(safe_panel:world_right() + padding - self.node:parameters().align_line_proportions * self.item_panel:w())
 	self.item_panel:set_world_center_y(safe_panel:world_center_y())
 	info_panel:set_world_top(content_panel:world_top())
 	info_panel:set_h(self._panel:bottom() - info_panel:top())
@@ -4825,12 +4932,14 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 		alpha = 0.75,
 		color = Color.black
 	})
-	BoxGuiObject:new(info_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(info_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self._info_panel = info_panel:panel({
 		y = 10,
@@ -5006,10 +5115,12 @@ function MenuNodeOpenContainerGui:weapon_cosmetics_callback(button, data)
 			id = data.cosmetic_id,
 			quality = data.cosmetic_quality
 		}, function ()
-			managers.menu:open_node("inventory_tradable_container_preview_node", {{
-				id = data.cosmetic_id,
-				quality = data.cosmetic_quality
-			}})
+			managers.menu:open_node("inventory_tradable_container_preview_node", {
+				{
+					id = data.cosmetic_id,
+					quality = data.cosmetic_quality
+				}
+			})
 			managers.menu_component:hide_blackmarket_gui()
 		end)
 	elseif button == Idstring("0") then
@@ -5037,6 +5148,7 @@ function MenuNodeOpenContainerGui:close()
 		self._fullscreen_panel:parent():remove(self._fullscreen_panel)
 	end
 end
+
 MenuNodeContainerPreviewGui = MenuNodeContainerPreviewGui or class(MenuNodeGui)
 
 function MenuNodeContainerPreviewGui:init(node, layer, parameters)
@@ -5084,4 +5196,3 @@ function MenuNodeContainerPreviewGui:close(...)
 	MenuNodeContainerPreviewGui.super.close(self, ...)
 	managers.menu_component:show_blackmarket_gui()
 end
-

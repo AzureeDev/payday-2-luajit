@@ -331,10 +331,16 @@ function TangoManager:announce_tango_weapon()
 	local category = weapon_tweak.selection_index == 2 and "secondaries" or "primaries"
 	local dialog_data = {
 		title = managers.localization:text("dialog_new_unlock_title"),
-		text = managers.localization:text("dialog_tango_complete_desc", {weapon = managers.localization:text(weapon_tweak.name_id)})
+		text = managers.localization:text("dialog_tango_complete_desc", {
+			weapon = managers.localization:text(weapon_tweak.name_id)
+		})
 	}
-	local ok_button = {text = managers.localization:text("dialog_ok")}
-	dialog_data.button_list = {ok_button}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
 	local weapon_id = managers.weapon_factory:get_weapon_id_by_factory_id(tweak_data.tango.arbiter_data.factory_id)
 
 	if weapon_id then
@@ -347,4 +353,3 @@ end
 function TangoManager:any_challenge_completed()
 	return self._has_completed_mission
 end
-

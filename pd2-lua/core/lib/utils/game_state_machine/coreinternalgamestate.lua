@@ -48,4 +48,3 @@ end
 function GameState:freeflight_drop_player(pos, rot, velocity)
 	Application:error("[FreeFlight] Drop player not implemented for state '" .. self:name() .. "'")
 end
-

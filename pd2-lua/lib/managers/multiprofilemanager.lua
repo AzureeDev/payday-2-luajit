@@ -220,4 +220,3 @@ function MultiProfileManager:_check_amount()
 		self._global._current_profile = prev_current
 	end
 end
-

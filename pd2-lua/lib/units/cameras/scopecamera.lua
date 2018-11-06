@@ -157,4 +157,3 @@ function ScopeCamera:update(t, dt)
 		end
 	end
 end
-

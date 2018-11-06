@@ -79,7 +79,9 @@ function AccessCameraUnitElement:_add_text_options_from_file(path)
 end
 
 function AccessCameraUnitElement:_add_text_options()
-	self._text_options = {"debug_none"}
+	self._text_options = {
+		"debug_none"
+	}
 
 	self:_add_text_options_from_file("strings/hud.strings")
 	self:_add_text_options_from_file("strings/wip.strings")
@@ -169,8 +171,11 @@ function AccessCameraUnitElement:_build_panel(panel, panel_sizer)
 		min = -1
 	}, "Specify a pitch limit.")
 end
+
 AccessCameraOperatorUnitElement = AccessCameraOperatorUnitElement or class(MissionElement)
-AccessCameraOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+AccessCameraOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function AccessCameraOperatorUnitElement:init(unit)
 	AccessCameraOperatorUnitElement.super.init(self, unit)
@@ -242,8 +247,11 @@ function AccessCameraOperatorUnitElement:_build_panel(panel, panel_sizer)
 	}, "Select an operation for the selected elements")
 	self:_add_help_text("This element can modify point_access_camera element. Select elements to modify using insert and clicking on them.")
 end
+
 AccessCameraTriggerUnitElement = AccessCameraTriggerUnitElement or class(MissionElement)
-AccessCameraTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+AccessCameraTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function AccessCameraTriggerUnitElement:init(unit)
 	AccessCameraTriggerUnitElement.super.init(self, unit)
@@ -316,4 +324,3 @@ function AccessCameraTriggerUnitElement:_build_panel(panel, panel_sizer)
 	}, "Select a trigger type for the selected elements")
 	self:_add_help_text("This element is a trigger to point_access_camera element.")
 end
-

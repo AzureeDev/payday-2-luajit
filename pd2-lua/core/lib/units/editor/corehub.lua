@@ -141,7 +141,7 @@ function CoreHub:set_required_triggers()
 
 	self._required_triggers:append("all")
 
-	if self._hed.required_triggers ~= "all" and #self._hed.triggers - 1 < tonumber(self._hed.required_triggers) then
+	if self._hed.required_triggers ~= "all" and tonumber(self._hed.required_triggers) > #self._hed.triggers - 1 then
 		if tonumber(self._hed.required_triggers) == 1 then
 			self._hed.required_triggers = "all"
 		else
@@ -703,4 +703,3 @@ function CoreHub:destroy()
 
 	HubElement.destroy(self)
 end
-

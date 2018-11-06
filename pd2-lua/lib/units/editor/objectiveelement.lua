@@ -27,7 +27,9 @@ function ObjectiveUnitElement:init(unit)
 end
 
 function ObjectiveUnitElement:update_sub_objectives()
-	local sub_objectives = table.list_add({"none"}, managers.objectives:sub_objectives_by_name(self._hed.objective))
+	local sub_objectives = table.list_add({
+		"none"
+	}, managers.objectives:sub_objectives_by_name(self._hed.objective))
 	self._hed.sub_objective = "none"
 
 	CoreEws.update_combobox_options(self._sub_objective_params, sub_objectives)
@@ -56,10 +58,14 @@ function ObjectiveUnitElement:_build_panel(panel, panel_sizer)
 		"complete_and_activate",
 		"remove_and_activate"
 	})
-	self:_build_value_combobox(panel, panel_sizer, "objective", table.list_add({"none"}, managers.objectives:objectives_by_name()))
+	self:_build_value_combobox(panel, panel_sizer, "objective", table.list_add({
+		"none"
+	}, managers.objectives:objectives_by_name()))
 
 	local options = self._hed.objective ~= "none" and managers.objectives:sub_objectives_by_name(self._hed.objective) or {}
-	local _, params = self:_build_value_combobox(panel, panel_sizer, "sub_objective", table.list_add({"none"}, options), "Select a sub objective from the combobox (if availible)")
+	local _, params = self:_build_value_combobox(panel, panel_sizer, "sub_objective", table.list_add({
+		"none"
+	}, options), "Select a sub objective from the combobox (if availible)")
 	self._sub_objective_params = params
 
 	self:_build_value_number(panel, panel_sizer, "amount", {
@@ -77,4 +83,3 @@ function ObjectiveUnitElement:_build_panel(panel, panel_sizer)
 
 	self:add_help_text(help)
 end
-

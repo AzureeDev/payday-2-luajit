@@ -10,7 +10,9 @@ function MenuItemCustomizeController:init(data_node, parameters)
 end
 
 function MenuItemCustomizeController:setup_gui(node, row_item)
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.controller_name = node:_text_item_part(row_item, row_item.gui_panel, node:_left_align())
 
 	row_item.controller_name:set_align("right")
@@ -67,4 +69,3 @@ function MenuItemCustomizeController:_layout(node, row_item)
 	row_item.controller_binding:set_height(h)
 	row_item.controller_binding:set_left(node:_right_align())
 end
-

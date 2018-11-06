@@ -90,4 +90,3 @@ function NewUnlockDialog:update(t, dt)
 		self._start_sound_t = nil
 	end
 end
-

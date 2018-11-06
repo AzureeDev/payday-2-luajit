@@ -40,7 +40,7 @@ function ElementProfileFilter:_check_player_lvl()
 end
 
 function ElementProfileFilter:_check_total_money_earned()
-	local pass = self._values.money_earned * 1000 <= managers.money:total_collected()
+	local pass = managers.money:total_collected() >= self._values.money_earned * 1000
 
 	return pass
 end
@@ -50,7 +50,7 @@ function ElementProfileFilter:_check_total_money_offshore()
 		return false
 	end
 
-	local pass = self._values.money_offshore * 1000 <= managers.money:offshore()
+	local pass = managers.money:offshore() >= self._values.money_offshore * 1000
 
 	return pass
 end
@@ -65,4 +65,3 @@ function ElementProfileFilter:_check_achievement()
 
 	return pass
 end
-

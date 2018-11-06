@@ -60,4 +60,3 @@ end
 function ElementWaypoint:load(data)
 	self:set_enabled(data.enabled)
 end
-

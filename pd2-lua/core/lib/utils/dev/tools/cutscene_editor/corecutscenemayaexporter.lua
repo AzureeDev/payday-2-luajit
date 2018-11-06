@@ -277,4 +277,3 @@ function CoreCutsceneMayaExporter:_maya_node_name(unit_name, object, full_path)
 
 	return parent and parent:parent() and parent:parent():parent() and self:_maya_node_name(unit_name, parent, full_path) .. "|" .. long_name or long_name
 end
-

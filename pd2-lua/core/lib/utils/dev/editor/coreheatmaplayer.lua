@@ -214,4 +214,3 @@ function HeatmapLayer:clear()
 	HeatmapLayer.super.clear(self)
 	self:_clr_data()
 end
-

@@ -13,9 +13,15 @@ function NodeGui:init(node, layer, parameters)
 	self.height_padding = 0
 	local safe_rect_pixels = managers.viewport:get_safe_rect_pixels()
 	self.ws = managers.gui_data:create_saferect_workspace()
-	self._item_panel_parent = self.ws:panel():panel({name = "item_panel_parent"})
-	self.item_panel = self._item_panel_parent:panel({name = "item_panel"})
-	self.safe_rect_panel = self.ws:panel():panel({name = "safe_rect_panel"})
+	self._item_panel_parent = self.ws:panel():panel({
+		name = "item_panel_parent"
+	})
+	self.item_panel = self._item_panel_parent:panel({
+		name = "item_panel"
+	})
+	self.safe_rect_panel = self.ws:panel():panel({
+		name = "safe_rect_panel"
+	})
 	self.corner_items = {}
 
 	self.ws:show()
@@ -89,11 +95,19 @@ function NodeGui:_setup_item_rows(node)
 			local params = item:parameters()
 
 			if params.text_id then
-				item_text = self.localize_strings and params.localize ~= false and params.localize ~= "false" and managers.localization:text(params.text_id) or params.text_id
+				if self.localize_strings and params.localize ~= false and params.localize ~= "false" then
+					item_text = managers.localization:text(params.text_id)
+				else
+					item_text = params.text_id
+				end
 			end
 
 			if params.help_id then
-				help_text = self.localize_strings and params.localize_help ~= false and params.localize_help ~= "false" and managers.localization:text(params.help_id) or params.help_id
+				if self.localize_strings and params.localize_help ~= false and params.localize_help ~= "false" then
+					help_text = managers.localization:text(params.help_id)
+				else
+					help_text = params.help_id
+				end
 			end
 
 			local row_item = {}
@@ -148,11 +162,19 @@ function NodeGui:_insert_row_item(item, node, i)
 		local params = item:parameters()
 
 		if params.text_id then
-			item_text = self.localize_strings and params.localize ~= false and params.localize ~= "false" and managers.localization:text(params.text_id) or params.text_id
+			if self.localize_strings and params.localize ~= false and params.localize ~= "false" then
+				item_text = managers.localization:text(params.text_id)
+			else
+				item_text = params.text_id
+			end
 		end
 
 		if params.help_id then
-			help_text = self.localize_strings and params.localize_help ~= false and params.localize_help ~= "false" and managers.localization:text(params.help_id) or params.help_id
+			if self.localize_strings and params.localize_help ~= false and params.localize_help ~= "false" then
+				help_text = managers.localization:text(params.help_id)
+			else
+				help_text = params.help_id
+			end
 		end
 
 		local row_item = {}
@@ -370,18 +392,18 @@ function NodeGui:_reposition_items(highlighted_row_item)
 		local offset = first and h * num_dividers_top or last and h * num_dividers_bottom or h
 		offset = offset + self.height_padding
 
-		if highlighted_row_item.gui_panel:world_y() - (offset + (prev_item and math.abs(prev_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h or 0)) < self._item_panel_parent:world_y() then
+		if self._item_panel_parent:world_y() > highlighted_row_item.gui_panel:world_y() - (offset + (prev_item and math.abs(prev_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h or 0)) then
 			if prev_item then
-				offset = (offset + math.abs(prev_item.gui_panel:y() - highlighted_row_item.gui_panel:y())) - h
+				offset = offset + math.abs(prev_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h
 			end
 
-			dy = -((highlighted_row_item.gui_panel:world_y() - self._item_panel_parent:world_y()) - offset)
+			dy = -(highlighted_row_item.gui_panel:world_y() - self._item_panel_parent:world_y() - offset)
 		elseif self._item_panel_parent:world_y() + self._item_panel_parent:h() < highlighted_row_item.gui_panel:world_y() + highlighted_row_item.gui_panel:h() + offset + (next_item and math.abs(next_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h or 0) then
 			if next_item then
-				offset = (offset + math.abs(next_item.gui_panel:y() - highlighted_row_item.gui_panel:y())) - h
+				offset = offset + math.abs(next_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h
 			end
 
-			dy = -((highlighted_row_item.gui_panel:world_y() + highlighted_row_item.gui_panel:h()) - (self._item_panel_parent:world_y() + self._item_panel_parent:h()) + offset)
+			dy = -(highlighted_row_item.gui_panel:world_y() + highlighted_row_item.gui_panel:h() - (self._item_panel_parent:world_y() + self._item_panel_parent:h()) + offset)
 		end
 
 		local old_dy = self._scroll_data.dy_left
@@ -428,7 +450,13 @@ function NodeGui:scroll_update(dt)
 	if dy_left ~= 0 then
 		local speed = self._scroll_data.speed
 		local dy = nil
-		dy = speed <= 0 and dy_left or math.lerp(0, dy_left, math.clamp((math.sign(dy_left) * speed * dt) / dy_left, 0, 1))
+
+		if speed <= 0 then
+			dy = dy_left
+		else
+			dy = math.lerp(0, dy_left, math.clamp(math.sign(dy_left) * speed * dt / dy_left, 0, 1))
+		end
+
 		self._scroll_data.dy_left = self._scroll_data.dy_left - dy
 
 		if self._item_panel_y and self._item_panel_y.target then
@@ -577,7 +605,7 @@ function NodeGui:_set_item_positions()
 
 			row_item.gui_panel:set_y(row_item.position.y)
 			row_item.menu_unselected:set_left(self:_mid_align() + (row_item.item:parameters().expand_value or 0))
-			row_item.menu_unselected:set_h((64 * row_item.gui_panel:h()) / 32)
+			row_item.menu_unselected:set_h(64 * row_item.gui_panel:h() / 32)
 			row_item.menu_unselected:set_center_y(row_item.gui_panel:center_y())
 			row_item.menu_unselected:set_w(scaled_size.width - row_item.menu_unselected:x())
 
@@ -662,7 +690,7 @@ function NodeGui:_setup_size()
 			row_item.gui_panel:set_w(24)
 			row_item.gui_panel:set_h(24)
 			row_item.gui_panel:set_right(self:_mid_align())
-			row_item.unselected:set_h((64 * row_item.gui_panel:h()) / 32)
+			row_item.unselected:set_h(64 * row_item.gui_panel:h() / 32)
 			row_item.unselected:set_center_y(row_item.gui_panel:h() / 2)
 			row_item.selected:set_shape(row_item.unselected:shape())
 			row_item.shadow:set_w(row_item.gui_panel:w())
@@ -690,4 +718,3 @@ function NodeGui:mouse_pressed(button, x, y)
 		end
 	end
 end
-

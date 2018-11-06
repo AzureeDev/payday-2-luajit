@@ -85,12 +85,14 @@ function MenuNodePrePlanningGui:_setup_item_panel(safe_rect, res)
 	self.box_panel:move(-10, -0)
 	self.box_panel:set_layer(self.layers.background)
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_clipping(false)
 	self.boxgui:set_layer(self.layers.last)
@@ -116,7 +118,9 @@ function MenuNodePrePlanningGui:_setup_item_panel(safe_rect, res)
 		self._icon_panel = nil
 	end
 
-	self._icon_panel = self._item_panel_parent:panel({name = "icons"})
+	self._icon_panel = self._item_panel_parent:panel({
+		name = "icons"
+	})
 
 	self._align_data.panel:set_left(self.box_panel:left())
 	self:_create_tooltip()
@@ -176,7 +180,9 @@ function MenuNodePrePlanningGui:_create_tooltip()
 		self._tooltip = nil
 	end
 
-	self._tooltip = self.ws:panel():panel({layer = self.layers.items})
+	self._tooltip = self.ws:panel():panel({
+		layer = self.layers.items
+	})
 
 	self._tooltip:set_w(self.box_panel:w())
 	self._tooltip:set_top(self.box_panel:bottom() + self._item_panel_parent:top() + 5)
@@ -225,7 +231,7 @@ function MenuNodePrePlanningGui:_create_tooltip()
 
 	description:set_top(icon:top())
 	description:set_left(icon:right() + 5)
-	description:set_width((self._tooltip:w() - 10) - description:left())
+	description:set_width(self._tooltip:w() - 10 - description:left())
 	description:set_kern(description:kern())
 
 	local x, y, w, h = description:text_rect()
@@ -247,7 +253,7 @@ function MenuNodePrePlanningGui:_create_tooltip()
 
 	error_text:set_top(description:bottom() + 5)
 	error_text:set_left(icon:right() + 5)
-	error_text:set_width((self._tooltip:w() - 10) - error_text:left())
+	error_text:set_width(self._tooltip:w() - 10 - error_text:left())
 	error_text:set_kern(error_text:kern())
 
 	local x, y, w, h = error_text:text_rect()
@@ -258,12 +264,14 @@ function MenuNodePrePlanningGui:_create_tooltip()
 
 	self._tooltip:set_h(bottom)
 
-	local boxgui = BoxGuiObject:new(self._tooltip, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	local boxgui = BoxGuiObject:new(self._tooltip, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	boxgui:set_clipping(false)
 	boxgui:set_layer(1000)
@@ -347,12 +355,14 @@ function MenuNodePrePlanningGui:_update_tooltip(item)
 			local bottom = math.max(title:bottom(), icon:bottom(), description:bottom(), error_text:bottom()) + 10
 
 			self._tooltip:set_h(bottom)
-			self._tooltip_boxgui:create_sides(self._tooltip, {sides = {
-				1,
-				1,
-				1,
-				1
-			}})
+			self._tooltip_boxgui:create_sides(self._tooltip, {
+				sides = {
+					1,
+					1,
+					1,
+					1
+				}
+			})
 			self._tooltip:show()
 		else
 			self._tooltip:hide()
@@ -367,7 +377,7 @@ function MenuNodePrePlanningGui:_align_marker(row_item)
 
 	self._marker_data.marker:show()
 	self._marker_data.marker:set_width(self:_scaled_size().width - self._marker_data.marker:left())
-	self._marker_data.marker:set_height((64 * row_item.gui_panel:height()) / 32)
+	self._marker_data.marker:set_height(64 * row_item.gui_panel:height() / 32)
 	self._marker_data.marker:set_center_y(row_item.gui_panel:center_y())
 	self._marker_data.marker:set_world_right(self.item_panel:world_right())
 	self._marker_data.gradient:show()
@@ -554,7 +564,9 @@ function MenuNodePrePlanningGui:_set_item_positions()
 end
 
 function MenuNodePrePlanningGui:test_clbk(...)
-	print(inspect({...}))
+	print(inspect({
+		...
+	}))
 end
 
 function MenuNodePrePlanningGui:mouse_moved(o, x, y)
@@ -616,4 +628,3 @@ end
 function MenuNodePrePlanningGui:close()
 	MenuNodePrePlanningGui.super.close(self)
 end
-

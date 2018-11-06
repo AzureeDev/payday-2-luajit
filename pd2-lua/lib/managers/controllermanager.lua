@@ -45,7 +45,9 @@ function ControllerManager:set_user_mod(connection_name, params)
 	Global.controller_manager.user_mod = Global.controller_manager.user_mod or {}
 
 	if params.axis then
-		Global.controller_manager.user_mod[connection_name] = Global.controller_manager.user_mod[connection_name] or {axis = params.axis}
+		Global.controller_manager.user_mod[connection_name] = Global.controller_manager.user_mod[connection_name] or {
+			axis = params.axis
+		}
 		Global.controller_manager.user_mod[connection_name][params.button] = params
 	else
 		Global.controller_manager.user_mod[connection_name] = params
@@ -83,7 +85,9 @@ function ControllerManager:load_user_mod()
 				end
 			elseif params.button and connections[params.button] then
 				connections[params.button]:set_controller_id(params.controller_id)
-				connections[params.button]:set_input_name_list({params.connection})
+				connections[params.button]:set_input_name_list({
+					params.connection
+				})
 			end
 		end
 
@@ -128,13 +132,19 @@ function ControllerManager:_show_controller_changed_dialog()
 	local data = {
 		callback_func = callback(self, self, "connect_controller_dialog_callback"),
 		title = managers.localization:text("dialog_connect_controller_title"),
-		text = managers.localization:text("dialog_connect_controller_text", {NR = Global.controller_manager.default_wrapper_index or 1})
+		text = managers.localization:text("dialog_connect_controller_text", {
+			NR = Global.controller_manager.default_wrapper_index or 1
+		})
 	}
 
 	if SystemInfo:platform() == Idstring("XB1") then
 		data.no_buttons = true
 	else
-		data.button_list = {{text = managers.localization:text("dialog_ok")}}
+		data.button_list = {
+			{
+				text = managers.localization:text("dialog_ok")
+			}
+		}
 	end
 
 	data.id = "connect_controller_dialog"
@@ -232,4 +242,3 @@ function ControllerManager:get_vr_controller()
 end
 
 CoreClass.override_class(CoreControllerManager.ControllerManager, ControllerManager)
-

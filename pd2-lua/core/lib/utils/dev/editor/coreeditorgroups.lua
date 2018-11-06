@@ -268,6 +268,7 @@ function CoreEditorGroups:parse_editable_gui(unit, node)
 	unit:editable_gui():set_alpha(tonumber(node:parameter("alpha")))
 	unit:editable_gui():set_shape(string.split(node:parameter("shape"), " "))
 end
+
 CoreEditorGroup = CoreEditorGroup or class()
 
 function CoreEditorGroup:init(name, reference, units)
@@ -457,6 +458,7 @@ function CoreEditorGroup:draw(t, dt)
 
 	Application:draw(self._reference, 0, 1 * i, 0)
 end
+
 GroupPresetsDialog = GroupPresetsDialog or class(CoreEditorEwsDialog)
 
 function GroupPresetsDialog:init(files, path)
@@ -526,4 +528,3 @@ end
 function GroupPresetsDialog:hide_on_create(hide)
 	self._hide_on_create = hide:get_value()
 end
-

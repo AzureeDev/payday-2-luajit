@@ -128,7 +128,7 @@ function ButtonBoxGui:_scroll_buttons(direction)
 	local SCROLL_SPEED = 28
 	local speed = SCROLL_SPEED * TimerManager:main():delta_time() * 200
 	local new_y = self._text_box_buttons_panel:y() + speed * direction
-	new_y = math.clamp(new_y, (self._info_area:h() - 10) - self._text_box_buttons_panel:h(), tweak_data.menu.pd2_large_font_size + 4)
+	new_y = math.clamp(new_y, self._info_area:h() - 10 - self._text_box_buttons_panel:h(), tweak_data.menu.pd2_large_font_size + 4)
 
 	self._text_box_buttons_panel:set_y(new_y)
 end
@@ -156,4 +156,3 @@ function ButtonBoxGui:mouse_wheel_down(x, y)
 
 	return used
 end
-

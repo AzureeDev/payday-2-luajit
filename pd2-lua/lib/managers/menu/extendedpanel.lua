@@ -1,7 +1,5 @@
-
 local function redirect_to_member(class, member_name, functions)
 	for _, name in pairs(functions) do
-
 		class[name] = function (self, ...)
 			local member = self[member_name]
 
@@ -18,7 +16,6 @@ local function redirect_to_panel(class, blacklist)
 	function class.__index(table, key)
 		for k, func in pairs(Panel) do
 			if not blacklist[k] and not rawget(class, k) then
-
 				class[k] = function (self, ...)
 					return func(self._panel, ...)
 				end
@@ -223,18 +220,6 @@ function ExtendedPanel.scale_font_to_fit(text, w_limit, h_limit, smallest_allowe
 	smallest_allowed = smallest_allowed or 8
 	local size = text:font_size()
 	local start_w = text:w()
-
-	while w_limit and w_limit < text:w() or h_limit and h_limit < text:h() do
-		if size == smallest_allowed then
-			return false
-		end
-
-		size = size - 1
-
-		text:set_w(start_w)
-		text:set_font_size(size)
-		ExtendedPanel.make_fine_text(text)
-	end
 
 	return true
 end
@@ -465,4 +450,3 @@ function ExtendedPanel:back_pressed()
 
 	return call_return_b_on_all_exists(self._input_components_set, "back_pressed")
 end
-

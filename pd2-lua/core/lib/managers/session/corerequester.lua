@@ -33,4 +33,3 @@ function Requester:force_task_completed()
 	self._task_is_running = nil
 	self._requested = nil
 end
-

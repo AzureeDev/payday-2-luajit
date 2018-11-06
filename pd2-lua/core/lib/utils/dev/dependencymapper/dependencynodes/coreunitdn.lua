@@ -74,4 +74,3 @@ function UnitDependencyNode:_walkxml2dependencies(xmlnode, deps)
 		end
 	end
 end
-

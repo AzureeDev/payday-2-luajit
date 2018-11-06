@@ -50,7 +50,9 @@ end
 
 function MissionScriptElement:override_value_on_element(element_ids, variable_name, new_value)
 	if type(element_ids) ~= "table" then
-		element_ids = {element_ids}
+		element_ids = {
+			element_ids
+		}
 	end
 
 	for _, params in ipairs(self._values.on_executed) do
@@ -61,4 +63,3 @@ function MissionScriptElement:override_value_on_element(element_ids, variable_na
 end
 
 CoreClass.override_class(CoreMissionScriptElement.MissionScriptElement, MissionScriptElement)
-

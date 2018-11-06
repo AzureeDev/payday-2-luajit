@@ -6,7 +6,6 @@ function MenuNodeEconomySafe:init(node, layer, parameters)
 	local safe_entry = node:parameters().safe_entry
 
 	if node:parameters().debug then
-
 		local function f()
 			self:_test_start_open_economy_safe(safe_entry)
 		end
@@ -73,7 +72,7 @@ function MenuNodeEconomySafe:_safe_result_recieved(error, items_new, items_remov
 
 	print("result.category: ", result.category, tweak_data.economy[result.category], tweak_data.blackmarket[result.category])
 
-	local entry_data = (tweak_data.economy[result.category] or tweak_data.blackmarket[result.category])[result.entry]
+	local entry_data = tweak_data.economy[result.category] or tweak_data.blackmarket[result.category][result.entry]
 
 	if entry_data.rarity ~= "legendary" and entry_data.rarity ~= "epic" then
 		managers.menu:set_cash_safe_scene_done(true, true)
@@ -119,7 +118,7 @@ function MenuNodeEconomySafe:_find_replace_raffle_panel()
 	while steps <= max_steps do
 		i = i + 1
 
-		if #self._raffle_panels < i then
+		if i > #self._raffle_panels then
 			i = 1
 		end
 
@@ -364,7 +363,15 @@ function MenuNodeEconomySafe:_create_raffle_panel(x, data, index)
 		local entry_data = tweak_data.blackmarket[data.category][data.entry]
 		local weapon_id = entry_data.weapon_id or entry_data.weapons[1]
 		is_legendary = entry_data.rarity == "legendary"
-		texture_name = is_legendary and "guis/dlcs/cash/textures/pd2/safe_raffle/icon_legendary" or managers.blackmarket:get_weapon_icon_path(weapon_id, {id = data.entry})
+
+		if is_legendary then
+			texture_name = "guis/dlcs/cash/textures/pd2/safe_raffle/icon_legendary"
+		else
+			texture_name = managers.blackmarket:get_weapon_icon_path(weapon_id, {
+				id = data.entry
+			})
+		end
+
 		name_id = entry_data.name_id
 		rarity_color = tweak_data.economy.rarities[entry_data.rarity].color
 		texture_rarity_name = tweak_data.economy.rarities[entry_data.rarity].header_col
@@ -459,7 +466,7 @@ function MenuNodeEconomySafe:stop_at(at, offset, stopped_clbk)
 		max_speed = self._raffle_speed,
 		lerp_value = 0,
 		at = at,
-		decc = ((0 - self._raffle_speed * self._raffle_speed) / 2) / 1000,
+		decc = (0 - self._raffle_speed * self._raffle_speed) / 2 / 1000,
 		start_time = Application:time(),
 		distance = 0,
 		stopped_clbk = stopped_clbk
@@ -580,7 +587,7 @@ function MenuNodeEconomySafe:_build_result_panel()
 		self.safe_rect_panel:remove(self.safe_rect_panel:child("result_panel"))
 	end
 
-	local item_data = (tweak_data.economy[self._result.category] or tweak_data.blackmarket[self._result.category])[self._result.entry]
+	local item_data = tweak_data.economy[self._result.category] or tweak_data.blackmarket[self._result.category][self._result.entry]
 	local rarity_data = tweak_data.economy.rarities[item_data.rarity]
 	local safe_rect_pixels = managers.gui_data:scaled_size()
 	local w_pad = 200
@@ -646,7 +653,9 @@ function MenuNodeEconomySafe:_build_result_panel()
 			end
 
 			local bonus_value = bonus_data.exp_multiplier and bonus_data.exp_multiplier * 100 - 100 .. "%" or bonus_data.money_multiplier and bonus_data.money_multiplier * 100 - 100 .. "%"
-			local bonus_title = bonus_data and managers.localization:to_upper_text(bonus_data.name_id, {team_bonus = bonus_value}) or ""
+			local bonus_title = bonus_data and managers.localization:to_upper_text(bonus_data.name_id, {
+				team_bonus = bonus_value
+			}) or ""
 			local bonus_text = self._result_panel:text({
 				halign = "left",
 				vertical = "bottom",
@@ -697,4 +706,3 @@ function MenuNodeEconomySafe:_test_textures()
 
 	return t
 end
-

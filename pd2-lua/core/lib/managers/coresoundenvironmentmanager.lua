@@ -577,6 +577,7 @@ end
 function CoreSoundEnvironmentManager:_next_occasional()
 	return Application:time() + 6 + math.rand(4)
 end
+
 local check_pos = Vector3()
 local mvec_surround_pos = Vector3()
 
@@ -709,6 +710,7 @@ function CoreSoundEnvironmentManager:_change_acoustic(environment)
 		end
 	end
 end
+
 local check_pos2 = Vector3()
 
 function CoreSoundEnvironmentManager:_check_inside(data)
@@ -826,6 +828,7 @@ function CoreSoundEnvironmentManager:destroy()
 
 	self._occasional_sound_source:stop()
 end
+
 SoundEnvironmentArea = SoundEnvironmentArea or class(CoreShapeManager.ShapeBox)
 
 function SoundEnvironmentArea:init(params)
@@ -1034,6 +1037,7 @@ function SoundEnvironmentArea:is_inside(pos)
 
 	return SoundEnvironmentArea.super.is_inside(self, pos)
 end
+
 SoundEnvironmentEmitter = SoundEnvironmentEmitter or class()
 
 function SoundEnvironmentEmitter:init(params)
@@ -1157,6 +1161,7 @@ function SoundEnvironmentEmitter:destroy()
 
 	self._soundsource = nil
 end
+
 SoundEnvironmentAreaEmitter = SoundEnvironmentAreaEmitter or class(CoreShapeManager.ShapeBoxMiddle)
 
 function SoundEnvironmentAreaEmitter:init(params)
@@ -1263,4 +1268,3 @@ function SoundEnvironmentAreaEmitter:destroy()
 
 	self._soundsource = nil
 end
-

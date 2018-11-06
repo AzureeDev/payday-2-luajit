@@ -62,6 +62,7 @@ function ShapeManager:parse(shape)
 
 	return t
 end
+
 local mvec1 = Vector3()
 local mvec2 = Vector3()
 local mvec3 = Vector3()
@@ -174,7 +175,9 @@ end
 function Shape:create_panel(parent, sizer)
 	self._panel = EWS:Panel(parent, "", "TAB_TRAVERSAL")
 
-	self._panel:set_extension({alive = true})
+	self._panel:set_extension({
+		alive = true
+	})
 
 	self._panel_sizer = EWS:BoxSizer("VERTICAL")
 
@@ -324,6 +327,7 @@ function Shape:destroy()
 		self._dialog:destroy()
 	end
 end
+
 ShapeBox = ShapeBox or class(Shape)
 
 function ShapeBox:init(params)
@@ -425,9 +429,9 @@ function ShapeBox:draw(t, dt, r, g, b)
 
 	local pos = self:position()
 	local rot = self:rotation()
-	pos = pos + (rot:x() * self._properties.width) / 2 + (rot:y() * self._properties.depth) / 2 + (rot:z() * self._properties.height) / 2
+	pos = pos + rot:x() * self._properties.width / 2 + rot:y() * self._properties.depth / 2 + rot:z() * self._properties.height / 2
 
-	brush:box(pos, (rot:x() * self._properties.width) / 2, (rot:y() * self._properties.depth) / 2, (rot:z() * self._properties.height) / 2)
+	brush:box(pos, rot:x() * self._properties.width / 2, rot:y() * self._properties.depth / 2, rot:z() * self._properties.height / 2)
 	self:draw_outline(t, dt, r, g, b)
 end
 
@@ -436,6 +440,7 @@ function ShapeBox:draw_outline(t, dt, r, g, b)
 
 	Application:draw_box_rotation(self:position(), rot, self._properties.width, self._properties.depth, self._properties.height, r, g, b)
 end
+
 ShapeBoxMiddle = ShapeBoxMiddle or class(ShapeBox)
 
 function ShapeBoxMiddle:init(params)
@@ -497,12 +502,13 @@ function ShapeBoxMiddle:draw(t, dt, r, g, b, a)
 	local pos = self:position()
 	local rot = self:rotation()
 
-	brush:box(pos, (rot:x() * self._properties.width) / 2, (rot:y() * self._properties.depth) / 2, (rot:z() * self._properties.height) / 2)
+	brush:box(pos, rot:x() * self._properties.width / 2, rot:y() * self._properties.depth / 2, rot:z() * self._properties.height / 2)
 
-	local c1 = ((self:position() - (rot:x() * self._properties.width) / 2) - (rot:y() * self._properties.depth) / 2) - (rot:z() * self._properties.height) / 2
+	local c1 = self:position() - rot:x() * self._properties.width / 2 - rot:y() * self._properties.depth / 2 - rot:z() * self._properties.height / 2
 
 	Application:draw_box_rotation(c1, rot, self._properties.width, self._properties.depth, self._properties.height, r, g, b)
 end
+
 ShapeBoxMiddleBottom = ShapeBoxMiddleBottom or class(ShapeBox)
 
 function ShapeBoxMiddleBottom:init(params)
@@ -511,9 +517,9 @@ end
 
 function ShapeBoxMiddleBottom:is_inside(pos)
 	local rot = self:rotation()
-	local x = (rot:x() * self._properties.width) / 2
-	local y = (rot:y() * self._properties.depth) / 2
-	local position = (self:position() - x) - y
+	local x = rot:x() * self._properties.width / 2
+	local y = rot:y() * self._properties.depth / 2
+	local position = self:position() - x - y
 	local pos_dir = pos - position
 	local inside = rot:x():dot(pos_dir)
 
@@ -539,14 +545,15 @@ function ShapeBoxMiddleBottom:draw(t, dt, r, g, b)
 
 	local pos = self:position()
 	local rot = self:rotation()
-	pos = pos + (rot:z() * self._properties.height) / 2
+	pos = pos + rot:z() * self._properties.height / 2
 
-	brush:box(pos, (rot:x() * self._properties.width) / 2, (rot:y() * self._properties.depth) / 2, (rot:z() * self._properties.height) / 2)
+	brush:box(pos, rot:x() * self._properties.width / 2, rot:y() * self._properties.depth / 2, rot:z() * self._properties.height / 2)
 
-	local c1 = (self:position() - (rot:x() * self._properties.width) / 2) - (rot:y() * self._properties.depth) / 2
+	local c1 = self:position() - rot:x() * self._properties.width / 2 - rot:y() * self._properties.depth / 2
 
 	Application:draw_box_rotation(c1, rot, self._properties.width, self._properties.depth, self._properties.height, r, g, b)
 end
+
 ShapeSphere = ShapeSphere or class(Shape)
 
 function ShapeSphere:init(params)
@@ -573,7 +580,7 @@ function ShapeSphere:set_radius(radius)
 end
 
 function ShapeSphere:is_inside(pos)
-	return (pos - self:position()):length() < self._properties.radius
+	return pos - self:position():length() < self._properties.radius
 end
 
 function ShapeSphere:draw(t, dt, r, g, b)
@@ -583,6 +590,7 @@ function ShapeSphere:draw(t, dt, r, g, b)
 	brush:sphere(self:position(), self._properties.radius, 4)
 	Application:draw_sphere(self:position(), self._properties.radius, r, g, b)
 end
+
 ShapeCylinder = ShapeCylinder or class(Shape)
 
 function ShapeCylinder:init(params)
@@ -646,6 +654,7 @@ function ShapeCylinder:is_inside(pos)
 
 	return false
 end
+
 ShapeCylinderMiddle = ShapeCylinderMiddle or class(ShapeCylinder)
 
 function ShapeCylinderMiddle:init(params)
@@ -695,10 +704,9 @@ function ShapeCylinderMiddle:draw(t, dt, r, g, b)
 
 	local pos = self:position()
 	local rot = self:rotation()
-	local from = pos - (rot:z() * self._properties.height) / 2
-	local to = pos + (rot:z() * self._properties.height) / 2
+	local from = pos - rot:z() * self._properties.height / 2
+	local to = pos + rot:z() * self._properties.height / 2
 
 	brush:cylinder(from, to, self._properties.radius, 100)
 	Application:draw_cylinder(from, to, self._properties.radius, r, g, b)
 end
-

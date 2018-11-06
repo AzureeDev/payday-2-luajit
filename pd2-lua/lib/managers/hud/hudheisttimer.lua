@@ -71,4 +71,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDHeistTimerVR")
 end
-

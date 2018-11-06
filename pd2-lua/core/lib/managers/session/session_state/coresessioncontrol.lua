@@ -10,4 +10,3 @@ end
 
 function Control:end_session()
 end
-

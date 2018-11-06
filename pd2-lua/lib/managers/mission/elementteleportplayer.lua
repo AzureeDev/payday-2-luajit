@@ -34,4 +34,3 @@ function ElementTeleportPlayer:on_executed(instigator)
 		end
 	end
 end
-

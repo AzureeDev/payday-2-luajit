@@ -464,7 +464,9 @@ end
 function CoreOldWorldDefinition:add_editor_group(name, reference)
 	table.insert(self._old_groups.group_names, name)
 
-	self._old_groups.groups[name] = {reference = reference}
+	self._old_groups.groups[name] = {
+		reference = reference
+	}
 	self._old_groups.groups[name].units = self._old_groups.groups[name].units or {}
 end
 
@@ -479,9 +481,10 @@ function CoreOldWorldDefinition:parse_brush(node)
 		self._massunit_path = node:parameter("path")
 	elseif node:has_parameter("file") then
 		self._massunit_path = node:parameter("file")
-		self._massunit_path = DB:has("massunit", self._massunit_path) or self:world_dir() .. self._massunit_path
 
-		return
+		if not DB:has("massunit", self._massunit_path) then
+			self._massunit_path = self:world_dir() .. self._massunit_path
+		end
 	end
 end
 
@@ -540,9 +543,10 @@ function CoreOldWorldDefinition:parse_world_camera(node)
 		self._world_camera_path = node:parameter("path")
 	elseif node:has_parameter("file") then
 		self._world_camera_path = node:parameter("file")
-		self._world_camera_path = DB:has("world_cameras", self._world_camera_path) or self:world_dir() .. self._world_camera_path
 
-		return
+		if not DB:has("world_cameras", self._world_camera_path) then
+			self._world_camera_path = self:world_dir() .. self._world_camera_path
+		end
 	end
 end
 
@@ -983,7 +987,11 @@ function CoreOldWorldDefinition:make_unit(name, data, offset)
 	local unit = nil
 
 	if name then
-		unit = MassUnitManager:can_spawn_unit(Idstring(name)) and not is_editor and MassUnitManager:spawn_unit(Idstring(name), data._position + offset, data._rotation) or safe_spawn_unit(name, data._position + offset, data._rotation)
+		if MassUnitManager:can_spawn_unit(Idstring(name)) and not is_editor then
+			unit = MassUnitManager:spawn_unit(Idstring(name), data._position + offset, data._rotation)
+		else
+			unit = safe_spawn_unit(name, data._position + offset, data._rotation)
+		end
 
 		if unit then
 			self:assign_unit_data(unit, data)
@@ -1153,10 +1161,12 @@ function CoreOldWorldDefinition:add_trigger_sequence(unit, triggers)
 				trigger = trigger
 			})
 		else
-			self._trigger_units[trigger.notify_unit_id] = {{
-				unit = unit,
-				trigger = trigger
-			}}
+			self._trigger_units[trigger.notify_unit_id] = {
+				{
+					unit = unit,
+					trigger = trigger
+				}
+			}
 		end
 	end
 end
@@ -1185,7 +1195,9 @@ function CoreOldWorldDefinition:get_unit_on_load(id, call)
 	if self._use_unit_callbacks[id] then
 		table.insert(self._use_unit_callbacks[id], call)
 	else
-		self._use_unit_callbacks[id] = {call}
+		self._use_unit_callbacks[id] = {
+			call
+		}
 	end
 
 	return nil
@@ -1222,6 +1234,7 @@ end
 function CoreOldWorldDefinition:get_soundbank()
 	return self._soundbank
 end
+
 LoadedMarker = LoadedMarker or class()
 
 function LoadedMarker:init(node)
@@ -1230,6 +1243,7 @@ function LoadedMarker:init(node)
 	self._rot = math.string_to_vector(node:parameter("rot"))
 	self._rot = Rotation(self._rot.x, self._rot.y, self._rot.z)
 end
+
 CoreWDSoundEnvironment = CoreWDSoundEnvironment or class()
 
 function CoreWDSoundEnvironment:init(node)
@@ -1309,6 +1323,7 @@ function CoreWDSoundEnvironment:create()
 		managers.sound_environment:add_area_emitter(sound_area_emitter)
 	end
 end
+
 CoreEnvironment = CoreEnvironment or class()
 
 function CoreEnvironment:init(node)
@@ -1455,6 +1470,7 @@ function CoreEnvironment:create(offset)
 		table.insert(self._units, unit)
 	end
 end
+
 CorePortal = CorePortal or class()
 
 function CorePortal:init(node)
@@ -1483,7 +1499,9 @@ function CorePortal:parse_portal_list(node)
 	for o in node:children() do
 		local p = math.string_to_vector(o:parameter("pos"))
 
-		table.insert(portal, {pos = p})
+		table.insert(portal, {
+			pos = p
+		})
 	end
 end
 
@@ -1526,6 +1544,7 @@ function CorePortal:create(offset)
 		end
 	end
 end
+
 CoreWire = CoreWire or class()
 
 function CoreWire:init(node)
@@ -1560,6 +1579,7 @@ function CoreWire:create_unit(offset)
 
 	return self._unit
 end
+
 CoreStaticUnit = CoreStaticUnit or class()
 
 function CoreStaticUnit:init(node)
@@ -1577,6 +1597,7 @@ function CoreStaticUnit:create_unit(offset)
 
 	return self._unit
 end
+
 CoreDynamicUnit = CoreDynamicUnit or class()
 
 function CoreDynamicUnit:init(node)
@@ -1633,6 +1654,7 @@ function CoreMissionElementUnit:create_unit(offset)
 
 	return self._unit
 end
+
 MissionElementValues = MissionElementValues or class()
 
 function MissionElementValues:init(node)
@@ -1706,6 +1728,7 @@ function CoreOldWorldDefinition:make_generic_data(in_data)
 
 	return data
 end
+
 Generic = Generic or class()
 
 function Generic:init(node)
@@ -1870,4 +1893,3 @@ function Generic:parse_editable_gui(node)
 		shape = shape
 	}
 end
-

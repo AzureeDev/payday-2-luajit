@@ -14,7 +14,6 @@ function CoreExecuteInOtherMissionUnitElement:selected()
 end
 
 function CoreExecuteInOtherMissionUnitElement:add_unit_list_btn()
-
 	local function f(unit)
 		return unit:type() == Idstring("mission_element") and unit ~= self._unit
 	end
@@ -38,4 +37,3 @@ function CoreExecuteInOtherMissionUnitElement:_build_panel(panel, panel_sizer)
 	self._btn_toolbar:realize()
 	panel_sizer:add(self._btn_toolbar, 0, 1, "EXPAND,LEFT")
 end
-

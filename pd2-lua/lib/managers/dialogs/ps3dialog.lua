@@ -40,4 +40,3 @@ end
 function PS3Dialog:button_pressed(button_index)
 	Dialog.button_pressed(self, button_index + 1)
 end
-

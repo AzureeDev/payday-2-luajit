@@ -200,7 +200,9 @@ function AIAttentionElement:_find_parent_raycast()
 end
 
 function AIAttentionElement:_find_att_obj_raycast()
-	local ray = managers.editor:unit_by_raycast({mask = 38})
+	local ray = managers.editor:unit_by_raycast({
+		mask = 38
+	})
 
 	if not ray or not ray.unit then
 		return
@@ -324,13 +326,17 @@ function AIAttentionElement:_build_panel(panel, panel_sizer)
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.instigator_ids, names)
 	self:_build_value_checkbox(panel, panel_sizer, "use_instigator")
-	self:_build_value_combobox(panel, panel_sizer, "preset", table.list_add({"none"}, tweak_data.attention.indexes), "Select the attention preset.")
+	self:_build_value_combobox(panel, panel_sizer, "preset", table.list_add({
+		"none"
+	}, tweak_data.attention.indexes), "Select the attention preset.")
 	self:_build_value_combobox(panel, panel_sizer, "operation", {
 		"set",
 		"add",
 		"override"
 	}, "Select an operation.")
-	self:_build_value_combobox(panel, panel_sizer, "override", table.list_add({"none"}, tweak_data.attention.indexes), "Select the attention preset to be overriden. (valid only with override operation)")
+	self:_build_value_combobox(panel, panel_sizer, "override", table.list_add({
+		"none"
+	}, tweak_data.attention.indexes), "Select the attention preset to be overriden. (valid only with override operation)")
 end
 
 function AIAttentionElement:add_to_mission_package()
@@ -350,4 +356,3 @@ function AIAttentionElement:_chk_set_link_values()
 		self._hed.local_rot = nil
 	end
 end
-

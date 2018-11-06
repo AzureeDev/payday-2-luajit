@@ -12,12 +12,18 @@ function PlayerHandStateMelee:_spawn_melee_unit()
 	local unit_name = tweak_data.blackmarket.melee_weapons[melee_entry].unit
 
 	if unit_name then
-		local aligns = tweak_data.blackmarket.melee_weapons[melee_entry].align_objects or {"a_weapon_left"}
+		local aligns = tweak_data.blackmarket.melee_weapons[melee_entry].align_objects or {
+			"a_weapon_left"
+		}
 		local graphic_objects = tweak_data.blackmarket.melee_weapons[melee_entry].graphic_objects or {}
 		local align = nil
 
 		if #aligns > 1 then
-			align = self._hsm:hand_id() == 1 and "a_weapon_right" or "a_weapon_left"
+			if self._hsm:hand_id() == 1 then
+				align = "a_weapon_right"
+			else
+				align = "a_weapon_left"
+			end
 
 			if not table.contains(aligns, align) then
 				Application:error("[PlayerHandStateMelee:_spawn_melee_unit] can't spawn melee weapon in this hand", melee_entry, self._hand_unit)
@@ -141,4 +147,3 @@ function PlayerHandStateMelee:update(t, dt)
 		managers.controller:get_vr_controller():trigger_haptic_pulse(self:hsm():hand_id() - 1, 0, charge_value * 1000 + 500)
 	end
 end
-

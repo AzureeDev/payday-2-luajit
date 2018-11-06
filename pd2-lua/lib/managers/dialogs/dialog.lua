@@ -84,4 +84,3 @@ end
 function Dialog:_strip_to_string_text(text)
 	return string.gsub(tostring(text), "\n", "\\n")
 end
-

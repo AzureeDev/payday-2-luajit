@@ -1,5 +1,7 @@
 CoreMotionPathOperatorUnitElement = CoreMotionPathOperatorUnitElement or class(MissionElement)
-CoreMotionPathOperatorUnitElement.LINK_ELEMENTS = {"elements"}
+CoreMotionPathOperatorUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 MotionPathOperatorUnitElement = MotionPathOperatorUnitElement or class(CoreMotionPathOperatorUnitElement)
 
 function MotionPathOperatorUnitElement:init(...)
@@ -98,7 +100,9 @@ end
 
 function CoreMotionPathOperatorUnitElement:_motion_path_markers()
 	self._hed.marker_ids = {}
-	local motion_path_markers = {"none"}
+	local motion_path_markers = {
+		"none"
+	}
 	local mission_elements = managers.worlddefinition._mission_element_units
 
 	for _, me in pairs(mission_elements) do
@@ -143,8 +147,11 @@ function CoreMotionPathOperatorUnitElement:on_executed_marker_selected()
 		self._hed.marker = nil
 	end
 end
+
 CoreMotionPathTriggerUnitElement = CoreMotionPathTriggerUnitElement or class(MissionElement)
-CoreMotionPathTriggerUnitElement.LINK_ELEMENTS = {"elements"}
+CoreMotionPathTriggerUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 MotionPathTriggerUnitElement = MotionPathTriggerUnitElement or class(CoreMotionPathTriggerUnitElement)
 
 function MotionPathTriggerUnitElement:init(...)
@@ -224,7 +231,8 @@ function CoreMotionPathTriggerUnitElement:_build_panel(panel, panel_sizer)
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
 
-	self:_build_value_combobox(panel, panel_sizer, "outcome", {"marker_reached"}, "Select an outcome to trigger on")
+	self:_build_value_combobox(panel, panel_sizer, "outcome", {
+		"marker_reached"
+	}, "Select an outcome to trigger on")
 	self:_add_help_text("This element is a trigger on motion path marker element.")
 end
-

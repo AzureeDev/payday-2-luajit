@@ -718,4 +718,3 @@ function FreeFlight:destroy()
 
 	self._vp = nil
 end
-

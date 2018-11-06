@@ -18,4 +18,3 @@ end
 function LayoutDescription:device_layout_description(device_type)
 	return self._device_layout_descriptions[device_type]
 end
-

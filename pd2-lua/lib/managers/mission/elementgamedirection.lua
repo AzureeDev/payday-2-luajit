@@ -14,4 +14,3 @@ function ElementGameDirection:on_executed(instigator)
 	managers.groupai:state():set_mission_fwd_vector(self._values.rotation:y(), self._values.position)
 	ElementGameDirection.super.on_executed(self, instigator)
 end
-

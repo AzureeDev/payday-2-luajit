@@ -62,7 +62,8 @@ function SpawnGrenadeUnitElement:_build_panel(panel, panel_sizer)
 	panel_sizer = panel_sizer or self._panel_sizer
 
 	self:_build_value_combobox(panel, panel_sizer, "grenade_type", table.map_keys(tweak_data.blackmarket.projectiles), "Select what type of grenade will be spawned.")
-	self:_build_value_number(panel, panel_sizer, "strength", {floats = 1}, "Use this to add a strength to a physic push on the spawned grenade")
+	self:_build_value_number(panel, panel_sizer, "strength", {
+		floats = 1
+	}, "Use this to add a strength to a physic push on the spawned grenade")
 	self:_add_help_text("Spawns a grenade.")
 end
-

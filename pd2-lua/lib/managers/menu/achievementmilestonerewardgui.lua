@@ -32,7 +32,9 @@ function RecentMilestoneItem:init(parent, data, black_bg)
 	}))
 
 	placer:add_right(self:fine_text({
-		text = managers.localization:text("menu_milestone_item_title", {AT = data.at}),
+		text = managers.localization:text("menu_milestone_item_title", {
+			AT = data.at
+		}),
 		font = small_font,
 		font_size = small_font_size,
 		color = color
@@ -79,6 +81,7 @@ function RecentMilestoneItem:init(parent, data, black_bg)
 
 	self._passed = passed
 end
+
 AchievementMilestoneRewardGui = AchievementMilestoneRewardGui or class(GrowPanel)
 
 function AchievementMilestoneRewardGui:init(parent, milestones, back_callback)
@@ -95,7 +98,9 @@ function AchievementMilestoneRewardGui:init(parent, milestones, back_callback)
 
 	main_placer:add_row(self:fine_text({
 		fixed_w = true,
-		text = managers.localization:text("menu_milestones_unlocked", {NUM = #milestones}),
+		text = managers.localization:text("menu_milestones_unlocked", {
+			NUM = #milestones
+		}),
 		font = medium_font,
 		font_size = medium_font_size
 	}))
@@ -132,15 +137,21 @@ function AchievementMilestoneRewardGui:init(parent, milestones, back_callback)
 		black_bg = not black_bg
 	end
 
-	local back_panel = self:panel({layer = -1})
+	local back_panel = self:panel({
+		layer = -1
+	})
 
-	back_panel:rect({color = Color.black:with_alpha(0.8)})
-	BoxGuiObject:new(back_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	back_panel:rect({
+		color = Color.black:with_alpha(0.8)
+	})
+	BoxGuiObject:new(back_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self._back = back_panel
 
@@ -170,4 +181,3 @@ function AchievementMilestoneRewardGui:back_pressed()
 
 	return true
 end
-

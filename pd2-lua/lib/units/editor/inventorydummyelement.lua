@@ -28,4 +28,3 @@ function InventoryDummyUnitElement:_build_panel(panel, panel_sizer)
 		max = 9
 	}, "Set inventory slot to spawn")
 end
-

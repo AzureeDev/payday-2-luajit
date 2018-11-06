@@ -71,4 +71,3 @@ function Manager:update(t, dt)
 		end
 	end
 end
-

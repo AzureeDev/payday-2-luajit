@@ -163,4 +163,3 @@ function Manager:update(t, dt)
 		menu.renderer:update(t, dt)
 	end
 end
-

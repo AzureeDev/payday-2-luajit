@@ -38,4 +38,3 @@ end
 function VehicleStateSecured:stop_vehicle()
 	return true
 end
-

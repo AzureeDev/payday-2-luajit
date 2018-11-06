@@ -52,7 +52,9 @@ function PlayerCarry:exit(state_data, new_state_name)
 	PlayerCarry.super.exit(self, state_data, new_state_name)
 	self._unit:camera():camera_unit():base():set_target_tilt(0)
 
-	local exit_data = {skip_equip = true}
+	local exit_data = {
+		skip_equip = true
+	}
 	self._dye_risk = nil
 
 	managers.job:set_memory("kill_count_carry", nil, true)
@@ -81,7 +83,9 @@ function PlayerCarry:_check_dye_pack()
 	local my_carry_data = managers.player:get_my_carry_data()
 
 	if my_carry_data.has_dye_pack then
-		self._dye_risk = {next_t = managers.player:player_timer():time() + 2 + math.random(3)}
+		self._dye_risk = {
+			next_t = managers.player:player_timer():time() + 2 + math.random(3)
+		}
 	end
 end
 
@@ -232,7 +236,12 @@ end
 
 function PlayerCarry:_get_max_walk_speed(...)
 	local multiplier = tweak_data.carry.types[self._tweak_data_name].move_speed_modifier
-	multiplier = managers.player:has_category_upgrade("carry", "movement_penalty_nullifier") and 1 or math.clamp(multiplier * managers.player:upgrade_value("carry", "movement_speed_multiplier", 1), 0, 1)
+
+	if managers.player:has_category_upgrade("carry", "movement_penalty_nullifier") then
+		multiplier = 1
+	else
+		multiplier = math.clamp(multiplier * managers.player:upgrade_value("carry", "movement_speed_multiplier", 1), 0, 1)
+	end
 
 	if managers.player:has_category_upgrade("player", "armor_carry_bonus") then
 		local base_max_armor = armor_init + managers.player:body_armor_value("armor") + managers.player:body_armor_skill_addend()
@@ -265,4 +274,3 @@ end
 if _G.IS_VR then
 	require("lib/units/beings/player/states/vr/PlayerCarryVR")
 end
-

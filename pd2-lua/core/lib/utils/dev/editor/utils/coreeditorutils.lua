@@ -170,6 +170,7 @@ end
 function GrabInfo:position()
 	return self._pos
 end
+
 layer_types = layer_types or {}
 
 function parse_layer_types()
@@ -333,4 +334,3 @@ function dump_all(units, name, get_objects_string)
 	MeshDumper:dump_meshes(managers.database:root_path() .. name, objects, Rotation(Vector3(1, 0, 0), Vector3(0, 0, -1), Vector3(0, -1, 0)))
 	cat_print("editor", "  .. dumping done.")
 end
-

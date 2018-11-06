@@ -149,4 +149,3 @@ add_prints("IngameWaitingForSpawnAllowed", {
 	"_upd_watch",
 	"_refresh_teammate_list"
 })
-

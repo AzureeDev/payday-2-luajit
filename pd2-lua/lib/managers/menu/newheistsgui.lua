@@ -22,7 +22,9 @@ function NewHeistsGui:init(ws, fullscreen_ws)
 	self._fullscreen_ws = fullscreen_ws
 	self._panel = ws:panel()
 	self._full_panel = fullscreen_ws:panel()
-	self._content_panel = self._full_panel:panel({w = IMAGE_W})
+	self._content_panel = self._full_panel:panel({
+		w = IMAGE_W
+	})
 
 	self._content_panel:set_right(self._panel:width())
 
@@ -45,13 +47,17 @@ function NewHeistsGui:init(ws, fullscreen_ws)
 	self:_set_text(managers.localization:to_upper_text(tweak[1].name_id))
 
 	for i = 1, self._page_count, 1 do
-		local content_panel = self._internal_content_panel:panel({x = (i == 1 and 0 or 1) * self._content_panel:w()})
+		local content_panel = self._internal_content_panel:panel({
+			x = (i == 1 and 0 or 1) * self._content_panel:w()
+		})
 		local image_panel = content_panel:panel({
 			y = header_h,
 			height = IMAGE_H
 		})
 
-		image_panel:bitmap({texture = tweak[i].texture_path})
+		image_panel:bitmap({
+			texture = tweak[i].texture_path
+		})
 		content_panel:set_h(image_panel:bottom())
 
 		max_h = math.max(max_h, image_panel:bottom())
@@ -59,19 +65,23 @@ function NewHeistsGui:init(ws, fullscreen_ws)
 		table.insert(self._contents, content_panel)
 	end
 
-	BoxGuiObject:new(self._internal_image_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._internal_image_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
-	self._selected_box = BoxGuiObject:new(self._internal_image_panel, {sides = {
-		2,
-		2,
-		2,
-		2
-	}})
+	self._selected_box = BoxGuiObject:new(self._internal_image_panel, {
+		sides = {
+			2,
+			2,
+			2,
+			2
+		}
+	})
 
 	self._selected_box:set_visible(false)
 	self._internal_content_panel:set_h(max_h)
@@ -83,9 +93,11 @@ function NewHeistsGui:init(ws, fullscreen_ws)
 	self._page_buttons = {}
 
 	for i = 1, self._page_count, 1 do
-		local page_button = self._page_panel:bitmap({texture = "guis/textures/pd2/ad_spot"})
+		local page_button = self._page_panel:bitmap({
+			texture = "guis/textures/pd2/ad_spot"
+		})
 
-		page_button:set_center_x((i / (self._page_count + 1) * self._page_panel:w()) / 2 + self._page_panel:w() / 4)
+		page_button:set_center_x(i / (self._page_count + 1) * self._page_panel:w() / 2 + self._page_panel:w() / 4)
 		page_button:set_center_y((self._page_panel:h() - page_button:h()) / 2)
 		table.insert(self._page_buttons, page_button)
 	end
@@ -168,6 +180,7 @@ function NewHeistsGui:set_bar_width(w, random)
 	mvector3.set_static(mvector_br, x + w, y + h, 0)
 	self._bar:set_texture_coordinates(mvector_tl, mvector_tr, mvector_bl, mvector_br)
 end
+
 local animating = nil
 
 function NewHeistsGui:update(t, dt)
@@ -214,7 +227,7 @@ function NewHeistsGui:_set_text(text)
 end
 
 function NewHeistsGui:_move_pages(pages)
-	local target_page = ((self._current_page + pages) - 1) % self._page_count + 1
+	local target_page = (self._current_page + pages - 1) % self._page_count + 1
 
 	if animating then
 		self._queued_page = target_page
@@ -238,26 +251,28 @@ function NewHeistsGui:_move_pages(pages)
 
 		local speed = swipe_distance / time
 		local start_pos = o:x()
-		local final_pos = (start_pos - swipe_distance) - 5
+		local final_pos = start_pos - swipe_distance - 5
 
-		while alive(o) and alive(other_object) and final_pos <= o:x() do
-			local dt = coroutine.yield()
-			t = t + dt
+		if alive(o) and alive(other_object) then
+			while alive(o) and alive(other_object) and final_pos <= o:x() do
+				local dt = coroutine.yield()
+				t = t + dt
 
-			o:move(-dt * speed, 0)
+				o:move(-dt * speed, 0)
 
-			if start_pos <= other_object:x() then
-				other_object:set_left(o:right() - 5)
-			end
-
-			if t < fade_text_t then
-				self._text:set_alpha(1 - t / fade_text_t)
-			else
-				if not text_changed then
-					self:_set_text(managers.localization:to_upper_text(tweak_data.gui.new_heists[target_page].name_id))
+				if start_pos <= other_object:x() then
+					other_object:set_left(o:right() - 5)
 				end
 
-				self._text:set_alpha((t - fade_text_t) / fade_text_t)
+				if t < fade_text_t then
+					self._text:set_alpha(1 - t / fade_text_t)
+				else
+					if not text_changed then
+						self:_set_text(managers.localization:to_upper_text(tweak_data.gui.new_heists[target_page].name_id))
+					end
+
+					self._text:set_alpha((t - fade_text_t) / fade_text_t)
+				end
 			end
 		end
 
@@ -397,4 +412,3 @@ function NewHeistsGui:set_enabled(enabled)
 
 	self._content_panel:set_visible(enabled)
 end
-

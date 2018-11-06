@@ -3,7 +3,9 @@ StatsTabItem = StatsTabItem or class()
 function StatsTabItem:init(panel, tab_panel, text, i)
 	self._main_panel = panel
 	self._tab_panel = tab_panel
-	self._panel = self._main_panel:panel({h = self._main_panel:h() - 70})
+	self._panel = self._main_panel:panel({
+		h = self._main_panel:h() - 70
+	})
 	self._index = i
 	local prev_item_title_text = tab_panel:child("tab_text_" .. tostring(i - 1))
 	local offset = prev_item_title_text and prev_item_title_text:right() or 0
@@ -174,11 +176,18 @@ function StatsTabItem:set_stats(stats_data)
 			num_string = string.format("%0.2d", found) or 0
 			desc_string = managers.localization:to_upper_text(gage_tweak_data:get_value(assignment, "name_id"))
 			stat_string = string.format("%0.2d", progress) .. " / " .. string.format("%0.2d", to_aquire)
-			reward_string = " - " .. (completed < 2 and managers.localization:to_upper_text("menu_es_gage_assignment_reward") or managers.localization:to_upper_text("menu_es_gage_assignment_reward_plural", {completed = completed}))
+			reward_string = " - " .. (completed < 2 and managers.localization:to_upper_text("menu_es_gage_assignment_reward") or managers.localization:to_upper_text("menu_es_gage_assignment_reward_plural", {
+				completed = completed
+			}))
 
 			if not has_dlc then
 				stat_string = ""
-				reward_string = last_dlc ~= dlc and managers.localization:to_upper_text(tweak_data:get_raw_value("lootdrop", "global_values", dlc, "unlock_id")) or ""
+
+				if last_dlc ~= dlc then
+					reward_string = managers.localization:to_upper_text(tweak_data:get_raw_value("lootdrop", "global_values", dlc, "unlock_id"))
+				else
+					reward_string = ""
+				end
 			end
 
 			new_stat_panel = self._panel:panel({
@@ -274,7 +283,7 @@ function StatsTabItem:set_stats(stats_data)
 			font_size = tweak_data.menu.pd2_small_font_size,
 			font = tweak_data.menu.pd2_small_font,
 			color = tweak_data.screen_colors.text,
-			w = (math.round(self._panel:w() / 2) - 5) - 10
+			w = math.round(self._panel:w() / 2) - 5 - 10
 		})
 		local stat_text = new_stat_panel:text({
 			vertical = "top",
@@ -299,7 +308,7 @@ function StatsTabItem:set_stats(stats_data)
 			stat_text:set_font(tweak_data.menu.pd2_medium_font_id)
 			desc_text:set_font_size(tweak_data.menu.pd2_medium_font_size)
 			stat_text:set_font_size(tweak_data.menu.pd2_medium_font_size)
-			new_stat_panel:set_h((self._panel:h() - new_stat_panel:y()) - 10)
+			new_stat_panel:set_h(self._panel:h() - new_stat_panel:y() - 10)
 			stat_text:set_h(new_stat_panel:h())
 			stat_text:set_x(10)
 		end
@@ -497,13 +506,16 @@ function StatsTabItem.animate_deselect(o)
 		o:set_center(center_x, center_y)
 	end)
 end
+
 StageEndScreenGui = StageEndScreenGui or class()
 local padding = 10
 
 function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 	self._safe_workspace = saferect_ws
 	self._full_workspace = fullrect_ws
-	self._fullscreen_panel = self._full_workspace:panel():panel({layer = 1})
+	self._fullscreen_panel = self._full_workspace:panel():panel({
+		layer = 1
+	})
 	local w = self._safe_workspace:panel():w() / 2 - padding
 
 	if managers.crime_spree:is_active() then
@@ -525,7 +537,9 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 	end
 
 	local continue_button = managers.menu:is_pc_controller() and "[ENTER]" or nil
-	local continue_text = utf8.to_upper(managers.localization:text("menu_es_calculating_experience", {CONTINUE = continue_button}))
+	local continue_text = utf8.to_upper(managers.localization:text("menu_es_calculating_experience", {
+		CONTINUE = continue_button
+	}))
 
 	if managers.crime_spree:is_active() then
 		continue_text = ""
@@ -552,8 +566,12 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 
 	self._continue_button:set_color(tweak_data.screen_colors.item_stage_1)
 
-	self._scroll_panel = self._panel:panel({name = "scroll_panel"})
-	self._tab_panel = self._scroll_panel:panel({name = "tab_panel"})
+	self._scroll_panel = self._panel:panel({
+		name = "scroll_panel"
+	})
+	self._tab_panel = self._scroll_panel:panel({
+		name = "tab_panel"
+	})
 	local big_text = self._fullscreen_panel:text({
 		name = "continue_big_text",
 		vertical = "bottom",
@@ -613,7 +631,9 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 	if show_summary then
 		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_summary")), 1)
 
-		item:set_stats({"stage_cash_summary"})
+		item:set_stats({
+			"stage_cash_summary"
+		})
 		table.insert(self._items, item)
 		self._items[1]._panel:set_alpha(0)
 	end
@@ -647,13 +667,17 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 
 	item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_stats_gage_assignment")), 4)
 
-	item:set_stats({"gage_assignment_summary"})
+	item:set_stats({
+		"gage_assignment_summary"
+	})
 	table.insert(self._items, item)
 
 	if managers.custom_safehouse:unlocked() then
 		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_safehouse_summary")), 5)
 
-		item:set_stats({"stage_safehouse_summary"})
+		item:set_stats({
+			"stage_safehouse_summary"
+		})
 		table.insert(self._items, item)
 	end
 
@@ -678,7 +702,7 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 	next_page:set_right(self._panel:w())
 
 	self._next_page = next_page
-	scroll_w = (scroll_w - next_page:w()) - 5
+	scroll_w = scroll_w - next_page:w() - 5
 	local ix, iy, iw, ih = self._items[#self._items]:tab_text_shape()
 
 	self._tab_panel:set_w(ix + iw + 5)
@@ -696,12 +720,14 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 	local box_panel = self._panel:panel()
 
 	box_panel:set_shape(self._items[self._selected_item]._panel:shape())
-	BoxGuiObject:new(box_panel, {sides = {
-		1,
-		1,
-		2,
-		1
-	}})
+	BoxGuiObject:new(box_panel, {
+		sides = {
+			1,
+			1,
+			2,
+			1
+		}
+	})
 
 	if statistics_data then
 		self:feed_statistics(statistics_data)
@@ -754,7 +780,16 @@ function StageEndScreenGui:play_bain_debrief()
 	if outro_event then
 		local snd_event = nil
 		local tactic = managers.groupai:state():enemy_weapons_hot() and "loud" or "stealth"
-		snd_event = type(outro_event) == "table" and ((outro_event.loud or outro_event.stealth) and outro_event[tactic] or outro_event[math.random(#outro_event)]) or outro_event
+
+		if type(outro_event) == "table" then
+			if outro_event.loud or outro_event.stealth then
+				snd_event = outro_event[tactic]
+			else
+				snd_event = outro_event[math.random(#outro_event)]
+			end
+		else
+			snd_event = outro_event
+		end
 
 		if snd_event then
 			print("[StageEndScreenGui] ", snd_event)
@@ -784,7 +819,7 @@ function StageEndScreenGui:console_subtitle_callback(event, string_id, duration,
 	if not self._console_subtitle_panel then
 		self._console_subtitle_panel = self._safe_workspace:panel():panel()
 
-		self._console_subtitle_panel:set_size((self._panel:x() - 10) - 10, self._panel:h() - 70)
+		self._console_subtitle_panel:set_size(self._panel:x() - 10 - 10, self._panel:h() - 70)
 		self._console_subtitle_panel:set_leftbottom(0, self._panel:bottom() - 70)
 		self._console_subtitle_panel:text({
 			text = "",
@@ -1185,4 +1220,3 @@ function StageEndScreenGui:reload()
 	self:close()
 	StageEndScreenGui.init(self, self._safe_workspace, self._full_workspace, self._data)
 end
-

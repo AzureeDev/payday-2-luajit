@@ -41,7 +41,9 @@ function IngameFatalState:at_enter()
 		end
 	end
 
-	managers.statistics:downed({fatal = true})
+	managers.statistics:downed({
+		fatal = true
+	})
 
 	local player = player_manager:player_unit()
 
@@ -81,4 +83,3 @@ end
 function IngameFatalState:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

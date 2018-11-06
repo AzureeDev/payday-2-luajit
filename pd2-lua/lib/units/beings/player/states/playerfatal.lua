@@ -21,7 +21,9 @@ function PlayerFatal:enter(state_data, enter_data)
 
 	self:_interupt_action_charging_weapon(managers.player:player_timer():time())
 	self:_start_action_dead(managers.player:player_timer():time())
-	self:_start_action_unequip_weapon(managers.player:player_timer():time(), {selection_wanted = 1})
+	self:_start_action_unequip_weapon(managers.player:player_timer():time(), {
+		selection_wanted = 1
+	})
 	self._unit:base():set_slot(self._unit, 4)
 	self._unit:camera():camera_unit():base():set_target_tilt(80)
 
@@ -46,15 +48,20 @@ end
 
 function PlayerFatal:_enter(enter_data)
 	local preset = nil
-	preset = managers.groupai:state():whisper_mode() and {
-		"pl_mask_on_friend_combatant_whisper_mode",
-		"pl_mask_on_friend_non_combatant_whisper_mode",
-		"pl_mask_on_foe_combatant_whisper_mode_crouch",
-		"pl_mask_on_foe_non_combatant_whisper_mode_crouch"
-	} or {
-		"pl_friend_combatant_cbt",
-		"pl_friend_non_combatant_cbt"
-	}
+
+	if managers.groupai:state():whisper_mode() then
+		preset = {
+			"pl_mask_on_friend_combatant_whisper_mode",
+			"pl_mask_on_friend_non_combatant_whisper_mode",
+			"pl_mask_on_foe_combatant_whisper_mode_crouch",
+			"pl_mask_on_foe_non_combatant_whisper_mode_crouch"
+		}
+	else
+		preset = {
+			"pl_friend_combatant_cbt",
+			"pl_friend_non_combatant_cbt"
+		}
+	end
 
 	self._ext_movement:set_attention_settings(preset)
 
@@ -79,7 +86,9 @@ function PlayerFatal:exit(state_data, new_state_name)
 		managers.hud:hide_stats_screen()
 	end
 
-	local exit_data = {equip_weapon = self._reequip_weapon}
+	local exit_data = {
+		equip_weapon = self._reequip_weapon
+	}
 
 	if new_state_name == "standard" then
 		exit_data.wants_crouch = true
@@ -165,4 +174,3 @@ function PlayerFatal:destroy()
 		PlayerBleedOut._unregister_revive_SO(self)
 	end
 end
-

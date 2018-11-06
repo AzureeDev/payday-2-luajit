@@ -149,6 +149,7 @@ function NewRaycastWeaponBaseVR:start_reload(total_time)
 		end
 	end
 end
+
 local __on_reload = NewRaycastWeaponBaseVR.on_reload
 
 function NewRaycastWeaponBaseVR:on_reload(...)
@@ -188,6 +189,7 @@ function NewRaycastWeaponBaseVR:stop_reload()
 		end
 	end
 end
+
 local __update_reloading = NewRaycastWeaponBaseVR.update_reloading
 
 function NewRaycastWeaponBaseVR:update_reloading(t, dt, time_left)
@@ -301,7 +303,9 @@ function NewRaycastWeaponBaseVR:update_reload_mag(time)
 	end
 
 	if mag_data.effect then
-		local effect = {effect = Idstring(mag_data.effect.name)}
+		local effect = {
+			effect = Idstring(mag_data.effect.name)
+		}
 		local unit = nil
 
 		if mag_data.effect.part then
@@ -364,6 +368,7 @@ end
 function NewRaycastWeaponBaseVR:_is_part_visible(part_id)
 	return not self._invisible_parts or not self._invisible_parts[part_id]
 end
+
 local __get_sound_event = NewRaycastWeaponBase._get_sound_event
 
 function NewRaycastWeaponBaseVR:_get_sound_event(event, alternative_event)
@@ -379,4 +384,3 @@ function NewRaycastWeaponBaseVR:_get_sound_event(event, alternative_event)
 
 	return __get_sound_event(self, event, alternative_event)
 end
-

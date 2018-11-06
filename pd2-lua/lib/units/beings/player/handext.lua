@@ -51,4 +51,3 @@ end
 
 function HandExt:update_variables()
 end
-

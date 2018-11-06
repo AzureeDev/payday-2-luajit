@@ -7,7 +7,9 @@ core:import("CorePortalManager")
 PortalLayer = PortalLayer or class(CoreStaticLayer.StaticLayer)
 
 function PortalLayer:init(owner)
-	PortalLayer.super.init(self, owner, "portal", {"portal"}, "portal_layer")
+	PortalLayer.super.init(self, owner, "portal", {
+		"portal"
+	}, "portal_layer")
 
 	self._portal_shapes = {}
 	self.update_function = callback(self, self, "update_portal_shape")
@@ -985,4 +987,3 @@ function PortalLayer:add_triggers()
 
 	vc:add_trigger(Idstring("enter"), callback(self, self, "insert"))
 end
-

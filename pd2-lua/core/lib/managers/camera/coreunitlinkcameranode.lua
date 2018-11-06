@@ -97,4 +97,3 @@ function UnitLinkCameraNode:update(t, dt, in_data, out_data)
 
 	UnitLinkCameraNode.super.update(self, t, dt, in_data, out_data)
 end
-

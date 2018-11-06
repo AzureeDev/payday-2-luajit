@@ -214,4 +214,3 @@ function load_layout(params)
 		Global.frame:iconize(data.is_iconized)
 	end
 end
-

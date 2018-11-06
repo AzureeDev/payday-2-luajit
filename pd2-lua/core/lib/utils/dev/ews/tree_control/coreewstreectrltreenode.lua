@@ -105,4 +105,3 @@ end
 function CoreEWSTreeCtrlTreeNode:has_children()
 	return table.getn(self._tree_ctrl:get_children(self._item_id)) > 0
 end
-

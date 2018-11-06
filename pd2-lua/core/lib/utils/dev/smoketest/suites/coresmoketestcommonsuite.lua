@@ -34,10 +34,13 @@ end
 
 function Substep:update(t, dt)
 end
+
 CallAndDoneSubstep = CallAndDoneSubstep or CoreClass.class(Substep)
 
 function CallAndDoneSubstep.step_arguments(callback)
-	local step_arguments = {callback = callback}
+	local step_arguments = {
+		callback = callback
+	}
 
 	return step_arguments
 end
@@ -46,10 +49,13 @@ function CallAndDoneSubstep:start()
 	self._step_arguments.callback()
 	self:_set_done()
 end
+
 WaitEventSubstep = WaitEventSubstep or CoreClass.class(Substep)
 
 function WaitEventSubstep.step_arguments(event_id)
-	local step_arguments = {event_id = event_id}
+	local step_arguments = {
+		event_id = event_id
+	}
 
 	return step_arguments
 end
@@ -63,6 +69,7 @@ end
 function WaitEventSubstep:destroy()
 	EventManager:unregister_listener(self._event_listener)
 end
+
 CallAndWaitEventSubstep = CallAndWaitEventSubstep or CoreClass.class(Substep)
 
 function CallAndWaitEventSubstep.step_arguments(callback, event_id)
@@ -85,10 +92,13 @@ end
 function CallAndWaitEventSubstep:destroy()
 	EventManager:unregister_listener(self._event_listener)
 end
+
 DelaySubstep = DelaySubstep or CoreClass.class(Substep)
 
 function DelaySubstep.step_arguments(seconds)
-	local step_arguments = {seconds = seconds}
+	local step_arguments = {
+		seconds = seconds
+	}
 
 	return step_arguments
 end
@@ -104,6 +114,7 @@ function DelaySubstep:update(t, dt)
 		self:_set_done()
 	end
 end
+
 CommonSuite = CommonSuite or CoreClass.class(CoreSmoketestSuite.Suite)
 
 function CommonSuite:init()
@@ -181,4 +192,3 @@ function CommonSuite:get_argument(name)
 
 	return self._suite_arguments[name]
 end
-

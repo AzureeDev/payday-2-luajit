@@ -136,4 +136,3 @@ function SubtitleManager:_update_presenter_visibility()
 
 	presenter[show_presenter and "show" or "hide"](presenter)
 end
-

@@ -66,7 +66,7 @@ function table.tuple_iterator(v, n)
 		index = index + n
 
 		if index <= count then
-			return unpack(v, index, (index + n) - 1)
+			return unpack(v, index, index + n - 1)
 		end
 	end
 end
@@ -309,7 +309,12 @@ function table.concat_map(map, concat_values, none_string, wrap, sep, last_sep)
 	for key, value in pairs(map) do
 		local last_func = func
 		local append_string = nil
-		append_string = concat_values and tostring(value) or tostring(key)
+
+		if concat_values then
+			append_string = tostring(value)
+		else
+			append_string = tostring(key)
+		end
 
 		function func(count, first)
 			if count == 1 then
@@ -352,6 +357,32 @@ function table.sorted_copy(t, predicate)
 	table.sort(sorted_copy, predicate)
 
 	return sorted_copy
+end
+
+function table.shuffled_copy(t)
+	if #t == 0 then
+		return {}
+	end
+
+	local shuffled_copy = clone(t)
+
+	for i = 1, #shuffled_copy - 1, 1 do
+		local swap_index = math.random(i, #shuffled_copy)
+		local temp = shuffled_copy[i]
+		shuffled_copy[i] = shuffled_copy[swap_index]
+		shuffled_copy[swap_index] = temp
+	end
+
+	return shuffled_copy
+end
+
+function table.shuffle(t)
+	for i = 1, #t - 1, 1 do
+		local swap_index = math.random(i, #t)
+		local temp = t[i]
+		t[i] = t[swap_index]
+		t[swap_index] = temp
+	end
 end
 
 function table.find_value(t, func)
@@ -439,9 +470,11 @@ function table.insert_sorted(t, item, comparator_func)
 	local index = 1
 	local examined_item = t[index]
 
-	while examined_item and comparator_func(examined_item, item) do
-		index = index + 1
-		examined_item = t[index]
+	if examined_item then
+		while examined_item and comparator_func(examined_item, item) do
+			index = index + 1
+			examined_item = t[index]
+		end
 	end
 
 	table.insert(t, index, item)
@@ -456,11 +489,13 @@ end
 function table.remove_condition(t, func)
 	local i = 1
 
-	while next(t) and i <= #t do
-		if func(t[i]) then
-			table.remove(t, i)
-		else
-			i = i + 1
+	if next(t) then
+		while next(t) and i <= #t do
+			if func(t[i]) then
+				table.remove(t, i)
+			else
+				i = i + 1
+			end
 		end
 	end
 end
@@ -528,7 +563,9 @@ function table.unpack_map(map)
 end
 
 function table.set(...)
-	return table.list_to_set({...})
+	return table.list_to_set({
+		...
+	})
 end
 
 function table.list_to_set(list)
@@ -592,7 +629,9 @@ end
 function table.list_add(...)
 	local result = {}
 
-	for _, list_table in ipairs({...}) do
+	for _, list_table in ipairs({
+		...
+	}) do
 		for _, value in ipairs(list_table) do
 			table.insert(result, value)
 		end
@@ -604,7 +643,9 @@ end
 function table.list_union(...)
 	local unique = {}
 
-	for _, list_table in ipairs({...}) do
+	for _, list_table in ipairs({
+		...
+	}) do
 		for _, value in ipairs(list_table) do
 			unique[value] = true
 		end
@@ -632,7 +673,9 @@ function table.is_list_value_union(list1, list2)
 end
 
 function table.list_append(t, ...)
-	for _, list_table in ipairs({...}) do
+	for _, list_table in ipairs({
+		...
+	}) do
 		for _, value in ipairs(list_table) do
 			table.insert(t, value)
 		end
@@ -640,7 +683,9 @@ function table.list_append(t, ...)
 end
 
 function table.map_append(t, ...)
-	for _, list_table in ipairs({...}) do
+	for _, list_table in ipairs({
+		...
+	}) do
 		for key, value in pairs(list_table) do
 			t[key] = value
 		end
@@ -765,4 +810,3 @@ function _G.unpack(t, i, n)
 
 	return default_unpack(t, i, n)
 end
-

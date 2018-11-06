@@ -30,4 +30,3 @@ function ElementFleePoint:operation_remove()
 		managers.groupai:state():remove_flee_point(self._id)
 	end
 end
-

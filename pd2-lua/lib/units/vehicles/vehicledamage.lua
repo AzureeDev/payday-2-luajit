@@ -57,10 +57,12 @@ function VehicleDamage:is_friendly_fire(attacker_unit)
 end
 
 function VehicleDamage:damage_mission(dmg)
-	local damage_info = {result = {
-		variant = "killzone",
-		type = "hurt"
-	}}
+	local damage_info = {
+		result = {
+			variant = "killzone",
+			type = "hurt"
+		}
+	}
 	local attack_data = {
 		variant = "killzone",
 		damage = dmg
@@ -240,10 +242,12 @@ function VehicleDamage:damage_explosion(attack_data)
 		return
 	end
 
-	local damage_info = {result = {
-		variant = "explosion",
-		type = "hurt"
-	}}
+	local damage_info = {
+		result = {
+			variant = "explosion",
+			type = "hurt"
+		}
+	}
 
 	if self._god_mode or self._invulnerable then
 		self:_call_listeners(damage_info)
@@ -303,7 +307,9 @@ function VehicleDamage:sync_damage_explosion(attacker_unit, damage_percent, i_at
 
 	local variant = "explosion"
 	local damage = damage_percent * self._HEALTH_INIT_PRECENT
-	local attack_data = {variant = variant}
+	local attack_data = {
+		variant = variant
+	}
 	local result = nil
 
 	if death then
@@ -314,7 +320,7 @@ function VehicleDamage:sync_damage_explosion(attacker_unit, damage_percent, i_at
 
 		self:die(attack_data.variant)
 
-		local data = {
+		slot10 = {
 			variant = "explosion",
 			head_shot = false,
 			name = self._unit:base()._tweak_table,
@@ -368,10 +374,12 @@ function VehicleDamage:damage_fire(attack_data)
 		return
 	end
 
-	local damage_info = {result = {
-		variant = "fire",
-		type = "hurt"
-	}}
+	local damage_info = {
+		result = {
+			variant = "fire",
+			type = "hurt"
+		}
+	}
 
 	if self._god_mode or self._invulnerable then
 		self:_call_listeners(damage_info)
@@ -431,7 +439,9 @@ function VehicleDamage:sync_damage_fire(attacker_unit, damage_percent, i_attack_
 
 	local variant = "fire"
 	local damage = damage_percent * self._HEALTH_INIT_PRECENT
-	local attack_data = {variant = variant}
+	local attack_data = {
+		variant = variant
+	}
 	local result = nil
 
 	if death then
@@ -442,7 +452,7 @@ function VehicleDamage:sync_damage_fire(attacker_unit, damage_percent, i_attack_
 
 		self:die(attack_data.variant)
 
-		local data = {
+		slot10 = {
 			variant = "fire",
 			head_shot = false,
 			name = self._unit:base()._tweak_table,
@@ -499,10 +509,12 @@ function VehicleDamage:damage_collision(attack_data)
 			return
 		end
 
-		local damage_info = {result = {
-			variant = "collision",
-			type = "hurt"
-		}}
+		local damage_info = {
+			result = {
+				variant = "collision",
+				type = "hurt"
+			}
+		}
 
 		if Global.god_mode then
 			if attack_data.damage > 0 then
@@ -692,4 +704,3 @@ function VehicleDamage:_health_recap()
 		self:die()
 	end
 end
-

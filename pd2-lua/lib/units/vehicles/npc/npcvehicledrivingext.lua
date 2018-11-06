@@ -221,6 +221,18 @@ function NpcVehicleDrivingExt:_display_debug_info()
 			}
 		}
 
+		if self._debug.nav_paths then
+			nav_paths.unit_id = self._debug.nav_paths.unit_id or ""
+			nav_paths.unit_name = self._debug.nav_paths.unit_name or ""
+			nav_paths.cop_path = self._debug.nav_paths.cop_path or ""
+			nav_paths.cop_target_path = self._debug.nav_paths.cop_target_path or ""
+			nav_paths.distance_to_player = self._debug.nav_paths.distance_to_player or 0
+			nav_paths.ai_cost = self._debug.nav_paths.ai_cost or {
+				cost = 0,
+				fps = 0
+			}
+		end
+
 		if self._current_state then
 			nav_paths.current_state = self._current_state:name() or "n/a"
 		end
@@ -288,10 +300,15 @@ function NpcVehicleDrivingExt:_choose_target_path_direction(player_path, target_
 		return
 	end
 
-	local distance_forward = (player_position - point_forward.point):length()
-	local distance_backward = (player_position - point_backward.point):length()
+	local distance_forward = player_position - point_forward.point:length()
+	local distance_backward = player_position - point_backward.point:length()
 	local retval = nil
-	retval = distance_forward <= distance_backward and "fwd" or "bck"
+
+	if distance_forward <= distance_backward then
+		retval = "fwd"
+	else
+		retval = "bck"
+	end
 
 	return retval
 end
@@ -310,7 +327,13 @@ function NpcVehicleDrivingExt:drive_to_point(cop_path, unit_and_pos, dt)
 	local profiler_name = "NpcVehicleDrivingExt:drive_to_point" .. unit_and_pos.unit
 	local profiler_id = Profiler:start(profiler_name)
 	local cop_points = nil
-	cop_points = (not unit_and_pos.direction or unit_and_pos.direction == "fwd") and cop_path.points or cop_path.points_bck
+
+	if not unit_and_pos.direction or unit_and_pos.direction == "fwd" then
+		cop_points = cop_path.points
+	else
+		cop_points = cop_path.points_bck
+	end
+
 	local target_path = nil
 	local player_unit = self:_get_target_unit()
 
@@ -358,7 +381,7 @@ function NpcVehicleDrivingExt:drive_to_point(cop_path, unit_and_pos, dt)
 	Profiler:stop(profiler_id)
 
 	local profiler_time = Profiler:counter_time(profiler_name)
-	local percentage_of_current_fps = (100 * profiler_time) / dt
+	local percentage_of_current_fps = 100 * profiler_time / dt
 
 	if self._debug then
 		self._debug.nav_paths.ai_cost = {
@@ -465,17 +488,25 @@ function NpcVehicleDrivingExt:_find_bridge(cop_path, target_path, unit_and_pos)
 	end
 
 	local point_id_in_direction = nil
-	point_id_in_direction = (not unit_and_pos.direction or unit_and_pos.direction == "fwd") and unit_and_pos.target_checkpoint or #cop_path.points - unit_and_pos.target_checkpoint + 1
+
+	if not unit_and_pos.direction or unit_and_pos.direction == "fwd" then
+		point_id_in_direction = unit_and_pos.target_checkpoint
+	else
+		point_id_in_direction = #cop_path.points - unit_and_pos.target_checkpoint + 1
+	end
+
 	local player_position = player_unit:position()
 	local cop_on_checkpoint = cop_path.marker_checkpoints[point_id_in_direction]
-	local min_distance_marker = {distance = 2000000}
+	local min_distance_marker = {
+		distance = 2000000
+	}
 
 	for marker_from, markers_to in pairs(bridges_to_target) do
 		for i, marker_to in ipairs(markers_to) do
 			if marker_from == cop_on_checkpoint then
 				local path_direction = self:_choose_target_path_direction(target_path, marker_to)
 				local marker_to_position = self:_get_marker_position(target_path, marker_to)
-				local distance_to_player = (marker_to_position - player_position):length()
+				local distance_to_player = marker_to_position - player_position:length()
 
 				if distance_to_player <= min_distance_marker.distance then
 					min_distance_marker.marker_to = marker_to
@@ -561,7 +592,9 @@ function NpcVehicleDrivingExt:_debug_show()
 	end
 
 	local debug_output_offset = managers.motion_path._debug_output_offset
-	self._debug = {ws = Overlay:newgui():create_screen_workspace()}
+	self._debug = {
+		ws = Overlay:newgui():create_screen_workspace()
+	}
 	self._debug.panel = self._debug.ws:panel()
 	self._debug.info = self._debug.panel:text({
 		text = "",
@@ -628,4 +661,3 @@ function NpcVehicleDrivingExt:set_state(new_state)
 		managers.network:session():send_to_peers_synched("sync_npc_vehicle_data", self._unit, self._current_state_name, self._target_unit)
 	end
 end
-

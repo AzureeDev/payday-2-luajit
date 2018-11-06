@@ -28,7 +28,9 @@ function NewNPCFlamethrowerBase:fire_blank(direction, impact)
 		self:play_tweak_data_sound("fire")
 	end
 
-	self._check_shooting_expired = {check_t = Application:time() + 0.3}
+	self._check_shooting_expired = {
+		check_t = Application:time() + 0.3
+	}
 
 	self._unit:set_extension_update_enabled(Idstring("base"), true)
 	self._unit:flamethrower_effect_extension():_spawn_muzzle_effect(self._obj_fire:position(), direction)
@@ -56,4 +58,3 @@ end
 function NewNPCFlamethrowerBase:third_person_important()
 	return NewFlamethrowerBase.third_person_important(self)
 end
-

@@ -18,7 +18,7 @@ function RepelRopeBase:update(unit, t, dt)
 		if prog > 1 then
 			unit:set_slot(0)
 		else
-			prog = prog ^ 3
+			prog = prog^3
 			local new_pos = self._tmp_vec3
 
 			self._unit:m_position(new_pos)
@@ -50,4 +50,3 @@ function RepelRopeBase:retract()
 		self._retract_duration = math.max(1, mvector3.distance(self._retract_pos, self._tmp_vec3)) / 600
 	end
 end
-

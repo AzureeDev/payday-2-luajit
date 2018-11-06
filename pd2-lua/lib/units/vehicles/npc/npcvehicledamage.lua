@@ -163,7 +163,9 @@ function NpcVehicleDamage:sync_damage_explosion(attacker_unit, damage_percent, i
 
 	local variant = "explosion"
 	local damage = damage_percent * self._HEALTH_INIT_PRECENT
-	local attack_data = {variant = variant}
+	local attack_data = {
+		variant = variant
+	}
 	local result = nil
 
 	if death then
@@ -174,7 +176,7 @@ function NpcVehicleDamage:sync_damage_explosion(attacker_unit, damage_percent, i
 
 		self:die(attack_data.variant)
 
-		local data = {
+		slot10 = {
 			variant = "explosion",
 			head_shot = false,
 			name = self._unit:base()._tweak_table,
@@ -274,7 +276,9 @@ function NpcVehicleDamage:sync_damage_fire(attacker_unit, damage_percent, i_atta
 
 	local variant = "fire"
 	local damage = damage_percent * self._HEALTH_INIT_PRECENT
-	local attack_data = {variant = variant}
+	local attack_data = {
+		variant = variant
+	}
 	local result = nil
 
 	if death then
@@ -285,7 +289,7 @@ function NpcVehicleDamage:sync_damage_fire(attacker_unit, damage_percent, i_atta
 
 		self:die(attack_data.variant)
 
-		local data = {
+		slot10 = {
 			variant = "fire",
 			head_shot = false,
 			name = self._unit:base()._tweak_table,
@@ -338,10 +342,12 @@ function NpcVehicleDamage:damage_collision(attack_data)
 			return
 		end
 
-		local damage_info = {result = {
-			variant = "collision",
-			type = "hurt"
-		}}
+		local damage_info = {
+			result = {
+				variant = "collision",
+				type = "hurt"
+			}
+		}
 		local damage = attack_data.damage
 		local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
 		damage = damage_percent * self._HEALTH_INIT_PRECENT
@@ -385,4 +391,3 @@ function NpcVehicleDamage:_health_recap()
 		self._unit:npc_vehicle_driving():on_vehicle_death()
 	end
 end
-

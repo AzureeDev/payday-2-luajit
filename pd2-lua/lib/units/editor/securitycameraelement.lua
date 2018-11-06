@@ -469,4 +469,3 @@ function SecurityCameraUnitElement:_align_camera_unit()
 
 	self._camera_u_data.unit:set_moving()
 end
-

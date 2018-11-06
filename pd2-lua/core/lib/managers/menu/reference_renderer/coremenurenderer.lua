@@ -38,7 +38,9 @@ function Renderer:init(logic, parameters)
 	self._fullscreen_ws:hide()
 
 	local safe_rect_pixels = managers.viewport:get_safe_rect_pixels()
-	self._main_panel = self.ws:panel():panel({layer = self._base_layer})
+	self._main_panel = self.ws:panel():panel({
+		layer = self._base_layer
+	})
 	self.safe_rect_panel = self.ws:panel():panel({
 		w = safe_rect_pixels.width,
 		h = safe_rect_pixels.height,
@@ -77,7 +79,12 @@ function Renderer:show_node(node, parameters)
 	end
 
 	local new_node_gui = nil
-	new_node_gui = parameters.node_gui_class and parameters.node_gui_class:new(node, layer + 1, parameters) or CoreMenuNodeGui.NodeGui:new(node, layer + 1, parameters)
+
+	if parameters.node_gui_class then
+		new_node_gui = parameters.node_gui_class:new(node, layer + 1, parameters)
+	else
+		new_node_gui = CoreMenuNodeGui.NodeGui:new(node, layer + 1, parameters)
+	end
 
 	table.insert(self._node_gui_stack, new_node_gui)
 
@@ -243,4 +250,3 @@ function Renderer:selected_node()
 
 	return stack[#stack]
 end
-

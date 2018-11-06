@@ -53,4 +53,3 @@ function SmokeScreenGrenade:update(unit, t, dt)
 
 	ProjectileBase.update(self, unit, t, dt)
 end
-

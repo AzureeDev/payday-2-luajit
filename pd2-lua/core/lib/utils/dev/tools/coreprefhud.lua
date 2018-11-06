@@ -184,6 +184,7 @@ function PrefHud:update_bars(t, dt)
 		self._prev_upd = self._prev_upd + dt
 	end
 end
+
 local ids_win32 = Idstring("WIN32")
 local ids_left_ctrl = Idstring("left ctrl")
 local ids_f1 = Idstring("f1")
@@ -209,4 +210,3 @@ function PrefHud:destroy()
 		Overlay:newgui():destroy_workspace(self._workspace)
 	end
 end
-

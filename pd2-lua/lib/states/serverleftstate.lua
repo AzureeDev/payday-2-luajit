@@ -22,6 +22,7 @@ function ServerLeftState:at_enter(...)
 	end
 
 	if managers.crime_spree:is_active() then
+		managers.system_menu:close("continue_crime_spree")
 		MenuCallbackHandler:create_server_left_crime_spree_dialog()
 	else
 		self:_create_server_left_dialog()
@@ -46,4 +47,3 @@ function ServerLeftState:on_server_left_ok_pressed()
 
 	self:_set_continue_button_text()
 end
-

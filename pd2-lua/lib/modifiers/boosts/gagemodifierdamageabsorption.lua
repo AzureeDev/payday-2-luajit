@@ -9,4 +9,3 @@ function GageModifierDamageAbsorption:modify_value(id, value)
 
 	return value
 end
-

@@ -17,7 +17,9 @@ function MotionpathMarkerUnitElement:init(unit)
 	self._hed.path_type = "airborne"
 	self._hed.marker_target_speed = 50
 	self._hed.bridges = {}
-	self._hed.markers = {units = {}}
+	self._hed.markers = {
+		units = {}
+	}
 	self._hed.path_id = nil
 	self._hed.motion_state = "move"
 
@@ -45,7 +47,9 @@ function MotionpathMarkerUnitElement:_add_text_options_from_file(path)
 end
 
 function MotionpathMarkerUnitElement:_add_wp_options()
-	self._text_options = {"debug_none"}
+	self._text_options = {
+		"debug_none"
+	}
 
 	self:_add_text_options_from_file("strings/system_text.strings")
 end
@@ -375,6 +379,7 @@ function MotionpathMarkerUnitElement:_build_panel(panel, panel_sizer)
 	add_marker_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "_add_marker_to_path"), nil)
 	self:_add_help_text("De Casteljau - Bezier spline end point and control point vector.")
 end
+
 local b2 = {
 	100,
 	500,
@@ -473,9 +478,11 @@ function MotionpathMarkerUnitElement:_recreate_motion_path(selected_unit, force_
 	local current_marker_unit = selected_unit
 	local parent_marker_unit = self:_get_unit(selected_unit:mission_element_data().markers.parent)
 
-	while parent_marker_unit and alive(parent_marker_unit) do
-		current_marker_unit = parent_marker_unit
-		parent_marker_unit = self:_get_unit(parent_marker_unit:mission_element_data().markers.parent)
+	if parent_marker_unit then
+		while parent_marker_unit and alive(parent_marker_unit) do
+			current_marker_unit = parent_marker_unit
+			parent_marker_unit = self:_get_unit(parent_marker_unit:mission_element_data().markers.parent)
+		end
 	end
 
 	MotionpathMarkerUnitElement._linked_markers = {}
@@ -487,14 +494,16 @@ function MotionpathMarkerUnitElement:_recreate_motion_path(selected_unit, force_
 	local child_marker_unit = self:_get_unit(current_marker_unit:mission_element_data().markers.child)
 	local last_child = current_marker_unit
 
-	while child_marker_unit and alive(child_marker_unit) do
-		local distance = mvector3.distance(last_child:position(), child_marker_unit:position())
-		path_length = path_length + distance
+	if child_marker_unit then
+		while child_marker_unit and alive(child_marker_unit) do
+			local distance = mvector3.distance(last_child:position(), child_marker_unit:position())
+			path_length = path_length + distance
 
-		table.insert(linked_markers, 1, child_marker_unit)
+			table.insert(linked_markers, 1, child_marker_unit)
 
-		last_child = child_marker_unit
-		child_marker_unit = self:_get_unit(child_marker_unit:mission_element_data().markers.child)
+			last_child = child_marker_unit
+			child_marker_unit = self:_get_unit(child_marker_unit:mission_element_data().markers.child)
+		end
 	end
 
 	local bline = {}
@@ -558,7 +567,12 @@ function MotionpathMarkerUnitElement:_recreate_motion_path(selected_unit, force_
 
 			for _, point in ipairs(self._bezier_points) do
 				current_z = current_z + z_step
-				final_speed = current_speed == -1 and -1 or (current_speed + speed_step) * 27.77
+
+				if current_speed == -1 then
+					final_speed = -1
+				else
+					final_speed = (current_speed + speed_step) * 27.77
+				end
 
 				table.insert(entire_path_points, {
 					point = point:with_z(current_z),
@@ -696,4 +710,3 @@ function MotionpathMarkerUnitElement:bez_draw(id, b, t)
 
 	return n1
 end
-

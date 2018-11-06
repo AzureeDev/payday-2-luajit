@@ -80,6 +80,7 @@ function EditUnitDialog:dialog_closed(data, event)
 
 	event:skip()
 end
+
 EditUnitBase = EditUnitBase or class()
 
 function EditUnitBase:init()
@@ -97,4 +98,3 @@ end
 function EditUnitBase:update_debug(ctrlr)
 	self._debug = ctrlr:get_value()
 end
-

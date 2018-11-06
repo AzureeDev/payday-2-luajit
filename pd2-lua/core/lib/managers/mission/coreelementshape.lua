@@ -67,4 +67,3 @@ end
 function ElementShape:load(data)
 	self:set_enabled(data.enabled)
 end
-

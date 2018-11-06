@@ -39,6 +39,7 @@ function VRFadeout:_add_setting_callback(setting_name, method)
 		clbk = clbk
 	})
 end
+
 local mvec_temp1 = Vector3()
 local mvec_temp2 = Vector3()
 local mvec_temp3 = Vector3()
@@ -192,7 +193,13 @@ local function fadeout_func_stepped(mover_position, head_position, rotation, slo
 	local separation = ghost_mover_separation(mover_position, head_position)
 
 	if separation < 1 then
-		separation = separation > 0.66 and 0.55 or separation > 0.33 and 0.35 or 0
+		if separation > 0.66 then
+			separation = 0.55
+		elseif separation > 0.33 then
+			separation = 0.35
+		else
+			separation = 0
+		end
 	end
 
 	fadeout = math.max(separation, fadeout)
@@ -312,4 +319,3 @@ function VRFadeout:update(mover_position, head_position, rotation, t, dt, ignore
 
 	return false
 end
-

@@ -34,7 +34,6 @@ function ElementPlaySound:on_executed(instigator)
 end
 
 function ElementPlaySound:_play_sound_on_elements()
-
 	local function f(unit)
 		if unit:id() ~= -1 then
 			unit:sound():say(self._values.sound_event, true, not self._values.append_prefix, true)
@@ -110,4 +109,3 @@ function ElementPlaySound:destroy()
 		self:sound_ended()
 	end
 end
-

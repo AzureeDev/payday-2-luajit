@@ -41,4 +41,3 @@ end
 function WeaponSimpleAnim:destroy(unit)
 	WeaponSimpleAnim.super.destroy(self, unit)
 end
-

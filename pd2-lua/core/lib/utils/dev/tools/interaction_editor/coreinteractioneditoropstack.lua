@@ -7,7 +7,11 @@ InteractionEditorOpStack = InteractionEditorOpStack or CoreClass.class()
 function InteractionEditorOpStack:init()
 	self._stack = {}
 	self._redo_stack = {}
-	self._ops = {save = {name = "save"}}
+	self._ops = {
+		save = {
+			name = "save"
+		}
+	}
 end
 
 function InteractionEditorOpStack:has_unsaved_changes()
@@ -31,7 +35,9 @@ end
 function InteractionEditorOpStack:new_op(name, ...)
 	table.insert(self._stack, {
 		op = assert(self._ops[name]),
-		params = {...}
+		params = {
+			...
+		}
 	})
 
 	self._redo_stack = {}
@@ -70,4 +76,3 @@ function InteractionEditorOpStack:redo()
 		end
 	end
 end
-

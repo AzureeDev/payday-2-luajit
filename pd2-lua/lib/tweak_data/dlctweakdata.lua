@@ -51,26 +51,31 @@ function DLCTweakData:init(tweak_data)
 			sft = true,
 			pim = true,
 			cash = true,
-			steel = true,
+			sdb = true,
 			bbq = true,
-			hlm2 = true,
+			ram = true,
 			jigg = 1,
 			season_pass = true,
 			gage_pack_snp = true,
 			dlc1 = true,
-			alienware_alpha = true,
-			humble_summer_2015 = 1,
-			speedrunners = 1,
+			ghm = true,
+			ssm = true,
+			steel = true,
 			pd2_million = true,
-			apa = true,
+			hlm2 = true,
 			mmh = true,
 			fgl = true,
 			pd2_hw_boxing = true,
+			speedrunners = 1,
 			infamous = 1,
 			pines = true,
+			alienware_alpha = true,
 			born = true,
+			humble_summer_2015 = 1,
+			khp = true,
 			trk = true,
 			pmp = true,
+			apa = true,
 			wmp = true,
 			opera = true,
 			pd2_goty = 1,
@@ -88,6 +93,7 @@ function DLCTweakData:init(tweak_data)
 			tng = true,
 			pal = true,
 			favorite = true,
+			ktm = true,
 			mad = true,
 			turtles = true,
 			gage_pack_jobs = false,
@@ -200,61 +206,79 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.starter_kit_mask.content.loot_global_value = "normal"
-	self.starter_kit_mask.content.loot_drops = {lootdrops}
-	self.pd2_clan = {content = {}}
-	self.pd2_clan.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "bear",
-		amount = 1
-	}}
+	self.starter_kit_mask.content.loot_drops = {
+		lootdrops
+	}
+	self.pd2_clan = {
+		content = {}
+	}
+	self.pd2_clan.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "bear",
+			amount = 1
+		}
+	}
 	self.pd2_clan2 = {
 		content = {},
 		dlc = "has_pd2_clan"
 	}
 	self.pd2_clan2.content.loot_global_value = "pd2_clan"
-	self.pd2_clan2.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_upg_fl_pis_tlr1",
-		amount = 1
-	}}
-	self.pd2_clan2.content.upgrades = {"usp"}
+	self.pd2_clan2.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_fl_pis_tlr1",
+			amount = 1
+		}
+	}
+	self.pd2_clan2.content.upgrades = {
+		"usp"
+	}
 	self.pd2_clan3 = {
 		content = {},
 		dlc = "has_pd2_clan"
 	}
 	self.pd2_clan3.content.loot_global_value = "pd2_clan"
-	self.pd2_clan3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "heat",
-		amount = 1
-	}}
+	self.pd2_clan3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "heat",
+			amount = 1
+		}
+	}
 	self.pd2_clan4 = {
 		content = {},
 		dlc = "has_pd2_clan"
 	}
 	self.pd2_clan4.content.loot_global_value = "pd2_clan"
-	self.pd2_clan4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "santa_happy",
-		amount = 1
-	}}
+	self.pd2_clan4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "santa_happy",
+			amount = 1
+		}
+	}
 	self.pd2_clan5 = {
 		content = {},
 		dlc = "has_pd2_clan"
 	}
 	self.pd2_clan5.content.loot_global_value = "pd2_clan"
 	self.pd2_clan5.content.loot_drops = {}
-	self.pd2_clan5.content.upgrades = {"brass_knuckles"}
+	self.pd2_clan5.content.upgrades = {
+		"brass_knuckles"
+	}
 	self.pd2_clan6 = {
 		content = {},
 		dlc = "has_pd2_clan"
 	}
 	self.pd2_clan6.content.loot_global_value = "pd2_clan"
-	self.pd2_clan6.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "unicorn",
-		amount = 1
-	}}
+	self.pd2_clan6.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "unicorn",
+			amount = 1
+		}
+	}
 	self.raidww2_clan_bundle = {
 		content = {},
 		dlc = "has_raidww2_clan"
@@ -329,7 +353,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.pd2_clan_johnwick.content.upgrades = {"kabartanto"}
+	self.pd2_clan_johnwick.content.upgrades = {
+		"kabartanto"
+	}
 	self.pd2_clan_crimefest_oct23 = {
 		content = {},
 		dlc = "has_pd2_clan"
@@ -369,7 +395,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.pd2_clan_lgl.content.upgrades = {"spas12"}
+	self.pd2_clan_lgl.content.upgrades = {
+		"spas12"
+	}
 	self.pd2_clan_hoxton = {
 		content = {},
 		dlc = "has_pd2_clan"
@@ -382,11 +410,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_bulldog_1.content.loot_global_value = "infamous"
-	self.ach_bulldog_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "old_hoxton",
-		amount = 1
-	}}
+	self.ach_bulldog_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "old_hoxton",
+			amount = 1
+		}
+	}
 	self.freed_old_hoxton = {
 		dlc = "has_freed_old_hoxton",
 		achievement_id = "bulldog_1",
@@ -394,7 +424,9 @@ function DLCTweakData:init(tweak_data)
 	}
 	self.freed_old_hoxton.content.loot_global_value = "pd2_clan"
 	self.freed_old_hoxton.content.loot_drops = {}
-	self.freed_old_hoxton.content.upgrades = {"toothbrush"}
+	self.freed_old_hoxton.content.upgrades = {
+		"toothbrush"
+	}
 	self.crimefest2_u2 = {
 		content = {},
 		free = true
@@ -454,11 +486,13 @@ function DLCTweakData:init(tweak_data)
 		free = true
 	}
 	self.crimefest2_rave.content.loot_global_value = "normal"
-	self.crimefest2_rave.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "lcv",
-		amount = 1
-	}}
+	self.crimefest2_rave.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "lcv",
+			amount = 1
+		}
+	}
 	self.crimefest2_u8 = {
 		content = {},
 		free = true
@@ -509,54 +543,64 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_brooklyn_1.content.loot_global_value = "normal"
-	self.ach_brooklyn_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "baitface",
-		amount = 1
-	}}
+	self.ach_brooklyn_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "baitface",
+			amount = 1
+		}
+	}
 	self.ach_brooklyn_2 = {
 		dlc = "has_achievement",
 		achievement_id = "brooklyn_2",
 		content = {}
 	}
 	self.ach_brooklyn_2.content.loot_global_value = "normal"
-	self.ach_brooklyn_2.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "nomegusta",
-		amount = 1
-	}}
+	self.ach_brooklyn_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "nomegusta",
+			amount = 1
+		}
+	}
 	self.ach_brooklyn_3 = {
 		dlc = "has_achievement",
 		achievement_id = "brooklyn_3",
 		content = {}
 	}
 	self.ach_brooklyn_3.content.loot_global_value = "normal"
-	self.ach_brooklyn_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "rageface",
-		amount = 1
-	}}
+	self.ach_brooklyn_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "rageface",
+			amount = 1
+		}
+	}
 	self.ach_brooklyn_4 = {
 		dlc = "has_achievement",
 		achievement_id = "brooklyn_4",
 		content = {}
 	}
 	self.ach_brooklyn_4.content.loot_global_value = "normal"
-	self.ach_brooklyn_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "dawg",
-		amount = 1
-	}}
+	self.ach_brooklyn_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dawg",
+			amount = 1
+		}
+	}
 	self.pd2_clan_bonnie = {
 		content = {},
 		dlc = "has_pd2_clan"
 	}
 	self.pd2_clan_bonnie.content.loot_global_value = "infamous"
-	self.pd2_clan_bonnie.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "bonnie",
-		amount = 1
-	}}
+	self.pd2_clan_bonnie.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "bonnie",
+			amount = 1
+		}
+	}
 	self.preorder = {
 		content = {},
 		content_on_consoles = true
@@ -588,7 +632,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.preorder.content.upgrades = {"player_crime_net_deal"}
+	self.preorder.content.upgrades = {
+		"player_crime_net_deal"
+	}
 
 	if SystemInfo:platform() == Idstring("PS4") then
 		table.insert(self.preorder.content.loot_drops, {
@@ -604,10 +650,16 @@ function DLCTweakData:init(tweak_data)
 		})
 	end
 
-	self.cce = {content = {}}
+	self.cce = {
+		content = {}
+	}
 	self.cce.content.loot_drops = {}
-	self.cce.content.upgrades = {"player_crime_net_deal_2"}
-	self.soundtrack = {content = {}}
+	self.cce.content.upgrades = {
+		"player_crime_net_deal_2"
+	}
+	self.soundtrack = {
+		content = {}
+	}
 	self.soundtrack.content.loot_drops = {}
 	self.poetry_soundtrack = {
 		dlc = "has_soundtrack_or_cce",
@@ -681,22 +733,26 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_lab_1.content.loot_global_value = "halloween"
-	self.ach_lab_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "invader",
-		amount = 1
-	}}
+	self.ach_lab_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "invader",
+			amount = 1
+		}
+	}
 	self.ach_lab_2 = {
 		dlc = "has_achievement",
 		achievement_id = "lab_2",
 		content = {}
 	}
 	self.ach_lab_2.content.loot_global_value = "halloween"
-	self.ach_lab_2.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "satan",
-		amount = 1
-	}}
+	self.ach_lab_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "satan",
+			amount = 1
+		}
+	}
 	self.free_halloween_textures = {
 		free = true,
 		content = {}
@@ -740,45 +796,55 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.halloween_nightmare_1.content.loot_global_value = "halloween"
-	self.halloween_nightmare_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "baby_happy",
-		amount = 1
-	}}
+	self.halloween_nightmare_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "baby_happy",
+			amount = 1
+		}
+	}
 	self.halloween_nightmare_2 = {
 		dlc = "has_achievement",
 		achievement_id = "halloween_nightmare_2",
 		content = {}
 	}
 	self.halloween_nightmare_2.content.loot_global_value = "halloween"
-	self.halloween_nightmare_2.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "brazil_baby",
-		amount = 1
-	}}
+	self.halloween_nightmare_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "brazil_baby",
+			amount = 1
+		}
+	}
 	self.halloween_nightmare_3 = {
 		dlc = "has_achievement",
 		achievement_id = "halloween_nightmare_3",
 		content = {}
 	}
 	self.halloween_nightmare_3.content.loot_global_value = "halloween"
-	self.halloween_nightmare_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "baby_angry",
-		amount = 1
-	}}
+	self.halloween_nightmare_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "baby_angry",
+			amount = 1
+		}
+	}
 	self.halloween_nightmare_4 = {
 		dlc = "has_achievement",
 		achievement_id = "halloween_nightmare_4",
 		content = {}
 	}
 	self.halloween_nightmare_4.content.loot_global_value = "halloween"
-	self.halloween_nightmare_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "baby_cry",
-		amount = 1
-	}}
-	self.armored_transport = {content = {}}
+	self.halloween_nightmare_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "baby_cry",
+			amount = 1
+		}
+	}
+	self.armored_transport = {
+		content = {}
+	}
 	self.armored_transport.content.loot_drops = {
 		{
 			{
@@ -858,7 +924,9 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.armored_transport_intel.content.loot_drops = {}
-	self.gage_pack = {content = {}}
+	self.gage_pack = {
+		content = {}
+	}
 	self.gage_pack.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -949,14 +1017,18 @@ function DLCTweakData:init(tweak_data)
 			content = {}
 		}
 		self.gage_pack_shotgun_free.content.loot_global_value = "normal"
-		self.gage_pack_shotgun_free.content.loot_drops = {{
-			type_items = "weapon_mods",
-			item_entry = "wpn_fps_upg_a_custom_free",
-			amount = 2
-		}}
+		self.gage_pack_shotgun_free.content.loot_drops = {
+			{
+				type_items = "weapon_mods",
+				item_entry = "wpn_fps_upg_a_custom_free",
+				amount = 2
+			}
+		}
 	end
 
-	self.gage_pack_shotgun = {content = {}}
+	self.gage_pack_shotgun = {
+		content = {}
+	}
 	self.gage_pack_shotgun.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -985,11 +1057,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_gage4_2.content.loot_global_value = "gage_pack_shotgun"
-	self.ach_gage4_2.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_upg_o_mbus_rear",
-		amount = 1
-	}}
+	self.ach_gage4_2.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_o_mbus_rear",
+			amount = 1
+		}
+	}
 	self.ach_gage4_4 = {
 		dlc = "has_achievement",
 		achievement_id = "gage4_4",
@@ -1024,33 +1098,39 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_gage4_5.content.loot_global_value = "gage_pack_shotgun"
-	self.ach_gage4_5.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_sho_ben_b_long",
-		amount = 1
-	}}
+	self.ach_gage4_5.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_ben_b_long",
+			amount = 1
+		}
+	}
 	self.ach_gage4_6 = {
 		dlc = "has_achievement",
 		achievement_id = "gage4_6",
 		content = {}
 	}
 	self.ach_gage4_6.content.loot_global_value = "gage_pack_shotgun"
-	self.ach_gage4_6.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_sho_ben_s_collapsed",
-		amount = 1
-	}}
+	self.ach_gage4_6.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_ben_s_collapsed",
+			amount = 1
+		}
+	}
 	self.ach_gage4_7 = {
 		dlc = "has_achievement",
 		achievement_id = "gage4_7",
 		content = {}
 	}
 	self.ach_gage4_7.content.loot_global_value = "gage_pack_shotgun"
-	self.ach_gage4_7.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_sho_ksg_b_short",
-		amount = 1
-	}}
+	self.ach_gage4_7.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_ksg_b_short",
+			amount = 1
+		}
+	}
 	self.ach_gage4_8 = {
 		dlc = "has_achievement",
 		achievement_id = "gage4_8",
@@ -1085,11 +1165,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_gage4_9.content.loot_global_value = "gage_pack_shotgun"
-	self.ach_gage4_9.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_sho_ben_s_solid",
-		amount = 1
-	}}
+	self.ach_gage4_9.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_ben_s_solid",
+			amount = 1
+		}
+	}
 	self.ach_gage4_10 = {
 		dlc = "has_achievement",
 		achievement_id = "gage4_10",
@@ -1146,7 +1228,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.gage_pack_assault = {content = {}}
+	self.gage_pack_assault = {
+		content = {}
+	}
 	self.gage_pack_assault.content.loot_drops = {}
 	self.ach_gage5_1 = {
 		dlc = "has_achievement",
@@ -1428,7 +1512,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.gage_pack_lmg = {content = {}}
+	self.gage_pack_lmg = {
+		content = {}
+	}
 	self.gage_pack_lmg.content.loot_drops = {
 		{
 			{
@@ -1501,7 +1587,9 @@ function DLCTweakData:init(tweak_data)
 		"rpk",
 		"kabar"
 	}
-	self.gage_pack_snp = {content = {}}
+	self.gage_pack_snp = {
+		content = {}
+	}
 	self.gage_pack_snp.content.loot_drops = {}
 	self.gage_pack_snp.content.upgrades = {}
 	self.ach_gage3_3 = {
@@ -1602,122 +1690,146 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_gage3_7.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_7.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_m95_barrel_long",
-		amount = 1
-	}}
+	self.ach_gage3_7.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_m95_barrel_long",
+			amount = 1
+		}
+	}
 	self.ach_gage3_8 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_8",
 		content = {}
 	}
 	self.ach_gage3_8.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_8.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_r93_b_suppressed",
-		amount = 1
-	}}
+	self.ach_gage3_8.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_r93_b_suppressed",
+			amount = 1
+		}
+	}
 	self.ach_gage3_9 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_9",
 		content = {}
 	}
 	self.ach_gage3_9.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_9.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_upg_o_45iron",
-		amount = 1
-	}}
+	self.ach_gage3_9.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_o_45iron",
+			amount = 1
+		}
+	}
 	self.ach_gage3_10 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_10",
 		content = {}
 	}
 	self.ach_gage3_10.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_10.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_r93_b_short",
-		amount = 1
-	}}
+	self.ach_gage3_10.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_r93_b_short",
+			amount = 1
+		}
+	}
 	self.ach_gage3_11 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_11",
 		content = {}
 	}
 	self.ach_gage3_11.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_11.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_m95_barrel_suppressed",
-		amount = 1
-	}}
+	self.ach_gage3_11.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_m95_barrel_suppressed",
+			amount = 1
+		}
+	}
 	self.ach_gage3_12 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_12",
 		content = {}
 	}
 	self.ach_gage3_12.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_12.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_m95_barrel_short",
-		amount = 1
-	}}
+	self.ach_gage3_12.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_m95_barrel_short",
+			amount = 1
+		}
+	}
 	self.ach_gage3_13 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_13",
 		content = {}
 	}
 	self.ach_gage3_13.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_13.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_upg_o_leupold",
-		amount = 1
-	}}
+	self.ach_gage3_13.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_o_leupold",
+			amount = 1
+		}
+	}
 	self.ach_gage3_14 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_14",
 		content = {}
 	}
 	self.ach_gage3_14.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_14.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_msr_body_msr",
-		amount = 1
-	}}
+	self.ach_gage3_14.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_msr_body_msr",
+			amount = 1
+		}
+	}
 	self.ach_gage3_15 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_15",
 		content = {}
 	}
 	self.ach_gage3_15.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_15.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_r93_body_wood",
-		amount = 1
-	}}
+	self.ach_gage3_15.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_r93_body_wood",
+			amount = 1
+		}
+	}
 	self.ach_gage3_16 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_16",
 		content = {}
 	}
 	self.ach_gage3_16.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_16.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_msr_ns_suppressor",
-		amount = 1
-	}}
+	self.ach_gage3_16.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_msr_ns_suppressor",
+			amount = 1
+		}
+	}
 	self.ach_gage3_17 = {
 		dlc = "has_achievement",
 		achievement_id = "gage3_17",
 		content = {}
 	}
 	self.ach_gage3_17.content.loot_global_value = "gage_pack_snp"
-	self.ach_gage3_17.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_snp_msr_b_long",
-		amount = 1
-	}}
-	self.big_bank = {content = {}}
+	self.ach_gage3_17.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_msr_b_long",
+			amount = 1
+		}
+	}
+	self.big_bank = {
+		content = {}
+	}
 	self.big_bank.content.loot_drops = {}
 	self.ach_bigbank_1 = {
 		dlc = "has_achievement",
@@ -1809,22 +1921,26 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_bigbank_4.content.loot_global_value = "big_bank"
-	self.ach_bigbank_4.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_ass_fal_fg_wood",
-		amount = 1
-	}}
+	self.ach_bigbank_4.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_fal_fg_wood",
+			amount = 1
+		}
+	}
 	self.ach_bigbank_5 = {
 		dlc = "has_achievement",
 		achievement_id = "bigbank_5",
 		content = {}
 	}
 	self.ach_bigbank_5.content.loot_global_value = "big_bank"
-	self.ach_bigbank_5.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_ass_fal_s_01",
-		amount = 1
-	}}
+	self.ach_bigbank_5.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_fal_s_01",
+			amount = 1
+		}
+	}
 	self.ach_bigbank_6 = {
 		dlc = "has_achievement",
 		achievement_id = "bigbank_6",
@@ -1859,129 +1975,155 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_bigbank_7.content.loot_global_value = "big_bank"
-	self.ach_bigbank_7.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_ass_fal_fg_01",
-		amount = 1
-	}}
+	self.ach_bigbank_7.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_fal_fg_01",
+			amount = 1
+		}
+	}
 	self.ach_bigbank_8 = {
 		dlc = "has_achievement",
 		achievement_id = "bigbank_8",
 		content = {}
 	}
 	self.ach_bigbank_8.content.loot_global_value = "big_bank"
-	self.ach_bigbank_8.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_ass_fal_fg_03",
-		amount = 1
-	}}
+	self.ach_bigbank_8.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_fal_fg_03",
+			amount = 1
+		}
+	}
 	self.ach_bigbank_10 = {
 		dlc = "has_achievement",
 		achievement_id = "bigbank_10",
 		content = {}
 	}
 	self.ach_bigbank_10.content.loot_global_value = "big_bank"
-	self.ach_bigbank_10.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_ass_fal_s_03",
-		amount = 1
-	}}
+	self.ach_bigbank_10.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_fal_s_03",
+			amount = 1
+		}
+	}
 	self.skull_mask_1 = {
 		dlc = "has_achievement",
 		achievement_id = "death_27",
 		content = {}
 	}
 	self.skull_mask_1.content.loot_global_value = "infamous"
-	self.skull_mask_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "skullhard",
-		amount = 1
-	}}
+	self.skull_mask_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "skullhard",
+			amount = 1
+		}
+	}
 	self.skull_mask_2 = {
 		dlc = "has_achievement",
 		achievement_id = "death_28",
 		content = {}
 	}
 	self.skull_mask_2.content.loot_global_value = "infamous"
-	self.skull_mask_2.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "skullveryhard",
-		amount = 1
-	}}
+	self.skull_mask_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "skullveryhard",
+			amount = 1
+		}
+	}
 	self.skull_mask_3 = {
 		dlc = "has_achievement",
 		achievement_id = "death_29",
 		content = {}
 	}
 	self.skull_mask_3.content.loot_global_value = "infamous"
-	self.skull_mask_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "skulloverkill",
-		amount = 1
-	}}
+	self.skull_mask_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "skulloverkill",
+			amount = 1
+		}
+	}
 	self.skull_mask_31 = {
 		dlc = "has_achievement",
 		achievement_id = "pick_66",
 		content = {}
 	}
 	self.skull_mask_31.content.loot_global_value = "infamous"
-	self.skull_mask_31.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "gitgud_e_wish",
-		amount = 1
-	}}
+	self.skull_mask_31.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "gitgud_e_wish",
+			amount = 1
+		}
+	}
 	self.skull_mask_4 = {
 		dlc = "has_achievement",
 		achievement_id = "death_30",
 		content = {}
 	}
 	self.skull_mask_4.content.loot_global_value = "infamous"
-	self.skull_mask_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "skulloverkillplus",
-		amount = 1
-	}}
+	self.skull_mask_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "skulloverkillplus",
+			amount = 1
+		}
+	}
 	self.skull_mask_41 = {
 		dlc = "has_achievement",
 		achievement_id = "axe_66",
 		content = {}
 	}
 	self.skull_mask_41.content.loot_global_value = "infamous"
-	self.skull_mask_41.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "gitgud_sm_wish",
-		amount = 1
-	}}
+	self.skull_mask_41.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "gitgud_sm_wish",
+			amount = 1
+		}
+	}
 	self.charliesierra = {
 		content = {},
 		free = true
 	}
 	self.charliesierra.content.loot_global_value = "normal"
-	self.charliesierra.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_upg_o_acog",
-		amount = 1
-	}}
-	self.xmas_soundtrack = {content = {}}
-	self.xmas_soundtrack.content.loot_drops = {{
+	self.charliesierra.content.loot_drops = {
 		{
-			type_items = "masks",
-			item_entry = "santa_mad",
-			amount = 1
-		},
-		{
-			type_items = "masks",
-			item_entry = "santa_drunk",
-			amount = 1
-		},
-		{
-			type_items = "masks",
-			item_entry = "santa_surprise",
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_o_acog",
 			amount = 1
 		}
-	}}
+	}
+	self.xmas_soundtrack = {
+		content = {}
+	}
+	self.xmas_soundtrack.content.loot_drops = {
+		{
+			{
+				type_items = "masks",
+				item_entry = "santa_mad",
+				amount = 1
+			},
+			{
+				type_items = "masks",
+				item_entry = "santa_drunk",
+				amount = 1
+			},
+			{
+				type_items = "masks",
+				item_entry = "santa_surprise",
+				amount = 1
+			}
+		}
+	}
 	self.gage_pack_jobs = {}
-	self.gage_pack_jobs = {content = {}}
+	self.gage_pack_jobs = {
+		content = {}
+	}
 	self.gage_pack_jobs.content.loot_drops = {}
 	self.kosugi_4 = {
 		dlc = "has_achievement",
@@ -1989,12 +2131,16 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.kosugi_4.content.loot_global_value = "infamous"
-	self.kosugi_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "samurai",
-		amount = 1
-	}}
-	self.twitch_pack = {content = {}}
+	self.kosugi_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "samurai",
+			amount = 1
+		}
+	}
+	self.twitch_pack = {
+		content = {}
+	}
 	self.twitch_pack.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -2024,7 +2170,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.humble_pack2 = {content = {}}
+	self.humble_pack2 = {
+		content = {}
+	}
 	self.humble_pack2.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -2037,7 +2185,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.humble_pack3 = {content = {}}
+	self.humble_pack3 = {
+		content = {}
+	}
 	self.humble_pack3.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -2050,7 +2200,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.humble_pack4 = {content = {}}
+	self.humble_pack4 = {
+		content = {}
+	}
 	self.humble_pack4.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -2063,39 +2215,63 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.e3_s15a = {content = {}}
-	self.e3_s15a.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "card_jack",
-		amount = 1
-	}}
-	self.e3_s15b = {content = {}}
-	self.e3_s15b.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "card_queen",
-		amount = 1
-	}}
-	self.e3_s15c = {content = {}}
-	self.e3_s15c.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "card_king",
-		amount = 1
-	}}
-	self.e3_s15d = {content = {}}
-	self.e3_s15d.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "card_joker",
-		amount = 1
-	}}
-	self.sweettooth = {content = {}}
-	self.sweettooth.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "sweettooth",
-		amount = 1
-	}}
-	self.hl_miami = {content = {}}
+	self.e3_s15a = {
+		content = {}
+	}
+	self.e3_s15a.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "card_jack",
+			amount = 1
+		}
+	}
+	self.e3_s15b = {
+		content = {}
+	}
+	self.e3_s15b.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "card_queen",
+			amount = 1
+		}
+	}
+	self.e3_s15c = {
+		content = {}
+	}
+	self.e3_s15c.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "card_king",
+			amount = 1
+		}
+	}
+	self.e3_s15d = {
+		content = {}
+	}
+	self.e3_s15d.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "card_joker",
+			amount = 1
+		}
+	}
+	self.sweettooth = {
+		content = {}
+	}
+	self.sweettooth.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "sweettooth",
+			amount = 1
+		}
+	}
+	self.hl_miami = {
+		content = {}
+	}
 	self.hl_miami.content.loot_drops = {}
-	self.hlm_game = {content = {}}
+	self.hlm_game = {
+		content = {}
+	}
 	self.hlm_game.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -2158,7 +2334,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.hlm_game.content.upgrades = {"briefcase"}
+	self.hlm_game.content.upgrades = {
+		"briefcase"
+	}
 	self.ach_miami_2 = {
 		dlc = "has_achievement",
 		achievement_id = "pig_2",
@@ -2534,7 +2712,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.gage_pack_historical = {content = {}}
+	self.gage_pack_historical = {
+		content = {}
+	}
 	self.gage_pack_historical.content.loot_global_value = "gage_pack_historical"
 	self.gage_pack_historical.content.loot_drops = {
 		{
@@ -2548,10 +2728,14 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.gage_pack_historical.content.upgrades = {"swagger"}
+	self.gage_pack_historical.content.upgrades = {
+		"swagger"
+	}
 
 	if SystemInfo:distribution() == Idstring("STEAM") then
-		self.alienware_alpha = {content = {}}
+		self.alienware_alpha = {
+			content = {}
+		}
 		self.alienware_alpha.content.loot_drops = {
 			{
 				type_items = "masks",
@@ -2564,94 +2748,116 @@ function DLCTweakData:init(tweak_data)
 				amount = 1
 			}
 		}
-		self.alienware_alpha_promo = {content = {}}
+		self.alienware_alpha_promo = {
+			content = {}
+		}
 		self.alienware_alpha_promo.content.loot_drops = {}
-		self.alienware_alpha_promo.content.upgrades = {"alien_maul"}
+		self.alienware_alpha_promo.content.upgrades = {
+			"alien_maul"
+		}
 	end
 
 	self.goty_weapon_bundle_2014 = {
 		dlc = "has_goty_weapon_bundle_2014",
 		content = {}
 	}
-	self.goty_weapon_bundle_2014.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "robo_arnold",
-		amount = 1
-	}}
+	self.goty_weapon_bundle_2014.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "robo_arnold",
+			amount = 1
+		}
+	}
 	self.goty_heist_bundle_2014 = {
 		dlc = "has_goty_heist_bundle_2014",
 		content = {}
 	}
-	self.goty_heist_bundle_2014.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "nun_town",
-		amount = 1
-	}}
+	self.goty_heist_bundle_2014.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "nun_town",
+			amount = 1
+		}
+	}
 	self.goty_dlc_bundle_2014 = {
 		dlc = "has_goty_all_dlc_bundle_2014",
 		content = {}
 	}
-	self.goty_dlc_bundle_2014.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "arch_nemesis",
-		amount = 1
-	}}
+	self.goty_dlc_bundle_2014.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "arch_nemesis",
+			amount = 1
+		}
+	}
 	self.ach_deer_1 = {
 		dlc = "has_achievement",
 		achievement_id = "deer_1",
 		content = {}
 	}
 	self.ach_deer_1.content.loot_global_value = "normal"
-	self.ach_deer_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "mrs_claus",
-		amount = 1
-	}}
+	self.ach_deer_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "mrs_claus",
+			amount = 1
+		}
+	}
 	self.ach_deer_2 = {
 		dlc = "has_achievement",
 		achievement_id = "deer_2",
 		content = {}
 	}
 	self.ach_deer_2.content.loot_global_value = "normal"
-	self.ach_deer_2.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "strinch",
-		amount = 1
-	}}
+	self.ach_deer_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "strinch",
+			amount = 1
+		}
+	}
 	self.ach_deer_3 = {
 		dlc = "has_achievement",
 		achievement_id = "deer_3",
 		content = {}
 	}
 	self.ach_deer_3.content.loot_global_value = "normal"
-	self.ach_deer_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "krampus",
-		amount = 1
-	}}
+	self.ach_deer_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "krampus",
+			amount = 1
+		}
+	}
 	self.ach_deer_4 = {
 		dlc = "has_achievement",
 		achievement_id = "deer_4",
 		content = {}
 	}
 	self.ach_deer_4.content.loot_global_value = "normal"
-	self.ach_deer_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "robo_santa",
-		amount = 1
-	}}
+	self.ach_deer_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "robo_santa",
+			amount = 1
+		}
+	}
 	self.ach_deer_6 = {
 		dlc = "has_achievement",
 		achievement_id = "deer_6",
 		content = {}
 	}
 	self.ach_deer_6.content.loot_global_value = "normal"
-	self.ach_deer_6.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "almirs_beard",
-		amount = 1
-	}}
-	self.character_pack_clover = {content = {}}
+	self.ach_deer_6.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "almirs_beard",
+			amount = 1
+		}
+	}
+	self.character_pack_clover = {
+		content = {}
+	}
 	self.character_pack_clover.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -2686,7 +2892,9 @@ function DLCTweakData:init(tweak_data)
 			}
 		}
 	}
-	self.hope_diamond = {content = {}}
+	self.hope_diamond = {
+		content = {}
+	}
 	self.hope_diamond.content.loot_drops = {}
 	self.ach_bat_2 = {
 		dlc = "has_achievement",
@@ -2780,7 +2988,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.the_bomb = {content = {}}
+	self.the_bomb = {
+		content = {}
+	}
 	self.the_bomb.content.loot_drops = {}
 	self.ach_cow_3 = {
 		dlc = "has_achievement",
@@ -2880,34 +3090,42 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_cow_9.content.loot_global_value = "the_bomb"
-	self.ach_cow_9.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_pis_hs2000_m_extended",
-		amount = 1
-	}}
+	self.ach_cow_9.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_hs2000_m_extended",
+			amount = 1
+		}
+	}
 	self.ach_cow_10 = {
 		dlc = "has_achievement",
 		achievement_id = "cow_10",
 		content = {}
 	}
 	self.ach_cow_10.content.loot_global_value = "the_bomb"
-	self.ach_cow_10.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_pis_hs2000_sl_long",
-		amount = 1
-	}}
+	self.ach_cow_10.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_hs2000_sl_long",
+			amount = 1
+		}
+	}
 	self.ach_cow_11 = {
 		dlc = "has_achievement",
 		achievement_id = "cow_11",
 		content = {}
 	}
 	self.ach_cow_11.content.loot_global_value = "the_bomb"
-	self.ach_cow_11.content.loot_drops = {{
-		type_items = "weapon_mods",
-		item_entry = "wpn_fps_pis_hs2000_sl_custom",
-		amount = 1
-	}}
-	self.akm4_pack = {content = {}}
+	self.ach_cow_11.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_hs2000_sl_custom",
+			amount = 1
+		}
+	}
+	self.akm4_pack = {
+		content = {}
+	}
 	self.akm4_pack.content.loot_drops = {}
 	self.ach_ameno_1 = {
 		dlc = "has_achievement",
@@ -3234,24 +3452,32 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.character_pack_dragan = {content = {}}
-	self.character_pack_dragan.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "dragan",
-		amount = 1
-	}}
+	self.character_pack_dragan = {
+		content = {}
+	}
+	self.character_pack_dragan.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dragan",
+			amount = 1
+		}
+	}
 	self.ach_gorilla_1 = {
 		dlc = "has_achievement",
 		achievement_id = "gorilla_1",
 		content = {}
 	}
 	self.ach_gorilla_1.content.loot_global_value = "normal"
-	self.ach_gorilla_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "champion_dallas",
-		amount = 1
-	}}
-	self.overkill_pack = {content = {}}
+	self.ach_gorilla_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "champion_dallas",
+			amount = 1
+		}
+	}
+	self.overkill_pack = {
+		content = {}
+	}
 	self.overkill_pack.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -3274,7 +3500,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.complete_overkill_pack = {content = {}}
+	self.complete_overkill_pack = {
+		content = {}
+	}
 	self.complete_overkill_pack.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -3421,12 +3649,16 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_fort_4.content.loot_global_value = "normal"
-	self.ach_fort_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "simpson",
-		amount = 1
-	}}
-	self.speedrunners = {content = {}}
+	self.ach_fort_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "simpson",
+			amount = 1
+		}
+	}
+	self.speedrunners = {
+		content = {}
+	}
 	self.speedrunners.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -3455,12 +3687,16 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_payback_3.content.loot_global_value = "infamous"
-	self.ach_payback_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "hectors_helmet",
-		amount = 1
-	}}
-	self.bbq = {content = {}}
+	self.ach_payback_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "hectors_helmet",
+			amount = 1
+		}
+	}
+	self.bbq = {
+		content = {}
+	}
 	self.bbq.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -3600,7 +3836,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.west = {content = {}}
+	self.west = {
+		content = {}
+	}
 	self.west.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -3741,12 +3979,16 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_melt_3.content.loot_global_value = "infamous"
-	self.ach_melt_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "grendel",
-		amount = 1
-	}}
-	self.arena = {content = {}}
+	self.ach_melt_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "grendel",
+			amount = 1
+		}
+	}
+	self.arena = {
+		content = {}
+	}
 	self.arena.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -3861,7 +4103,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.character_pack_sokol = {content = {}}
+	self.character_pack_sokol = {
+		content = {}
+	}
 	self.character_pack_sokol.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -3879,7 +4123,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.kenaz = {content = {}}
+	self.kenaz = {
+		content = {}
+	}
 	self.kenaz.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -3989,7 +4235,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.turtles = {content = {}}
+	self.turtles = {
+		content = {}
+	}
 	self.turtles.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -4168,7 +4416,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.dragon = {content = {}}
+	self.dragon = {
+		content = {}
+	}
 	self.dragon.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -4206,11 +4456,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.dragon_maskfix.content.loot_global_value = "dragon"
-	self.dragon_maskfix.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "jiro",
-		amount = 1
-	}}
+	self.dragon_maskfix.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "jiro",
+			amount = 1
+		}
+	}
 	self.steel_free = {
 		free = true,
 		content = {}
@@ -4455,33 +4707,39 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.tormentor_mask.content.loot_global_value = "normal"
-	self.tormentor_mask.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "tormentor",
-		amount = 1
-	}}
+	self.tormentor_mask.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "tormentor",
+			amount = 1
+		}
+	}
 	self.ach_cane_3 = {
 		dlc = "has_achievement",
 		achievement_id = "cane_3",
 		content = {}
 	}
 	self.ach_cane_3.content.loot_global_value = "normal"
-	self.ach_cane_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "rudeolph",
-		amount = 1
-	}}
+	self.ach_cane_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "rudeolph",
+			amount = 1
+		}
+	}
 	self.ach_cane_4 = {
 		dlc = "has_achievement",
 		achievement_id = "cane_4",
 		content = {}
 	}
 	self.ach_cane_4.content.loot_global_value = "normal"
-	self.ach_cane_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "greedy_the_elf",
-		amount = 1
-	}}
+	self.ach_cane_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "greedy_the_elf",
+			amount = 1
+		}
+	}
 	self.ach_peta_2 = {
 		dlc = "has_achievement",
 		achievement_id = "peta_2",
@@ -4666,12 +4924,16 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.coco = {content = {}}
-	self.coco.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "jimmy_duct",
-		amount = 1
-	}}
+	self.coco = {
+		content = {}
+	}
+	self.coco.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "jimmy_duct",
+			amount = 1
+		}
+	}
 	self.coco.free = true
 	self.coco.content.loot_global_value = "infamous"
 	self.mad = {
@@ -4784,7 +5046,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.pim = {content = {}}
+	self.pim = {
+		content = {}
+	}
 	self.pim.content.loot_drops = {
 		{
 			type_items = "weapon_mods",
@@ -4939,7 +5203,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.opera = {content = {}}
+	self.opera = {
+		content = {}
+	}
 	self.opera.content.loot_global_value = "opera"
 	self.opera.content.loot_drops = {
 		{
@@ -4965,7 +5231,9 @@ function DLCTweakData:init(tweak_data)
 	self.dos.content.loot_global_value = "normal"
 	self.dos.content.loot_drops = {}
 	self.dos.content.upgrades = {}
-	self.jigg = {content = {}}
+	self.jigg = {
+		content = {}
+	}
 	self.jigg.content.loot_drops = {
 		{
 			type_items = "masks",
@@ -4983,7 +5251,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.dbd_clan = {content = {}}
+	self.dbd_clan = {
+		content = {}
+	}
 	self.dbd_clan.content.loot_drops = {}
 	self.dbd_clan_award = {
 		dlc = "has_dbd_clan",
@@ -5018,72 +5288,98 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.pdcon_2015 = {content = {}}
-	self.pdcon_2015.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "king_of_jesters",
-		amount = 1
-	}}
-	self.pdcon_2016 = {content = {}}
-	self.pdcon_2016.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "pdc16_clover",
-		amount = 1
-	}}
-	self.bobblehead = {content = {}}
-	self.bobblehead.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "bobblehead_dozer",
-		amount = 1
-	}}
+	self.pdcon_2015 = {
+		content = {}
+	}
+	self.pdcon_2015.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "king_of_jesters",
+			amount = 1
+		}
+	}
+	self.pdcon_2016 = {
+		content = {}
+	}
+	self.pdcon_2016.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "pdc16_clover",
+			amount = 1
+		}
+	}
+	self.bobblehead = {
+		content = {}
+	}
+	self.bobblehead.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "bobblehead_dozer",
+			amount = 1
+		}
+	}
 	self.free_jwshades = {
 		free = true,
 		content = {}
 	}
 	self.free_jwshades.content.loot_global_value = "infamous"
-	self.free_jwshades.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "jw_shades",
-		amount = 1
-	}}
+	self.free_jwshades.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "jw_shades",
+			amount = 1
+		}
+	}
 	self.dbd_boo_0_award = {
 		dlc = "has_dbd_clan",
 		content = {}
 	}
 	self.dbd_boo_0_award.content.loot_global_value = "dbd_clan"
-	self.dbd_boo_0_award.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "dbd_04",
-		amount = 1
-	}}
+	self.dbd_boo_0_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dbd_04",
+			amount = 1
+		}
+	}
 	self.dbd_boo_1_award = {
 		dlc = "has_dbd_clan",
 		content = {}
 	}
 	self.dbd_boo_1_award.content.loot_global_value = "dbd_clan"
-	self.dbd_boo_1_award.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "dbd_01",
-		amount = 1
-	}}
+	self.dbd_boo_1_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dbd_01",
+			amount = 1
+		}
+	}
 	self.dbd_boo_4_award = {
 		dlc = "has_dbd_clan",
 		content = {}
 	}
 	self.dbd_boo_4_award.content.loot_global_value = "dbd_clan"
-	self.dbd_boo_4_award.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "dbd_slasher",
-		amount = 1
-	}}
-	self.wild = {content = {}}
+	self.dbd_boo_4_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dbd_slasher",
+			amount = 1
+		}
+	}
+	self.wild = {
+		content = {}
+	}
 	self.wild.content.loot_global_value = "wild"
-	self.wild.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "rust",
-		amount = 1
-	}}
-	self.born = {content = {}}
+	self.wild.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "rust",
+			amount = 1
+		}
+	}
+	self.born = {
+		content = {}
+	}
 	self.born.content.loot_drops = {}
 	self.ach_born_3 = {
 		dlc = "has_achievement",
@@ -5177,18 +5473,22 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.solus_clan = {content = {}}
+	self.solus_clan = {
+		content = {}
+	}
 	self.solus_clan.content.loot_drops = {}
 	self.solus_clan_award = {
 		dlc = "has_solus_clan",
 		content = {}
 	}
 	self.solus_clan_award.content.loot_global_value = "solus_clan"
-	self.solus_clan_award.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "solus",
-		amount = 1
-	}}
+	self.solus_clan_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "solus",
+			amount = 1
+		}
+	}
 	self.pd2_clan_migg = {
 		content = {},
 		dlc = "has_pd2_clan"
@@ -5243,7 +5543,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.gotti_bundle = {content = {}}
+	self.gotti_bundle = {
+		content = {}
+	}
 	self.gotti_bundle.content.loot_global_value = "normal"
 	self.gotti_bundle.content.loot_drops = {
 		{
@@ -5267,7 +5569,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.nyck_bundle = {content = {}}
+	self.nyck_bundle = {
+		content = {}
+	}
 	self.nyck_bundle.content.loot_global_value = "normal"
 	self.nyck_bundle.content.loot_drops = {
 		{
@@ -5291,57 +5595,71 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.urf_bundle = {content = {}}
+	self.urf_bundle = {
+		content = {}
+	}
 	self.urf_bundle.content.loot_global_value = "normal"
-	self.urf_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "urf_seal",
-		amount = 1
-	}}
+	self.urf_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "urf_seal",
+			amount = 1
+		}
+	}
 	self.howl = {
 		free = true,
 		content = {}
 	}
 	self.howl.content.loot_global_value = "halloween"
-	self.howl.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "hwl_dallas_zombie",
-		amount = 1
-	}}
+	self.howl.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "hwl_dallas_zombie",
+			amount = 1
+		}
+	}
 	self.ach_help_4 = {
 		dlc = "has_achievement",
 		achievement_id = "orange_4",
 		content = {}
 	}
 	self.ach_help_4.content.loot_global_value = "halloween"
-	self.ach_help_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "hwl_wolf_zombie",
-		amount = 1
-	}}
+	self.ach_help_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "hwl_wolf_zombie",
+			amount = 1
+		}
+	}
 	self.ach_help_5 = {
 		dlc = "has_achievement",
 		achievement_id = "orange_5",
 		content = {}
 	}
 	self.ach_help_5.content.loot_global_value = "halloween"
-	self.ach_help_5.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "howl_chains_zombie",
-		amount = 1
-	}}
+	self.ach_help_5.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "howl_chains_zombie",
+			amount = 1
+		}
+	}
 	self.ach_help_6 = {
 		dlc = "has_achievement",
 		achievement_id = "orange_6",
 		content = {}
 	}
 	self.ach_help_6.content.loot_global_value = "halloween"
-	self.ach_help_6.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "hwl_hoxton_zombie",
-		amount = 1
-	}}
-	self.tango = {content = {}}
+	self.ach_help_6.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "hwl_hoxton_zombie",
+			amount = 1
+		}
+	}
+	self.tango = {
+		content = {}
+	}
 	self.tango.content.loot_global_value = "tango"
 	self.tango.content.loot_drops = {
 		{
@@ -5455,7 +5773,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.win_bundle = {content = {}}
+	self.win_bundle = {
+		content = {}
+	}
 	self.win_bundle.content.loot_global_value = "normal"
 	self.win_bundle.content.loot_drops = {
 		{
@@ -5487,7 +5807,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.chico_bundle = {content = {}}
+	self.chico_bundle = {
+		content = {}
+	}
 	self.chico_bundle.content.loot_global_value = "chico"
 	self.chico_bundle.dlc = "has_chico"
 	self.chico_bundle.content.loot_drops = {
@@ -5502,7 +5824,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.friend_bundle = {content = {}}
+	self.friend_bundle = {
+		content = {}
+	}
 	self.friend_bundle.content.loot_global_value = "friend"
 	self.friend_bundle.dlc = "has_friend"
 	self.friend_bundle.content.loot_drops = {
@@ -5596,21 +5920,25 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.swm_bundle.content.loot_global_value = "swm"
-	self.swm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "swm_sydney",
-		amount = 1
-	}}
+	self.swm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "swm_sydney",
+			amount = 1
+		}
+	}
 	self.sparkle_bundle = {
 		dlc = "has_sparkle",
 		content = {}
 	}
 	self.sparkle_bundle.content.loot_global_value = "sparkle"
-	self.sparkle_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "spk_party",
-		amount = 1
-	}}
+	self.sparkle_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "spk_party",
+			amount = 1
+		}
+	}
 	self.sha_bundle = {
 		free = true,
 		content = {}
@@ -5643,12 +5971,16 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.yor_bundle.content.loot_global_value = "normal"
-	self.yor_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "yor",
-		amount = 1
-	}}
-	self.spa_bundle = {content = {}}
+	self.yor_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "yor",
+			amount = 1
+		}
+	}
+	self.spa_bundle = {
+		content = {}
+	}
 	self.spa_bundle.content.loot_global_value = "spa"
 	self.spa_bundle.dlc = "has_spa"
 	self.spa_bundle.content.loot_drops = {}
@@ -5744,7 +6076,9 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-	self.grv_bundle = {content = {}}
+	self.grv_bundle = {
+		content = {}
+	}
 	self.grv_bundle.content.loot_global_value = "grv"
 	self.grv_bundle.dlc = "has_grv"
 	self.grv_bundle.content.loot_drops = {}
@@ -5873,11 +6207,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_cee_3.content.loot_global_value = "infamous"
-	self.ach_cee_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "mrm",
-		amount = 1
-	}}
+	self.ach_cee_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "mrm",
+			amount = 1
+		}
+	}
 	self.pn2_bundle = {
 		dlc = "has_pn2",
 		content = {}
@@ -5960,11 +6296,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.mdm_bundle.content.loot_global_value = "infamous"
-	self.mdm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "mdm",
-		amount = 1
-	}}
+	self.mdm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "mdm",
+			amount = 1
+		}
+	}
 	self.ant_free = {
 		free = true,
 		content = {}
@@ -6022,31 +6360,37 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.dgm_bundle.content.loot_global_value = "pd2_clan"
-	self.dgm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "dgm",
-		amount = 1
-	}}
+	self.dgm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dgm",
+			amount = 1
+		}
+	}
 	self.gcm_bundle = {
 		free = true,
 		content = {}
 	}
 	self.gcm_bundle.content.loot_global_value = "pd2_clan"
-	self.gcm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "gcm",
-		amount = 1
-	}}
+	self.gcm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "gcm",
+			amount = 1
+		}
+	}
 	self.ztm_bundle = {
 		dlc = "has_ztm",
 		content = {}
 	}
 	self.ztm_bundle.content.loot_global_value = "ztm"
-	self.ztm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "ztm",
-		amount = 1
-	}}
+	self.ztm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ztm",
+			amount = 1
+		}
+	}
 	self.wmp_bundle = {
 		free = true,
 		content = {}
@@ -6111,11 +6455,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.pbm_bundle.content.loot_global_value = "pbm"
-	self.pbm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "pbm",
-		amount = 1
-	}}
+	self.pbm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "pbm",
+			amount = 1
+		}
+	}
 	self.dnm = {
 		free = true,
 		content = {}
@@ -6127,11 +6473,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_trk_a_0.content.loot_global_value = "infamous"
-	self.ach_trk_a_0.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "dnm",
-		amount = 1
-	}}
+	self.ach_trk_a_0.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dnm",
+			amount = 1
+		}
+	}
 	self.wwh = {
 		free = true,
 		content = {}
@@ -6148,54 +6496,64 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_eng_1.content.loot_global_value = "eng"
-	self.ach_eng_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "eng_01",
-		amount = 1
-	}}
+	self.ach_eng_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "eng_01",
+			amount = 1
+		}
+	}
 	self.ach_eng_2 = {
 		dlc = "has_achievement",
 		achievement_id = "eng_2",
 		content = {}
 	}
 	self.ach_eng_2.content.loot_global_value = "eng"
-	self.ach_eng_2.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "eng_02",
-		amount = 1
-	}}
+	self.ach_eng_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "eng_02",
+			amount = 1
+		}
+	}
 	self.ach_eng_3 = {
 		dlc = "has_achievement",
 		achievement_id = "eng_4",
 		content = {}
 	}
 	self.ach_eng_3.content.loot_global_value = "eng"
-	self.ach_eng_3.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "eng_03",
-		amount = 1
-	}}
+	self.ach_eng_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "eng_03",
+			amount = 1
+		}
+	}
 	self.ach_eng_4 = {
 		dlc = "has_achievement",
 		achievement_id = "eng_3",
 		content = {}
 	}
 	self.ach_eng_4.content.loot_global_value = "eng"
-	self.ach_eng_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "eng_04",
-		amount = 1
-	}}
+	self.ach_eng_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "eng_04",
+			amount = 1
+		}
+	}
 	self.fdm_bundle = {
 		dlc = "has_fdm",
 		content = {}
 	}
 	self.fdm_bundle.content.loot_global_value = "fdm"
-	self.fdm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "fdm",
-		amount = 1
-	}}
+	self.fdm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "fdm",
+			amount = 1
+		}
+	}
 	self.jfr = {
 		free = true,
 		content = {}
@@ -6205,87 +6563,103 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.kwm_bundle.content.loot_global_value = "normal"
-	self.kwm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "kwm",
-		amount = 1
-	}}
+	self.kwm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "kwm",
+			amount = 1
+		}
+	}
 	self.mmj_bundle = {
 		free = true,
 		content = {}
 	}
 	self.mmj_bundle.content.loot_global_value = "normal"
-	self.mmj_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "mmj",
-		amount = 1
-	}}
+	self.mmj_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "mmj",
+			amount = 1
+		}
+	}
 	self.ami_2 = {
 		dlc = "has_achievement_milestone",
 		milestone_id = "ami_2",
 		content = {}
 	}
 	self.ami_2.content.loot_global_value = "infamous"
-	self.ami_2.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "ami_02",
-		amount = 1
-	}}
+	self.ami_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ami_02",
+			amount = 1
+		}
+	}
 	self.ami_4 = {
 		dlc = "has_achievement_milestone",
 		milestone_id = "ami_4",
 		content = {}
 	}
 	self.ami_4.content.loot_global_value = "infamous"
-	self.ami_4.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "ami_03",
-		amount = 1
-	}}
+	self.ami_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ami_03",
+			amount = 1
+		}
+	}
 	self.ami_6 = {
 		dlc = "has_achievement_milestone",
 		milestone_id = "ami_6",
 		content = {}
 	}
 	self.ami_6.content.loot_global_value = "infamous"
-	self.ami_6.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "ami_05",
-		amount = 1
-	}}
+	self.ami_6.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ami_05",
+			amount = 1
+		}
+	}
 	self.ami_8 = {
 		dlc = "has_achievement_milestone",
 		milestone_id = "ami_8",
 		content = {}
 	}
 	self.ami_8.content.loot_global_value = "infamous"
-	self.ami_8.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "ami_04",
-		amount = 1
-	}}
+	self.ami_8.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ami_04",
+			amount = 1
+		}
+	}
 	self.ami_10 = {
 		dlc = "has_achievement_milestone",
 		milestone_id = "ami_10",
 		content = {}
 	}
 	self.ami_10.content.loot_global_value = "infamous"
-	self.ami_10.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "ami_01",
-		amount = 1
-	}}
+	self.ami_10.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ami_01",
+			amount = 1
+		}
+	}
 	self.ami_12 = {
 		dlc = "has_achievement_milestone",
 		milestone_id = "ami_12",
 		content = {}
 	}
 	self.ami_12.content.loot_global_value = "infamous"
-	self.ami_12.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "ami_06",
-		amount = 1
-	}}
+	self.ami_12.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ami_06",
+			amount = 1
+		}
+	}
 	self.ami_13 = {
 		dlc = "has_achievement_milestone",
 		milestone_id = "ami_13",
@@ -6369,11 +6743,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.gwm_bundle.content.loot_global_value = "pd2_clan"
-	self.gwm_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "gwm",
-		amount = 1
-	}}
+	self.gwm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "gwm",
+			amount = 1
+		}
+	}
 	self.rvd_bundle = {
 		dlc = "has_rvd",
 		content = {}
@@ -6450,11 +6826,13 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.ach_ggez_1.content.loot_global_value = "infamous"
-	self.ach_ggez_1.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "ggac_od_t2",
-		amount = 1
-	}}
+	self.ach_ggez_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ggac_od_t2",
+			amount = 1
+		}
+	}
 	self.pmp_bundle = {
 		dlc = "has_pmp",
 		content = {}
@@ -7279,12 +7657,147 @@ function DLCTweakData:init(tweak_data)
 		content = {}
 	}
 	self.joy_bundle.content.loot_global_value = "infamous"
-	self.joy_bundle.content.loot_drops = {{
-		type_items = "masks",
-		item_entry = "joy",
-		amount = 1
-	}}
+	self.joy_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "joy",
+			amount = 1
+		}
+	}
+	self.ghm_bundle = {
+		dlc = "has_ghm",
+		content = {}
+	}
+	self.ghm_bundle.content.loot_global_value = "pd2_clan"
+	self.ghm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ghm",
+			amount = 1
+		}
+	}
+	self.khp_bundle = {
+		free = true,
+		content = {}
+	}
+	self.khp_bundle.content.loot_global_value = "normal"
+	self.khp_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_legacy_b_threaded",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_legacy_g_wood",
+			amount = 1
+		}
+	}
+	self.sdb_bundle = {
+		free = true,
+		content = {}
+	}
+	self.sdb_bundle.content.loot_global_value = "normal"
+	self.sdb_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_coach_b_short",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_coach_s_short",
+			amount = 1
+		}
+	}
+	self.ram_bundle = {
+		free = true,
+		content = {}
+	}
+	self.ram_bundle.content.loot_global_value = "normal"
+	self.ram_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_bow_elastic_m_explosive",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_bow_elastic_m_poison",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_bow_elastic_body_tactic",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_bow_elastic_g_2",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_bow_elastic_g_3",
+			amount = 1
+		}
+	}
+	self.sms_bundle_1 = {
+		dlc = "has_stat",
+		stat_id = "tester",
+		content = {}
+	}
+	self.sms_bundle_1.content.loot_global_value = "infamous"
+	self.sms_bundle_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "sms_01",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sms_02",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sms_03",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sms_04",
+			amount = 1
+		}
+	}
+	self.sms_bundle_2 = {
+		dlc = "has_achievement",
+		achievement_id = "fin_1",
+		content = {}
+	}
+	self.sms_bundle_2.content.loot_global_value = "infamous"
+	self.sms_bundle_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "sms_05",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sms_06",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sms_07",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sms_08",
+			amount = 1
+		}
+	}
 
 	self:init_generated()
 end
-

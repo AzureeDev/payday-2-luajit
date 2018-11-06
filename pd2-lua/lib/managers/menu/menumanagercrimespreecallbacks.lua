@@ -1,4 +1,3 @@
-
 function MenuCallbackHandler:crime_spree_is_active()
 	return managers.crime_spree:is_active()
 end
@@ -146,7 +145,9 @@ function MenuCallbackHandler:claim_crime_spree_rewards(item, node)
 			callback_func = callback(self, self, "_dialog_crime_spree_claim_rewards_no"),
 			cancel_button = true
 		}
-		dialog_data.button_list = {no_button}
+		dialog_data.button_list = {
+			no_button
+		}
 
 		managers.system_menu:show(dialog_data)
 	end
@@ -170,7 +171,9 @@ function MenuCallbackHandler:show_crime_spree_crash_dialog()
 		text = managers.localization:text("dialog_ok"),
 		cancel_button = true
 	}
-	dialog_data.button_list = {no_button}
+	dialog_data.button_list = {
+		no_button
+	}
 
 	managers.system_menu:show(dialog_data)
 
@@ -178,11 +181,15 @@ function MenuCallbackHandler:show_crime_spree_crash_dialog()
 end
 
 function MenuCallbackHandler:end_crime_spree(item, node)
-	local dialog_data = {title = managers.localization:text("dialog_warning_title")}
+	local dialog_data = {
+		title = managers.localization:text("dialog_warning_title")
+	}
 
 	if managers.crime_spree:can_refund_entry_fee() then
 		local cost = managers.crime_spree:get_start_cost(managers.crime_spree:spree_level())
-		dialog_data.text = managers.localization:text("dialog_are_you_sure_you_want_stop_cs_refund", {coins = cost})
+		dialog_data.text = managers.localization:text("dialog_are_you_sure_you_want_stop_cs_refund", {
+			coins = cost
+		})
 	else
 		dialog_data.text = managers.localization:text("dialog_are_you_sure_you_want_stop_cs")
 	end
@@ -287,7 +294,9 @@ function MenuCallbackHandler:end_game_crime_spree()
 		fail_on_quit = false
 	end
 
-	local dialog_data = {title = managers.localization:text("dialog_warning_title")}
+	local dialog_data = {
+		title = managers.localization:text("dialog_warning_title")
+	}
 
 	if Global.game_settings.is_playing then
 		if managers.crime_spree:has_failed() then
@@ -322,7 +331,9 @@ end
 function MenuCallbackHandler:_dialog_end_game_crime_spree_yes(failed)
 	managers.platform:set_playing(false)
 	managers.job:clear_saved_ghost_bonus()
-	managers.statistics:stop_session({quit = true})
+	managers.statistics:stop_session({
+		quit = true
+	})
 	managers.savefile:save_progress()
 	managers.job:deactivate_current_job()
 	managers.gage_assignment:deactivate_assignments()
@@ -372,7 +383,9 @@ function MenuCallbackHandler:crime_spree_continue()
 			callback_func = callback(self, self, "_dialog_crime_spree_continue_no"),
 			cancel_button = true
 		}
-		dialog_data.button_list = {no_button}
+		dialog_data.button_list = {
+			no_button
+		}
 
 		managers.system_menu:show(dialog_data)
 	else
@@ -421,10 +434,14 @@ function MenuCallbackHandler:_dialog_crime_spree_continue_no()
 end
 
 function MenuCallbackHandler:create_server_left_crime_spree_dialog()
-	local dialog_data = {title = managers.localization:text("dialog_warning_title")}
+	local dialog_data = {
+		title = managers.localization:text("dialog_warning_title")
+	}
 
 	if Global.on_server_left_message then
-		dialog_data.text = managers.localization:text("dialog_on_server_left_message_cs", {message = managers.localization:text(Global.on_server_left_message)})
+		dialog_data.text = managers.localization:text("dialog_on_server_left_message_cs", {
+			message = managers.localization:text(Global.on_server_left_message)
+		})
 		Global.on_server_left_message = nil
 	else
 		dialog_data.text = managers.localization:text("dialog_the_host_has_left_the_game_cs")
@@ -435,7 +452,9 @@ function MenuCallbackHandler:create_server_left_crime_spree_dialog()
 		text = managers.localization:text("dialog_ok"),
 		callback_func = callback(self, self, "_on_server_left_ok_pressed")
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -445,19 +464,27 @@ function MenuCallbackHandler:_on_server_left_ok_pressed()
 end
 
 function MenuCallbackHandler:show_peer_kicked_crime_spree_dialog(params)
-	local dialog_data = {title = managers.localization:text(Global.on_remove_peer_message and "dialog_information_title" or "dialog_mp_kicked_out_title")}
+	local dialog_data = {
+		title = managers.localization:text(Global.on_remove_peer_message and "dialog_information_title" or "dialog_mp_kicked_out_title")
+	}
 
 	if Global.on_remove_peer_message then
-		dialog_data.text = managers.localization:text("dialog_on_server_left_message_cs", {message = managers.localization:text(Global.on_remove_peer_message)})
+		dialog_data.text = managers.localization:text("dialog_on_server_left_message_cs", {
+			message = managers.localization:text(Global.on_remove_peer_message)
+		})
 	else
-		dialog_data.text = managers.localization:text("dialog_on_server_left_message_cs", {message = managers.localization:text("dialog_mp_kicked_out_message")})
+		dialog_data.text = managers.localization:text("dialog_on_server_left_message_cs", {
+			message = managers.localization:text("dialog_mp_kicked_out_message")
+		})
 	end
 
 	local ok_button = {
 		text = managers.localization:text("dialog_ok"),
 		callback_func = callback(self, self, "_on_server_left_ok_pressed")
 	}
-	dialog_data.button_list = {ok_button}
+	dialog_data.button_list = {
+		ok_button
+	}
 
 	managers.system_menu:show(dialog_data)
 
@@ -481,7 +508,9 @@ function MenuCallbackHandler:crime_spree_reroll()
 	}
 
 	if can_afford then
-		dialog_data.text = managers.localization:text("menu_cs_reroll_text", {cost = managers.crime_spree:randomization_cost()})
+		dialog_data.text = managers.localization:text("menu_cs_reroll_text", {
+			cost = managers.crime_spree:randomization_cost()
+		})
 		local yes_button = {
 			text = managers.localization:text("dialog_yes"),
 			callback_func = callback(self, self, "_dialog_crime_spree_reroll_yes")
@@ -496,13 +525,17 @@ function MenuCallbackHandler:crime_spree_reroll()
 			no_button
 		}
 	else
-		dialog_data.text = managers.localization:text("menu_cs_reroll_text_cant_afford", {cost = managers.crime_spree:randomization_cost()})
+		dialog_data.text = managers.localization:text("menu_cs_reroll_text_cant_afford", {
+			cost = managers.crime_spree:randomization_cost()
+		})
 		local no_button = {
 			text = managers.localization:text("dialog_ok"),
 			callback_func = callback(self, self, "_dialog_crime_spree_reroll_no"),
 			cancel_button = true
 		}
-		dialog_data.button_list = {no_button}
+		dialog_data.button_list = {
+			no_button
+		}
 	end
 
 	managers.system_menu:show(dialog_data)
@@ -543,7 +576,9 @@ function MenuManager:show_confirm_mission_gage_asset_buy(params)
 		title = managers.localization:text("dialog_assets_buy_title"),
 		text = managers.localization:text("dialog_mission_asset_buy", {
 			asset_desc = managers.localization:text(asset_tweak_data.unlock_desc_id or "menu_asset_unknown_unlock_desc", asset_tweak_data.data),
-			cost = managers.localization:text("bm_cs_continental_coin_cost", {cost = managers.experience:cash_string(asset_tweak_data.cost, "")})
+			cost = managers.localization:text("bm_cs_continental_coin_cost", {
+				cost = managers.experience:cash_string(asset_tweak_data.cost, "")
+			})
 		}),
 		focus_button = 2
 	}
@@ -581,7 +616,9 @@ function MenuManager:show_gage_assets_unlock_prevented(params)
 		text = managers.localization:text("dialog_ok"),
 		cancel_button = true
 	}
-	dialog_data.button_list = {no_button}
+	dialog_data.button_list = {
+		no_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -597,7 +634,9 @@ function MenuManager:show_gage_asset_desc(params)
 		text = managers.localization:text("dialog_ok"),
 		cancel_button = true
 	}
-	dialog_data.button_list = {no_button}
+	dialog_data.button_list = {
+		no_button
+	}
 
 	managers.system_menu:show(dialog_data)
 end
@@ -644,4 +683,3 @@ end
 
 function MenuCallbackHandler:_dialog_clear_crime_spree_record_no()
 end
-

@@ -45,16 +45,28 @@ GameStateFilters = {
 		ingame_bleed_out = true,
 		ingame_fatal = true
 	},
-	arrested = {ingame_arrested = true},
-	game_over = {gameoverscreen = true},
+	arrested = {
+		ingame_arrested = true
+	},
+	game_over = {
+		gameoverscreen = true
+	},
 	any_end_game = {
 		victoryscreen = true,
 		gameoverscreen = true
 	},
-	waiting_for_players = {ingame_waiting_for_players = true},
-	waiting_for_respawn = {ingame_waiting_for_respawn = true},
-	waiting_for_spawn_allowed = {ingame_waiting_for_spawn_allowed = true},
-	menu = {menu_main = true},
+	waiting_for_players = {
+		ingame_waiting_for_players = true
+	},
+	waiting_for_respawn = {
+		ingame_waiting_for_respawn = true
+	},
+	waiting_for_spawn_allowed = {
+		ingame_waiting_for_spawn_allowed = true
+	},
+	menu = {
+		menu_main = true
+	},
 	player_slot = {
 		ingame_lobby_menu = true,
 		menu_main = true,
@@ -65,4 +77,3 @@ GameStateFilters = {
 		ingame_lobby_menu = true
 	}
 }
-

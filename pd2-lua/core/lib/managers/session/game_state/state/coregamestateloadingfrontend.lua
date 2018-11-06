@@ -17,8 +17,7 @@ end
 function LoadingFrontEnd:transition()
 	local current_time = self.game_state._session_manager:_debug_time()
 
-	if self._debug_time + 2 < current_time then
+	if current_time > self._debug_time + 2 then
 		return CoreGameStatePreFrontEnd.PreFrontEnd
 	end
 end
-

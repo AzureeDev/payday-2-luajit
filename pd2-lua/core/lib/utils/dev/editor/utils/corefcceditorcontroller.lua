@@ -356,7 +356,7 @@ function FFCEditorController:update_orthographic(time, rel_time)
 
 	self._camera:set_position(self._camera:position() + move)
 
-	self._mul = self._mul + (speed * (self._controller:button(Idstring("altitude_up")) - self._controller:button(Idstring("altitude_down")))) / 100
+	self._mul = self._mul + speed * (self._controller:button(Idstring("altitude_up")) - self._controller:button(Idstring("altitude_down"))) / 100
 
 	self:set_orthographic_screen()
 end
@@ -391,4 +391,3 @@ function FFCEditorController:toggle_orthographic(use)
 		camera:set_rotation(self._camera_settings.rotation)
 	end
 end
-

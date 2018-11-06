@@ -128,7 +128,7 @@ function MenuItemKitSlot:text()
 	elseif self._parameters.category == "equipment" then
 		local id = self._options[self._current_index]
 		local equipment_id = tweak_data.upgrades.definitions[id].equipment_id
-		local name_id = (tweak_data.equipments.specials[equipment_id] or tweak_data.equipments[equipment_id]).text_id
+		local name_id = tweak_data.equipments.specials[equipment_id] or tweak_data.equipments[equipment_id].text_id
 
 		return managers.localization:text(name_id)
 	end
@@ -222,13 +222,17 @@ end
 function MenuItemKitSlot:setup_gui(node, row_item)
 	local category = self:parameters().category
 	local slot = self:parameters().slot
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.gui_text = node:_text_item_part(row_item, row_item.gui_panel, node:_right_align(), "right")
 
 	row_item.gui_text:set_wrap(true)
 	row_item.gui_text:set_word_wrap(true)
 
-	row_item.choice_panel = row_item.gui_panel:panel({w = node.item_panel:w()})
+	row_item.choice_panel = row_item.gui_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.choice_text = row_item.choice_panel:text({
 		halign = "center",
 		vertical = "center",
@@ -283,7 +287,9 @@ function MenuItemKitSlot:setup_gui(node, row_item)
 
 	row_item.description_panel:set_left(row_item.choice_panel:left())
 
-	row_item.description_panel_bg = row_item.description_panel:rect({color = Color.black:with_alpha(0.5)})
+	row_item.description_panel_bg = row_item.description_panel:rect({
+		color = Color.black:with_alpha(0.5)
+	})
 	local icon, texture_rect = tweak_data.hud_icons:get_icon_data("fallback")
 	row_item.description_icon = row_item.description_panel:bitmap({
 		name = "description_icon",
@@ -454,7 +460,7 @@ function MenuItemKitSlot:_layout(node, row_item)
 	row_item.description_panel:set_h(126 * tweak_data.scale.kit_menu_description_h_scale)
 	row_item.description_panel:set_w(safe_rect.width / 2)
 	row_item.description_panel:set_right(safe_rect.width)
-	row_item.description_panel:set_bottom((safe_rect.height - tweak_data.menu.upper_saferect_border) - tweak_data.menu.border_pad)
+	row_item.description_panel:set_bottom(safe_rect.height - tweak_data.menu.upper_saferect_border - tweak_data.menu.border_pad)
 	row_item.description_panel_bg:set_size(row_item.description_panel:size())
 
 	local pad = 4 * tweak_data.scale.kit_menu_bar_scale
@@ -463,7 +469,7 @@ function MenuItemKitSlot:_layout(node, row_item)
 	row_item.description_icon:set_position(pad, pad)
 	row_item.description_text:set_font_size(tweak_data.menu.kit_description_font_size)
 	row_item.description_text:set_h(row_item.description_panel:h())
-	row_item.description_text:set_w((safe_rect.width / 2 - (row_item.description_icon:right() + 4)) - pad)
+	row_item.description_text:set_w(safe_rect.width / 2 - (row_item.description_icon:right() + 4) - pad)
 	row_item.description_text:set_y(pad)
 	row_item.description_text:set_left(row_item.description_icon:right() + 4)
 	row_item.description_progress_text:set_font_size(node.font_size)
@@ -476,7 +482,7 @@ function MenuItemKitSlot:_layout(node, row_item)
 	row_item.progress_bg:set_h(22 * tweak_data.scale.kit_menu_bar_scale)
 	row_item.progress_bg:set_bottom(row_item.description_panel_bg:h() - pad)
 	row_item.progress_bg:set_left(row_item.description_progress_text:right() + 8)
-	row_item.progress_bg:set_w((row_item.description_panel:w() - row_item.progress_bg:left()) - pad)
+	row_item.progress_bg:set_w(row_item.description_panel:w() - row_item.progress_bg:left() - pad)
 
 	local current, total = self:upgrade_progress()
 	local value = total ~= 0 and current / total or 0
@@ -488,4 +494,3 @@ function MenuItemKitSlot:_layout(node, row_item)
 	row_item.progress_text:set_size(row_item.progress_bg:size())
 	row_item.progress_text:set_position(row_item.progress_bg:x(), row_item.progress_bg:y())
 end
-

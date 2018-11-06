@@ -3,8 +3,12 @@ CrimeNetFiltersGui = CrimeNetFiltersGui or class()
 function CrimeNetFiltersGui:init(ws, fullscreen_ws, node)
 	self._ws = ws
 	self._fullscreen_ws = fullscreen_ws
-	self._panel = self._ws:panel():panel({layer = 51})
-	self._fullscreen_panel = self._fullscreen_ws:panel():panel({layer = 50})
+	self._panel = self._ws:panel():panel({
+		layer = 51
+	})
+	self._fullscreen_panel = self._fullscreen_ws:panel():panel({
+		layer = 50
+	})
 	self._node = node
 	local blur = self._fullscreen_panel:bitmap({
 		texture = "guis/textures/test_blur_df",
@@ -36,4 +40,3 @@ function CrimeNetFiltersGui:close()
 	self._ws:panel():remove(self._panel)
 	self._fullscreen_ws:panel():remove(self._fullscreen_panel)
 end
-

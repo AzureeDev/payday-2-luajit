@@ -70,7 +70,9 @@ function ProjectileBase:get_name_id()
 end
 
 function ProjectileBase:is_category(...)
-	for _, cat in ipairs({...}) do
+	for _, cat in ipairs({
+		...
+	}) do
 		if cat == "projectile" then
 			return true
 		end
@@ -90,7 +92,9 @@ function ProjectileBase:active()
 end
 
 function ProjectileBase:create_sweep_data()
-	self._sweep_data = {slot_mask = self._slot_mask}
+	self._sweep_data = {
+		slot_mask = self._slot_mask
+	}
 	self._sweep_data.slot_mask = managers.mutators:modify_value("ProjectileBase:create_sweep_data:slot_mask", self._sweep_data.slot_mask)
 	self._sweep_data.current_pos = self._unit:position()
 	self._sweep_data.last_pos = mvector3.copy(self._sweep_data.current_pos)
@@ -244,7 +248,9 @@ function ProjectileBase:_bounce(...)
 end
 
 function ProjectileBase:save(data)
-	local state = {timer = self._timer}
+	local state = {
+		timer = self._timer
+	}
 	data.ProjectileBase = state
 end
 
@@ -370,4 +376,3 @@ end
 function ProjectileBase._play_sound_and_effects(position, normal, range, custom_params)
 	managers.explosion:play_sound_and_effects(position, normal, range, custom_params)
 end
-

@@ -6,7 +6,9 @@ function CopLogicIntimidated.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	my_data.detection = data.char_tweak.detection.combat
 	my_data.aggressor_unit = enter_params and enter_params.aggressor_unit
@@ -50,7 +52,9 @@ function CopLogicIntimidated.enter(data, new_logic_name, enter_params)
 		return
 	end
 
-	data.unit:brain():set_attention_settings({corpse_sneak = true})
+	data.unit:brain():set_attention_settings({
+		corpse_sneak = true
+	})
 	managers.groupai:state():register_rescueable_hostage(data.unit, nil)
 
 	my_data.is_hostage = true
@@ -214,7 +218,12 @@ function CopLogicIntimidated.on_intimidated(data, amount, aggressor_unit)
 				walk = -1
 			}
 		else
-			anim = managers.groupai:state():whisper_mode() and "tied_all_in_one" or "hands_up"
+			if managers.groupai:state():whisper_mode() then
+				anim = "tied_all_in_one"
+			else
+				anim = "hands_up"
+			end
+
 			blocks = {
 				heavy_hurt = -1,
 				hurt = -1,
@@ -377,7 +386,9 @@ function CopLogicIntimidated._do_tied(data, aggressor_unit)
 		data.unit:character_damage():set_pickup(nil)
 
 		if aggressor_unit == managers.player:player_unit() then
-			managers.statistics:tied({name = data.unit:base()._tweak_table})
+			managers.statistics:tied({
+				name = data.unit:base()._tweak_table
+			})
 		else
 			aggressor_unit:network():send_to_unit({
 				"statistics_tied",
@@ -642,4 +653,3 @@ function CopLogicIntimidated._chk_begin_alarm_pager(data)
 		data.brain:begin_alarm_pager()
 	end
 end
-

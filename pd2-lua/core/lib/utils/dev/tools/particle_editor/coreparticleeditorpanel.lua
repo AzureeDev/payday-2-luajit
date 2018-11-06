@@ -599,7 +599,12 @@ function CoreParticleEditorPanel:on_stack_paste(stacktype)
 
 	local box = self._stacklist_boxes[stacktype]
 	local selected = box:selected_index()
-	selected = (selected >= 0 or nil) and selected + 1
+
+	if selected < 0 then
+		selected = nil
+	else
+		selected = selected + 1
+	end
 
 	if not selected then
 		self._atom:stack(stacktype):add_member(deep_clone(self._editor._clipboard_object))
@@ -837,7 +842,9 @@ function CoreParticleEditorPanel:do_save(warn_on_overwrite)
 			platform = string.lower(SystemInfo:platform():s()),
 			source_root = managers.database:base_path(),
 			target_db_root = Application:base_path() .. "/assets",
-			source_files = {managers.database:entry_relative_path(self._effect:name())}
+			source_files = {
+				managers.database:entry_relative_path(self._effect:name())
+			}
 		})
 		DB:reload()
 		managers.database:clear_all_cached_indices()
@@ -882,11 +889,14 @@ function CoreParticleEditorPanel:close()
 
 	return true
 end
+
 CoreUndoStack = CoreUndoStack or class()
 
 function CoreUndoStack:init(startstate, stacksize)
 	self._stacksize = stacksize
-	self._stack = {startstate}
+	self._stack = {
+		startstate
+	}
 	self._ptr = 1
 end
 
@@ -927,4 +937,3 @@ function CoreUndoStack:redo()
 
 	return self._stack[self._ptr]
 end
-

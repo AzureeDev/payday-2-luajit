@@ -1,4 +1,3 @@
-
 local function init_cac_2()
 	local state_changed_key = {}
 	local enemy_killed_key = {}
@@ -30,6 +29,7 @@ local function init_cac_2()
 	function progress_tweak.get()
 		return kill_count
 	end
+
 	progress_tweak.max = target_count
 end
 
@@ -193,4 +193,3 @@ function AchievmentManager:init_cac_custom_achievements()
 	init_cac_20()
 	init_cac_28()
 end
-

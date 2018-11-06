@@ -67,4 +67,3 @@ function TemporaryPropertyManager:remove_property(prop)
 		self._properties[prop] = nil
 	end
 end
-

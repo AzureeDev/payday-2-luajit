@@ -1,20 +1,21 @@
 TextBoxGui = TextBoxGui or class()
-TextBoxGui.PRESETS = {}
-TextBoxGui.PRESETS.system_menu = {
-	w = 540,
-	h = 270
-}
-TextBoxGui.PRESETS.weapon_stats = {
-	w = 700,
-	x = 60,
-	h = 270,
-	bottom = 620
-}
-TextBoxGui.PRESETS.help_dialog = {
-	w = 540,
-	h = 270,
-	font = tweak_data.menu.pd2_small_font,
-	font_size = tweak_data.menu.pd2_small_font_size
+TextBoxGui.PRESETS = {
+	system_menu = {
+		w = 540,
+		h = 270
+	},
+	weapon_stats = {
+		w = 700,
+		x = 60,
+		h = 270,
+		bottom = 620
+	},
+	help_dialog = {
+		w = 540,
+		h = 270,
+		font = tweak_data.menu.pd2_small_font,
+		font_size = tweak_data.menu.pd2_small_font_size
+	}
 }
 
 function TextBoxGui:init(...)
@@ -282,7 +283,7 @@ function TextBoxGui:_create_text_box(ws, title, text, content_data, config)
 		layer = 1,
 		text = text or "none",
 		visible = text and true or false,
-		w = (scroll_panel:w() - math.round(stats_panel:w())) - (has_stats and 20 or 0),
+		w = scroll_panel:w() - math.round(stats_panel:w()) - (has_stats and 20 or 0),
 		x = math.round(stats_panel:w()) + (has_stats and 20 or 0),
 		font = font,
 		font_size = font_size,
@@ -418,26 +419,32 @@ function TextBoxGui:_create_text_box(ws, title, text, content_data, config)
 	})
 
 	scroll_down_indicator_arrow:set_leftbottom(scroll_panel:right() + 2, scroll_down_indicator_shade:bottom() - 8)
-	BoxGuiObject:new(scroll_up_indicator_shade, {sides = {
-		0,
-		0,
-		2,
-		0
-	}}):set_aligns("scale", "scale")
-	BoxGuiObject:new(scroll_down_indicator_shade, {sides = {
-		0,
-		0,
-		0,
-		2
-	}}):set_aligns("scale", "scale")
+	BoxGuiObject:new(scroll_up_indicator_shade, {
+		sides = {
+			0,
+			0,
+			2,
+			0
+		}
+	}):set_aligns("scale", "scale")
+	BoxGuiObject:new(scroll_down_indicator_shade, {
+		sides = {
+			0,
+			0,
+			0,
+			2
+		}
+	}):set_aligns("scale", "scale")
 	lower_static_panel:set_bottom(main:h() - h * 2)
 
-	self._info_box = BoxGuiObject:new(info_area, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._info_box = BoxGuiObject:new(info_area, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	local bar_h = scroll_down_indicator_arrow:top() - scroll_up_indicator_arrow:bottom()
 	local scroll_bar = main:panel({
 		name = "scroll_bar",
@@ -446,12 +453,14 @@ function TextBoxGui:_create_text_box(ws, title, text, content_data, config)
 		layer = 4,
 		h = bar_h
 	})
-	self._scroll_bar_box_class = BoxGuiObject:new(scroll_bar, {sides = {
-		2,
-		2,
-		0,
-		0
-	}})
+	self._scroll_bar_box_class = BoxGuiObject:new(scroll_bar, {
+		sides = {
+			2,
+			2,
+			0,
+			0
+		}
+	})
 
 	self._scroll_bar_box_class:set_aligns("scale", "scale")
 	scroll_bar:set_w(8)
@@ -852,7 +861,7 @@ function TextBoxGui:_set_scroll_indicator()
 	local is_visible = scroll_panel:h() < scroll_text:h()
 
 	if scroll_text:h() ~= 0 then
-		scroll_bar:set_h((bar_h * scroll_panel:h()) / scroll_text:h())
+		scroll_bar:set_h(bar_h * scroll_panel:h() / scroll_text:h())
 	end
 
 	scroll_bar:set_visible(is_visible)
@@ -869,14 +878,18 @@ function TextBoxGui:_check_scroll_indicator_states()
 	local scroll_text = scroll_panel:child("text")
 
 	if not self._up_alpha then
-		self._up_alpha = {current = 0}
+		self._up_alpha = {
+			current = 0
+		}
 
 		self._text_box:child("scroll_up_indicator_shade"):set_alpha(self._up_alpha.current)
 		self._text_box:child("scroll_up_indicator_arrow"):set_color(self._text_box:child("scroll_up_indicator_arrow"):color():with_alpha(self._up_alpha.current))
 	end
 
 	if not self._down_alpha then
-		self._down_alpha = {current = 1}
+		self._down_alpha = {
+			current = 1
+		}
 
 		self._text_box:child("scroll_down_indicator_shade"):set_alpha(self._down_alpha.current)
 		self._text_box:child("scroll_down_indicator_arrow"):set_color(self._text_box:child("scroll_down_indicator_arrow"):color():with_alpha(self._down_alpha.current))
@@ -888,7 +901,7 @@ function TextBoxGui:_check_scroll_indicator_states()
 	local scroll_bar = self._text_box:child("scroll_bar")
 	local sh = scroll_text:h() ~= 0 and scroll_text:h() or 1
 
-	scroll_bar:set_top(up_arrow:bottom() - (scroll_text:top() * ((scroll_panel:h() - up_arrow:h() * 2) - 16)) / sh)
+	scroll_bar:set_top(up_arrow:bottom() - scroll_text:top() * (scroll_panel:h() - up_arrow:h() * 2 - 16) / sh)
 end
 
 function TextBoxGui:input_focus()
@@ -1191,7 +1204,7 @@ function TextBoxGui:scroll_with_bar(target_y, current_y)
 
 		current_y = target_y
 	elseif current_y < target_y then
-		if scroll_panel:world_y() + arrow_size < target_y then
+		if target_y > scroll_panel:world_y() + arrow_size then
 			local mul = (scroll_panel:h() - arrow_size * 2) / scroll_text:h()
 
 			self:scroll_down((target_y - current_y) / mul)
@@ -1372,21 +1385,23 @@ function TextBoxGui:set_size(x, y)
 	local lsp_h = lower_static_panel:h()
 	local info_area = self._panel:child("info_area")
 
-	info_area:set_size(self._panel:w(), (self._panel:h() - h * 2) - lsp_h)
+	info_area:set_size(self._panel:w(), self._panel:h() - h * 2 - lsp_h)
 
 	if self._info_box then
-		self._info_box:create_sides(info_area, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		self._info_box:create_sides(info_area, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 	end
 
 	local buttons_panel = info_area:child("buttons_panel")
 	local scroll_panel = info_area:child("scroll_panel")
 
-	scroll_panel:set_w((info_area:w() - buttons_panel:w()) - 30)
+	scroll_panel:set_w(info_area:w() - buttons_panel:w() - 30)
 	scroll_panel:set_y(scroll_panel:y() - 1)
 	scroll_panel:set_y(scroll_panel:y() + 1)
 
@@ -1504,4 +1519,3 @@ function TextBoxGui:close()
 		self._fullscreen_ws = nil
 	end
 end
-

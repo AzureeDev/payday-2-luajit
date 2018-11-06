@@ -41,11 +41,13 @@ function MilestoneItem:init(parent, data, black_bg)
 		})
 		local cx, cy = icon:center()
 
-		lock:set_center(math.round((cx + icon:w() * 0.5) - 10), math.round((cy + icon:h() * 0.5) - 10))
+		lock:set_center(math.round(cx + icon:w() * 0.5 - 10), math.round(cy + icon:h() * 0.5 - 10))
 	end
 
 	placer:add_right(self:fine_text({
-		text = managers.localization:text("menu_milestone_item_title", {AT = data.at}),
+		text = managers.localization:text("menu_milestone_item_title", {
+			AT = data.at
+		}),
 		font = small_font,
 		font_size = small_font_size,
 		color = color
@@ -121,6 +123,7 @@ function MilestoneItem:init(parent, data, black_bg)
 
 	self._passed = passed
 end
+
 AchievementMilestoneGui = AchievementMilestoneGui or class(GrowPanel)
 
 function AchievementMilestoneGui:init(parent, back_callback)
@@ -180,15 +183,21 @@ function AchievementMilestoneGui:init(parent, back_callback)
 		self._list:scroll_to_show_item_at_world(last_passed, self._list:world_y())
 	end
 
-	local back_panel = self:panel({layer = -1})
+	local back_panel = self:panel({
+		layer = -1
+	})
 
-	back_panel:rect({color = Color.black:with_alpha(0.8)})
-	BoxGuiObject:new(back_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	back_panel:rect({
+		color = Color.black:with_alpha(0.8)
+	})
+	BoxGuiObject:new(back_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self._back = back_panel
 
@@ -218,4 +227,3 @@ function AchievementMilestoneGui:back_pressed()
 
 	return true
 end
-

@@ -1,3 +1,5 @@
+require("lib/managers/custom_safehouse/UnoAchievementChallenge")
+
 local one_day_seconds = 86400
 CustomSafehouseManager = CustomSafehouseManager or class()
 CustomSafehouseManager.SAVE_DATA_VERSION = 2
@@ -9,23 +11,34 @@ function CustomSafehouseManager:init()
 	self:_setup()
 end
 
+function CustomSafehouseManager:init_finalize()
+	if Network:is_server() and managers.job:current_job_id() == "chill" then
+		self:send_room_tiers()
+	end
+
+	self._uno_achievement_challenge:init_finalize()
+end
+
 function CustomSafehouseManager:_setup()
 	self._server_tick = 0
 	self._highest_tier = #tweak_data.safehouse.prices.rooms
 
 	if not Global.custom_safehouse_manager then
-		Global.custom_safehouse_manager = {}
-		Global.custom_safehouse_manager.total = Application:digest_value(0, true)
-		Global.custom_safehouse_manager.total_collected = Application:digest_value(0, true)
-		Global.custom_safehouse_manager.prev_total = Application:digest_value(0, true)
-		Global.custom_safehouse_manager.rooms = {}
+		Global.custom_safehouse_manager = {
+			total = Application:digest_value(0, true),
+			total_collected = Application:digest_value(0, true),
+			prev_total = Application:digest_value(0, true),
+			rooms = {}
+		}
 
 		for index, data in ipairs(tweak_data.safehouse.rooms) do
 			Global.custom_safehouse_manager.rooms[data.room_id] = {
 				tier_start = 1,
 				tier_current = 1,
 				tier_max = data.tier_max or self._highest_tier,
-				unlocked_tiers = {1}
+				unlocked_tiers = {
+					1
+				}
 			}
 		end
 
@@ -46,14 +59,20 @@ function CustomSafehouseManager:_setup()
 
 	self:attempt_give_initial_coins()
 	self:check_if_new_daily_available()
-	managers.mission:add_global_event_listener("custom_safehouse_enter_safehouse", {Message.OnEnterSafeHouse}, callback(self, self, "_on_enter_safe_house"))
-	managers.mission:add_global_event_listener("custom_safehouse_heist_complete", {Message.OnHeistComplete}, callback(self, self, "_on_heist_completed"))
+	managers.mission:add_global_event_listener("custom_safehouse_enter_safehouse", {
+		Message.OnEnterSafeHouse
+	}, callback(self, self, "_on_enter_safe_house"))
+	managers.mission:add_global_event_listener("custom_safehouse_heist_complete", {
+		Message.OnHeistComplete
+	}, callback(self, self, "_on_heist_completed"))
 
 	self._trophy_unlocked_callbacks = {}
 
 	if not self:unlocked() then
 		self._global._new_player = true
 	end
+
+	self._uno_achievement_challenge = UnoAchievementChallenge:new()
 end
 
 function CustomSafehouseManager:save(data)
@@ -99,7 +118,8 @@ function CustomSafehouseManager:save(data)
 		daily = self._global.daily,
 		has_entered_safehouse = self._global._has_entered_safehouse or false,
 		spawn_cooldown = self._global._spawn_cooldown or 0,
-		new_player = self._global._new_player or false
+		new_player = self._global._new_player or false,
+		uno_achievement_challenge = self._uno_achievement_challenge:save()
 	}
 	data.CustomSafehouseManager = state
 end
@@ -163,6 +183,7 @@ function CustomSafehouseManager:load(data, version)
 
 		self:check_if_new_daily_available()
 		self:attempt_give_initial_coins()
+		self._uno_achievement_challenge:load(state.uno_achievement_challenge)
 	end
 end
 
@@ -268,10 +289,15 @@ end
 
 function CustomSafehouseManager:send_room_tiers(peer)
 	local send_func = nil
-	send_func = peer and function (room_name, room_tier)
-		managers.network:session():send_to_peer(peer, "sync_safehouse_room_tier", room_name, room_tier)
-	end or function (room_name, room_tier)
-		managers.network:session():send_to_peers("sync_safehouse_room_tier", room_name, room_tier)
+
+	if peer then
+		function send_func(room_name, room_tier)
+			managers.network:session():send_to_peer(peer, "sync_safehouse_room_tier", room_name, room_tier)
+		end
+	else
+		function send_func(room_name, room_tier)
+			managers.network:session():send_to_peers("sync_safehouse_room_tier", room_name, room_tier)
+		end
 	end
 
 	for name, v in pairs(self._global.rooms) do
@@ -361,7 +387,7 @@ function CustomSafehouseManager:can_afford_room_tier(room_id, tier)
 end
 
 function CustomSafehouseManager:can_afford_tier(tier)
-	if #tweak_data.safehouse.prices.rooms < tier then
+	if tier > #tweak_data.safehouse.prices.rooms then
 		return false
 	else
 		return tweak_data.safehouse.prices.rooms[tier] <= self:coins()
@@ -527,6 +553,7 @@ function CustomSafehouseManager:run_trophy_unlocked_callbacks(...)
 		callback(...)
 	end
 end
+
 CustomSafehouseManager._mutator_achievement_categories = {
 	"complete_heist_achievements",
 	"grenade_achievements",
@@ -693,6 +720,7 @@ end
 function CustomSafehouseManager:flush_completed_trophies()
 	self._global.completed_trophies = {}
 end
+
 CustomSafehouseManager.DAILY_STATES = {
 	"unstarted",
 	"seen",
@@ -733,7 +761,7 @@ function CustomSafehouseManager:has_completed_daily()
 		complete = true
 
 		for idx, objective in ipairs(self._global.daily.trophy.objectives) do
-			objective.completed = (objective.max_progress or 1) <= (objective.progress or 0)
+			objective.completed = (objective.progress or 0) >= (objective.max_progress or 1)
 
 			if not objective.completed then
 				complete = false
@@ -886,10 +914,12 @@ function CustomSafehouseManager:generate_daily(id, tag)
 		tag = tag or nil,
 		contractor = contractor.character,
 		timestamp = self:get_timestamp(),
-		rewards = {{
-			"safehouse_coins",
-			tweak_data.safehouse.rewards.daily_complete
-		}},
+		rewards = {
+			{
+				"safehouse_coins",
+				tweak_data.safehouse.rewards.daily_complete
+			}
+		},
 		trophy = deep_clone(daily)
 	}
 
@@ -1044,3 +1074,6 @@ function CustomSafehouseManager:is_new_player()
 	return self._global._new_player
 end
 
+function CustomSafehouseManager:uno_achievement_challenge()
+	return self._uno_achievement_challenge
+end

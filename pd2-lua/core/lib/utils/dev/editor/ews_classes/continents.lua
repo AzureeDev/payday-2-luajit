@@ -234,7 +234,9 @@ function ContinentPanel:open_world_setting_dialog()
 	local path, dir = managers.database:open_file_dialog(Global.frame, "World setting (*.world_setting)|*.world_setting", managers.editor:get_open_dir())
 
 	if path and dir then
-		CreateWorldSettingFile:new({path = path})
+		CreateWorldSettingFile:new({
+			path = path
+		})
 	end
 end
 
@@ -254,4 +256,3 @@ function ContinentPanel:set_world_setting_path(path)
 	self._world_setting_path:set_value(path or "-")
 	self._panel:layout()
 end
-

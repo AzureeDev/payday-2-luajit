@@ -54,4 +54,3 @@ function ElementCinematicCamera:pre_destroy(...)
 	ElementCinematicCamera.super.pre_destroy(self, ...)
 	self:_delete_camera_unit()
 end
-

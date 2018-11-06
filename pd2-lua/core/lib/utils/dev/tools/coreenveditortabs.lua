@@ -100,4 +100,3 @@ end
 
 function CoreEnvEditor:create_simple_interface()
 end
-

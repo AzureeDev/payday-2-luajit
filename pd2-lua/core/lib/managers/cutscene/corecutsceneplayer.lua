@@ -177,7 +177,12 @@ function CoreCutscenePlayer:_master_driving_sound_instance(sound_instance)
 	local master_instance = self._driving_sound_instance_map[sound_instance]
 
 	if master_instance == nil then
-		master_instance = sound_instance.playing_instances and sound_instance:playing_instances()[1] or sound_instance
+		if sound_instance.playing_instances then
+			master_instance = sound_instance:playing_instances()[1]
+		else
+			master_instance = sound_instance
+		end
+
 		self._driving_sound_instance_map[sound_instance] = master_instance
 	end
 
@@ -633,12 +638,12 @@ function CoreCutscenePlayer:_wide_viewport_rect()
 		x = viewport_x,
 		y = viewport_y,
 		w = viewport_width,
-		h = viewport_height
+		h = viewport_height,
+		px = rect.x * resolution.x,
+		py = rect.y * resolution.y,
+		pw = rect.w * resolution.x,
+		ph = rect.h * resolution.y
 	}
-	rect.px = rect.x * resolution.x
-	rect.py = rect.y * resolution.y
-	rect.pw = rect.w * resolution.x
-	rect.ph = rect.h * resolution.y
 
 	return rect
 end
@@ -893,4 +898,3 @@ function CoreCutscenePlayer:_camera_has_cut()
 
 	return position_threshold_reached or rotation_threshold_reached
 end
-

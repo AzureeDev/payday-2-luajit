@@ -23,4 +23,3 @@ function StopLoadingGame:transition()
 
 	return CoreMenuStateInGame.InGame
 end
-

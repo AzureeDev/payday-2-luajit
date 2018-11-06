@@ -20,4 +20,3 @@ function AssetTriggerUnitElement:_build_panel(panel, panel_sizer)
 	self:_build_value_combobox(panel, panel_sizer, "id", managers.assets:get_every_asset_ids(), "Select an asset id from the combobox")
 	self:_add_help_text("Set the asset that the element should trigger on.")
 end
-

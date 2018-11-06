@@ -74,7 +74,9 @@ function ElementSpawnCivilianGroup:on_executed(instigator)
 		for i = 1, self._group_data.amount, 1 do
 			local element = self._spawn_points[self:_get_spawn_point(i)]
 
-			element:produce(self._values.team and {team = self._values.team})
+			element:produce(self._values.team and {
+				team = self._values.team
+			})
 		end
 	end
 
@@ -122,4 +124,3 @@ function ElementSpawnCivilianGroup:units()
 
 	return all_units
 end
-

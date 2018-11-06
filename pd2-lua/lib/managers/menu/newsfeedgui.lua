@@ -25,7 +25,7 @@ function NewsFeedGui:update(t, dt)
 			self._next = nil
 			self._news.i = self._news.i + 1
 
-			if #self._titles < self._news.i then
+			if self._news.i > #self._titles then
 				self._news.i = 1
 			end
 
@@ -88,7 +88,9 @@ function NewsFeedGui:news_result(success, body)
 	if success then
 		self._titles = self:_get_text_block(body, "<title>", "</title>", self.MAX_NEWS)
 		self._links = self:_get_text_block(body, "<link><![CDATA[", "]]></link>", self.MAX_NEWS)
-		self._news = {i = 0}
+		self._news = {
+			i = 0
+		}
 		self._next = true
 
 		self._panel:child("title_announcement"):set_visible(#self._titles > 0)
@@ -164,19 +166,21 @@ function NewsFeedGui:_get_text_block(s, sp, ep, max_results)
 		table.insert(result, string.sub(s, e1 + 1, s2 - 1))
 	end
 
-	while i < len and #result < max_results do
-		local s1, e1 = string.find(s, "<item>", i, true)
+	if i < len then
+		while i < len and max_results > #result do
+			local s1, e1 = string.find(s, "<item>", i, true)
 
-		if not e1 then
-			break
+			if not e1 then
+				break
+			end
+
+			local s2, e2 = string.find(s, "</item>", e1, true)
+			local item_s = string.sub(s, e1 + 1, s2 - 1)
+
+			f(item_s, sp, ep, max_results)
+
+			i = e1
 		end
-
-		local s2, e2 = string.find(s, "</item>", e1, true)
-		local item_s = string.sub(s, e1 + 1, s2 - 1)
-
-		f(item_s, sp, ep, max_results)
-
-		i = e1
 	end
 
 	return result
@@ -210,4 +214,3 @@ function NewsFeedGui:close()
 		self._ws:panel():remove(self._panel)
 	end
 end
-

@@ -100,8 +100,22 @@ function MenuNodeCustomizeGadgetGui:_setup_item_panel(safe_rect, res)
 	if mod_td.adds then
 		for _, part_id in ipairs(mod_td.adds) do
 			local sub_type = tweak_data.weapon.factory.parts[part_id].sub_type
-			show_laser = sub_type == "laser" or false
-			show_flashlight = sub_type == "flashlight" or false
+
+			if sub_type ~= "laser" then
+				if false then
+					show_laser = false
+				end
+			else
+				show_laser = true
+			end
+
+			if sub_type ~= "flashlight" then
+				if false then
+					show_flashlight = false
+				end
+			else
+				show_flashlight = true
+			end
 		end
 	end
 
@@ -146,12 +160,14 @@ function MenuNodeCustomizeGadgetGui:_setup_item_panel(safe_rect, res)
 
 	self:update_node_colors()
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_clipping(false)
 	self.boxgui:set_layer(1000)
@@ -296,4 +312,3 @@ function MenuNodeCustomizeGadgetGui:close()
 	self:_unretrieve_texture()
 	MenuNodeCustomizeGadgetGui.super.close(self)
 end
-

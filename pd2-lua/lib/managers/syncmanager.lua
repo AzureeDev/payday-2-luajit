@@ -52,6 +52,7 @@ function SyncManager:send_all_synced_units_to(peer)
 		end
 	end
 end
+
 SyncManager.sync_functions = {
 	weapon = "handle_synced_weapon_blueprint",
 	vault_cash = "handle_synced_vault_cash",
@@ -118,9 +119,15 @@ function SyncManager:_get_mask_id_and_blueprint(data_string)
 	local data = string.split(data_string or "", " ")
 	local mask_id = data[1]
 	local blueprint = {
-		color = {id = data[2] or "nothing"},
-		pattern = {id = data[3] or "no_color_no_material"},
-		material = {id = data[4] or "plastic"}
+		color = {
+			id = data[2] or "nothing"
+		},
+		pattern = {
+			id = data[3] or "no_color_no_material"
+		},
+		material = {
+			id = data[4] or "plastic"
+		}
 	}
 
 	return mask_id, blueprint
@@ -158,4 +165,3 @@ function SyncManager:handle_synced_vault_cash(unit_id, data_string)
 		unit_element:set_active_tier(target_tier)
 	end
 end
-

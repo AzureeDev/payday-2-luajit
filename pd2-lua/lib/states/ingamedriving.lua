@@ -105,4 +105,3 @@ end
 function IngameDriving:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

@@ -8,4 +8,3 @@ function GageModifierFastCrouching:modify_value(id, value, state_data, speed_twe
 
 	return value
 end
-

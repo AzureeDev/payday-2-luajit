@@ -111,4 +111,3 @@ function CoreCutsceneActorDatabaseUnitTypeInfo:_file_line(file, line)
 		end
 	end
 end
-

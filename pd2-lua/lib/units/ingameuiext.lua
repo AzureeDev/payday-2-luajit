@@ -9,4 +9,3 @@ function IngameUIExt:init(unit)
 		end
 	end
 end
-

@@ -15,7 +15,9 @@ function HUDSuspicion:init(hud, sound_source)
 		visible = false,
 		valign = "center"
 	})
-	self._misc_panel = self._suspicion_panel:panel({name = "misc_panel"})
+	self._misc_panel = self._suspicion_panel:panel({
+		name = "misc_panel"
+	})
 
 	self._suspicion_panel:set_size(200, 200)
 	self._suspicion_panel:set_center(self._suspicion_panel:parent():w() / 2, self._suspicion_panel:parent():h() / 2)
@@ -331,4 +333,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDSuspicionVR")
 end
-

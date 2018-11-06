@@ -21,4 +21,3 @@ function ElementSpecialObjectiveTrigger:on_executed(instigator)
 
 	ElementSpecialObjectiveTrigger.super.on_executed(self, instigator)
 end
-

@@ -22,4 +22,3 @@ function ModifierMedicRage:OnEnemyDied(unit)
 		end
 	end
 end
-

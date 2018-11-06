@@ -91,7 +91,13 @@ function HuskPlayerInventory:add_unit_by_factory_name(factory_name, equip, insta
 	end
 
 	local blueprint = nil
-	blueprint = blueprint_string and blueprint_string ~= "" and managers.weapon_factory:unpack_blueprint_from_string(factory_name, blueprint_string) or managers.weapon_factory:get_default_blueprint_by_factory_id(factory_name)
+
+	if blueprint_string and blueprint_string ~= "" then
+		blueprint = managers.weapon_factory:unpack_blueprint_from_string(factory_name, blueprint_string)
+	else
+		blueprint = managers.weapon_factory:get_default_blueprint_by_factory_id(factory_name)
+	end
+
 	local cosmetics = nil
 	local cosmetics_data = string.split(cosmetics_string, "-")
 	local weapon_skin_id = cosmetics_data[1] or "nil"
@@ -217,3 +223,13 @@ function HuskPlayerInventory:set_weapon_underbarrel(selection_index, underbarrel
 	selection.unit:base():set_underbarrel(underbarrel_id, is_on)
 end
 
+function HuskPlayerInventory:set_visibility_state(state)
+	local state_name = self._unit:movement():current_state_name()
+	local is_clean = HuskPlayerMovement.clean_states[state_name]
+
+	if state and is_clean then
+		return
+	end
+
+	HuskPlayerInventory.super.set_visibility_state(self, state)
+end

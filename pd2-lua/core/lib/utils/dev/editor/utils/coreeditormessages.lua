@@ -6,7 +6,7 @@ local function set_enum()
 	return enum
 end
 
-EditorMessage = {}
-EditorMessage.OnUnitRemoved = set_enum()
-EditorMessage.OnUnitRestored = set_enum()
-
+EditorMessage = {
+	OnUnitRemoved = set_enum(),
+	OnUnitRestored = set_enum()
+}

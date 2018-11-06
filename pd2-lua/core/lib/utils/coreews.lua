@@ -91,6 +91,7 @@ end
 function EWSConfirmDialog:cancel()
 	return self._cancel
 end
+
 LocalizerTextCtrl = LocalizerTextCtrl or CoreClass.class()
 
 function LocalizerTextCtrl:init(panel, sizer, text)
@@ -110,6 +111,7 @@ end
 function LocalizerTextCtrl:set_value(value)
 	return self._text_ctrlr:set_value(Localizer:lookup(value))
 end
+
 EWSRadioBitmapButton = EWSRadioBitmapButton or CoreClass.class()
 
 function EWSRadioBitmapButton:init(panel, bmp, id, style)
@@ -144,6 +146,7 @@ end
 function EWSRadioBitmapButton:value()
 	return self._value
 end
+
 EwsTextDialog = EwsTextDialog or CoreClass.class()
 
 function EwsTextDialog:init(name, init_text)
@@ -529,7 +532,9 @@ function list_selector(params)
 end
 
 function _list_selector_add_from_list(params)
-	local dialog = _G.SelectNameModal:new("Add", _list_selector_get_left_box_value(params), {list_style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING"})
+	local dialog = _G.SelectNameModal:new("Add", _list_selector_get_left_box_value(params), {
+		list_style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING"
+	})
 
 	if dialog:cancelled() then
 		return
@@ -551,7 +556,9 @@ function _list_selector_add_from_list(params)
 end
 
 function _list_selector_remove_from_list(params)
-	local dialog = _G.SelectNameModal:new("Remove", _list_selector_get_value(params), {list_style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING"})
+	local dialog = _G.SelectNameModal:new("Remove", _list_selector_get_value(params), {
+		list_style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING"
+	})
 
 	if dialog:cancelled() then
 		return
@@ -644,7 +651,9 @@ function combobox_and_list(params)
 	local toolbar = EWS:ToolBar(params.panel, "", "TB_FLAT,TB_NODIVIDER")
 
 	toolbar:add_tool("SELECT_NAME_LIST", "Select from list", image_path("world_editor\\unit_by_name_list.png"), nil)
-	toolbar:connect("SELECT_NAME_LIST", "EVT_COMMAND_MENU_SELECTED", callback(nil, _G, "_on_gui_value_combobox_toolbar_select_dialog"), {combobox_params = params})
+	toolbar:connect("SELECT_NAME_LIST", "EVT_COMMAND_MENU_SELECTED", callback(nil, _G, "_on_gui_value_combobox_toolbar_select_dialog"), {
+		combobox_params = params
+	})
 	toolbar:realize()
 	horizontal_sizer:add(toolbar, 0, 1, "EXPAND,LEFT")
 
@@ -681,4 +690,3 @@ function get_notebook_current_page_index(notebook)
 
 	return nil
 end
-

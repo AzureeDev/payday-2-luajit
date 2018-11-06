@@ -33,6 +33,7 @@ function ElementFilter:on_executed(instigator)
 
 	ElementFilter.super.on_executed(self, instigator)
 end
+
 local win32 = Idstring("WIN32")
 local ps3 = Idstring("PS3")
 local x360 = Idstring("X360")
@@ -136,4 +137,3 @@ function ElementFilter:_check_mode()
 
 	return false
 end
-

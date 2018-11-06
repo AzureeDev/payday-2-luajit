@@ -175,7 +175,9 @@ function CoreCutscene:_parse_single_animation_blob(cutscene_node)
 		if collection_node:name() == "controlled_units" then
 			local animation_blob = collection_node:parameter("animation_blob")
 
-			return animation_blob and {animation_blob}
+			return animation_blob and {
+				animation_blob
+			}
 		end
 	end
 
@@ -213,4 +215,3 @@ function CoreCutscene:_debug_persistent_keys()
 
 	return persistent_keys
 end
-

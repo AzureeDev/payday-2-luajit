@@ -38,4 +38,3 @@ function Material_configDependencyNode:_walkxml2dependencies(xmlnode, deps)
 		end
 	end
 end
-

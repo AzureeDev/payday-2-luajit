@@ -23,6 +23,7 @@ end
 
 function Updator:set_batch_count()
 end
+
 SlaveUpdator = SlaveUpdator or class(Updator)
 
 function SlaveUpdator:init(vp, port)
@@ -81,6 +82,7 @@ function SlaveUpdator:slaveupdators_init()
 	self._units = {}
 	self._pings = {}
 end
+
 MasterUpdator = MasterUpdator or class(Updator)
 
 function MasterUpdator:init(vp, host, port, master_listener_port, manual_pumping)
@@ -145,4 +147,3 @@ end
 function MasterUpdator:slaveupdators_ready_to_send()
 	self._ready_to_send = true
 end
-

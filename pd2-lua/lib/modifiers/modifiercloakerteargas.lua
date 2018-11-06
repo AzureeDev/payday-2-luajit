@@ -19,4 +19,3 @@ function ModifierCloakerTearGas:OnEnemyDied(unit, damage_info)
 		grenade:base():detonate()
 	end
 end
-

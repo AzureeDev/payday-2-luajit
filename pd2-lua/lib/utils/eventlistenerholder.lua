@@ -1,7 +1,9 @@
 EventListenerHolder = EventListenerHolder or class()
 
 function EventListenerHolder:add(key, event_types, clbk)
-	event_types = type(event_types) == "table" and event_types or {event_types}
+	event_types = type(event_types) == "table" and event_types or {
+		event_types
+	}
 
 	if self._calling then
 		self:_set_new(key, event_types, clbk)
@@ -156,4 +158,3 @@ end
 function EventListenerHolder:has_listeners_for_event(event)
 	return self._listeners and self._listeners[event]
 end
-

@@ -4,7 +4,9 @@ require("lib/managers/menu/MenuNodeKitGui")
 MenuKitRenderer = MenuKitRenderer or class(MenuLobbyRenderer)
 
 function MenuKitRenderer:init(logic)
-	local parameters = {layer = 200}
+	local parameters = {
+		layer = 200
+	}
 
 	MenuRenderer.init(self, logic, parameters)
 end
@@ -45,8 +47,7 @@ function MenuKitRenderer:open(...)
 	MenuKitRenderer.super.open(self, ...)
 
 	if self._player_slots then
-		for _, slot in ipairs(self._player_slots) do
-			-- Nothing
+		for slot4, slot5 in ipairs(self._player_slots) do
 		end
 	end
 end
@@ -195,4 +196,3 @@ end
 function MenuKitRenderer:close(...)
 	MenuKitRenderer.super.close(self, ...)
 end
-

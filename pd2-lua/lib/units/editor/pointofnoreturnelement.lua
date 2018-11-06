@@ -1,5 +1,7 @@
 PointOfNoReturnElement = PointOfNoReturnElement or class(MissionElement)
-PointOfNoReturnElement.LINK_ELEMENTS = {"elements"}
+PointOfNoReturnElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function PointOfNoReturnElement:init(unit)
 	PointOfNoReturnElement.super.init(self, unit)
@@ -42,7 +44,9 @@ function PointOfNoReturnElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local exact_names = {"core/units/mission_elements/trigger_area/trigger_area"}
+	local exact_names = {
+		"core/units/mission_elements/trigger_area/trigger_area"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, nil, exact_names)
 
@@ -267,4 +271,3 @@ end
 function PointOfNoReturnElement:add_triggers(vc)
 	vc:add_trigger(Idstring("lmb"), callback(self, self, "add_element"))
 end
-

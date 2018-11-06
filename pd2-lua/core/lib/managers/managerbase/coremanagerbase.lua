@@ -145,4 +145,3 @@ function ManagerBase:end_update(t, dt)
 		self.__changed = false
 	end
 end
-

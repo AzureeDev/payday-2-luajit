@@ -58,7 +58,9 @@ function CoreTableEditorPanel:add_column(heading, format_style)
 end
 
 function CoreTableEditorPanel:add_item(...)
-	local values = {...}
+	local values = {
+		...
+	}
 	local item_index = self.__list_ctrl:append_item(tostring(values[1]))
 
 	for i = 2, #values, 1 do
@@ -245,4 +247,3 @@ function CoreTableEditorPanel:_on_control_edited(control, column_name, value_met
 
 	self:set_selected_item_value(column_name, value)
 end
-

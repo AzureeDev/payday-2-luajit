@@ -22,4 +22,3 @@ core:_add_to_pristine_and_global("properties", CoreCode.properties)
 core:import("CoreLogic")
 core:_add_to_pristine_and_global("iff", CoreLogic.iff)
 core:_add_to_pristine_and_global("toboolean", CoreLogic.toboolean)
-

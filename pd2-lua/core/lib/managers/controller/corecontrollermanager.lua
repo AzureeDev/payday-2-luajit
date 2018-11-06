@@ -130,7 +130,9 @@ function ControllerManager:replace_active_controller(replacement_ctrl_index, rep
 	local new_indexes = {}
 
 	for wrapper_index, controller_index in pairs(self._wrapper_to_controller_list) do
-		new_indexes[wrapper_index] = {replacement_ctrl}
+		new_indexes[wrapper_index] = {
+			replacement_ctrl
+		}
 	end
 
 	self._wrapper_to_controller_list = new_indexes
@@ -731,4 +733,3 @@ function ControllerManager:verify_parsed_controller_setup_map(parsed_controller_
 
 	return result
 end
-

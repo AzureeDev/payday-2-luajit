@@ -13,7 +13,9 @@ end
 
 function MenuItemDivider:setup_gui(node, row_item)
 	local scaled_size = managers.gui_data:scaled_size()
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	local h = row_item.item:parameters().size or 10
 
 	if row_item.text then
@@ -64,4 +66,3 @@ end
 function MenuItemDivider:on_delete_row_item(row_item, ...)
 	MenuItemDivider.super.on_delete_row_item(self, row_item, ...)
 end
-

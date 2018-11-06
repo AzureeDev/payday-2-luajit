@@ -124,4 +124,3 @@ end
 function SessionManager:_debug_time()
 	return self._debug_timer
 end
-

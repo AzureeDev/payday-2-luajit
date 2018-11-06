@@ -75,4 +75,3 @@ function CoreSequenceCutsceneKey:_run_sequence_if_exists(sequence_name)
 		self:_unit_extension(self:unit_name(), "damage"):run_sequence_simple(sequence_name)
 	end
 end
-

@@ -27,4 +27,3 @@ function HuskCivilianDamage:damage_fire(attack_data)
 
 	return CopDamage.damage_fire(self, attack_data)
 end
-

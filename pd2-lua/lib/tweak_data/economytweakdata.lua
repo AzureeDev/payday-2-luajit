@@ -85,7 +85,11 @@ function EconomyTweakData:init()
 	}
 	self.contents.legendary = {
 		def_id = 10000,
-		contains = {weapon_skins = {"ak74_rodina"}},
+		contains = {
+			weapon_skins = {
+				"ak74_rodina"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.overkill_01 = {
@@ -115,16 +119,20 @@ function EconomyTweakData:init()
 				"ppk_bloodsplat",
 				"b92fs_wooh"
 			},
-			contents = {"overkill_01_legendary"}
+			contents = {
+				"overkill_01_legendary"
+			}
 		}
 	}
 	self.contents.overkill_01_legendary = {
 		def_id = 10002,
-		contains = {weapon_skins = {
-			"flamethrower_mk2_fire",
-			"rpg7_boom",
-			"m134_bulletstorm"
-		}},
+		contains = {
+			weapon_skins = {
+				"flamethrower_mk2_fire",
+				"rpg7_boom",
+				"m134_bulletstorm"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.event_01 = {
@@ -147,12 +155,18 @@ function EconomyTweakData:init()
 				"plainsrider_linked",
 				"new_m4_payday"
 			},
-			contents = {"event_01_legendary"}
+			contents = {
+				"event_01_legendary"
+			}
 		}
 	}
 	self.contents.event_01_legendary = {
 		def_id = 10004,
-		contains = {weapon_skins = {"deagle_bling"}},
+		contains = {
+			weapon_skins = {
+				"deagle_bling"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.weapon_01 = {
@@ -175,7 +189,9 @@ function EconomyTweakData:init()
 				"famas_hypno",
 				"huntsman_hypno"
 			},
-			contents = {"legendary"}
+			contents = {
+				"legendary"
+			}
 		}
 	}
 	self.contents.event_red = {
@@ -193,7 +209,9 @@ function EconomyTweakData:init()
 				"new_m14_golddigger",
 				"ppk_golddigger"
 			},
-			contents = {"event_01_legendary"}
+			contents = {
+				"event_01_legendary"
+			}
 		},
 		type = "limited"
 	}
@@ -212,7 +230,9 @@ function EconomyTweakData:init()
 				"deagle_bloodbath",
 				"rpg7_bloodbath"
 			},
-			contents = {"legendary"}
+			contents = {
+				"legendary"
+			}
 		},
 		type = "limited"
 	}
@@ -236,12 +256,18 @@ function EconomyTweakData:init()
 				"g36_dallas",
 				"m95_dallas"
 			},
-			contents = {"dallas_01_legendary"}
+			contents = {
+				"dallas_01_legendary"
+			}
 		}
 	}
 	self.contents.dallas_01_legendary = {
 		def_id = 10009,
-		contains = {weapon_skins = {"p90_dallas_sallad"}},
+		contains = {
+			weapon_skins = {
+				"p90_dallas_sallad"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.surf_01 = {
@@ -264,12 +290,18 @@ function EconomyTweakData:init()
 				"striker_waves",
 				"x_g22c_waves"
 			},
-			contents = {"surf_01_legendary"}
+			contents = {
+				"surf_01_legendary"
+			}
 		}
 	}
 	self.contents.surf_01_legendary = {
 		def_id = 10011,
-		contains = {weapon_skins = {"r870_waves"}},
+		contains = {
+			weapon_skins = {
+				"r870_waves"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.event_flake = {
@@ -287,12 +319,18 @@ function EconomyTweakData:init()
 				"wa2000_ginger",
 				"akmsu_ginger"
 			},
-			contents = {"event_flake_legendary"}
+			contents = {
+				"event_flake_legendary"
+			}
 		}
 	}
 	self.contents.event_flake_legendary = {
 		def_id = 10013,
-		contains = {weapon_skins = {"x_1911_ginger"}},
+		contains = {
+			weapon_skins = {
+				"x_1911_ginger"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.event_bah = {
@@ -310,13 +348,19 @@ function EconomyTweakData:init()
 				"x_1911_baaah",
 				"ksg_baaah"
 			},
-			contents = {"event_bah_legendary"}
+			contents = {
+				"event_bah_legendary"
+			}
 		},
 		type = "limited"
 	}
 	self.contents.event_bah_legendary = {
 		def_id = 10015,
-		contains = {weapon_skins = {"model70_baaah"}},
+		contains = {
+			weapon_skins = {
+				"model70_baaah"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.pack_01 = {
@@ -339,12 +383,18 @@ function EconomyTweakData:init()
 				"s552_wolf",
 				"m16_wolf"
 			},
-			contents = {"pack_01_legendary"}
+			contents = {
+				"pack_01_legendary"
+			}
 		}
 	}
 	self.contents.pack_01_legendary = {
 		def_id = 10017,
-		contains = {weapon_skins = {"par_wolf"}},
+		contains = {
+			weapon_skins = {
+				"par_wolf"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.cola_01 = {
@@ -367,12 +417,18 @@ function EconomyTweakData:init()
 				"gre_m79_cola",
 				"fal_cola"
 			},
-			contents = {"cola_01_legendary"}
+			contents = {
+				"cola_01_legendary"
+			}
 		}
 	}
 	self.contents.cola_01_legendary = {
 		def_id = 10019,
-		contains = {weapon_skins = {"m16_cola"}},
+		contains = {
+			weapon_skins = {
+				"m16_cola"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.burn_01 = {
@@ -395,12 +451,18 @@ function EconomyTweakData:init()
 				"glock_17_burn",
 				"scorpion_burn"
 			},
-			contents = {"burn_01_legendary"}
+			contents = {
+				"burn_01_legendary"
+			}
 		}
 	}
 	self.contents.burn_01_legendary = {
 		def_id = 10021,
-		contains = {weapon_skins = {"judge_burn"}},
+		contains = {
+			weapon_skins = {
+				"judge_burn"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.buck_01 = {
@@ -423,12 +485,18 @@ function EconomyTweakData:init()
 				"new_mp5_buck",
 				"m1928_buck"
 			},
-			contents = {"buck_01_legendary"}
+			contents = {
+				"buck_01_legendary"
+			}
 		}
 	}
 	self.contents.buck_01_legendary = {
 		def_id = 10023,
-		contains = {weapon_skins = {"boot_buck"}},
+		contains = {
+			weapon_skins = {
+				"boot_buck"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.same_01 = {
@@ -451,12 +519,18 @@ function EconomyTweakData:init()
 				"new_m14_same",
 				"par_same"
 			},
-			contents = {"same_01_legendary"}
+			contents = {
+				"same_01_legendary"
+			}
 		}
 	}
 	self.contents.same_01_legendary = {
 		def_id = 10025,
-		contains = {weapon_skins = {"ksg_same"}},
+		contains = {
+			weapon_skins = {
+				"ksg_same"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.bundles.same_01 = {
@@ -464,24 +538,26 @@ function EconomyTweakData:init()
 		dlc_id = "518760",
 		quality = "mint",
 		bonus = false,
-		contains = {weapon_skins = {
-			"amcar_same",
-			"usp_same",
-			"gre_m79_same",
-			"deagle_same",
-			"colt_1911_same",
-			"b92fs_same",
-			"judge_same",
-			"p90_same",
-			"akm_same",
-			"ak5_same",
-			"baka_same",
-			"model70_same",
-			"new_raging_bull_same",
-			"new_m14_same",
-			"par_same",
-			"ksg_same"
-		}}
+		contains = {
+			weapon_skins = {
+				"amcar_same",
+				"usp_same",
+				"gre_m79_same",
+				"deagle_same",
+				"colt_1911_same",
+				"b92fs_same",
+				"judge_same",
+				"p90_same",
+				"akm_same",
+				"ak5_same",
+				"baka_same",
+				"model70_same",
+				"new_raging_bull_same",
+				"new_m14_same",
+				"par_same",
+				"ksg_same"
+			}
+		}
 	}
 	self.contents.grunt_01 = {
 		def_id = 10026,
@@ -503,12 +579,18 @@ function EconomyTweakData:init()
 				"akmsu_grunt",
 				"x_1911_grunt"
 			},
-			contents = {"grunt_01_legendary"}
+			contents = {
+				"grunt_01_legendary"
+			}
 		}
 	}
 	self.contents.grunt_01_legendary = {
 		def_id = 10027,
-		contains = {weapon_skins = {"tecci_grunt"}},
+		contains = {
+			weapon_skins = {
+				"tecci_grunt"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.lones_01 = {
@@ -532,12 +614,20 @@ function EconomyTweakData:init()
 	}
 	self.contents.lones_01_legendary = {
 		def_id = 10029,
-		contains = {weapon_skins = {"serbu_lones"}},
+		contains = {
+			weapon_skins = {
+				"serbu_lones"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.lones_01_legendary_02 = {
 		def_id = 10030,
-		contains = {weapon_skins = {"new_m14_lones"}},
+		contains = {
+			weapon_skins = {
+				"new_m14_lones"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.smosh_01 = {
@@ -560,12 +650,18 @@ function EconomyTweakData:init()
 				"new_m4_smosh",
 				"aug_smosh"
 			},
-			contents = {"smosh_01_legendary"}
+			contents = {
+				"smosh_01_legendary"
+			}
 		}
 	}
 	self.contents.smosh_01_legendary = {
 		def_id = 10032,
-		contains = {weapon_skins = {"new_raging_bull_smosh"}},
+		contains = {
+			weapon_skins = {
+				"new_raging_bull_smosh"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.bundles.smosh_01 = {
@@ -573,24 +669,26 @@ function EconomyTweakData:init()
 		dlc_id = "558270",
 		quality = "mint",
 		bonus = false,
-		contains = {weapon_skins = {
-			"scar_smosh",
-			"colt_1911_smosh",
-			"scorpion_smosh",
-			"deagle_smosh",
-			"r870_smosh",
-			"m32_smosh",
-			"x_1911_smosh",
-			"hs2000_smosh",
-			"saw_smosh",
-			"m37_smosh",
-			"m1928_smosh",
-			"mateba_smosh",
-			"polymer_smosh",
-			"new_m4_smosh",
-			"aug_smosh",
-			"new_raging_bull_smosh"
-		}}
+		contains = {
+			weapon_skins = {
+				"scar_smosh",
+				"colt_1911_smosh",
+				"scorpion_smosh",
+				"deagle_smosh",
+				"r870_smosh",
+				"m32_smosh",
+				"x_1911_smosh",
+				"hs2000_smosh",
+				"saw_smosh",
+				"m37_smosh",
+				"m1928_smosh",
+				"mateba_smosh",
+				"polymer_smosh",
+				"new_m4_smosh",
+				"aug_smosh",
+				"new_raging_bull_smosh"
+			}
+		}
 	}
 	self.contents.sfs_01 = {
 		def_id = 10033,
@@ -612,12 +710,18 @@ function EconomyTweakData:init()
 				"mac10_sfs",
 				"galil_sfs"
 			},
-			contents = {"sfs_01_legendary"}
+			contents = {
+				"sfs_01_legendary"
+			}
 		}
 	}
 	self.contents.sfs_01_legendary = {
 		def_id = 10034,
-		contains = {weapon_skins = {"contraband_sfs"}},
+		contains = {
+			weapon_skins = {
+				"contraband_sfs"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.wac_01 = {
@@ -640,12 +744,18 @@ function EconomyTweakData:init()
 				"x_mp5_wac",
 				"msr_wac"
 			},
-			contents = {"wac_01_legendary"}
+			contents = {
+				"wac_01_legendary"
+			}
 		}
 	}
 	self.contents.wac_01_legendary = {
 		def_id = 10036,
-		contains = {weapon_skins = {"x_akmsu_wac"}},
+		contains = {
+			weapon_skins = {
+				"x_akmsu_wac"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.cs3_01 = {
@@ -668,12 +778,18 @@ function EconomyTweakData:init()
 				"huntsman_cs3",
 				"polymer_cs3"
 			},
-			contents = {"cs3_01_legendary"}
+			contents = {
+				"cs3_01_legendary"
+			}
 		}
 	}
 	self.contents.cs3_01_legendary = {
 		def_id = 10038,
-		contains = {weapon_skins = {"ppk_cs3"}},
+		contains = {
+			weapon_skins = {
+				"ppk_cs3"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.bundles.cs3_01 = {
@@ -681,24 +797,26 @@ function EconomyTweakData:init()
 		dlc_id = "627400",
 		quality = "mint",
 		bonus = false,
-		contains = {weapon_skins = {
-			"judge_cs3",
-			"m95_cs3",
-			"peacemaker_cs3",
-			"arbiter_cs3",
-			"flint_cs3",
-			"aa12_cs3",
-			"new_mp5_cs3",
-			"saw_cs3",
-			"frankish_cs3",
-			"new_m4_cs3",
-			"sparrow_cs3",
-			"tti_cs3",
-			"new_raging_bull_cs3",
-			"huntsman_cs3",
-			"ppk_cs3",
-			"polymer_cs3"
-		}}
+		contains = {
+			weapon_skins = {
+				"judge_cs3",
+				"m95_cs3",
+				"peacemaker_cs3",
+				"arbiter_cs3",
+				"flint_cs3",
+				"aa12_cs3",
+				"new_mp5_cs3",
+				"saw_cs3",
+				"frankish_cs3",
+				"new_m4_cs3",
+				"sparrow_cs3",
+				"tti_cs3",
+				"new_raging_bull_cs3",
+				"huntsman_cs3",
+				"ppk_cs3",
+				"polymer_cs3"
+			}
+		}
 	}
 	self.contents.cvc_01 = {
 		def_id = 10039,
@@ -734,12 +852,18 @@ function EconomyTweakData:init()
 				"china_mxs",
 				"akm_mxs"
 			},
-			contents = {"mxs_01_legendary"}
+			contents = {
+				"mxs_01_legendary"
+			}
 		}
 	}
 	self.contents.mxs_01_legendary = {
 		def_id = 10041,
-		contains = {weapon_skins = {"x_chinchilla_mxs"}},
+		contains = {
+			weapon_skins = {
+				"x_chinchilla_mxs"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.cs4_01 = {
@@ -762,12 +886,18 @@ function EconomyTweakData:init()
 				"new_raging_bull_cs4",
 				"striker_cs4"
 			},
-			contents = {"cs4_01_legendary"}
+			contents = {
+				"cs4_01_legendary"
+			}
 		}
 	}
 	self.contents.cs4_01_legendary = {
 		def_id = 10043,
-		contains = {weapon_skins = {"p90_cs4"}},
+		contains = {
+			weapon_skins = {
+				"p90_cs4"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.bundles.cs4_01 = {
@@ -775,24 +905,26 @@ function EconomyTweakData:init()
 		dlc_id = "694940",
 		quality = "mint",
 		bonus = false,
-		contains = {weapon_skins = {
-			"polymer_cs4",
-			"l85a2_cs4",
-			"amcar_cs4",
-			"usp_cs4",
-			"m16_cs4",
-			"benelli_cs4",
-			"wa2000_cs4",
-			"serbu_cs4",
-			"arbiter_cs4",
-			"flint_cs4",
-			"chinchilla_cs4",
-			"rpg7_cs4",
-			"mac10_cs4",
-			"new_raging_bull_cs4",
-			"striker_cs4",
-			"p90_cs4"
-		}}
+		contains = {
+			weapon_skins = {
+				"polymer_cs4",
+				"l85a2_cs4",
+				"amcar_cs4",
+				"usp_cs4",
+				"m16_cs4",
+				"benelli_cs4",
+				"wa2000_cs4",
+				"serbu_cs4",
+				"arbiter_cs4",
+				"flint_cs4",
+				"chinchilla_cs4",
+				"rpg7_cs4",
+				"mac10_cs4",
+				"new_raging_bull_cs4",
+				"striker_cs4",
+				"p90_cs4"
+			}
+		}
 	}
 	self.contents.ast_01 = {
 		def_id = 10044,
@@ -823,12 +955,18 @@ function EconomyTweakData:init()
 				"breech_wwt",
 				"mg42_wwt"
 			},
-			contents = {"wwt_01_legendary"}
+			contents = {
+				"wwt_01_legendary"
+			}
 		}
 	}
 	self.contents.wwt_01_legendary = {
 		def_id = 10046,
-		contains = {weapon_skins = {"colt_1911_wwt"}},
+		contains = {
+			weapon_skins = {
+				"colt_1911_wwt"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.skf_01 = {
@@ -851,12 +989,18 @@ function EconomyTweakData:init()
 				"famas_skf",
 				"g36_skf"
 			},
-			contents = {"skf_01_legendary"}
+			contents = {
+				"skf_01_legendary"
+			}
 		}
 	}
 	self.contents.skf_01_legendary = {
 		def_id = 10048,
-		contains = {weapon_skins = {"mac10_skf"}},
+		contains = {
+			weapon_skins = {
+				"mac10_skf"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.bundles.skf_01 = {
@@ -864,24 +1008,26 @@ function EconomyTweakData:init()
 		dlc_id = "729560",
 		quality = "mint",
 		bonus = false,
-		contains = {weapon_skins = {
-			"new_m4_skf",
-			"p226_skf",
-			"amcar_skf",
-			"ppk_skf",
-			"aug_skf",
-			"lemming_skf",
-			"g26_skf",
-			"ching_skf",
-			"mp7_skf",
-			"ray_skf",
-			"b682_skf",
-			"ak5_skf",
-			"scar_skf",
-			"famas_skf",
-			"g36_skf",
-			"mac10_skf"
-		}}
+		contains = {
+			weapon_skins = {
+				"new_m4_skf",
+				"p226_skf",
+				"amcar_skf",
+				"ppk_skf",
+				"aug_skf",
+				"lemming_skf",
+				"g26_skf",
+				"ching_skf",
+				"mp7_skf",
+				"ray_skf",
+				"b682_skf",
+				"ak5_skf",
+				"scar_skf",
+				"famas_skf",
+				"g36_skf",
+				"mac10_skf"
+			}
+		}
 	}
 	self.contents.cas_01 = {
 		def_id = 10049,
@@ -900,14 +1046,16 @@ function EconomyTweakData:init()
 	self.bundles.cas_01 = {
 		def_id = 30005,
 		dlc_id = "763390",
-		contains = {armor_skins = {
-			"cas_m90",
-			"cas_police",
-			"cas_miami",
-			"cas_slayer",
-			"cas_trash",
-			"cas_gensec"
-		}}
+		contains = {
+			armor_skins = {
+				"cas_m90",
+				"cas_police",
+				"cas_miami",
+				"cas_slayer",
+				"cas_trash",
+				"cas_gensec"
+			}
+		}
 	}
 	self.contents.css_01 = {
 		def_id = 10050,
@@ -929,12 +1077,18 @@ function EconomyTweakData:init()
 				"lemming_css",
 				"ppk_css"
 			},
-			contents = {"css_01_legendary"}
+			contents = {
+				"css_01_legendary"
+			}
 		}
 	}
 	self.contents.css_01_legendary = {
 		def_id = 10051,
-		contains = {weapon_skins = {"polymer_css"}},
+		contains = {
+			weapon_skins = {
+				"polymer_css"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.bundles.css_01 = {
@@ -942,7 +1096,9 @@ function EconomyTweakData:init()
 		dlc_id = "802500",
 		quality = "mint",
 		bonus = false,
-		contains = {weapon_skins = table.list_add(self.contents.css_01.contains.weapon_skins, self.contents.css_01_legendary.contains.weapon_skins)}
+		contains = {
+			weapon_skins = table.list_add(self.contents.css_01.contains.weapon_skins, self.contents.css_01_legendary.contains.weapon_skins)
+		}
 	}
 	self.contents.dss_01 = {
 		def_id = 10052,
@@ -964,12 +1120,18 @@ function EconomyTweakData:init()
 				"huntsman_dss",
 				"b682_dss"
 			},
-			contents = {"dss_01_legendary"}
+			contents = {
+				"dss_01_legendary"
+			}
 		}
 	}
 	self.contents.dss_01_legendary = {
 		def_id = 10053,
-		contains = {weapon_skins = {"shrew_dss"}},
+		contains = {
+			weapon_skins = {
+				"shrew_dss"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.contents.cat_01 = {
@@ -992,12 +1154,18 @@ function EconomyTweakData:init()
 				"x_usp_cat",
 				"usp_cat"
 			},
-			contents = {"cat_01_legendary"}
+			contents = {
+				"cat_01_legendary"
+			}
 		}
 	}
 	self.contents.cat_01_legendary = {
 		def_id = 10055,
-		contains = {weapon_skins = {"p226_cat"}},
+		contains = {
+			weapon_skins = {
+				"p226_cat"
+			}
+		},
 		rarity = "legendary"
 	}
 	self.bundles.cat_01 = {
@@ -1005,7 +1173,9 @@ function EconomyTweakData:init()
 		dlc_id = "892410",
 		quality = "mint",
 		bonus = false,
-		contains = {weapon_skins = table.list_add(self.contents.cat_01.contains.weapon_skins, self.contents.cat_01_legendary.contains.weapon_skins)}
+		contains = {
+			weapon_skins = table.list_add(self.contents.cat_01.contains.weapon_skins, self.contents.cat_01_legendary.contains.weapon_skins)
+		}
 	}
 	self.safes.overkill_01 = {
 		def_id = 50000,
@@ -1472,112 +1642,158 @@ function EconomyTweakData:init()
 		safe = "cat_01",
 		unit_name = "units/payday2_cash/safes/cat/drill/eco_drill_cat"
 	}
-	self.bonuses = {concealment_p1 = {}}
+	self.bonuses = {
+		concealment_p1 = {}
+	}
 	self.bonuses.concealment_p1.name_id = "bm_menu_bonus_concealment"
-	self.bonuses.concealment_p1.stats = {concealment = 1}
+	self.bonuses.concealment_p1.stats = {
+		concealment = 1
+	}
 	self.bonuses.concealment_p2 = {
 		name_id = "bm_menu_bonus_concealment",
-		stats = {concealment = 2}
+		stats = {
+			concealment = 2
+		}
 	}
 	self.bonuses.concealment_p3 = {
 		name_id = "bm_menu_bonus_concealment",
-		stats = {concealment = 3}
+		stats = {
+			concealment = 3
+		}
 	}
 	self.bonuses.spread_p1 = {
 		name_id = "bm_menu_bonus_spread",
-		stats = {spread = 1}
+		stats = {
+			spread = 1
+		}
 	}
 	self.bonuses.spread_n1 = {
 		name_id = "bm_menu_bonus_spread",
-		stats = {spread = -1}
+		stats = {
+			spread = -1
+		}
 	}
 	self.bonuses.recoil_p1 = {
 		name_id = "bm_menu_bonus_recoil",
-		stats = {recoil = 1}
+		stats = {
+			recoil = 1
+		}
 	}
 	self.bonuses.recoil_p2 = {
 		name_id = "bm_menu_bonus_recoil",
-		stats = {recoil = 2}
+		stats = {
+			recoil = 2
+		}
 	}
 	self.bonuses.damage_p1 = {
 		name_id = "bm_menu_bonus_damage",
-		stats = {damage = 1}
+		stats = {
+			damage = 1
+		}
 	}
 	self.bonuses.damage_p2 = {
 		name_id = "bm_menu_bonus_damage",
-		stats = {damage = 2}
+		stats = {
+			damage = 2
+		}
 	}
 	self.bonuses.total_ammo_p1 = {
 		name_id = "bm_menu_bonus_total_ammo",
-		stats = {total_ammo_mod = 1}
+		stats = {
+			total_ammo_mod = 1
+		}
 	}
 	self.bonuses.total_ammo_p3 = {
 		name_id = "bm_menu_bonus_total_ammo",
-		stats = {total_ammo_mod = 3}
+		stats = {
+			total_ammo_mod = 3
+		}
 	}
 	self.bonuses.concealment_p1_tem_p1 = {
 		name_id = "bm_menu_bonus_concealment_tem",
-		stats = {concealment = 1},
+		stats = {
+			concealment = 1
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.concealment_p2_tem_p1 = {
 		name_id = "bm_menu_bonus_concealment_tem",
-		stats = {concealment = 2},
+		stats = {
+			concealment = 2
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.concealment_p3_tem_p1 = {
 		name_id = "bm_menu_bonus_concealment_tem",
-		stats = {concealment = 3},
+		stats = {
+			concealment = 3
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.spread_p1_tem_p1 = {
 		name_id = "bm_menu_bonus_spread_tem",
-		stats = {spread = 1},
+		stats = {
+			spread = 1
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.spread_n1_tem_p1 = {
 		name_id = "bm_menu_bonus_spread_tem",
-		stats = {spread = -1},
+		stats = {
+			spread = -1
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.recoil_p1_tem_p1 = {
 		name_id = "bm_menu_bonus_recoil_tem",
-		stats = {recoil = 1},
+		stats = {
+			recoil = 1
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.recoil_p2_tem_p1 = {
 		name_id = "bm_menu_bonus_recoil_tem",
-		stats = {recoil = 2},
+		stats = {
+			recoil = 2
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.damage_p1_tem_p1 = {
 		name_id = "bm_menu_bonus_damage_tem",
-		stats = {damage = 1},
+		stats = {
+			damage = 1
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.damage_p2_tem_p1 = {
 		name_id = "bm_menu_bonus_damage_tem",
-		stats = {damage = 2},
+		stats = {
+			damage = 2
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.total_ammo_p1_tem_p1 = {
 		name_id = "bm_menu_bonus_total_ammo_tem",
-		stats = {total_ammo_mod = 1},
+		stats = {
+			total_ammo_mod = 1
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
 	self.bonuses.total_ammo_p3_tem_p1 = {
 		name_id = "bm_menu_bonus_total_ammo_tem",
-		stats = {total_ammo_mod = 3},
+		stats = {
+			total_ammo_mod = 3
+		},
 		exp_multiplier = 1.01,
 		money_multiplier = 1.01
 	}
@@ -1683,7 +1899,14 @@ function EconomyTweakData:get_bonuses_by_safe(safe)
 
 		if item.bonus then
 			local bonus_data = self.bonuses[item.bonus]
-			bonus = bonus_data.stats and (bonus_data.exp_multiplier or bonus_data.money_multiplier) and "both" or bonus_data.stats and "single" or "team"
+
+			if bonus_data.stats and (bonus_data.exp_multiplier or bonus_data.money_multiplier) then
+				bonus = "both"
+			elseif bonus_data.stats then
+				bonus = "single"
+			else
+				bonus = "team"
+			end
 		end
 
 		bonuses[wid] = bonus
@@ -1691,4 +1914,3 @@ function EconomyTweakData:get_bonuses_by_safe(safe)
 
 	return bonuses
 end
-

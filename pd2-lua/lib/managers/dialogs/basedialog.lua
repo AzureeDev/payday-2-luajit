@@ -67,4 +67,3 @@ end
 function BaseDialog:blocks_exec()
 	return true
 end
-

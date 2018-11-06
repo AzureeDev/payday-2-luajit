@@ -1,4 +1,3 @@
-
 function class(...)
 	local super = ...
 
@@ -99,4 +98,3 @@ function CoreLoadingSetup:make_entrypoint()
 	rawset(_G, "update", callback(self, self, "__update"))
 	rawset(_G, "destroy", callback(self, self, "__destroy"))
 end
-

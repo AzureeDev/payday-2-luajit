@@ -26,4 +26,3 @@ function EditorSuite:environment_editor()
 	managers.toolhub:open("Environment Editor")
 	managers.toolhub:close("Environment Editor")
 end
-

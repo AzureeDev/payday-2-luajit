@@ -27,4 +27,3 @@ function ElementHint:on_executed(instigator)
 
 	ElementHint.super.on_executed(self, instigator)
 end
-

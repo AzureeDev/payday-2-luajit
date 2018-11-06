@@ -84,7 +84,9 @@ function CreateWorldSettingFile:_compile(path)
 		platform = string.lower(SystemInfo:platform():s()),
 		source_root = managers.database:root_path() .. "/assets",
 		target_db_root = Application:base_path() .. "assets",
-		source_files = {managers.database:entry_path_with_properties(path)}
+		source_files = {
+			managers.database:entry_path_with_properties(path)
+		}
 	}
 
 	Application:data_compile(t)
@@ -123,4 +125,3 @@ end
 function CreateWorldSettingFile:on_cancel()
 	self:end_modal()
 end
-

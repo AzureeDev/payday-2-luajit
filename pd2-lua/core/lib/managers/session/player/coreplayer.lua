@@ -82,4 +82,3 @@ end
 function Player:set_team(team)
 	self._team = team
 end
-

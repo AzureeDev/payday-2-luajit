@@ -46,11 +46,15 @@ function InteractionEditor:open_system(path)
 end
 
 function InteractionEditor:save_system(sys, path)
-	assert(sys or self:active_system()):save(path)
+	slot4 = sys or self:active_system()
+
+	assert(sys or self.active_system()):save(path)
 end
 
 function InteractionEditor:close_system(sys)
-	local system = sys or self:active_system()
+	if not sys then
+		local system = self:active_system()
+	end
 
 	if system then
 		if system:has_unsaved_changes() then
@@ -93,7 +97,9 @@ function InteractionEditor:activate_system(panel)
 end
 
 function InteractionEditor:do_save(sys)
-	local system = sys or self:active_system()
+	if not sys then
+		local system = self:active_system()
+	end
 
 	if system then
 		if system:is_new() then
@@ -105,7 +111,9 @@ function InteractionEditor:do_save(sys)
 end
 
 function InteractionEditor:do_save_as(sys)
-	local system = sys or self:active_system()
+	if not sys then
+		local system = self:active_system()
+	end
 
 	if system then
 		local path, dir = managers.database:save_file_dialog(self._ui:frame(), true, "*.interaction_project", managers.database:entry_name(managers.database:base_path() .. "/" .. string.lower(system:caption())))
@@ -127,7 +135,9 @@ function InteractionEditor:do_save_all()
 end
 
 function InteractionEditor:undo(sys)
-	local system = sys or self:active_system()
+	if not sys then
+		local system = self:active_system()
+	end
 
 	if system then
 		system:undo()
@@ -135,10 +145,11 @@ function InteractionEditor:undo(sys)
 end
 
 function InteractionEditor:redo(sys)
-	local system = sys or self:active_system()
+	if not sys then
+		local system = self:active_system()
+	end
 
 	if system then
 		system:redo()
 	end
 end
-

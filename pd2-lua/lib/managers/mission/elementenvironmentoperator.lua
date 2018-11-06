@@ -34,4 +34,3 @@ function ElementEnvironmentOperator:on_executed(instigator)
 
 	ElementEnvironmentOperator.super.on_executed(self, instigator)
 end
-

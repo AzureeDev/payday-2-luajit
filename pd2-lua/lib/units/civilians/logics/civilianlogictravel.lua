@@ -9,7 +9,9 @@ function CivilianLogicTravel.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	local is_cool = data.unit:movement():cool()
 
@@ -63,11 +65,18 @@ function CivilianLogicTravel.enter(data, new_logic_name, enter_params)
 	end
 
 	local attention_settings = nil
-	attention_settings = is_cool and {"civ_all_peaceful"} or {
-		"civ_enemy_cbt",
-		"civ_civ_cbt",
-		"civ_murderer_cbt"
-	}
+
+	if is_cool then
+		attention_settings = {
+			"civ_all_peaceful"
+		}
+	else
+		attention_settings = {
+			"civ_enemy_cbt",
+			"civ_civ_cbt",
+			"civ_murderer_cbt"
+		}
+	end
 
 	data.unit:brain():set_attention_settings(attention_settings)
 
@@ -101,6 +110,7 @@ function CivilianLogicTravel.exit(data, new_logic_name, enter_params)
 		data.unit:brain():set_update_enabled_state(true)
 	end
 end
+
 local tmp_vec1 = Vector3()
 
 function CivilianLogicTravel._optimize_path(path)
@@ -118,7 +128,9 @@ function CivilianLogicTravel._optimize_path(path)
 
 	remove_duplicates(path)
 
-	local opt_path = {path[1]}
+	local opt_path = {
+		path[1]
+	}
 	local i = 1
 	local count = 1
 
@@ -204,7 +216,7 @@ function CivilianLogicTravel.update(data)
 			local cur_index = my_data.coarse_path_index
 			local total_nav_points = #coarse_path
 
-			if total_nav_points <= cur_index then
+			if cur_index >= total_nav_points then
 				objective.in_place = true
 
 				if objective.type ~= "escort" and objective.type ~= "act" and objective.type ~= "follow" and not objective.action_duration then
@@ -218,14 +230,25 @@ function CivilianLogicTravel.update(data)
 				data.brain:rem_pos_rsrv("path")
 
 				local to_pos = nil
-				to_pos = cur_index == total_nav_points - 1 and CivilianLogicTravel._determine_exact_destination(data, objective) or coarse_path[cur_index + 1][2]
+
+				if cur_index == total_nav_points - 1 then
+					to_pos = CivilianLogicTravel._determine_exact_destination(data, objective)
+				else
+					to_pos = coarse_path[cur_index + 1][2]
+				end
+
 				my_data.processing_advance_path = true
 
 				unit:brain():search_for_path(my_data.advance_path_search_id, to_pos)
 			end
 		else
 			local nav_seg = nil
-			nav_seg = objective.follow_unit and objective.follow_unit:movement():nav_tracker():nav_segment() or objective.nav_seg
+
+			if objective.follow_unit then
+				nav_seg = objective.follow_unit:movement():nav_tracker():nav_segment()
+			else
+				nav_seg = objective.nav_seg
+			end
 
 			if unit:brain():search_for_coarse_path(my_data.coarse_path_search_id, nav_seg) then
 				my_data.processing_coarse_path = true
@@ -324,4 +347,3 @@ function CivilianLogicTravel.is_available_for_assignment(data, objective)
 
 	return not data.is_tied
 end
-

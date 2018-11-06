@@ -191,4 +191,3 @@ function Easing.outin_expo(a, b, t)
 		return Easing.in_expo(a + c, b, t - 1) + c
 	end
 end
-

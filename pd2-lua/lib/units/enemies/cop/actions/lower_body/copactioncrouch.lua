@@ -75,4 +75,3 @@ end
 function CopActionCrouch:type()
 	return "crouch"
 end
-

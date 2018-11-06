@@ -320,6 +320,7 @@ function MenuManagerVR:post_event(event)
 	__post_event(self, event)
 	self:post_event_vr(event)
 end
+
 local medium_pulse_events = {
 	highlight = true,
 	menu_skill_investment = true
@@ -370,7 +371,12 @@ end
 
 function MenuManagerVR:set_ingame_subtitle_presenter(ingame)
 	local presenter = nil
-	presenter = ingame and CoreSubtitlePresenter.IngamePresenterVR:new(tweak_data.menu.pd2_medium_font, tweak_data.menu.pd2_medium_font_size, managers.hud:subtitle_workspace()) or CoreSubtitlePresenter.OverlayPresenter:new(tweak_data.menu.pd2_medium_font, tweak_data.menu.pd2_medium_font_size)
+
+	if ingame then
+		presenter = CoreSubtitlePresenter.IngamePresenterVR:new(tweak_data.menu.pd2_medium_font, tweak_data.menu.pd2_medium_font_size, managers.hud:subtitle_workspace())
+	else
+		presenter = CoreSubtitlePresenter.OverlayPresenter:new(tweak_data.menu.pd2_medium_font, tweak_data.menu.pd2_medium_font_size)
+	end
 
 	managers.subtitle:set_presenter(presenter)
 	presenter:show()
@@ -388,4 +394,3 @@ end
 function MenuManagerVR:on_enter_menu_disable_ingame_camera_active_bg()
 	self._ingame_viewport:set_active(false)
 end
-

@@ -200,7 +200,7 @@ function ElementLaserTrigger:update_laser_draw(t, dt)
 			for j = 1, self._values.cycle_active_amount, 1 do
 				index = index + 1
 
-				if #self._cycle_order < index then
+				if index > #self._cycle_order then
 					index = 1
 				end
 
@@ -209,7 +209,7 @@ function ElementLaserTrigger:update_laser_draw(t, dt)
 
 			self._cycle_index = (self._values.cycle_type == "pop" and index or self._cycle_index) + 1
 
-			if #self._cycle_order < self._cycle_index then
+			if self._cycle_index > #self._cycle_order then
 				self._cycle_index = 1
 			end
 		end
@@ -358,11 +358,13 @@ end
 function ElementLaserTrigger:_clean_destroyed_units()
 	local i = 1
 
-	while next(self._inside) and i <= #self._inside do
-		if alive(self._inside[i]) then
-			i = i + 1
-		else
-			self:_remove_inside_by_index(i)
+	if next(self._inside) then
+		while next(self._inside) and i <= #self._inside do
+			if alive(self._inside[i]) then
+				i = i + 1
+			else
+				self:_remove_inside_by_index(i)
+			end
 		end
 	end
 end
@@ -436,4 +438,3 @@ function ElementLaserTrigger:load(data)
 
 	self:_set_dummies_visible(data.dummies_visible)
 end
-

@@ -22,12 +22,14 @@ function CrimeSpreeRewardsDetailsPage:init(...)
 
 	local outline_panel = self:panel():panel({})
 
-	BoxGuiObject:new(outline_panel, {sides = {
-		4,
-		4,
-		2,
-		1
-	}})
+	BoxGuiObject:new(outline_panel, {
+		sides = {
+			4,
+			4,
+			2,
+			1
+		}
+	})
 
 	local w = (self:panel():w() - padding) / #tweak_data.crime_spree.rewards
 	local count = 0
@@ -111,7 +113,9 @@ function CrimeSpreeRewardsDetailsPage:init(...)
 
 	if warning_title then
 		local level_layer = 50
-		local level_panel = self:panel():panel({layer = level_layer})
+		local level_panel = self:panel():panel({
+			layer = level_layer
+		})
 
 		level_panel:bitmap({
 			texture = "guis/textures/pd2/cs_warning_background",
@@ -224,4 +228,3 @@ function CrimeSpreeRewardsDetailsPage:_create_card(panel, icon, scale, layer, ro
 
 	return upcard
 end
-

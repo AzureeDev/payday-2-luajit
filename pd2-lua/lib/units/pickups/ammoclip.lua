@@ -1,7 +1,8 @@
 AmmoClip = AmmoClip or class(Pickup)
-AmmoClip.EVENT_IDS = {}
-AmmoClip.EVENT_IDS.bonnie_share_ammo = 1
-AmmoClip.EVENT_IDS.register_grenade = 16
+AmmoClip.EVENT_IDS = {
+	bonnie_share_ammo = 1,
+	register_grenade = 16
+}
 local CABLE_TIE_GET_CHANCE = 0.2
 local CABLE_TIE_GET_AMOUNT = 1
 
@@ -189,4 +190,3 @@ function AmmoClip:sync_net_event(event, peer)
 		end
 	end
 end
-

@@ -40,14 +40,18 @@ function AchievmentManager:init()
 			self:_parse_achievments()
 
 			if not Global.achievment_manager then
-				Global.achievment_manager = {achievments = self.achievments}
+				Global.achievment_manager = {
+					achievments = self.achievments
+				}
 			end
 
 			self.achievments = Global.achievment_manager.achievments
 		end
 	elseif SystemInfo:platform() == Idstring("PS3") then
 		if not Global.achievment_manager then
-			Global.achievment_manager = {trophy_requests = {}}
+			Global.achievment_manager = {
+				trophy_requests = {}
+			}
 		end
 
 		self:_parse_achievments("PSN")
@@ -74,7 +78,9 @@ function AchievmentManager:init()
 		if not Global.achievment_manager then
 			self:_parse_achievments("XB1")
 
-			Global.achievment_manager = {achievments = self.achievments}
+			Global.achievment_manager = {
+				achievments = self.achievments
+			}
 		else
 			self.achievments = Global.achievment_manager.achievments
 		end
@@ -86,7 +92,9 @@ function AchievmentManager:init()
 
 	self._forced = Global.achievment_manager.forced or {}
 	Global.achievment_manager.forced = self._forced
-	self._recent_data = Global.achievment_manager.recent_time or {time = os.time() - 1}
+	self._recent_data = Global.achievment_manager.recent_time or {
+		time = os.time() - 1
+	}
 	Global.achievment_manager.recent_time = self._recent_data
 	self._with_progress = {}
 	self._recent_progress = {}
@@ -322,7 +330,9 @@ function AchievmentManager:total_unlocked()
 end
 
 function AchievmentManager:add_heist_success_award(id)
-	self._mission_end_achievements[id] = {award = true}
+	self._mission_end_achievements[id] = {
+		award = true
+	}
 end
 
 function AchievmentManager:add_heist_success_award_progress(id)
@@ -670,10 +680,12 @@ function AchievmentManager:award_progress(stat, value)
 
 		return old_value <= v.at
 	end)
-	local stats = {[stat] = {
-		type = "int",
-		value = value or 1
-	}}
+	local stats = {
+		[stat] = {
+			type = "int",
+			value = value or 1
+		}
+	}
 
 	managers.network.account:publish_statistics(stats, true)
 
@@ -907,7 +919,9 @@ function AchievmentManager:_check_autounlock_complete_heist()
 	for achievement, achievement_data in pairs(tweak_data.achievement.complete_heist_achievements) do
 		if eligible_for_autounlock(achievement_data) then
 			if not achievement_data.jobs then
-				local jobs = {achievement_data.job}
+				local jobs = {
+					achievement_data.job
+				}
 			end
 
 			for i, job in pairs(jobs) do
@@ -957,4 +971,3 @@ function AchievmentManager:_award_achievement(t, name)
 
 	return true
 end
-

@@ -7,7 +7,7 @@ function FriendsBoxGui:init(ws, title, text, content_data, config, type)
 	config.w = 300
 	local x, y = ws:size()
 	config.x = x - config.w
-	config.y = (y - config.h) - CoreMenuRenderer.Renderer.border_height + 10
+	config.y = y - config.h - CoreMenuRenderer.Renderer.border_height + 10
 	config.no_close_legend = true
 	config.no_scroll_legend = true
 	self._default_font_size = tweak_data.menu.default_font_size
@@ -31,7 +31,9 @@ function FriendsBoxGui:_create_friend_action_gui_by_user(user_data)
 
 	local user = user_data.user
 	local offline = user_data.main_state == "offline"
-	local data = {button_list = {}}
+	local data = {
+		button_list = {}
+	}
 	local my_lobby_id = managers.network.matchmake.lobby_handler and managers.network.matchmake.lobby_handler:id()
 	local user_lobby_id = user:lobby() and user:lobby():id()
 
@@ -257,7 +259,15 @@ end
 function FriendsBoxGui:_update_sub_state(user_data)
 	local friends_panel = self._scroll_panel:child("friends_panel")
 	local panel = nil
-	panel = user_data.main_state == "ingame" and friends_panel:child("ingame_panel") or user_data.main_state == "online" and friends_panel:child("online_panel") or friends_panel:child("offline_panel")
+
+	if user_data.main_state == "ingame" then
+		panel = friends_panel:child("ingame_panel")
+	elseif user_data.main_state == "online" then
+		panel = friends_panel:child("online_panel")
+	else
+		panel = friends_panel:child("offline_panel")
+	end
+
 	local user_panel = panel:child(user_data.user:id())
 	local user_state = user_panel:child("user_state")
 
@@ -573,12 +583,12 @@ function FriendsBoxGui:mouse_pressed(button, x, y)
 				x = x + 16
 				y = y - 16
 
-				if (self:x() + self:w()) - 20 < x + self._friend_action_gui:w() then
-					x = ((self:x() + self:w()) - 20) - self._friend_action_gui:w()
+				if x + self._friend_action_gui:w() > self:x() + self:w() - 20 then
+					x = self:x() + self:w() - 20 - self._friend_action_gui:w()
 				end
 
-				if self:y() + self:h() < y + self._friend_action_gui:h() then
-					y = (self:y() + self:h()) - self._friend_action_gui:h()
+				if y + self._friend_action_gui:h() > self:y() + self:h() then
+					y = self:y() + self:h() - self._friend_action_gui:h()
 				end
 
 				self._friend_action_gui:set_position(x, y)
@@ -702,4 +712,3 @@ function FriendsBoxGui:close()
 		self._friend_action_gui:close()
 	end
 end
-

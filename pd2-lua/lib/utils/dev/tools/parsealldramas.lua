@@ -58,7 +58,9 @@ function ParseAllDramas:start_parsing()
 
 	self._panel:set_size(self._ws:panel():w() / 2, self._ws:panel():h() / 2)
 	self._panel:set_center(self._ws:panel():w() / 2, self._ws:panel():h() / 2)
-	self._panel:rect({color = Color(0, 0, 0)})
+	self._panel:rect({
+		color = Color(0, 0, 0)
+	})
 
 	self._text = self._panel:text({
 		text = "",
@@ -198,4 +200,3 @@ function ParseAllDramas:marker_callback(instance, sound_source, event_type, cook
 	self._non_string_events[cookie] = nil
 	self._parsed_sound_events[cookie] = label
 end
-

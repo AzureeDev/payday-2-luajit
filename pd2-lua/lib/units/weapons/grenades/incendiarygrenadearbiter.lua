@@ -13,4 +13,3 @@ function IncendiaryGrenadeArbiter:_spawn_environment_fire(normal)
 	EnvironmentFire.spawn(position, rotation, data, normal, self._thrower_unit, 0, 1)
 	self._unit:set_slot(0)
 end
-

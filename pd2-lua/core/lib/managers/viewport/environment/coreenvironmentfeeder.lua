@@ -125,6 +125,7 @@ end
 
 function Feeder:apply(handler, viewport, scene)
 end
+
 Vector3Feeder = Vector3Feeder or CoreClass.class(Feeder)
 
 function Vector3Feeder:set(current)
@@ -147,6 +148,7 @@ function Vector3Feeder:update_current(handler, scale)
 
 	return scale == 1, false
 end
+
 StringFeeder = StringFeeder or CoreClass.class(Feeder)
 
 function StringFeeder:update_current(handler, scale)
@@ -158,6 +160,7 @@ function StringFeeder:update_current(handler, scale)
 		return false, true
 	end
 end
+
 UnderlayPathFeeder = UnderlayPathFeeder or CoreClass.class(StringFeeder)
 UnderlayPathFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
 UnderlayPathFeeder.DATA_PATH_KEY = Idstring("others/underlay"):key()
@@ -205,6 +208,7 @@ function UnderlayPathFeeder:apply(handler, viewport, scene)
 
 	Global._current_underlay_name = self._current
 end
+
 GlobalLightColorFeeder = GlobalLightColorFeeder or CoreClass.class(Vector3Feeder)
 GlobalLightColorFeeder.DATA_PATH_KEY = Idstring("others/sun_ray_color"):key()
 GlobalLightColorFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -228,6 +232,7 @@ function GlobalLightColorFeeder:apply(handler, viewport, scene)
 		Application:error("[EnvironmentManager][GlobalLightFeeder] No underlay loaded.")
 	end
 end
+
 GlobalLightColorScaleFeeder = GlobalLightColorScaleFeeder or CoreClass.class(Feeder)
 GlobalLightColorScaleFeeder.DATA_PATH_KEY = Idstring("others/sun_ray_color_scale"):key()
 GlobalLightColorScaleFeeder.APPLY_GROUP_ID = GlobalLightColorFeeder.APPLY_GROUP_ID
@@ -243,6 +248,7 @@ CubeMapTextureFeeder.FILTER_CATEGORY = "Cubemap"
 function CubeMapTextureFeeder:apply(handler, viewport, scene)
 	managers.global_texture:set_texture("current_global_texture", self._current, "CUBEMAP")
 end
+
 WorldOverlayTextureFeeder = WorldOverlayTextureFeeder or CoreClass.class(StringFeeder)
 WorldOverlayTextureFeeder.DATA_PATH_KEY = Idstring("others/global_world_overlay_texture"):key()
 WorldOverlayTextureFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -252,6 +258,7 @@ WorldOverlayTextureFeeder.FILTER_CATEGORY = "GlobalTexture"
 function WorldOverlayTextureFeeder:apply(handler, viewport, scene)
 	managers.global_texture:set_texture("current_global_world_overlay_texture", self._current, "texture")
 end
+
 WorldOverlayMaskTextureFeeder = WorldOverlayMaskTextureFeeder or CoreClass.class(StringFeeder)
 WorldOverlayMaskTextureFeeder.DATA_PATH_KEY = Idstring("others/global_world_overlay_mask_texture"):key()
 WorldOverlayMaskTextureFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -261,6 +268,7 @@ WorldOverlayMaskTextureFeeder.FILTER_CATEGORY = "GlobalTexture"
 function WorldOverlayMaskTextureFeeder:apply(handler, viewport, scene)
 	managers.global_texture:set_texture("current_global_world_overlay_mask_texture", self._current, "texture")
 end
+
 SkyRotationFeeder = SkyRotationFeeder or CoreClass.class(Feeder)
 SkyRotationFeeder.DATA_PATH_KEY = Idstring("sky_orientation/rotation"):key()
 SkyRotationFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -273,6 +281,7 @@ function SkyRotationFeeder:apply(handler, viewport, scene)
 		UnderlayPathFeeder.ref_cam_obj:set_rotation(temp_rotation)
 	end
 end
+
 UnderlaySkyTopColorFeeder = UnderlaySkyTopColorFeeder or CoreClass.class(Vector3Feeder)
 UnderlaySkyTopColorFeeder.DATA_PATH_KEY = Idstring("underlay_effect/sky/color0"):key()
 UnderlaySkyTopColorFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -294,6 +303,7 @@ function UnderlaySkyTopColorFeeder:apply(handler, viewport, scene)
 		end
 	end
 end
+
 UnderlaySkyTopColorScaleFeeder = UnderlaySkyTopColorScaleFeeder or CoreClass.class(Feeder)
 UnderlaySkyTopColorScaleFeeder.DATA_PATH_KEY = Idstring("underlay_effect/sky/color0_scale"):key()
 UnderlaySkyTopColorScaleFeeder.APPLY_GROUP_ID = UnderlaySkyTopColorFeeder.APPLY_GROUP_ID
@@ -321,6 +331,7 @@ function UnderlaySkyBottomColorFeeder:apply(handler, viewport, scene)
 		end
 	end
 end
+
 UnderlaySkyBottomColorScaleFeeder = UnderlaySkyBottomColorScaleFeeder or CoreClass.class(Feeder)
 UnderlaySkyBottomColorScaleFeeder.DATA_PATH_KEY = Idstring("underlay_effect/sky/color2_scale"):key()
 UnderlaySkyBottomColorScaleFeeder.APPLY_GROUP_ID = UnderlaySkyBottomColorFeeder.APPLY_GROUP_ID
@@ -338,6 +349,7 @@ function PostAmbientFalloffScaleFeeder:apply(handler, viewport, scene)
 
 	material:set_variable(ids_ambient_falloff_scale, self._current)
 end
+
 PostAmbientColorFeeder = PostAmbientColorFeeder or CoreClass.class(Vector3Feeder)
 PostAmbientColorFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color"):key()
 PostAmbientColorFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -358,6 +370,7 @@ function PostAmbientColorFeeder:apply(handler, viewport, scene)
 		material:set_variable(ids_ambient_color, zero_vector3)
 	end
 end
+
 PostAmbientColorScaleFeeder = PostAmbientColorScaleFeeder or CoreClass.class(Feeder)
 PostAmbientColorScaleFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_color_scale"):key()
 PostAmbientColorScaleFeeder.APPLY_GROUP_ID = PostAmbientColorFeeder.APPLY_GROUP_ID
@@ -384,6 +397,7 @@ function PostSkyTopColorFeeder:apply(handler, viewport, scene)
 		material:set_variable(ids_sky_top_color, zero_vector3)
 	end
 end
+
 PostSkyTopColorScaleFeeder = PostSkyTopColorScaleFeeder or CoreClass.class(Feeder)
 PostSkyTopColorScaleFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/sky_top_color_scale"):key()
 PostSkyTopColorScaleFeeder.APPLY_GROUP_ID = PostSkyTopColorFeeder.APPLY_GROUP_ID
@@ -410,6 +424,7 @@ function PostSkyBottomColorFeeder:apply(handler, viewport, scene)
 		material:set_variable(ids_sky_bottom_color, zero_vector3)
 	end
 end
+
 PostSkyBottomColorScaleFeeder = PostSkyBottomColorScaleFeeder or CoreClass.class(Feeder)
 PostSkyBottomColorScaleFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/sky_bottom_color_scale"):key()
 PostSkyBottomColorScaleFeeder.APPLY_GROUP_ID = PostSkyBottomColorFeeder.APPLY_GROUP_ID
@@ -429,6 +444,7 @@ function PostFogStartColorFeeder:apply(handler, viewport, scene)
 	mvector3.multiply(temp_vector3, platform_intensity_scale)
 	material:set_variable(ids_fog_start_color, temp_vector3)
 end
+
 PostFogFarLowColorFeeder = PostFogFarLowColorFeeder or CoreClass.class(Vector3Feeder)
 PostFogFarLowColorFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/fog_far_low_color"):key()
 PostFogFarLowColorFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -442,6 +458,7 @@ function PostFogFarLowColorFeeder:apply(handler, viewport, scene)
 	mvector3.multiply(temp_vector3, platform_intensity_scale)
 	material:set_variable(ids_fog_far_low_color, temp_vector3)
 end
+
 PostFogMinRangeFeeder = PostFogMinRangeFeeder or CoreClass.class(Feeder)
 PostFogMinRangeFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/fog_min_range"):key()
 PostFogMinRangeFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -453,6 +470,7 @@ function PostFogMinRangeFeeder:apply(handler, viewport, scene)
 
 	material:set_variable(ids_fog_min_range, self._current)
 end
+
 PostFogMaxRangeFeeder = PostFogMaxRangeFeeder or CoreClass.class(Feeder)
 PostFogMaxRangeFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/fog_max_range"):key()
 PostFogMaxRangeFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -464,6 +482,7 @@ function PostFogMaxRangeFeeder:apply(handler, viewport, scene)
 
 	material:set_variable(ids_fog_max_range, self._current)
 end
+
 PostFogMaxDensityFeeder = PostFogMaxDensityFeeder or CoreClass.class(Feeder)
 PostFogMaxDensityFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/fog_max_density"):key()
 PostFogMaxDensityFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -475,6 +494,7 @@ function PostFogMaxDensityFeeder:apply(handler, viewport, scene)
 
 	material:set_variable(ids_fog_max_density, self._current)
 end
+
 PostAmbientScaleFeeder = PostAmbientScaleFeeder or CoreClass.class(Feeder)
 PostAmbientScaleFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/ambient_scale"):key()
 PostAmbientScaleFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -486,6 +506,7 @@ function PostAmbientScaleFeeder:apply(handler, viewport, scene)
 
 	material:set_variable(ids_ambient_scale, self._current)
 end
+
 PostEffectLightScaleFeeder = PostEffectLightScaleFeeder or CoreClass.class(Feeder)
 PostEffectLightScaleFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/effect_light_scale"):key()
 PostEffectLightScaleFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -513,6 +534,7 @@ function PostShadowSlice0Feeder:apply(handler, viewport, scene)
 	_apply_fov_ratio(self._current)
 	material:set_variable(ids_slice0, self._current)
 end
+
 PostShadowSlice1Feeder = PostShadowSlice1Feeder or CoreClass.class(Vector3Feeder)
 PostShadowSlice1Feeder.DATA_PATH_KEY = Idstring("post_effect/shadow_processor/shadow_rendering/shadow_modifier/slice1"):key()
 PostShadowSlice1Feeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -525,6 +547,7 @@ function PostShadowSlice1Feeder:apply(handler, viewport, scene)
 	_apply_fov_ratio(self._current)
 	material:set_variable(ids_slice1, self._current)
 end
+
 PostShadowSlice2Feeder = PostShadowSlice2Feeder or CoreClass.class(Vector3Feeder)
 PostShadowSlice2Feeder.DATA_PATH_KEY = Idstring("post_effect/shadow_processor/shadow_rendering/shadow_modifier/slice2"):key()
 PostShadowSlice2Feeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -537,6 +560,7 @@ function PostShadowSlice2Feeder:apply(handler, viewport, scene)
 	_apply_fov_ratio(self._current)
 	material:set_variable(ids_slice2, self._current)
 end
+
 PostShadowSlice3Feeder = PostShadowSlice3Feeder or CoreClass.class(Vector3Feeder)
 PostShadowSlice3Feeder.DATA_PATH_KEY = Idstring("post_effect/shadow_processor/shadow_rendering/shadow_modifier/slice3"):key()
 PostShadowSlice3Feeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -549,6 +573,7 @@ function PostShadowSlice3Feeder:apply(handler, viewport, scene)
 	_apply_fov_ratio(self._current)
 	material:set_variable(ids_slice3, self._current)
 end
+
 PostShadowSliceDepthsFeeder = PostShadowSliceDepthsFeeder or CoreClass.class(Vector3Feeder)
 PostShadowSliceDepthsFeeder.DATA_PATH_KEY = Idstring("post_effect/shadow_processor/shadow_rendering/shadow_modifier/shadow_slice_depths"):key()
 PostShadowSliceDepthsFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -561,6 +586,7 @@ function PostShadowSliceDepthsFeeder:apply(handler, viewport, scene)
 	_apply_fov_ratio(self._current)
 	material:set_variable(ids_shadow_slice_depths, self._current)
 end
+
 PostShadowSliceOverlapFeeder = PostShadowSliceOverlapFeeder or CoreClass.class(Vector3Feeder)
 PostShadowSliceOverlapFeeder.DATA_PATH_KEY = Idstring("post_effect/shadow_processor/shadow_rendering/shadow_modifier/shadow_slice_overlap"):key()
 PostShadowSliceOverlapFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -573,6 +599,7 @@ function PostShadowSliceOverlapFeeder:apply(handler, viewport, scene)
 	_apply_fov_ratio(self._current)
 	material:set_variable(ids_shadow_slice_overlap, self._current)
 end
+
 PostEffectBloomThresholdFeeder = PostEffectBloomThresholdFeeder or CoreClass.class(Feeder)
 PostEffectBloomThresholdFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/bloom_threshold"):key()
 PostEffectBloomThresholdFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -585,6 +612,7 @@ function PostEffectBloomThresholdFeeder:apply(handler, viewport, scene)
 
 	material:set_variable(ids_bloom_threshold, self._current)
 end
+
 PostEffectBloomIntensityFeeder = PostEffectBloomIntensityFeeder or CoreClass.class(Feeder)
 PostEffectBloomIntensityFeeder.DATA_PATH_KEY = Idstring("post_effect/bloom_combine_post_processor/bloom_combine/bloom_lense/bloom_intensity"):key()
 PostEffectBloomIntensityFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -597,6 +625,7 @@ function PostEffectBloomIntensityFeeder:apply(handler, viewport, scene)
 
 	material:set_variable(ids_bloom_intensity, self._current)
 end
+
 PostEffectBloomBlurSizeFeeder = PostEffectBloomBlurSizeFeeder or CoreClass.class(Feeder)
 PostEffectBloomBlurSizeFeeder.DATA_PATH_KEY = Idstring("post_effect/bloom_combine_post_processor/bloom_combine/bloom_lense/bloom_blur_size"):key()
 PostEffectBloomBlurSizeFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -607,6 +636,7 @@ PostEffectBloomBlurSizeFeeder.FILTER_CATEGORY = "Effect"
 function PostEffectBloomBlurSizeFeeder:apply(handler, viewport, scene)
 	managers.environment_controller:bloom_blur_size(self._current, viewport)
 end
+
 PostEffectLenseIntensityFeeder = PostEffectLenseIntensityFeeder or CoreClass.class(Feeder)
 PostEffectLenseIntensityFeeder.DATA_PATH_KEY = Idstring("post_effect/bloom_combine_post_processor/bloom_combine/bloom_lense/lense_intensity"):key()
 PostEffectLenseIntensityFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -619,6 +649,7 @@ function PostEffectLenseIntensityFeeder:apply(handler, viewport, scene)
 
 	material:set_variable(ids_lense_intensity, self._current)
 end
+
 EnvironmentEffectFeeder = EnvironmentEffectFeeder or CoreClass.class(StringFeeder)
 EnvironmentEffectFeeder.DATA_PATH_KEY = Idstring("environment_effects/effects"):key()
 EnvironmentEffectFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
@@ -632,6 +663,7 @@ function EnvironmentEffectFeeder:apply(handler, viewport, scene)
 		managers.environment_effects:set_active_effects(effects)
 	end
 end
+
 UnderlayPathFeeder.AFFECTED_LIST = {
 	GlobalLightColorScaleFeeder,
 	GlobalLightColorFeeder,
@@ -641,4 +673,3 @@ UnderlayPathFeeder.AFFECTED_LIST = {
 	UnderlaySkyBottomColorFeeder,
 	UnderlaySkyBottomColorScaleFeeder
 }
-

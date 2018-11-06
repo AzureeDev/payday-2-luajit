@@ -94,4 +94,3 @@ function FragGrenade:bullet_hit()
 
 	self:_detonate()
 end
-

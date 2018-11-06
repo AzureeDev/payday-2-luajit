@@ -83,8 +83,8 @@ function LightLoadingScreenGuiScript:layout_saferect()
 	local h = scaled_size.height
 	local sh = math.min(self._safe_rect_pixels.height, self._safe_rect_pixels.width / (w / h))
 	local sw = math.min(self._safe_rect_pixels.width, self._safe_rect_pixels.height * w / h)
-	local x = math.round(self._res.x / 2 - (sh * w / h) / 2)
-	local y = math.round(self._res.y / 2 - (sw / (w / h)) / 2)
+	local x = math.round(self._res.x / 2 - sh * w / h / 2)
+	local y = math.round(self._res.y / 2 - sw / (w / h) / 2)
 
 	self._saferect:set_screen(w, h, x, y, sw)
 end
@@ -189,4 +189,3 @@ function LightLoadingScreenGuiScript:set_visible(visible, res)
 		self._saferect:hide()
 	end
 end
-

@@ -389,4 +389,3 @@ function MenuArmourBase:use_cc()
 
 	return not ignored_by_armor_skin and not no_armor_skin
 end
-

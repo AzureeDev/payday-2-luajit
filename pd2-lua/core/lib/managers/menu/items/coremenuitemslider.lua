@@ -14,6 +14,17 @@ function ItemSlider:init(data_node, parameters)
 	self._show_value = false
 	self._is_percentage = false
 	self._decimal_count = 5
+
+	if data_node then
+		self._min = data_node.min or self._min
+		self._max = data_node.max or self._max
+		self._step = data_node.step or self._step
+		self._show_value = data_node.show_value
+		self._is_percentage = data_node.is_percentage
+		self._show_slider_text = self._show_value or data_node.show_slider_text
+		self._decimal_count = data_node.decimal_count or self._decimal_count
+	end
+
 	self._min = tonumber(self._min)
 	self._max = tonumber(self._max)
 	self._step = tonumber(self._step)
@@ -102,7 +113,9 @@ function ItemSlider:slider_highlighted_color()
 end
 
 function ItemSlider:setup_gui(node, row_item)
-	row_item.gui_panel = node.item_panel:panel({w = node.item_panel:w()})
+	row_item.gui_panel = node.item_panel:panel({
+		w = node.item_panel:w()
+	})
 	row_item.gui_text = node:_text_item_part(row_item, row_item.gui_panel, node:_right_align())
 
 	row_item.gui_text:set_layer(node.layers.items + 1)
@@ -300,4 +313,3 @@ function ItemSlider:_layout(node, row_item)
 
 	row_item.gui_text:set_height(h)
 end
-

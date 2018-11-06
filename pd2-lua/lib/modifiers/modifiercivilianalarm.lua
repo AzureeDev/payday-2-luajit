@@ -14,4 +14,3 @@ function ModifierCivilianAlarm:OnCivilianKilled()
 		self._alarmed = true
 	end
 end
-

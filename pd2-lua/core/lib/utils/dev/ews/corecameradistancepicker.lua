@@ -55,7 +55,7 @@ function CoreCameraDistancePicker:_screen_to_world(coords)
 	local camera = assert(managers.viewport and managers.viewport:get_current_camera())
 	local viewport = assert(managers.viewport and managers.viewport:get_active_vp())
 	local viewport_rect = viewport:get_rect()
-	local viewport_position = coords:with_x((coords.x * 2 * viewport:get_width_multiplier()) / viewport_rect.w):with_y((coords.y * 2) / viewport_rect.h)
+	local viewport_position = coords:with_x(coords.x * 2 * viewport:get_width_multiplier() / viewport_rect.w):with_y(coords.y * 2 / viewport_rect.h)
 
 	return camera:screen_to_world(viewport_position)
 end
@@ -65,7 +65,7 @@ function CoreCameraDistancePicker:_world_to_screen(coords)
 	local viewport = assert(managers.viewport and managers.viewport:get_active_vp())
 	local viewport_rect = viewport:get_rect()
 	local viewport_position = camera:world_to_screen(coords)
-	local screen_position = viewport_position:with_x((viewport_position.x * 2 * viewport:get_width_multiplier()) / viewport_rect.w):with_y(-viewport_position.y / 2 * viewport_rect.h)
+	local screen_position = viewport_position:with_x(viewport_position.x * 2 * viewport:get_width_multiplier() / viewport_rect.w):with_y(-viewport_position.y / 2 * viewport_rect.h)
 
 	return screen_position
 end
@@ -130,4 +130,3 @@ end
 function CoreCameraDistancePicker:_exit_pick_mode()
 	self.__is_picking = nil
 end
-

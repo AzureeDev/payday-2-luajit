@@ -7,6 +7,7 @@ function RemoteCommandManagerPD2:init()
 		RemoteCommandManager:set_callback(callback(self, self, "remote_callback"))
 	end
 end
+
 local steam_users = {}
 
 function RemoteCommandManagerPD2:remote_callback(method, parameters)
@@ -112,4 +113,3 @@ function RemoteCommandManagerPD2:remote_callback(method, parameters)
 		}
 	end
 end
-

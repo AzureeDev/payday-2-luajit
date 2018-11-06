@@ -5,7 +5,9 @@ local SELECTION = {
 VRArcadeTweakData = VRArcadeTweakData or class()
 
 function VRArcadeTweakData:init(tweak_data)
-	self.packages = {"packages/vr_arcade_base"}
+	self.packages = {
+		"packages/vr_arcade_base"
+	}
 	self.loadouts = {
 		rifle_american = {
 			name_id = "bm_loadout_rifle_american",
@@ -31,7 +33,9 @@ function VRArcadeTweakData:init(tweak_data)
 					factory_id = "wpn_fps_ass_amcar",
 					equipped = true,
 					weapon_id = "amcar",
-					texture_switches = {wpn_fps_upg_o_45rds = "1 3"},
+					texture_switches = {
+						wpn_fps_upg_o_45rds = "1 3"
+					},
 					global_values = {
 						wpn_fps_m4_uupg_m_std = "normal",
 						wpn_fps_upg_o_45rds = "tango",
@@ -58,7 +62,9 @@ function VRArcadeTweakData:init(tweak_data)
 					factory_id = "wpn_fps_pis_g17",
 					equipped = true,
 					weapon_id = "glock_17",
-					global_values = {wpn_fps_upg_fl_pis_crimson = "pd2_clan"},
+					global_values = {
+						wpn_fps_upg_fl_pis_crimson = "pd2_clan"
+					},
 					blueprint = {
 						"wpn_fps_pis_g17_body_standard",
 						"wpn_fps_pis_g17_b_standard",
@@ -121,7 +127,9 @@ function VRArcadeTweakData:init(tweak_data)
 					factory_id = "wpn_fps_snp_tti",
 					equipped = true,
 					weapon_id = "tti",
-					texture_switches = {wpn_fps_upg_o_acog = "1 3"},
+					texture_switches = {
+						wpn_fps_upg_o_acog = "1 3"
+					},
 					global_values = {
 						wpn_fps_upg_o_45iron = "gage_pack_snp",
 						wpn_fps_upg_o_acog = "normal",
@@ -154,7 +162,9 @@ function VRArcadeTweakData:init(tweak_data)
 					factory_id = "wpn_fps_smg_schakal",
 					equipped = true,
 					weapon_id = "schakal",
-					texture_switches = {wpn_fps_upg_o_reflex = "1 3"},
+					texture_switches = {
+						wpn_fps_upg_o_reflex = "1 3"
+					},
 					global_values = {
 						wpn_fps_upg_o_reflex = "gage_pack_jobs",
 						wpn_fps_smg_schakal_s_folded = "pim",
@@ -178,7 +188,9 @@ function VRArcadeTweakData:init(tweak_data)
 					factory_id = "wpn_fps_sho_aa12",
 					equipped = true,
 					weapon_id = "aa12",
-					texture_switches = {wpn_fps_upg_o_docter = "1 3"},
+					texture_switches = {
+						wpn_fps_upg_o_docter = "1 3"
+					},
 					global_values = {
 						wpn_fps_sho_aa12_mag_drum = "bbq",
 						wpn_fps_upg_o_docter = "normal",
@@ -225,7 +237,9 @@ function VRArcadeTweakData:init(tweak_data)
 end
 
 function VRArcadeTweakData:init_player_tweak_data(tweak_data)
-	tweak_data.player.damage.REVIVE_HEALTH_STEPS = {1}
+	tweak_data.player.damage.REVIVE_HEALTH_STEPS = {
+		1
+	}
 	tweak_data.player.damage.HEALTH_INIT = 100
 end
 
@@ -637,7 +651,9 @@ function VRArcadeTweakData:init_weapon_tweak_data(tweak_data)
 end
 
 function VRArcadeTweakData:init_weapon_factory_tweak_data(tweak_data)
-	tweak_data.weapon.factory.allow_multiple_part_types = {"gadget"}
+	tweak_data.weapon.factory.allow_multiple_part_types = {
+		"gadget"
+	}
 	tweak_data.weapon.factory.parts.wpn_fps_m4_uupg_m_std.stats.extra_ammo = nil
 end
 
@@ -2182,13 +2198,15 @@ function VRArcadeTweakData:init_group_ai_tweak_data(tweak_data)
 		0,
 		0
 	}
-	group_ai.besiege.cloaker.groups = {single_spooc = {
-		0,
-		0,
-		0,
-		0,
-		0
-	}}
+	group_ai.besiege.cloaker.groups = {
+		single_spooc = {
+			0,
+			0,
+			0,
+			0,
+			0
+		}
+	}
 	group_ai.besiege.assault.groups = {
 		tac_swat_shotgun_rush = {
 			1,
@@ -2354,21 +2372,33 @@ function VRArcadeTweakData:init_group_ai_tweak_data(tweak_data)
 		"flank"
 	}
 	group_ai.unit_categories.CITY_swat_m4 = {
-		unit_types = {america = {Idstring("units/payday2/characters/ene_city_swat_1/ene_city_swat_1")}},
+		unit_types = {
+			america = {
+				Idstring("units/payday2/characters/ene_city_swat_1/ene_city_swat_1")
+			}
+		},
 		access = {
 			acrobatic = true,
 			walk = true
 		}
 	}
 	group_ai.unit_categories.CITY_swat_shotgun = {
-		unit_types = {america = {Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2")}},
+		unit_types = {
+			america = {
+				Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2")
+			}
+		},
 		access = {
 			acrobatic = true,
 			walk = true
 		}
 	}
 	group_ai.unit_categories.CITY_swat_smg = {
-		unit_types = {america = {Idstring("units/payday2/characters/ene_city_swat_3/ene_city_swat_3")}},
+		unit_types = {
+			america = {
+				Idstring("units/payday2/characters/ene_city_swat_3/ene_city_swat_3")
+			}
+		},
 		access = {
 			acrobatic = true,
 			walk = true
@@ -2544,13 +2574,15 @@ function VRArcadeTweakData:init_group_ai_tweak_data(tweak_data)
 			2,
 			3
 		},
-		spawn = {{
-			freq = 1,
-			amount_min = 1,
-			rank = 1,
-			unit = "CS_cop_stealth_MP5",
-			tactics = group_ai._tactics.FBI_suit_stealth
-		}}
+		spawn = {
+			{
+				freq = 1,
+				amount_min = 1,
+				rank = 1,
+				unit = "CS_cop_stealth_MP5",
+				tactics = group_ai._tactics.FBI_suit_stealth
+			}
+		}
 	}
 	group_ai.enemy_spawn_groups.tac_tazer_charge = {
 		amount = {
@@ -2696,7 +2728,9 @@ end
 
 function VRArcadeTweakData:init_interaction_tweak_data(tweak_data)
 	tweak_data.interaction.intimidate.equipment_consume = false
-	local timer_exclude = {hold_choose_handedness = true}
+	local timer_exclude = {
+		hold_choose_handedness = true
+	}
 
 	for name, data in pairs(tweak_data.interaction) do
 		if not timer_exclude[name] and type(data) == "table" and data.timer then
@@ -2820,4 +2854,3 @@ function VRArcadeTweakData:set_difficulty(tweak_data, difficulty)
 		}
 	end
 end
-

@@ -13,7 +13,7 @@ end
 function Storage:_load_status()
 	local current_time = TimerManager:game():time()
 
-	if self._load_started_time + 0.8 < current_time then
+	if current_time > self._load_started_time + 0.8 then
 		self:_create_profile_data()
 
 		return SaveData.OK
@@ -23,4 +23,3 @@ end
 function Storage:_close_load_task()
 	self._load_started_time = nil
 end
-

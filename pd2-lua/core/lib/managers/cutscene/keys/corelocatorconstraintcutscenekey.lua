@@ -33,7 +33,9 @@ function CoreLocatorConstraintCutsceneKey:evaluate(player, fast_forward)
 end
 
 function CoreLocatorConstraintCutsceneKey:revert(player)
-	local preceeding_key = self:preceeding_key({locator_name = self:locator_name()})
+	local preceeding_key = self:preceeding_key({
+		locator_name = self:locator_name()
+	})
 
 	if preceeding_key then
 		preceeding_key:evaluate(player, false)
@@ -149,4 +151,3 @@ function CoreLocatorConstraintCutsceneKey:_constrain_locator_to_object(parent_ob
 		locator_unit:set_animations_enabled(true)
 	end
 end
-

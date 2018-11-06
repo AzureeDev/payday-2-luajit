@@ -17,6 +17,7 @@ end
 function FreeFlightAction:name()
 	return self._name
 end
+
 FreeFlightActionToggle = FreeFlightActionToggle or class()
 
 function FreeFlightActionToggle:init(name1, name2, callback1, callback2)
@@ -52,4 +53,3 @@ function FreeFlightActionToggle:name()
 		return self._name2
 	end
 end
-

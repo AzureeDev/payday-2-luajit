@@ -137,4 +137,3 @@ function ServerStatusBoxGui:set_server_info_state(state)
 
 	self._scroll_panel:child("server_panel"):child("server_state_text"):set_text(string.upper(s))
 end
-

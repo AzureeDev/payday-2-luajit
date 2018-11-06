@@ -51,7 +51,6 @@ function ConnectionNetworkHandler:request_join(peer_name, preferred_character, d
 end
 
 function ConnectionNetworkHandler:join_request_reply(reply_id, my_peer_id, my_character, level_index, difficulty_index, one_down, state, server_character, user_id, mission, job_id_index, job_stage, alternative_job_stage, interupt_job_stage_level_index, xuid, auth_ticket, sender)
-	print("[Debug] ConnectionNetworkHandler:join_request_reply - one_down:", one_down)
 	print(" 1 ConnectionNetworkHandler:join_request_reply", reply_id, my_peer_id, my_character, level_index, difficulty_index, one_down, state, server_character, user_id, mission, job_id_index, job_stage, alternative_job_stage, interupt_job_stage_level_index, xuid, auth_ticket, sender)
 
 	if not self._verify_in_client_session() then
@@ -210,7 +209,9 @@ function ConnectionNetworkHandler:kick_to_briefing(...)
 	managers.network:session():local_peer():set_waiting_for_player_ready(false)
 	managers.network:session():chk_send_local_player_ready()
 	managers.network:session():on_set_member_ready(managers.network:session():local_peer():id(), false, true, false)
-	game_state_machine:change_state_by_name("ingame_waiting_for_players", {sync_data = true})
+	game_state_machine:change_state_by_name("ingame_waiting_for_players", {
+		sync_data = true
+	})
 end
 
 function ConnectionNetworkHandler:spawn_dropin_penalty(dead, bleed_out, health, used_deployable, used_cable_ties, used_body_bags)
@@ -582,7 +583,12 @@ function ConnectionNetworkHandler:set_member_ready(peer_id, ready, mode, outfit_
 	end
 
 	if mode == 1 then
-		ready = ready ~= 0 and true or false
+		if ready ~= 0 then
+			ready = true
+		else
+			ready = false
+		end
+
 		local ready_state = peer:waiting_for_player_ready()
 
 		peer:set_waiting_for_player_ready(ready)
@@ -775,15 +781,18 @@ function ConnectionNetworkHandler:sync_explode_bullet(position, normal, damage, 
 	end
 
 	if InstantExplosiveBulletBase then
-		local user_unit = managers.criminals and managers.criminals:character_unit_by_peer_id(peer:id())
+		if false then
+			local user_unit = managers.criminals and managers.criminals:character_unit_by_peer_id(peer:id())
 
-		if alive(user_unit) then
-			local weapon_unit = user_unit:inventory():unit_by_selection(peer_id_or_selection_index)
+			if alive(user_unit) then
+				local weapon_unit = user_unit:inventory():unit_by_selection(peer_id_or_selection_index)
 
-			if alive(weapon_unit) then
-				InstantExplosiveBulletBase:on_collision_server(position, normal, damage / 163.84, user_unit, weapon_unit, peer:id(), peer_id_or_selection_index)
-				InstantExplosiveBulletBase:on_collision_client(position, normal, damage / 163.84, managers.criminals and managers.criminals:character_unit_by_peer_id(peer_id_or_selection_index))
+				if alive(weapon_unit) then
+					InstantExplosiveBulletBase:on_collision_server(position, normal, damage / 163.84, user_unit, weapon_unit, peer:id(), peer_id_or_selection_index)
+				end
 			end
+		else
+			InstantExplosiveBulletBase:on_collision_client(position, normal, damage / 163.84, managers.criminals and managers.criminals:character_unit_by_peer_id(peer_id_or_selection_index))
 		end
 	end
 end
@@ -881,7 +890,7 @@ function ConnectionNetworkHandler:sync_fire_results(count_cops, count_gangsters,
 			})
 		end
 
-		local weapon_pass, weapon_type_pass, count_pass, all_pass = nil
+		slot14, slot15, slot16, slot17 = nil
 	end
 end
 
@@ -1177,3 +1186,16 @@ function ConnectionNetworkHandler:sync_end_assault_skirmish(sender)
 	managers.skirmish:on_end_assault()
 end
 
+function ConnectionNetworkHandler:uno_achievement_challenge_completed(sender)
+	local peer = self._verify_sender(sender)
+
+	if not peer then
+		return
+	end
+
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+
+	managers.custom_safehouse:uno_achievement_challenge():set_peer_completed(peer:id(), true)
+end

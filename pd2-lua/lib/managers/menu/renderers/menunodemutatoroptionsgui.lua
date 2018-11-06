@@ -71,12 +71,14 @@ function MenuNodeMutatorOptionsGui:_setup_item_panel(safe_rect, res)
 
 	self._texture_panel:set_center(self.box_panel:w() / 2, self.box_panel:h() / 2)
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_clipping(false)
 	self.boxgui:set_layer(1000)
@@ -151,4 +153,3 @@ end
 function MenuNodeMutatorOptionsGui:close()
 	MenuNodeMutatorOptionsGui.super.close(self)
 end
-

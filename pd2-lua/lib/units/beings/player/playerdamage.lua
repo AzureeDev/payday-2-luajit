@@ -8,7 +8,11 @@ PlayerDamage._UPPERS_COOLDOWN = 20
 
 function PlayerDamage:init(unit)
 	self._lives_init = tweak_data.player.damage.LIVES_INIT
-	self._lives_init = Global.game_settings.one_down and 2
+
+	if Global.game_settings.one_down then
+		self._lives_init = 2
+	end
+
 	self._lives_init = managers.modifiers:modify_value("PlayerDamage:GetMaximumLives", self._lives_init)
 	self._unit = unit
 	self._max_health_reduction = managers.player:upgrade_value("player", "max_health_reduction", 1)
@@ -94,37 +98,49 @@ function PlayerDamage:init(unit)
 				end
 			end
 
-			CopDamage.register_listener("on_damage", {"on_damage"}, on_damage)
+			CopDamage.register_listener("on_damage", {
+				"on_damage"
+			}, on_damage)
 		end
 	end
 
-	self._listener_holder:add("on_use_armor_bag", {"on_use_armor_bag"}, callback(self, self, "_on_use_armor_bag_event"))
+	self._listener_holder:add("on_use_armor_bag", {
+		"on_use_armor_bag"
+	}, callback(self, self, "_on_use_armor_bag_event"))
 
 	if self:_init_armor_grinding_data() then
-
 		function self._on_damage_callback_func()
 			return callback(self, self, "_on_damage_armor_grinding")
 		end
 
 		self:_add_on_damage_event()
-		self._listener_holder:add("on_enter_bleedout", {"on_enter_bleedout"}, callback(self, self, "_on_enter_bleedout_event"))
+		self._listener_holder:add("on_enter_bleedout", {
+			"on_enter_bleedout"
+		}, callback(self, self, "_on_enter_bleedout_event"))
 
 		if has_swansong_skill then
-			self._listener_holder:add("on_enter_swansong", {"on_enter_swansong"}, callback(self, self, "_on_enter_swansong_event"))
-			self._listener_holder:add("on_exit_swansong", {"on_enter_bleedout"}, callback(self, self, "_on_exit_swansong_event"))
+			self._listener_holder:add("on_enter_swansong", {
+				"on_enter_swansong"
+			}, callback(self, self, "_on_enter_swansong_event"))
+			self._listener_holder:add("on_exit_swansong", {
+				"on_enter_bleedout"
+			}, callback(self, self, "_on_exit_swansong_event"))
 		end
 
-		self._listener_holder:add("on_revive", {"on_revive"}, callback(self, self, "_on_revive_event"))
+		self._listener_holder:add("on_revive", {
+			"on_revive"
+		}, callback(self, self, "_on_revive_event"))
 	else
 		self:_init_standard_listeners()
 	end
 
 	if player_manager:has_category_upgrade("temporary", "revive_damage_reduction") then
-		self._listener_holder:add("combat_medic_damage_reduction", {"on_revive"}, callback(self, self, "_activate_combat_medic_damage_reduction"))
+		self._listener_holder:add("combat_medic_damage_reduction", {
+			"on_revive"
+		}, callback(self, self, "_activate_combat_medic_damage_reduction"))
 	end
 
 	if player_manager:has_category_upgrade("player", "revive_damage_reduction") and player_manager:has_category_upgrade("player", "revive_damage_reduction") then
-
 		local function on_revive_interaction_start()
 			managers.player:set_property("revive_damage_reduction", player_manager:upgrade_value("player", "revive_damage_reduction"), 1)
 		end
@@ -137,13 +153,23 @@ function PlayerDamage:init(unit)
 			managers.player:activate_temporary_upgrade("temporary", "revive_damage_reduction")
 		end
 
-		self._listener_holder:add("on_revive_interaction_start", {"on_revive_interaction_start"}, on_revive_interaction_start)
-		self._listener_holder:add("on_revive_interaction_interrupt", {"on_revive_interaction_interrupt"}, on_exit_interaction)
-		self._listener_holder:add("on_revive_interaction_success", {"on_revive_interaction_success"}, on_revive_interaction_success)
+		self._listener_holder:add("on_revive_interaction_start", {
+			"on_revive_interaction_start"
+		}, on_revive_interaction_start)
+		self._listener_holder:add("on_revive_interaction_interrupt", {
+			"on_revive_interaction_interrupt"
+		}, on_exit_interaction)
+		self._listener_holder:add("on_revive_interaction_success", {
+			"on_revive_interaction_success"
+		}, on_revive_interaction_success)
 	end
 
-	managers.mission:add_global_event_listener("player_regenerate_armor", {"player_regenerate_armor"}, callback(self, self, "_regenerate_armor"))
-	managers.mission:add_global_event_listener("player_force_bleedout", {"player_force_bleedout"}, callback(self, self, "force_into_bleedout", false))
+	managers.mission:add_global_event_listener("player_regenerate_armor", {
+		"player_regenerate_armor"
+	}, callback(self, self, "_regenerate_armor"))
+	managers.mission:add_global_event_listener("player_force_bleedout", {
+		"player_force_bleedout"
+	}, callback(self, self, "force_into_bleedout", false))
 
 	local level_tweak = tweak_data.levels[managers.job:current_level_id()]
 
@@ -161,18 +187,25 @@ function PlayerDamage:init(unit)
 end
 
 function PlayerDamage:_init_standard_listeners()
-
 	function self._on_damage_callback_func()
 		return callback(self, self, "_on_damage_event")
 	end
 
 	self:_add_on_damage_event()
-	self._listener_holder:add("on_enter_bleedout", {"on_enter_bleedout"}, callback(self, self, "_on_enter_bleedout_event"))
-	self._listener_holder:add("on_revive", {"on_revive"}, callback(self, self, "_on_revive_event"))
+	self._listener_holder:add("on_enter_bleedout", {
+		"on_enter_bleedout"
+	}, callback(self, self, "_on_enter_bleedout_event"))
+	self._listener_holder:add("on_revive", {
+		"on_revive"
+	}, callback(self, self, "_on_revive_event"))
 
 	if managers.player:has_category_upgrade("temporary", "berserker_damage_multiplier") then
-		self._listener_holder:add("on_enter_swansong", {"on_enter_swansong"}, callback(self, self, "_on_enter_swansong_event"))
-		self._listener_holder:add("on_exit_swansong", {"on_enter_bleedout"}, callback(self, self, "_on_exit_swansong_event"))
+		self._listener_holder:add("on_enter_swansong", {
+			"on_enter_swansong"
+		}, callback(self, self, "_on_enter_swansong_event"))
+		self._listener_holder:add("on_exit_swansong", {
+			"on_enter_bleedout"
+		}, callback(self, self, "_on_exit_swansong_event"))
 	end
 end
 
@@ -831,7 +864,6 @@ function PlayerDamage:set_armor(armor)
 		if current_armor == 0 and armor ~= 0 then
 			self:consume_armor_stored_health()
 		elseif current_armor ~= 0 and armor == 0 and self._dire_need then
-
 			local function clbk()
 				return self:is_regenerating_armor()
 			end
@@ -922,10 +954,12 @@ function PlayerDamage:damage_tase(attack_data)
 
 		managers.player:set_player_state("tased")
 
-		local damage_info = {result = {
-			variant = "tase",
-			type = "hurt"
-		}}
+		local damage_info = {
+			result = {
+				variant = "tase",
+				type = "hurt"
+			}
+		}
 
 		self:_call_listeners(damage_info)
 
@@ -949,6 +983,7 @@ end
 function PlayerDamage:erase_tase_data()
 	self._tase_data = nil
 end
+
 local mvec1 = Vector3()
 
 function PlayerDamage:damage_melee(attack_data)
@@ -1023,7 +1058,9 @@ function PlayerDamage:is_friendly_fire(unit)
 end
 
 function PlayerDamage:play_whizby(position)
-	self._unit:sound():play_whizby({position = position})
+	self._unit:sound():play_whizby({
+		position = position
+	})
 	self._unit:camera():play_shaker("whizby", 0.1)
 
 	if not _G.IS_VR then
@@ -1358,10 +1395,12 @@ function PlayerDamage:_send_damage_drama(attack_data, health_subtracted)
 end
 
 function PlayerDamage:damage_killzone(attack_data)
-	local damage_info = {result = {
-		variant = "killzone",
-		type = "hurt"
-	}}
+	local damage_info = {
+		result = {
+			variant = "killzone",
+			type = "hurt"
+		}
+	}
 
 	if self._god_mode or self._invulnerable or self._mission_damage_blockers.invulnerable then
 		self:_call_listeners(damage_info)
@@ -1414,10 +1453,12 @@ function PlayerDamage:damage_killzone(attack_data)
 end
 
 function PlayerDamage:damage_fall(data)
-	local damage_info = {result = {
-		variant = "fall",
-		type = "hurt"
-	}}
+	local damage_info = {
+		result = {
+			variant = "fall",
+			type = "hurt"
+		}
+	}
 
 	if self._god_mode or self._invulnerable or self._mission_damage_blockers.invulnerable then
 		self:_call_listeners(damage_info)
@@ -1509,10 +1550,12 @@ function PlayerDamage:damage_explosion(attack_data)
 		return
 	end
 
-	local damage_info = {result = {
-		variant = "explosion",
-		type = "hurt"
-	}}
+	local damage_info = {
+		result = {
+			variant = "explosion",
+			type = "hurt"
+		}
+	}
 
 	if self._god_mode or self._invulnerable or self._mission_damage_blockers.invulnerable then
 		self:_call_listeners(damage_info)
@@ -1556,10 +1599,12 @@ function PlayerDamage:damage_fire(attack_data)
 		return
 	end
 
-	local damage_info = {result = {
-		variant = "fire",
-		type = "hurt"
-	}}
+	local damage_info = {
+		result = {
+			variant = "fire",
+			type = "hurt"
+		}
+	}
 
 	if self._god_mode or self._invulnerable or self._mission_damage_blockers.invulnerable then
 		self:_call_listeners(damage_info)
@@ -1603,10 +1648,12 @@ function PlayerDamage:damage_fire(attack_data)
 end
 
 function PlayerDamage:damage_simple(attack_data)
-	local damage_info = {result = {
-		type = "hurt",
-		variant = attack_data.variant
-	}}
+	local damage_info = {
+		result = {
+			type = "hurt",
+			variant = attack_data.variant
+		}
+	}
 
 	if self._god_mode or self._invulnerable or self._mission_damage_blockers.invulnerable then
 		self:_call_listeners(damage_info)
@@ -1685,7 +1732,7 @@ function PlayerDamage:_check_bleed_out(can_activate_berserker, ignore_movement_s
 
 		local time = Application:time()
 
-		if not self._block_medkit_auto_revive and self._uppers_elapsed + self._UPPERS_COOLDOWN < time then
+		if not self._block_medkit_auto_revive and time > self._uppers_elapsed + self._UPPERS_COOLDOWN then
 			local auto_recovery_kit = FirstAidKitBase.GetFirstAidKit(self._unit:position())
 
 			if auto_recovery_kit then
@@ -1781,7 +1828,19 @@ function PlayerDamage:_drop_blood_sample()
 		self._unit:sound():say("g29", false)
 
 		if managers.groupai:state():bain_state() then
-			managers.dialog:queue_dialog("hos_ban_139", {})
+			local params = {}
+
+			if not self._blood_sample_reminder_given then
+				function params.done_cbk()
+					managers.dialog:queue_dialog("Play_pln_nmh_73", {
+						delay = 3
+					})
+				end
+
+				self._blood_sample_reminder_given = true
+			end
+
+			managers.dialog:queue_dialog("Play_pln_nmh_72", params)
 		end
 
 		local splatter_from = self._unit:position() + math.UP * 5
@@ -1816,7 +1875,9 @@ function PlayerDamage:on_downed()
 	self._damage_to_hot_stack = {}
 
 	self:disable_berserker()
-	managers.hud:pd_start_timer({time = self._downed_timer})
+	managers.hud:pd_start_timer({
+		time = self._downed_timer
+	})
 	managers.hud:on_downed()
 	self:_stop_tinnitus()
 	self:_stop_concussion()
@@ -1890,7 +1951,9 @@ function PlayerDamage:on_arrested()
 	self._arrested_timer = tweak_data.player.damage.ARRESTED_TIME
 	self._arrested_paused_counter = 0
 
-	managers.hud:pd_start_timer({time = self._arrested_timer})
+	managers.hud:pd_start_timer({
+		time = self._arrested_timer
+	})
 	managers.hud:on_arrested()
 end
 
@@ -2095,7 +2158,7 @@ function PlayerDamage:shoot_pos_mid(m_pos)
 end
 
 function PlayerDamage:got_max_doh_stacks()
-	return self._doh_data.max_stacks and (tonumber(self._doh_data.max_stacks) or 1) <= #self._damage_to_hot_stack
+	return self._doh_data.max_stacks and #self._damage_to_hot_stack >= (tonumber(self._doh_data.max_stacks) or 1)
 end
 
 function PlayerDamage:add_damage_to_hot()
@@ -2214,13 +2277,21 @@ function PlayerDamage:remove_listener(key)
 end
 
 function PlayerDamage:on_fatal_state_enter()
-	local dmg_info = {result = {type = "death"}}
+	local dmg_info = {
+		result = {
+			type = "death"
+		}
+	}
 
 	self:_call_listeners(dmg_info)
 end
 
 function PlayerDamage:on_incapacitated_state_enter()
-	local dmg_info = {result = {type = "death"}}
+	local dmg_info = {
+		result = {
+			type = "death"
+		}
+	}
 
 	self:_call_listeners(dmg_info)
 end
@@ -2256,7 +2327,9 @@ function PlayerDamage.clbk_msg_overwrite_criminal_hurt(overwrite_data, msg_queue
 				dmg
 			})
 
-			overwrite_data.indexes[crim_key] = {[attacker_key] = #msg_queue}
+			overwrite_data.indexes[crim_key] = {
+				[attacker_key] = #msg_queue
+			}
 		end
 	else
 		overwrite_data.indexes = {}
@@ -2581,6 +2654,7 @@ function PlayerDamage:remaining_delayed_damage()
 
 	return remaining_damage
 end
+
 PlayerBodyDamage = PlayerBodyDamage or class()
 
 function PlayerBodyDamage:init(unit, unit_extension, body)
@@ -2596,9 +2670,10 @@ end
 function PlayerBodyDamage:damage_fire(attack_unit, normal, position, direction, damage, velocity)
 	local attack_data = {
 		damage = damage,
-		col_ray = {ray = -direction}
+		col_ray = {
+			ray = -direction
+		}
 	}
 
 	self._unit_extension:damage_killzone(attack_data)
 end
-

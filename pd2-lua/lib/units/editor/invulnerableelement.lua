@@ -1,5 +1,7 @@
 InvulnerableUnitElement = InvulnerableUnitElement or class(MissionElement)
-InvulnerableUnitElement.LINK_ELEMENTS = {"elements"}
+InvulnerableUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function InvulnerableUnitElement:init(unit)
 	InvulnerableUnitElement.super.init(self, unit)
@@ -110,4 +112,3 @@ function InvulnerableUnitElement:_build_panel(panel, panel_sizer)
 
 	self:add_help_text(help)
 end
-

@@ -111,4 +111,3 @@ function SafehouseNPCSound:_sound_start_muttering(override_sound)
 
 	self:say(override_sound or string.format("Play_%s_idle", self.character), false, true)
 end
-

@@ -19,4 +19,3 @@ function Init:transition()
 		return CoreGameStatePreFrontEnd.PreFrontEnd
 	end
 end
-

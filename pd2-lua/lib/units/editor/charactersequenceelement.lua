@@ -1,7 +1,9 @@
 CharacterSequenceElement = SequenceCharacterElement or class(MissionElement)
 CharacterSequenceElement.SAVE_UNIT_POSITION = false
 CharacterSequenceElement.SAVE_UNIT_ROTATION = false
-CharacterSequenceElement.LINK_ELEMENTS = {"elements"}
+CharacterSequenceElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function CharacterSequenceElement:init(unit)
 	CharacterSequenceElement.super.init(self, unit)
@@ -82,4 +84,3 @@ end
 
 function CharacterSequenceElement:update_editing()
 end
-

@@ -48,6 +48,7 @@ end
 function EnvironmentEffectsManager:camera_rotation()
 	return self._camera_rotation
 end
+
 EnvironmentEffect = EnvironmentEffect or class()
 
 function EnvironmentEffect:init(default)
@@ -69,6 +70,7 @@ end
 function EnvironmentEffect:default()
 	return self._default
 end
+
 RainEffect = RainEffect or class(EnvironmentEffect)
 local ids_rain_post_processor = Idstring("rain_post_processor")
 local ids_rain_ripples = Idstring("rain_ripples")
@@ -137,6 +139,7 @@ function RainEffect:stop()
 		self._vp = nil
 	end
 end
+
 LightningEffect = LightningEffect or class(EnvironmentEffect)
 
 function LightningEffect:init(effect_data)
@@ -310,6 +313,7 @@ end
 function LightningEffect:_set_next_timer()
 	self._next = self._min_interval + math.rand(self._rnd_interval)
 end
+
 RainDropEffect = RainDropEffect or class(EnvironmentEffect)
 
 function RainDropEffect:init()
@@ -344,6 +348,7 @@ function RainDropEffect:stop()
 		self._raindrops = nil
 	end
 end
+
 RainDropScreenEffect = RainDropScreenEffect or class(RainDropEffect)
 
 function RainDropScreenEffect:init()
@@ -353,4 +358,3 @@ function RainDropScreenEffect:init()
 end
 
 CoreClass.override_class(CoreEnvironmentEffectsManager.EnvironmentEffectsManager, EnvironmentEffectsManager)
-

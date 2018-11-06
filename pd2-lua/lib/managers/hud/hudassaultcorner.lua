@@ -200,7 +200,9 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 		font = tweak_data.hud_corner.assault_font
 	})
 
-	point_of_no_return_text:set_text(utf8.to_upper(managers.localization:text("hud_assault_point_no_return_in", {time = ""})))
+	point_of_no_return_text:set_text(utf8.to_upper(managers.localization:text("hud_assault_point_no_return_in", {
+		time = ""
+	})))
 	point_of_no_return_text:set_size(self._noreturn_bg_box:w(), self._noreturn_bg_box:h())
 
 	local point_of_no_return_timer = self._noreturn_bg_box:text({
@@ -279,7 +281,7 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 	end
 
 	local width = 200
-	local x = ((assault_panel:left() + self._bg_box:left()) - 3) - width
+	local x = assault_panel:left() + self._bg_box:left() - 3 - width
 	local buffs_panel = self._hud_panel:panel({
 		name = "buffs_panel",
 		h = 38,
@@ -361,13 +363,15 @@ function HUDAssaultCorner:setup_wave_display(top, right)
 			x = 0,
 			y = 0,
 			h = wave_h
-		}, {blend_mode = "add"})
+		}, {
+			blend_mode = "add"
+		})
 
 		waves_icon:set_right(wave_panel:w())
 		waves_icon:set_center_y(self._wave_bg_box:h() * 0.5)
 		self._wave_bg_box:set_right(waves_icon:left())
 
-		local num_waves = self._wave_bg_box:text({
+		slot7 = self._wave_bg_box:text({
 			vertical = "center",
 			name = "num_waves",
 			layer = 1,
@@ -391,7 +395,7 @@ function HUDAssaultCorner:should_display_waves()
 end
 
 function HUDAssaultCorner:_animate_text(text_panel, bg_box, color, color_function)
-	local text_list = (bg_box or self._bg_box):script().text_list
+	local text_list = bg_box or self._bg_box:script().text_list
 	local text_index = 0
 	local texts = {}
 	local padding = 10
@@ -412,7 +416,9 @@ function HUDAssaultCorner:_animate_text(text_panel, bg_box, color, color_functio
 			local use_stars = true
 
 			if managers.crime_spree:is_active() then
-				text_string = text_string .. managers.localization:to_upper_text("menu_cs_level", {level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")})
+				text_string = text_string .. managers.localization:to_upper_text("menu_cs_level", {
+					level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")
+				})
 				use_stars = false
 			end
 
@@ -686,7 +692,9 @@ function HUDAssaultCorner:_set_text_list(text_list)
 end
 
 function HUDAssaultCorner:_start_assault(text_list)
-	text_list = text_list or {""}
+	text_list = text_list or {
+		""
+	}
 	local assault_panel = self._hud_panel:child("assault_panel")
 	local text_panel = assault_panel:child("text_panel")
 
@@ -699,7 +707,9 @@ function HUDAssaultCorner:_start_assault(text_list)
 		self._bg_box:child("text_panel"):stop()
 		self._bg_box:child("text_panel"):clear()
 	else
-		self._bg_box:panel({name = "text_panel"})
+		self._bg_box:panel({
+			name = "text_panel"
+		})
 	end
 
 	self._bg_box:child("bg"):stop()
@@ -868,7 +878,7 @@ function HUDAssaultCorner:_offset_hostage(is_offseted, hostage_panel)
 	local target_y = is_offseted and OFFSET or 0
 	local t = (1 - math.abs(hostage_panel:y() - target_y) / OFFSET) * TOTAL_T
 
-	while t < TOTAL_T do
+	while TOTAL_T > t do
 		local dt = coroutine.yield()
 		t = math.min(t + dt, TOTAL_T)
 		local lerp = t / TOTAL_T
@@ -933,16 +943,36 @@ function HUDAssaultCorner:hide_point_of_no_return_timer()
 end
 
 function HUDAssaultCorner:flash_point_of_no_return_timer(beep)
-
 	local function flash_timer(o)
 		local t = 0
 
 		while t < 0.5 do
 			t = t + coroutine.yield()
 			local n = 1 - math.sin(t * 180)
-			local r = math.lerp(1 or self._point_of_no_return_color.r, 1, n)
-			local g = math.lerp(0 or self._point_of_no_return_color.g, 0.8, n)
-			local b = math.lerp(0 or self._point_of_no_return_color.b, 0.2, n)
+			slot3 = math.lerp
+			slot4 = 1
+
+			if 1 then
+				slot4 = self._point_of_no_return_color.r
+			end
+
+			local r = slot3(slot4, 1, n)
+			slot4 = math.lerp
+			slot5 = 0
+
+			if 0 then
+				slot5 = self._point_of_no_return_color.g
+			end
+
+			local g = slot4(slot5, 0.8, n)
+			slot5 = math.lerp
+			slot6 = 0
+
+			if 0 then
+				slot6 = self._point_of_no_return_color.b
+			end
+
+			local b = slot5(slot6, 0.2, n)
 
 			o:set_color(Color(r, g, b))
 			o:set_font_size(math.lerp(tweak_data.hud_corner.noreturn_size, tweak_data.hud_corner.noreturn_size * 1.25, n))
@@ -964,17 +994,22 @@ function HUDAssaultCorner:show_casing(mode)
 	text_panel:script().text_list = {}
 	self._casing_bg_box:script().text_list = {}
 	local msg = nil
-	msg = mode == "civilian" and {
-		"hud_casing_mode_ticker_clean",
-		"hud_assault_end_line",
-		"hud_casing_mode_ticker_clean",
-		"hud_assault_end_line"
-	} or {
-		"hud_casing_mode_ticker",
-		"hud_assault_end_line",
-		"hud_casing_mode_ticker",
-		"hud_assault_end_line"
-	}
+
+	if mode == "civilian" then
+		msg = {
+			"hud_casing_mode_ticker_clean",
+			"hud_assault_end_line",
+			"hud_casing_mode_ticker_clean",
+			"hud_assault_end_line"
+		}
+	else
+		msg = {
+			"hud_casing_mode_ticker",
+			"hud_assault_end_line",
+			"hud_casing_mode_ticker",
+			"hud_assault_end_line"
+		}
+	end
 
 	for _, text_id in ipairs(msg) do
 		table.insert(text_panel:script().text_list, text_id)
@@ -985,7 +1020,9 @@ function HUDAssaultCorner:show_casing(mode)
 		self._casing_bg_box:child("text_panel"):stop()
 		self._casing_bg_box:child("text_panel"):clear()
 	else
-		self._casing_bg_box:panel({name = "text_panel"})
+		self._casing_bg_box:panel({
+			name = "text_panel"
+		})
 	end
 
 	self._casing_bg_box:child("bg"):stop()
@@ -1170,7 +1207,11 @@ function HUDAssaultCorner:_update_feedback_alpha(t, dt)
 	local color = self._feedback_color
 
 	if color == self._assault_color then
-		color = alpha_curve < 0 and Color.blue or Color.red
+		if alpha_curve < 0 then
+			color = Color.blue
+		else
+			color = Color.red
+		end
 	end
 
 	managers.platform:set_feedback_color(color:with_alpha(alpha))
@@ -1207,13 +1248,17 @@ function HUDAssaultCorner:get_completed_waves_string()
 end
 
 function HUDAssaultCorner:wave_popup_string_start()
-	local macro = {current = managers.network:session():is_host() and managers.groupai:state():get_assault_number() or self._wave_number}
+	local macro = {
+		current = managers.network:session():is_host() and managers.groupai:state():get_assault_number() or self._wave_number
+	}
 
 	return managers.localization:to_upper_text("hud_skirmish_wave_start", macro)
 end
 
 function HUDAssaultCorner:wave_popup_string_end()
-	local macro = {current = managers.network:session():is_host() and managers.groupai:state():get_assault_number() or self._wave_number}
+	local macro = {
+		current = managers.network:session():is_host() and managers.groupai:state():get_assault_number() or self._wave_number
+	}
 
 	return managers.localization:to_upper_text("hud_skirmish_wave_end", macro)
 end
@@ -1236,12 +1281,14 @@ function HUDAssaultCorner:_popup_wave(text, color)
 	popup_panel:set_center_x(self._hud_panel:w() / 2)
 	popup_panel:set_center_y(self._hud_panel:h() / 3.5)
 
-	local box = BoxGuiObject:new(popup_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	local box = BoxGuiObject:new(popup_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	box:set_color(color)
 	popup_panel:rect({
@@ -1288,4 +1335,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDAssaultCornerVR")
 end
-

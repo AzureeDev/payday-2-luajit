@@ -26,4 +26,3 @@ end
 function SelectStorageDialog:to_string()
 	return string.format("%s, Content type: %s, Min bytes: %s, Auto select: %s", tostring(BaseDialog.to_string(self)), tostring(self._data.content_type), tostring(self._data.min_bytes), tostring(self._data.auto_select))
 end
-

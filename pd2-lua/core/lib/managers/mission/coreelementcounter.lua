@@ -146,6 +146,7 @@ function ElementCounter:_check_triggers(type)
 		end
 	end
 end
+
 ElementCounterReset = ElementCounterReset or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementCounterReset:init(...)
@@ -171,6 +172,7 @@ function ElementCounterReset:on_executed(instigator)
 
 	ElementCounterReset.super.on_executed(self, instigator)
 end
+
 ElementCounterOperator = ElementCounterOperator or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementCounterOperator:init(...)
@@ -205,6 +207,7 @@ function ElementCounterOperator:on_executed(instigator)
 
 	ElementCounterOperator.super.on_executed(self, instigator)
 end
+
 ElementCounterTrigger = ElementCounterTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementCounterTrigger:init(...)
@@ -229,6 +232,7 @@ function ElementCounterTrigger:on_executed(instigator)
 
 	ElementCounterTrigger.super.on_executed(self, instigator)
 end
+
 ElementCounterFilter = ElementCounterFilter or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementCounterFilter:init(...)
@@ -327,4 +331,3 @@ function ElementCounterFilter:_check_type(element)
 		return self._values.value < element:counter_value()
 	end
 end
-

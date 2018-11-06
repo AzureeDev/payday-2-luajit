@@ -615,6 +615,7 @@ function MenuInput:mouse_double_click(o, button, x, y)
 
 	return managers.menu:active_menu().renderer:mouse_double_click(o, button, x, y)
 end
+
 local print_timers = {}
 
 local function upd_print(id, t, ...)
@@ -988,4 +989,3 @@ function MenuInput:input_crime_spree_item(item, controller, mouse_click)
 		end
 	end
 end
-

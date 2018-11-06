@@ -41,7 +41,11 @@ function BaseNetworkHandler._verify_sender(rpc)
 	local peer = nil
 
 	if session then
-		peer = rpc:protocol_at_index(0) == "STEAM" and session:peer_by_user_id(rpc:ip_at_index(0)) or session:peer_by_ip(rpc:ip_at_index(0))
+		if rpc:protocol_at_index(0) == "STEAM" then
+			peer = session:peer_by_user_id(rpc:ip_at_index(0))
+		else
+			peer = session:peer_by_ip(rpc:ip_at_index(0))
+		end
 
 		if peer then
 			return peer
@@ -131,7 +135,9 @@ function BaseNetworkHandler:_chk_unit_too_early(unit, unit_id_str, fun_name, uni
 	local data = {
 		unit_param_index = unit_param_index,
 		fun_name = fun_name,
-		params = {...}
+		params = {
+			...
+		}
 	}
 	local unit_id = tonumber(unit_id_str)
 	self._unit_too_early_queue[unit_id] = self._unit_too_early_queue[unit_id] or {}
@@ -141,4 +147,3 @@ function BaseNetworkHandler:_chk_unit_too_early(unit, unit_id_str, fun_name, uni
 
 	return true
 end
-

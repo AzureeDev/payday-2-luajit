@@ -23,4 +23,3 @@ function PrepareStartSimulation:transition()
 		return CoreGameStateInEditorSimulation.Simulation, self._level_handler
 	end
 end
-

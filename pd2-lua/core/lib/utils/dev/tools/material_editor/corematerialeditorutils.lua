@@ -133,7 +133,11 @@ function CoreMaterialEditor:_create_make_file(rebuild)
 
 		for k, v in pairs(self._shader_defines) do
 			if v._checked then
-				defines = not defines and k or defines .. " " .. k
+				if not defines then
+					defines = k
+				else
+					defines = defines .. " " .. k
+				end
 			end
 		end
 
@@ -337,4 +341,3 @@ function CoreMaterialEditor:_set_channels_default_texture(node)
 		end
 	end
 end
-

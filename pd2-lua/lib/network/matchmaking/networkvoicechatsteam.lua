@@ -45,8 +45,9 @@ function NetworkVoiceChatSTEAM:_save_globals()
 		Global.steam = {}
 	end
 
-	Global.steam.voip = {}
-	Global.steam.voip.handler = self.handler
+	Global.steam.voip = {
+		handler = self.handler
+	}
 end
 
 function NetworkVoiceChatSTEAM:enabled()
@@ -73,7 +74,9 @@ function NetworkVoiceChatSTEAM:update()
 
 	for id, pl in pairs(playing) do
 		if not self._users_talking[id] then
-			self._users_talking[id] = {time = 0}
+			self._users_talking[id] = {
+				time = 0
+			}
 		end
 
 		if pl then
@@ -123,4 +126,3 @@ end
 function NetworkVoiceChatSTEAM:is_muted(peer)
 	return self.handler:is_voice_receiver_muted(peer:id())
 end
-

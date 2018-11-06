@@ -132,7 +132,9 @@ function FeedbackUnitElement:_build_panel(panel, panel_sizer)
 	local above_camera_effect_sizer = EWS:StaticBoxSizer(panel, "VERTICAL", "Above camera effect")
 
 	panel_sizer:add(above_camera_effect_sizer, 0, 0, "EXPAND")
-	self:_build_value_combobox(panel, above_camera_effect_sizer, "above_camera_effect", table.list_add({"none"}, self:_effect_options()), "Select and above camera effect", "effect")
+	self:_build_value_combobox(panel, above_camera_effect_sizer, "above_camera_effect", table.list_add({
+		"none"
+	}, self:_effect_options()), "Select and above camera effect", "effect")
 	self:_build_value_number(panel, above_camera_effect_sizer, "above_camera_effect_distance", {
 		min = 0,
 		floats = 2,
@@ -159,4 +161,3 @@ function FeedbackUnitElement:add_to_mission_package()
 		})
 	end
 end
-

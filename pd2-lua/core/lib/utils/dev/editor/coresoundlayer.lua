@@ -6,7 +6,9 @@ require("core/lib/units/data/CoreEditorSoundData")
 SoundLayer = SoundLayer or class(CoreStaticLayer.StaticLayer)
 
 function SoundLayer:init(owner)
-	SoundLayer.super.init(self, owner, "sounds", {"sound"}, "sound_layer")
+	SoundLayer.super.init(self, owner, "sounds", {
+		"sound"
+	}, "sound_layer")
 
 	self._muted = false
 	self._environment_unit = "core/units/sound_environment/sound_environment"
@@ -68,7 +70,9 @@ function SoundLayer:save(save_params)
 	local t = {
 		single_data_block = true,
 		entry = self._save_name,
-		data = {file = file_name}
+		data = {
+			file = file_name
+		}
 	}
 
 	managers.editor:add_save_data(t)
@@ -250,7 +254,9 @@ function SoundLayer:build_panel(notebook)
 		name = "Categories",
 		panel = self._sound_panel,
 		sizer = self._sound_emitter_sizer,
-		options = #emitter_paths > 0 and emitter_paths or {"- No emitter paths in project -"},
+		options = #emitter_paths > 0 and emitter_paths or {
+			"- No emitter paths in project -"
+		},
 		value = #emitter_paths > 0 and default_emitter_path or "- No emitter paths in project -",
 		value_changed_cb = function (params)
 			self:select_emitter_path(params.value)
@@ -262,7 +268,9 @@ function SoundLayer:build_panel(notebook)
 		name = "Events",
 		panel = self._sound_panel,
 		sizer = self._sound_emitter_sizer,
-		options = default_emitter_path and managers.sound_environment:emitter_events(default_emitter_path) or {"- Talk to your sound designer -"},
+		options = default_emitter_path and managers.sound_environment:emitter_events(default_emitter_path) or {
+			"- Talk to your sound designer -"
+		},
 		value = default_emitter_path and managers.sound_environment:emitter_events(default_emitter_path)[1] or "- Talk to your sound designer -",
 		value_changed_cb = function (params)
 			self:select_emitter_event(params.value)
@@ -312,7 +320,9 @@ function SoundLayer:_build_defaults(sizer)
 		sorted = true,
 		panel = self._sound_panel,
 		sizer = sizer,
-		options = no_ambiences_availible and {error_text} or managers.sound_environment:ambience_events(),
+		options = no_ambiences_availible and {
+			error_text
+		} or managers.sound_environment:ambience_events(),
 		value = no_ambiences_availible and error_text or managers.sound_environment:game_default_ambience()
 	}
 	local ambiences = CoreEws.combobox(self._default_ambience)
@@ -331,7 +341,9 @@ function SoundLayer:_build_defaults(sizer)
 		sorted = true,
 		panel = self._sound_panel,
 		sizer = sizer,
-		options = no_occasionals_availible and {error_text} or managers.sound_environment:occasional_events(),
+		options = no_occasionals_availible and {
+			error_text
+		} or managers.sound_environment:occasional_events(),
 		value = no_occasionals_availible and error_text or managers.sound_environment:game_default_occasional()
 	}
 	local occasionals = CoreEws.combobox(self._default_occasional)
@@ -764,4 +776,3 @@ function SoundLayer:set_unit_name(units)
 		self._unit_name = ""
 	end
 end
-

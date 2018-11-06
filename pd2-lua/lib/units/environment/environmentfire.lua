@@ -240,7 +240,7 @@ function EnvironmentFire:_do_damage()
 				end
 
 				if Network:is_server() then
-					local hit_units, splinters = managers.fire:detect_and_give_dmg({
+					slot16, slot17 = managers.fire:detect_and_give_dmg({
 						player_damage = 0,
 						push_units = false,
 						hit_pos = effect_position,
@@ -318,4 +318,3 @@ function EnvironmentFire:load(data)
 
 	self:on_spawn(data, normal, self._user_unit, added_time, range_multiplier)
 end
-

@@ -59,4 +59,3 @@ function ElementAIRemove:on_executed(instigator)
 
 	ElementAIRemove.super.on_executed(self, instigator)
 end
-

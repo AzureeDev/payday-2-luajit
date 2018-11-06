@@ -54,7 +54,9 @@ function VictoryState:_set_continue_button_text()
 	local is_server_or_trial = Network:is_server() or managers.dlc:is_trial()
 	local text_id = not is_server_or_trial and "victory_client_waiting_for_server" or self._completion_bonus_done == false and "menu_es_calculating_experience" or managers.job:on_last_stage() and "menu_victory_goto_payday" or "menu_victory_goto_next_stage"
 	local continue_button = managers.menu:is_pc_controller() and "[ENTER]" or nil
-	local text = utf8.to_upper(managers.localization:text(text_id, {CONTINUE = continue_button}))
+	local text = utf8.to_upper(managers.localization:text(text_id, {
+		CONTINUE = continue_button
+	}))
 
 	managers.menu_component:set_endscreen_continue_button_text(text, not is_server_or_trial or not self._completion_bonus_done)
 end
@@ -88,4 +90,3 @@ function VictoryState:continue()
 		Application:error("Trying to continue from victory screen, but I have no state to goto")
 	end
 end
-

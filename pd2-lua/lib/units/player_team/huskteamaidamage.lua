@@ -316,7 +316,9 @@ end
 function HuskTeamAIDamage:sync_damage_bleeding()
 	local dmg_info = {
 		variant = "bleeding",
-		result = {type = "death"}
+		result = {
+			type = "death"
+		}
 	}
 
 	self:_die()
@@ -331,7 +333,9 @@ function HuskTeamAIDamage:sync_damage_incapacitated()
 
 	local dmg_info = {
 		variant = "bleeding",
-		result = {type = "fatal"}
+		result = {
+			type = "fatal"
+		}
 	}
 
 	self:_call_listeners(dmg_info)
@@ -449,4 +453,3 @@ function HuskTeamAIDamage:load(data)
 		self:_on_fatal()
 	end
 end
-

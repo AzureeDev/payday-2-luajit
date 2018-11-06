@@ -38,4 +38,3 @@ function ElementToggle:on_executed(instigator)
 
 	ElementToggle.super.on_executed(self, instigator)
 end
-

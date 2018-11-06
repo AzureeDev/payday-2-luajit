@@ -155,6 +155,7 @@ function VectorSliderBox:_set_enabled_all(value)
 	self.__slider_z:set_enabled(value)
 	self.__slider_z_textctrl:set_enabled(value)
 end
+
 Vector2SliderBox = Vector2SliderBox or CoreClass.class(VectorSliderBox)
 
 function Vector2SliderBox:init(parent_frame, title, min, max, step)
@@ -167,6 +168,7 @@ function Vector2SliderBox:init(parent_frame, title, min, max, step)
 	self.__slider_z = EWS:Slider(self._parent_frame, 0, 0, 0)
 	self.__slider_z_textctrl = EWS:TextCtrl(self._parent_frame, 0, "", "")
 end
+
 Vector3SliderBox = Vector3SliderBox or CoreClass.class(VectorSliderBox)
 
 function Vector3SliderBox:init(parent_frame, title, min, max, step)
@@ -178,4 +180,3 @@ function Vector3SliderBox:init(parent_frame, title, min, max, step)
 	self.__slider_y, self.__slider_y_textctrl = self:_create_sizer()
 	self.__slider_z, self.__slider_z_textctrl = self:_create_sizer()
 end
-

@@ -13,13 +13,13 @@ function rgb_to_hsv(r, g, b)
 	if max == min then
 		hue = 0
 	elseif max == r and b <= g then
-		hue = (60 * (g - b)) / (max - min)
+		hue = 60 * (g - b) / (max - min)
 	elseif max == r and g < b then
-		hue = (60 * (g - b)) / (max - min) + 360
+		hue = 60 * (g - b) / (max - min) + 360
 	elseif max == g then
-		hue = (60 * (b - r)) / (max - min) + 120
+		hue = 60 * (b - r) / (max - min) + 120
 	elseif max == b then
-		hue = (60 * (r - g)) / (max - min) + 240
+		hue = 60 * (r - g) / (max - min) + 240
 	end
 
 	hue = math.fmod(hue, 360)
@@ -120,8 +120,8 @@ end
 function wire_set_midpoint(unit, source, target, middle)
 	local s_pos = unit:get_object(source):position()
 	local e_pos = unit:get_object(target):position()
-	local n = (e_pos - s_pos):normalized():cross(Vector3(0, 0, 1))
-	local dir = (e_pos - s_pos):normalized():cross(n)
+	local n = e_pos - s_pos:normalized():cross(Vector3(0, 0, 1))
+	local dir = e_pos - s_pos:normalized():cross(n)
 	local m_point = s_pos + (e_pos - s_pos) * 0.5
 
 	unit:get_object(middle):set_position(m_point + dir * unit:wire_data().slack)
@@ -129,7 +129,7 @@ function wire_set_midpoint(unit, source, target, middle)
 	local co = unit:get_object(Idstring("co_cable"))
 
 	if co then
-		co:set_rotation(Rotation:look_at((e_pos - s_pos):normalized(), math.UP))
+		co:set_rotation(Rotation:look_at(e_pos - s_pos:normalized(), math.UP))
 	end
 end
 
@@ -159,10 +159,10 @@ function get_fit_size(width, height, bounding_width, bounding_height)
 	local bounding_aspect = bounding_width / bounding_height
 	local aspect = width / height
 
-	if aspect <= bounding_aspect then
-		return (bounding_width * aspect) / bounding_aspect, bounding_height
+	if bounding_aspect >= aspect then
+		return bounding_width * aspect / bounding_aspect, bounding_height
 	else
-		return bounding_width, (bounding_height * bounding_aspect) / aspect
+		return bounding_width, bounding_height * bounding_aspect / aspect
 	end
 end
 
@@ -191,6 +191,7 @@ function os.get_oldest_date(date1, date2)
 		return nil
 	end
 end
+
 math.UP = Vector3(0, 0, 1)
 math.DOWN = Vector3(0, 0, -1)
 math.Z = math.UP
@@ -257,8 +258,8 @@ end
 
 function math.spline(points, t)
 	local mu = t * t
-	local a0 = (points[4] - points[3]) - points[1] + points[2]
-	local a1 = (points[1] - points[2]) - a0
+	local a0 = points[4] - points[3] - points[1] + points[2]
+	local a1 = points[1] - points[2] - a0
 	local a2 = points[3] - points[1]
 	local a3 = points[2]
 
@@ -271,7 +272,7 @@ function math.spline_len(points, n)
 
 	for i = 1, n, 1 do
 		local p = math.spline(points, i / n)
-		len = len + (p - old_p):length()
+		len = len + p - old_p:length()
 		old_p = p
 	end
 
@@ -314,7 +315,7 @@ function math.bezier_len(points, n)
 
 	for i = 1, n, 1 do
 		local p = math.bezier(points, i / n)
-		len = len + (p - old_p):length()
+		len = len + p - old_p:length()
 		old_p = p
 	end
 
@@ -323,7 +324,7 @@ end
 
 function math.point_on_line(l1, l2, p)
 	local u = (p.x - l1.x) * (l2.x - l1.x) + (p.y - l1.y) * (l2.y - l1.y) + (p.z - l1.z) * (l2.z - l1.z)
-	local u = math.clamp(u / math.pow((l2 - l1):length(), 2), 0, 1)
+	local u = math.clamp(u / math.pow(l2 - l1:length(), 2), 0, 1)
 	local x = l1.x + u * (l2.x - l1.x)
 	local y = l1.y + u * (l2.y - l1.y)
 	local z = l1.z + u * (l2.z - l1.z)
@@ -334,7 +335,7 @@ end
 function math.distance_to_line(l1, l2, p)
 	local closest_point = math.point_on_line(l1, l2, p)
 
-	return (closest_point - p):length(), closest_point
+	return closest_point - p:length(), closest_point
 end
 
 function math.limitangle(angle)
@@ -370,4 +371,3 @@ end
 function math.within(x, min, max)
 	return min <= x and x <= max
 end
-

@@ -15,4 +15,3 @@ end
 
 function NetworkSpawnPointExt:destroy(unit)
 end
-

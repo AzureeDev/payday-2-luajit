@@ -1,7 +1,9 @@
 RandomInstanceElement = RandomInstanceElement or class(MissionElement)
 RandomInstanceElement.SAVE_UNIT_POSITION = false
 RandomInstanceElement.SAVE_UNIT_ROTATION = false
-RandomInstanceElement.LINK_ELEMENTS = {"instances"}
+RandomInstanceElement.LINK_ELEMENTS = {
+	"instances"
+}
 RandomInstanceElement._type = "input"
 
 function RandomInstanceElement:init(unit)
@@ -162,7 +164,9 @@ function RandomInstanceElement:_remove_counter_id(unit)
 end
 
 function RandomInstanceElement:_on_gui_select_instance_list()
-	local settings = {list_style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING"}
+	local settings = {
+		list_style = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING"
+	}
 	local names = managers.world_instance:instance_names_by_script(self._unit:mission_element_data().script)
 	local dialog = SelectNameModal:new("Select instances", names, settings)
 
@@ -277,8 +281,8 @@ function RandomInstanceElement:_remove_instance_item(idx)
 
 	self._panel:layout()
 end
+
 RandomInstanceElementInputEvent = RandomInstanceElementInputEvent or class(RandomInstanceElement)
 RandomInstanceElementInputEvent._type = "input"
 RandomInstanceElementOutputEvent = RandomInstanceElementOutputEvent or class(RandomInstanceElement)
 RandomInstanceElementOutputEvent._type = "output"
-

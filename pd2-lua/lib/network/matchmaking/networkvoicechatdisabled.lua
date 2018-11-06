@@ -109,4 +109,3 @@ function NetworkVoiceChatDisabled:psn_session_destroyed()
 		Global.psn.voice.restart = nil
 	end
 end
-

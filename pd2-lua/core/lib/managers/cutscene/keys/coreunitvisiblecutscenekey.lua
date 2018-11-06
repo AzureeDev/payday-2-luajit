@@ -21,7 +21,9 @@ function CoreUnitVisibleCutsceneKey:play(player, undo, fast_forward)
 	assert(type(self.evaluate) == "function", "Cutscene key must define the \"evaluate\" method to use the default CoreCutsceneKeyBase:play method.")
 
 	if undo then
-		local preceeding_key = self:preceeding_key({unit_name = self:unit_name()})
+		local preceeding_key = self:preceeding_key({
+			unit_name = self:unit_name()
+		})
 
 		if preceeding_key then
 			preceeding_key:evaluate(player, false)
@@ -49,4 +51,3 @@ function CoreUnitVisibleCutsceneKey:evaluate(player, fast_forward, visible)
 		end
 	end
 end
-

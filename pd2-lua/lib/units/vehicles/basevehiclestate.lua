@@ -79,4 +79,3 @@ end
 function BaseVehicleState:stop_vehicle()
 	return false
 end
-

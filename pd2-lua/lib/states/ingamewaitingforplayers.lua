@@ -350,7 +350,9 @@ function IngameWaitingForPlayersState:at_enter()
 	self:_get_cameras()
 
 	self._cam_unit = CoreUnit.safe_spawn_unit("units/gui/background_camera_01/waiting_camera_01", Vector3(), Rotation())
-	self._camera_data = {index = 0}
+	self._camera_data = {
+		index = 0
+	}
 
 	self:_next_camera()
 
@@ -385,7 +387,9 @@ function IngameWaitingForPlayersState:at_enter()
 
 		managers.hud:set_blackscreen_loading_text_status(0)
 		managers.network:session():send_to_peers_loaded("set_member_ready", managers.network:session():local_peer():id(), 0, 2, "")
-		managers.dyn_resource:add_listener(self, {DynamicResourceManager.listener_events.file_streamer_workload}, callback(self, self, "clbk_file_streamer_status"))
+		managers.dyn_resource:add_listener(self, {
+			DynamicResourceManager.listener_events.file_streamer_workload
+		}, callback(self, self, "clbk_file_streamer_status"))
 	end
 
 	if Global.game_settings.single_player then
@@ -535,7 +539,14 @@ function IngameWaitingForPlayersState:at_exit()
 
 	local is_safe_house = managers.job:current_job_data() and managers.job:current_job_id() == "safehouse"
 	local rich_presence = nil
-	rich_presence = is_safe_house and "SafeHousePlaying" or Global.game_settings.single_player and "SPPlaying" or "MPPlaying"
+
+	if is_safe_house then
+		rich_presence = "SafeHousePlaying"
+	elseif Global.game_settings.single_player then
+		rich_presence = "SPPlaying"
+	else
+		rich_presence = "MPPlaying"
+	end
 
 	managers.game_play_central:start_heist_timer()
 	managers.platform:set_presence("Playing")
@@ -590,7 +601,7 @@ function IngameWaitingForPlayersState:_next_camera()
 	self._camera_data.next_t = Application:time() + 8 + math.rand(4)
 	self._camera_data.index = self._camera_data.index + 1
 
-	if #self._cameras < self._camera_data.index then
+	if self._camera_data.index > #self._cameras then
 		self._camera_data.index = 1
 	end
 
@@ -610,4 +621,3 @@ end
 function IngameWaitingForPlayersState:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

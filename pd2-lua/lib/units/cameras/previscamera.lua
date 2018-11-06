@@ -74,4 +74,3 @@ function PrevisCamera:destroy()
 		self._camera = nil
 	end
 end
-

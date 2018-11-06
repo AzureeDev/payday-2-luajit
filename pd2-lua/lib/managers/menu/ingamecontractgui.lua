@@ -7,7 +7,7 @@ function IngameContractGui:init(ws, node)
 		h = math.round(ws:panel():h() * 1)
 	})
 
-	self._panel:set_y((CoreMenuRenderer.Renderer.border_height + tweak_data.menu.pd2_large_font_size) - 5)
+	self._panel:set_y(CoreMenuRenderer.Renderer.border_height + tweak_data.menu.pd2_large_font_size - 5)
 	self._panel:grow(0, -(self._panel:y() + tweak_data.menu.pd2_medium_font_size))
 
 	self._node = node
@@ -76,8 +76,19 @@ function IngameContractGui:init(ws, node)
 		local min_ghost = math.round(min_ghost_bonus * 100)
 		local max_ghost = math.round(max_ghost_bonus * 100)
 		local min_string, max_string = nil
-		min_string = min_ghost == 0 and min_ghost_bonus ~= 0 and string.format("%0.2f", math.abs(min_ghost_bonus * 100)) or tostring(math.abs(min_ghost))
-		max_string = max_ghost == 0 and max_ghost_bonus ~= 0 and string.format("%0.2f", math.abs(max_ghost_bonus * 100)) or tostring(math.abs(max_ghost))
+
+		if min_ghost == 0 and min_ghost_bonus ~= 0 then
+			min_string = string.format("%0.2f", math.abs(min_ghost_bonus * 100))
+		else
+			min_string = tostring(math.abs(min_ghost))
+		end
+
+		if max_ghost == 0 and max_ghost_bonus ~= 0 then
+			max_string = string.format("%0.2f", math.abs(max_ghost_bonus * 100))
+		else
+			max_string = tostring(math.abs(max_ghost))
+		end
+
 		local ghost_bonus_string = min_ghost_bonus == max_ghost_bonus and min_string or min_string .. "-" .. max_string
 		local ghostable_text = text_panel:text({
 			blend_mode = "add",
@@ -85,7 +96,9 @@ function IngameContractGui:init(ws, node)
 			wrap = true,
 			align = "left",
 			wrap_word = true,
-			text = managers.localization:to_upper_text("menu_ghostable_job", {bonus = ghost_bonus_string}),
+			text = managers.localization:to_upper_text("menu_ghostable_job", {
+				bonus = ghost_bonus_string
+			}),
 			font_size = tweak_data.menu.pd2_small_font_size,
 			font = tweak_data.menu.pd2_small_font,
 			color = tweak_data.screen_colors.ghost_color
@@ -156,7 +169,9 @@ function IngameContractGui:init(ws, node)
 			wrap = true,
 			align = "left",
 			blend_mode = "normal",
-			text = managers.localization:to_upper_text("menu_ghost_bonus", {exp_bonus = job_ghost_string}),
+			text = managers.localization:to_upper_text("menu_ghost_bonus", {
+				exp_bonus = job_ghost_string
+			}),
 			font = tweak_data.menu.pd2_small_font,
 			font_size = tweak_data.menu.pd2_small_font_size,
 			color = ghost_color
@@ -180,7 +195,9 @@ function IngameContractGui:init(ws, node)
 			word_wrap = true,
 			wrap = true,
 			align = "left",
-			text = managers.localization:to_upper_text(job_heat_text_id, {job_heat = job_heat_string}),
+			text = managers.localization:to_upper_text(job_heat_text_id, {
+				job_heat = job_heat_string
+			}),
 			font = tweak_data.menu.pd2_small_font,
 			font_size = font_size,
 			color = heat_color
@@ -249,7 +266,9 @@ function IngameContractGui:init(ws, node)
 		menu_risk_id = "menu_risk_sm_wish"
 	end
 
-	local risk_stats_panel = text_panel:panel({name = "risk_stats_panel"})
+	local risk_stats_panel = text_panel:panel({
+		name = "risk_stats_panel"
+	})
 
 	risk_stats_panel:set_h(risk_title:h() + 5)
 
@@ -309,7 +328,14 @@ function IngameContractGui:init(ws, node)
 				local this_difficulty = i == difficulty_stars + 1
 				active = i <= difficulty_stars + 1
 				color = active and risk_color or Color.white
-				alpha = this_difficulty and 1 or active and 0.5 or 0.25
+
+				if this_difficulty then
+					alpha = 1
+				elseif active then
+					alpha = 0.5
+				else
+					alpha = 0.25
+				end
 
 				risk_stat:set_color(color)
 				risk_stat:set_alpha(alpha)
@@ -332,7 +358,9 @@ function IngameContractGui:init(ws, node)
 			x = max_x,
 			w = text_panel:w() - max_x,
 			h = text_panel:h(),
-			text = self:get_text(menu_risk_id) .. " " .. managers.localization:to_upper_text("menu_stat_job_completed", {stat = tostring(stat)}) .. " ",
+			text = self:get_text(menu_risk_id) .. " " .. managers.localization:to_upper_text("menu_stat_job_completed", {
+				stat = tostring(stat)
+			}) .. " ",
 			font = tweak_data.hud_stats.objective_desc_font,
 			font_size = font_size,
 			color = risk_color
@@ -346,7 +374,9 @@ function IngameContractGui:init(ws, node)
 			blend_mode = "add",
 			font = tweak_data.menu.pd2_small_font,
 			font_size = font_size,
-			text = self:get_text(show_max and "menu_potential_rewards_max" or "menu_potential_rewards_min", {BTN_Y = managers.localization:btn_macro("menu_modify_item")}),
+			text = self:get_text(show_max and "menu_potential_rewards_max" or "menu_potential_rewards_min", {
+				BTN_Y = managers.localization:btn_macro("menu_modify_item")
+			}),
 			color = managers.menu:is_pc_controller() and tweak_data.screen_colors.button_stage_3 or tweak_data.screen_colors.text
 		})
 
@@ -379,7 +409,9 @@ function IngameContractGui:init(ws, node)
 		self._jobpay_title = jobpay_title
 		self._experience_title = experience_title
 		self._text_panel = text_panel
-		self._rewards_panel = text_panel:panel({name = "rewards_panel"})
+		self._rewards_panel = text_panel:panel({
+			name = "rewards_panel"
+		})
 		self._potential_show_max = show_max
 
 		self:set_potential_rewards(show_max)
@@ -387,12 +419,14 @@ function IngameContractGui:init(ws, node)
 
 	self:_rec_round_object(self._panel)
 
-	self._sides = BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._sides = BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 end
 
 function IngameContractGui:_rec_round_object(object)
@@ -456,7 +490,9 @@ function IngameContractGui:set_potential_rewards(show_max)
 	local xp_max = contract_visuals.max_mission_xp and (type(contract_visuals.max_mission_xp) == "table" and contract_visuals.max_mission_xp[difficulty_stars + 1] or contract_visuals.max_mission_xp) or 0
 
 	if show_max then
-		total_xp, dissected_xp = managers.experience:get_contract_xp_by_stars(job_id, job_stars, difficulty_stars, job_data.professional, #job_chain, {mission_xp = xp_max})
+		total_xp, dissected_xp = managers.experience:get_contract_xp_by_stars(job_id, job_stars, difficulty_stars, job_data.professional, #job_chain, {
+			mission_xp = xp_max
+		})
 		total_payout, base_payout, risk_payout = managers.money:get_contract_money_by_stars(job_stars, difficulty_stars, #job_chain, job_id, nil, {
 			mandatory_bags_value = contract_visuals.mandatory_bags_value and contract_visuals.mandatory_bags_value[difficulty_stars + 1],
 			bonus_bags_value = contract_visuals.bonus_bags_value and contract_visuals.bonus_bags_value[difficulty_stars + 1],
@@ -464,7 +500,9 @@ function IngameContractGui:set_potential_rewards(show_max)
 			vehicle_value = contract_visuals.vehicle_value and contract_visuals.vehicle_value[difficulty_stars + 1]
 		})
 	else
-		total_xp, dissected_xp = managers.experience:get_contract_xp_by_stars(job_id, job_stars, difficulty_stars, job_data.professional, #job_chain, {mission_xp = xp_min})
+		total_xp, dissected_xp = managers.experience:get_contract_xp_by_stars(job_id, job_stars, difficulty_stars, job_data.professional, #job_chain, {
+			mission_xp = xp_min
+		})
 		total_payout, base_payout, risk_payout = managers.money:get_contract_money_by_stars(job_stars, difficulty_stars, #job_chain, job_id)
 	end
 
@@ -533,7 +571,9 @@ function IngameContractGui:set_potential_rewards(show_max)
 	local gain_xp = total_xp
 	local levels_gained = managers.experience:get_levels_gained_from_xp(gain_xp)
 	local reached_level_cap = managers.experience:reached_level_cap()
-	local levelup_text = reached_level_cap and managers.localization:to_upper_text("menu_reached_level_cap") or managers.localization:to_upper_text("menu_levelup", {levels = string.format("%0.1d%%", levels_gained * 100)})
+	local levelup_text = reached_level_cap and managers.localization:to_upper_text("menu_reached_level_cap") or managers.localization:to_upper_text("menu_levelup", {
+		levels = string.format("%0.1d%%", levels_gained * 100)
+	})
 	local potential_level_up_text = self._rewards_panel:text({
 		blend_mode = "normal",
 		name = "potential_level_up_text",
@@ -580,7 +620,9 @@ function IngameContractGui:set_potential_rewards(show_max)
 	local payday_text = self._rewards_panel:text({
 		font = tweak_data.menu.pd2_large_font,
 		font_size = tweak_data.menu.pd2_large_font_size,
-		text = self:get_text("menu_payday", {MONEY = managers.experience:cash_string(math.round(payday_value))}),
+		text = self:get_text("menu_payday", {
+			MONEY = managers.experience:cash_string(math.round(payday_value))
+		}),
 		color = tweak_data.screen_colors.text
 	})
 
@@ -619,7 +661,9 @@ function IngameContractGui:_toggle_potential_rewards()
 	if alive(self._potential_rewards_title) then
 		self._potential_show_max = not self._potential_show_max
 
-		self._potential_rewards_title:set_text(managers.localization:to_upper_text(self._potential_show_max and "menu_potential_rewards_max" or "menu_potential_rewards_min", {BTN_Y = managers.localization:btn_macro("menu_modify_item")}))
+		self._potential_rewards_title:set_text(managers.localization:to_upper_text(self._potential_show_max and "menu_potential_rewards_max" or "menu_potential_rewards_min", {
+			BTN_Y = managers.localization:btn_macro("menu_modify_item")
+		}))
 		managers.hud:make_fine_text(self._potential_rewards_title)
 		self:set_potential_rewards(self._potential_show_max)
 		managers.menu_component:post_event("menu_enter")
@@ -641,4 +685,3 @@ function IngameContractGui:close()
 		self._panel = nil
 	end
 end
-

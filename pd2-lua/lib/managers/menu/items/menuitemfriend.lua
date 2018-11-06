@@ -8,4 +8,3 @@ function MenuItemFriend:init(data_node, parameters)
 
 	self._type = MenuItemFriend.TYPE
 end
-

@@ -7,7 +7,9 @@ MutatorShieldDozers.reductions = {
 	exp = 0
 }
 MutatorShieldDozers.disables_achievements = true
-MutatorShieldDozers.categories = {"enemies"}
+MutatorShieldDozers.categories = {
+	"enemies"
+}
 MutatorShieldDozers.icon_coords = {
 	1,
 	2
@@ -35,4 +37,3 @@ function MutatorShieldDozers:modify_value(id, value)
 		end
 	end
 end
-

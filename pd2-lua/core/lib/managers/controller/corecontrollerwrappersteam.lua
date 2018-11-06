@@ -3,7 +3,9 @@ core:import("CoreControllerWrapper")
 
 ControllerWrapperSteam = ControllerWrapperSteam or class(CoreControllerWrapper.ControllerWrapper)
 ControllerWrapperSteam.TYPE = "steam"
-ControllerWrapperSteam.CONTROLLER_TYPE_LIST = {"steam_controller"}
+ControllerWrapperSteam.CONTROLLER_TYPE_LIST = {
+	"steam_controller"
+}
 
 function ControllerWrapperSteam:init(manager, id, name, controller, setup, debug, skip_virtual_controller)
 	local func_map = {
@@ -15,7 +17,9 @@ function ControllerWrapperSteam:init(manager, id, name, controller, setup, debug
 		keyboard = Input:keyboard(),
 		mouse = Input:mouse(),
 		steampad = controller
-	}, "steampad", setup, debug, skip_virtual_controller, {steampad = func_map})
+	}, "steampad", setup, debug, skip_virtual_controller, {
+		steampad = func_map
+	})
 end
 
 function ControllerWrapperSteam:virtual_connect_confirm(controller_id, controller, input_name, connection_name, connection)
@@ -49,4 +53,3 @@ function ControllerWrapperSteam.change_mode(controller, mode)
 		return mode
 	end
 end
-

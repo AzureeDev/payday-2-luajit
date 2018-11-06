@@ -35,4 +35,3 @@ function AreaMinPoliceForceUnitElement:_build_panel(panel, panel_sizer)
 		ctrlr = amount_points
 	})
 end
-

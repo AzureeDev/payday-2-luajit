@@ -12,4 +12,3 @@ elseif SystemInfo:platform() == Idstring("XB1") then
 elseif SystemInfo:platform() == Idstring("PS4") then
 	Storage = CoreFakeLocalUserStorage.Storage
 end
-

@@ -44,4 +44,3 @@ function FrameCallback:reset_counter(key)
 		self._callbacks[key].current = 0
 	end
 end
-

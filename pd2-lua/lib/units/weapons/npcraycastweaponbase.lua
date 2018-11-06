@@ -153,6 +153,7 @@ end
 function NPCRaycastWeaponBase:add_damage_multiplier(damage_multiplier)
 	self._damage = self._damage * damage_multiplier
 end
+
 local mto = Vector3()
 local mfrom = Vector3()
 local mspread = Vector3()
@@ -253,6 +254,7 @@ function NPCRaycastWeaponBase:_sound_singleshot()
 		sound = self._sound_fire:post_event(sound_name)
 	end
 end
+
 local mvec_to = Vector3()
 local mvec_spread = Vector3()
 
@@ -294,7 +296,7 @@ function NPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_
 	end
 
 	if not col_ray or col_ray.distance > 600 or result.guaranteed_miss then
-		local num_rays = (tweak_data.weapon[self._name_id] or {}).rays or 1
+		local num_rays = tweak_data.weapon[self._name_id] or {}.rays or 1
 
 		for i = 1, num_rays, 1 do
 			mvector3.set(mvec_spread, direction)
@@ -310,7 +312,9 @@ function NPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_
 	result.hit_enemy = char_hit
 
 	if self._alert_events then
-		result.rays = {col_ray}
+		result.rays = {
+			col_ray
+		}
 	end
 
 	self:_cleanup_smoke_shot()
@@ -337,7 +341,9 @@ function NPCRaycastWeaponBase:_check_smoke_shot(user_unit, target_unit)
 		end
 
 		if not self._ignore_unit_tables then
-			self._ignore_unit_tables = {normal = clone(self._setup.ignore_units)}
+			self._ignore_unit_tables = {
+				normal = clone(self._setup.ignore_units)
+			}
 		end
 
 		local key = "smoke_" .. tostring(target_unit:key())
@@ -443,7 +449,7 @@ function NPCRaycastWeaponBase:set_laser_enabled(state)
 
 		local spawn_rot = self._obj_fire:rotation()
 		local spawn_pos = self._obj_fire:position()
-		spawn_pos = (spawn_pos - spawn_rot:y() * 8 + spawn_rot:z() * 2) - spawn_rot:x() * 1.5
+		spawn_pos = spawn_pos - spawn_rot:y() * 8 + spawn_rot:z() * 2 - spawn_rot:x() * 1.5
 		self._laser_unit = World:spawn_unit(Idstring("units/payday2/weapons/wpn_npc_upg_fl_ass_smg_sho_peqbox/wpn_npc_upg_fl_ass_smg_sho_peqbox"), spawn_pos, spawn_rot)
 
 		self._unit:link(self._obj_fire:name(), self._laser_unit)
@@ -457,4 +463,3 @@ function NPCRaycastWeaponBase:set_laser_enabled(state)
 		self._laser_unit = nil
 	end
 end
-

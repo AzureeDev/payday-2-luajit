@@ -7,14 +7,21 @@ function FlamethrowerEffectExtension:init(...)
 end
 
 function FlamethrowerEffectExtension:setup_default()
-	self._flame_effect = {effect = Idstring("effects/payday2/particles/explosions/flamethrower")}
-	self._nozzle_effect = {effect = Idstring("effects/payday2/particles/explosions/flamethrower_nosel")}
-	self._pilot_light = {effect = Idstring("effects/payday2/particles/explosions/flamethrower_pilot")}
+	self._flame_effect = {
+		effect = Idstring("effects/payday2/particles/explosions/flamethrower")
+	}
+	self._nozzle_effect = {
+		effect = Idstring("effects/payday2/particles/explosions/flamethrower_nosel")
+	}
+	self._pilot_light = {
+		effect = Idstring("effects/payday2/particles/explosions/flamethrower_pilot")
+	}
 	self._flame_max_range = tweak_data.weapon[self._name_id].flame_max_range
 	self._single_flame_effect_duration = tweak_data.weapon[self._name_id].single_flame_effect_duration
 	self._distance_to_gun_tip = 50
 	self._flamethrower_effect_collection = {}
 end
+
 local mvec1 = Vector3()
 
 function FlamethrowerEffectExtension:update(unit, t, dt)
@@ -77,4 +84,3 @@ function FlamethrowerEffectExtension:_spawn_muzzle_effect(from_pos, direction)
 		direction = direction
 	})
 end
-

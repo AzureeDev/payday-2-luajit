@@ -19,4 +19,3 @@ end
 
 function Session:join_remote_user(remote_user)
 end
-

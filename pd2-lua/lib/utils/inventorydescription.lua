@@ -31,7 +31,9 @@ function InventoryDescription._find_item_in_content(entry, category, content)
 end
 
 local function is_weapon_category(weapon_tweak, ...)
-	local arg = {...}
+	local arg = {
+		...
+	}
 	local categories = weapon_tweak.categories
 
 	for i = 1, #arg, 1 do
@@ -75,15 +77,12 @@ function InventoryDescription._create_list(list, ingame_format)
 	table.sort(list)
 
 	for i, text in ipairs(list) do
-		if ingame_format then
-			list_text = list_text .. (i > 1 and ", " or "") .. text
-		else
-			list_text = list_text .. "[*]" .. text
-		end
+		list_text = ingame_format and list_text .. (i > 1 and ", " or "") .. text or list_text .. "[*]" .. text
 	end
 
 	return ingame_format and list_text or "[list]" .. list_text .. "[/list]"
 end
+
 local func_hex_color = InventoryDescription._create_hex_color
 local func_color_text = InventoryDescription._add_color_to_text
 local func_add_lb = InventoryDescription._add_line_break
@@ -118,8 +117,8 @@ function InventoryDescription.create_description_safe(safe_entry, ingame_format)
 	local x_td, y_td, xr_td, yr_td = nil
 
 	local function sort_func(x, y)
-		x_td = (tweak_data.economy[x.category] or tweak_data.blackmarket[x.category])[x.entry]
-		y_td = (tweak_data.economy[y.category] or tweak_data.blackmarket[y.category])[y.entry]
+		x_td = tweak_data.economy[x.category] or tweak_data.blackmarket[x.category][x.entry]
+		y_td = tweak_data.economy[y.category] or tweak_data.blackmarket[y.category][y.entry]
 		xr_td = tweak_data.economy.rarities[x_td.rarity or "common"]
 		yr_td = tweak_data.economy.rarities[y_td.rarity or "common"]
 
@@ -135,9 +134,9 @@ function InventoryDescription.create_description_safe(safe_entry, ingame_format)
 	local td = nil
 
 	for i, item in ipairs(items_list) do
-		td = (tweak_data.economy[item.category] or tweak_data.blackmarket[item.category])[item.entry]
+		td = tweak_data.economy[item.category] or tweak_data.blackmarket[item.category][item.entry]
 		local item_text = ""
-		item_text = item.category == "contents" and td.rarity == "legendary" and managers.localization:text("bm_menu_rarity_legendary_item_long") or (td.weapon_id and utf8.to_upper(managers.weapon_factory:get_weapon_name_by_weapon_id(td.weapon_id)) .. " | " or "") .. managers.localization:text(td.name_id)
+		item_text = (item.category ~= "contents" or td.rarity ~= "legendary" or managers.localization:text("bm_menu_rarity_legendary_item_long")) and (td.weapon_id and utf8.to_upper(managers.weapon_factory:get_weapon_name_by_weapon_id(td.weapon_id)) .. " | " or "") .. managers.localization:text(td.name_id)
 		text = text .. func_color_text(item_text, func_hex_color(tweak_data.economy.rarities[td.rarity or "common"].color), ingame_format)
 
 		if i ~= #items_list then
@@ -195,10 +194,14 @@ function InventoryDescription.create_description_item(item, tweak, colors, ingam
 			})
 		elseif bonus_data.exp_multiplier then
 			local xp_boost = "+" .. bonus_data.exp_multiplier * 100 - 100 .. "%"
-			bonus_string = bonus_string .. (not ingame_format and func_add_lb(ingame_format) or "") .. func_add_lb(ingame_format) .. managers.localization:text("steam_inventory_team_boost") .. " " .. managers.localization:text("steam_inventory_boost_xp", {xp = xp_boost})
+			bonus_string = bonus_string .. (not ingame_format and func_add_lb(ingame_format) or "") .. func_add_lb(ingame_format) .. managers.localization:text("steam_inventory_team_boost") .. " " .. managers.localization:text("steam_inventory_boost_xp", {
+				xp = xp_boost
+			})
 		elseif bonus_data.money_multiplier then
 			local cash_boost = "+" .. bonus_data.money_multiplier * 100 - 100 .. "%"
-			bonus_string = bonus_string .. (not ingame_format and func_add_lb(ingame_format) or "") .. func_add_lb(ingame_format) .. managers.localization:text("steam_inventory_team_boost") .. " " .. managers.localization:text("steam_inventory_boost_cash", {cash = cash_boost})
+			bonus_string = bonus_string .. (not ingame_format and func_add_lb(ingame_format) or "") .. func_add_lb(ingame_format) .. managers.localization:text("steam_inventory_team_boost") .. " " .. managers.localization:text("steam_inventory_boost_cash", {
+				cash = cash_boost
+			})
 		end
 
 		bonus_string = func_color_text(bonus_string, color_bonus, ingame_format)
@@ -234,14 +237,21 @@ function InventoryDescription.create_description_item(item, tweak, colors, ingam
 		end
 
 		collection_string = func_color_text(collection_string, color_collection, ingame_format)
-		desc = item.category == "armor_skins" and desc .. func_add_lb(ingame_format) .. collection_string or desc .. func_add_lb(ingame_format) .. func_add_lb(ingame_format) .. collection_string
+
+		if item.category == "armor_skins" then
+			desc = desc .. func_add_lb(ingame_format) .. collection_string
+		else
+			desc = desc .. func_add_lb(ingame_format) .. func_add_lb(ingame_format) .. collection_string
+		end
 	end
 
 	if tweak.weapon_id then
 		local dlc = tweak_data.weapon[tweak.weapon_id].global_value
 
 		if dlc and dlc ~= "pd2_clan" and (not ingame_format or not managers.dlc:is_dlc_unlocked(dlc)) then
-			local dlc_string = func_color_text(managers.localization:text("steam_inventory_dlc_required", {dlc = managers.localization:text("bm_global_value_" .. dlc)}), color_dlc, ingame_format)
+			local dlc_string = func_color_text(managers.localization:text("steam_inventory_dlc_required", {
+				dlc = managers.localization:text("bm_global_value_" .. dlc)
+			}), color_dlc, ingame_format)
 			desc = desc .. func_add_lb(ingame_format) .. func_add_lb(ingame_format) .. dlc_string
 		end
 	end
@@ -270,6 +280,7 @@ function InventoryDescription.create_description_item(item, tweak, colors, ingam
 
 	return desc
 end
+
 WeaponDescription = WeaponDescription or class()
 WeaponDescription._stats_shown = {
 	{
@@ -286,7 +297,9 @@ WeaponDescription._stats_shown = {
 		round_value = true,
 		name = "fire_rate"
 	},
-	{name = "damage"},
+	{
+		name = "damage"
+	},
 	{
 		percent = true,
 		name = "spread",
@@ -310,7 +323,9 @@ WeaponDescription._stats_shown = {
 	}
 }
 
-table.insert(WeaponDescription._stats_shown, {name = "reload"})
+table.insert(WeaponDescription._stats_shown, {
+	name = "reload"
+})
 
 function WeaponDescription.get_bonus_stats(cosmetic_id, weapon_id, bonus)
 	local base_stats = WeaponDescription._get_base_stats(weapon_id)
@@ -342,7 +357,7 @@ function WeaponDescription.get_weapon_ammo_info(weapon_id, extra_ammo, total_amm
 
 	for _, category in ipairs(weapon_tweak_data.categories) do
 		if managers.player:has_category_upgrade(category, "extra_ammo_multiplier") then
-			category_multiplier = (category_multiplier + managers.player:upgrade_value(category, "extra_ammo_multiplier", 1)) - 1
+			category_multiplier = category_multiplier + managers.player:upgrade_value(category, "extra_ammo_multiplier", 1) - 1
 			category_skill_in_effect = true
 		end
 	end
@@ -354,7 +369,6 @@ function WeaponDescription.get_weapon_ammo_info(weapon_id, extra_ammo, total_amm
 	end
 
 	local function get_ammo_max_per_clip(weapon_id)
-
 		local function upgrade_blocked(category, upgrade)
 			if not weapon_tweak_data.upgrade_blocks then
 				return false
@@ -391,10 +405,10 @@ function WeaponDescription.get_weapon_ammo_info(weapon_id, extra_ammo, total_amm
 	ammo_max_per_clip = math.min(ammo_max_per_clip, ammo_max)
 	local ammo_data = {
 		base = tweak_data.weapon[weapon_id].AMMO_MAX,
-		mod = ammo_from_mods + managers.player:upgrade_value(weapon_id, "clip_amount_increase") * ammo_max_per_clip
+		mod = ammo_from_mods + managers.player:upgrade_value(weapon_id, "clip_amount_increase") * ammo_max_per_clip,
+		skill = (ammo_data.base + ammo_data.mod) * ammo_max_multiplier - ammo_data.base - ammo_data.mod,
+		skill_in_effect = managers.player:has_category_upgrade("player", "extra_ammo_multiplier") or category_skill_in_effect or managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul")
 	}
-	ammo_data.skill = ((ammo_data.base + ammo_data.mod) * ammo_max_multiplier - ammo_data.base) - ammo_data.mod
-	ammo_data.skill_in_effect = managers.player:has_category_upgrade("player", "extra_ammo_multiplier") or category_skill_in_effect or managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul")
 
 	return ammo_max_per_clip, ammo_max, ammo_data
 end
@@ -404,13 +418,17 @@ function WeaponDescription._get_skill_stats(name, category, slot, base_stats, mo
 	local tweak_stats = tweak_data.weapon.stats
 
 	for _, stat in pairs(WeaponDescription._stats_shown) do
-		skill_stats[stat.name] = {value = 0}
+		skill_stats[stat.name] = {
+			value = 0
+		}
 	end
 
 	local detection_risk = 0
 
 	if category then
-		local custom_data = {[category] = managers.blackmarket:get_crafted_category_slot(category, slot)}
+		local custom_data = {
+			[category] = managers.blackmarket:get_crafted_category_slot(category, slot)
+		}
 		detection_risk = managers.blackmarket:get_suspicion_offset_from_custom_data(custom_data, tweak_data.player.SUSPICION_OFFSET_LERP or 0.75)
 		detection_risk = detection_risk * 100
 	end
@@ -540,7 +558,7 @@ function WeaponDescription._get_skill_stats(name, category, slot, base_stats, mo
 				end
 
 				skill_stats[stat.name].skill_in_effect = multiplier ~= 1 or modifier ~= 0
-				skill_stats[stat.name].value = (modifier + base_value * multiplier) - base_value
+				skill_stats[stat.name].value = modifier + base_value * multiplier - base_value
 			end
 		end
 	end
@@ -619,7 +637,11 @@ function WeaponDescription._get_mods_stats(name, base_stats, equipped_mods, bonu
 			stat_name = stat.name
 
 			if mods_stats[stat.name].index and tweak_stats[stat_name] then
-				index = stat.name == "concealment" and base_stats[stat.name].index + mods_stats[stat.name].index or math.clamp(base_stats[stat.name].index + mods_stats[stat.name].index, 1, #tweak_stats[stat_name])
+				if stat.name == "concealment" then
+					index = base_stats[stat.name].index + mods_stats[stat.name].index
+				else
+					index = math.clamp(base_stats[stat.name].index + mods_stats[stat.name].index, 1, #tweak_stats[stat_name])
+				end
 
 				if stat.name ~= "reload" then
 					mods_stats[stat.name].value = stat.index and index or tweak_stats[stat_name][index] * tweak_data.gui.stats_present_multiplier
@@ -880,7 +902,13 @@ function WeaponDescription._get_weapon_mod_stats(mod_name, weapon_name, base_sta
 		part_data = nil
 
 		if mod.name then
-			part_data = tweak_data.blackmarket.weapon_skins[mod.name] and tweak_data.blackmarket.weapon_skins[mod.name].bonus and tweak_data.economy.bonuses[tweak_data.blackmarket.weapon_skins[mod.name].bonus] and {stats = tweak_data.economy.bonuses[tweak_data.blackmarket.weapon_skins[mod.name].bonus].stats} or managers.weapon_factory:get_part_data_by_part_id_from_weapon(mod.name, factory_id, default_blueprint)
+			if tweak_data.blackmarket.weapon_skins[mod.name] and tweak_data.blackmarket.weapon_skins[mod.name].bonus and tweak_data.economy.bonuses[tweak_data.blackmarket.weapon_skins[mod.name].bonus] then
+				part_data = {
+					stats = tweak_data.economy.bonuses[tweak_data.blackmarket.weapon_skins[mod.name].bonus].stats
+				}
+			else
+				part_data = managers.weapon_factory:get_part_data_by_part_id_from_weapon(mod.name, factory_id, default_blueprint)
+			end
 		end
 
 		for _, stat in pairs(WeaponDescription._stats_shown) do
@@ -988,4 +1016,3 @@ function WeaponDescription._get_weapon_mod_stats(mod_name, weapon_name, base_sta
 
 	return mod_stats
 end
-

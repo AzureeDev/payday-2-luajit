@@ -293,7 +293,14 @@ end
 
 function InteractionEditorGenericPanel:on_update_prop(data, event)
 	local v = nil
-	v = data.dtype == "number" and tonumber(data.widget:get_value()) or data.dtype == "string" and tostring(data.widget:get_value()) or data.widget:get_value()
+
+	if data.dtype == "number" then
+		v = tonumber(data.widget:get_value())
+	elseif data.dtype == "string" then
+		v = tostring(data.widget:get_value())
+	else
+		v = data.widget:get_value()
+	end
 
 	assert(data.desc:property_set(data.node, data.prop, v))
 end
@@ -368,4 +375,3 @@ end
 function InteractionEditorGenericPanel:on_list_box_update(data, event)
 	data.remove_btn:set_enabled(true)
 end
-

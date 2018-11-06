@@ -10,8 +10,9 @@ function MissionAssetsManager:_setup()
 	self._asset_textures_in_loading = {}
 	self._asset_textures_loaded = {}
 	local assets = {}
-	Global.asset_manager = {}
-	Global.asset_manager.assets = assets
+	Global.asset_manager = {
+		assets = assets
+	}
 	self._global = Global.asset_manager
 	self._tweak_data = tweak_data.assets
 	self._money_spent = 0
@@ -637,4 +638,3 @@ function MissionAssetsManager:is_all_textures_loaded()
 
 	return table.size(self._asset_textures_in_loading) == 0 and table.size(self._asset_textures_loaded) ~= 0
 end
-

@@ -51,4 +51,3 @@ end
 function MenuItemToggleWithIcon:set_icon_visible(state)
 	self._icon:set_visible(state)
 end
-

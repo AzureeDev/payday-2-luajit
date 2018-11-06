@@ -53,7 +53,9 @@ function SmokeScreenEffect:update(t, dt)
 
 			if not self._sound_killed then
 				self._sound_source:post_event("lung_loop_end")
-				managers.enemy:add_delayed_clbk("SmokeScreenEffect", callback(ProjectileBase, ProjectileBase, "_dispose_of_sound", {sound_source = self._sound_source}), TimerManager:game():time() + 4)
+				managers.enemy:add_delayed_clbk("SmokeScreenEffect", callback(ProjectileBase, ProjectileBase, "_dispose_of_sound", {
+					sound_source = self._sound_source
+				}), TimerManager:game():time() + 4)
 
 				self._sound_killed = true
 			end
@@ -77,4 +79,3 @@ function SmokeScreenEffect:destroy()
 		World:effect_manager():kill(self._effect)
 	end
 end
-

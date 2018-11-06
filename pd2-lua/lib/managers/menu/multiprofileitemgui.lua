@@ -24,12 +24,14 @@ function MultiProfileItemGui:init(ws, panel)
 	})
 
 	self._box_panel = self._profile_panel:panel()
-	self._box = BoxGuiObject:new(self._box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._box = BoxGuiObject:new(self._box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	if managers.menu:is_pc_controller() then
 		self._panel:set_w(self._panel:w() + self._profile_panel:h())
@@ -108,12 +110,14 @@ function MultiProfileItemGui:init(ws, panel)
 			layer = -100,
 			color = Color.black
 		})
-		BoxGuiObject:new(self._quick_select_panel:panel(), {sides = {
-			0,
-			1,
-			4,
-			4
-		}})
+		BoxGuiObject:new(self._quick_select_panel:panel(), {
+			sides = {
+				0,
+				1,
+				4,
+				4
+			}
+		})
 	end
 
 	self._caret = self._profile_panel:rect({
@@ -167,32 +171,39 @@ function MultiProfileItemGui:update()
 	self._name_text:set_left(text_width * 0.1)
 
 	local arrow_left = self._profile_panel:child("arrow_left")
-	arrow_left = arrow_left or self._profile_panel:bitmap({
-		texture = "guis/textures/menu_arrows",
-		name = "arrow_left",
-		size = 32,
-		texture_rect = {
-			0,
-			0,
-			24,
-			24
-		},
-		color = mult:has_previous() and tweak_data.screen_colors.button_stage_3 or tweak_data.menu.default_disabled_text_color
-	})
+
+	if not arrow_left then
+		arrow_left = self._profile_panel:bitmap({
+			texture = "guis/textures/menu_arrows",
+			name = "arrow_left",
+			size = 32,
+			texture_rect = {
+				0,
+				0,
+				24,
+				24
+			},
+			color = mult:has_previous() and tweak_data.screen_colors.button_stage_3 or tweak_data.menu.default_disabled_text_color
+		})
+	end
+
 	local arrow_right = self._profile_panel:child("arrow_right")
-	arrow_right = arrow_right or self._profile_panel:bitmap({
-		texture = "guis/textures/menu_arrows",
-		name = "arrow_right",
-		size = 32,
-		rotation = 180,
-		texture_rect = {
-			0,
-			0,
-			24,
-			24
-		},
-		color = mult:has_next() and tweak_data.screen_colors.button_stage_3 or tweak_data.menu.default_disabled_text_color
-	})
+
+	if not arrow_right then
+		arrow_right = self._profile_panel:bitmap({
+			texture = "guis/textures/menu_arrows",
+			name = "arrow_right",
+			size = 32,
+			rotation = 180,
+			texture_rect = {
+				0,
+				0,
+				24,
+				24
+			},
+			color = mult:has_next() and tweak_data.screen_colors.button_stage_3 or tweak_data.menu.default_disabled_text_color
+		})
+	end
 
 	arrow_left:set_left(0)
 	arrow_right:set_right(self._profile_panel:w())
@@ -202,7 +213,6 @@ function MultiProfileItemGui:update()
 end
 
 function MultiProfileItemGui:mouse_moved(x, y)
-
 	local function anim_func(o, large)
 		local current_width = o:w()
 		local current_height = o:h()
@@ -520,4 +530,3 @@ function MultiProfileItemGui:handle_key(k, pressed)
 		self:set_editing(false)
 	end
 end
-

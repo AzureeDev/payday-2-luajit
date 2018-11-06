@@ -3,8 +3,12 @@ CrimeNetCasinoGui = CrimeNetCasinoGui or class()
 function CrimeNetCasinoGui:init(ws, fullscreen_ws, node)
 	self._ws = ws
 	self._fullscreen_ws = fullscreen_ws
-	self._panel = self._ws:panel():panel({layer = 51})
-	self._fullscreen_panel = self._fullscreen_ws:panel():panel({layer = 50})
+	self._panel = self._ws:panel():panel({
+		layer = 51
+	})
+	self._fullscreen_panel = self._fullscreen_ws:panel():panel({
+		layer = 50
+	})
 
 	self._fullscreen_panel:rect({
 		alpha = 0.75,
@@ -33,13 +37,17 @@ function CrimeNetCasinoGui:init(ws, fullscreen_ws, node)
 
 	local medium_font = tweak_data.menu.pd2_medium_font
 	local medium_font_size = tweak_data.menu.pd2_medium_font_size
-	self._button_panel = self._panel:panel({layer = 1})
+	self._button_panel = self._panel:panel({
+		layer = 1
+	})
 	local button_exit = self._button_panel:text({
 		name = "button_exit",
 		align = "right",
 		blend_mode = "add",
 		layer = 1,
-		text = managers.localization:to_upper_text("menu_casino_choice_exit", {BTN_X = managers.localization:btn_macro("menu_casino_exit")}),
+		text = managers.localization:to_upper_text("menu_casino_choice_exit", {
+			BTN_X = managers.localization:btn_macro("menu_casino_exit")
+		}),
 		font = medium_font,
 		font_size = medium_font_size,
 		color = tweak_data.screen_colors.text
@@ -57,7 +65,9 @@ function CrimeNetCasinoGui:init(ws, fullscreen_ws, node)
 		align = "right",
 		blend_mode = "add",
 		layer = 1,
-		text = managers.localization:to_upper_text("menu_casino_choice_bet", {BTN_X = managers.localization:btn_macro("menu_casino_bet")}),
+		text = managers.localization:to_upper_text("menu_casino_choice_bet", {
+			BTN_X = managers.localization:btn_macro("menu_casino_bet")
+		}),
 		font = medium_font,
 		font_size = medium_font_size,
 		color = tweak_data.screen_colors.text
@@ -156,7 +166,9 @@ function CrimeNetCasinoGui:can_afford()
 
 		if can_afford then
 			button:set_color(self._button_bet_highlight and tweak_data.screen_colors.button_stage_2 or tweak_data.screen_colors.button_stage_3)
-			button:set_text(managers.localization:to_upper_text("menu_casino_choice_bet", {BTN_X = managers.localization:btn_macro("menu_casino_bet")}))
+			button:set_text(managers.localization:to_upper_text("menu_casino_choice_bet", {
+				BTN_X = managers.localization:btn_macro("menu_casino_bet")
+			}))
 			button:set_visible(managers.menu:is_pc_controller())
 		else
 			button:set_color(tweak_data.screen_colors.important_1)
@@ -228,7 +240,9 @@ function CrimeNetCasinoGui:_crimenet_casino_pay_fee()
 			back_callback = callback(self, self, "_crimenet_casino_lootdrop_back")
 		}
 
-		managers.menu:open_node("crimenet_contract_casino_lootdrop", {node_data})
+		managers.menu:open_node("crimenet_contract_casino_lootdrop", {
+			node_data
+		})
 	end
 end
 
@@ -241,4 +255,3 @@ function CrimeNetCasinoGui:_crimenet_casino_lootdrop_back()
 
 	return not done
 end
-

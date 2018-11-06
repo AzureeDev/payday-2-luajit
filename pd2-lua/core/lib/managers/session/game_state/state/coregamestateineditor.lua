@@ -22,4 +22,3 @@ function InEditor:transition()
 		return CoreGameStateInEditorPrepareStartSimulation.PrepareStartSimulation
 	end
 end
-

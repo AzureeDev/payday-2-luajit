@@ -188,7 +188,19 @@ function TextTemplateBase:_stock_ticker()
 
 		for i, company in ipairs(companies) do
 			srand = 0
-			srand = math.rand(1) < bankruptcy_chance and math.rand(-99, -45) or math.rand(1) < bad_chance and math.rand(-55, -5) or math.rand(1) < good_chance and math.rand(0, 40) or math.rand(1) < joker_chance and math.rand(-100, 250) or math.rand(-10, 10)
+
+			if math.rand(1) < bankruptcy_chance then
+				srand = math.rand(-99, -45)
+			elseif math.rand(1) < bad_chance then
+				srand = math.rand(-55, -5)
+			elseif math.rand(1) < good_chance then
+				srand = math.rand(0, 40)
+			elseif math.rand(1) < joker_chance then
+				srand = math.rand(-100, 250)
+			else
+				srand = math.rand(-10, 10)
+			end
+
 			TextTemplateBase.STOCK_PERCENT[i] = srand
 		end
 	end
@@ -278,7 +290,9 @@ function TextTemplateBase:destroy()
 end
 
 function TextTemplateBase:save(data)
-	local state = {template = self.TEMPLATE}
+	local state = {
+		template = self.TEMPLATE
+	}
 	data.TextTemplateBase = state
 end
 
@@ -289,4 +303,3 @@ function TextTemplateBase:load(data)
 		self:set_template(state.template)
 	end
 end
-

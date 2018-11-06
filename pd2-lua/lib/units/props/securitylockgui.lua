@@ -59,7 +59,9 @@ function SecurityLockGui:setup()
 		timer_bg:set_h(h / 2)
 		timer:set_h(timer_bg:h() - 8)
 		title:set_h(h / 2)
-		title:set_text(managers.localization:text("prop_security_lock_title", {NR = i}))
+		title:set_text(managers.localization:text("prop_security_lock_title", {
+			NR = i
+		}))
 		title:set_font_size(h / 2 * self._size_multiplier)
 		title:set_top(icon:top())
 		title:set_left(icon:right() + pad)
@@ -280,4 +282,3 @@ function SecurityLockGui:load(data)
 
 	self:set_visible(state.visible)
 end
-

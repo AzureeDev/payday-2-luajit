@@ -61,7 +61,7 @@ function DramaExt:sound_callback(instance, event_type, unit, sound_source, label
 	elseif event_type == "marker" and sound_source then
 		managers.subtitle:set_visible(true)
 		managers.subtitle:set_enabled(true)
-		managers.subtitle:show_subtitle(sound_source, DramaExt:_subtitle_len(sound_source))
+		managers.subtitle:show_subtitle(sound_source, DramaExt._subtitle_len(DramaExt, sound_source))
 	end
 end
 
@@ -89,4 +89,3 @@ function DramaExt:_length_from_tweak(id)
 
 	return nil
 end
-

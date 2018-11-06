@@ -83,17 +83,15 @@ function SecurityCamera:set_detection_enabled(state, settings, mission_element)
 		self._last_detect_t = self._last_detect_t or TimerManager:game():time()
 		self._detection_interval = 0.1
 		self._SO_access_str = "security"
-		self._SO_access = managers.navigation:convert_access_filter_to_number({self._SO_access_str})
+		self._SO_access = managers.navigation:convert_access_filter_to_number({
+			self._SO_access_str
+		})
 		self._visibility_slotmask = managers.slot:get_mask("AI_visibility")
-
-		if settings then
-			self._cone_angle = settings.fov
-			self._detection_delay = settings.detection_delay
-			self._range = settings.detection_range
-			self._suspicion_range = settings.suspicion_range
-			self._team = managers.groupai:state():team_data(settings.team_id or tweak_data.levels:get_default_team_ID("combatant"))
-		end
-
+		self._cone_angle = settings.fov
+		self._detection_delay = settings.detection_delay
+		self._range = settings.detection_range
+		self._suspicion_range = settings.suspicion_range
+		self._team = managers.groupai:state():team_data(settings.team_id or tweak_data.levels:get_default_team_ID("combatant"))
 		self._detected_attention_objects = self._detected_attention_objects or {}
 		self._look_obj = self._unit:get_object(Idstring("CameraLens"))
 		self._yaw_obj = self._unit:get_object(Idstring("CameraYaw"))
@@ -102,32 +100,34 @@ function SecurityCamera:set_detection_enabled(state, settings, mission_element)
 		self._look_fwd = nil
 		self._tmp_vec1 = self._tmp_vec1 or Vector3()
 		self._suspicion_lvl_sync = 0
-	else
-		self._last_detect_t = nil
 
-		self:_destroy_all_detected_attention_object_data()
+		if 0 then
+			self._last_detect_t = nil
 
-		self._brush = nil
-		self._visibility_slotmask = nil
-		self._detection_delay = nil
-		self._look_obj = nil
-		self._yaw_obj = nil
-		self._pitch_obj = nil
-		self._pos = nil
-		self._look_fwd = nil
-		self._tmp_vec1 = nil
-		self._detected_attention_objects = nil
-		self._suspicion_lvl_sync = nil
-		self._team = nil
+			self:_destroy_all_detected_attention_object_data()
 
-		if not self._destroying then
-			self:_stop_all_sounds()
-			self:_deactivate_tape_loop()
+			self._brush = nil
+			self._visibility_slotmask = nil
+			self._detection_delay = nil
+			self._look_obj = nil
+			self._yaw_obj = nil
+			self._pitch_obj = nil
+			self._pos = nil
+			self._look_fwd = nil
+			self._tmp_vec1 = nil
+			self._detected_attention_objects = nil
+			self._suspicion_lvl_sync = nil
+			self._team = nil
+
+			if not self._destroying then
+				self:_stop_all_sounds()
+				self:_deactivate_tape_loop()
+			end
 		end
-	end
 
-	if settings then
-		self:apply_rotations(settings.yaw, settings.pitch)
+		if settings then
+			self:apply_rotations(settings.yaw, settings.pitch)
+		end
 	end
 
 	managers.groupai:state():register_security_camera(self._unit, state)
@@ -151,8 +151,8 @@ function SecurityCamera:apply_rotations(yaw, pitch)
 	self._unit:set_moving()
 
 	if Network:is_server() then
-		local sync_yaw = (255 * (yaw + 180)) / 360
-		local sync_pitch = (255 * (pitch + 90)) / 180
+		local sync_yaw = 255 * (yaw + 180) / 360
+		local sync_pitch = 255 * (pitch + 90) / 180
 
 		managers.network:session():send_to_peers_synched("camera_yaw_pitch", self._unit, sync_yaw, sync_pitch)
 	end
@@ -244,7 +244,7 @@ function SecurityCamera:_upd_acquire_new_attention_objects(t)
 						local in_cone = true
 
 						if self._cone_angle ~= nil then
-							local dir = (attention_pos - my_pos):normalized()
+							local dir = attention_pos - my_pos:normalized()
 							in_cone = my_fwd:angle(dir) <= self._cone_angle * 0.5
 						end
 
@@ -422,7 +422,7 @@ function SecurityCamera:_detection_angle_chk(my_pos, my_fwd, attention_pos, stri
 	local angle = mvector3.angle(my_fwd, self._tmp_vec1)
 	local angle_max = self._cone_angle * 0.5
 
-	if angle * strictness < angle_max then
+	if angle_max > angle * strictness then
 		return true
 	end
 end
@@ -604,7 +604,6 @@ function SecurityCamera:_destroy_all_detected_attention_object_data()
 end
 
 function SecurityCamera:_upd_suspicion(t)
-
 	local function _exit_func(attention_data)
 		attention_data.unit:movement():on_uncovered(self._unit)
 		self:_sound_the_alarm(attention_data.unit)
@@ -1107,4 +1106,3 @@ function SecurityCamera:destroy(unit)
 		SecurityCamera.active_tape_loop_unit = nil
 	end
 end
-

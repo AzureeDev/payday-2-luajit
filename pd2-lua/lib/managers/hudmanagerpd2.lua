@@ -26,14 +26,17 @@ require("lib/managers/hud/HUDWaitingLegend")
 require("lib/managers/hud/HUDStageEndCrimeSpreeScreen")
 require("lib/managers/hud/HUDStatsScreenSkirmish")
 
-HUDManager.disabled = {}
-HUDManager.disabled[Idstring("guis/player_hud"):key()] = true
-HUDManager.disabled[Idstring("guis/experience_hud"):key()] = true
+HUDManager.disabled = {
+	[Idstring("guis/player_hud"):key()] = true,
+	[Idstring("guis/experience_hud"):key()] = true
+}
 HUDManager.PLAYER_PANEL = 4
 
 function HUDManager:controller_mod_changed()
 	if self:alive("guis/mask_off_hud") then
-		self:script("guis/mask_off_hud").mask_on_text:set_text(utf8.to_upper(managers.localization:text("hud_instruct_mask_on", {BTN_USE_ITEM = managers.localization:btn_macro("use_item")})))
+		self:script("guis/mask_off_hud").mask_on_text:set_text(utf8.to_upper(managers.localization:text("hud_instruct_mask_on", {
+			BTN_USE_ITEM = managers.localization:btn_macro("use_item")
+		})))
 	end
 
 	if self._hud_temp then
@@ -209,7 +212,7 @@ function HUDManager:add_waiting(peer_id, override_index)
 	if panel and peer then
 		panel:set_waiting(true, peer)
 
-		local _ = not self._waiting_legend:is_set() and self._waiting_legend:show_on(panel, peer)
+		slot6 = not self._waiting_legend:is_set() and self._waiting_legend:show_on(panel, peer)
 	end
 end
 
@@ -258,7 +261,7 @@ function HUDManager:set_ammo_amount(selection_index, max_clip, current_clip, cur
 		local panel = hud.panel:child("ammo_test")
 		local ammo_rect = panel:child("ammo_test_rect")
 
-		ammo_rect:set_w((panel:w() * current_clip) / max_clip)
+		ammo_rect:set_w(panel:w() * current_clip / max_clip)
 		ammo_rect:set_center_x(panel:w() / 2)
 		panel:stop()
 		panel:animate(callback(self, self, "_animate_ammo_test"))
@@ -402,11 +405,19 @@ function HUDManager:set_stored_health_max(stored_health_ratio)
 end
 
 function HUDManager:set_info_meter(i, data)
+	slot4 = i or HUDManager.PLAYER_PANEL
+
 	self._teammate_panels[i or HUDManager.PLAYER_PANEL]:set_info_meter(data)
 end
 
 function HUDManager:set_absorb_active(i, absorb_amount)
-	self._teammate_panels[i or HUDManager.PLAYER_PANEL]:set_absorb_active(absorb_amount)
+	slot3 = self._teammate_panels
+
+	if not i then
+		slot4 = HUDManager.PLAYER_PANEL
+	end
+
+	slot3[slot4]:set_absorb_active(absorb_amount)
 end
 
 function HUDManager:add_item(data)
@@ -426,7 +437,9 @@ function HUDManager:set_deployable_equipment_from_string(i, data)
 end
 
 function HUDManager:set_item_amount(index, amount)
-	self:set_teammate_deployable_equipment_amount(HUDManager.PLAYER_PANEL, index, {amount = amount})
+	self:set_teammate_deployable_equipment_amount(HUDManager.PLAYER_PANEL, index, {
+		amount = amount
+	})
 end
 
 function HUDManager:set_item_amount_from_string(index, amount_str, amount)
@@ -610,7 +623,16 @@ function HUDManager:_create_assault_corner()
 
 	full_hud.panel:clear()
 
-	self._hud_assault_corner = HUDAssaultCorner:new(hud, full_hud, tweak_data.levels[Global.game_settings.level_id].hud or {})
+	slot4 = HUDAssaultCorner
+	slot3 = HUDAssaultCorner.new
+	slot5 = hud
+	slot6 = full_hud
+
+	if not tweak_data.levels[Global.game_settings.level_id].hud then
+		slot7 = {}
+	end
+
+	self._hud_assault_corner = slot3(slot4, slot5, slot6, slot7)
 end
 
 function HUDManager:mark_cheater(peer_id)
@@ -630,14 +652,33 @@ function HUDManager:mark_cheater(peer_id)
 end
 
 function HUDManager:add_teammate_panel(character_name, player_name, ai, peer_id)
-
 	local function add_panel(i)
 		self._teammate_panels[i]:add_panel()
 		self._teammate_panels[i]:set_peer_id(peer_id)
 		self._teammate_panels[i]:set_ai(ai)
-		self:set_teammate_callsign(i, ai and tweak_data.max_players + 1 or peer_id)
+
+		slot2 = self
+		slot1 = self.set_teammate_callsign
+		slot3 = i
+
+		if not ai or not (tweak_data.max_players + 1) then
+			slot4 = peer_id
+		end
+
+		slot1(slot2, slot3, slot4)
 		self:set_teammate_name(i, player_name)
-		self:set_teammate_state(i, ai and "ai" or "player")
+
+		slot2 = self
+		slot1 = self.set_teammate_state
+		slot3 = i
+
+		if ai then
+			slot4 = "ai"
+		else
+			slot4 = "player"
+		end
+
+		slot1(slot2, slot3, slot4)
 
 		local synced_cocaine_stacks = managers.player:get_synced_cocaine_stacks(peer_id)
 
@@ -651,7 +692,9 @@ function HUDManager:add_teammate_panel(character_name, player_name, ai, peer_id)
 		end
 
 		if peer_id then
-			local peer_equipment = managers.player:get_synced_equipment_possession(peer_id) or {}
+			if not managers.player:get_synced_equipment_possession(peer_id) then
+				local peer_equipment = {}
+			end
 
 			for equipment, amount in pairs(peer_equipment) do
 				self:add_teammate_special_equipment(i, {
@@ -781,7 +824,11 @@ function HUDManager:get_teammate_panel_by_peer(peer)
 	end
 
 	for i, teammate_panel in ipairs(self._teammate_panels) do
-		local is_player_panel = i == HUDManager.PLAYER_PANEL
+		if i ~= HUDManager.PLAYER_PANEL then
+			slot7 = false
+		else
+			local is_player_panel = true
+		end
 
 		if teammate_panel:peer_id() == peer:id() and not is_player_panel then
 			return teammate_panel
@@ -794,8 +841,17 @@ function HUDManager:teampanels_height()
 end
 
 function HUDManager:_create_teammates_panel(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
-	self._hud.teammate_panels_data = self._hud.teammate_panels_data or {}
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
+	slot2 = self._hud
+
+	if not self._hud.teammate_panels_data then
+		slot3 = {}
+	end
+
+	slot2.teammate_panels_data = slot3
 	self._teammate_panels = {}
 
 	if hud.panel:child("teammates_panel") then
@@ -812,19 +868,45 @@ function HUDManager:_create_teammates_panel(hud)
 	})
 	local teammate_w = 204
 	local player_gap = 240
-	local small_gap = ((teammates_panel:w() - player_gap) - teammate_w * 4) / 3
+	local small_gap = (teammates_panel:w() - player_gap - teammate_w * 4) / 3
 
 	for i = 1, 4, 1 do
-		local is_player = i == HUDManager.PLAYER_PANEL
-		self._hud.teammate_panels_data[i] = {
-			taken = false and is_player,
-			special_equipments = {}
-		}
-		local pw = teammate_w + (is_player and 0 or 64)
+		if i ~= HUDManager.PLAYER_PANEL then
+			slot11 = false
+		else
+			local is_player = true
+		end
+
+		slot12 = self._hud.teammate_panels_data
+		slot13 = {}
+		slot14 = false
+
+		if false then
+			slot14 = is_player
+		end
+
+		slot13.taken = slot14
+		slot13.special_equipments = {}
+		slot12[i] = slot13
+
+		if is_player then
+			slot12 = 0
+		else
+			slot12 = 64
+		end
+
+		local pw = teammate_w + slot12
 		local teammate = HUDTeammate:new(i, teammates_panel, is_player, pw)
 
 		if not _G.IS_VR then
-			local x = math.floor((pw + small_gap) * (i - 1) + (i == HUDManager.PLAYER_PANEL and player_gap or 0))
+			slot14 = math.floor
+			slot15 = (pw + small_gap) * (i - 1)
+
+			if i ~= HUDManager.PLAYER_PANEL or not player_gap then
+				slot16 = 0
+			end
+
+			local x = slot14(slot15 + slot16)
 
 			teammate._panel:set_x(math.floor(x))
 		end
@@ -840,7 +922,10 @@ function HUDManager:_create_waiting_legend(hud)
 end
 
 function HUDManager:_create_present_panel(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._hud_presenter = HUDPresenter:new(hud)
 end
 
@@ -854,7 +939,10 @@ function HUDManager:present_done()
 end
 
 function HUDManager:_create_interaction(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._hud_interaction = HUDInteraction:new(hud)
 end
 
@@ -883,7 +971,10 @@ function HUDManager:hide_interaction_bar(complete)
 end
 
 function HUDManager:_create_progress_timer(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._progress_timer = HUDInteraction:new(hud, "progress_timer")
 end
 
@@ -1050,7 +1141,10 @@ function HUDManager:flash_point_of_no_return_timer(beep)
 end
 
 function HUDManager:_create_objectives(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._hud_objectives = HUDObjectives:new(hud)
 end
 
@@ -1075,7 +1169,10 @@ function HUDManager:complete_objective(data)
 end
 
 function HUDManager:_create_hint(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._hud_hint = HUDHint:new(hud)
 end
 
@@ -1092,8 +1189,19 @@ function HUDManager:stop_hint()
 end
 
 function HUDManager:_create_heist_timer(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
-	self._hud_heist_timer = HUDHeistTimer:new(hud, tweak_data.levels[Global.game_settings.level_id].hud or {})
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
+	slot3 = HUDHeistTimer
+	slot2 = HUDHeistTimer.new
+	slot4 = hud
+
+	if not tweak_data.levels[Global.game_settings.level_id].hud then
+		slot5 = {}
+	end
+
+	self._hud_heist_timer = slot2(slot3, slot4, slot5)
 end
 
 function HUDManager:feed_heist_time(time)
@@ -1105,7 +1213,10 @@ function HUDManager:modify_heist_time(time)
 end
 
 function HUDManager:_create_temp_hud(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._hud_temp = HUDTemp:new(hud)
 end
 
@@ -1126,7 +1237,10 @@ function HUDManager:set_max_stamina(value)
 end
 
 function HUDManager:_create_suspicion(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._hud_suspicion = HUDSuspicion:new(hud, self._sound_source)
 end
 
@@ -1144,7 +1258,10 @@ function HUDManager:set_suspicion(status)
 end
 
 function HUDManager:_create_hit_confirm(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._hud_hit_confirm = HUDHitConfirm:new(hud)
 end
 
@@ -1173,7 +1290,10 @@ function HUDManager:on_crit_confirmed()
 end
 
 function HUDManager:_create_hit_direction(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	end
+
 	self._hud_hit_direction = HUDHitDirection:new(hud)
 end
 
@@ -1182,7 +1302,10 @@ function HUDManager:on_hit_direction(dir, unit_type_hit, fixed_angle)
 end
 
 function HUDManager:_create_downed_hud(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_DOWNED_HUD)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_DOWNED_HUD)
+	end
+
 	self._hud_player_downed = HUDPlayerDowned:new(hud)
 end
 
@@ -1195,7 +1318,10 @@ function HUDManager:on_arrested()
 end
 
 function HUDManager:_create_custody_hud(hud)
-	hud = hud or managers.hud:script(PlayerBase.PLAYER_CUSTODY_HUD)
+	if not hud then
+		hud = managers.hud:script(PlayerBase.PLAYER_CUSTODY_HUD)
+	end
+
 	self._hud_player_custody = HUDPlayerCustody:new(hud)
 end
 
@@ -1273,7 +1399,11 @@ end
 
 function HUDManager:_add_name_label(data)
 	local hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_FULLSCREEN_PD2)
-	local last_id = self._hud.name_labels[#self._hud.name_labels] and self._hud.name_labels[#self._hud.name_labels].id or 0
+
+	if not self._hud.name_labels[#self._hud.name_labels] or not self._hud.name_labels[#self._hud.name_labels].id then
+		local last_id = 0
+	end
+
 	local id = last_id + 1
 	local character_name = data.name
 	local rank = 0
@@ -1286,12 +1416,18 @@ function HUDManager:_add_name_label(data)
 		rank = data.unit:network():peer():rank()
 
 		if level then
-			local experience = (rank > 0 and managers.experience:rank_string(rank) .. "-" or "") .. level
+			if rank <= 0 or not (managers.experience:rank_string(rank) .. "-") then
+				slot10 = ""
+			end
+
+			local experience = slot10 .. level
 			data.name = data.name .. " (" .. experience .. ")"
 		end
 	end
 
-	local panel = hud.panel:panel({name = "name_label" .. id})
+	local panel = hud.panel:panel({
+		name = "name_label" .. id
+	})
 	local radius = 24
 	local interact = CircleBitmapGuiObject:new(panel, {
 		blend_mode = "add",
@@ -1311,7 +1447,11 @@ function HUDManager:_add_name_label(data)
 		17
 	}
 	local color_id = managers.criminals:character_color_id_by_unit(data.unit)
-	local crim_color = tweak_data.chat_colors[color_id] or tweak_data.chat_colors[#tweak_data.chat_colors]
+
+	if not tweak_data.chat_colors[color_id] then
+		local crim_color = tweak_data.chat_colors[#tweak_data.chat_colors]
+	end
+
 	local text = panel:text({
 		name = "text",
 		vertical = "top",
@@ -1332,7 +1472,7 @@ function HUDManager:_add_name_label(data)
 		x = 1,
 		texture = tabs_texture,
 		texture_rect = bag_rect,
-		color = (crim_color * 1.1):with_alpha(1)
+		color = crim_color * 1.1:with_alpha(1)
 	})
 
 	panel:text({
@@ -1359,7 +1499,7 @@ function HUDManager:_add_name_label(data)
 		text = utf8.to_upper("Fixing"),
 		font = tweak_data.hud.medium_font,
 		font_size = tweak_data.hud.name_label_font_size,
-		color = (crim_color * 1.1):with_alpha(1)
+		color = crim_color * 1.1:with_alpha(1)
 	})
 
 	if rank > 0 then
@@ -1392,10 +1532,16 @@ end
 
 function HUDManager:add_vehicle_name_label(data)
 	local hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_FULLSCREEN_PD2)
-	local last_id = self._hud.name_labels[#self._hud.name_labels] and self._hud.name_labels[#self._hud.name_labels].id or 0
+
+	if not self._hud.name_labels[#self._hud.name_labels] or not self._hud.name_labels[#self._hud.name_labels].id then
+		local last_id = 0
+	end
+
 	local id = last_id + 1
 	local vehicle_name = data.name
-	local panel = hud.panel:panel({name = "name_label" .. id})
+	local panel = hud.panel:panel({
+		name = "name_label" .. id
+	})
 	local radius = 24
 	local interact = CircleBitmapGuiObject:new(panel, {
 		blend_mode = "add",
@@ -1435,7 +1581,7 @@ function HUDManager:add_vehicle_name_label(data)
 		x = 1,
 		texture = tabs_texture,
 		texture_rect = bag_rect,
-		color = (crim_color * 1.1):with_alpha(1)
+		color = crim_color * 1.1:with_alpha(1)
 	})
 	local bag_number = panel:text({
 		name = "bag_number",
@@ -1475,7 +1621,7 @@ function HUDManager:add_vehicle_name_label(data)
 		text = utf8.to_upper("Fixing"),
 		font = tweak_data.hud.medium_font,
 		font_size = tweak_data.hud.name_label_font_size,
-		color = (crim_color * 1.1):with_alpha(1)
+		color = crim_color * 1.1:with_alpha(1)
 	})
 	self:align_teammate_name_label(panel, interact)
 	table.insert(self._hud.name_labels, {
@@ -1573,12 +1719,27 @@ function HUDManager:teammate_progress(peer_id, type_index, enabled, tweak_data_i
 		local action_text = ""
 
 		if type_index == 1 then
-			action_text = managers.localization:text(tweak_data.interaction[tweak_data_id].action_text_id or "hud_action_generic")
+			slot10 = managers.localization
+			slot9 = managers.localization.text
+
+			if not tweak_data.interaction[tweak_data_id].action_text_id then
+				slot11 = "hud_action_generic"
+			end
+
+			action_text = slot9(slot10, slot11)
 		elseif type_index == 2 then
 			if enabled then
 				local equipment_name = managers.localization:text(tweak_data.equipments[tweak_data_id].text_id)
-				local deploying_text = tweak_data.equipments[tweak_data_id].deploying_text_id and managers.localization:text(tweak_data.equipments[tweak_data_id].deploying_text_id) or false
-				action_text = deploying_text or managers.localization:text("hud_deploying_equipment", {EQUIPMENT = equipment_name})
+
+				if not tweak_data.equipments[tweak_data_id].deploying_text_id or not managers.localization:text(tweak_data.equipments[tweak_data_id].deploying_text_id) then
+					local deploying_text = false
+				end
+
+				if not deploying_text then
+					action_text = managers.localization:text("hud_deploying_equipment", {
+						EQUIPMENT = equipment_name
+					})
+				end
 			end
 		elseif type_index == 3 then
 			action_text = managers.localization:text("hud_starting_heist")
@@ -1627,7 +1788,7 @@ end
 function HUDManager:_animate_label_interact(panel, interact, timer)
 	local t = 0
 
-	while t <= timer do
+	while timer >= t do
 		local dt = coroutine.yield()
 		t = t + dt
 
@@ -1693,7 +1854,11 @@ function HUDManager:start_access_camera()
 		self._hud_chat:clear()
 	end
 
-	self._hud_chat = self._hud_chat_access or self._hud_chat
+	if not self._hud_chat_access then
+		slot1 = self._hud_chat
+	end
+
+	self._hud_chat = slot1
 end
 
 function HUDManager:stop_access_camera()
@@ -1703,7 +1868,11 @@ function HUDManager:stop_access_camera()
 		self._hud_chat:clear()
 	end
 
-	self._hud_chat = self._hud_chat_ingame or self._hud_chat
+	if not self._hud_chat_ingame then
+		slot1 = self._hud_chat
+	end
+
+	self._hud_chat = slot1
 end
 
 function HUDManager:access_camera_track(i, cam, pos)
@@ -1929,7 +2098,11 @@ function HUDManager:make_cards_hud(peer, max_pc, left_card, right_card)
 	if self._hud_lootscreen then
 		self._hud_lootscreen:make_cards(peer, max_pc, left_card, right_card)
 	else
-		self._saved_setup = self._saved_setup or {}
+		if not self._saved_setup then
+			slot5 = {}
+		end
+
+		self._saved_setup = slot5
 
 		table.insert(self._saved_setup, {
 			peer = peer,
@@ -1944,7 +2117,11 @@ function HUDManager:make_lootdrop_hud(lootdrop_data)
 	if self._hud_lootscreen then
 		self._hud_lootscreen:make_lootdrop(lootdrop_data)
 	else
-		self._saved_lootdrop = self._saved_lootdrop or {}
+		if not self._saved_lootdrop then
+			slot2 = {}
+		end
+
+		self._saved_lootdrop = slot2
 
 		table.insert(self._saved_lootdrop, lootdrop_data)
 	end
@@ -1954,7 +2131,11 @@ function HUDManager:set_selected_lootcard(peer_id, selected)
 	if self._hud_lootscreen then
 		self._hud_lootscreen:set_selected(peer_id, selected)
 	else
-		self._saved_selected = self._saved_selected or {}
+		if not self._saved_selected then
+			slot3 = {}
+		end
+
+		self._saved_selected = slot3
 		self._saved_selected[peer_id] = selected
 	end
 end
@@ -1963,7 +2144,11 @@ function HUDManager:confirm_choose_lootcard(peer_id, card_id)
 	if self._hud_lootscreen then
 		self._hud_lootscreen:begin_choose_card(peer_id, card_id)
 	else
-		self._saved_card_chosen = self._saved_card_chosen or {}
+		if not self._saved_card_chosen then
+			slot3 = {}
+		end
+
+		self._saved_card_chosen = slot3
 		self._saved_card_chosen[peer_id] = card_id
 	end
 end
@@ -2016,7 +2201,10 @@ function HUDManager:set_ai_stopped(ai_id, stopped)
 		return
 	end
 
-	local name = panel:child("name") and string.gsub(panel:child("name"):text(), "%W", "")
+	if panel:child("name") then
+		local name = string.gsub(panel:child("name"):text(), "%W", "")
+	end
+
 	local label = nil
 
 	for _, lbl in ipairs(self._hud.name_labels) do
@@ -2074,8 +2262,17 @@ function HUDManager:achievement_popup(id)
 	end
 
 	local d = tweak_data.achievement.visual[id]
+	local title = managers.localization:to_upper_text("hud_achieved_popup")
 
-	HudChallengeNotification.queue(managers.localization:to_upper_text("hud_achieved_popup"), managers.localization:to_upper_text(d.name_id), d.icon_id)
+	if not d or not managers.localization:to_upper_text(d.name_id) then
+		local text = id
+	end
+
+	if not d or not d.icon_id then
+		local icon = "placeholder_circle"
+	end
+
+	HudChallengeNotification.queue(title, text, icon)
 end
 
 function HUDManager:challenge_popup(d)
@@ -2102,7 +2299,17 @@ function HUDManager:safe_house_challenge_popup(id, c_type)
 	end
 
 	if not d then
-		Application:error("Failed to get data about side job with id '" .. id .. "' and type '" .. (c_type or "nil") .. "'!")
+		slot6 = Application
+		slot5 = Application.error
+		slot7 = "Failed to get data about side job with id '"
+		slot8 = id
+		slot9 = "' and type '"
+
+		if not c_type then
+			slot10 = "nil"
+		end
+
+		slot5(slot6, slot7 .. slot8 .. slot9 .. slot10 .. "'!")
 
 		return
 	end
@@ -2115,13 +2322,19 @@ end
 function HUDManager:achievement_milestone_popup(id)
 	local milestone = managers.achievment:get_milestone(id)
 	local title = managers.localization:to_upper_text("hud_achievement_milestone_popup")
-	local description = managers.localization:to_upper_text("menu_milestone_item_title", {AT = milestone.at})
+	local description = managers.localization:to_upper_text("menu_milestone_item_title", {
+		AT = milestone.at
+	})
 
 	HudChallengeNotification.queue(title, description, "milestone_trophy", milestone.rewards)
 end
 
 function HUDManager:register_ingame_workspace(name, obj)
-	self._ingame_workspaces = self._ingame_workspaces or {}
+	if not self._ingame_workspaces then
+		slot3 = {}
+	end
+
+	self._ingame_workspaces = slot3
 
 	managers.gui_data:add_workspace_object(name, obj)
 
@@ -2133,6 +2346,32 @@ function HUDManager:register_ingame_workspace(name, obj)
 end
 
 function HUDManager:ingame_workspace(name)
-	return self._ingame_workspaces and self._ingame_workspaces[name]
+	if self._ingame_workspaces then
+		slot2 = self._ingame_workspaces[name]
+	end
+
+	return slot2
 end
 
+function HUDManager:hide_panels(...)
+	local function fade_out(o)
+		for t, p, dt in seconds(1) do
+			o:set_alpha(1 - p)
+		end
+
+		o:set_visible(false)
+	end
+
+	local hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
+	local panels = {
+		...
+	}
+
+	for _, panel_name in ipairs(panels) do
+		local panel = hud.panel:child(panel_name)
+
+		if panel then
+			panel:animate(fade_out)
+		end
+	end
+end

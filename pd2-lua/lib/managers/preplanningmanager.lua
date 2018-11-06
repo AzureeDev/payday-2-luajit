@@ -1,9 +1,10 @@
-
 local function debug_assert(chk, ...)
 	if not chk then
 		local s = ""
 
-		for i, text in ipairs({...}) do
+		for i, text in ipairs({
+			...
+		}) do
 			s = s .. "  " .. text
 		end
 
@@ -569,7 +570,9 @@ function PrePlanningManager:execute_reserved_mission_elements()
 			end
 		end
 
-		local finished_votes = {name_id = "menu_pp_sub_voting"}
+		local finished_votes = {
+			name_id = "menu_pp_sub_voting"
+		}
 		local winners = self:get_current_majority_votes()
 
 		for plan, data in pairs(winners) do
@@ -578,7 +581,9 @@ function PrePlanningManager:execute_reserved_mission_elements()
 			execute_func(type, index, finished_votes)
 		end
 
-		local finished_types = {name_id = "menu_pp_sub_place"}
+		local finished_types = {
+			name_id = "menu_pp_sub_place"
+		}
 
 		for id, data in pairs(self._reserved_mission_elements) do
 			type, index = unpack(data.pack)
@@ -621,7 +626,9 @@ function PrePlanningManager:get_current_preplan()
 		end
 	end
 
-	local current_votes = {name_id = "menu_pp_sub_voting"}
+	local current_votes = {
+		name_id = "menu_pp_sub_voting"
+	}
 	local leaders = self:get_current_majority_votes()
 
 	for plan, data in pairs(leaders) do
@@ -630,7 +637,9 @@ function PrePlanningManager:get_current_preplan()
 		set_func(type, index, nil, current_votes)
 	end
 
-	local current_types = {name_id = "menu_pp_sub_place"}
+	local current_types = {
+		name_id = "menu_pp_sub_place"
+	}
 
 	for id, data in pairs(self._reserved_mission_elements) do
 		type, index = unpack(data.pack)
@@ -698,7 +707,9 @@ function PrePlanningManager:_update_vote_council()
 	end
 
 	local local_peer_id = managers.network:session():local_peer():id()
-	local peers = {local_peer_id}
+	local peers = {
+		local_peer_id
+	}
 
 	for peer_id, _ in pairs(managers.network:session():peers()) do
 		table.insert(peers, peer_id)
@@ -771,6 +782,7 @@ function PrePlanningManager:_check_spawn_deployable(type, element)
 		BodyBagsBagBase.spawn(pos, rot, 0)
 	end
 end
+
 local mvec = Vector3()
 local mrot = Rotation()
 
@@ -879,10 +891,15 @@ function PrePlanningManager:get_type_desc(type)
 	local cost_money = managers.money:get_preplanning_type_cost(type)
 	local cost_budget = self:get_type_budget_cost(type)
 	text_string = text_string .. "\n"
-	text_string = cost_money == 0 and cost_budget == 0 and text_string .. managers.localization:text("menu_pp_free_of_charge") or text_string .. managers.localization:text("menu_pp_tooltip_costs", {
-		money = managers.experience:cash_string(cost_money),
-		budget = cost_budget
-	})
+
+	if cost_money == 0 and cost_budget == 0 then
+		text_string = text_string .. managers.localization:text("menu_pp_free_of_charge")
+	else
+		text_string = text_string .. managers.localization:text("menu_pp_tooltip_costs", {
+			money = managers.experience:cash_string(cost_money),
+			budget = cost_budget
+		})
+	end
 
 	return text_string
 end
@@ -1276,4 +1293,3 @@ function PrePlanningManager:sync_load(data)
 		managers.menu_component:update_preplanning_element(nil, nil)
 	end
 end
-

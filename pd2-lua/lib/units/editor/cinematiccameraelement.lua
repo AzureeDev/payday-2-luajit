@@ -1,5 +1,7 @@
 CinematicCameraUnitElement = CinematicCameraUnitElement or class(MissionElement)
-CinematicCameraUnitElement.ON_EXECUTED_ALTERNATIVES = {"camera_done"}
+CinematicCameraUnitElement.ON_EXECUTED_ALTERNATIVES = {
+	"camera_done"
+}
 
 function CinematicCameraUnitElement:init(unit)
 	CinematicCameraUnitElement.super.init(self, unit)
@@ -115,4 +117,3 @@ function CinematicCameraUnitElement:add_to_mission_package()
 		continent = self._unit:unit_data().continent
 	})
 end
-

@@ -73,12 +73,14 @@ local Outline = Outline or class()
 
 function Outline:init(panel)
 	self._panel = panel
-	self._box_gui = BoxGuiObject:new(panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._box_gui = BoxGuiObject:new(panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self._box_gui:set_layer(2)
 end
@@ -100,20 +102,25 @@ end
 function Outline:recreate()
 	local s = self._selected and 2 or 1
 
-	self._box_gui:create_sides(self._panel, {sides = {
-		s,
-		s,
-		s,
-		s
-	}})
+	self._box_gui:create_sides(self._panel, {
+		sides = {
+			s,
+			s,
+			s,
+			s
+		}
+	})
 end
+
 HUDBeltInteraction.size = 160
 
 function HUDBeltInteraction:init(ws, id, custom_icon_id)
 	self._ws = ws
 	self._id = id
 	self._custom_icon_id = custom_icon_id
-	self._panel = ws:panel():panel({name = "belt_" .. id})
+	self._panel = ws:panel():panel({
+		name = "belt_" .. id
+	})
 	local custom_state = nil
 	self._texture, custom_state = get_icon(custom_icon_id or id)
 	self._icon = self._panel:bitmap({
@@ -212,7 +219,7 @@ function HUDBeltInteraction:set_amount(amount)
 	make_fine_text(self._amount_text)
 	self._amount_text:set_right(self._panel:w() - 6)
 	self._amount_text:set_bottom(self._panel:h() - 6)
-	self._amount_text:set_color((amount > 0 and Color.white or Color.red):with_alpha(self._alpha + self._alpha_diff))
+	self._amount_text:set_color(amount > 0 and Color.white or Color.red:with_alpha(self._alpha + self._alpha_diff))
 end
 
 function HUDBeltInteraction:set_state(state)
@@ -246,12 +253,13 @@ function HUDBeltInteraction:set_alpha(alpha)
 		self._amount_text:set_color(self._amount_text:color():with_alpha(alpha + self._alpha_diff))
 	end
 
-	self._bg:set_color(self._bg:color():with_alpha(math.min((alpha + self._alpha_diff) - 0.1, 0.6)))
+	self._bg:set_color(self._bg:color():with_alpha(math.min(alpha + self._alpha_diff - 0.1, 0.6)))
 	self._bg_tint:set_color(self._bg_tint:color():with_alpha((alpha + self._alpha_diff) * 2))
 	self._outline:set_alpha(alpha * 2)
 
 	self._alpha = alpha
 end
+
 local anim_speed = 1
 
 function HUDBeltInteraction:_animate_size_alpha(o, size_ratio, alpha)
@@ -266,16 +274,6 @@ function HUDBeltInteraction:_animate_size_alpha(o, size_ratio, alpha)
 	local flip = current_ratio < size_ratio and 1 or -1
 	local alpha_comp_func = self._alpha_diff < alpha and math.min or math.max
 	local new_ratio = current_ratio
-
-	while flip > 0 and new_ratio < size_ratio or flip <= 0 and size_ratio < new_ratio do
-		local dt = coroutine.yield()
-		new_ratio = new_ratio + dt * anim_speed * flip
-
-		panel:set_size(self._w * new_ratio, self._h * new_ratio)
-		panel:set_center(cx, cy)
-
-		self._alpha_diff = alpha_comp_func(self._alpha_diff + dt * anim_speed * flip * 2, alpha)
-	end
 
 	panel:set_size(self._w * size_ratio, self._h * size_ratio)
 	panel:set_center(cx, cy)
@@ -461,7 +459,12 @@ end
 
 function HUDBeltInteraction:set_edit_mode(enabled)
 	local align = nil
-	align = enabled and "center" or "scale"
+
+	if enabled then
+		align = "center"
+	else
+		align = "scale"
+	end
 
 	self._icon:set_halign(align)
 	self._icon:set_valign(align)
@@ -563,6 +566,7 @@ end
 function HUDBeltInteraction:ws()
 	return self._ws
 end
+
 HUDBeltInteractionReload = HUDBeltInteractionReload or class(HUDBeltInteraction)
 
 function HUDBeltInteractionReload:init(ws, id)
@@ -632,6 +636,7 @@ function HUDBeltInteractionReload:trigger_reload()
 	self._ammo_text:hide()
 	self:stop_timer()
 end
+
 HUDBelt = HUDBelt or class()
 HUDBelt.LEFT = 1
 HUDBelt.RIGHT = 2
@@ -1247,4 +1252,3 @@ function HUDBelt:interacting(id, world_pos)
 		return true
 	end
 end
-

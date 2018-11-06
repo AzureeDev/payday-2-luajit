@@ -30,7 +30,9 @@ end
 function HUDManagerVR:_init_tablet_gui()
 	self._tablet_ws = self._gui:create_world_workspace(402, 226, Vector3(0, 0, 0), Vector3(1, 0, 0), Vector3(0, 1, 0))
 	local tablet_panel = self._tablet_ws:panel()
-	local main = tablet_panel:panel({name = "main_page"})
+	local main = tablet_panel:panel({
+		name = "main_page"
+	})
 	local right = tablet_panel:panel({
 		name = "right_page",
 		x = tablet_panel:w()
@@ -84,8 +86,12 @@ function HUDManagerVR:_init_tablet_gui()
 			left = "left",
 			right = "right"
 		},
-		right = {left = "main"},
-		left = {right = "main"}
+		right = {
+			left = "main"
+		},
+		left = {
+			right = "main"
+		}
 	}
 	self._current_page = "main"
 	self._page_callbacks = {
@@ -116,7 +122,9 @@ function HUDManagerVR:_init_ammo_gui()
 
 	self._ammo_ws:hide()
 
-	local ammo_flash = self._ammo_ws:panel():panel({name = "ammo_flash"})
+	local ammo_flash = self._ammo_ws:panel():panel({
+		name = "ammo_flash"
+	})
 
 	ammo_flash:gradient({
 		valign = "scale",
@@ -469,9 +477,9 @@ function HUDManagerVR:link_watch_prompt_as_hand(hand_unit, side, offset)
 	local hand_rot = hand_unit:rotation()
 
 	if side == 1 or side == "right" then
-		self._watch_prompt_ws:set_linked(800, 80, hand_obj, hand_obj:position() + (Vector3(-24, 0, 24) + offset):rotate_with(hand_rot), Vector3(24, 0, 0):rotate_with(hand_rot), Vector3(0, -1.7, -1.7):rotate_with(hand_rot))
+		self._watch_prompt_ws:set_linked(800, 80, hand_obj, hand_obj:position() + Vector3(-24, 0, 24) + offset:rotate_with(hand_rot), Vector3(24, 0, 0):rotate_with(hand_rot), Vector3(0, -1.7, -1.7):rotate_with(hand_rot))
 	elseif side == 2 or side == "left" then
-		self._watch_prompt_ws:set_linked(800, 80, hand_obj, hand_obj:position() + (Vector3(0, 0, 24) + offset):rotate_with(hand_rot), Vector3(24, 0, 0):rotate_with(hand_rot), Vector3(0, -1.7, -1.7):rotate_with(hand_rot))
+		self._watch_prompt_ws:set_linked(800, 80, hand_obj, hand_obj:position() + Vector3(0, 0, 24) + offset:rotate_with(hand_rot), Vector3(24, 0, 0):rotate_with(hand_rot), Vector3(0, -1.7, -1.7):rotate_with(hand_rot))
 	end
 end
 
@@ -484,7 +492,7 @@ function HUDManagerVR:bind_watch_to_hand(hand_unit)
 	local base_offset = 0.7
 
 	for i, holo_ws in ipairs(self._holo_ws) do
-		holo_ws:set_object(100, 100, watch_object, Vector3(0, 0, base_offset - (self._holo_height * i) / self._holo_count))
+		holo_ws:set_object(100, 100, watch_object, Vector3(0, 0, base_offset - self._holo_height * i / self._holo_count))
 		holo_ws:show()
 	end
 end
@@ -608,6 +616,7 @@ end
 function HUDManagerVR:set_reload_timer(current, max)
 	self._teammate_panels[HUDManager.PLAYER_PANEL]:set_reload_timer(current, max)
 end
+
 local tmp_vec1 = Vector3()
 
 function HUDManagerVR:update(t, dt)
@@ -639,8 +648,8 @@ function HUDManagerVR:create_vehicle_interaction_ws(id, vehicle_unit, position, 
 	w = w or 128
 	h = h or 128
 	local ws_rot = Rotation(direction, up or math.UP)
-	local size = Vector3(10, 0, (-10 * h) / w)
-	self._vehicle_interactions[id] = self._gui:create_linked_workspace(w, h, vehicle_unit:orientation_object(), ((vehicle_unit:orientation_object():position() + position:rotate_with(vehicle_rot)) - size:rotate_with(ws_rot) / 2) - direction * 5, ws_rot:x() * size.x, ws_rot:z() * size.z)
+	local size = Vector3(10, 0, -10 * h / w)
+	self._vehicle_interactions[id] = self._gui:create_linked_workspace(w, h, vehicle_unit:orientation_object(), vehicle_unit:orientation_object():position() + position:rotate_with(vehicle_rot) - size:rotate_with(ws_rot) / 2 - direction * 5, ws_rot:x() * size.x, ws_rot:z() * size.z)
 
 	return self._vehicle_interactions[id]
 end
@@ -680,7 +689,9 @@ function HUDManagerVR:_add_name_label(data)
 
 	ws:set_billboard(Workspace.BILLBOARD_Y)
 
-	local panel = ws:panel():panel({name = "name_label" .. id})
+	local panel = ws:panel():panel({
+		name = "name_label" .. id
+	})
 	local radius = 24
 	local interact = CircleBitmapGuiObject:new(panel, {
 		blend_mode = "add",
@@ -727,7 +738,7 @@ function HUDManagerVR:_add_name_label(data)
 		x = 1,
 		texture = tabs_texture,
 		texture_rect = bag_rect,
-		color = (crim_color * 1.1):with_alpha(1)
+		color = crim_color * 1.1:with_alpha(1)
 	})
 
 	panel:text({
@@ -758,7 +769,7 @@ function HUDManagerVR:_add_name_label(data)
 		text = utf8.to_upper("Fixing"),
 		font = tweak_data.hud.medium_font,
 		font_size = tweak_data.hud.name_label_font_size,
-		color = (crim_color * 1.1):with_alpha(1)
+		color = crim_color * 1.1:with_alpha(1)
 	})
 
 	if rank > 0 then
@@ -801,7 +812,9 @@ function HUDManager:add_vehicle_name_label(data)
 
 	ws:set_billboard(Workspace.BILLBOARD_Y)
 
-	local panel = ws:panel():panel({name = "name_label" .. id})
+	local panel = ws:panel():panel({
+		name = "name_label" .. id
+	})
 	local radius = 24
 	local interact = CircleBitmapGuiObject:new(panel, {
 		blend_mode = "add",
@@ -845,7 +858,7 @@ function HUDManager:add_vehicle_name_label(data)
 		x = 1,
 		texture = tabs_texture,
 		texture_rect = bag_rect,
-		color = (crim_color * 1.1):with_alpha(1)
+		color = crim_color * 1.1:with_alpha(1)
 	})
 	local bag_number = panel:text({
 		name = "bag_number",
@@ -891,7 +904,7 @@ function HUDManager:add_vehicle_name_label(data)
 		text = utf8.to_upper("Fixing"),
 		font = tweak_data.hud.medium_font,
 		font_size = tweak_data.hud.name_label_font_size,
-		color = (crim_color * 1.1):with_alpha(1)
+		color = crim_color * 1.1:with_alpha(1)
 	})
 	self:align_teammate_name_label(panel, interact)
 	table.insert(self._hud.name_labels, {
@@ -952,18 +965,21 @@ function HUDManagerVR:_remove_name_label(id)
 		end
 	end
 end
+
 local __align_teammate_name_label = HUDManager.align_teammate_name_label
 
 function HUDManagerVR:align_teammate_name_label(panel, interact)
 	__align_teammate_name_label(self, panel, interact)
 	panel:set_center_x(panel:parent():w() / 2)
 end
+
 local __show_progress_timer = HUDManager.show_progress_timer
 
 function HUDManagerVR:show_progress_timer(...)
 	__show_progress_timer(self, ...)
 	self._hud_interaction:remove_interact()
 end
+
 local __remove_progress_timer = HUDManager.remove_progress_timer
 
 function HUDManagerVR:remove_progress_timer()
@@ -1016,7 +1032,7 @@ function HUDManager:add_waypoint(id, data)
 		name = "arrow" .. id,
 		texture = arrow_icon,
 		texture_rect = arrow_texture_rect,
-		color = (data.color or Color.white):with_alpha(0.75),
+		color = data.color or Color.white:with_alpha(0.75),
 		w = arrow_texture_rect[3],
 		h = arrow_texture_rect[4],
 		blend_mode = data.blend_mode
@@ -1061,20 +1077,22 @@ function HUDManager:add_waypoint(id, data)
 		distance:set_visible(false)
 	end
 
-	local timer = data.timer and ws:panel():text({
-		font_size = 32,
-		h = 32,
-		vertical = "center",
-		w = 32,
-		align = "center",
-		render_template = "OverlayText",
-		depth_mode = "disabled",
-		rotation = 360,
-		layer = 0,
-		name = "timer" .. id,
-		text = (math.round(data.timer) < 10 and "0" or "") .. math.round(data.timer),
-		font = tweak_data.hud.medium_font_noshadow
-	})
+	if data.timer then
+		local timer = ws:panel():text({
+			font_size = 32,
+			h = 32,
+			vertical = "center",
+			w = 32,
+			align = "center",
+			render_template = "OverlayText",
+			depth_mode = "disabled",
+			rotation = 360,
+			layer = 0,
+			name = "timer" .. id,
+			text = (math.round(data.timer) < 10 and "0" or "") .. math.round(data.timer),
+			font = tweak_data.hud.medium_font_noshadow
+		})
+	end
 
 	if timer then
 		timer:set_bottom(ws:panel():h())
@@ -1143,11 +1161,11 @@ function HUDManager:add_waypoint(id, data)
 	if self._hud.waypoints[id].slot == 2 then
 		self._hud.waypoints[id].slot_x = t[1] / 2 + self._hud.waypoints[id].text:w() / 2 + 10
 	elseif self._hud.waypoints[id].slot == 3 then
-		self._hud.waypoints[id].slot_x = (-t[1] / 2 - self._hud.waypoints[id].text:w() / 2) - 10
+		self._hud.waypoints[id].slot_x = -t[1] / 2 - self._hud.waypoints[id].text:w() / 2 - 10
 	elseif self._hud.waypoints[id].slot == 4 then
 		self._hud.waypoints[id].slot_x = t[1] / 2 + t[2] + self._hud.waypoints[id].text:w() / 2 + 20
 	elseif self._hud.waypoints[id].slot == 5 then
-		self._hud.waypoints[id].slot_x = ((-t[1] / 2 - t[3]) - self._hud.waypoints[id].text:w() / 2) - 20
+		self._hud.waypoints[id].slot_x = -t[1] / 2 - t[3] - self._hud.waypoints[id].text:w() / 2 - 20
 	end
 end
 
@@ -1222,6 +1240,7 @@ function HUDManager:remove_waypoint(id)
 
 	self._hud.waypoints[id] = nil
 end
+
 local wp_pos = Vector3()
 local wp_dir = Vector3()
 local wp_dir_normalized = Vector3()
@@ -1446,4 +1465,3 @@ function HUDManager:_update_waypoints(t, dt)
 		end
 	end
 end
-

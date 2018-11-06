@@ -49,4 +49,3 @@ end
 function CoreCutsceneClipMetadata:prime_cast(cast)
 	self:footage():prime_cast(cast)
 end
-

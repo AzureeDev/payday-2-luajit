@@ -47,6 +47,7 @@ end
 function PlayerHandStateDriving:gripping_throttle()
 	return self._gripping_throttle
 end
+
 local pen = Draw:pen()
 local offset = Vector3()
 local middle = Vector3()
@@ -56,7 +57,6 @@ local throttle_rot = Rotation()
 local exit = Vector3()
 
 function PlayerHandStateDriving:update(t, dt)
-
 	local function offset_to_world(output, offset)
 		mvector3.set(output, offset)
 		mvector3.rotate_with(output, self._vehicle.vehicle_unit:rotation())
@@ -267,7 +267,7 @@ function PlayerHandStateDriving:update(t, dt)
 
 						self._gripping_throttle = true
 
-						mrotation.set_look_at(throttle_rot, (middle - offset):normalized(), math.UP)
+						mrotation.set_look_at(throttle_rot, middle - offset:normalized(), math.UP)
 						mrotation.multiply(throttle_rot, self._vehicle.vehicle_unit:rotation():inverse())
 						mrotation.rotation_difference(throttle_rot, throttle_rot, self._hand_unit:rotation())
 
@@ -332,4 +332,3 @@ function PlayerHandStateDriving:update(t, dt)
 		end
 	end
 end
-

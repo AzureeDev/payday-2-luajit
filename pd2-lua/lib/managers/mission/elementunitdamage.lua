@@ -60,7 +60,9 @@ end
 
 function ElementUnitDamage:_load_unit(unit)
 	if unit.damage then
-		unit:damage():add_listener("element_unit_damage" .. self._id, {"on_take_damage"}, callback(self, self, "clbk_linked_unit_took_damage"))
+		unit:damage():add_listener("element_unit_damage" .. self._id, {
+			"on_take_damage"
+		}, callback(self, self, "clbk_linked_unit_took_damage"))
 		table.insert(self._units, unit)
 	end
 end
@@ -98,4 +100,3 @@ end
 function ElementUnitDamage:load(data)
 	self:set_enabled(data.enabled)
 end
-

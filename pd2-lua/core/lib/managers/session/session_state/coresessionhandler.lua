@@ -13,4 +13,3 @@ end
 function Session:session_started()
 	cat_print("debug", "Session Started!")
 end
-

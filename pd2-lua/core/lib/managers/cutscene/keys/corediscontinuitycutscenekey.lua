@@ -35,4 +35,3 @@ function CoreDiscontinuityCutsceneKey:validate_control_for_attribute(attribute_n
 
 	return true
 end
-

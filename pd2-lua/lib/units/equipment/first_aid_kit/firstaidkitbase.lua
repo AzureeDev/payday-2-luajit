@@ -44,7 +44,9 @@ function FirstAidKitBase.spawn(pos, rot, bits, peer_id)
 end
 
 function FirstAidKitBase:set_server_information(peer_id)
-	self._server_information = {owner_peer_id = peer_id}
+	self._server_information = {
+		owner_peer_id = peer_id
+	}
 
 	managers.network:session():peer(peer_id):set_used_deployable(true)
 end
@@ -77,7 +79,7 @@ end
 
 function FirstAidKitBase:_get_upgrade_levels(bits)
 	local auto_recovery = Bitwise:rshift(bits, FirstAidKitBase.auto_recovery_shift)
-	local upgrade_lvl = Bitwise:rshift(bits, FirstAidKitBase.upgrade_lvl_shift) % 2 ^ FirstAidKitBase.upgrade_lvl_shift
+	local upgrade_lvl = Bitwise:rshift(bits, FirstAidKitBase.upgrade_lvl_shift) % 2^FirstAidKitBase.upgrade_lvl_shift
 
 	return upgrade_lvl, auto_recovery
 end
@@ -210,7 +212,9 @@ function FirstAidKitBase:_set_empty()
 end
 
 function FirstAidKitBase:save(data)
-	local state = {is_dynamic = self._is_dynamic}
+	local state = {
+		is_dynamic = self._is_dynamic
+	}
 	data.FirstAidKitBase = state
 end
 
@@ -235,4 +239,3 @@ function FirstAidKitBase:destroy()
 		self._validate_clbk_id = nil
 	end
 end
-

@@ -6,11 +6,12 @@ end
 
 function MoneyManager:_setup()
 	if not Global.money_manager then
-		Global.money_manager = {}
-		Global.money_manager.total = Application:digest_value(0, true)
-		Global.money_manager.total_collected = Application:digest_value(0, true)
-		Global.money_manager.offshore = Application:digest_value(0, true)
-		Global.money_manager.total_spent = Application:digest_value(0, true)
+		Global.money_manager = {
+			total = Application:digest_value(0, true),
+			total_collected = Application:digest_value(0, true),
+			offshore = Application:digest_value(0, true),
+			total_spent = Application:digest_value(0, true)
+		}
 	end
 
 	self._global = Global.money_manager
@@ -163,7 +164,9 @@ function MoneyManager:civilian_killed()
 		return
 	end
 
-	local text = managers.localization:text("hud_civilian_killed_message", {AMOUNT = managers.experience:cash_string(deduct_amount)})
+	local text = managers.localization:text("hud_civilian_killed_message", {
+		AMOUNT = managers.experience:cash_string(deduct_amount)
+	})
 	local title = managers.localization:text("hud_civilian_killed_title")
 
 	managers.hud:present_mid_text({
@@ -512,14 +515,14 @@ function MoneyManager:get_secured_bonus_bags_money()
 	local bag_value = bonus_bags
 	local bag_risk = math.round(bag_value * money_multiplier)
 
-	return math.round(((bag_value + bag_risk) * bag_skill_bonus) / self:get_tweak_value("money_manager", "offshore_rate"))
+	return math.round((bag_value + bag_risk) * bag_skill_bonus / self:get_tweak_value("money_manager", "offshore_rate"))
 end
 
 function MoneyManager:get_secured_mandatory_bags_money()
 	local mandatory_value = managers.loot:get_secured_mandatory_bags_value()
 	local bag_skill_bonus = managers.player:upgrade_value("player", "secured_bags_money_multiplier", 1)
 
-	return math.round((mandatory_value * bag_skill_bonus) / self:get_tweak_value("money_manager", "offshore_rate"))
+	return math.round(mandatory_value * bag_skill_bonus / self:get_tweak_value("money_manager", "offshore_rate"))
 end
 
 function MoneyManager:get_secured_bonus_bag_value(carry_id, multiplier)
@@ -539,7 +542,7 @@ function MoneyManager:get_secured_bonus_bag_value(carry_id, multiplier)
 		bag_value = carry_value
 	end
 
-	return math.round(((bag_value + bag_risk) * bag_skill_bonus) / self:get_tweak_value("money_manager", "offshore_rate"))
+	return math.round((bag_value + bag_risk) * bag_skill_bonus / self:get_tweak_value("money_manager", "offshore_rate"))
 end
 
 function MoneyManager:get_job_bag_value()
@@ -614,7 +617,11 @@ function MoneyManager:get_weapon_price(weapon_id)
 	local pc = self:_get_weapon_pc(weapon_id)
 
 	if not tweak_data.money_manager.weapon_cost[pc] then
-		pc = pc and #tweak_data.money_manager.weapon_cost < pc and #tweak_data.money_manager.weapon_cost or 1
+		if pc and pc > #tweak_data.money_manager.weapon_cost then
+			pc = #tweak_data.money_manager.weapon_cost
+		else
+			pc = 1
+		end
 	end
 
 	local cost = self:get_tweak_value("money_manager", "weapon_cost", pc)
@@ -630,7 +637,11 @@ function MoneyManager:get_weapon_price_modified(weapon_id)
 	local pc = self:_get_weapon_pc(weapon_id)
 
 	if not tweak_data.money_manager.weapon_cost[pc] then
-		pc = pc and #tweak_data.money_manager.weapon_cost < pc and #tweak_data.money_manager.weapon_cost or 1
+		if pc and pc > #tweak_data.money_manager.weapon_cost then
+			pc = #tweak_data.money_manager.weapon_cost
+		else
+			pc = 1
+		end
 	end
 
 	local cost = self:get_tweak_value("money_manager", "weapon_cost", pc)
@@ -687,7 +698,9 @@ end
 function MoneyManager:on_sell_weapon(category, slot)
 	local amount = self:get_weapon_slot_sell_value(category, slot)
 
-	self:_add_to_total(amount, {no_offshore = true})
+	self:_add_to_total(amount, {
+		no_offshore = true
+	})
 end
 
 function MoneyManager:get_weapon_part_sell_value(part_id, global_value)
@@ -714,13 +727,17 @@ function MoneyManager:on_sell_weapon_part(part_id, global_value)
 	local amount = self:get_weapon_part_sell_value(part_id, global_value)
 
 	Application:debug("value of removed weapon part", amount)
-	self:_add_to_total(amount, {no_offshore = true})
+	self:_add_to_total(amount, {
+		no_offshore = true
+	})
 end
 
 function MoneyManager:on_sell_weapon_slot(category, slot)
 	local amount = self:get_weapon_slot_sell_value(category, slot)
 
-	self._add_to_total(amount, {no_offshore = true})
+	self._add_to_total(amount, {
+		no_offshore = true
+	})
 end
 
 function MoneyManager:can_afford_mission_asset(asset_id)
@@ -738,7 +755,9 @@ end
 function MoneyManager:refund_mission_assets()
 	local amount = managers.assets:get_money_spent()
 
-	self:_add_to_total(amount, {no_offshore = true})
+	self:_add_to_total(amount, {
+		no_offshore = true
+	})
 end
 
 function MoneyManager:can_afford_spend_skillpoint(tree, tier, points)
@@ -758,7 +777,9 @@ end
 function MoneyManager:on_respec_skilltree(tree, forced_respec_multiplier)
 	local amount = self:get_skilltree_tree_respec_cost(tree, forced_respec_multiplier)
 
-	self:_add_to_total(amount, {no_offshore = true})
+	self:_add_to_total(amount, {
+		no_offshore = true
+	})
 end
 
 function MoneyManager:refund_weapon_part(weapon_id, part_id, global_value)
@@ -767,7 +788,9 @@ function MoneyManager:refund_weapon_part(weapon_id, part_id, global_value)
 	local gv_tweak_data = tweak_data.lootdrop.global_values[global_value or "normal"]
 	local global_value_multiplier = gv_tweak_data and gv_tweak_data.value_multiplier or 1
 
-	self:_add_to_total(math.round(mod_price * global_value_multiplier), {no_offshore = true})
+	self:_add_to_total(math.round(mod_price * global_value_multiplier), {
+		no_offshore = true
+	})
 end
 
 function MoneyManager:get_weapon_modify_price(weapon_id, part_id, global_value)
@@ -991,7 +1014,9 @@ end
 function MoneyManager:on_sell_mask(mask_id, global_value, blueprint)
 	local amount = self:get_mask_sell_value(mask_id, global_value, blueprint)
 
-	self:_add_to_total(amount, {no_offshore = true})
+	self:_add_to_total(amount, {
+		no_offshore = true
+	})
 end
 
 function MoneyManager:get_loot_drop_cash_value(value_id)
@@ -1001,14 +1026,18 @@ end
 function MoneyManager:on_loot_drop_cash(value_id)
 	local amount = self:get_loot_drop_cash_value(value_id)
 
-	self:_add_to_total(amount, {no_offshore = true})
+	self:_add_to_total(amount, {
+		no_offshore = true
+	})
 end
 
 function MoneyManager:get_tweak_value(...)
 	local value = tweak_data:get_value(...)
 
 	if not value then
-		Application:error("[MoneyManager:get_tweak_value] tweak data value non existent!", inspect({...}))
+		Application:error("[MoneyManager:get_tweak_value] tweak data value non existent!", inspect({
+			...
+		}))
 		Application:stack_dump()
 	end
 
@@ -1029,7 +1058,7 @@ function MoneyManager:can_afford_preplanning_type(type)
 	local cost = self:get_preplanning_type_cost(type)
 	local reserved_cost = managers.preplanning:get_reserved_local_cost()
 
-	return cost + reserved_cost <= self:total()
+	return self:total() >= cost + reserved_cost
 end
 
 function MoneyManager:on_buy_preplanning_types()
@@ -1518,4 +1547,3 @@ function MoneyManager:load(data)
 		XboxLive:write_hero_stat("offshore", self._global.offshore)
 	end
 end
-

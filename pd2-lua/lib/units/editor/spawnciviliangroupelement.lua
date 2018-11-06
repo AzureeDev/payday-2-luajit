@@ -1,5 +1,7 @@
 SpawnCivilianGroupUnitElement = SpawnCivilianGroupUnitElement or class(MissionElement)
-SpawnCivilianGroupUnitElement.LINK_ELEMENTS = {"elements"}
+SpawnCivilianGroupUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function SpawnCivilianGroupUnitElement:init(unit)
 	SpawnCivilianGroupUnitElement.super.init(self, unit)
@@ -72,7 +74,9 @@ function SpawnCivilianGroupUnitElement:_build_panel(panel, panel_sizer)
 
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
-	local names = {"ai_spawn_civilian"}
+	local names = {
+		"ai_spawn_civilian"
+	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, names)
 	self:_build_value_checkbox(panel, panel_sizer, "random", "Select spawn points randomly")
@@ -81,6 +85,7 @@ function SpawnCivilianGroupUnitElement:_build_panel(panel, panel_sizer)
 		floats = 0,
 		min = 0
 	}, "Specify amount of civilians to spawn from group")
-	self:_build_value_combobox(panel, panel_sizer, "team", table.list_add({"default"}, tweak_data.levels:get_team_names_indexed()), "Select the group's team (overrides character team).")
+	self:_build_value_combobox(panel, panel_sizer, "team", table.list_add({
+		"default"
+	}, tweak_data.levels:get_team_names_indexed()), "Select the group's team (overrides character team).")
 end
-

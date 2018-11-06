@@ -2,6 +2,7 @@ MusicManager = MusicManager or class(CoreMusicManager)
 
 function MusicManager:init()
 	MusicManager.super.init(self)
+	self:post_event("music_uno_fade_reset")
 end
 
 function MusicManager:init_globals(...)
@@ -25,6 +26,10 @@ function MusicManager:on_steam_overlay_close()
 	if SystemInfo:platform() ~= Idstring("X360") then
 		self:clbk_game_has_music_control(true)
 	end
+end
+
+function MusicManager:on_mission_end()
+	self:post_event("music_uno_fade_reset")
 end
 
 function MusicManager:track_listen_start(event, track)
@@ -159,15 +164,21 @@ function MusicManager:load_settings(data)
 	end
 
 	if managers.network and not self._added_overlay_listeners then
-		managers.network.account:add_overlay_listener("steam_music_manager_open", {"overlay_open"}, callback(self, self, "on_steam_overlay_open"))
-		managers.network.account:add_overlay_listener("steam_music_manager_close", {"overlay_close"}, callback(self, self, "on_steam_overlay_close"))
+		managers.network.account:add_overlay_listener("steam_music_manager_open", {
+			"overlay_open"
+		}, callback(self, self, "on_steam_overlay_open"))
+		managers.network.account:add_overlay_listener("steam_music_manager_close", {
+			"overlay_close"
+		}, callback(self, self, "on_steam_overlay_close"))
 
 		self._added_overlay_listeners = true
 	end
 end
 
 function MusicManager:save_profile(data)
-	local state = {loadout_selection = Global.music_manager.loadout_selection}
+	local state = {
+		loadout_selection = Global.music_manager.loadout_selection
+	}
 	data.MusicManager = state
 end
 
@@ -368,6 +379,9 @@ function MusicManager:jukebox_default_tracks()
 		credits = "criminals_ambition",
 		heist_run = "track_52",
 		heist_crojob1 = "all",
+		heist_bph = "track_62_lcv",
+		heist_nmh = "track_63",
+		heist_vit = "track_64_lcv",
 		heist_sah = "track_61",
 		heist_firestarter3 = "track_02",
 		heist_alex1 = "track_08",
@@ -541,4 +555,3 @@ end
 function MusicManager:music_tracks()
 	return tweak_data.music.soundbank_list
 end
-

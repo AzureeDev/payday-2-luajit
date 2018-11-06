@@ -218,26 +218,32 @@ function Setup:load_packages()
 end
 
 function Setup:init_managers(managers)
-	Global.game_settings = Global.game_settings or {
-		is_playing = false,
-		auto_kick = true,
-		drop_in_option = 1,
-		permission = "public",
-		job_plan = -1,
-		search_modded_lobbies = true,
-		search_appropriate_jobs = true,
-		gamemode = "standard",
-		drop_in_allowed = true,
-		reputation_permission = 0,
-		difficulty = "normal",
-		team_ai_option = 1,
-		team_ai = true,
-		kick_option = 1,
-		one_down = false,
-		allow_modded_players = true,
-		search_one_down_lobbies = false,
-		level_id = managers.dlc:is_trial() and "bank_trial" or "branchbank"
-	}
+	slot2 = Global
+
+	if not Global.game_settings then
+		slot3 = {
+			is_playing = false,
+			auto_kick = true,
+			drop_in_option = 1,
+			permission = "public",
+			job_plan = -1,
+			search_modded_lobbies = true,
+			search_appropriate_jobs = true,
+			gamemode = "standard",
+			drop_in_allowed = true,
+			reputation_permission = 0,
+			difficulty = "normal",
+			team_ai_option = 1,
+			team_ai = true,
+			kick_option = 1,
+			one_down = false,
+			allow_modded_players = true,
+			search_one_down_lobbies = false,
+			level_id = managers.dlc:is_trial() and "bank_trial" or "branchbank"
+		}
+	end
+
+	slot2.game_settings = slot3
 
 	managers.dlc:setup()
 
@@ -373,7 +379,7 @@ function Setup:_start_loading_screen()
 		local show_controller = managers.user:get_setting("loading_screen_show_controller")
 		local show_hints = managers.user:get_setting("loading_screen_show_hints")
 		setup = "lib/setups/LevelLoadingSetup"
-		local load_level_data = {
+		load_level_data = {
 			level_data = Global.level_data,
 			level_tweak_data = tweak_data.levels[Global.level_data.level_id] or {}
 		}
@@ -396,18 +402,20 @@ function Setup:_start_loading_screen()
 					"vehicle"
 				})]
 				load_level_data.controller_image = "guis/textures/controller"
-				load_level_data.controller_shapes = {{
-					position = {
-						cy = 0.5,
-						cx = 0.5
-					},
-					texture_rect = {
-						0,
-						0,
-						512,
-						256
+				load_level_data.controller_shapes = {
+					{
+						position = {
+							cy = 0.5,
+							cx = 0.5
+						},
+						texture_rect = {
+							0,
+							0,
+							512,
+							256
+						}
 					}
-				}}
+				}
 			end
 
 			if load_level_data.controller_coords then
@@ -444,8 +452,10 @@ function Setup:_start_loading_screen()
 			},
 			bg_texture = bg_texture or "guis/textures/loading/loading_bg"
 		}
+	elseif not Global.boot_loading_environment_done then
+		setup = "lib/setups/LightLoadingSetup"
 	else
-		setup = not Global.boot_loading_environment_done and "lib/setups/LightLoadingSetup" or "lib/setups/HeavyLoadingSetup"
+		setup = "lib/setups/HeavyLoadingSetup"
 	end
 
 	self:_setup_loading_environment()
@@ -484,14 +494,16 @@ function Setup:_setup_loading_environment()
 				sky_bottom_color = Vector3(0, 0, 0)
 			}
 		},
-		shadow_processor = {shadow_modifier = {
-			slice0 = Vector3(0, 800, 0),
-			slice1 = Vector3(650, 1600, 0),
-			slice2 = Vector3(1300, 5500, 0),
-			slice3 = Vector3(5100, 17500, 0),
-			shadow_slice_depths = Vector3(800, 1600, 5500),
-			shadow_slice_overlap = Vector3(150, 300, 400)
-		}}
+		shadow_processor = {
+			shadow_modifier = {
+				slice0 = Vector3(0, 800, 0),
+				slice1 = Vector3(650, 1600, 0),
+				slice2 = Vector3(1300, 5500, 0),
+				slice3 = Vector3(5100, 17500, 0),
+				shadow_slice_depths = Vector3(800, 1600, 5500),
+				shadow_slice_overlap = Vector3(150, 300, 400)
+			}
+		}
 	}
 	local dummy_vp = Application:create_world_viewport(0, 0, 1, 1)
 
@@ -643,8 +655,10 @@ function Setup:render()
 end
 
 function Setup:end_frame(t, dt)
-	while self._end_frame_callbacks and #self._end_frame_callbacks > 0 do
-		table.remove(self._end_frame_callbacks)()
+	if self._end_frame_callbacks then
+		while self._end_frame_callbacks and #self._end_frame_callbacks > 0 do
+			table.remove(self._end_frame_callbacks)()
+		end
 	end
 end
 
@@ -872,4 +886,3 @@ end
 function Setup:is_unloading()
 	return self._started_unloading_packages and true
 end
-

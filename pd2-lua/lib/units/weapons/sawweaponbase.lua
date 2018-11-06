@@ -86,7 +86,11 @@ function SawWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spread_m
 		local ammo_usage = 5
 
 		if ray_res.hit_enemy then
-			ammo_usage = managers.player:has_category_upgrade("saw", "enemy_slicer") and managers.player:upgrade_value("saw", "enemy_slicer", 10) or 15
+			if managers.player:has_category_upgrade("saw", "enemy_slicer") then
+				ammo_usage = managers.player:upgrade_value("saw", "enemy_slicer", 10)
+			else
+				ammo_usage = 15
+			end
 		end
 
 		ammo_usage = ammo_usage + math.ceil(math.random() * 10)
@@ -155,6 +159,7 @@ end
 function SawWeaponBase:third_person_important()
 	return true
 end
+
 local mvec_to = Vector3()
 local mvec_spread_direction = Vector3()
 
@@ -206,7 +211,9 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 	result.hit_enemy = hit_unit
 
 	if self._alert_events then
-		result.rays = {col_ray}
+		result.rays = {
+			col_ray
+		}
 	end
 
 	if col_ray then
@@ -226,6 +233,7 @@ end
 function SawWeaponBase:can_reload()
 	return self:clip_empty() and SawWeaponBase.super.can_reload(self)
 end
+
 SawHit = SawHit or class(InstantBulletBase)
 local tank_server_names = {
 	Idstring("units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1"),
@@ -269,4 +277,3 @@ function SawHit:play_impact_sound_and_effects(weapon_unit, col_ray)
 		col_ray = col_ray
 	})
 end
-

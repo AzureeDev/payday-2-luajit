@@ -266,4 +266,3 @@ function HuskServerSyncedCivilianDamage:_clamp_health_percentage(health_abs)
 
 	return damage, damage_percent
 end
-

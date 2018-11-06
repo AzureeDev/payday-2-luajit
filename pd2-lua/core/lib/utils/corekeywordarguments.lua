@@ -8,7 +8,9 @@ function parse_kwargs(args, ...)
 	local kwargs = args[1]
 	local result = {}
 
-	for _, arg_def in ipairs({...}) do
+	for _, arg_def in ipairs({
+		...
+	}) do
 		local j = string.find(arg_def, ":")
 		local typ = string.sub(arg_def, 1, j - 1)
 		local name = string.sub(arg_def, j + 1)
@@ -30,7 +32,9 @@ end
 KeywordArguments = KeywordArguments or CoreClass.class()
 
 function KeywordArguments:init(...)
-	local args = {...}
+	local args = {
+		...
+	}
 
 	assert(#args == 1, "must be called with one argument only (a table with keyword arguments)")
 	assert(type(args[1]) == "table", "must be called with table as first argument")
@@ -50,7 +54,9 @@ end
 function KeywordArguments:mandatory(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v ~= nil, "a mandatory keyword argument (" .. n .. ") is missing")
@@ -65,7 +71,9 @@ end
 function KeywordArguments:mandatory_string(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v ~= nil, "a mandatory keyword argument (" .. n .. ") is missing")
@@ -81,7 +89,9 @@ end
 function KeywordArguments:mandatory_number(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v ~= nil, "a mandatory keyword argument (" .. n .. ") is missing")
@@ -97,7 +107,9 @@ end
 function KeywordArguments:mandatory_table(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v ~= nil, "a mandatory keyword argument (" .. n .. ") is missing")
@@ -113,7 +125,9 @@ end
 function KeywordArguments:mandatory_function(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v ~= nil, "a mandatory keyword argument (" .. n .. ") is missing")
@@ -129,7 +143,9 @@ end
 function KeywordArguments:mandatory_object(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v ~= nil, "a mandatory keyword argument (" .. n .. ") is missing")
@@ -145,7 +161,9 @@ end
 function KeywordArguments:optional(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		table.insert(ret_list, self._kwargs[n])
 
 		self._unconsumed_kwargs[n] = nil
@@ -157,7 +175,9 @@ end
 function KeywordArguments:optional_string(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v == nil or type(v) == "string", "keyword argument is not a string (" .. n .. "=" .. tostring(v) .. ")")
@@ -172,7 +192,9 @@ end
 function KeywordArguments:optional_number(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v == nil or type(v) == "number", "keyword argument is not a number (" .. n .. "=" .. tostring(v) .. ")")
@@ -187,7 +209,9 @@ end
 function KeywordArguments:optional_table(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v == nil or type(v) == "table", "keyword argument is not a table or userdata (" .. n .. "=" .. tostring(v) .. ")")
@@ -202,7 +226,9 @@ end
 function KeywordArguments:optional_function(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v == nil or type(v) == "function", "keyword argument is not a function (" .. n .. "=" .. tostring(v) .. ")")
@@ -217,7 +243,9 @@ end
 function KeywordArguments:optional_object(...)
 	local ret_list = {}
 
-	for _, n in ipairs({...}) do
+	for _, n in ipairs({
+		...
+	}) do
 		local v = self._kwargs[n]
 
 		assert(v == nil or type(v) == "table" or type(v) == "userdata", "keyword argument is not a table or userdata (" .. n .. "=" .. tostring(v) .. ")")
@@ -228,4 +256,3 @@ function KeywordArguments:optional_object(...)
 
 	return unpack(ret_list)
 end
-

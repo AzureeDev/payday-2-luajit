@@ -59,7 +59,9 @@ function WaypointUnitElement:_add_text_options_from_file(path)
 end
 
 function WaypointUnitElement:_add_wp_options()
-	self._text_options = {"debug_none"}
+	self._text_options = {
+		"debug_none"
+	}
 
 	self:_add_text_options_from_file("strings/system_text.strings")
 end
@@ -96,4 +98,3 @@ function WaypointUnitElement:_build_panel(panel, panel_sizer)
 	text_sizer:add(self._text, 2, 2, "RIGHT,TOP,EXPAND")
 	panel_sizer:add(text_sizer, 1, 0, "EXPAND")
 end
-

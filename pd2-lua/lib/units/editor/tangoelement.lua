@@ -28,7 +28,9 @@ function TangoAwardElement:_build_panel(panel, panel_sizer)
 		end
 	end
 
-	local objectives = {"select a challenge"}
+	local objectives = {
+		"select a challenge"
+	}
 
 	if self._hed.challenge then
 		local id = self._hed.challenge
@@ -74,6 +76,7 @@ function TangoAwardElement:set_element_data(data)
 		self._objective_box:set_selection(0)
 	end
 end
+
 TangoFilterElement = TangoFilterElement or class(MissionElement)
 
 function TangoFilterElement:init(unit)
@@ -102,7 +105,9 @@ function TangoFilterElement:_build_panel(panel, panel_sizer)
 		end
 	end
 
-	local objectives = {"all"}
+	local objectives = {
+		"all"
+	}
 
 	if self._hed.challenge then
 		local id = self._hed.challenge
@@ -148,4 +153,3 @@ function TangoFilterElement:set_element_data(data)
 		self._objective_box:set_selection(0)
 	end
 end
-

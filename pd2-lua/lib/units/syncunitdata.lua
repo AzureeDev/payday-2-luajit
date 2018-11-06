@@ -5,7 +5,9 @@ function SyncUnitData:init(unit)
 end
 
 function SyncUnitData:save(data)
-	local state = {lights = {}}
+	local state = {
+		lights = {}
+	}
 
 	for _, light in ipairs(self._unit:get_objects_by_type(Idstring("light"))) do
 		local l = {
@@ -36,4 +38,3 @@ function SyncUnitData:load(data)
 	managers.worlddefinition:setup_lights(self._unit, state)
 	managers.worlddefinition:setup_projection_light(self._unit, state)
 end
-

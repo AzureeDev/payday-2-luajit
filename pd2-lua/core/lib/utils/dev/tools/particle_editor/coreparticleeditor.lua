@@ -572,7 +572,7 @@ function CoreParticleEditor:update(t, dt)
 
 	if self._gizmo_movement == "SMOOTH" then
 		local gizmo = self:effect_gizmo()
-		self._gizmo_accum = self._gizmo_accum + (dt * 360) / 4
+		self._gizmo_accum = self._gizmo_accum + dt * 360 / 4
 		local a = self._gizmo_accum
 		local r = 500
 
@@ -587,7 +587,7 @@ function CoreParticleEditor:update(t, dt)
 		gizmo:set_position(self._gizmo_anchor + Vector3(100 * s, 0, 0))
 	elseif self._gizmo_movement == "CIRCLE" then
 		local gizmo = self:effect_gizmo()
-		self._gizmo_accum = self._gizmo_accum + (dt * 360) / 16
+		self._gizmo_accum = self._gizmo_accum + dt * 360 / 16
 		local a = self._gizmo_accum
 		local r = 500
 
@@ -747,4 +747,3 @@ function CoreParticleEditor:on_save_as()
 		cur:on_save_as()
 	end
 end
-

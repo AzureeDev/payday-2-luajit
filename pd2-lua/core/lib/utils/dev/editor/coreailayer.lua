@@ -7,11 +7,17 @@ require("core/lib/units/data/CoreAiEditorData")
 AiLayer = AiLayer or class(CoreStaticLayer.StaticLayer)
 
 function AiLayer:init(owner)
-	AiLayer.super.init(self, owner, "ai", {"ai"}, "ai_layer")
+	AiLayer.super.init(self, owner, "ai", {
+		"ai"
+	}, "ai_layer")
 
 	self._brush = Draw:brush()
-	self._graph_types = {surface = "surface"}
-	self._unit_graph_types = {surface = Idstring("core/units/nav_surface/nav_surface")}
+	self._graph_types = {
+		surface = "surface"
+	}
+	self._unit_graph_types = {
+		surface = Idstring("core/units/nav_surface/nav_surface")
+	}
 	self._nav_surface_unit = Idstring("core/units/nav_surface/nav_surface")
 	self._patrol_point_unit = Idstring("core/units/patrol_point/patrol_point")
 
@@ -20,7 +26,9 @@ function AiLayer:init(owner)
 
 	self._patrol_path_brush = Draw:brush()
 	self._only_draw_selected_patrol_path = false
-	self._default_values = {all_visible = true}
+	self._default_values = {
+		all_visible = true
+	}
 end
 
 function AiLayer:load(world_holder, offset)
@@ -51,7 +59,9 @@ function AiLayer:save(save_params)
 	local t = {
 		single_data_block = true,
 		entry = "ai_nav_graphs",
-		data = {file = file_name}
+		data = {
+			file = file_name
+		}
 	}
 
 	managers.editor:add_save_data(t)
@@ -78,7 +88,9 @@ function AiLayer:save(save_params)
 		local t = {
 			single_data_block = true,
 			entry = "ai_mop_graphs",
-			data = {file = mop_filename}
+			data = {
+				file = mop_filename
+			}
 		}
 
 		managers.editor:add_save_data(t)
@@ -188,7 +200,12 @@ function AiLayer:_draw_patrol_path(name, path, t, dt)
 	if #path.points > 0 then
 		for i, point in ipairs(path.points) do
 			local to_unit = nil
-			to_unit = i == #path.points and path.points[1].unit or path.points[i + 1].unit
+
+			if i == #path.points then
+				to_unit = path.points[1].unit
+			else
+				to_unit = path.points[i + 1].unit
+			end
 
 			self._patrol_path_brush:set_color(Color.white:with_alpha(selected_path and 1 or 0.25))
 			Application:draw_link({
@@ -370,7 +387,9 @@ function AiLayer:_build_ai_settings()
 
 	state:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_set_group_state"), nil)
 
-	self._ai_settings_guis = {group_state = group_state}
+	self._ai_settings_guis = {
+		group_state = group_state
+	}
 
 	return graphs_sizer
 end
@@ -806,7 +825,9 @@ function AiLayer:_set_debug_options()
 		return
 	end
 
-	local options = {quads = true}
+	local options = {
+		quads = true
+	}
 
 	for name, ctrl in pairs(self._debug_buttons) do
 		options[name] = ctrl:get_value()
@@ -1082,7 +1103,9 @@ function AiLayer:update_unit_settings()
 end
 
 function AiLayer:_init_ai_settings()
-	self._ai_settings = {group_state = "besiege"}
+	self._ai_settings = {
+		group_state = "besiege"
+	}
 
 	managers.groupai:set_state(self._ai_settings.group_state)
 end
@@ -1135,4 +1158,3 @@ function AiLayer:_set_detection_mul()
 
 	managers.navigation:set_detection_multiplier(self._selected_unit:unit_data().unit_id, self._ai_unit_settings_guis.detection_multiplier.value)
 end
-

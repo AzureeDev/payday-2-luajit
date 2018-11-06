@@ -10,6 +10,7 @@ function SequenceManager:init()
 
 	self._proximity_masks.players = managers.slot:get_mask("players")
 end
+
 InteractionElement = InteractionElement or class(CoreSequenceManager.BaseElement)
 InteractionElement.NAME = "interaction"
 
@@ -30,4 +31,3 @@ function InteractionElement:activate_callback(env)
 end
 
 CoreClass.override_class(CoreSequenceManager.SequenceManager, SequenceManager)
-

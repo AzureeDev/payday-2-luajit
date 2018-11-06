@@ -1,5 +1,7 @@
 NewFlamethrowerBase = NewFlamethrowerBase or class(NewRaycastWeaponBase)
-NewFlamethrowerBase.EVENT_IDS = {flamethrower_effect = 1}
+NewFlamethrowerBase.EVENT_IDS = {
+	flamethrower_effect = 1
+}
 
 function NewFlamethrowerBase:init(...)
 	NewFlamethrowerBase.super.init(self, ...)
@@ -22,8 +24,12 @@ function NewFlamethrowerBase:_create_use_setups()
 	local use_data = {}
 	local player_setup = {
 		selection_index = tweak_data.weapon[self._name_id].use_data.selection_index,
-		equip = {align_place = tweak_data.weapon[self._name_id].use_data.align_place or "left_hand"},
-		unequip = {align_place = "back"}
+		equip = {
+			align_place = tweak_data.weapon[self._name_id].use_data.align_place or "left_hand"
+		},
+		unequip = {
+			align_place = "back"
+		}
 	}
 	use_data.player = player_setup
 	self._use_data = use_data
@@ -44,6 +50,7 @@ end
 function NewFlamethrowerBase:_spawn_muzzle_effect(from_pos, direction)
 	self._unit:flamethrower_effect_extension():_spawn_muzzle_effect(from_pos, direction)
 end
+
 local mvec_to = Vector3()
 local mvec_direction = Vector3()
 local mvec_spread_direction = Vector3()
@@ -106,7 +113,11 @@ function NewFlamethrowerBase:_fire_raycast(user_unit, from_pos, direction, dmg_m
 	result.hit_enemy = hit_enemies > 0 and true or false
 
 	if self._alert_events then
-		result.rays = {{position = from_pos}}
+		result.rays = {
+			{
+				position = from_pos
+			}
+		}
 	end
 
 	managers.statistics:shot_fired({
@@ -136,4 +147,3 @@ end
 function NewFlamethrowerBase:third_person_important()
 	return true
 end
-

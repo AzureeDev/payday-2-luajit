@@ -25,6 +25,7 @@ function ElementHeat:on_executed(instigator)
 
 	ElementHeat.super.on_executed(self, instigator)
 end
+
 ElementHeatTrigger = ElementHeatTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementHeatTrigger:init(...)
@@ -60,4 +61,3 @@ function ElementHeatTrigger:on_executed(instigator)
 		self:remove_callback()
 	end
 end
-

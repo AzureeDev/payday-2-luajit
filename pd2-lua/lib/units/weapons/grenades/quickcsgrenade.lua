@@ -39,7 +39,7 @@ function QuickCsGrenade:update(unit, t, dt)
 
 			self:detonate()
 		end
-	elseif self._state == 3 and (not self._last_damage_tick or self._last_damage_tick + self._damage_tick_period < t) then
+	elseif self._state == 3 and (not self._last_damage_tick or t > self._last_damage_tick + self._damage_tick_period) then
 		self:_do_damage()
 
 		self._last_damage_tick = t
@@ -72,7 +72,9 @@ function QuickCsGrenade:_do_damage()
 	if player_unit and mvector3.distance_sq(self._unit:position(), player_unit:position()) < self._tweak_data.radius * self._tweak_data.radius then
 		local attack_data = {
 			damage = self._damage_per_tick,
-			col_ray = {ray = math.UP}
+			col_ray = {
+				ray = math.UP
+			}
 		}
 
 		player_unit:character_damage():damage_killzone(attack_data)
@@ -126,4 +128,3 @@ function QuickCsGrenade:destroy()
 
 	managers.environment_controller:set_blurzone(self._unit:key(), 0)
 end
-

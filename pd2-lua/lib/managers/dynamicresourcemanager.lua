@@ -1,6 +1,8 @@
 DynamicResourceManager = DynamicResourceManager or class()
 DynamicResourceManager.DYN_RESOURCES_PACKAGE = "packages/dyn_resources"
-DynamicResourceManager.listener_events = {file_streamer_workload = 1}
+DynamicResourceManager.listener_events = {
+	file_streamer_workload = 1
+}
 local ids_unit = Idstring("unit")
 
 function DynamicResourceManager:init()
@@ -274,4 +276,3 @@ end
 function DynamicResourceManager:preload_units()
 	print("[DynamicResourceManager:preload_units]")
 end
-

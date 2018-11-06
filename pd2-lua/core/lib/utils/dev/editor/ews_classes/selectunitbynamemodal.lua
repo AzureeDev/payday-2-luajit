@@ -35,6 +35,6 @@ end
 function SelectUnitByNameModal:selected_units()
 	return self:_selected_item_units()
 end
+
 SingleSelectUnitByNameModal = SingleSelectUnitByNameModal or class(SelectUnitByNameModal)
 SingleSelectUnitByNameModal.STYLE = "LC_REPORT,LC_NO_HEADER,LC_SORT_ASCENDING,LC_SINGLE_SEL"
-

@@ -13,7 +13,9 @@ local tiny_font_size = tweak_data.menu.pd2_tiny_font_size
 MenuNodeAchievementFilterCreator = MenuNodeAchievementFilterCreator or class(MenuInitiatorBase)
 
 function MenuNodeAchievementFilterCreator:create_item(node, item_type, params)
-	local data_node = {type = item_type}
+	local data_node = {
+		type = item_type
+	}
 	local new_item = node:create_item(data_node, params)
 
 	new_item:set_enabled(params.enabled)
@@ -26,7 +28,9 @@ function MenuNodeAchievementFilterCreator:create_divider(node, params)
 	params = params or {}
 	params.no_text = not params.text_id
 	params.size = params.size or 8
-	local data_node = {type = "MenuItemDivider"}
+	local data_node = {
+		type = "MenuItemDivider"
+	}
 	local new_item = node:create_item(data_node, params)
 
 	node:add_item(new_item)
@@ -232,7 +236,9 @@ function MenuNodeAchievementFilterGui:init(node, layer, parameters)
 	self._calc_filter_num = create_params.calc_filter_num or function ()
 		return 0
 	end
-	self._extra_panel = ExtendedPanel:new(self.item_panel, {layer = 151})
+	self._extra_panel = ExtendedPanel:new(self.item_panel, {
+		layer = 151
+	})
 	local title_dummy = self:row_item_by_name("title_dummy").gui_panel
 	self._title_help = LeftRightText:new(self._extra_panel, {
 		font = medium_font,
@@ -254,12 +260,14 @@ function MenuNodeAchievementFilterGui:init(node, layer, parameters)
 	corners:set_h(bot_div:y() - top_div:y())
 	corners:set_lefttop(top_div:lefttop())
 	corners:move(0, 12)
-	BoxGuiObject:new(corners, {sides = {
-		1,
-		1,
-		2,
-		2
-	}})
+	BoxGuiObject:new(corners, {
+		sides = {
+			1,
+			1,
+			2,
+			2
+		}
+	})
 
 	if managers.menu:is_pc_controller() then
 		local buttons_div = self:row_item_by_name("buttons_div").gui_panel
@@ -311,7 +319,9 @@ function MenuNodeAchievementFilterGui:update(...)
 		Global.achievements_filters.tags[k] = item:value()
 	end
 
-	self._title_help:set_left(managers.localization:text("menu_filter_achievement_count", {COUNT = self._calc_filter_num()}))
+	self._title_help:set_left(managers.localization:text("menu_filter_achievement_count", {
+		COUNT = self._calc_filter_num()
+	}))
 end
 
 function MenuNodeAchievementFilterGui:_set_help_text(text_id, localize)
@@ -353,12 +363,14 @@ function MenuNodeAchievementFilterGui:_setup_item_panel(safe_rect, res)
 	self.box_panel:move(-10, -10)
 	self.box_panel:set_layer(151)
 
-	self.boxgui = BoxGuiObject:new(self.box_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self.boxgui = BoxGuiObject:new(self.box_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	self.boxgui:set_layer(self.item_panel:layer() + 50)
 	self.box_panel:rect({
@@ -402,4 +414,3 @@ end
 function MenuNodeAchievementFilterGui:special_btn_pressed(...)
 	return self._extra_panel:special_btn_pressed(...)
 end
-

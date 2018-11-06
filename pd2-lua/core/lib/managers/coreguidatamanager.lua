@@ -21,8 +21,10 @@ function GuiDataManager:destroy()
 end
 
 function GuiDataManager:create_saferect_workspace(workspace_object, scene)
-	local ws = (scene or self._scene_gui or Overlay:gui()):create_scaled_screen_workspace(10, 10, 10, 10, 10)
-	self._workspace_configuration[ws:key()] = {workspace_object = workspace_object}
+	local ws = scene or self._scene_gui or Overlay:gui():create_scaled_screen_workspace(10, 10, 10, 10, 10)
+	self._workspace_configuration[ws:key()] = {
+		workspace_object = workspace_object
+	}
 
 	self:layout_workspace(ws)
 
@@ -30,8 +32,10 @@ function GuiDataManager:create_saferect_workspace(workspace_object, scene)
 end
 
 function GuiDataManager:create_fullscreen_workspace(workspace_object, scene)
-	local ws = (scene or self._scene_gui or Overlay:gui()):create_scaled_screen_workspace(10, 10, 10, 10, 10)
-	self._workspace_configuration[ws:key()] = {workspace_object = workspace_object}
+	local ws = scene or self._scene_gui or Overlay:gui():create_scaled_screen_workspace(10, 10, 10, 10, 10)
+	self._workspace_configuration[ws:key()] = {
+		workspace_object = workspace_object
+	}
 
 	self:layout_fullscreen_workspace(ws)
 
@@ -39,8 +43,10 @@ function GuiDataManager:create_fullscreen_workspace(workspace_object, scene)
 end
 
 function GuiDataManager:create_fullscreen_16_9_workspace(workspace_object, scene)
-	local ws = (scene or self._scene_gui or Overlay:gui()):create_scaled_screen_workspace(10, 10, 10, 10, 10)
-	self._workspace_configuration[ws:key()] = {workspace_object = workspace_object}
+	local ws = scene or self._scene_gui or Overlay:gui():create_scaled_screen_workspace(10, 10, 10, 10, 10)
+	self._workspace_configuration[ws:key()] = {
+		workspace_object = workspace_object
+	}
 
 	self:layout_fullscreen_16_9_workspace(ws)
 
@@ -48,8 +54,10 @@ function GuiDataManager:create_fullscreen_16_9_workspace(workspace_object, scene
 end
 
 function GuiDataManager:create_corner_saferect_workspace(workspace_object, scene)
-	local ws = (scene or self._scene_gui or Overlay:gui()):create_scaled_screen_workspace(10, 10, 10, 10, 10)
-	self._workspace_configuration[ws:key()] = {workspace_object = workspace_object}
+	local ws = scene or self._scene_gui or Overlay:gui():create_scaled_screen_workspace(10, 10, 10, 10, 10)
+	self._workspace_configuration[ws:key()] = {
+		workspace_object = workspace_object
+	}
 
 	self:layout_corner_saferect_workspace(ws)
 
@@ -57,8 +65,10 @@ function GuiDataManager:create_corner_saferect_workspace(workspace_object, scene
 end
 
 function GuiDataManager:create_1280_workspace(workspace_object, scene)
-	local ws = (scene or self._scene_gui or Overlay:gui()):create_scaled_screen_workspace(10, 10, 10, 10, 10)
-	self._workspace_configuration[ws:key()] = {workspace_object = workspace_object}
+	local ws = scene or self._scene_gui or Overlay:gui():create_scaled_screen_workspace(10, 10, 10, 10, 10)
+	self._workspace_configuration[ws:key()] = {
+		workspace_object = workspace_object
+	}
 
 	self:layout_1280_workspace(ws)
 
@@ -66,8 +76,10 @@ function GuiDataManager:create_1280_workspace(workspace_object, scene)
 end
 
 function GuiDataManager:create_corner_saferect_1280_workspace(workspace_object, scene)
-	local ws = (scene or self._scene_gui or Overlay:gui()):create_scaled_screen_workspace(10, 10, 10, 10, 10)
-	self._workspace_configuration[ws:key()] = {workspace_object = workspace_object}
+	local ws = scene or self._scene_gui or Overlay:gui():create_scaled_screen_workspace(10, 10, 10, 10, 10)
+	self._workspace_configuration[ws:key()] = {
+		workspace_object = workspace_object
+	}
 
 	self:layout_corner_saferect_1280_workspace(ws)
 
@@ -113,6 +125,7 @@ function GuiDataManager:_aspect_ratio()
 
 	return managers.viewport:aspect_ratio()
 end
+
 local base_res = {
 	x = 1280,
 	y = 720
@@ -134,8 +147,8 @@ function GuiDataManager:_setup_workspace_data()
 	local h = scaled_size.height
 	local sh = math.min(safe_rect.height, safe_rect.width / (w / h))
 	local sw = math.min(safe_rect.width, safe_rect.height * w / h)
-	local x = res.x / 2 - (sh * w / h) / 2
-	local y = res.y / 2 - (sw / (w / h)) / 2
+	local x = res.x / 2 - sh * w / h / 2
+	local y = res.y / 2 - sw / (w / h) / 2
 	self._safe_x = x
 	self._safe_y = y
 	self._saferect_data.w = w
@@ -175,8 +188,8 @@ function GuiDataManager:_setup_workspace_data()
 	h = base_res.y
 	sh = math.min(res.y, res.x / (w / h))
 	sw = math.min(res.x, res.y * w / h)
-	x = res.x / 2 - (sh * w / h) / 2
-	y = res.y / 2 - (sw / (w / h)) / 2
+	x = res.x / 2 - sh * w / h / 2
+	y = res.y / 2 - sw / (w / h) / 2
 	self._fullrect_16_9_data.w = w
 	self._fullrect_16_9_data.h = h
 	self._fullrect_16_9_data.width = self._fullrect_16_9_data.w
@@ -390,4 +403,3 @@ function GuiDataManager:add_workspace_object(name, workspace_object)
 	self._workspace_objects = self._workspace_objects or {}
 	self._workspace_objects[name] = workspace_object
 end
-

@@ -72,6 +72,7 @@ function FiniteStateMachine:_set_state(new_state_class, ...)
 
 	function new_state_class.init()
 	end
+
 	self._state = new_state_class:new()
 
 	assert(self._state ~= nil)
@@ -84,4 +85,3 @@ function FiniteStateMachine:_set_state(new_state_class, ...)
 		self._state:init(...)
 	end
 end
-

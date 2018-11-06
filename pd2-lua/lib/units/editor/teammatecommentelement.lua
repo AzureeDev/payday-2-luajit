@@ -72,7 +72,9 @@ function TeammateCommentUnitElement:_build_panel(panel, panel_sizer)
 	panel = panel or self._panel
 	panel_sizer = panel_sizer or self._panel_sizer
 
-	self:_build_value_combobox(panel, panel_sizer, "comment", table.list_add({"none"}, managers.groupai:state().teammate_comment_names), "Select a comment")
+	self:_build_value_combobox(panel, panel_sizer, "comment", table.list_add({
+		"none"
+	}, managers.groupai:state().teammate_comment_names), "Select a comment")
 	self:_build_value_checkbox(panel, panel_sizer, "close_to_element", "Play close to element", "Play close to element")
 	self:_build_value_checkbox(panel, panel_sizer, "use_instigator", "Play on instigator", "Play on instigator")
 	self:_build_value_number(panel, panel_sizer, "radius", {
@@ -90,4 +92,3 @@ function TeammateCommentUnitElement:destroy()
 	self:stop_test_element()
 	TeammateCommentUnitElement.super.destroy(self)
 end
-

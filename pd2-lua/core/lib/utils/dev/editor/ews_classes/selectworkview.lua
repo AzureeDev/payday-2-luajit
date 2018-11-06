@@ -286,4 +286,3 @@ function SelectWorkView:recreate()
 	self:fill_views_list()
 	self._panel:layout()
 end
-

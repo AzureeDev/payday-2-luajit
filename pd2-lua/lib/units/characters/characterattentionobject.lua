@@ -119,7 +119,7 @@ function CharacterAttentionObject:set_settings_set(settings_set)
 	if register then
 		self:_register()
 	elseif unregister then
-		managers.groupai:state():unregister_AI_attention_object((self._parent_unit or self._unit):key())
+		managers.groupai:state():unregister_AI_attention_object(self._parent_unit or self._unit:key())
 	end
 
 	if changed or unregister then
@@ -142,4 +142,3 @@ end
 function CharacterAttentionObject:_register()
 	managers.groupai:state():register_AI_attention_object(self._parent_unit or self._unit, self, self._unit:movement() and self._unit:movement():nav_tracker())
 end
-

@@ -342,11 +342,13 @@ end
 function ElementAreaTrigger:_clean_destroyed_units()
 	local i = 1
 
-	while next(self._inside) and i <= #self._inside do
-		if alive(self._inside[i]) then
-			i = i + 1
-		else
-			table.remove(self._inside, i)
+	if next(self._inside) then
+		while next(self._inside) and i <= #self._inside do
+			if alive(self._inside[i]) then
+				i = i + 1
+			else
+				table.remove(self._inside, i)
+			end
 		end
 	end
 end
@@ -402,6 +404,7 @@ function ElementAreaTrigger:load(data)
 
 	self._values.use_disabled_shapes = data.use_disabled_shapes
 end
+
 ElementAreaOperator = ElementAreaOperator or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementAreaOperator:init(...)
@@ -437,6 +440,7 @@ function ElementAreaOperator:on_executed(instigator)
 
 	ElementAreaOperator.super.on_executed(self, instigator)
 end
+
 ElementAreaReportTrigger = ElementAreaReportTrigger or class(ElementAreaTrigger)
 
 function ElementAreaReportTrigger:update_area()
@@ -562,17 +566,19 @@ end
 function ElementAreaReportTrigger:_clean_destroyed_units()
 	local i = 1
 
-	while next(self._inside) and i <= #self._inside do
-		local unit = self._inside[i]
+	if next(self._inside) then
+		while next(self._inside) and i <= #self._inside do
+			local unit = self._inside[i]
 
-		if alive(unit) and (not unit:character_damage() or not unit:character_damage():dead()) then
-			i = i + 1
-		else
-			if alive(unit) and unit:character_damage() and unit:character_damage():dead() then
-				self:on_executed(unit, "on_death")
+			if alive(unit) and (not unit:character_damage() or not unit:character_damage():dead()) then
+				i = i + 1
+			else
+				if alive(unit) and unit:character_damage() and unit:character_damage():dead() then
+					self:on_executed(unit, "on_death")
+				end
+
+				self:_remove_inside_by_index(i)
 			end
-
-			self:_remove_inside_by_index(i)
 		end
 	end
 end
@@ -617,4 +623,3 @@ end
 function ElementAreaReportTrigger:sync_rule_failed(unit)
 	self:_rule_failed(unit)
 end
-

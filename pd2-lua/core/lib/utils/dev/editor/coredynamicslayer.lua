@@ -11,4 +11,3 @@ function DynamicsLayer:init(owner)
 
 	self._uses_continents = true
 end
-

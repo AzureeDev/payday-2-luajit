@@ -183,4 +183,3 @@ end
 function TransformCameraNode:parent_camera()
 	return self._parent_camera
 end
-

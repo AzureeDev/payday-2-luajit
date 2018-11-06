@@ -33,7 +33,9 @@ function ActionSpooc:init(action_desc, common_data)
 	end
 
 	self._action_desc = action_desc
-	self._nav_path = action_desc.nav_path or {mvector3.copy(common_data.pos)}
+	self._nav_path = action_desc.nav_path or {
+		mvector3.copy(common_data.pos)
+	}
 
 	self._ext_movement:enable_update()
 
@@ -147,12 +149,7 @@ function ActionSpooc:init(action_desc, common_data)
 		self:_wait()
 	end
 
-	if self:_use_christmas_sounds() then
-		self._unit:sound():play("cloaker_detect_christmas_mono", nil, nil)
-	else
-		self._unit:sound():play("cloaker_detect_mono", nil, nil)
-	end
-
+	self._unit:sound():play(self:get_sound_event("detect"))
 	self._unit:damage():run_sequence_simple("turn_on_spook_lights")
 
 	local r = LevelsTweakData.LevelType.Russia
@@ -165,18 +162,18 @@ function ActionSpooc:init(action_desc, common_data)
 		self._taunt_after_assault = "rcloaker_taunt_after_assault"
 	end
 
+	local spooc_sound_events = self._common_data.char_tweak.spooc_sound_events or {}
+	self._taunt_during_assault = spooc_sound_events.taunt_during_assault or self._taunt_during_assault
+	self._taunt_after_assault = spooc_sound_events.taunt_after_assault or self._taunt_after_assault
+
 	return true
 end
 
 function ActionSpooc:on_exit()
 	if self._unit:character_damage():dead() then
-		if self:_use_christmas_sounds() then
-			self._unit:sound():play("cloaker_detect_christmas_stop", nil, nil)
-		else
-			self._unit:sound():play("cloaker_detect_stop", nil, nil)
-		end
+		self._unit:sound():play(self:get_sound_event("detect_stop"))
 	else
-		self._unit:sound():play("cloaker_presence_loop", nil, nil)
+		self._unit:sound():play(self._unit:base():char_tweak().spawn_sound_event)
 
 		if self._is_local and self._taunt_at_beating_played and not self._unit:sound():speaking(TimerManager:game():time()) then
 			self._unit:sound():say(self._taunt_after_assault, true, true)
@@ -324,7 +321,9 @@ function ActionSpooc:_upd_strike_first_frame(t)
 			mvector3.subtract(enemy_vec, self._target_unit:movement():m_pos())
 			mvector3.set_z(enemy_vec, 0)
 			mvector3.normalize(enemy_vec)
-			self._target_unit:camera():camera_unit():base():clbk_aim_assist({ray = enemy_vec})
+			self._target_unit:camera():camera_unit():base():clbk_aim_assist({
+				ray = enemy_vec
+			})
 		end
 	end
 
@@ -428,7 +427,17 @@ function ActionSpooc:_upd_sprint(t)
 
 	if self._move_dir then
 		local attention = self._attention
-		face_fwd = attention and (attention.unit and attention.unit:movement():m_pos() - self._common_data.pos or attention.pos - self._common_data.pos) or self._move_dir
+
+		if attention then
+			if attention.unit then
+				face_fwd = attention.unit:movement():m_pos() - self._common_data.pos
+			else
+				face_fwd = attention.pos - self._common_data.pos
+			end
+		else
+			face_fwd = self._move_dir
+		end
+
 		local move_dir_norm = self._move_dir:normalized()
 
 		mvector3.set_z(face_fwd, 0)
@@ -443,9 +452,19 @@ function ActionSpooc:_upd_sprint(t)
 		local wanted_walk_dir = nil
 
 		if math.abs(right_dot) < math.abs(fwd_dot) then
-			wanted_walk_dir = (anim_data.move_l and right_dot < 0 or anim_data.move_r and right_dot > 0) and math.abs(fwd_dot) < 0.73 and anim_data.move_side or fwd_dot > 0 and "fwd" or "bwd"
+			if (anim_data.move_l and right_dot < 0 or anim_data.move_r and right_dot > 0) and math.abs(fwd_dot) < 0.73 then
+				wanted_walk_dir = anim_data.move_side
+			elseif fwd_dot > 0 then
+				wanted_walk_dir = "fwd"
+			else
+				wanted_walk_dir = "bwd"
+			end
+		elseif (anim_data.move_fwd and fwd_dot > 0 or anim_data.move_bwd and fwd_dot < 0) and math.abs(right_dot) < 0.73 then
+			wanted_walk_dir = anim_data.move_side
+		elseif right_dot > 0 then
+			wanted_walk_dir = "r"
 		else
-			wanted_walk_dir = (anim_data.move_fwd and fwd_dot > 0 or anim_data.move_bwd and fwd_dot < 0) and math.abs(right_dot) < 0.73 and anim_data.move_side or right_dot > 0 and "r" or "l"
+			wanted_walk_dir = "l"
 		end
 
 		local wanted_u_fwd = self._move_dir:rotate_with(self._walk_side_rot[wanted_walk_dir])
@@ -456,7 +475,30 @@ function ActionSpooc:_upd_sprint(t)
 		local pose = self._stance.values[4] > 0 and "wounded" or self._ext_anim.pose or "stand"
 		local real_velocity = self._cur_vel
 		local variant = nil
-		variant = self._ext_anim.sprint and (real_velocity > 480 and self._ext_anim.pose == "stand" and "sprint" or real_velocity > 250 and "run" or "walk") or self._ext_anim.run and (real_velocity > 530 and self._walk_anim_velocities[pose][self._stance.name].sprint and self._ext_anim.pose == "stand" and "sprint" or real_velocity > 250 and "run" or "walk") or real_velocity > 530 and self._walk_anim_velocities[pose][self._stance.name].sprint and self._ext_anim.pose == "stand" and "sprint" or real_velocity > 300 and "run" or "walk"
+
+		if self._ext_anim.sprint then
+			if real_velocity > 480 and self._ext_anim.pose == "stand" then
+				variant = "sprint"
+			elseif real_velocity > 250 then
+				variant = "run"
+			else
+				variant = "walk"
+			end
+		elseif self._ext_anim.run then
+			if real_velocity > 530 and self._walk_anim_velocities[pose][self._stance.name].sprint and self._ext_anim.pose == "stand" then
+				variant = "sprint"
+			elseif real_velocity > 250 then
+				variant = "run"
+			else
+				variant = "walk"
+			end
+		elseif real_velocity > 530 and self._walk_anim_velocities[pose][self._stance.name].sprint and self._ext_anim.pose == "stand" then
+			variant = "sprint"
+		elseif real_velocity > 300 then
+			variant = "run"
+		else
+			variant = "walk"
+		end
 
 		self:_adjust_move_anim(wanted_walk_dir, variant)
 
@@ -1001,11 +1043,7 @@ function ActionSpooc:anim_act_clbk(anim_act)
 
 		self._stroke_t = TimerManager:game():time()
 
-		if Global.level_data.level_id == "pines" or Global.level_data.level_id == "cane" then
-			self._unit:sound():play("cloaker_detect_christmas_stop", nil, nil)
-		else
-			self._unit:sound():play("cloaker_detect_stop", nil, nil)
-		end
+		self._unit:sound():play(self:get_sound_event("detect_stop"))
 
 		if not self._is_local then
 			self._unit:sound():say(sound_string, true, true)
@@ -1294,7 +1332,9 @@ function ActionSpooc:_upd_flying_strike_first_frame(t)
 		mvector3.subtract(enemy_vec, self._target_unit:movement():m_pos())
 		mvector3.set_z(enemy_vec, 0)
 		mvector3.normalize(enemy_vec)
-		self._target_unit:camera():camera_unit():base():clbk_aim_assist({ray = enemy_vec})
+		self._target_unit:camera():camera_unit():base():clbk_aim_assist({
+			ray = enemy_vec
+		})
 	end
 
 	self:_set_updator("_upd_flying_strike")
@@ -1400,3 +1440,17 @@ function ActionSpooc:_use_christmas_sounds()
 	return tweak and tweak.is_christmas_heist
 end
 
+function ActionSpooc:get_sound_event(sound)
+	local sound_events = self._unit:base():char_tweak().spooc_sound_events
+	local event = sound_events[sound]
+
+	if self:_use_christmas_sounds() then
+		local christmas_events = {
+			detect_stop = "cloaker_detect_christmas_stop",
+			detect = "cloaker_detect_christmas_mono"
+		}
+		event = christmas_events[sound] or event
+	end
+
+	return event
+end

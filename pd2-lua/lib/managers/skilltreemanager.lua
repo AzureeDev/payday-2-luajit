@@ -47,10 +47,11 @@ end
 
 function SkillTreeManager:_setup(reset)
 	if not Global.skilltree_manager or reset then
-		Global.skilltree_manager = {}
-		Global.skilltree_manager.VERSION = SkillTreeManager.VERSION
-		Global.skilltree_manager.reset_message = false
-		Global.skilltree_manager.times_respeced = 1
+		Global.skilltree_manager = {
+			VERSION = SkillTreeManager.VERSION,
+			reset_message = false,
+			times_respeced = 1
+		}
 		self._global = Global.skilltree_manager
 
 		self:_setup_skill_switches()
@@ -230,7 +231,7 @@ function SkillTreeManager:_spend_points(tree, tier, points, points_tier, skill_i
 end
 
 function SkillTreeManager:points(switch_data)
-	return Application:digest_value((switch_data or self._global).points, false)
+	return Application:digest_value(switch_data or self._global.points, false)
 end
 
 function SkillTreeManager:_set_points(value)
@@ -242,7 +243,7 @@ function SkillTreeManager:_set_points(value)
 end
 
 function SkillTreeManager:points_spent(tree, switch_data)
-	return Application:digest_value((switch_data or self._global).trees[tree].points_spent, false)
+	return Application:digest_value(switch_data or self._global.trees[tree].points_spent, false)
 end
 
 function SkillTreeManager:points_spent_in_skilltree(tree_name, switch_data)
@@ -311,7 +312,7 @@ function SkillTreeManager:current_max_tier(tree)
 end
 
 function SkillTreeManager:skill_completed(skill_id, switch_data)
-	return (switch_data or self._global).skills[skill_id].unlocked == (switch_data or self._global).skills[skill_id].total
+	return switch_data or self._global.skills[skill_id].unlocked == switch_data or self._global.skills[skill_id].total
 end
 
 function SkillTreeManager:skill_step(skill_id)
@@ -319,7 +320,7 @@ function SkillTreeManager:skill_step(skill_id)
 end
 
 function SkillTreeManager:next_skill_step(skill_id, switch_data)
-	return (switch_data or self._global).skills[skill_id].unlocked + 1
+	return switch_data or self._global.skills[skill_id].unlocked + 1
 end
 
 function SkillTreeManager:next_skill_step_data(skill_id)
@@ -429,16 +430,18 @@ function SkillTreeManager:_get_heighst_tier_points(current_tier, tiers)
 	local next_tier = prev_next_tier
 	local num_unlocked_skills_above = prev_num_unlocked_skills_above
 
-	while num_unlocked_skills_above > 0 and next_tier < #tiers do
-		next_tier = next_tier + 1
-		num_unlocked_skills_above = self:get_num_unlocked_skills(tiers[next_tier])
+	if num_unlocked_skills_above > 0 then
+		while num_unlocked_skills_above > 0 and next_tier < #tiers do
+			next_tier = next_tier + 1
+			num_unlocked_skills_above = self:get_num_unlocked_skills(tiers[next_tier])
 
-		if num_unlocked_skills_above == 0 then
-			return prev_next_tier, prev_num_unlocked_skills_above
+			if num_unlocked_skills_above == 0 then
+				return prev_next_tier, prev_num_unlocked_skills_above
+			end
+
+			prev_next_tier = next_tier
+			prev_num_unlocked_skills_above = num_unlocked_skills_above
 		end
-
-		prev_next_tier = next_tier
-		prev_num_unlocked_skills_above = num_unlocked_skills_above
 	end
 
 	return prev_next_tier, prev_num_unlocked_skills_above
@@ -620,7 +623,7 @@ function SkillTreeManager:tier_unlocked(tree, tier, switch_data)
 end
 
 function SkillTreeManager:tree_unlocked(tree, switch_data)
-	return (switch_data or self._global).trees[tree].unlocked
+	return switch_data or self._global.trees[tree].unlocked
 end
 
 function SkillTreeManager:trees_unlocked(switch_trees)
@@ -777,17 +780,23 @@ end
 
 function SkillTreeManager:can_unlock_skill_switch(selected_skill_switch)
 	if not self._global.skill_switches[selected_skill_switch] then
-		return false, {"error"}
+		return false, {
+			"error"
+		}
 	end
 
 	if self._global.skill_switches[selected_skill_switch].unlocked then
-		return false, {"unlocked"}
+		return false, {
+			"unlocked"
+		}
 	end
 
 	local skill_switch_data = tweak_data.skilltree.skill_switches[selected_skill_switch]
 
 	if not skill_switch_data then
-		return false, {"error"}
+		return false, {
+			"error"
+		}
 	end
 
 	local locks = skill_switch_data.locks
@@ -806,7 +815,7 @@ function SkillTreeManager:can_unlock_skill_switch(selected_skill_switch)
 			table.insert(fail_reasons, "level")
 		end
 
-		if locks.achievement and not (managers.achievment:get_info(locks.achievement) or {}).awarded then
+		if locks.achievement and not managers.achievment:get_info(locks.achievement) or {}.awarded then
 			table.insert(fail_reasons, "achievement")
 		end
 
@@ -815,7 +824,9 @@ function SkillTreeManager:can_unlock_skill_switch(selected_skill_switch)
 		end
 	end
 
-	return true, {"success"}
+	return true, {
+		"success"
+	}
 end
 
 function SkillTreeManager:on_skill_switch_unlocked(selected_skill_switch)
@@ -1642,7 +1653,9 @@ end
 function SkillTreeManager:get_specialization_value(...)
 	local value = self._global.specializations
 
-	for _, index in ipairs({...}) do
+	for _, index in ipairs({
+		...
+	}) do
 		value = value[index]
 	end
 
@@ -1969,7 +1982,9 @@ end
 
 function SkillTreeManager:debug()
 	managers.debug:set_enabled(true)
-	managers.debug:set_systems_enabled(true, {"gui"})
+	managers.debug:set_systems_enabled(true, {
+		"gui"
+	})
 
 	local gui = managers.debug._system_list.gui
 
@@ -2054,4 +2069,3 @@ function SkillTreeManager:reset()
 		managers.statistics:publish_skills_to_steam()
 	end
 end
-

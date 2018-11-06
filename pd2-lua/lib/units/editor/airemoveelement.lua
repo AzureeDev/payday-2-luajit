@@ -1,5 +1,7 @@
 AIRemoveUnitElement = AIRemoveUnitElement or class(MissionElement)
-AIRemoveUnitElement.LINK_ELEMENTS = {"elements"}
+AIRemoveUnitElement.LINK_ELEMENTS = {
+	"elements"
+}
 
 function AIRemoveUnitElement:init(unit)
 	MissionElement.init(self, unit)
@@ -126,4 +128,3 @@ function AIRemoveUnitElement:_build_panel(panel, panel_sizer)
 	})
 	panel_sizer:add(force_ragdoll, 0, 0, "EXPAND")
 end
-

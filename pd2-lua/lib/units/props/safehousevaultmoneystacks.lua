@@ -93,4 +93,3 @@ function SafehouseVaultMoneyStacks:perform_sync()
 		managers.sync:add_synced_vault_cash(self._unit:id(), self._active_tier)
 	end
 end
-

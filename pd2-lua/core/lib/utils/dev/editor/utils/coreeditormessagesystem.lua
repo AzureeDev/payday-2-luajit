@@ -33,7 +33,9 @@ function EditorMessageSystem:unregister(message, uid)
 end
 
 function EditorMessageSystem:notify(message, uid, ...)
-	local arg = {...}
+	local arg = {
+		...
+	}
 
 	table.insert(self._messages, {
 		message = message,
@@ -43,7 +45,9 @@ function EditorMessageSystem:notify(message, uid, ...)
 end
 
 function EditorMessageSystem:notify_now(message, uid, ...)
-	local arg = {...}
+	local arg = {
+		...
+	}
 
 	if self._listeners[message] then
 		if uid and self._listeners[message][uid] then
@@ -143,4 +147,3 @@ function EditorMessageSystem:_unregister(message, uid)
 		self._listeners[message][uid] = nil
 	end
 end
-

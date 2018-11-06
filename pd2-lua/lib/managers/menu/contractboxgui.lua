@@ -83,24 +83,26 @@ function ContractBoxGui:init(ws, fullscreen_ws)
 			MenuBackdropGUI.animate_bg_text(self, bg_text)
 		end
 
-		if managers.menu:is_pc_controller() and wfs_text and false then
-			local bg_text = self._fullscreen_panel:text({
-				vertical = "bottom",
-				h = 90,
-				alpha = 0.4,
-				align = "right",
-				layer = 1,
-				text = wfs_text:text(),
-				font_size = tweak_data.menu.pd2_massive_font_size,
-				font = tweak_data.menu.pd2_massive_font,
-				color = tweak_data.screen_colors.button_stage_3
-			})
-			local x, y = managers.gui_data:safe_to_full_16_9(wfs_text:world_right(), wfs_text:world_center_y())
+		if managers.menu:is_pc_controller() and wfs_text then
+			if false then
+				local bg_text = self._fullscreen_panel:text({
+					vertical = "bottom",
+					h = 90,
+					alpha = 0.4,
+					align = "right",
+					layer = 1,
+					text = wfs_text:text(),
+					font_size = tweak_data.menu.pd2_massive_font_size,
+					font = tweak_data.menu.pd2_massive_font,
+					color = tweak_data.screen_colors.button_stage_3
+				})
+				local x, y = managers.gui_data:safe_to_full_16_9(wfs_text:world_right(), wfs_text:world_center_y())
 
-			bg_text:set_world_right(x)
-			bg_text:set_world_center_y(y)
-			bg_text:move(13, -9)
-			MenuBackdropGUI.animate_bg_text(self, bg_text)
+				bg_text:set_world_right(x)
+				bg_text:set_world_center_y(y)
+				bg_text:move(13, -9)
+				MenuBackdropGUI.animate_bg_text(self, bg_text)
+			end
 		end
 	end
 
@@ -244,7 +246,9 @@ function ContractBoxGui:create_contract_box()
 		local length_text = self._contract_panel:text({
 			vertical = "top",
 			align = "left",
-			text = managers.localization:to_upper_text("cn_menu_contract_length", {stages = #job_chain}),
+			text = managers.localization:to_upper_text("cn_menu_contract_length", {
+				stages = #job_chain
+			}),
 			font_size = font_size,
 			font = font,
 			color = tweak_data.screen_colors.text
@@ -321,8 +325,12 @@ function ContractBoxGui:create_contract_box()
 		local contract_visuals = job_data.contract_visuals or {}
 		local xp_min = contract_visuals.min_mission_xp and (type(contract_visuals.min_mission_xp) == "table" and contract_visuals.min_mission_xp[difficulty_stars + 1] or contract_visuals.min_mission_xp) or 0
 		local xp_max = contract_visuals.max_mission_xp and (type(contract_visuals.max_mission_xp) == "table" and contract_visuals.max_mission_xp[difficulty_stars + 1] or contract_visuals.max_mission_xp) or 0
-		local total_xp_min, _ = managers.experience:get_contract_xp_by_stars(job_id, job_stars, difficulty_stars, job_data.professional, #job_chain, {mission_xp = xp_min})
-		local total_xp_max, _ = managers.experience:get_contract_xp_by_stars(job_id, job_stars, difficulty_stars, job_data.professional, #job_chain, {mission_xp = xp_max})
+		local total_xp_min, _ = managers.experience:get_contract_xp_by_stars(job_id, job_stars, difficulty_stars, job_data.professional, #job_chain, {
+			mission_xp = xp_min
+		})
+		local total_xp_max, _ = managers.experience:get_contract_xp_by_stars(job_id, job_stars, difficulty_stars, job_data.professional, #job_chain, {
+			mission_xp = xp_max
+		})
 		local xp_text_min = managers.money:add_decimal_marks_to_string(tostring(math.round(total_xp_min)))
 		local xp_text_max = managers.money:add_decimal_marks_to_string(tostring(math.round(total_xp_max)))
 		local job_xp_text = total_xp_min < total_xp_max and managers.localization:text("menu_number_range", {
@@ -518,12 +526,14 @@ function ContractBoxGui:create_contract_box()
 		self._contract_panel:set_h(0)
 	end
 
-	BoxGuiObject:new(self._contract_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._contract_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	for i = 1, tweak_data.max_players, 1 do
 		local peer = managers.network:session():peer(i)
@@ -604,12 +614,14 @@ function ContractBoxGui:create_mutators_tooltip()
 		layer = -1,
 		color = Color.black
 	})
-	BoxGuiObject:new(self._mutators_tooltip, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._mutators_tooltip, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	self._mutators_tooltip:set_alpha(0)
 end
 
@@ -1001,4 +1013,3 @@ function ContractBoxGui:close()
 	self._ws:panel():remove(self._panel)
 	self._fullscreen_ws:panel():remove(self._fullscreen_panel)
 end
-

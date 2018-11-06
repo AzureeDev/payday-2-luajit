@@ -219,7 +219,9 @@ function PlayerStandard:enter(state_data, enter_data)
 	end
 
 	if enter_data and enter_data.equip_weapon then
-		self:_start_action_unequip_weapon(managers.player:player_timer():time(), {selection_wanted = enter_data.equip_weapon})
+		self:_start_action_unequip_weapon(managers.player:player_timer():time(), {
+			selection_wanted = enter_data.equip_weapon
+		})
 	end
 
 	if enter_data then
@@ -415,6 +417,7 @@ function PlayerStandard:get_fire_weapon_direction()
 		return self._ext_camera:forward()
 	end
 end
+
 local temp_vec1 = Vector3()
 
 function PlayerStandard:_upd_nav_data()
@@ -502,6 +505,7 @@ function PlayerStandard:_calculate_standard_variables(t, dt)
 	self._setting_hold_to_run = managers.user:get_setting("hold_to_run")
 	self._setting_hold_to_duck = managers.user:get_setting("hold_to_duck")
 end
+
 local tmp_ground_from_vec = Vector3()
 local tmp_ground_to_vec = Vector3()
 local up_offset_vec = math.UP * 30
@@ -580,6 +584,7 @@ function PlayerStandard:_create_on_controller_disabled_input()
 
 	return input
 end
+
 local win32 = SystemInfo:platform() == Idstring("WIN32")
 
 function PlayerStandard:_get_input(t, dt, paused)
@@ -614,7 +619,9 @@ function PlayerStandard:_get_input(t, dt, paused)
 	end
 
 	local input = {
-		data = {_unit = self._unit},
+		data = {
+			_unit = self._unit
+		},
 		any_input_pressed = pressed,
 		any_input_released = released,
 		any_input_downed = downed,
@@ -809,6 +816,7 @@ function PlayerStandard:_update_check_actions(t, dt, paused)
 	self:_check_action_night_vision(t, input)
 	self:_find_pickups(t)
 end
+
 local mvec_pos_new = Vector3()
 local mvec_achieved_walk_vel = Vector3()
 local mvec_move_dir_normalized = Vector3()
@@ -822,7 +830,7 @@ function PlayerStandard:_update_movement(t, dt)
 	self._headbob = self._headbob or 0
 
 	if self._state_data.on_zipline and self._state_data.zipline_data.position then
-		local speed = (mvector3.length(self._state_data.zipline_data.position - self._pos) / dt) / 500
+		local speed = mvector3.length(self._state_data.zipline_data.position - self._pos) / dt / 500
 		pos_new = mvec_pos_new
 
 		mvector3.set(pos_new, self._state_data.zipline_data.position)
@@ -864,7 +872,7 @@ function PlayerStandard:_update_movement(t, dt)
 			local fwd_dot = jump_dir:dot(input_move_vec)
 
 			if fwd_dot < jump_vel then
-				local sustain_dot = (input_move_vec:normalized() * jump_vel):dot(jump_dir)
+				local sustain_dot = input_move_vec:normalized() * jump_vel:dot(jump_dir)
 				local new_move_vec = input_move_vec + jump_dir * (sustain_dot - fwd_dot)
 
 				mvector3.step(achieved_walk_vel, self._last_velocity_xy, new_move_vec, 700 * dt)
@@ -873,7 +881,7 @@ function PlayerStandard:_update_movement(t, dt)
 				mvector3.step(achieved_walk_vel, self._last_velocity_xy, wanted_walk_speed * self._move_dir:normalized(), acceleration * dt)
 			end
 
-			local fwd_component = nil
+			slot16 = nil
 		else
 			mvector3.multiply(mvec_move_dir_normalized, wanted_walk_speed)
 			mvector3.step(achieved_walk_vel, self._last_velocity_xy, mvec_move_dir_normalized, acceleration * dt)
@@ -957,7 +965,7 @@ function PlayerStandard:_update_movement(t, dt)
 end
 
 function PlayerStandard:_update_network_position(t, dt, cur_pos, pos_new)
-	if not self._last_sent_pos_t or 1 / tweak_data.network.player_tick_rate < t - self._last_sent_pos_t then
+	if not self._last_sent_pos_t or t - self._last_sent_pos_t > 1 / tweak_data.network.player_tick_rate then
 		local move_speed = math.clamp(mvector3.length(self._stick_move), 0, 1)
 
 		if move_speed < PlayerStandard.MOVEMENT_DEADZONE then
@@ -1019,7 +1027,9 @@ function PlayerStandard:_update_foley(t, input)
 
 		self._unit:sound():play_land(material_name)
 
-		if self._unit:character_damage():damage_fall({height = self._state_data.enter_air_pos_z - self._pos.z}) then
+		if self._unit:character_damage():damage_fall({
+			height = self._state_data.enter_air_pos_z - self._pos.z
+		}) then
 			self._running_wanted = false
 
 			managers.rumble:play("hard_land")
@@ -1053,7 +1063,7 @@ function PlayerStandard:_check_step(t)
 	self._last_step_pos = self._last_step_pos or Vector3()
 	local step_length = self._state_data.on_ladder and 50 or self._state_data.in_steelsight and (managers.player:has_category_upgrade("player", "steelsight_normal_movement_speed") and 150 or 100) or self._state_data.ducking and 125 or self._running and 175 or 150
 
-	if step_length * step_length < mvector3.distance_sq(self._last_step_pos, self._pos) then
+	if mvector3.distance_sq(self._last_step_pos, self._pos) > step_length * step_length then
 		mvector3.set(self._last_step_pos, self._pos)
 		self._unit:base():anim_data_clbk_footstep()
 	end
@@ -1096,7 +1106,9 @@ function PlayerStandard:_stance_entered(unequipped)
 	local stance_standard = tweak_data.player.stances.default[managers.player:current_state()] or tweak_data.player.stances.default.standard
 	local head_stance = self._state_data.ducking and tweak_data.player.stances.default.crouched.head or stance_standard.head
 	local stance_id = nil
-	local stance_mod = {translation = Vector3(0, 0, 0)}
+	local stance_mod = {
+		translation = Vector3(0, 0, 0)
+	}
 
 	if not unequipped then
 		stance_id = self._equipped_unit:base():get_stance_id()
@@ -1109,7 +1121,7 @@ function PlayerStandard:_stance_entered(unequipped)
 	local stances = nil
 	stances = (self:_is_meleeing() or self:_is_throwing_projectile()) and tweak_data.player.stances.default or tweak_data.player.stances[stance_id] or tweak_data.player.stances.default
 	local misc_attribs = stances.standard
-	misc_attribs = self:_is_using_bipod() and not self:_is_throwing_projectile() and stances.bipod or self._state_data.in_steelsight and stances.steelsight or self._state_data.ducking and stances.crouched or stances.standard
+	misc_attribs = (not self:_is_using_bipod() or self:_is_throwing_projectile() or stances.bipod) and (self._state_data.in_steelsight and stances.steelsight or self._state_data.ducking and stances.crouched or stances.standard)
 	local duration = tweak_data.player.TRANSITION_DURATION + (self._equipped_unit:base():transition_duration() or 0)
 	local duration_multiplier = self._state_data.in_steelsight and 1 / self._equipped_unit:base():enter_steelsight_speed_multiplier() or 1
 	local new_fov = self:get_zoom_fov(misc_attribs) + 0
@@ -1838,7 +1850,7 @@ function PlayerStandard:_check_action_interact(t, input)
 		end
 	end
 
-	if (self._start_intimidate or force_secondary_intimidate) and not self:_action_interact_forbidden() and (not keyboard and self._start_intimidate_t + secondary_delay < t or force_secondary_intimidate) then
+	if (self._start_intimidate or force_secondary_intimidate) and not self:_action_interact_forbidden() and (not keyboard and t > self._start_intimidate_t + secondary_delay or force_secondary_intimidate) then
 		self:_start_action_intimidate(t, true)
 
 		self._start_intimidate = false
@@ -2143,8 +2155,9 @@ function PlayerStandard:_get_melee_charge_lerp_value(t, offset)
 		return 0
 	end
 
-	return math.clamp((t - self._state_data.melee_start_t) - offset, 0, max_charge_time) / max_charge_time
+	return math.clamp(t - self._state_data.melee_start_t - offset, 0, max_charge_time) / max_charge_time
 end
+
 local melee_vars = {
 	"player_melee",
 	"player_melee_var2"
@@ -2281,7 +2294,9 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 
 			if not hit_unit:character_damage()._no_blood then
-				managers.game_play_central:play_impact_flesh({col_ray = col_ray})
+				managers.game_play_central:play_impact_flesh({
+					col_ray = col_ray
+				})
 				managers.game_play_central:play_impact_sound_and_effects({
 					no_decal = true,
 					no_sound = true,
@@ -2311,7 +2326,9 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 		local custom_data = nil
 
 		if _G.IS_VR and hand_id then
-			custom_data = {engine = hand_id == 1 and "right" or "left"}
+			custom_data = {
+				engine = hand_id == 1 and "right" or "left"
+			}
 		end
 
 		managers.rumble:play("melee_hit", nil, nil, custom_data)
@@ -2329,7 +2346,13 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 		if character_unit:character_damage() and character_unit:character_damage().damage_melee then
 			local dmg_multiplier = 1
-			dmg_multiplier = not managers.enemy:is_civilian(character_unit) and not managers.groupai:state():is_enemy_special(character_unit) and dmg_multiplier * managers.player:upgrade_value("player", "non_special_melee_multiplier", 1) or dmg_multiplier * managers.player:upgrade_value("player", "melee_damage_multiplier", 1)
+
+			if not managers.enemy:is_civilian(character_unit) and not managers.groupai:state():is_enemy_special(character_unit) then
+				dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "non_special_melee_multiplier", 1)
+			else
+				dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_damage_multiplier", 1)
+			end
+
 			dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_" .. tostring(tweak_data.blackmarket.melee_weapons[melee_entry].stats.weapon_type) .. "_damage_multiplier", 1)
 
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
@@ -2366,7 +2389,9 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 
 			local special_weapon = tweak_data.blackmarket.melee_weapons[melee_entry].special_weapon
-			local action_data = {variant = "melee"}
+			local action_data = {
+				variant = "melee"
+			}
 
 			if special_weapon == "taser" then
 				action_data.variant = "taser_tased"
@@ -2429,6 +2454,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 	return col_ray
 end
+
 PlayerStandard.MINMAX_MELEE_SYNC = {
 	0,
 	63
@@ -2713,9 +2739,13 @@ function PlayerStandard:_start_action_use_item(t)
 	self:_play_unequip_animation()
 	managers.hud:show_progress_timer_bar(0, deploy_timer)
 
-	local text = managers.player:selected_equipment_deploying_text() or managers.localization:text("hud_deploying_equipment", {EQUIPMENT = managers.player:selected_equipment_name()})
+	local text = managers.player:selected_equipment_deploying_text() or managers.localization:text("hud_deploying_equipment", {
+		EQUIPMENT = managers.player:selected_equipment_name()
+	})
 
-	managers.hud:show_progress_timer({text = text})
+	managers.hud:show_progress_timer({
+		text = text
+	})
 
 	local post_event = managers.player:selected_equipment_sound_start()
 
@@ -2776,7 +2806,9 @@ function PlayerStandard:_check_change_weapon(t, input)
 		action_forbidden = action_forbidden or self._unit:inventory():num_selections() == 1 or self:_interacting() or self:_is_throwing_projectile() or self:_is_deploying_bipod()
 
 		if not action_forbidden then
-			local data = {next = true}
+			local data = {
+				next = true
+			}
 			self._change_weapon_pressed_expire_t = t + 0.33
 
 			self:_start_action_unequip_weapon(t, data)
@@ -2832,7 +2864,7 @@ function PlayerStandard:_add_unit_to_char_table(char_table, unit, unit_type, int
 		local angle = vec:angle(cam_fwd)
 
 		if angle < max_angle then
-			local ing_wgt = (dis * dis * (1 - vec:dot(cam_fwd))) / priority
+			local ing_wgt = dis * dis * (1 - vec:dot(cam_fwd)) / priority
 
 			if interaction_through_walls then
 				table.insert(char_table, {
@@ -3001,9 +3033,25 @@ function PlayerStandard:_get_intimidation_action(prime_target, char_table, amoun
 			elseif prime_target.unit:base():char_tweak().is_escort then
 				plural = false
 				local e_guy = prime_target.unit
-				voice_type = e_guy:anim_data().move and "escort_keep" or e_guy:anim_data().panic and "escort_go" or prime_target.unit:base():char_tweak().speech_escort or "escort"
+
+				if e_guy:anim_data().move then
+					voice_type = "escort_keep"
+				elseif e_guy:anim_data().panic then
+					voice_type = "escort_go"
+				else
+					voice_type = prime_target.unit:base():char_tweak().speech_escort or "escort"
+				end
 			else
-				voice_type = prime_target.unit:movement():stance_name() == "cbt" and prime_target.unit:anim_data().stand and "come" or prime_target.unit:anim_data().move and "stop" or prime_target.unit:anim_data().drop and "down_stay" or "down"
+				if prime_target.unit:movement():stance_name() == "cbt" and prime_target.unit:anim_data().stand then
+					voice_type = "come"
+				elseif prime_target.unit:anim_data().move then
+					voice_type = "stop"
+				elseif prime_target.unit:anim_data().drop then
+					voice_type = "down_stay"
+				else
+					voice_type = "down"
+				end
+
 				local num_affected = 0
 
 				for _, char in pairs(char_table) do
@@ -3018,7 +3066,11 @@ function PlayerStandard:_get_intimidation_action(prime_target, char_table, amoun
 					end
 				end
 
-				plural = num_affected > 1 and true or false
+				if num_affected > 1 then
+					plural = true
+				else
+					plural = false
+				end
 			end
 
 			local max_inv_wgt = 0
@@ -3039,13 +3091,17 @@ function PlayerStandard:_get_intimidation_action(prime_target, char_table, amoun
 				for _, char in pairs(char_table) do
 					if char.unit_type ~= unit_type_camera and char.unit_type ~= unit_type_teammate and (not is_whisper_mode or not char.unit:movement():cool()) then
 						if char.unit_type == unit_type_civilian then
-							amount = (amount or tweak_data.player.long_dis_interaction.intimidate_strength) * managers.player:upgrade_value("player", "civ_intimidation_mul", 1) * managers.player:team_upgrade_value("player", "civ_intimidation_mul", 1)
+							if not amount then
+								slot23 = tweak_data.player.long_dis_interaction.intimidate_strength
+							end
+
+							amount = slot23 * managers.player:upgrade_value("player", "civ_intimidation_mul", 1) * managers.player:team_upgrade_value("player", "civ_intimidation_mul", 1)
 						end
 
 						if prime_target_key == char.unit:key() then
 							voice_type = char.unit:brain():on_intimidated(amount or tweak_data.player.long_dis_interaction.intimidate_strength, self._unit) or voice_type
 						elseif not primary_only and char.unit_type ~= unit_type_enemy then
-							char.unit:brain():on_intimidated(((amount or tweak_data.player.long_dis_interaction.intimidate_strength) * char.inv_wgt) / max_inv_wgt, self._unit)
+							char.unit:brain():on_intimidated((amount or tweak_data.player.long_dis_interaction.intimidate_strength) * char.inv_wgt / max_inv_wgt, self._unit)
 						end
 					end
 				end
@@ -3177,7 +3233,9 @@ function PlayerStandard:_get_unit_intimidation_action(intimidate_enemies, intimi
 					local dist = 2000
 					local prio = 0.001
 
-					self:_add_unit_to_char_table(char_table, unit, unit_type_camera, dist, false, false, prio, my_head_pos, cam_fwd, {unit})
+					self:_add_unit_to_char_table(char_table, unit, unit_type_camera, dist, false, false, prio, my_head_pos, cam_fwd, {
+						unit
+					})
 				end
 			end
 		end
@@ -3187,7 +3245,9 @@ function PlayerStandard:_get_unit_intimidation_action(intimidate_enemies, intimi
 		if turret_units then
 			for _, unit in pairs(turret_units) do
 				if alive(unit) and unit:movement():team().foes[self._ext_movement:team().id] then
-					self:_add_unit_to_char_table(char_table, unit, unit_type_turret, 2000, false, false, 0.01, my_head_pos, cam_fwd, {unit})
+					self:_add_unit_to_char_table(char_table, unit, unit_type_turret, 2000, false, false, 0.01, my_head_pos, cam_fwd, {
+						unit
+					})
 				end
 			end
 		end
@@ -3426,7 +3486,9 @@ function PlayerStandard:_check_action_equip(t, input)
 			local new_action = not self._ext_inventory:is_equipped(selection_wanted)
 
 			if new_action then
-				self:_start_action_unequip_weapon(t, {selection_wanted = selection_wanted})
+				self:_start_action_unequip_weapon(t, {
+					selection_wanted = selection_wanted
+				})
 			end
 		end
 	end
@@ -3502,11 +3564,11 @@ function PlayerStandard:_perform_jump(jump_vec)
 	self._send_jump_vec = jump_vec * 0.87
 	local t = managers.game_play_central and managers.game_play_central:get_heist_timer() or 0
 
-	if not (managers.achievment:get_info(tweak_data.achievement.jordan_1) or {}).awarded then
+	if not managers.achievment:get_info(tweak_data.achievement.jordan_1) or {}.awarded then
 		managers.achievment:award(tweak_data.achievement.jordan_1)
 	end
 
-	if not (managers.achievment:get_info(tweak_data.achievement.jordan_2.award) or {}).awarded then
+	if not managers.achievment:get_info(tweak_data.achievement.jordan_2.award) or {}.awarded then
 		local memory = managers.job:get_memory("jordan_2", true) or {}
 
 		table.insert(memory, t)
@@ -3533,7 +3595,7 @@ function PlayerStandard:_perform_jump(jump_vec)
 	if jordan_4 or jordan_4 == nil then
 		local last_jump_t = managers.job:get_memory("last_jump_t", true) or 0
 
-		if last_jump_t and last_jump_t + tweak_data.achievement.complete_heist_achievements.jordan_4.jump_timer < t then
+		if last_jump_t and t > last_jump_t + tweak_data.achievement.complete_heist_achievements.jordan_4.jump_timer then
 			managers.job:set_memory("jordan_4", false)
 		else
 			managers.job:set_memory("jordan_4", true)
@@ -3560,7 +3622,15 @@ function PlayerStandard:_update_network_jump(pos, is_exit)
 		self._is_jumping = nil
 	elseif self._send_jump_vec and not is_exit then
 		if self._is_jumping and type(self._gnd_ray) ~= "boolean" then
-			self._ext_network:send("action_walk_nav_point", self._gnd_ray and self._gnd_ray.position)
+			slot5 = self._ext_network
+			slot4 = self._ext_network.send
+			slot6 = "action_walk_nav_point"
+
+			if self._gnd_ray then
+				slot7 = self._gnd_ray.position
+			end
+
+			slot4(slot5, slot6, slot7)
 		end
 
 		self._ext_network:send("action_jump", pos or self._pos, self._send_jump_vec)
@@ -3595,7 +3665,9 @@ function PlayerStandard:_start_action_zipline(t, input, zipline_unit)
 	self:_interupt_action_steelsight(t)
 
 	self._state_data.on_zipline = true
-	self._state_data.zipline_data = {zipline_unit = zipline_unit}
+	self._state_data.zipline_data = {
+		zipline_unit = zipline_unit
+	}
 
 	self._ext_camera:play_shaker("player_enter_zipline")
 
@@ -3607,7 +3679,7 @@ function PlayerStandard:_start_action_zipline(t, input, zipline_unit)
 		self._state_data.zipline_data.start_pos = self._unit:position()
 		self._state_data.zipline_data.end_pos = self._fwd_ray.position
 		self._state_data.zipline_data.slack = math.max(0, math.abs(self._state_data.zipline_data.start_pos.z - self._state_data.zipline_data.end_pos.z) / 3)
-		self._state_data.zipline_data.tot_t = (self._state_data.zipline_data.end_pos - self._state_data.zipline_data.start_pos):length() / 1000
+		self._state_data.zipline_data.tot_t = self._state_data.zipline_data.end_pos - self._state_data.zipline_data.start_pos:length() / 1000
 	end
 
 	self._state_data.zipline_data.t = 0
@@ -3729,7 +3801,7 @@ function PlayerStandard:set_stance_switch_delay(delay)
 end
 
 function PlayerStandard:_is_underbarrel_attachment_active(weapon_unit)
-	local weapon = (weapon_unit or self._equipped_unit):base()
+	local weapon = weapon_unit or self._equipped_unit:base()
 	local underbarrel_names = managers.weapon_factory:get_parts_from_weapon_by_type_or_perk("underbarrel", weapon._factory_id, weapon._blueprint)
 
 	if underbarrel_names and underbarrel_names[1] then
@@ -4616,23 +4688,31 @@ function PlayerStandard:_upd_attention()
 
 	if false and self._seat and self._seat.driving then
 		-- Nothing
-	else
-		preset = managers.groupai:state():whisper_mode() and (self._state_data.ducking and {
-			"pl_mask_on_friend_combatant_whisper_mode",
-			"pl_mask_on_friend_non_combatant_whisper_mode",
-			"pl_mask_on_foe_combatant_whisper_mode_crouch",
-			"pl_mask_on_foe_non_combatant_whisper_mode_crouch"
-		} or {
-			"pl_mask_on_friend_combatant_whisper_mode",
-			"pl_mask_on_friend_non_combatant_whisper_mode",
-			"pl_mask_on_foe_combatant_whisper_mode_stand",
-			"pl_mask_on_foe_non_combatant_whisper_mode_stand"
-		}) or self._state_data.ducking and {
+	elseif managers.groupai:state():whisper_mode() then
+		if self._state_data.ducking then
+			preset = {
+				"pl_mask_on_friend_combatant_whisper_mode",
+				"pl_mask_on_friend_non_combatant_whisper_mode",
+				"pl_mask_on_foe_combatant_whisper_mode_crouch",
+				"pl_mask_on_foe_non_combatant_whisper_mode_crouch"
+			}
+		else
+			preset = {
+				"pl_mask_on_friend_combatant_whisper_mode",
+				"pl_mask_on_friend_non_combatant_whisper_mode",
+				"pl_mask_on_foe_combatant_whisper_mode_stand",
+				"pl_mask_on_foe_non_combatant_whisper_mode_stand"
+			}
+		end
+	elseif self._state_data.ducking then
+		preset = {
 			"pl_friend_combatant_cbt",
 			"pl_friend_non_combatant_cbt",
 			"pl_foe_combatant_cbt_crouch",
 			"pl_foe_non_combatant_cbt_crouch"
-		} or {
+		}
+	else
+		preset = {
 			"pl_friend_combatant_cbt",
 			"pl_friend_non_combatant_cbt",
 			"pl_foe_combatant_cbt_stand",
@@ -4764,7 +4844,6 @@ function PlayerStandard:set_night_vision_state(state)
 	local effect = state and night_vision.effect or default_color_grading
 
 	if state then
-
 		local function light_modifier(handler, feeder)
 			local base_light = feeder._target and mvector3.copy(feeder._target) or Vector3()
 			local light = night_vision.light
@@ -4831,4 +4910,3 @@ function PlayerStandard:tweak_data_clbk_reload()
 		self._tweak_data = tweak_data.player.movement_state.standard
 	end
 end
-

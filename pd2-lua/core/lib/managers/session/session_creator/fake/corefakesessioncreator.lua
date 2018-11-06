@@ -24,10 +24,13 @@ end
 
 function Creator:find_session(session_info, callback)
 	local fake_sessions = {
-		{info = 2},
-		{info = 3}
+		{
+			info = 2
+		},
+		{
+			info = 3
+		}
 	}
 
 	callback(fake_sessions)
 end
-

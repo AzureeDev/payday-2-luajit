@@ -60,4 +60,3 @@ function HuskCopMovement:chk_action_forbidden(action_desc)
 		end
 	end
 end
-

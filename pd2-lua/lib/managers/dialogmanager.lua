@@ -9,14 +9,36 @@ function DialogManager:init()
 	local level_tweak = tweak_data.levels[level_id]
 
 	self:set_narrator(level_tweak and level_tweak.narrator or "bain")
+
+	self._delayed_dialog_requests = {}
 end
 
 function DialogManager:init_finalize()
 	self:_load_dialogs()
 end
 
+function DialogManager:update(t, dt)
+	for i = #self._delayed_dialog_requests, 1, -1 do
+		local entry = self._delayed_dialog_requests[i]
+
+		if entry.time <= t then
+			self:queue_dialog(unpack(entry.request))
+			table.remove(self._delayed_dialog_requests, i)
+		end
+	end
+end
+
 function DialogManager:queue_dialog(id, params)
 	if not params.skip_idle_check and managers.platform:presence() == "Idle" then
+		return
+	end
+
+	if params.delay then
+		self:_add_delayed_dialog({
+			id,
+			params
+		})
+
 		return
 	end
 
@@ -63,6 +85,17 @@ function DialogManager:queue_dialog(id, params)
 	end
 
 	return true
+end
+
+function DialogManager:_add_delayed_dialog(dialog_request)
+	local delay = dialog_request[2].delay
+	dialog_request[2] = clone(dialog_request[2])
+	dialog_request[2].delay = nil
+
+	table.insert(self._delayed_dialog_requests, {
+		request = dialog_request,
+		time = TimerManager:game():time() + delay
+	})
 end
 
 function DialogManager:queue_narrator_dialog(id, params)
@@ -229,4 +262,3 @@ function DialogManager:_load_dialog_data(name)
 		end
 	end
 end
-

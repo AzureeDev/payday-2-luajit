@@ -10,4 +10,3 @@ function FlashGrenadeUnitDamage:add_damage(endurance_type, attack_unit, dest_bod
 
 	return destroyed, damage
 end
-

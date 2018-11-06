@@ -8,4 +8,3 @@ function MenuItemLevel:init(data_node, parameters)
 
 	self._type = MenuItemLevel.TYPE
 end
-

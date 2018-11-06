@@ -75,12 +75,16 @@ function PromotionalWeaponPreviewGui:setup()
 		w = self._panel:w(),
 		h = self._panel:h()
 	})
-	BoxGuiObject:new(self._panel:panel({layer = 100}), {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel:panel({
+		layer = 100
+	}), {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 
 	local img_size = self._panel:h() - padding * 2
 	local img_panel = nil
@@ -94,12 +98,16 @@ function PromotionalWeaponPreviewGui:setup()
 			h = img_size
 		})
 
-		BoxGuiObject:new(img_panel:panel({layer = 100}), {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(img_panel:panel({
+			layer = 100
+		}), {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 		img_panel:bitmap({
 			layer = 1,
 			y = 0,
@@ -135,8 +143,7 @@ function PromotionalWeaponPreviewGui:setup()
 		color = tweak_data.screen_colors.text,
 		x = (img_panel and img_panel:right() or 0) + padding,
 		y = name:bottom(),
-		w = (self._panel:w() - name:left()) - padding,
+		w = self._panel:w() - name:left() - padding,
 		h = self._panel:h() - name:bottom()
 	})
 end
-

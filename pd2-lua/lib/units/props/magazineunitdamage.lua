@@ -19,8 +19,22 @@ function MagazineUnitDamage:play_collision_sfx(other_unit, position, normal, col
 		material_name = World:pick_decal_material(collision_ray.unit, ray_from, ray_to, slot_mask)
 	end
 
-	material_name = material_name ~= empty_idstr and false
-	sound_switch_name = material_name and material_name or idstr_concrete
+	if material_name ~= empty_idstr then
+		-- Nothing
+	else
+		material_name = false
+
+		if false then
+			material_name = true
+		end
+	end
+
+	if material_name then
+		sound_switch_name = material_name
+	else
+		sound_switch_name = idstr_concrete
+	end
+
 	local ss = SoundDevice:create_source("collision")
 
 	ss:set_position(position)
@@ -39,4 +53,3 @@ function MagazineUnitDamage:material_name(idstring)
 
 	return material
 end
-

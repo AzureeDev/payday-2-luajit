@@ -91,4 +91,3 @@ function MaterialControl:set_time(material_name, time)
 		end
 	end
 end
-

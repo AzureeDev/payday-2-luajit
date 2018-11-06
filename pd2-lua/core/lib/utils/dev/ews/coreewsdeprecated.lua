@@ -55,12 +55,14 @@ end
 function CoreEWS.topdown_layout(w)
 	local q = w
 
-	while q and q.type_name == "EWSPanel" do
-		q:set_sizer_min_size()
-		q:layout()
-		q:refresh()
+	if q then
+		while q and q.type_name == "EWSPanel" do
+			q:set_sizer_min_size()
+			q:layout()
+			q:refresh()
 
-		q = q:parent()
+			q = q:parent()
+		end
 	end
 end
 
@@ -335,12 +337,15 @@ function CoreEWS:XMLTextCtrl(...)
 end
 
 function CoreEWS:_remove_self(...)
-	local params = {...}
+	local params = {
+		...
+	}
 
 	if #params > 0 and params[1] == CoreEWS then
-		params = {select(2, ...)}
+		params = {
+			select(2, ...)
+		}
 	end
 
 	return unpack(params)
 end
-

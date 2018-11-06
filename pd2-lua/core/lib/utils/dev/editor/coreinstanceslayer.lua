@@ -10,7 +10,9 @@ core:import("CoreWorldDefinition")
 InstancesLayer = InstancesLayer or class(CoreStaticLayer.StaticLayer)
 
 function InstancesLayer:init(owner)
-	InstancesLayer.super.init(self, owner, "instances", {"nothing"}, "statics_layer")
+	InstancesLayer.super.init(self, owner, "instances", {
+		"nothing"
+	}, "statics_layer")
 
 	self._uses_continents = true
 	self._selected_instances = {}
@@ -251,7 +253,9 @@ function InstancesLayer:select_instance(instance_name_or_table, force_select)
 	local multiselect = self:ctrl() or force_select
 
 	if type(instance_name_or_table) ~= "table" then
-		instance_name_or_table = {instance_name_or_table}
+		instance_name_or_table = {
+			instance_name_or_table
+		}
 	end
 
 	self._selected_instances = self._selected_instances or {}
@@ -302,7 +306,7 @@ function InstancesLayer:select_instance(instance_name_or_table, force_select)
 			local continent_data = managers.editor:continents()[data.continent]
 			local indx = continent_data:base_id() + managers.world_instance:start_offset_index() + data.start_index
 
-			if indx < start_index then
+			if start_index > indx then
 				start_index = indx
 			end
 
@@ -448,9 +452,9 @@ function InstancesLayer:add_instance(name, folder, index_size, script, pos, rot,
 		position = pos or self._current_pos,
 		rotation = rot or self._current_rot or Rotation(),
 		script = script,
-		index_size = index_size
+		index_size = index_size,
+		start_index = managers.world_instance:get_safe_start_index(instance.index_size, instance.continent)
 	}
-	instance.start_index = managers.world_instance:get_safe_start_index(instance.index_size, instance.continent)
 
 	managers.world_instance:add_instance_data(instance)
 
@@ -941,7 +945,9 @@ function InstancesLayer:_clear_predefined_instances_notebook()
 end
 
 function InstancesLayer:_predefined_data_by_category()
-	local t = {ALL = {}}
+	local t = {
+		ALL = {}
+	}
 
 	for name, data in pairs(self._predefined_instances) do
 		local category = data.category or "N/A"
@@ -1078,7 +1084,9 @@ function InstancesLayer:_set_selected_predefined_instance(name)
 
 	local folder = self._predefined_instances[name].folder
 	local size = self._predefined_instances[name].size
-	local id, amount, type_amount = managers.world_instance:check_highest_id({folder = folder})
+	local id, amount, type_amount = managers.world_instance:check_highest_id({
+		folder = folder
+	})
 
 	self._predefined_instances_info_guis.folder:set_label(folder)
 	self._predefined_instances_info_guis.size:set_label("" .. size)
@@ -1153,7 +1161,9 @@ function InstancesLayer:_set_selection_instances_listbox(name)
 
 	if name then
 		if type(name) ~= "table" then
-			name = {name}
+			name = {
+				name
+			}
 		end
 
 		for i = 0, self._instances_listbox:nr_items() - 1, 1 do
@@ -1203,7 +1213,9 @@ function InstancesLayer:_on_gui_reload_predefined_instances_file()
 		platform = string.lower(SystemInfo:platform():s()),
 		source_root = managers.database:base_path(),
 		target_db_root = Application:base_path() .. "assets",
-		source_files = {self._predefined_instances_file .. ".xml"}
+		source_files = {
+			self._predefined_instances_file .. ".xml"
+		}
 	}
 
 	Application:data_compile(t)
@@ -1384,6 +1396,7 @@ function InstancesLayer:clear()
 	self:_update_overlay_gui()
 	InstancesLayer.super.clear(self)
 end
+
 Reference = Reference or class()
 
 function Reference:init(pos, rot)
@@ -1398,6 +1411,7 @@ end
 function Reference:rotation()
 	return self._rot
 end
+
 Instance = Instance or class()
 
 function Instance:init(data)
@@ -1423,4 +1437,3 @@ end
 function Instance:rotation()
 	return self._data.rotation or Rotation()
 end
-

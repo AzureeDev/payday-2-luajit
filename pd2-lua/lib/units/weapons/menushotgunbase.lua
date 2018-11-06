@@ -3,6 +3,7 @@ ShotgunBase = ShotgunBase or class(NewRaycastWeaponBase)
 function ShotgunBase:init(...)
 	ShotgunBase.super.init(self, ...)
 end
+
 NewFlamethrowerBase = NewFlamethrowerBase or class(NewRaycastWeaponBase)
 FlamethrowerEffectExtension = FlamethrowerEffectExtension or class(NewRaycastWeaponBase)
 SaigaShotgun = SaigaShotgun or class(ShotgunBase)
@@ -13,4 +14,3 @@ AkimboWeaponBase.AKIMBO = true
 AkimboShotgunBase = AkimboShotgunBase or class(AkimboWeaponBase)
 BowWeaponBase = BowWeaponBase or class(NewRaycastWeaponBase)
 CrossbowWeaponBase = CrossbowWeaponBase or class(NewRaycastWeaponBase)
-

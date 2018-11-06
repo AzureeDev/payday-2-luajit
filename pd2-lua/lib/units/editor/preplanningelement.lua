@@ -17,7 +17,9 @@ function PrePlanningUnitElement:init(unit)
 end
 
 function PrePlanningUnitElement:_create_dynamic_on_executed_alternatives()
-	PrePlanningUnitElement.ON_EXECUTED_ALTERNATIVES = {"any"}
+	PrePlanningUnitElement.ON_EXECUTED_ALTERNATIVES = {
+		"any"
+	}
 
 	for _, type in ipairs(managers.preplanning:types()) do
 		table.insert(PrePlanningUnitElement.ON_EXECUTED_ALTERNATIVES, type)
@@ -62,4 +64,3 @@ function PrePlanningUnitElement:_build_panel(panel, panel_sizer)
 
 	CoreEws.list_selector(disables_params)
 end
-

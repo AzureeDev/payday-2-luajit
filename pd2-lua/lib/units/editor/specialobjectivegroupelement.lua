@@ -233,7 +233,6 @@ function SpecialObjectiveGroupElement:add_unit_list_btn()
 end
 
 function SpecialObjectiveGroupElement:remove_unit_list_btn()
-
 	local function f(unit)
 		return self._hed.spawn_instigator_ids and table.contains(self._hed.spawn_instigator_ids, unit:unit_data().unit_id) or self._hed.followup_elements and table.contains(self._hed.followup_elements, unit:unit_data().unit_id)
 	end
@@ -325,4 +324,3 @@ end
 
 function SpecialObjectiveGroupElement:add_to_mission_package()
 end
-

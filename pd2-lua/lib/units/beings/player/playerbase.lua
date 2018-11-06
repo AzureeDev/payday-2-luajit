@@ -230,6 +230,7 @@ end
 function PlayerBase:controller()
 	return self._controller
 end
+
 local on_ladder_footstep_material = Idstring("steel")
 
 function PlayerBase:anim_data_clbk_footstep(foot)
@@ -294,7 +295,7 @@ function PlayerBase:set_detection_multiplier(reason, multiplier)
 	local range_mul = self._detection_settings.init_range_mul
 
 	for reason, mul in pairs(self._detection_settings.multipliers) do
-		delay_mul = (delay_mul * 1) / mul
+		delay_mul = delay_mul * 1 / mul
 		range_mul = range_mul * math.sqrt(mul)
 	end
 
@@ -358,4 +359,3 @@ end
 function PlayerBase:character_name()
 	return managers.criminals:character_name_by_unit(self._unit)
 end
-

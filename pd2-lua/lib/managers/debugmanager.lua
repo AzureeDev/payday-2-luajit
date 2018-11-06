@@ -14,7 +14,9 @@ end
 
 function DebugManager:set_qa_debug_enabled(username, enabled)
 	enabled = not not enabled
-	local cat_print_list = {"qa"}
+	local cat_print_list = {
+		"qa"
+	}
 
 	for _, cat in ipairs(cat_print_list) do
 		Global.category_print[cat] = enabled
@@ -24,4 +26,3 @@ function DebugManager:set_qa_debug_enabled(username, enabled)
 end
 
 CoreClass.override_class(CoreDebugManager.DebugManager, DebugManager)
-

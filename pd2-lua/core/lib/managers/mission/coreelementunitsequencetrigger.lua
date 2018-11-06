@@ -8,10 +8,12 @@ function ElementUnitSequenceTrigger:init(...)
 	ElementUnitSequenceTrigger.super.init(self, ...)
 
 	if not self._values.sequence_list and self._values.sequence then
-		self._values.sequence_list = {{
-			unit_id = self._values.unit_id,
-			sequence = self._values.sequence
-		}}
+		self._values.sequence_list = {
+			{
+				unit_id = self._values.unit_id,
+				sequence = self._values.sequence
+			}
+		}
 	end
 end
 
@@ -52,4 +54,3 @@ function ElementUnitSequenceTrigger:load(data)
 		self:on_script_activated()
 	end
 end
-

@@ -45,7 +45,9 @@ function HUDBlackScreen:init(hud)
 		continue_button = managers.localization:btn_macro("laser_primary", true)
 	end
 
-	local text = utf8.to_upper(managers.localization:text("hud_skip_blackscreen", {BTN_ACCEPT = continue_button}))
+	local text = utf8.to_upper(managers.localization:text("hud_skip_blackscreen", {
+		BTN_ACCEPT = continue_button
+	}))
 	local skip_text = self._blackscreen_panel:text({
 		y = 0,
 		vertical = "bottom",
@@ -57,7 +59,9 @@ function HUDBlackScreen:init(hud)
 		color = Color.white,
 		font = tweak_data.hud.medium_font_noshadow
 	})
-	local loading_text = utf8.to_upper(managers.localization:text("menu_loading_progress", {prog = 0}))
+	local loading_text = utf8.to_upper(managers.localization:text("menu_loading_progress", {
+		prog = 0
+	}))
 	local loading_text_object = self._blackscreen_panel:text({
 		y = 0,
 		vertical = "bottom",
@@ -118,7 +122,9 @@ function HUDBlackScreen:set_loading_text_status(status)
 
 			self._blackscreen_panel:child("loading_text"):set_text(loading_text)
 		else
-			local loading_text = utf8.to_upper(managers.localization:text("menu_loading_progress", {prog = status}))
+			local loading_text = utf8.to_upper(managers.localization:text("menu_loading_progress", {
+				prog = status
+			}))
 
 			self._blackscreen_panel:child("loading_text"):set_text(loading_text)
 		end
@@ -245,7 +251,9 @@ function HUDBlackScreen:_set_job_data_crime_spree()
 	local risk_text = job_panel:text({
 		vertical = "top",
 		align = "center",
-		text = managers.localization:to_upper_text("menu_cs_level", {level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")}),
+		text = managers.localization:to_upper_text("menu_cs_level", {
+			level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")
+		}),
 		font = tweak_data.menu.pd2_large_font,
 		font_size = tweak_data.menu.pd2_large_font_size,
 		color = tweak_data.screen_colors.crime_spree_risk
@@ -366,14 +374,14 @@ function HUDBlackScreen:_create_stages()
 
 		if (not is_completed or not {
 			0,
-			(Color(120, 255, 120) / 255):with_alpha(0.25),
+			Color(120, 255, 120) / 255:with_alpha(0.25),
 			1,
-			(Color(120, 255, 120) / 255):with_alpha(0)
+			Color(120, 255, 120) / 255:with_alpha(0)
 		}) and (not is_current_stage or not {
 			0,
-			(Color(230, 200, 150) / 255):with_alpha(0.5),
+			Color(230, 200, 150) / 255:with_alpha(0.5),
 			1,
-			(Color(230, 200, 150) / 255):with_alpha(0)
+			Color(230, 200, 150) / 255:with_alpha(0)
 		}) then
 			local gradient_points = {
 				0,
@@ -500,4 +508,3 @@ function HUDBlackScreen:_animate_fade_out(mid_text)
 
 	self._blackscreen_panel:set_alpha(0)
 end
-

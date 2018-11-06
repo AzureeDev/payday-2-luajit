@@ -10,4 +10,3 @@ function InGame:transition()
 		return CoreMenuStatePrepareLoadingFrontEnd.PrepareLoadingFrontEnd
 	end
 end
-

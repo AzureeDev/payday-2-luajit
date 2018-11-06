@@ -101,11 +101,15 @@ function MenuModInfoGui:set_mod_info(item)
 		y = 10,
 		name = "conflicted"
 	})
-	local modded_panel = self.mod_info_panel:panel({name = "modded"})
+	local modded_panel = self.mod_info_panel:panel({
+		name = "modded"
+	})
 	local title = self.safe_rect_panel:text({
 		name = "info_title",
 		layer = 1,
-		text = managers.localization:to_upper_text("menu_mods_info_title", {mod = mod_name}),
+		text = managers.localization:to_upper_text("menu_mods_info_title", {
+			mod = mod_name
+		}),
 		font = self.medium_font,
 		font_size = self.medium_font_size
 	})
@@ -238,18 +242,22 @@ function MenuModInfoGui:set_mod_info(item)
 		self.mod_info_panel:set_h(modded_panel:bottom() + 10)
 
 		if self._mod_main_panel:h() < self.mod_info_panel:h() then
-			self._scroll_up_box = BoxGuiObject:new(self._mod_main_panel, {sides = {
-				0,
-				0,
-				2,
-				0
-			}})
-			self._scroll_down_box = BoxGuiObject:new(self._mod_main_panel, {sides = {
-				0,
-				0,
-				0,
-				2
-			}})
+			self._scroll_up_box = BoxGuiObject:new(self._mod_main_panel, {
+				sides = {
+					0,
+					0,
+					2,
+					0
+				}
+			})
+			self._scroll_down_box = BoxGuiObject:new(self._mod_main_panel, {
+				sides = {
+					0,
+					0,
+					0,
+					2
+				}
+			})
 
 			self._scroll_up_box:hide()
 			self._scroll_down_box:show()
@@ -311,12 +319,14 @@ function MenuModInfoGui:set_mod_info(item)
 				valign = "scale",
 				halign = "scale"
 			})
-			self._scroll_bar_box_class = BoxGuiObject:new(scroll_bar_box_panel, {sides = {
-				2,
-				2,
-				0,
-				0
-			}})
+			self._scroll_bar_box_class = BoxGuiObject:new(scroll_bar_box_panel, {
+				sides = {
+					2,
+					2,
+					0,
+					0
+				}
+			})
 
 			self._scroll_bar_box_class:set_aligns("scale", "scale")
 			self._scroll_bar_box_class:set_blend_mode("add")
@@ -488,4 +498,3 @@ function MenuModInfoGui:update(t, dt)
 		self:set_scroll_indicators(self._scroll_y and self._scroll_y + cy * 500 * dt)
 	end
 end
-

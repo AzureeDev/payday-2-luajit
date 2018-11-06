@@ -304,12 +304,14 @@ function CustomSafehouseGuiPageMap:_setup_map()
 		end
 	end
 
-	BoxGuiObject:new(self._floor_control_panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._floor_control_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	self:select_floor(self._selected_floor)
 end
 
@@ -364,7 +366,7 @@ function CustomSafehouseGuiPageMap:select_floor(floor)
 	local wanted_zoom = self:current_floor():start_zoom() and self:convert_zoom_to_map(self:current_floor():start_zoom()) or self._map_zoom
 
 	self:_set_zoom(wanted_zoom, self._map_panel:w() / 2, self._map_panel:h() / 2)
-	self:_set_map_position((-self._map_panel:w() / 2 + self._panel:w() / 2) - 240 * self:current_zoom(), -self._map_panel:h() / 2 + self._panel:h() / 2 + 200 * self:current_zoom())
+	self:_set_map_position(-self._map_panel:w() / 2 + self._panel:w() / 2 - 240 * self:current_zoom(), -self._map_panel:h() / 2 + self._panel:h() / 2 + 200 * self:current_zoom())
 	self:current_floor():set_zoom_value(self._map_zoom)
 	self:current_floor():show()
 	self:current_floor():update()
@@ -449,14 +451,16 @@ function CustomSafehouseGuiPageMap:_setup_info_panel()
 			h = h or remaining_height
 		})
 
-		BoxGuiObject:new(panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 
-		remaining_height = (remaining_height - h) - BOX_GAP
+		remaining_height = remaining_height - h - BOX_GAP
 
 		return panel
 	end
@@ -735,7 +739,9 @@ end
 
 function CustomSafehouseGuiPageMap:get_legend()
 	if self:is_being_raided() then
-		return {"back"}
+		return {
+			"back"
+		}
 	else
 		return {
 			"move",
@@ -1017,7 +1023,7 @@ function CustomSafehouseGuiPageMap:update(t, dt)
 	if self._scanline then
 		self._scanline:move(0, 50 * dt)
 
-		if self:panel():h() + 25 <= self._scanline:top() then
+		if self._scanline:top() >= self:panel():h() + 25 then
 			self._scanline:set_bottom(-25)
 		end
 	end
@@ -1125,7 +1131,7 @@ function CustomSafehouseGuiPageMap:update(t, dt)
 		local step = dt * speed
 		local padding = 25
 
-		if -padding < mleft then
+		if mleft > -padding then
 			local mx = math.lerp(0, -padding - mleft, step)
 
 			self:_move_map_position(mx, 0)
@@ -1145,7 +1151,7 @@ function CustomSafehouseGuiPageMap:update(t, dt)
 			end
 		end
 
-		if -padding < mtop then
+		if mtop > -padding then
 			local my = math.lerp(0, -padding - mtop, step)
 
 			self:_move_map_position(0, my)
@@ -1463,6 +1469,7 @@ function CustomSafehouseGuiPageMap:_set_map_position(x, y, location)
 
 	self._grid_panel:set_center(self._map_panel:center())
 end
+
 CustomSafehouseMapFloor = CustomSafehouseMapFloor or class()
 
 function CustomSafehouseMapFloor:init(panel, map_panel, tweak)
@@ -1483,7 +1490,7 @@ function CustomSafehouseMapFloor:init(panel, map_panel, tweak)
 		local aspect = self._bg:w() / self._bg:h()
 		local panel_aspect = panel:w() / panel:h()
 
-		if panel_aspect < aspect then
+		if aspect > panel_aspect then
 			self._bg:set_h(panel:h())
 			self._bg:set_w(panel:h() * aspect)
 		else
@@ -1646,18 +1653,20 @@ function CustomSafehouseMapFloor:set_zoom_value(zoom)
 		point:set_zoom_value(zoom, self._alpha_limit)
 	end
 end
+
 CustomSafehouseMapPoint = CustomSafehouseMapPoint or class()
 CustomSafehouseMapPoint.WIDTH = 64
 CustomSafehouseMapPoint.HEIGHT = 64
 CustomSafehouseMapPoint.FRAME_WIDTH = 96
 CustomSafehouseMapPoint.FRAME_HEIGHT = 96
 CustomSafehouseMapPoint.PADDING = 2
-CustomSafehouseMapPoint.colors = {}
-CustomSafehouseMapPoint.colors.selected = tweak_data.screen_colors.button_stage_2:with_alpha(1)
-CustomSafehouseMapPoint.colors.locked = Color.white:with_alpha(0.25)
-CustomSafehouseMapPoint.colors.unlocked = Color.white
-CustomSafehouseMapPoint.colors.unavailable = tweak_data.screen_colors.important_1
-CustomSafehouseMapPoint.colors.current = tweak_data.screen_colors.button_stage_3:with_alpha(1)
+CustomSafehouseMapPoint.colors = {
+	selected = tweak_data.screen_colors.button_stage_2:with_alpha(1),
+	locked = Color.white:with_alpha(0.25),
+	unlocked = Color.white,
+	unavailable = tweak_data.screen_colors.important_1,
+	current = tweak_data.screen_colors.button_stage_3:with_alpha(1)
+}
 
 function CustomSafehouseMapPoint:init(parent, map_panel, id)
 	self.make_fine_text = BlackMarketGui.make_fine_text
@@ -1873,7 +1882,9 @@ function CustomSafehouseMapPoint:attempt_purchase(step)
 			dialog_data.text = managers.localization:text(room_data.help_id .. "_" .. next_tier) .. "\n\n" .. dialog_data.text
 			local yes_button = {
 				text = managers.localization:text("dialog_yes"),
-				callback_func = callback(self, self, "_confirm_purchase", {tier = next_tier})
+				callback_func = callback(self, self, "_confirm_purchase", {
+					tier = next_tier
+				})
 			}
 			local no_button = {
 				text = managers.localization:text("dialog_no"),
@@ -1918,7 +1929,9 @@ function CustomSafehouseMapPoint:_confirm_purchase(data)
 		managers.menu_component:custom_safehouse_gui():call_refresh()
 		managers.menu_component:post_event("chill_upgrade_stinger")
 
-		local effect_panel = self._panel:panel({layer = 100})
+		local effect_panel = self._panel:panel({
+			layer = 100
+		})
 
 		SimpleGUIEffectSpewer.infamous_up(self._image:center_x(), self._image:center_y(), effect_panel)
 		self:update_help_text(data.tier)
@@ -1947,7 +1960,9 @@ function CustomSafehouseMapPoint:update_help_text(tier_id)
 		self._parent:set_help_text(help_text)
 		self._parent:set_warning_text(nil)
 	else
-		local macros = {cost = tweak_data.safehouse.prices.rooms[next_tier]}
+		local macros = {
+			cost = tweak_data.safehouse.prices.rooms[next_tier]
+		}
 		help_text = help_text .. "\n\n" .. managers.localization:text("menu_cs_upgrade_cost", macros)
 
 		self._parent:set_help_text(help_text)
@@ -1966,6 +1981,7 @@ function CustomSafehouseMapPoint:set_zoom_value(zoom, alpha_limit)
 
 	self._title:set_alpha(self._alpha)
 end
+
 CustomSafehouseGuiRaidButton = CustomSafehouseGuiRaidButton or class(CustomSafehouseGuiItem)
 
 function CustomSafehouseGuiRaidButton:init(panel, layer, y, callback)
@@ -2055,4 +2071,3 @@ function CustomSafehouseGuiRaidButton:set_selected(selected, play_sound)
 		self._text:set_color(self._color)
 	end
 end
-

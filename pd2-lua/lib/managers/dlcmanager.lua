@@ -4,8 +4,9 @@ DLCManager.PLATFORM_CLASS_MAP = {}
 function DLCManager:new(...)
 	local platform = SystemInfo:platform()
 
-	return (self.PLATFORM_CLASS_MAP[platform:key()] or GenericDLCManager):new(...)
+	return self.PLATFORM_CLASS_MAP[platform:key()] or GenericDLCManager:new(...)
 end
+
 GenericDLCManager = GenericDLCManager or class()
 
 function GenericDLCManager:init()
@@ -16,7 +17,9 @@ end
 
 function GenericDLCManager:_set_dlc_save_table()
 	if not Global.dlc_save then
-		Global.dlc_save = {packages = {}}
+		Global.dlc_save = {
+			packages = {}
+		}
 	end
 end
 
@@ -577,8 +580,14 @@ function GenericDLCManager:has_pmp()
 	return self:is_dlc_unlocked("pmp")
 end
 
+function GenericDLCManager:has_ghm()
+	return self:is_dlc_unlocked("ghm")
+end
+
 function GenericDLCManager:has_goty_all_dlc_bundle_2014()
-	return self:has_goty_weapon_bundle_2014() and self:has_goty_heist_bundle_2014() and self:is_dlcs_unlocked({"character_pack_clover"})
+	return self:has_goty_weapon_bundle_2014() and self:has_goty_heist_bundle_2014() and self:is_dlcs_unlocked({
+		"character_pack_clover"
+	})
 end
 
 function GenericDLCManager:has_soundtrack_or_cce()
@@ -621,9 +630,16 @@ function GenericDLCManager:has_achievement_milestone(data)
 	return milestone.awarded
 end
 
+function GenericDLCManager:has_stat(data)
+	local sa_handler = Steam:sa_handler()
+
+	return sa_handler:get_stat(data.stat_id) >= (data.stat_value or 1)
+end
+
 function GenericDLCManager:has_dlc_or_soundtrack_or_cce(dlc)
 	return managers.dlc:is_dlc_unlocked(dlc) or managers.dlc:has_soundtrack_or_cce()
 end
+
 PS3DLCManager = PS3DLCManager or class(GenericDLCManager)
 DLCManager.PLATFORM_CLASS_MAP[Idstring("PS3"):key()] = PS3DLCManager
 PS3DLCManager.SERVICE_ID = "EP4040-BLES01902_00"
@@ -632,31 +648,32 @@ function PS3DLCManager:init()
 	PS3DLCManager.super.init(self)
 
 	if not Global.dlc_manager then
-		Global.dlc_manager = {}
-		Global.dlc_manager.all_dlc_data = {
-			full_game = {
-				filename = "full_game_key.edat",
-				product_id = self.SERVICE_ID .. "-PAYDAY2NPEU00000"
-			},
-			preorder = {
-				filename = "preorder_dlc_key.edat",
-				product_id = self.SERVICE_ID .. "-PPAYDAY2XX000006"
-			},
-			sweettooth = {
-				filename = "sweettooth_dlc_key.edat",
-				product_id = self.SERVICE_ID .. "-PPAYDAY2SWTTOOTH"
-			},
-			armored_transport = {
-				filename = "armored_transport_dlc_key.edat",
-				product_id = self.SERVICE_ID .. "-PPAYDAY2ARMORDTR"
-			},
-			gage_pack = {
-				filename = "gagepack_1_dlc_key.edat",
-				product_id = self.SERVICE_ID .. "-PPAYDAY2GAGEPAK1"
-			},
-			gage_pack_lmg = {
-				filename = "gagepack_2_dlc_key.edat",
-				product_id = self.SERVICE_ID .. "-PPAYDAY2GAGEPAK2"
+		Global.dlc_manager = {
+			all_dlc_data = {
+				full_game = {
+					filename = "full_game_key.edat",
+					product_id = self.SERVICE_ID .. "-PAYDAY2NPEU00000"
+				},
+				preorder = {
+					filename = "preorder_dlc_key.edat",
+					product_id = self.SERVICE_ID .. "-PPAYDAY2XX000006"
+				},
+				sweettooth = {
+					filename = "sweettooth_dlc_key.edat",
+					product_id = self.SERVICE_ID .. "-PPAYDAY2SWTTOOTH"
+				},
+				armored_transport = {
+					filename = "armored_transport_dlc_key.edat",
+					product_id = self.SERVICE_ID .. "-PPAYDAY2ARMORDTR"
+				},
+				gage_pack = {
+					filename = "gagepack_1_dlc_key.edat",
+					product_id = self.SERVICE_ID .. "-PPAYDAY2GAGEPAK1"
+				},
+				gage_pack_lmg = {
+					filename = "gagepack_2_dlc_key.edat",
+					product_id = self.SERVICE_ID .. "-PPAYDAY2GAGEPAK2"
+				}
 			}
 		}
 
@@ -734,7 +751,9 @@ function PS3DLCManager:buy_full_game()
 		product = "full_game",
 		type = "buy_product"
 	}
-	self._activity = {type = "open"}
+	self._activity = {
+		type = "open"
+	}
 end
 
 function PS3DLCManager:buy_product(product_name)
@@ -754,7 +773,9 @@ function PS3DLCManager:buy_product(product_name)
 		type = "buy_product",
 		product = product_name
 	}
-	self._activity = {type = "open"}
+	self._activity = {
+		type = "open"
+	}
 end
 
 function PS3DLCManager:cb_NPCommerce(result, info)
@@ -796,7 +817,9 @@ function PS3DLCManager:cb_NPCommerce(result, info)
 				self:_close_NPCommerce()
 			end
 
-			self._activity = {type = "browse"}
+			self._activity = {
+				type = "browse"
+			}
 		end
 	elseif self._activity.type == "browse" then
 		if info.browse_succes then
@@ -848,6 +871,7 @@ function PS3DLCManager:cb_confirm_purchase_no()
 
 	self:_close_NPCommerce()
 end
+
 X360DLCManager = X360DLCManager or class(GenericDLCManager)
 DLCManager.PLATFORM_CLASS_MAP[Idstring("X360"):key()] = X360DLCManager
 
@@ -855,16 +879,17 @@ function X360DLCManager:init()
 	X360DLCManager.super.init(self)
 
 	if not Global.dlc_manager then
-		Global.dlc_manager = {}
-		Global.dlc_manager.all_dlc_data = {
-			full_game = {
-				is_default = true,
-				verified = true,
-				index = 0
-			},
-			preorder = {
-				is_default = false,
-				index = 1
+		Global.dlc_manager = {
+			all_dlc_data = {
+				full_game = {
+					is_default = true,
+					verified = true,
+					index = 0
+				},
+				preorder = {
+					is_default = false,
+					index = 1
+				}
 			}
 		}
 
@@ -910,6 +935,7 @@ end
 function X360DLCManager:on_signin_complete()
 	self:_verify_dlcs()
 end
+
 PS4DLCManager = PS4DLCManager or class(GenericDLCManager)
 DLCManager.PLATFORM_CLASS_MAP[Idstring("PS4"):key()] = PS4DLCManager
 
@@ -917,230 +943,231 @@ function PS4DLCManager:init()
 	PS4DLCManager.super.init(self)
 
 	if not Global.dlc_manager then
-		Global.dlc_manager = {}
-		Global.dlc_manager.all_dlc_data = {
-			full_game = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			preorder = {
-				verified_for_TheBigScore = false,
-				product_id = "PAYDAYLOOTBAGDLC"
-			},
-			career_criminal_edition = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			alienware_alpha = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			alienware_alpha_promo = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			soundtrack = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			pdth_soundtrack = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			armored_transport = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			gage_pack = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			gage_pack_lmg = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			gage_pack_jobs = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			gage_pack_snp = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			gage_pack_shotgun = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			gage_pack_assault = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			big_bank = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			hl_miami = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			hlm_game = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			character_pack_clover = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			character_pack_dragan = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			hope_diamond = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			the_bomb = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			xmas_soundtrack = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			twitch_pack = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			humble_pack2 = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			gage_pack_historical = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			akm4_pack = {
-				verified = false,
-				product_id = "PD2DLCBUTCHCAR01",
-				verified_for_TheBigScore = true
-			},
-			bbq = {
-				verified = false,
-				product_id = "PD2DLCBUTCHBBQ02",
-				verified_for_TheBigScore = true
-			},
-			west = {
-				verified = false,
-				product_id = "PD2DLCBUTCHWES03",
-				verified_for_TheBigScore = true
-			},
-			arena = {
-				verified = false,
-				product_id = "PD2DLCALESSOHT04",
-				verified_for_TheBigScore = true
-			},
-			kenaz = {
-				verified = false,
-				product_id = "PD2DLCGOLDENGC05",
-				verified_for_TheBigScore = true
-			},
-			character_pack_sokol = {
-				verified = false,
-				product_id = "PD2DLCSOKOLCHR06",
-				verified_for_TheBigScore = true
-			},
-			turtles = {
-				verified = false,
-				product_id = "PD2DLCGAGENINJ07",
-				verified_for_TheBigScore = true
-			},
-			dragon = {
-				verified = false,
-				product_id = "PD2DLCYAKUZACH08",
-				verified_for_TheBigScore = true
-			},
-			steel = {
-				verified = false,
-				product_id = "PD2DLCGAGECHIV09",
-				verified_for_TheBigScore = true
-			},
-			berry = {
-				verified = false,
-				product_id = "PD2DLCPOINTBRK10",
-				verified_for_TheBigScore = true
-			},
-			mad = {
-				verified = true,
-				product_id = "PD2DLCHARDCORE11",
-				verified_for_TheBigScore = true
-			},
-			coco = {
-				verified = true,
-				product_id = "PD2DLCJIMMYCHA12",
-				verified_for_TheBigScore = true
-			},
-			pal = {
-				verified = false,
-				product_id = "PD2DLCWOLFPACK13",
-				verified_for_TheBigScore = false
-			},
-			peta = {
-				verified = false,
-				product_id = "PD2DLCGOATSIMU14",
-				verified_for_TheBigScore = false
-			},
-			opera = {
-				verified = false,
-				product_id = "PD2DLCSYDNEYCH15",
-				verified_for_TheBigScore = false
-			},
-			born = {
-				verified = false,
-				product_id = "PD2DLCBIKERHST16",
-				verified_for_TheBigScore = false
-			},
-			wild = {
-				verified = false,
-				product_id = "PD2DLCBIKERCHA17",
-				verified_for_TheBigScore = false
-			},
-			rota = {
-				verified_for_TheBigScore = true,
-				verified = true
-			},
-			pim = {
-				verified = false,
-				product_id = "PD2DLCJWICKWPN18",
-				verified_for_TheBigScore = false
-			},
-			tango = {
-				verified = false,
-				product_id = "PD2DLCGAGESPEC19",
-				verified_for_TheBigScore = false
-			},
-			friend = {
-				verified = false,
-				product_id = "PD2DLCSCARFHST20",
-				verified_for_TheBigScore = false
-			},
-			chico = {
-				verified = false,
-				product_id = "PD2DLCSCARFCHA21",
-				verified_for_TheBigScore = false
-			},
-			spa = {
-				verified = false,
-				product_id = "PD2DLCJWICKHST22",
-				verified_for_TheBigScore = false
-			},
-			grv = {
-				verified = false,
-				product_id = "PD2DLCGAGERUSS23",
-				verified_for_TheBigScore = false
-			},
-			pn2 = {
-				verified_for_TheBigScore = true,
-				verified = true
+		Global.dlc_manager = {
+			all_dlc_data = {
+				full_game = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				preorder = {
+					verified_for_TheBigScore = false,
+					product_id = "PAYDAYLOOTBAGDLC"
+				},
+				career_criminal_edition = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				alienware_alpha = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				alienware_alpha_promo = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				soundtrack = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				pdth_soundtrack = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				armored_transport = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				gage_pack = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				gage_pack_lmg = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				gage_pack_jobs = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				gage_pack_snp = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				gage_pack_shotgun = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				gage_pack_assault = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				big_bank = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				hl_miami = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				hlm_game = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				character_pack_clover = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				character_pack_dragan = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				hope_diamond = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				the_bomb = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				xmas_soundtrack = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				twitch_pack = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				humble_pack2 = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				gage_pack_historical = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				akm4_pack = {
+					verified = false,
+					product_id = "PD2DLCBUTCHCAR01",
+					verified_for_TheBigScore = true
+				},
+				bbq = {
+					verified = false,
+					product_id = "PD2DLCBUTCHBBQ02",
+					verified_for_TheBigScore = true
+				},
+				west = {
+					verified = false,
+					product_id = "PD2DLCBUTCHWES03",
+					verified_for_TheBigScore = true
+				},
+				arena = {
+					verified = false,
+					product_id = "PD2DLCALESSOHT04",
+					verified_for_TheBigScore = true
+				},
+				kenaz = {
+					verified = false,
+					product_id = "PD2DLCGOLDENGC05",
+					verified_for_TheBigScore = true
+				},
+				character_pack_sokol = {
+					verified = false,
+					product_id = "PD2DLCSOKOLCHR06",
+					verified_for_TheBigScore = true
+				},
+				turtles = {
+					verified = false,
+					product_id = "PD2DLCGAGENINJ07",
+					verified_for_TheBigScore = true
+				},
+				dragon = {
+					verified = false,
+					product_id = "PD2DLCYAKUZACH08",
+					verified_for_TheBigScore = true
+				},
+				steel = {
+					verified = false,
+					product_id = "PD2DLCGAGECHIV09",
+					verified_for_TheBigScore = true
+				},
+				berry = {
+					verified = false,
+					product_id = "PD2DLCPOINTBRK10",
+					verified_for_TheBigScore = true
+				},
+				mad = {
+					verified = true,
+					product_id = "PD2DLCHARDCORE11",
+					verified_for_TheBigScore = true
+				},
+				coco = {
+					verified = true,
+					product_id = "PD2DLCJIMMYCHA12",
+					verified_for_TheBigScore = true
+				},
+				pal = {
+					verified = false,
+					product_id = "PD2DLCWOLFPACK13",
+					verified_for_TheBigScore = false
+				},
+				peta = {
+					verified = false,
+					product_id = "PD2DLCGOATSIMU14",
+					verified_for_TheBigScore = false
+				},
+				opera = {
+					verified = false,
+					product_id = "PD2DLCSYDNEYCH15",
+					verified_for_TheBigScore = false
+				},
+				born = {
+					verified = false,
+					product_id = "PD2DLCBIKERHST16",
+					verified_for_TheBigScore = false
+				},
+				wild = {
+					verified = false,
+					product_id = "PD2DLCBIKERCHA17",
+					verified_for_TheBigScore = false
+				},
+				rota = {
+					verified_for_TheBigScore = true,
+					verified = true
+				},
+				pim = {
+					verified = false,
+					product_id = "PD2DLCJWICKWPN18",
+					verified_for_TheBigScore = false
+				},
+				tango = {
+					verified = false,
+					product_id = "PD2DLCGAGESPEC19",
+					verified_for_TheBigScore = false
+				},
+				friend = {
+					verified = false,
+					product_id = "PD2DLCSCARFHST20",
+					verified_for_TheBigScore = false
+				},
+				chico = {
+					verified = false,
+					product_id = "PD2DLCSCARFCHA21",
+					verified_for_TheBigScore = false
+				},
+				spa = {
+					verified = false,
+					product_id = "PD2DLCJWICKHST22",
+					verified_for_TheBigScore = false
+				},
+				grv = {
+					verified = false,
+					product_id = "PD2DLCGAGERUSS23",
+					verified_for_TheBigScore = false
+				},
+				pn2 = {
+					verified_for_TheBigScore = true,
+					verified = true
+				}
 			}
 		}
 
@@ -1212,7 +1239,9 @@ function PS4DLCManager:buy_full_game()
 		product = "full_game",
 		type = "buy_product"
 	}
-	self._activity = {type = "open"}
+	self._activity = {
+		type = "open"
+	}
 end
 
 function PS4DLCManager:buy_product(product_name)
@@ -1232,7 +1261,9 @@ function PS4DLCManager:buy_product(product_name)
 		type = "buy_product",
 		product = product_name
 	}
-	self._activity = {type = "open"}
+	self._activity = {
+		type = "open"
+	}
 end
 
 function PS4DLCManager:cb_NPCommerce(result, info)
@@ -1274,7 +1305,9 @@ function PS4DLCManager:cb_NPCommerce(result, info)
 				self:_close_NPCommerce()
 			end
 
-			self._activity = {type = "browse"}
+			self._activity = {
+				type = "browse"
+			}
 		end
 	elseif self._activity.type == "browse" then
 		if info.browse_succes then
@@ -1326,6 +1359,7 @@ function PS4DLCManager:cb_confirm_purchase_no()
 
 	self:_close_NPCommerce()
 end
+
 XB1DLCManager = XB1DLCManager or class(GenericDLCManager)
 DLCManager.PLATFORM_CLASS_MAP[Idstring("XB1"):key()] = XB1DLCManager
 
@@ -1333,110 +1367,111 @@ function XB1DLCManager:init()
 	XB1DLCManager.super.init(self)
 
 	if not Global.dlc_manager then
-		Global.dlc_manager = {}
-		Global.dlc_manager.all_dlc_data = {
-			full_game = {
-				is_default = true,
-				verified = true,
-				index = 0
-			},
-			preorder = {
-				is_default = false,
-				product_id = "f4bfed8e-a74c-4bd5-baad-5b985d0ef15d",
-				index = 1
-			},
-			career_criminal_edition = {
-				index = 2,
-				is_default = true
-			},
-			alienware_alpha = {
-				index = 3,
-				is_default = true
-			},
-			alienware_alpha_promo = {
-				index = 4,
-				is_default = true
-			},
-			soundtrack = {
-				index = 5,
-				is_default = true
-			},
-			pdth_soundtrack = {
-				index = 6,
-				is_default = true
-			},
-			armored_transport = {
-				index = 7,
-				is_default = true
-			},
-			gage_pack = {
-				index = 8,
-				is_default = true
-			},
-			gage_pack_lmg = {
-				index = 9,
-				is_default = true
-			},
-			gage_pack_jobs = {
-				index = 10,
-				is_default = true
-			},
-			gage_pack_snp = {
-				index = 11,
-				is_default = true
-			},
-			gage_pack_shotgun = {
-				index = 12,
-				is_default = true
-			},
-			gage_pack_assault = {
-				index = 13,
-				is_default = true
-			},
-			big_bank = {
-				index = 14,
-				is_default = true
-			},
-			hl_miami = {
-				index = 15,
-				is_default = true
-			},
-			hlm_game = {
-				is_default = true,
-				index = 16,
-				external = true
-			},
-			character_pack_clover = {
-				index = 17,
-				is_default = true
-			},
-			character_pack_dragan = {
-				index = 18,
-				is_default = true
-			},
-			hope_diamond = {
-				index = 19,
-				is_default = true
-			},
-			the_bomb = {
-				index = 20,
-				is_default = true
-			},
-			xmas_soundtrack = {
-				index = 21,
-				is_default = true
-			},
-			twitch_pack = {
-				index = 22,
-				is_default = true
-			},
-			humble_pack2 = {
-				index = 23,
-				is_default = true
-			},
-			gage_pack_historical = {
-				index = 24,
-				is_default = true
+		Global.dlc_manager = {
+			all_dlc_data = {
+				full_game = {
+					is_default = true,
+					verified = true,
+					index = 0
+				},
+				preorder = {
+					is_default = false,
+					product_id = "f4bfed8e-a74c-4bd5-baad-5b985d0ef15d",
+					index = 1
+				},
+				career_criminal_edition = {
+					index = 2,
+					is_default = true
+				},
+				alienware_alpha = {
+					index = 3,
+					is_default = true
+				},
+				alienware_alpha_promo = {
+					index = 4,
+					is_default = true
+				},
+				soundtrack = {
+					index = 5,
+					is_default = true
+				},
+				pdth_soundtrack = {
+					index = 6,
+					is_default = true
+				},
+				armored_transport = {
+					index = 7,
+					is_default = true
+				},
+				gage_pack = {
+					index = 8,
+					is_default = true
+				},
+				gage_pack_lmg = {
+					index = 9,
+					is_default = true
+				},
+				gage_pack_jobs = {
+					index = 10,
+					is_default = true
+				},
+				gage_pack_snp = {
+					index = 11,
+					is_default = true
+				},
+				gage_pack_shotgun = {
+					index = 12,
+					is_default = true
+				},
+				gage_pack_assault = {
+					index = 13,
+					is_default = true
+				},
+				big_bank = {
+					index = 14,
+					is_default = true
+				},
+				hl_miami = {
+					index = 15,
+					is_default = true
+				},
+				hlm_game = {
+					is_default = true,
+					index = 16,
+					external = true
+				},
+				character_pack_clover = {
+					index = 17,
+					is_default = true
+				},
+				character_pack_dragan = {
+					index = 18,
+					is_default = true
+				},
+				hope_diamond = {
+					index = 19,
+					is_default = true
+				},
+				the_bomb = {
+					index = 20,
+					is_default = true
+				},
+				xmas_soundtrack = {
+					index = 21,
+					is_default = true
+				},
+				twitch_pack = {
+					index = 22,
+					is_default = true
+				},
+				humble_pack2 = {
+					index = 23,
+					is_default = true
+				},
+				gage_pack_historical = {
+					index = 24,
+					is_default = true
+				}
 			}
 		}
 
@@ -1490,6 +1525,7 @@ end
 function XB1DLCManager:on_signin_complete()
 	self:chk_content_updated()
 end
+
 WINDLCManager = WINDLCManager or class(GenericDLCManager)
 DLCManager.PLATFORM_CLASS_MAP[Idstring("WIN32"):key()] = WINDLCManager
 
@@ -1497,415 +1533,428 @@ function WINDLCManager:init()
 	WINDLCManager.super.init(self)
 
 	if not Global.dlc_manager then
-		Global.dlc_manager = {}
-		Global.dlc_manager.all_dlc_data = {
-			full_game = {
-				app_id = "218620",
-				verified = true
-			},
-			preorder = {
-				app_id = "247450",
-				no_install = true
-			},
-			career_criminal_edition = {
-				app_id = "218630",
-				no_install = true
-			},
-			alienware_alpha = {
-				app_id = "328861",
-				no_install = true
-			},
-			alienware_alpha_promo = {
-				app_id = "318720",
-				no_install = true
-			},
-			soundtrack = {
-				app_id = "254260",
-				no_install = true
-			},
-			pdth_soundtrack = {
-				app_id = "207816",
-				no_install = true
-			},
-			armored_transport = {
-				app_id = "264610",
-				no_install = true
-			},
-			gage_pack = {
-				app_id = "267380",
-				no_install = true
-			},
-			gage_pack_lmg = {
-				app_id = "275590",
-				no_install = true
-			},
-			gage_pack_jobs = {
-				app_id = "259381",
-				no_install = true
-			},
-			gage_pack_snp = {
-				app_id = "259380",
-				no_install = true
-			},
-			gage_pack_shotgun = {
-				app_id = "311050",
-				no_install = true
-			},
-			gage_pack_assault = {
-				app_id = "320030",
-				no_install = true
-			},
-			overkill_pack = {
-				app_id = "348090",
-				no_install = true
-			},
-			complete_overkill_pack = {
-				app_id = "348091",
-				no_install = true
-			},
-			akm4_pack = {
-				app_id = "351890",
-				no_install = true
-			},
-			big_bank = {
-				app_id = "306690",
-				no_install = true
-			},
-			hl_miami = {
-				app_id = "323500",
-				no_install = true
-			},
-			hlm_game = {
-				no_install = true,
-				app_id = "219150",
-				external = true
-			},
-			hlm2 = {
-				no_install = true,
-				app_id = "274170",
-				external = true
-			},
-			hlm2_deluxe = {
-				no_install = true,
-				app_id = "355390",
-				external = true
-			},
-			hlm2_aus = {
-				no_install = true,
-				app_id = "338951",
-				external = true
-			},
-			speedrunners = {
-				no_install = true,
-				app_id = "207140",
-				external = true
-			},
-			character_pack_clover = {
-				app_id = "337661",
-				no_install = true
-			},
-			character_pack_dragan = {
-				app_id = "344140",
-				no_install = true
-			},
-			character_pack_sokol = {
-				app_id = "374301",
-				no_install = true
-			},
-			hope_diamond = {
-				app_id = "337660",
-				no_install = true
-			},
-			the_bomb = {
-				app_id = "339480",
-				no_install = true
-			},
-			bbq = {
-				app_id = "358150",
-				no_install = true
-			},
-			west = {
-				app_id = "349830",
-				no_install = true
-			},
-			arena = {
-				app_id = "366660",
-				no_install = true
-			},
-			kenaz = {
-				app_id = "374300",
-				no_install = true
-			},
-			turtles = {
-				app_id = "384021",
-				no_install = true
-			},
-			dragon = {
-				app_id = "384020",
-				no_install = true
-			},
-			berry = {
-				app_id = "422400",
-				no_install = true
-			},
-			xmas_soundtrack = {
-				app_id = "267381",
-				no_install = true
-			},
-			bsides_soundtrack = {
-				app_id = "368870",
-				no_install = true
-			},
-			twitch_pack = {
-				app_id = "306110",
-				no_install = true
-			},
-			humble_pack2 = {
-				app_id = "331040",
-				no_install = true
-			},
-			humble_pack3 = {
-				app_id = "375380",
-				no_install = true
-			},
-			humble_pack4 = {
-				app_id = "375381",
-				no_install = true
-			},
-			e3_s15a = {
-				app_id = "375382",
-				no_install = true
-			},
-			e3_s15b = {
-				app_id = "375383",
-				no_install = true
-			},
-			e3_s15c = {
-				app_id = "375384",
-				no_install = true
-			},
-			e3_s15d = {
-				app_id = "375385",
-				no_install = true
-			},
-			pdcon_2015 = {
-				app_id = "338950",
-				no_install = true
-			},
-			gage_pack_historical = {
-				app_id = "331900",
-				no_install = true
-			},
-			steel = {
-				app_id = "401650",
-				no_install = true
-			},
-			bobblehead = {
-				app_id = "328860",
-				no_install = true
-			},
-			peta = {
-				app_id = "433730",
-				no_install = true
-			},
-			pal = {
-				no_install = true,
-				app_id = "441600",
-				external = true
-			},
-			opera = {
-				app_id = "468410",
-				no_install = true
-			},
-			jigg = {
-				app_id = "486610",
-				no_install = true
-			},
-			wild = {
-				app_id = "450660",
-				no_install = true
-			},
-			born = {
-				app_id = "487210",
-				no_install = true
-			},
-			dbd_deluxe = {
-				no_install = true,
-				app_id = "489980",
-				external = true
-			},
-			pim = {
-				app_id = "545100",
-				no_install = true
-			},
-			rota = {
-				app_id = "218620",
-				no_install = true
-			},
-			gotti_bundle = {
-				app_id = "218620",
-				no_install = true
-			},
-			nyck_bundle = {
-				app_id = "218620",
-				no_install = true
-			},
-			sparkle = {
-				app_id = "532810",
-				no_install = true
-			},
-			urf_bundle = {
-				app_id = "218620",
-				no_install = true
-			},
-			tango = {
-				app_id = "548420",
-				no_install = true
-			},
-			friend = {
-				app_id = "548421",
-				no_install = true
-			},
-			chico = {
-				app_id = "548422",
-				no_install = true
-			},
-			rvd = {
-				app_id = "218620",
-				no_install = true
-			},
-			pd2_clan = {source_id = "103582791433980119"},
-			dbd_clan = {source_id = "103582791441335905"},
-			solus_clan = {source_id = "103582791438562929"},
-			pdcon_2016 = {
-				app_id = "552490",
-				no_install = true
-			},
-			win_bundle = {
-				app_id = "218620",
-				no_install = true
-			},
-			swm = {
-				app_id = "588130",
-				no_install = true
-			},
-			yor_bundle = {
-				app_id = "218620",
-				no_install = true
-			},
-			sha = {
-				app_id = "218620",
-				no_install = true
-			},
-			spa = {
-				app_id = "591710",
-				no_install = true
-			},
-			grv = {
-				app_id = "612900",
-				no_install = true
-			},
-			amp = {
-				app_id = "218620",
-				no_install = true
-			},
-			mp2 = {
-				app_id = "218620",
-				no_install = true
-			},
-			mom = {
-				app_id = "218620",
-				no_install = true
-			},
-			ant = {
-				no_install = true,
-				app_id = "489570",
-				external = true
-			},
-			pn2 = {
-				app_id = "618940",
-				no_install = true
-			},
-			max = {
-				app_id = "218620",
-				no_install = true
-			},
-			trk = {
-				app_id = "218620",
-				no_install = true
-			},
-			dgm = {
-				app_id = "218620",
-				no_install = true
-			},
-			ztm = {
-				app_id = "735640",
-				no_install = true
-			},
-			joy = {
-				app_id = "218620",
-				no_install = true
-			},
-			raidww2_clan = {source_id = "103582791460014708"},
-			fdm = {
-				app_id = "707620",
-				no_install = true
-			},
-			ecp = {
-				app_id = "758420",
-				no_install = true
-			},
-			cmo = {
-				app_id = "218620",
-				no_install = true
-			},
-			cmt = {
-				app_id = "218620",
-				no_install = true
-			},
-			pbm = {
-				app_id = "735630",
-				no_install = true
-			},
-			dnm = {
-				app_id = "218620",
-				no_install = true
-			},
-			wwh = {
-				app_id = "218620",
-				no_install = true
-			},
-			myh = {
-				app_id = "218620",
-				no_install = true
-			},
-			fgl = {
-				app_id = "218620",
-				no_install = true
-			},
-			osa = {
-				app_id = "218620",
-				no_install = true
-			},
-			ami = {
-				app_id = "218620",
-				no_install = true
-			},
-			gwm = {
-				app_id = "218620",
-				no_install = true
-			},
-			dmg = {
-				app_id = "218620",
-				no_install = true
-			},
-			ggac = {
-				app_id = "218620",
-				no_install = true
-			},
-			pmp = {
-				app_id = "218620",
-				no_install = true
+		Global.dlc_manager = {
+			all_dlc_data = {
+				full_game = {
+					app_id = "218620",
+					verified = true
+				},
+				preorder = {
+					app_id = "247450",
+					no_install = true
+				},
+				career_criminal_edition = {
+					app_id = "218630",
+					no_install = true
+				},
+				alienware_alpha = {
+					app_id = "328861",
+					no_install = true
+				},
+				alienware_alpha_promo = {
+					app_id = "318720",
+					no_install = true
+				},
+				soundtrack = {
+					app_id = "254260",
+					no_install = true
+				},
+				pdth_soundtrack = {
+					app_id = "207816",
+					no_install = true
+				},
+				armored_transport = {
+					app_id = "264610",
+					no_install = true
+				},
+				gage_pack = {
+					app_id = "267380",
+					no_install = true
+				},
+				gage_pack_lmg = {
+					app_id = "275590",
+					no_install = true
+				},
+				gage_pack_jobs = {
+					app_id = "259381",
+					no_install = true
+				},
+				gage_pack_snp = {
+					app_id = "259380",
+					no_install = true
+				},
+				gage_pack_shotgun = {
+					app_id = "311050",
+					no_install = true
+				},
+				gage_pack_assault = {
+					app_id = "320030",
+					no_install = true
+				},
+				overkill_pack = {
+					app_id = "348090",
+					no_install = true
+				},
+				complete_overkill_pack = {
+					app_id = "348091",
+					no_install = true
+				},
+				akm4_pack = {
+					app_id = "351890",
+					no_install = true
+				},
+				big_bank = {
+					app_id = "306690",
+					no_install = true
+				},
+				hl_miami = {
+					app_id = "323500",
+					no_install = true
+				},
+				hlm_game = {
+					no_install = true,
+					app_id = "219150",
+					external = true
+				},
+				hlm2 = {
+					no_install = true,
+					app_id = "274170",
+					external = true
+				},
+				hlm2_deluxe = {
+					no_install = true,
+					app_id = "355390",
+					external = true
+				},
+				hlm2_aus = {
+					no_install = true,
+					app_id = "338951",
+					external = true
+				},
+				speedrunners = {
+					no_install = true,
+					app_id = "207140",
+					external = true
+				},
+				character_pack_clover = {
+					app_id = "337661",
+					no_install = true
+				},
+				character_pack_dragan = {
+					app_id = "344140",
+					no_install = true
+				},
+				character_pack_sokol = {
+					app_id = "374301",
+					no_install = true
+				},
+				hope_diamond = {
+					app_id = "337660",
+					no_install = true
+				},
+				the_bomb = {
+					app_id = "339480",
+					no_install = true
+				},
+				bbq = {
+					app_id = "358150",
+					no_install = true
+				},
+				west = {
+					app_id = "349830",
+					no_install = true
+				},
+				arena = {
+					app_id = "366660",
+					no_install = true
+				},
+				kenaz = {
+					app_id = "374300",
+					no_install = true
+				},
+				turtles = {
+					app_id = "384021",
+					no_install = true
+				},
+				dragon = {
+					app_id = "384020",
+					no_install = true
+				},
+				berry = {
+					app_id = "422400",
+					no_install = true
+				},
+				xmas_soundtrack = {
+					app_id = "267381",
+					no_install = true
+				},
+				bsides_soundtrack = {
+					app_id = "368870",
+					no_install = true
+				},
+				twitch_pack = {
+					app_id = "306110",
+					no_install = true
+				},
+				humble_pack2 = {
+					app_id = "331040",
+					no_install = true
+				},
+				humble_pack3 = {
+					app_id = "375380",
+					no_install = true
+				},
+				humble_pack4 = {
+					app_id = "375381",
+					no_install = true
+				},
+				e3_s15a = {
+					app_id = "375382",
+					no_install = true
+				},
+				e3_s15b = {
+					app_id = "375383",
+					no_install = true
+				},
+				e3_s15c = {
+					app_id = "375384",
+					no_install = true
+				},
+				e3_s15d = {
+					app_id = "375385",
+					no_install = true
+				},
+				pdcon_2015 = {
+					app_id = "338950",
+					no_install = true
+				},
+				gage_pack_historical = {
+					app_id = "331900",
+					no_install = true
+				},
+				steel = {
+					app_id = "401650",
+					no_install = true
+				},
+				bobblehead = {
+					app_id = "328860",
+					no_install = true
+				},
+				peta = {
+					app_id = "433730",
+					no_install = true
+				},
+				pal = {
+					no_install = true,
+					app_id = "441600",
+					external = true
+				},
+				opera = {
+					app_id = "468410",
+					no_install = true
+				},
+				jigg = {
+					app_id = "486610",
+					no_install = true
+				},
+				wild = {
+					app_id = "450660",
+					no_install = true
+				},
+				born = {
+					app_id = "487210",
+					no_install = true
+				},
+				dbd_deluxe = {
+					no_install = true,
+					app_id = "489980",
+					external = true
+				},
+				pim = {
+					app_id = "545100",
+					no_install = true
+				},
+				rota = {
+					app_id = "218620",
+					no_install = true
+				},
+				gotti_bundle = {
+					app_id = "218620",
+					no_install = true
+				},
+				nyck_bundle = {
+					app_id = "218620",
+					no_install = true
+				},
+				sparkle = {
+					app_id = "532810",
+					no_install = true
+				},
+				urf_bundle = {
+					app_id = "218620",
+					no_install = true
+				},
+				tango = {
+					app_id = "548420",
+					no_install = true
+				},
+				friend = {
+					app_id = "548421",
+					no_install = true
+				},
+				chico = {
+					app_id = "548422",
+					no_install = true
+				},
+				rvd = {
+					app_id = "218620",
+					no_install = true
+				},
+				pd2_clan = {
+					source_id = "103582791433980119"
+				},
+				dbd_clan = {
+					source_id = "103582791441335905"
+				},
+				solus_clan = {
+					source_id = "103582791438562929"
+				},
+				pdcon_2016 = {
+					app_id = "552490",
+					no_install = true
+				},
+				win_bundle = {
+					app_id = "218620",
+					no_install = true
+				},
+				swm = {
+					app_id = "588130",
+					no_install = true
+				},
+				yor_bundle = {
+					app_id = "218620",
+					no_install = true
+				},
+				sha = {
+					app_id = "218620",
+					no_install = true
+				},
+				spa = {
+					app_id = "591710",
+					no_install = true
+				},
+				grv = {
+					app_id = "612900",
+					no_install = true
+				},
+				amp = {
+					app_id = "218620",
+					no_install = true
+				},
+				mp2 = {
+					app_id = "218620",
+					no_install = true
+				},
+				mom = {
+					app_id = "218620",
+					no_install = true
+				},
+				ant = {
+					no_install = true,
+					app_id = "489570",
+					external = true
+				},
+				pn2 = {
+					app_id = "618940",
+					no_install = true
+				},
+				max = {
+					app_id = "218620",
+					no_install = true
+				},
+				trk = {
+					app_id = "218620",
+					no_install = true
+				},
+				dgm = {
+					app_id = "218620",
+					no_install = true
+				},
+				ztm = {
+					app_id = "735640",
+					no_install = true
+				},
+				joy = {
+					app_id = "218620",
+					no_install = true
+				},
+				raidww2_clan = {
+					source_id = "103582791460014708"
+				},
+				fdm = {
+					app_id = "707620",
+					no_install = true
+				},
+				ecp = {
+					app_id = "758420",
+					no_install = true
+				},
+				cmo = {
+					app_id = "218620",
+					no_install = true
+				},
+				cmt = {
+					app_id = "218620",
+					no_install = true
+				},
+				pbm = {
+					app_id = "735630",
+					no_install = true
+				},
+				dnm = {
+					app_id = "218620",
+					no_install = true
+				},
+				wwh = {
+					app_id = "218620",
+					no_install = true
+				},
+				myh = {
+					app_id = "218620",
+					no_install = true
+				},
+				fgl = {
+					app_id = "218620",
+					no_install = true
+				},
+				osa = {
+					app_id = "218620",
+					no_install = true
+				},
+				ami = {
+					app_id = "218620",
+					no_install = true
+				},
+				gwm = {
+					app_id = "218620",
+					no_install = true
+				},
+				dmg = {
+					app_id = "218620",
+					no_install = true
+				},
+				ggac = {
+					app_id = "218620",
+					no_install = true
+				},
+				pmp = {
+					app_id = "218620",
+					no_install = true
+				},
+				ghm = {
+					app_id = "218620",
+					no_install = true
+				}
 			}
 		}
 
@@ -1955,7 +2004,6 @@ function WINDLCManager:check_pdth(clbk)
 	Global.dlc_manager.has_pdth = has_pdth
 
 	if has_pdth then
-
 		local function result_function(success, page)
 			if success then
 				local json_reply_match = "\"([^,:\"]+)\"%s*:%s*\"([^\"]+)\""
@@ -2018,4 +2066,3 @@ function WINDLCManager:chk_content_updated()
 end
 
 require("lib/managers/dlc/DLCManagerGeneratedData")
-

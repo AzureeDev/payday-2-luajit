@@ -9,8 +9,9 @@ ArmorSkinEditor.texture_types = {
 }
 
 function ArmorSkinEditor:init()
-	Global.armor_skin_editor = {}
-	Global.armor_skin_editor.skins = {}
+	Global.armor_skin_editor = {
+		skins = {}
+	}
 	self._global = Global.armor_skin_editor
 	self._current_skin = 1
 	self._active = false
@@ -158,6 +159,7 @@ end
 function ArmorSkinEditor:set_ignore_unsaved(ignore)
 	self._ignore_unsaved = ignore
 end
+
 ArmorSkinEditor.get_texture_list = SkinEditor.get_texture_list
 ArmorSkinEditor.get_texture_list_by_type = SkinEditor.get_texture_list_by_type
 ArmorSkinEditor.load_textures = SkinEditor.load_textures
@@ -199,6 +201,7 @@ function ArmorSkinEditor:apply_changes_to_character(data)
 		character:base():_apply_cosmetics({})
 	end
 end
+
 ArmorSkinEditor.remove_texture_by_name = SkinEditor.remove_texture_by_name
 ArmorSkinEditor.get_all_applied_textures = SkinEditor.get_all_applied_textures
 ArmorSkinEditor.remove_literal_paths = SkinEditor.remove_literal_paths
@@ -227,6 +230,7 @@ function ArmorSkinEditor:get_current_item_tags()
 
 	return tags
 end
+
 ArmorSkinEditor.hide_screenshot_bg = SkinEditor.hide_screenshot_bg
 ArmorSkinEditor.leave_screenshot_mode = SkinEditor.leave_screenshot_mode
 ArmorSkinEditor.get_screenshot_name = SkinEditor.get_screenshot_name
@@ -303,11 +307,17 @@ function ArmorSkinEditor:publish_skin(skin, title, desc, changelog, callb)
 				Steam:overlay_activate("url", "steam://url/CommunityFilePage/" .. id)
 			end
 		else
-			local dialog_data = {title = managers.localization:text("dialog_error_title")}
+			local dialog_data = {
+				title = managers.localization:text("dialog_error_title")
+			}
 			local result_text = managers.localization:exists(result) and managers.localization:text(result) or result
 			dialog_data.text = managers.localization:text("debug_wskn_submit_failed") .. "\n" .. result_text
-			local ok_button = {text = managers.localization:text("dialog_ok")}
-			dialog_data.button_list = {ok_button}
+			local ok_button = {
+				text = managers.localization:text("dialog_ok")
+			}
+			dialog_data.button_list = {
+				ok_button
+			}
 
 			managers.system_menu:show(dialog_data)
 		end
@@ -424,4 +434,3 @@ function ArmorSkinEditor:publish_skin(skin, title, desc, changelog, callb)
 		sub("success")
 	end
 end
-

@@ -39,7 +39,7 @@ function ListenerManager:get_closest_listener_position(position)
 
 		if alive(distance_obj) then
 			local obj_position = distance_obj:position()
-			local obj_distance = (obj_position - position):length()
+			local obj_distance = obj_position - position:length()
 
 			if not closest_distance or obj_distance < closest_distance then
 				closest_position = obj_position
@@ -437,4 +437,3 @@ function ListenerManager:debug_print()
 		cat_debug("debug", tostring(stack_id) .. ": " .. tostring(stack:to_string()))
 	end
 end
-

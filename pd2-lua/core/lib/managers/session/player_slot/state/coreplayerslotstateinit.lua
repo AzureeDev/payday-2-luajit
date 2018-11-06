@@ -19,4 +19,3 @@ function Init:transition()
 		return CorePlayerSlotStateDetectLocalUser.DetectLocalUser
 	end
 end
-

@@ -274,4 +274,3 @@ function CoreCutsceneOptimizer:_problem_map()
 
 	return problem_map
 end
-

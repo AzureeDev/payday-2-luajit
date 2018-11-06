@@ -31,4 +31,3 @@ function ElementDisableShout:on_executed(instigator)
 
 	ElementDisableShout.super.on_executed(self, instigator)
 end
-

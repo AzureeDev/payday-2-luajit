@@ -5,7 +5,9 @@ function CivilianLogicEscort.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 
 	data.unit:brain():set_update_enabled_state(true)
 
@@ -212,7 +214,9 @@ function CivilianLogicEscort._get_objective_path_data(data, my_data)
 
 	if path_data then
 		if path_style == "precise" then
-			local path = {mvector3.copy(data.m_pos)}
+			local path = {
+				mvector3.copy(data.m_pos)
+			}
 
 			for _, point in ipairs(path_data.points) do
 				table.insert(path, point.position)
@@ -224,7 +228,9 @@ function CivilianLogicEscort._get_objective_path_data(data, my_data)
 			local end_pos = mvector3.copy(path[#path])
 			local end_seg = managers.navigation:get_nav_seg_from_pos(end_pos)
 			my_data.coarse_path = {
-				{start_seg},
+				{
+					start_seg
+				},
 				{
 					end_seg,
 					end_pos
@@ -234,7 +240,11 @@ function CivilianLogicEscort._get_objective_path_data(data, my_data)
 			local t_ins = table.insert
 			my_data.coarse_path_index = 1
 			local start_seg = data.unit:movement():nav_tracker():nav_segment()
-			my_data.coarse_path = {{start_seg}}
+			my_data.coarse_path = {
+				{
+					start_seg
+				}
+			}
 			local coarse_path = my_data.coarse_path
 			local points = path_data.points
 			local i_point = 1
@@ -256,7 +266,9 @@ function CivilianLogicEscort._get_objective_path_data(data, my_data)
 			local end_pos = mvector3.copy(path_data.points[#path_data.points].position)
 			local end_seg = managers.navigation:get_nav_seg_from_pos(end_pos)
 			my_data.coarse_path = {
-				{start_seg},
+				{
+					start_seg
+				},
 				{
 					end_seg,
 					end_pos
@@ -341,10 +353,11 @@ function CivilianLogicEscort._begin_stand_hesitant_action(data, my_data)
 end
 
 function CivilianLogicEscort._get_all_paths(data)
-	return {advance_path = data.internal_data.advance_path}
+	return {
+		advance_path = data.internal_data.advance_path
+	}
 end
 
 function CivilianLogicEscort._set_verified_paths(data, verified_paths)
 	data.internal_data.stare_path = verified_paths.stare_path
 end
-

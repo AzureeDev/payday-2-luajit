@@ -43,7 +43,9 @@ end
 
 function LightLoadingSetup:_init_vr_camera()
 	local pos, rot = VRManager:hmd_pose()
-	self._initial_pose = {position = Vector3(pos.x, pos.y, 140)}
+	self._initial_pose = {
+		position = Vector3(pos.x, pos.y, 140)
+	}
 
 	VRManager:set_output_scaling(1, 1)
 end
@@ -55,7 +57,7 @@ function LightLoadingSetup:_update_vr_camera()
 	self._camera:set_position(pos)
 	self._camera:set_rotation(rot)
 end
+
 setup = setup or LightLoadingSetup:new()
 
 setup:make_entrypoint()
-

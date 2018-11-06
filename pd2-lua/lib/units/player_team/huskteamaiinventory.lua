@@ -3,6 +3,7 @@ HuskTeamAIInventory.preload_mask = TeamAIInventory.preload_mask
 HuskTeamAIInventory.clbk_mask_unit_loaded = TeamAIInventory.clbk_mask_unit_loaded
 HuskTeamAIInventory._reset_mask_visibility = TeamAIInventory._reset_mask_visibility
 HuskTeamAIInventory._ensure_weapon_visibility = TeamAIInventory._ensure_weapon_visibility
+HuskTeamAIInventory.set_visibility_state = TeamAIInventory.set_visibility_state
 
 function HuskTeamAIInventory:add_unit_by_name(new_unit_name, equip)
 	local new_unit = World:spawn_unit(new_unit_name, Vector3(), Rotation())
@@ -39,4 +40,3 @@ function HuskTeamAIInventory:equip_selection(selection_index, instant)
 
 	return res
 end
-

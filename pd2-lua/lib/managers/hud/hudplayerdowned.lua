@@ -8,7 +8,9 @@ function HUDPlayerDowned:init(hud)
 		self._hud_panel:remove(self._hud_panel:child("downed_panel"))
 	end
 
-	local downed_panel = self._hud_panel:panel({name = "downed_panel"})
+	local downed_panel = self._hud_panel:panel({
+		name = "downed_panel"
+	})
 	local timer_msg = downed_panel:text({
 		text = "BLEH BLEH IN",
 		vertical = "center",
@@ -44,7 +46,9 @@ function HUDPlayerDowned:init(hud)
 end
 
 function HUDPlayerDowned:set_arrest_finished_text()
-	self._hud.arrest_finished_text:set_text(utf8.to_upper(managers.localization:text("hud_instruct_finish_arrest", {BTN_INTERACT = managers.localization:btn_macro("interact")})))
+	self._hud.arrest_finished_text:set_text(utf8.to_upper(managers.localization:text("hud_instruct_finish_arrest", {
+		BTN_INTERACT = managers.localization:btn_macro("interact")
+	})))
 end
 
 function HUDPlayerDowned:on_downed()
@@ -96,4 +100,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDPlayerDownedVR")
 end
-

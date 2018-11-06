@@ -51,6 +51,7 @@ end
 
 function CustomSafehouseGuiItem:flash()
 end
+
 CustomSafehouseGuiTabItem = CustomSafehouseGuiTabItem or class(CustomSafehouseGuiItem)
 
 function CustomSafehouseGuiTabItem:init(index, title_id, page_item, gui, tab_x, tab_panel)
@@ -130,6 +131,7 @@ function CustomSafehouseGuiTabItem:refresh()
 		self._page_panel:child("PageTabBG"):set_visible(self._active)
 	end
 end
+
 CustomSafehouseGuiPage = CustomSafehouseGuiPage or class(CustomSafehouseGuiItem)
 
 function CustomSafehouseGuiPage:init(page_id, page_panel, fullscreen_panel, gui)
@@ -143,7 +145,9 @@ function CustomSafehouseGuiPage:init(page_id, page_panel, fullscreen_panel, gui)
 	self._info_panel = gui:info_panel():panel({})
 	self._event_listener = gui:event_listener()
 
-	self._event_listener:add(page_id, {"refresh"}, callback(self, self, "refresh"))
+	self._event_listener:add(page_id, {
+		"refresh"
+	}, callback(self, self, "refresh"))
 	self:refresh()
 end
 
@@ -245,6 +249,7 @@ function CustomSafehouseGuiPage:get_legend()
 		"back"
 	}
 end
+
 CustomSafehouseGuiButtonItem = CustomSafehouseGuiButtonItem or class(CustomSafehouseGuiItem)
 
 function CustomSafehouseGuiButtonItem:init(panel, data, x, priority)
@@ -392,6 +397,7 @@ function CustomSafehouseGuiButtonItem:set_hidden(hidden)
 
 	self._panel:set_visible(not hidden)
 end
+
 CustomSafehouseGuiButtonItemWithIcon = CustomSafehouseGuiButtonItemWithIcon or class(CustomSafehouseGuiButtonItem)
 
 function CustomSafehouseGuiButtonItemWithIcon:init(panel, data, x, priority)
@@ -444,4 +450,3 @@ function CustomSafehouseGuiButtonItemWithIcon:set_selected(selected, play_sound)
 		end
 	end
 end
-

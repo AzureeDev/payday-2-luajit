@@ -51,6 +51,7 @@ end
 
 function MenuGuiItem:flash()
 end
+
 MenuGuiTabItem = MenuGuiTabItem or class(MenuGuiItem)
 MenuGuiTabItem.FONT = medium_font
 MenuGuiTabItem.FONT_SIZE = medium_font_size
@@ -135,6 +136,7 @@ function MenuGuiTabItem:refresh()
 		self._page_panel:child("PageTabBG"):set_visible(self._active)
 	end
 end
+
 MenuGuiSmallTabItem = MenuGuiSmallTabItem or class(MenuGuiTabItem)
 MenuGuiSmallTabItem.FONT = small_font
 MenuGuiSmallTabItem.FONT_SIZE = small_font_size
@@ -156,7 +158,9 @@ function MenuGuiTabPage:init(page_id, page_panel, fullscreen_panel, gui)
 	if gui.event_listener then
 		self._event_listener = gui:event_listener()
 
-		self._event_listener:add(page_id, {"refresh"}, callback(self, self, "refresh"))
+		self._event_listener:add(page_id, {
+			"refresh"
+		}, callback(self, self, "refresh"))
 	end
 
 	self:refresh()
@@ -260,6 +264,7 @@ function MenuGuiTabPage:get_legend()
 		"back"
 	}
 end
+
 MenuGuiButtonItem = MenuGuiButtonItem or class(MenuGuiItem)
 
 function MenuGuiButtonItem:init(panel, data, x, priority)
@@ -342,4 +347,3 @@ function MenuGuiButtonItem:trigger()
 	MenuGuiButtonItem.super.trigger(self)
 	self._callback()
 end
-

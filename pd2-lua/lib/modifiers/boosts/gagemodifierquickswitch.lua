@@ -13,4 +13,3 @@ function GageModifierQuickSwitch:modify_value(id, value)
 
 	return value
 end
-

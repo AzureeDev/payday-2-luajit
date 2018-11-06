@@ -3,7 +3,9 @@ core:import("CoreControllerWrapper")
 
 ControllerWrapperGamepad = ControllerWrapperGamepad or class(CoreControllerWrapper.ControllerWrapper)
 ControllerWrapperGamepad.TYPE = "gamepad"
-ControllerWrapperGamepad.CONTROLLER_TYPE_LIST = {"win32_game_controller"}
+ControllerWrapperGamepad.CONTROLLER_TYPE_LIST = {
+	"win32_game_controller"
+}
 ControllerWrapperGamepad.IDS_POV_0 = Idstring("pov 0")
 ControllerWrapperGamepad.IDS_AXIS = Idstring("axis")
 ControllerWrapperGamepad.IDS_RANGE = Idstring("range")
@@ -27,7 +29,9 @@ function ControllerWrapperGamepad:init(manager, id, name, controller, setup, deb
 		gamepad = controller,
 		keyboard = Input:keyboard(),
 		mouse = Input:mouse()
-	}, "gamepad", setup, debug, skip_virtual_controller, {gamepad = func_map})
+	}, "gamepad", setup, debug, skip_virtual_controller, {
+		gamepad = func_map
+	})
 end
 
 function ControllerWrapperGamepad:virtual_connect_up(controller_id, controller, input_name, connection_name, connection)
@@ -169,4 +173,3 @@ function ControllerWrapperGamepad:get_input_axis(connection_name)
 
 	return cache
 end
-

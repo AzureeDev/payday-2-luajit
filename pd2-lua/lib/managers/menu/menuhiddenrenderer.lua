@@ -20,4 +20,3 @@ function MenuHiddenRenderer:hide()
 	MenuHiddenRenderer.super.hide(self)
 	self._main_panel:root():hide()
 end
-

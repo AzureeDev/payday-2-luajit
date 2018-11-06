@@ -287,7 +287,9 @@ function CopActionTase:update(t)
 					if not vis_ray then
 						self._common_data.ext_network:send("action_tase_event", 3)
 
-						local attack_data = {attacker_unit = self._unit}
+						local attack_data = {
+							attacker_unit = self._unit
+						}
 
 						self._attention.unit:character_damage():damage_tase(attack_data)
 						CopDamage._notify_listeners("on_criminal_tased", self._unit, self._attention.unit)
@@ -377,4 +379,3 @@ function CopActionTase:clbk_malfunction()
 
 	self._unit:character_damage():damage_melee(action_data)
 end
-

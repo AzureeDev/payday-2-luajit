@@ -73,7 +73,7 @@ function HostStateInGame:on_join_request_received(data, peer_name, client_prefer
 		return
 	end
 
-	if tweak_data.max_players - 1 <= table.size(data.peers) then
+	if table.size(data.peers) >= tweak_data.max_players - 1 then
 		print("server is full")
 		self:_send_request_denied(sender, 5, my_user_id)
 
@@ -102,7 +102,12 @@ function HostStateInGame:on_join_request_received(data, peer_name, client_prefer
 	new_peer:set_join_attempt_identifier(join_attempt_identifier)
 
 	local new_peer_rpc = nil
-	new_peer_rpc = managers.network:protocol_type() == "TCP_IP" and managers.network:session():resolve_new_peer_rpc(new_peer, sender) or sender
+
+	if managers.network:protocol_type() == "TCP_IP" then
+		new_peer_rpc = managers.network:session():resolve_new_peer_rpc(new_peer, sender)
+	else
+		new_peer_rpc = sender
+	end
 
 	new_peer:set_rpc(new_peer_rpc)
 	new_peer:set_ip_verified(true)
@@ -189,4 +194,3 @@ end
 function HostStateInGame:is_joinable(data)
 	return not data.wants_to_load_level
 end
-

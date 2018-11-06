@@ -69,12 +69,16 @@ function PromotionalMenuButton:_setup_selection(parent_gui, panel, params, theme
 		h = corner_size
 	}))
 
-	self._selection_outline = BoxGuiObject:new(self._panel:panel({layer = 100}), theme.selection_outline_sides or {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._selection_outline = BoxGuiObject:new(self._panel:panel({
+		layer = 100
+	}), theme.selection_outline_sides or {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 end
 
 function PromotionalMenuButton:_setup_titles(parent_gui, panel, params, theme)
@@ -264,10 +268,11 @@ function PromotionalMenuButton:set_selected(selected, force)
 	end
 
 	if alive(self._bg_image) then
+		local w = self._bg_image_size[1]
 		local h = self._bg_image_size[2]
 
 		if selected then
-			local w = self._bg_image_size[1] * self._zoom_factor
+			w = w * self._zoom_factor
 			h = h * self._zoom_factor
 		end
 
@@ -296,24 +301,32 @@ function PromotionalMenuButton:animate_image_size(img, target_w, target_h, durat
 		img:set_center(self._panel:w() * 0.5, self._panel:h() * 0.5)
 	end)
 end
+
 RaidPromotionalMenuButton = RaidPromotionalMenuButton or class(PromotionalMenuButton)
 
 function RaidPromotionalMenuButton:_setup_selection(parent_gui, panel, params, theme)
 	self._corner_rects = {}
 
 	if not theme.selection_outline_sides then
-		local config = {sides = {
-			1,
-			1,
-			1,
-			1
-		}}
+		local config = {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		}
 	end
 
 	config.texture = "guis/textures/test_blur_df"
-	local unselected_outline = BoxGuiObject:new(self._panel:panel({layer = 99}), config)
-	self._selection_outline = BoxGuiObject:new(self._panel:panel({layer = 100}), config)
+	local unselected_outline = BoxGuiObject:new(self._panel:panel({
+		layer = 99
+	}), config)
+	self._selection_outline = BoxGuiObject:new(self._panel:panel({
+		layer = 100
+	}), config)
 end
+
 RaidPromotionalMenuFloatingButton = RaidPromotionalMenuFloatingButton or class(PromotionalMenuButton)
 
 function RaidPromotionalMenuFloatingButton:_setup_panel(panel, params)
@@ -342,6 +355,7 @@ end
 
 function RaidPromotionalMenuFloatingButton:_setup_selection(parent_gui, panel, params, theme)
 end
+
 PromotionalMenuUnselectableButton = PromotionalMenuUnselectableButton or class(PromotionalMenuButton)
 
 function PromotionalMenuUnselectableButton:_setup_selection(parent_gui, panel, params, theme)
@@ -360,6 +374,7 @@ end
 
 function PromotionalMenuUnselectableButton:trigger()
 end
+
 PromotionalMenuSeperatorRaid = PromotionalMenuSeperatorRaid or class(PromotionalMenuButton)
 
 function PromotionalMenuSeperatorRaid:setup(parent_gui, panel, params, theme)
@@ -424,4 +439,3 @@ end
 
 function PromotionalMenuSeperatorRaid:trigger()
 end
-

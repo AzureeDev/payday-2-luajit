@@ -24,4 +24,3 @@ end
 function HUDHeistTimerVR:show()
 	self._heist_timer_panel:show()
 end
-

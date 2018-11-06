@@ -31,4 +31,3 @@ function NetworkBaseExtension:peer()
 		return managers.network:session():peer_by_unit(self._unit)
 	end
 end
-

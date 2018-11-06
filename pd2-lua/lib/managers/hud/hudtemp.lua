@@ -152,7 +152,9 @@ function HUDTemp:init(hud)
 end
 
 function HUDTemp:set_throw_bag_text()
-	self._temp_panel:child("throw_instruction"):set_text(utf8.to_upper(managers.localization:text("hud_instruct_throw_bag", {BTN_USE_ITEM = managers.localization:btn_macro("use_item")})))
+	self._temp_panel:child("throw_instruction"):set_text(utf8.to_upper(managers.localization:text("hud_instruct_throw_bag", {
+		BTN_USE_ITEM = managers.localization:btn_macro("use_item")
+	})))
 end
 
 function HUDTemp:_bag_panel_bottom()
@@ -367,4 +369,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDTempVR")
 end
-

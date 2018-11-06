@@ -108,14 +108,18 @@ function LootDropScreenGui:set_state(state)
 		self._is_alone = true
 
 		self:close_network()
-		managers.menu:show_peer_kicked_dialog({ok_func = callback(self, self, "on_server_left_ok_pressed")})
+		managers.menu:show_peer_kicked_dialog({
+			ok_func = callback(self, self, "on_server_left_ok_pressed")
+		})
 	elseif id_state == Idstring("on_disconnected") then
 		self._lootscreen_hud:clear_other_peers(self._id)
 
 		self._is_alone = true
 
 		self:close_network()
-		managers.menu:show_mp_disconnected_internet_dialog({ok_func = callback(self, self, "on_server_left_ok_pressed")})
+		managers.menu:show_mp_disconnected_internet_dialog({
+			ok_func = callback(self, self, "on_server_left_ok_pressed")
+		})
 	else
 		Application:error("LootDropScreenGui:set_state: unrecognizable state", state)
 	end
@@ -187,7 +191,9 @@ function LootDropScreenGui:check_all_ready()
 		end
 
 		local continue_button = managers.menu:is_pc_controller() and "[ENTER]" or nil
-		local text = managers.localization:to_upper_text(text_id, {CONTINUE = continue_button})
+		local text = managers.localization:to_upper_text(text_id, {
+			CONTINUE = continue_button
+		})
 
 		self._continue_button:set_text(text)
 
@@ -236,7 +242,10 @@ function LootDropScreenGui:update(t, dt)
 			end
 		elseif self._time_left then
 			self._time_left = math.max(self._time_left - dt, 0)
-			self._time_left = self._card_chosen and 0
+
+			if self._card_chosen then
+				self._time_left = 0
+			end
 
 			if self._time_left > 10 then
 				self._time_left_text:set_text(string.format("%1d", self._time_left))
@@ -552,6 +561,7 @@ function LootDropScreenGui:reload()
 	self:close()
 	LootDropScreenGui.init(self, self._safe_workspace, self._full_workspace, self._lootscreen_hud)
 end
+
 CasinoLootDropScreenGui = CasinoLootDropScreenGui or class(LootDropScreenGui)
 
 function CasinoLootDropScreenGui:init(saferect_ws, fullrect_ws, lootscreen_hud, saved_state)
@@ -583,4 +593,3 @@ function CasinoLootDropScreenGui:set_layer(layer)
 	self._fullscreen_panel:set_layer(layer)
 	self._panel:set_layer(layer)
 end
-

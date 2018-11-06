@@ -116,4 +116,3 @@ function parse_value_node(node)
 
 	return value_name, CoreMath.string_to_value(type, val)
 end
-

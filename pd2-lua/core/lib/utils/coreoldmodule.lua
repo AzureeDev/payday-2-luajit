@@ -9,4 +9,3 @@ function core_or_local(name, ...)
 
 	return metatable and metatable:new(...)
 end
-

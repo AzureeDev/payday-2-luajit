@@ -18,4 +18,3 @@ function GageModifierQuickLocks:modify_value(id, value, interact_object)
 
 	return value
 end
-

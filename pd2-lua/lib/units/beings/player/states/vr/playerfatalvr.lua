@@ -86,4 +86,3 @@ function PlayerFatalVR:set_belt_and_hands_enabled(enabled)
 		end
 	end
 end
-

@@ -91,4 +91,3 @@ end
 function ListenerHolder:is_empty()
 	return not self._listeners
 end
-

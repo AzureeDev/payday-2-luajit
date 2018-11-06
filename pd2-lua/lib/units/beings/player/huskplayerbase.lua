@@ -54,6 +54,31 @@ function HuskPlayerBase:load(data)
 	self._concealment_modifier = nil
 end
 
+function HuskPlayerBase:save(data)
+	data.upgrades = {}
+	data.temporary_upgrades = {}
+
+	for category, upgrades in pairs(self._upgrade_levels) do
+		for upgrade, level in pairs(upgrades) do
+			data.upgrades[category] = data.upgrades[category] or {}
+			data.upgrades[category][upgrade] = level
+		end
+	end
+
+	for category, upgrades in pairs(self._temporary_upgrades_map) do
+		for upgrade, index in pairs(upgrades) do
+			data.temporary_upgrades[category] = data.temporary_upgrades[category] or {}
+			local level = self._temporary_upgrades[index] and self._temporary_upgrades[index].level or 1
+			data.temporary_upgrades[category][upgrade] = {
+				index = index,
+				level = level
+			}
+		end
+	end
+
+	data.concealment_modifier = managers.blackmarket:get_concealment_of_peer(managers.network:session():peer_by_unit(self._unit))
+end
+
 function HuskPlayerBase:set_upgrade_value(category, upgrade, level)
 	self._upgrades[category] = self._upgrades[category] or {}
 	self._upgrade_levels[category] = self._upgrade_levels[category] or {}
@@ -94,7 +119,8 @@ function HuskPlayerBase:set_temporary_upgrade_owned(category, upgrade, level, in
 	self._temporary_upgrades_map[category][upgrade] = index
 	self._temporary_upgrades[index] = {
 		value = upgrade_values[1],
-		time = upgrade_values[2]
+		time = upgrade_values[2],
+		level = level
 	}
 end
 
@@ -159,4 +185,3 @@ end
 
 function HuskPlayerBase:chk_freeze_anims()
 end
-

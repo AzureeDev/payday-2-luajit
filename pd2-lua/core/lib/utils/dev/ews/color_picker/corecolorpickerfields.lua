@@ -135,13 +135,21 @@ end
 function ColorPickerFields:_create_rgb_fields(parent_frame)
 	local fields = {
 		"Red",
-		{max = 255},
+		{
+			max = 255
+		},
 		"Green",
-		{max = 255},
+		{
+			max = 255
+		},
 		"Blue",
-		{max = 255},
+		{
+			max = 255
+		},
 		"Alpha",
-		{max = 255}
+		{
+			max = 255
+		}
 	}
 
 	return self:_create_panel_with_fields(parent_frame, fields)
@@ -155,11 +163,17 @@ function ColorPickerFields:_create_hsv_fields(parent_frame)
 			max = 359
 		},
 		"Sat",
-		{max = 100},
+		{
+			max = 100
+		},
 		"Value",
-		{max = 100},
+		{
+			max = 100
+		},
 		"Alpha",
-		{max = 255}
+		{
+			max = 255
+		}
 	}
 
 	return self:_create_panel_with_fields(parent_frame, fields)
@@ -302,4 +316,3 @@ function ColorPickerFields:_mirroring_fields(field)
 
 	return table.exclude(my_group, field)
 end
-

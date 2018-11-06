@@ -15,7 +15,9 @@ function WireLayer:init(owner, save_name, units_vector, slot_mask)
 	self._ctrlrs = {}
 	self._mid_point_align = 0.5
 
-	self:load_unit_map_from_vector(units_vector or {"wire"})
+	self:load_unit_map_from_vector(units_vector or {
+		"wire"
+	})
 
 	self._unit_name = ""
 	self._target_name = Idstring("a_target")
@@ -90,7 +92,10 @@ function WireLayer:set_select_unit(unit)
 	WireLayer.super.set_select_unit(self, unit)
 
 	self._selected_point = nil
-	self._selected_point = self._selected_unit and self._selected_unit:get_object(self._target_name)
+
+	if self._selected_unit then
+		self._selected_point = self._selected_unit:get_object(self._target_name)
+	end
 end
 
 function WireLayer:delete_selected_unit()
@@ -134,7 +139,7 @@ function WireLayer:update(t, dt)
 		local n = ray.normal
 		local u_rot = Rotation()
 		local z = n
-		local x = (u_rot:x() - z * z:dot(u_rot:x())):normalized()
+		local x = u_rot:x() - z * z:dot(u_rot:x()):normalized()
 		local y = z:cross(x)
 		local rot = Rotation(x, y, z)
 		self._current_rot = rot
@@ -296,4 +301,3 @@ end
 function WireLayer:clear_triggers()
 	self._editor_data.virtual_controller:clear_triggers()
 end
-

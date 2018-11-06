@@ -151,4 +151,3 @@ function SubtitleTweakData:_init_moon()
 		vld_moon_32_03 = 4.02
 	}
 end
-

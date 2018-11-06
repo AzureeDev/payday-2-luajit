@@ -11,4 +11,3 @@ function HUDObjectivesVR:init(hud)
 	hud.panel = hud.old_panel
 	hud.old_panel = nil
 end
-

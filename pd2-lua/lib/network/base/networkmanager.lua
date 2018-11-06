@@ -51,7 +51,9 @@ end
 
 function NetworkManager:init()
 	self.OVERWRITEABLE_MSGS = {
-		set_look_dir = {clbk = NetworkManager.clbk_msg_overwrite},
+		set_look_dir = {
+			clbk = NetworkManager.clbk_msg_overwrite
+		},
 		criminal_hurt = {
 			clbk = PlayerDamage.clbk_msg_overwrite_criminal_hurt,
 			indexes = {}
@@ -199,7 +201,11 @@ function NetworkManager:ps3_determine_voice(lan)
 	if lan == true then
 		voice = "voice_quiet"
 	elseif PSN:is_online() then
-		voice = PSN:online_chat_allowed() and "voice_psn" or "voice_disabled"
+		if PSN:online_chat_allowed() then
+			voice = "voice_psn"
+		else
+			voice = "voice_disabled"
+		end
 	end
 
 	if self.voice_chat and self.voice_chat:voice_type() == voice then
@@ -271,8 +277,9 @@ end
 
 function NetworkManager:save()
 	if self._started then
-		Global.network = {}
-		Global.network.network_bound = self._network_bound
+		Global.network = {
+			network_bound = self._network_bound
+		}
 
 		if self._session then
 			Global.network.session_host = self._session:is_host()
@@ -487,7 +494,12 @@ function NetworkManager:on_discover_host_received(sender)
 	print("on_discover_host_received", level_id)
 
 	local my_name = nil
-	my_name = SystemInfo:platform() == Idstring("PS3") and "Player 1" or Network:hostname()
+
+	if SystemInfo:platform() == Idstring("PS3") then
+		my_name = "Player 1"
+	else
+		my_name = Network:hostname()
+	end
 
 	sender:discover_host_reply(my_name, level_id, level_name, sender:ip_at_index(0), state, difficulty)
 end
@@ -591,10 +603,12 @@ end
 function NetworkManager:search_ses()
 	PSN:set_matchmaking_callback("session_search", callback(self, self, "clbk_search_session"))
 
-	local search_params = {numbers = {
-		1,
-		3
-	}}
+	local search_params = {
+		numbers = {
+			1,
+			3
+		}
+	}
 
 	PSN:search_session(search_params, {}, PSN:get_world_list()[1].world_id)
 end
@@ -610,9 +624,13 @@ end
 function NetworkManager.clbk_msg_overwrite(overwrite_data, msg_queue, ...)
 	if msg_queue then
 		if overwrite_data.index then
-			msg_queue[overwrite_data.index] = {...}
+			msg_queue[overwrite_data.index] = {
+				...
+			}
 		else
-			table.insert(msg_queue, {...})
+			table.insert(msg_queue, {
+				...
+			})
 
 			overwrite_data.index = #msg_queue
 		end
@@ -647,7 +665,9 @@ function NetworkManager:on_peer_added(peer, peer_id)
 	end
 
 	if managers.chat then
-		managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_added", {name = peer:name()}))
+		managers.chat:feed_system_message(ChatManager.GAME, managers.localization:text("menu_chat_peer_added", {
+			name = peer:name()
+		}))
 	end
 
 	if managers.mutators then
@@ -658,4 +678,3 @@ function NetworkManager:on_peer_added(peer, peer_id)
 		peer:set_is_dropin(managers.statistics:has_session_started())
 	end
 end
-

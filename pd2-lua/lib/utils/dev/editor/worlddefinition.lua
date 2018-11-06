@@ -20,4 +20,3 @@ function WorldDefinition:get_cover_data()
 end
 
 CoreClass.override_class(CoreWorldDefinition.WorldDefinition, WorldDefinition)
-

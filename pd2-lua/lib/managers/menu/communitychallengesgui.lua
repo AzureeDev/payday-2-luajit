@@ -176,7 +176,9 @@ function CommunityChallengeProgressBar:init(parent, config)
 	})
 	self._stage_text = FineText:new(panel, {
 		blend_mode = "add",
-		text = managers.localization:to_upper_text("menu_community_challenges_stage", {stage = "I"}),
+		text = managers.localization:to_upper_text("menu_community_challenges_stage", {
+			stage = "I"
+		}),
 		font = font,
 		font_size = font_size,
 		color = color_emphasis
@@ -187,7 +189,9 @@ function CommunityChallengeProgressBar:init(parent, config)
 		font_size = font_size,
 		color = color_muted
 	})
-	self._exp_icon = panel:bitmap({texture = "guis/textures/pd2/community_challenges/experience_bonus_icon"})
+	self._exp_icon = panel:bitmap({
+		texture = "guis/textures/pd2/community_challenges/experience_bonus_icon"
+	})
 	self._progress_fill = panel:rect({
 		blend_mode = "add",
 		layer = -1,
@@ -209,7 +213,9 @@ function CommunityChallengeProgressBar:config(config)
 	})
 
 	local stage_roman = make_roman_numerals(config.stage or 1)
-	local stage_text = managers.localization:to_upper_text("menu_community_challenges_stage", {stage = stage_roman})
+	local stage_text = managers.localization:to_upper_text("menu_community_challenges_stage", {
+		stage = stage_roman
+	})
 
 	self._stage_text:set_text(stage_text)
 	self._progress_text:set_text(self:_make_progress_text())
@@ -221,7 +227,7 @@ function CommunityChallengeProgressBar:layout()
 	self._progress_text:set_leftbottom(5, self._height - 1)
 	self._stage_text:set_lefttop(self._title_text:right() + 5, 1)
 
-	local fill_max_width = (self._width - self._exp_icon:width()) - 10
+	local fill_max_width = self._width - self._exp_icon:width() - 10
 	local fill_ratio = self._target_value > 0 and self._current_value / self._target_value or 1
 
 	self._progress_fill:set_width(fill_max_width * fill_ratio)
@@ -250,6 +256,7 @@ end
 function CommunityChallengeProgressBar:get_statistic_id()
 	return self._statistic_id
 end
+
 CommunityChallengeProgressTotal = CommunityChallengeProgressTotal or class(GUIObjectWrapper)
 
 function CommunityChallengeProgressTotal:init(parent, config)
@@ -281,7 +288,9 @@ function CommunityChallengeProgressTotal:init(parent, config)
 	})
 	self._stage_text = FineText:new(panel, {
 		blend_mode = "add",
-		text = managers.localization:to_upper_text("menu_community_challenges_stage", {stage = "I"}),
+		text = managers.localization:to_upper_text("menu_community_challenges_stage", {
+			stage = "I"
+		}),
 		font = font,
 		font_size = font_size,
 		color = color_emphasis
@@ -300,7 +309,9 @@ function CommunityChallengeProgressTotal:config(config)
 	self._total_value = config.total_value or 0
 	self._additional_zeroes = config.additional_zeroes or 0
 	local stage_roman = make_roman_numerals(config.stage or 1)
-	local stage_text = managers.localization:to_upper_text("menu_community_challenges_stage", {stage = stage_roman})
+	local stage_text = managers.localization:to_upper_text("menu_community_challenges_stage", {
+		stage = stage_roman
+	})
 
 	self._stage_text:set_text(stage_text)
 	self._progress_text:set_text(self:_make_progress_text())
@@ -325,6 +336,7 @@ end
 function CommunityChallengeProgressTotal:get_statistic_id()
 	return self._statistic_id
 end
+
 CommunityChallengesGui = CommunityChallengesGui or class(GUIObjectWrapper)
 
 function CommunityChallengesGui:init(parent)
@@ -364,13 +376,17 @@ function CommunityChallengesGui:init(parent)
 
 	local active_bonus = managers.community_challenges:get_active_experience_bonus()
 	self._total_bonus_text = FineText:new(self._stats_container, {
-		text = managers.localization:to_upper_text("menu_community_challenges_active_bonus", {bonus = active_bonus * 100}),
+		text = managers.localization:to_upper_text("menu_community_challenges_active_bonus", {
+			bonus = active_bonus * 100
+		}),
 		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size,
 		color = color_text
 	})
 	self._info_text = FineText:new(self._stats_container, {
-		text = managers.localization:to_upper_text("menu_community_challenges_info_ended", {bonus = CommunityChallengesManager.PER_CHALLENGE_BONUS * 100}),
+		text = managers.localization:to_upper_text("menu_community_challenges_info_ended", {
+			bonus = CommunityChallengesManager.PER_CHALLENGE_BONUS * 100
+		}),
 		font = tweak_data.menu.pd2_tiny_font,
 		font_size = tweak_data.menu.pd2_tiny_font_size,
 		color = color_muted
@@ -382,12 +398,14 @@ function CommunityChallengesGui:init(parent)
 		layer = -1,
 		color = Color(0.3, 0, 0, 0)
 	})
-	self._bg_box = BoxGuiObject:new(self._stats_container, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	self._bg_box = BoxGuiObject:new(self._stats_container, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	local challenge_data = managers.community_challenges:get_challenge_data()
 
 	if challenge_data then
@@ -455,7 +473,8 @@ function CommunityChallengesGui:consume_community_challenges_data(data)
 
 	local active_bonus = managers.community_challenges:get_active_experience_bonus()
 
-	self._total_bonus_text:set_text(managers.localization:to_upper_text("menu_community_challenges_active_bonus", {bonus = math.round(active_bonus * 100)}))
+	self._total_bonus_text:set_text(managers.localization:to_upper_text("menu_community_challenges_active_bonus", {
+		bonus = math.round(active_bonus * 100)
+	}))
 	self:layout()
 end
-

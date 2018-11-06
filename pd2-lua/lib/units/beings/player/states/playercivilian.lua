@@ -30,12 +30,16 @@ function PlayerCivilian:_enter(enter_data)
 	end
 
 	self._unit:base():set_slot(self._unit, 4)
-	self._ext_movement:set_attention_settings({"pl_civilian"})
+	self._ext_movement:set_attention_settings({
+		"pl_civilian"
+	})
 
 	if not managers.groupai:state():enemy_weapons_hot() then
 		self._enemy_weapons_hot_listen_id = "PlayerCivilian" .. tostring(self._unit:key())
 
-		managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {"enemy_weapons_hot"}, callback(self, self, "clbk_enemy_weapons_hot"))
+		managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {
+			"enemy_weapons_hot"
+		}, callback(self, self, "clbk_enemy_weapons_hot"))
 	end
 
 	self._ext_network:send("set_stance", 1, false, false)
@@ -264,4 +268,3 @@ end
 function PlayerCivilian:_get_walk_headbob()
 	return 0.0125
 end
-

@@ -10,4 +10,3 @@ end
 function NpcVehicleStateInactive:name()
 	return NpcVehicleDrivingExt.STATE_INACTIVE
 end
-

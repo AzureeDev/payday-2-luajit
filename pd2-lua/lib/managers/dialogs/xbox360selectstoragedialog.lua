@@ -12,4 +12,3 @@ function Xbox360SelectStorageDialog:show()
 
 	return success
 end
-

@@ -372,7 +372,7 @@ function BootupState:play_next(is_skipped)
 	self._play_index = (self._play_index or 0) + 1
 	self._play_data = self._play_data_list[self._play_index]
 
-	if is_skipped then
+	if is_skipped and self._play_data then
 		while self._play_data and self._play_data.auto_skip do
 			self._play_index = self._play_index + 1
 			self._play_data = self._play_data_list[self._play_index]
@@ -412,9 +412,9 @@ function BootupState:play_next(is_skipped)
 		local padding = self._play_data.padding or 0
 
 		if self._play_data.gui then
-			if res.x / res.y < self._play_data.width / self._play_data.height then
+			if self._play_data.width / self._play_data.height > res.x / res.y then
 				width = res.x - padding * 2
-				height = (self._play_data.height * width) / self._play_data.width
+				height = self._play_data.height * width / self._play_data.width
 			else
 				height = self._play_data.height
 				width = self._play_data.width
@@ -527,4 +527,3 @@ function BootupState:at_exit()
 		PackageManager:unload("packages/boot_screen")
 	end
 end
-

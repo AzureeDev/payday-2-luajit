@@ -5,7 +5,9 @@ function CivilianLogicFlee.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
 
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
 	data.internal_data = my_data
 	my_data.detection = data.char_tweak.detection.cbt
 
@@ -81,7 +83,9 @@ function CivilianLogicFlee.enter(data, new_logic_name, enter_params)
 	if not my_data.delayed_post_react_alert_id and data.unit:movement():stance_name() == "ntl" then
 		my_data.delayed_post_react_alert_id = "postreact_alert" .. key_str
 
-		CopLogicBase.add_delayed_clbk(my_data, my_data.delayed_post_react_alert_id, callback(CivilianLogicFlee, CivilianLogicFlee, "post_react_alert_clbk", {data = data}), TimerManager:game():time() + math.lerp(4, 8, math.random()))
+		CopLogicBase.add_delayed_clbk(my_data, my_data.delayed_post_react_alert_id, callback(CivilianLogicFlee, CivilianLogicFlee, "post_react_alert_clbk", {
+			data = data
+		}), TimerManager:game():time() + math.lerp(4, 8, math.random()))
 	end
 
 	data.unit:brain():set_attention_settings(attention_settings)
@@ -162,7 +166,9 @@ function CivilianLogicFlee.update(data)
 					local cover = managers.navigation:find_cover_in_nav_seg_1(next_area.nav_segs)
 
 					if cover then
-						CopLogicAttack._set_best_cover(data, my_data, {cover})
+						CopLogicAttack._set_best_cover(data, my_data, {
+							cover
+						})
 
 						to_cover = my_data.best_cover
 					else
@@ -620,7 +626,9 @@ function CivilianLogicFlee._find_hide_cover(data)
 		end
 
 		CivilianLogicFlee._cancel_pathing(data, my_data)
-		CopLogicAttack._set_best_cover(data, my_data, {cover})
+		CopLogicAttack._set_best_cover(data, my_data, {
+			cover
+		})
 		data.unit:brain():set_update_enabled_state(true)
 		CopLogicBase._reset_attention(data)
 	elseif data.unit:anim_data().react or data.unit:anim_data().halt then
@@ -943,7 +951,7 @@ function CivilianLogicFlee._get_coarse_flee_path(data)
 
 		iterations = iterations + 1
 
-		if iterations < max_attempts then
+		if max_attempts > iterations then
 			flee_point = managers.groupai:state():safe_flee_point(data.unit:movement():nav_tracker():nav_segment(), ignore_segments)
 
 			if not flee_point then
@@ -977,7 +985,9 @@ function CivilianLogicFlee.wants_rescue(data)
 end
 
 function CivilianLogicFlee._get_all_paths(data)
-	return {flee_path = data.internal_data.flee_path}
+	return {
+		flee_path = data.internal_data.flee_path
+	}
 end
 
 function CivilianLogicFlee._set_verified_paths(data, verified_paths)
@@ -1087,4 +1097,3 @@ end
 function CivilianLogicFlee.on_police_call_success(data)
 	data.internal_data.called_the_police = true
 end
-

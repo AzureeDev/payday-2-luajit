@@ -59,4 +59,3 @@ end
 function HuskCopInventory:set_visibility_state(state)
 	CopInventory.set_visibility_state(self, state)
 end
-

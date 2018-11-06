@@ -409,7 +409,9 @@ function WeaponFactoryManager:_preload_part(factory_id, part_id, forbidden, over
 		package = "packages/fps_weapon_parts/" .. part_id
 
 		if DB:has(Idstring("package"), Idstring(package)) then
-			parts[part_id] = {package = package}
+			parts[part_id] = {
+				package = package
+			}
 
 			self:load_package(parts[part_id].package)
 		else
@@ -751,7 +753,6 @@ function WeaponFactoryManager:clbk_part_unit_loaded(task_data, status, u_type, u
 	end
 
 	if task_data.spawn then
-
 		local function _spawn(part)
 			local unit = self:_spawn_and_link_unit(part.name, part.a_obj, task_data.third_person, part.link_to_unit)
 
@@ -1042,7 +1043,7 @@ end
 function WeaponFactoryManager:has_weapon_more_than_default_parts(factory_id)
 	local weapon_tweak = tweak_data.weapon.factory[factory_id]
 
-	return #weapon_tweak.default_blueprint < #weapon_tweak.uses_parts
+	return #weapon_tweak.uses_parts > #weapon_tweak.default_blueprint
 end
 
 function WeaponFactoryManager:get_parts_from_factory_id(factory_id)
@@ -1127,7 +1128,9 @@ function WeaponFactoryManager:get_part_desc_by_part_id(part_id)
 
 	local desc_id = tweak_data.blackmarket.weapon_mods[part_id].desc_id
 
-	return desc_id and managers.localization:text(desc_id, {BTN_GADGET = managers.localization:btn_macro("weapon_gadget", true)}) or Application:production_build() and "Add ##desc_id## to ##" .. part_id .. "## in tweak_data.blackmarket.weapon_mods" or ""
+	return desc_id and managers.localization:text(desc_id, {
+		BTN_GADGET = managers.localization:btn_macro("weapon_gadget", true)
+	}) or Application:production_build() and "Add ##desc_id## to ##" .. part_id .. "## in tweak_data.blackmarket.weapon_mods" or ""
 end
 
 function WeaponFactoryManager:get_part_name_by_part_id(part_id)
@@ -1624,4 +1627,3 @@ function WeaponFactoryManager:debug_get_stats(factory_id, blueprint)
 
 	return stats
 end
-

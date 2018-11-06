@@ -198,7 +198,7 @@ function RumbleManager:mult_distance_lerp(pos_func_list, params)
 		for pos_func in pairs(pos_func_list) do
 			local next_closest_pos = pos_func(params)
 
-			if not closest_pos or (next_closest_pos - source):lenght() < (closest_pos - source):length() then
+			if not closest_pos or next_closest_pos - source:lenght() < closest_pos - source:length() then
 				closest_pos = next_closest_pos
 			end
 		end
@@ -208,7 +208,7 @@ function RumbleManager:mult_distance_lerp(pos_func_list, params)
 			local zero_dis = params.zero_dis or 1000 - full_dis
 			local mult = params.multiplier or 1
 			local source = params.source
-			mult = (mult * (zero_dis - math.clamp((source - closest_pos):length() - full_dis, 0, zero_dis))) / zero_dis
+			mult = mult * (zero_dis - math.clamp(source - closest_pos:length() - full_dis, 0, zero_dis)) / zero_dis
 
 			return mult
 		end
@@ -216,4 +216,3 @@ function RumbleManager:mult_distance_lerp(pos_func_list, params)
 
 	return 0
 end
-

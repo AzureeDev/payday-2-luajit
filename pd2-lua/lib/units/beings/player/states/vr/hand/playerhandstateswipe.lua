@@ -22,11 +22,13 @@ function PlayerHandStateSwipe:at_exit(next_state)
 
 	self._flick_callback = nil
 end
+
 local ids_tablet = Idstring("tablet")
 
 function PlayerHandStateSwipe:post_event(event)
 	self._hand_unit:base():other_hand_base():post_event(event, ids_tablet)
 end
+
 local tmp_vec = Vector3(0, 0, 0)
 local tmp_vec2 = Vector3(0, 0, 0)
 
@@ -99,6 +101,7 @@ function PlayerHandStateSwipe:update(t, dt)
 		end
 	end
 end
+
 local dir_vec = Vector3(0, 0, 0)
 
 function PlayerHandStateSwipe:_check_flick(t, pos, x)
@@ -127,4 +130,3 @@ function PlayerHandStateSwipe:item_transition(next_state, params)
 
 	self:default_transition(next_state, params)
 end
-

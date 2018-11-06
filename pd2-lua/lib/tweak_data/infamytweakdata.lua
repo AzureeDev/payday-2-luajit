@@ -1,7 +1,6 @@
 InfamyTweakData = InfamyTweakData or class()
 
 function InfamyTweakData:init()
-
 	local function digest(value)
 		return Application:digest_value(value, true)
 	end
@@ -104,7 +103,9 @@ function InfamyTweakData:init()
 			},
 			infamous_lootdrop = infamous_lootdrop_multiplier,
 			infamous_xp = infamous_xp_multiplier_base,
-			skillcost = {multiplier = skillcost_multiplier}
+			skillcost = {
+				multiplier = skillcost_multiplier
+			}
 		}
 	}
 	self.items.infamy_mastermind = {
@@ -267,13 +268,17 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_xp",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_xp",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_medium},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_medium
+		},
 		icon_xy = {
 			1,
 			1
 		},
 		cost = self.cost.tier1,
-		upgrades = {infamous_xp = infamous_xp_multiplier_medium}
+		upgrades = {
+			infamous_xp = infamous_xp_multiplier_medium
+		}
 	}
 
 	for i = 1, 15, 1 do
@@ -284,7 +289,9 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_balaclava",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_balaclava",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_small},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_small
+		},
 		icon_xy = {
 			2,
 			1
@@ -313,7 +320,9 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_lurker",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_lurker",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_small},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_small
+		},
 		icon_xy = {
 			2,
 			1
@@ -342,7 +351,9 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_hood",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_hood",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_small},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_small
+		},
 		icon_xy = {
 			2,
 			1
@@ -371,7 +382,9 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_pain",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_pain",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_small},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_small
+		},
 		icon_xy = {
 			2,
 			1
@@ -400,7 +413,9 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_ranger",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_ranger",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_small},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_small
+		},
 		icon_xy = {
 			2,
 			1
@@ -429,7 +444,9 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_punk",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_punk",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_small},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_small
+		},
 		icon_xy = {
 			2,
 			1
@@ -458,7 +475,9 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_daft",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_daft",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_small},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_small
+		},
 		icon_xy = {
 			2,
 			1
@@ -487,7 +506,9 @@ function InfamyTweakData:init()
 		name_id = "menu_infamy_name_destroyer",
 		add_tier = false,
 		desc_id = "menu_infamy_desc_destroyer",
-		desc_params = {xpboost = infamous_readable_xp_multiplier_small},
+		desc_params = {
+			xpboost = infamous_readable_xp_multiplier_small
+		},
 		icon_xy = {
 			2,
 			1
@@ -512,41 +533,58 @@ function InfamyTweakData:init()
 			infamous_xp = infamous_xp_multiplier_small
 		}
 	}
-	self.items.infamy_secret_9 = {icon_xy = {
-		1,
-		1
-	}}
-	self.items.infamy_secret_8 = {icon_xy = {
-		2,
-		1
-	}}
-	self.items.infamy_secret_7 = {icon_xy = {
-		3,
-		1
-	}}
-	self.items.infamy_secret_6 = {icon_xy = {
-		0,
-		2
-	}}
-	self.items.infamy_secret_5 = {icon_xy = {
-		1,
-		2
-	}}
-	self.items.infamy_secret_4 = {icon_xy = {
-		2,
-		2
-	}}
-	self.items.infamy_secret_3 = {icon_xy = {
-		3,
-		2
-	}}
-	self.items.infamy_secret_2 = {icon_xy = {
-		0,
-		3
-	}}
-	self.items.infamy_secret_1 = {icon_xy = {
-		1,
-		3
-	}}
+	self.items.infamy_secret_9 = {
+		icon_xy = {
+			1,
+			1
+		}
+	}
+	self.items.infamy_secret_8 = {
+		icon_xy = {
+			2,
+			1
+		}
+	}
+	self.items.infamy_secret_7 = {
+		icon_xy = {
+			3,
+			1
+		}
+	}
+	self.items.infamy_secret_6 = {
+		icon_xy = {
+			0,
+			2
+		}
+	}
+	self.items.infamy_secret_5 = {
+		icon_xy = {
+			1,
+			2
+		}
+	}
+	self.items.infamy_secret_4 = {
+		icon_xy = {
+			2,
+			2
+		}
+	}
+	self.items.infamy_secret_3 = {
+		icon_xy = {
+			3,
+			2
+		}
+	}
+	self.items.infamy_secret_2 = {
+		icon_xy = {
+			0,
+			3
+		}
+	}
+	self.items.infamy_secret_1 = {
+		icon_xy = {
+			1,
+			3
+		}
+	}
 end
-

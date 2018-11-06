@@ -1,11 +1,13 @@
 BaseInteractionExt = BaseInteractionExt or class()
-BaseInteractionExt.EVENT_IDS = {}
-BaseInteractionExt.EVENT_IDS.at_interact_start = 1
-BaseInteractionExt.EVENT_IDS.at_interact_interupt = 2
-BaseInteractionExt.SKILL_IDS = {}
-BaseInteractionExt.SKILL_IDS.none = 1
-BaseInteractionExt.SKILL_IDS.basic = 2
-BaseInteractionExt.SKILL_IDS.aced = 3
+BaseInteractionExt.EVENT_IDS = {
+	at_interact_start = 1,
+	at_interact_interupt = 2
+}
+BaseInteractionExt.SKILL_IDS = {
+	none = 1,
+	basic = 2,
+	aced = 3
+}
 BaseInteractionExt.INFO_IDS = {
 	1,
 	2,
@@ -40,6 +42,7 @@ end
 function BaseInteractionExt:is_owner()
 	return self._owner_id and self._owner_id == managers.network:session():local_peer():id()
 end
+
 local ids_material = Idstring("material")
 
 function BaseInteractionExt:refresh_material()
@@ -135,7 +138,9 @@ end
 
 function BaseInteractionExt:_setup_ray_objects()
 	if self._ray_object_names then
-		self._ray_objects = {self._interact_obj or self._unit:orientation_object()}
+		self._ray_objects = {
+			self._interact_obj or self._unit:orientation_object()
+		}
 
 		for _, object_name in ipairs(self._ray_object_names) do
 			table.insert(self._ray_objects, self._unit:get_object(Idstring(object_name)))
@@ -174,6 +179,7 @@ end
 
 function BaseInteractionExt:update(distance_to_player)
 end
+
 local is_PS3 = SystemInfo:platform() == Idstring("PS3")
 
 function BaseInteractionExt:_btn_interact()
@@ -200,7 +206,14 @@ function BaseInteractionExt:can_select(player)
 	end
 
 	local blockers = nil
-	blockers = type(self._tweak_data.special_equipment_block) == "string" and {self._tweak_data.special_equipment_block} or self._tweak_data.special_equipment_block
+
+	if type(self._tweak_data.special_equipment_block) == "string" then
+		blockers = {
+			self._tweak_data.special_equipment_block
+		}
+	else
+		blockers = self._tweak_data.special_equipment_block
+	end
 
 	if blockers then
 		for k, blocker in pairs(blockers) do
@@ -378,7 +391,7 @@ function BaseInteractionExt:interact_start(player, data)
 
 	if sound and sound ~= "" then
 		local delay = (self:_timer_value() or 0) * managers.player:toolset_value()
-		delay = delay / 3 + (math.random() * delay) / 3
+		delay = delay / 3 + math.random() * delay / 3
 		local say_t = Application:time() + delay
 		self._interact_say_clbk = "interact_say_waiting"
 
@@ -632,6 +645,7 @@ function BaseInteractionExt:set_outline_flash_state(state, sync)
 		self:set_active(self._active, sync)
 	end
 end
+
 local ids_contour_color = Idstring("contour_color")
 local ids_contour_opacity = Idstring("contour_opacity")
 
@@ -651,7 +665,9 @@ function BaseInteractionExt:set_contour_override(state)
 end
 
 function BaseInteractionExt:save(data)
-	local state = {active = self._active}
+	local state = {
+		active = self._active
+	}
 
 	if self.drop_in_sync_tweak_data then
 		state.tweak_data = self.tweak_data
@@ -714,6 +730,7 @@ end
 function BaseInteractionExt:can_remove_item()
 	return true
 end
+
 UseInteractionExt = UseInteractionExt or class(BaseInteractionExt)
 
 function UseInteractionExt:unselect()
@@ -751,7 +768,9 @@ function UseInteractionExt:interact(player)
 	self:remove_interact()
 
 	if self._unit:damage() then
-		self._unit:damage():run_sequence_simple("interact", {unit = player})
+		self._unit:damage():run_sequence_simple("interact", {
+			unit = player
+		})
 	end
 
 	managers.network:session():send_to_peers_synched("sync_interacted", self._unit, -2, self.tweak_data, 1)
@@ -818,7 +837,9 @@ function UseInteractionExt:sync_interacted(peer, player, status, skip_alive_chec
 	self:set_active(false)
 
 	if self._unit:damage() then
-		self._unit:damage():run_sequence_simple("interact", {unit = player})
+		self._unit:damage():run_sequence_simple("interact", {
+			unit = player
+		})
 	end
 
 	return player
@@ -827,6 +848,7 @@ end
 function UseInteractionExt:destroy()
 	UseInteractionExt.super.destroy(self)
 end
+
 MultipleChoiceInteractionExt = MultipleChoiceInteractionExt or class(UseInteractionExt)
 
 function MultipleChoiceInteractionExt:can_interact(player)
@@ -878,7 +900,9 @@ function MultipleChoiceInteractionExt:interact(player)
 		end
 
 		if self._unit:damage() then
-			self._unit:damage():run_sequence_simple("wrong", {unit = player})
+			self._unit:damage():run_sequence_simple("wrong", {
+				unit = player
+			})
 		end
 
 		managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "interaction", 1)
@@ -892,9 +916,12 @@ end
 
 function MultipleChoiceInteractionExt:sync_net_event(event_id, player)
 	if self._unit:damage() then
-		self._unit:damage():run_sequence_simple("wrong", {unit = player})
+		self._unit:damage():run_sequence_simple("wrong", {
+			unit = player
+		})
 	end
 end
+
 TripMineInteractionExt = TripMineInteractionExt or class(UseInteractionExt)
 
 function TripMineInteractionExt:interact(player)
@@ -923,6 +950,7 @@ function TripMineInteractionExt:unselect()
 	TripMineInteractionExt.super.unselect(self)
 	self._unit:base():contour_unselected()
 end
+
 ECMJammerInteractionExt = ECMJammerInteractionExt or class(UseInteractionExt)
 
 function ECMJammerInteractionExt:interact(player)
@@ -958,6 +986,7 @@ function ECMJammerInteractionExt:set_active(active, sync, ...)
 	ECMJammerInteractionExt.super.set_active(self, active, sync, ...)
 	self._unit:base():contour_interaction()
 end
+
 ReviveInteractionExt = ReviveInteractionExt or class(BaseInteractionExt)
 
 function ReviveInteractionExt:init(unit, ...)
@@ -1004,7 +1033,9 @@ end
 
 function ReviveInteractionExt:_at_interact_start_free(player)
 	if self._unit:base().is_husk_player then
-		local revive_rpc_params = {"start_free_player"}
+		local revive_rpc_params = {
+			"start_free_player"
+		}
 
 		self._unit:network():send_to_unit(revive_rpc_params)
 	else
@@ -1036,7 +1067,9 @@ end
 
 function ReviveInteractionExt:_at_interact_interupt_revive(player)
 	if self._unit:base().is_husk_player then
-		local revive_rpc_params = {"interupt_revive_player"}
+		local revive_rpc_params = {
+			"interupt_revive_player"
+		}
 
 		self._unit:network():send_to_unit(revive_rpc_params)
 	else
@@ -1056,7 +1089,9 @@ end
 
 function ReviveInteractionExt:_at_interact_interupt_free(player)
 	if self._unit:base().is_husk_player then
-		local revive_rpc_params = {"interupt_free_player"}
+		local revive_rpc_params = {
+			"interupt_free_player"
+		}
 
 		self._unit:network():send_to_unit(revive_rpc_params)
 	else
@@ -1085,6 +1120,7 @@ function ReviveInteractionExt:get_waypoint_time()
 
 	return nil
 end
+
 local is_win32 = SystemInfo:platform() == Idstring("WIN32")
 
 function ReviveInteractionExt:set_active(active, sync, down_time)
@@ -1234,6 +1270,7 @@ function ReviveInteractionExt:load(data)
 
 	ReviveInteractionExt.super.load(self, data)
 end
+
 GageAssignmentInteractionExt = GageAssignmentInteractionExt or class(UseInteractionExt)
 
 function GageAssignmentInteractionExt:init(unit)
@@ -1261,6 +1298,7 @@ function GageAssignmentInteractionExt:interact(player)
 
 	return self._unit:base():pickup(player)
 end
+
 AmmoBagInteractionExt = AmmoBagInteractionExt or class(UseInteractionExt)
 
 function AmmoBagInteractionExt:_interact_blocked(player)
@@ -1282,12 +1320,17 @@ function AmmoBagInteractionExt:interact(player)
 
 	return interacted
 end
+
 SentryGunInteractionExt = SentryGunInteractionExt or class(UseInteractionExt)
 
 function SentryGunInteractionExt:init(unit)
 	SentryGunInteractionExt.super.init(self, unit)
-	unit:event_listener():add("interaction_on_fire", {"on_fire"}, callback(self, self, "_on_weapon_fire_event"))
-	unit:event_listener():add("interaction_on_death", {"on_death"}, callback(self, self, "_on_death_event"))
+	unit:event_listener():add("interaction_on_fire", {
+		"on_fire"
+	}, callback(self, self, "_on_weapon_fire_event"))
+	unit:event_listener():add("interaction_on_death", {
+		"on_death"
+	}, callback(self, self, "_on_death_event"))
 end
 
 function SentryGunInteractionExt:destroy()
@@ -1329,6 +1372,7 @@ end
 function SentryGunInteractionExt:_on_weapon_fire_event()
 	self:set_dirty(true)
 end
+
 SentryGunFireModeInteractionExt = SentryGunFireModeInteractionExt or class(UseInteractionExt)
 
 function SentryGunFireModeInteractionExt:setup(sentry_gun_weapon)
@@ -1336,7 +1380,9 @@ function SentryGunFireModeInteractionExt:setup(sentry_gun_weapon)
 	local unit = sentry_gun_weapon.unit and sentry_gun_weapon:unit()
 
 	if unit then
-		unit:event_listener():add("sentry_fire_mode_on_fire", {"on_fire"}, callback(self, self, "_on_weapon_fire_event"))
+		unit:event_listener():add("sentry_fire_mode_on_fire", {
+			"on_fire"
+		}, callback(self, self, "_on_weapon_fire_event"))
 	end
 end
 
@@ -1368,6 +1414,7 @@ end
 function SentryGunFireModeInteractionExt:_on_weapon_fire_event()
 	self:set_dirty(true)
 end
+
 GrenadeCrateInteractionExt = GrenadeCrateInteractionExt or class(UseInteractionExt)
 
 function GrenadeCrateInteractionExt:_interact_blocked(player)
@@ -1383,6 +1430,7 @@ function GrenadeCrateInteractionExt:interact(player)
 
 	return self._unit:base():take_grenade(player)
 end
+
 BodyBagsBagInteractionExt = BodyBagsBagInteractionExt or class(UseInteractionExt)
 
 function BodyBagsBagInteractionExt:_interact_blocked(player)
@@ -1394,6 +1442,7 @@ function BodyBagsBagInteractionExt:interact(player)
 
 	return self._unit:base():take_bodybag(player)
 end
+
 DoctorBagBaseInteractionExt = DoctorBagBaseInteractionExt or class(UseInteractionExt)
 
 function DoctorBagBaseInteractionExt:_interact_blocked(player)
@@ -1413,6 +1462,7 @@ function DoctorBagBaseInteractionExt:interact(player)
 
 	return interacted
 end
+
 C4BagInteractionExt = C4BagInteractionExt or class(UseInteractionExt)
 
 function C4BagInteractionExt:_interact_blocked(player)
@@ -1421,10 +1471,13 @@ end
 
 function C4BagInteractionExt:interact(player)
 	C4BagInteractionExt.super.super.interact(self, player)
-	managers.player:add_special({name = "c4"})
+	managers.player:add_special({
+		name = "c4"
+	})
 
 	return true
 end
+
 MultipleEquipmentBagInteractionExt = MultipleEquipmentBagInteractionExt or class(UseInteractionExt)
 
 function MultipleEquipmentBagInteractionExt:_interact_blocked(player)
@@ -1438,7 +1491,12 @@ function MultipleEquipmentBagInteractionExt:interact(player)
 	local max_player_can_carry = tweak_data.equipments.specials[equipment_name].quantity or 1
 	local player_equipment = managers.player:has_special_equipment(equipment_name)
 	local amount_wanted = nil
-	amount_wanted = player_equipment and max_player_can_carry - Application:digest_value(player_equipment.amount, false) or max_player_can_carry
+
+	if player_equipment then
+		amount_wanted = max_player_can_carry - Application:digest_value(player_equipment.amount, false)
+	else
+		amount_wanted = max_player_can_carry
+	end
 
 	if Network:is_server() then
 		self:sync_interacted(nil, player, amount_wanted)
@@ -1483,6 +1541,7 @@ function MultipleEquipmentBagInteractionExt:sync_interacted(peer, player, amount
 		end
 	end
 end
+
 VeilInteractionExt = VeilInteractionExt or class(UseInteractionExt)
 
 function VeilInteractionExt:_interact_blocked(player)
@@ -1491,10 +1550,13 @@ end
 
 function VeilInteractionExt:interact(player)
 	VeilInteractionExt.super.super.interact(self, player)
-	managers.player:add_special({name = "blood_sample"})
+	managers.player:add_special({
+		name = "blood_sample"
+	})
 
 	return true
 end
+
 VeilTakeInteractionExt = VeilTakeInteractionExt or class(UseInteractionExt)
 
 function VeilTakeInteractionExt:_interact_blocked(player)
@@ -1503,7 +1565,9 @@ end
 
 function VeilTakeInteractionExt:interact(player)
 	VeilTakeInteractionExt.super.interact(self, player)
-	managers.player:add_special({name = "blood_sample_verified"})
+	managers.player:add_special({
+		name = "blood_sample_verified"
+	})
 
 	if self._unit:damage():has_sequence("got_blood_sample") then
 		self._unit:damage():run_sequence_simple("got_blood_sample")
@@ -1519,6 +1583,7 @@ function VeilTakeInteractionExt:sync_interacted()
 
 	VeilTakeInteractionExt.super.sync_interacted(self)
 end
+
 SmallLootInteractionExt = SmallLootInteractionExt or class(UseInteractionExt)
 
 function SmallLootInteractionExt:interact(player)
@@ -1530,18 +1595,21 @@ function SmallLootInteractionExt:interact(player)
 
 	self._unit:base():take(player)
 end
+
 MoneyWrapInteractionExt = MoneyWrapInteractionExt or class(UseInteractionExt)
 
 function MoneyWrapInteractionExt:interact(player)
 	MoneyWrapInteractionExt.super.super.interact(self, player)
 	self._unit:base():take_money(player)
 end
+
 DiamondInteractionExt = DiamondInteractionExt or class(UseInteractionExt)
 
 function DiamondInteractionExt:interact(player)
 	DiamondInteractionExt.super.interact(self, player)
 	self._unit:base():take_money(player)
 end
+
 SecurityCameraInteractionExt = SecurityCameraInteractionExt or class(UseInteractionExt)
 
 function SecurityCameraInteractionExt:interact_distance(...)
@@ -1588,6 +1656,7 @@ function SecurityCameraInteractionExt:sync_interacted(peer, player, status, skip
 		return
 	end
 end
+
 ZipLineInteractionExt = ZipLineInteractionExt or class(UseInteractionExt)
 
 function ZipLineInteractionExt:can_select(player)
@@ -1622,6 +1691,7 @@ function ZipLineInteractionExt:interact(player)
 	ZipLineInteractionExt.super.super.interact(self, player)
 	self._unit:zipline():on_interacted(player)
 end
+
 IntimitateInteractionExt = IntimitateInteractionExt or class(BaseInteractionExt)
 IntimitateInteractionExt.drop_in_sync_tweak_data = true
 
@@ -1700,7 +1770,9 @@ function IntimitateInteractionExt:interact(player)
 					end
 				end
 			else
-				memory = {new_memory}
+				memory = {
+					new_memory
+				}
 			end
 
 			managers.job:set_memory(achievement, memory, true)
@@ -1746,7 +1818,9 @@ function IntimitateInteractionExt:interact(player)
 			managers.achievment:award_progress(tweak_data.achievement.relation_with_bulldozer.stat)
 		end
 
-		managers.statistics:trade({name = self._unit:base()._tweak_table})
+		managers.statistics:trade({
+			name = self._unit:base()._tweak_table
+		})
 	elseif self.tweak_data == "hostage_convert" then
 		if Network:is_server() then
 			self:remove_interact()
@@ -1854,7 +1928,6 @@ function IntimitateInteractionExt:_at_interact_interupt(player, complete)
 end
 
 function IntimitateInteractionExt:sync_interacted(peer, player, status, skip_alive_check)
-
 	local function _get_unit()
 		local unit = player
 
@@ -2023,6 +2096,7 @@ end
 function IntimitateInteractionExt:on_interacting_unit_destroyed(peer, player)
 	self:sync_interacted(peer, player, "interrupted", nil)
 end
+
 CarryInteractionExt = CarryInteractionExt or class(UseInteractionExt)
 
 function CarryInteractionExt:_interact_blocked(player)
@@ -2089,11 +2163,15 @@ function CarryInteractionExt:sync_interacted(peer, player, status, skip_alive_ch
 	end
 
 	if self._unit:damage():has_sequence("interact") then
-		self._unit:damage():run_sequence_simple("interact", {unit = player})
+		self._unit:damage():run_sequence_simple("interact", {
+			unit = player
+		})
 	end
 
 	if self._unit:damage():has_sequence("load") then
-		self._unit:damage():run_sequence_simple("load", {unit = player})
+		self._unit:damage():run_sequence_simple("load", {
+			unit = player
+		})
 	end
 
 	if self._global_event then
@@ -2180,6 +2258,7 @@ function CarryInteractionExt:_collision_callback(tag, unit, body, other_unit, ot
 		body:set_collision_script_tag(Idstring(""))
 	end
 end
+
 LootBankInteractionExt = LootBankInteractionExt or class(UseInteractionExt)
 
 function LootBankInteractionExt:_interact_blocked(player)
@@ -2203,8 +2282,11 @@ end
 function LootBankInteractionExt:sync_interacted(peer, player, status, skip_alive_check)
 	local player = player or peer:unit()
 
-	self._unit:damage():run_sequence_simple("unload", {unit = player})
+	self._unit:damage():run_sequence_simple("unload", {
+		unit = player
+	})
 end
+
 EventIDInteractionExt = EventIDInteractionExt or class(UseInteractionExt)
 
 function EventIDInteractionExt:show_blocked_hint(player, skip_hint)
@@ -2239,7 +2321,7 @@ function EventIDInteractionExt:interact_start(player)
 
 	if sound and sound ~= "" then
 		local delay = (self._tweak_data.timer or 0) * managers.player:toolset_value()
-		delay = delay / 3 + (math.random() * delay) / 3
+		delay = delay / 3 + math.random() * delay / 3
 		local say_t = Application:time() + delay
 		self._interact_say_clbk = "interact_say_waiting"
 
@@ -2323,6 +2405,7 @@ function EventIDInteractionExt:sync_net_event(event_id, peer)
 		unit_base:sync_net_event(event_id, peer)
 	end
 end
+
 MissionDoorDeviceInteractionExt = MissionDoorDeviceInteractionExt or class(UseInteractionExt)
 
 function MissionDoorDeviceInteractionExt:interact(player)
@@ -2335,7 +2418,7 @@ function MissionDoorDeviceInteractionExt:interact(player)
 	if Network:is_client() then
 		managers.network:session():send_to_host("server_place_mission_door_device", self._unit, player)
 	else
-		local result = self:server_place_mission_door_device(player)
+		slot2 = self:server_place_mission_door_device(player)
 	end
 end
 
@@ -2374,7 +2457,9 @@ function MissionDoorDeviceInteractionExt:server_place_mission_door_device(player
 	end
 
 	if self._unit:damage() then
-		self._unit:damage():run_sequence_simple("interact", {unit = player})
+		self._unit:damage():run_sequence_simple("interact", {
+			unit = player
+		})
 	end
 
 	network_session:send_to_peers_synched("sync_interacted", self._unit, -2, self.tweak_data, 1)
@@ -2428,6 +2513,7 @@ function MissionDoorDeviceInteractionExt:sync_net_event(event_id)
 		self._unit:timer_gui():set_skill(event_id)
 	end
 end
+
 SpecialEquipmentInteractionExt = SpecialEquipmentInteractionExt or class(UseInteractionExt)
 
 function SpecialEquipmentInteractionExt:_interact_blocked(player)
@@ -2472,12 +2558,15 @@ function SpecialEquipmentInteractionExt:sync_interacted(peer, player, status, sk
 end
 
 function SpecialEquipmentInteractionExt:apply_item_pickup()
-	managers.player:add_special({name = self._special_equipment})
+	managers.player:add_special({
+		name = self._special_equipment
+	})
 end
 
 function SpecialEquipmentInteractionExt:can_remove_item()
 	return self._remove_on_interact
 end
+
 AccessCameraInteractionExt = AccessCameraInteractionExt or class(UseInteractionExt)
 
 function AccessCameraInteractionExt:_interact_blocked(player)
@@ -2490,6 +2579,7 @@ function AccessCameraInteractionExt:interact(player)
 
 	return true
 end
+
 MissionElementInteractionExt = MissionElementInteractionExt or class(UseInteractionExt)
 MissionElementInteractionExt.drop_in_sync_tweak_data = true
 
@@ -2564,7 +2654,9 @@ end
 function MissionElementInteractionExt:save(data)
 	MissionElementInteractionExt.super.save(self, data)
 
-	local state = {override_timer_value = self._override_timer_value}
+	local state = {
+		override_timer_value = self._override_timer_value
+	}
 	data.MissionElementInteractionExt = state
 end
 
@@ -2574,6 +2666,7 @@ function MissionElementInteractionExt:load(data)
 
 	MissionElementInteractionExt.super.load(self, data)
 end
+
 DrivingInteractionExt = DrivingInteractionExt or class(UseInteractionExt)
 
 function DrivingInteractionExt:init(unit)
@@ -2760,6 +2853,7 @@ function DrivingInteractionExt:_setup_ray_objects()
 		end
 	end
 end
+
 CivilianHeisterInteractionExt = CivilianHeisterInteractionExt or class(UseInteractionExt)
 
 function CivilianHeisterInteractionExt:init(unit)
@@ -2777,9 +2871,15 @@ function CivilianHeisterInteractionExt:init(unit)
 	self._visible_check_slotmask = managers.slot:get_mask("world_geometry")
 
 	self._unit:set_extension_update_enabled(Idstring("interaction"), self:active())
-	managers.mission:add_global_event_listener(tostring(unit:key()) .. "_on_daily_generated", {Message.OnDailyGenerated}, callback(self, self, "_on_daily_generated"))
-	managers.mission:add_global_event_listener(tostring(unit:key()) .. "_on_daily_completed", {Message.OnDailyCompleted}, callback(self, self, "_on_daily_completed"))
-	managers.mission:add_global_event_listener(tostring(unit:key()) .. "_on_daily_reward_collected", {Message.OnDailyRewardCollected}, callback(self, self, "_on_daily_reward_collected"))
+	managers.mission:add_global_event_listener(tostring(unit:key()) .. "_on_daily_generated", {
+		Message.OnDailyGenerated
+	}, callback(self, self, "_on_daily_generated"))
+	managers.mission:add_global_event_listener(tostring(unit:key()) .. "_on_daily_completed", {
+		Message.OnDailyCompleted
+	}, callback(self, self, "_on_daily_completed"))
+	managers.mission:add_global_event_listener(tostring(unit:key()) .. "_on_daily_reward_collected", {
+		Message.OnDailyRewardCollected
+	}, callback(self, self, "_on_daily_reward_collected"))
 end
 
 function CivilianHeisterInteractionExt:_on_daily_generated(daily_info)
@@ -2871,7 +2971,12 @@ function CivilianHeisterInteractionExt:get_character_voice_line(key, character_t
 				for _, trophy_id in ipairs(data.requirements.trophies) do
 					local trophy = managers.custom_safehouse:get_trophy(trophy_id)
 					local fail = not trophy
-					fail = data.requirements.invert and trophy.completed or not trophy.completed
+
+					if data.requirements.invert then
+						fail = trophy.completed
+					else
+						fail = not trophy.completed
+					end
 
 					if fail then
 						pass_trophy = false
@@ -3049,7 +3154,7 @@ function CivilianHeisterInteractionExt:update(unit, t, dt)
 
 	for id, data in pairs(managers.criminals:characters()) do
 		if data.taken and alive(data.unit) and data.unit:id() ~= -1 then
-			local dist = (data.unit:position() - unit:position()):length()
+			local dist = data.unit:position() - unit:position():length()
 
 			if dist < self.heister_data.idle_line_dist then
 				can_play_idle_line = true
@@ -3097,6 +3202,7 @@ function CivilianHeisterInteractionExt:play_minigame_vo(state)
 	self._unit:sound():set_minigame_response(state)
 	self:_play_voice_line("Play_" .. tostring(self.heister_data.voice) .. "_minigame")
 end
+
 SafehouseNPCInteractionExt = SafehouseNPCInteractionExt or class(UseInteractionExt)
 
 function SafehouseNPCInteractionExt:init(unit)
@@ -3137,6 +3243,7 @@ end
 function SafehouseNPCInteractionExt:_reenable_ext()
 	self:set_active(true)
 end
+
 ButlerInteractionExt = ButlerInteractionExt or class(SafehouseNPCInteractionExt)
 
 function ButlerInteractionExt:init(unit)
@@ -3144,6 +3251,7 @@ function ButlerInteractionExt:init(unit)
 
 	self._answer_line = "Play_btl_answering"
 end
+
 AccessFBIFilesInteractionExt = AccessFBIFilesInteractionExt or class(UseInteractionExt)
 
 function AccessFBIFilesInteractionExt:_interact_blocked(player)
@@ -3156,6 +3264,7 @@ function AccessFBIFilesInteractionExt:interact(player)
 
 	return true
 end
+
 AccessPD2StashInteractionExt = AccessPD2StashInteractionExt or class(UseInteractionExt)
 
 function AccessPD2StashInteractionExt:_interact_blocked(player)
@@ -3168,6 +3277,7 @@ function AccessPD2StashInteractionExt:interact(player)
 
 	return true
 end
+
 AccessBankInvadersInteractionExt = AccessBankInvadersInteractionExt or class(UseInteractionExt)
 
 function AccessBankInvadersInteractionExt:_interact_blocked(player)
@@ -3180,6 +3290,7 @@ function AccessBankInvadersInteractionExt:interact(player)
 
 	return true
 end
+
 AccessSideJobsInteractionExt = AccessSideJobsInteractionExt or class(UseInteractionExt)
 
 function AccessSideJobsInteractionExt:_interact_blocked(player)
@@ -3192,6 +3303,7 @@ function AccessSideJobsInteractionExt:interact(player)
 
 	return true
 end
+
 AccessWeaponMenuInteractionExt = AccessWeaponMenuInteractionExt or class(UseInteractionExt)
 
 function AccessWeaponMenuInteractionExt:interact(player)
@@ -3203,6 +3315,7 @@ function AccessWeaponMenuInteractionExt:interact(player)
 
 	return true
 end
+
 AccessCrimeNetInteractionExt = AccessCrimeNetInteractionExt or class(UseInteractionExt)
 
 function AccessCrimeNetInteractionExt:init(unit)
@@ -3217,6 +3330,7 @@ function AccessCrimeNetInteractionExt:init(unit)
 
 	self._outlined = true
 end
+
 local offs = Vector3(0, 0, 1) * 200
 
 function AccessCrimeNetInteractionExt:update(unit, t, dt)
@@ -3226,7 +3340,9 @@ function AccessCrimeNetInteractionExt:update(unit, t, dt)
 		local player_unit = managers.player:player_unit()
 
 		if player_unit then
-			local ignore_unit = {self._unit}
+			local ignore_unit = {
+				self._unit
+			}
 			local hit = World:raycast("ray", self._unit:position() + offs, player_unit:position() + offs, "slot_mask", self._world_slotmask, "ignore_unit", ignore_unit)
 
 			if not hit and not self._outlined then
@@ -3241,4 +3357,3 @@ function AccessCrimeNetInteractionExt:update(unit, t, dt)
 		end
 	end
 end
-

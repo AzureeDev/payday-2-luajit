@@ -10,4 +10,3 @@ function HUDSuspicionVR:init(hud, sound_source)
 	hud.panel = hud.old_panel
 	hud.old_panel = nil
 end
-

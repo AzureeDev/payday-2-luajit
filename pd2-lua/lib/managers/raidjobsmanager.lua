@@ -10,4 +10,3 @@ function RaidJobsManager:init()
 
 	self:_setup()
 end
-

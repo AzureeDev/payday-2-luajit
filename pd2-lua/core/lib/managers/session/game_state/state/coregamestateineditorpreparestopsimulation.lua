@@ -20,4 +20,3 @@ function PrepareStopSimulation:transition()
 		return CoreGameStateInEditorStopSimulation.StopSimulation
 	end
 end
-

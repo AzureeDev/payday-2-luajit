@@ -66,4 +66,3 @@ end
 function NpcVehicleStateManeuverBackLeft:is_maneuvering()
 	return true
 end
-

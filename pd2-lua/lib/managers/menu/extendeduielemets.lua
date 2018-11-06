@@ -85,10 +85,13 @@ end
 function GrowPanel:row_w()
 	return self:w() - self._placer._border_padding_x * 2
 end
+
 ScrollGrowPanel = ScrollGrowPanel or class(GrowPanel)
 
 function ScrollGrowPanel:init(scroll, config)
-	config = set_defaults(config, {use_given = true})
+	config = set_defaults(config, {
+		use_given = true
+	})
 
 	ScrollGrowPanel.super.init(self, scroll:canvas(), config)
 
@@ -103,6 +106,7 @@ end
 function ScrollGrowPanel:_set_ensure_size(w, h)
 	self._scroll:set_canvas_size(w, h)
 end
+
 local ScrollablePanelExt = ScrollablePanelExt or class(ScrollablePanel)
 
 function ScrollablePanelExt:init(parent_panel, name, data)
@@ -122,6 +126,7 @@ function ScrollablePanelExt:set_canvas_size(w, h)
 		self:on_canvas_resized()
 	end
 end
+
 ScrollableList = ScrollableList or class(ExtendedPanel)
 
 function ScrollableList:init(parent, scroll_config, canvas_config)
@@ -293,18 +298,22 @@ function ScrollableList:add_lines_and_static_down_indicator()
 			0
 		}
 	})
-	local down_no_scroll = BoxGuiObject:new(box._panel, {sides = {
-		0,
-		0,
-		0,
-		1
-	}})
-	local down_scroll = BoxGuiObject:new(box._panel, {sides = {
-		0,
-		0,
-		0,
-		2
-	}})
+	local down_no_scroll = BoxGuiObject:new(box._panel, {
+		sides = {
+			0,
+			0,
+			0,
+			1
+		}
+	})
+	local down_scroll = BoxGuiObject:new(box._panel, {
+		sides = {
+			0,
+			0,
+			0,
+			2
+		}
+	})
 
 	local function update_down_indicator()
 		local indicate = self:scroll_item()._scroll_bar:visible()
@@ -317,6 +326,7 @@ function ScrollableList:add_lines_and_static_down_indicator()
 
 	self._scroll.on_canvas_resized = update_down_indicator
 end
+
 ScrollItemList = ScrollItemList or class(ScrollableList)
 
 function ScrollItemList:init(parent, scroll_config, canvas_config)
@@ -512,6 +522,7 @@ function ScrollItemList:filter_items(filter_function, mod_start, keep_selection)
 		self:scroll_to_show_item_at_world(self._selected_item, w_y)
 	end
 end
+
 ListItem = ListItem or class(ExtendedPanel)
 
 function ListItem:init(...)
@@ -535,10 +546,13 @@ function ListItem:set_selected(state)
 
 	local _ = state and managers.menu_component:post_event("highlight")
 end
+
 BaseButton = BaseButton or class(ExtendedPanel)
 
 function BaseButton:init(parent, config)
-	config = set_defaults(config, {input = true})
+	config = set_defaults(config, {
+		input = true
+	})
 
 	BaseButton.super.init(self, parent, config)
 
@@ -599,10 +613,13 @@ function BaseButton:special_btn_pressed(button)
 		return true
 	end
 end
+
 TextButton = TextButton or class(BaseButton)
 
 function TextButton:init(parent, text_config, func, panel_config)
-	panel_config = set_defaults(panel_config, {binding = text_config.binding})
+	panel_config = set_defaults(panel_config, {
+		binding = text_config.binding
+	})
 
 	TextButton.super.init(self, parent, panel_config)
 
@@ -612,7 +629,9 @@ function TextButton:init(parent, text_config, func, panel_config)
 	text_config.color = self._normal_color
 
 	if text_config.text_id and text_config.binding then
-		text_config.text = managers.localization:text(text_config.text_id, {MY_BTN = managers.localization:btn_macro(text_config.binding, true)})
+		text_config.text = managers.localization:text(text_config.text_id, {
+			MY_BTN = managers.localization:btn_macro(text_config.binding, true)
+		})
 		text_config.text_id = nil
 	end
 
@@ -644,10 +663,13 @@ function TextButton:set_text(text)
 		self:set_size(self._text:rightbottom())
 	end
 end
+
 IconButton = IconButton or class(BaseButton)
 
 function IconButton:init(parent, icon_config, func)
-	IconButton.super.init(self, parent, {binding = icon_config.binding}, func)
+	IconButton.super.init(self, parent, {
+		binding = icon_config.binding
+	}, func)
 
 	self._select_panel = ExtendedPanel:new(self)
 	self._normal_color = icon_config.normal_color or icon_config.color
@@ -680,6 +702,7 @@ end
 function IconButton:_enabled_changed(state)
 	self:_set_color(state and self._normal_color or self._disabled_color)
 end
+
 ProgressBar = ProgressBar or class(ExtendedPanel)
 
 function ProgressBar:init(parent, config, progress)
@@ -689,7 +712,9 @@ function ProgressBar:init(parent, config, progress)
 	self._max = config.max or 1
 	self._back_color = config.back_config and config.back_config.color or config.back_color or Color.black
 	self._progress_color = config.progress_config and config.progress_config.color or config.progress_color or Color.white
-	self._back = self:rect(config.back_config or {color = self._back_color})
+	self._back = self:rect(config.back_config or {
+		color = self._back_color
+	})
 	self._progress = self:rect(config.progress_config or {
 		w = 0,
 		color = self._progress_color
@@ -707,13 +732,15 @@ function ProgressBar:init(parent, config, progress)
 			y = 0
 		end
 
-		self._edges = {left = self:rect({
-			w = 3,
-			rotation = 360,
-			color = self._back_color,
-			h = h,
-			y = y
-		})}
+		self._edges = {
+			left = self:rect({
+				w = 3,
+				rotation = 360,
+				color = self._back_color,
+				h = h,
+				y = y
+			})
+		}
 
 		self._edges.left:set_right(0)
 
@@ -742,7 +769,7 @@ end
 function ProgressBar:set_progress(v)
 	self._at = math.clamp(v, 0, self._max)
 
-	self._progress:set_w((self._back:w() * self._at) / self._max)
+	self._progress:set_w(self._back:w() * self._at / self._max)
 
 	if self._edges then
 		self._edges.left:set_color(self._at > 0 and self._progress_color or self._back_color)
@@ -758,6 +785,7 @@ function ProgressBar:set_max(v, dont_scale_current)
 
 	self:set_progress(current)
 end
+
 TextProgressBar = TextProgressBar or class(ProgressBar)
 
 function TextProgressBar:init(parent, config, text_config, progress)
@@ -818,6 +846,7 @@ function TextProgressBar:set_progress(v)
 
 	return self._at
 end
+
 SpecialButtonBinding = SpecialButtonBinding or class()
 
 function SpecialButtonBinding:init(binding, func, add_to_panel)
@@ -846,6 +875,7 @@ end
 function SpecialButtonBinding:set_enabled(state)
 	self._enabled = state
 end
+
 ButtonLegendsBar = ButtonLegendsBar or class(GrowPanel)
 ButtonLegendsBar.PADDING = 10
 
@@ -857,7 +887,9 @@ function ButtonLegendsBar:init(panel, config, panel_config)
 		w = panel:w(),
 		padding = self.PADDING
 	})
-	panel_config = set_defaults(panel_config, {fixed_w = panel_config.w})
+	panel_config = set_defaults(panel_config, {
+		fixed_w = panel_config.w
+	})
 
 	ButtonLegendsBar.super.init(self, panel, panel_config)
 
@@ -878,7 +910,13 @@ function ButtonLegendsBar:add_item(data, id, dont_update)
 		table.insert(self._items, self:_create_legend(nil, text))
 	else
 		local macro_name = data.macro_name or "MY_BTN"
-		local text = data.text or managers.localization:to_upper_text(data.text_id, {[macro_name] = managers.localization:btn_macro(data.binding, true) or ""})
+
+		if not data.text then
+			local text = managers.localization:to_upper_text(data.text_id, {
+				[macro_name] = managers.localization:btn_macro(data.binding, true) or ""
+			})
+		end
+
 		local item = nil
 
 		if data.func and not self._legends_only then
@@ -986,6 +1024,7 @@ function ButtonLegendsBar:_update_items()
 		end
 	end
 end
+
 TextLegendsBar = TextLegendsBar or class(ButtonLegendsBar)
 TextLegendsBar.SEPERATOR = "  |  "
 
@@ -1079,4 +1118,3 @@ function TextLegendsBar:_update_items()
 		complete_line(text_item)
 	end
 end
-

@@ -19,4 +19,3 @@ function ElementMandatoryBags:on_executed(instigator)
 	managers.loot:set_mandatory_bags_data(self._values.carry_id, self._values.amount)
 	ElementMandatoryBags.super.on_executed(self, instigator)
 end
-

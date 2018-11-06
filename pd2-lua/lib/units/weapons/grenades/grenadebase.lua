@@ -1,5 +1,7 @@
 GrenadeBase = GrenadeBase or class(ProjectileBase)
-GrenadeBase.EVENT_IDS = {detonate = 1}
+GrenadeBase.EVENT_IDS = {
+	detonate = 1
+}
 local mvec1 = Vector3()
 local mvec2 = Vector3()
 
@@ -131,7 +133,7 @@ function GrenadeBase:_check_achievements(unit, is_dead, damage_percent, hit_coun
 			mvector3.set(mvec2, unit:position())
 
 			local distance = mvector3.distance_sq(mvec1, mvec2)
-			distance_pass = achievement_data.distance * achievement_data.distance <= distance
+			distance_pass = distance >= achievement_data.distance * achievement_data.distance
 		end
 
 		timer_pass = not achievement_data.timer
@@ -154,7 +156,9 @@ function GrenadeBase:_check_achievements(unit, is_dead, damage_percent, hit_coun
 
 				managers.job:set_memory(memory_name, memory, true)
 			else
-				managers.job:set_memory(memory_name, {t}, true)
+				managers.job:set_memory(memory_name, {
+					t
+				}, true)
 			end
 		end
 
@@ -193,7 +197,9 @@ function GrenadeBase:clbk_impact(tag, unit, body, other_unit, other_body, positi
 end
 
 function GrenadeBase:save(data)
-	local state = {timer = self._timer}
+	local state = {
+		timer = self._timer
+	}
 	data.GrenadeBase = state
 end
 
@@ -201,4 +207,3 @@ function GrenadeBase:load(data)
 	local state = data.GrenadeBase
 	self._timer = state.timer
 end
-

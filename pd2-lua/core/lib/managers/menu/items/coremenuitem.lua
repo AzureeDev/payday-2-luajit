@@ -16,7 +16,9 @@ function Item:init(data_node, parameters)
 		end
 	end
 
-	local required_params = {"name"}
+	local required_params = {
+		"name"
+	}
 
 	for _, p_name in ipairs(required_params) do
 		if not params[p_name] then
@@ -226,4 +228,3 @@ function Item:icon_visible()
 
 	return true
 end
-

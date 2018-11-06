@@ -48,4 +48,3 @@ function ElementCharacterTeam:on_executed(instigator)
 
 	ElementCharacterTeam.super.on_executed(self, instigator)
 end
-

@@ -32,7 +32,9 @@ function IngameIncapacitatedState:at_enter()
 		end
 	end
 
-	managers.statistics:downed({incapacitated = true})
+	managers.statistics:downed({
+		incapacitated = true
+	})
 
 	local player = managers.player:player_unit()
 
@@ -68,4 +70,3 @@ end
 function IngameIncapacitatedState:on_disconnected()
 	IngameCleanState.on_disconnected(self)
 end
-

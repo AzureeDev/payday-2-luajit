@@ -20,7 +20,9 @@ function ControllerWrapperPC:init(manager, id, name, controller, setup, debug, s
 		keyboard = Input:keyboard(),
 		mouse = Input:mouse(),
 		gamepads = gamepads
-	}, "keyboard", setup, debug, skip_virtual_controller, {keyboard = func_map})
+	}, "keyboard", setup, debug, skip_virtual_controller, {
+		keyboard = func_map
+	})
 end
 
 function ControllerWrapperPC:virtual_connect_keyboard_axis_1(controller_id, controller, input_name, connection_name, connection)
@@ -131,4 +133,3 @@ function ControllerWrapperPC:virtual_connect2(controller_id, controller, input_n
 		end
 	end
 end
-

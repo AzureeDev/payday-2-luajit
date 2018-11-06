@@ -71,4 +71,3 @@ function InputManager:_destroy_input_provider(input_provider)
 	local feeder = self._input_provider_to_feeder[input_provider]
 	self._feeders[feeder] = nil
 end
-

@@ -11,7 +11,7 @@ function Drill.get_upgrades(drill_unit, player)
 
 	if is_drill or is_saw then
 		local player_skill = PlayerSkill
-		local upgrades = {
+		upgrades = {
 			auto_repair_level_1 = player_skill.skill_level("player", "drill_autorepair_1", 0, player),
 			auto_repair_level_2 = player_skill.skill_level("player", "drill_autorepair_2", 0, player),
 			speed_upgrade_level = player_skill.skill_level("player", "drill_speed_multiplier", 0, player),
@@ -81,7 +81,9 @@ function Drill:start()
 			if not self._ene_weap_hot_listen_id then
 				self._ene_weap_hot_listen_id = "Drill_ene_w_hot" .. tostring(self._unit:key())
 
-				managers.groupai:state():add_listener(self._ene_weap_hot_listen_id, {"enemy_weapons_hot"}, callback(self, self, "clbk_enemy_weapons_hot"))
+				managers.groupai:state():add_listener(self._ene_weap_hot_listen_id, {
+					"enemy_weapons_hot"
+				}, callback(self, self, "clbk_enemy_weapons_hot"))
 			end
 		end
 	end
@@ -148,7 +150,11 @@ function Drill:_kill_jammed_effect()
 end
 
 function Drill:set_jammed(jammed)
-	jammed = jammed and true or false
+	if jammed then
+		jammed = true
+	else
+		jammed = false
+	end
 
 	if self._jammed == jammed then
 		return
@@ -223,22 +229,24 @@ function Drill:_change_num_jammed_drills(d)
 		Drill._drll_remind_clbk = nil
 	end
 end
-Drill.REMINDER_COMMENTS = {}
-Drill.REMINDER_COMMENTS.default = {}
-Drill.REMINDER_COMMENTS.drill = {
-	"d01x_sin",
-	"d02x_sin"
-}
-Drill.REMINDER_COMMENTS.hacking_device = {}
-Drill.REMINDER_COMMENTS.saw = {
-	"d05",
-	"d05"
+
+Drill.REMINDER_COMMENTS = {
+	default = {},
+	drill = {
+		"d01x_sin",
+		"d02x_sin"
+	},
+	hacking_device = {},
+	saw = {
+		"d05",
+		"d05"
+	}
 }
 
 function Drill:_drill_remind_clbk()
 	if not managers.groupai:state():whisper_mode() then
 		local device = self.is_drill and "drill" or self.is_saw and "saw" or self.is_hacking_device and "hacking_device" or "default"
-		local reminder = (Drill.REMINDER_COMMENTS[device] or Drill.REMINDER_COMMENTS.default)[self._jammed_count <= 1 and 1 or 2]
+		local reminder = Drill.REMINDER_COMMENTS[device] or Drill.REMINDER_COMMENTS.default[self._jammed_count <= 1 and 1 or 2]
 
 		if reminder then
 			managers.groupai:state():teammate_comment(nil, reminder, nil, false, nil, false)
@@ -249,7 +257,9 @@ function Drill:_drill_remind_clbk()
 end
 
 function Drill:save(data)
-	local state = {skill_upgrades = self._skill_upgrades}
+	local state = {
+		skill_upgrades = self._skill_upgrades
+	}
 	data.Drill = state
 end
 
@@ -770,7 +780,7 @@ function Drill:clbk_investigate_SO_verification(candidate_unit)
 	if ray then
 		local my_dis = mvector3.distance(candidate_listen_pos, sound_source_pos)
 
-		if (self._alert_radius or 900) * 0.5 < my_dis then
+		if my_dis > (self._alert_radius or 900) * 0.5 then
 			return
 		end
 	end
@@ -908,4 +918,3 @@ function Drill:compare_skill_upgrades(skill_upgrades)
 
 	return self._skill_upgrades.auto_repair_level_1 < skill_upgrades.auto_repair_level_1 or self._skill_upgrades.auto_repair_level_2 < skill_upgrades.auto_repair_level_2 or self._skill_upgrades.speed_upgrade_level < skill_upgrades.speed_upgrade_level or skill_upgrades.silent_drill and not self._skill_upgrades.silent_drill or skill_upgrades.reduced_alert and not self._skill_upgrades.reduced_alert
 end
-

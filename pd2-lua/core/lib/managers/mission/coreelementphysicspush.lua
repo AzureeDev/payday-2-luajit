@@ -16,4 +16,3 @@ function ElementPhysicsPush:on_executed(instigator)
 	World:play_physic_effect(self.IDS_EFFECT, self._values.position, self._values.physicspush_range, self._values.physicspush_velocity, self._values.physicspush_mass)
 	ElementPhysicsPush.super.on_executed(self, instigator)
 end
-

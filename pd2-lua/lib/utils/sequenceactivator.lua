@@ -11,4 +11,3 @@ function SequenceActivator:init(unit)
 
 	self._sequences = nil
 end
-

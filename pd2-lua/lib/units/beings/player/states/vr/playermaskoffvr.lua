@@ -131,6 +131,7 @@ function PlayerMaskOffVR:_check_use_item(t, input)
 
 	return __check_use_item_default(self, t, input)
 end
+
 local __start_action_state_standard = PlayerMaskOff._start_action_state_standard
 
 function PlayerMaskOffVR:_start_action_state_standard(...)
@@ -149,4 +150,3 @@ end
 function PlayerMaskOffVR:_can_duck()
 	return false
 end
-

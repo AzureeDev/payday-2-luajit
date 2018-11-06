@@ -26,7 +26,9 @@ function ECMJammerBase.spawn(pos, rot, battery_life_upgrade_lvl, owner, peer_id)
 end
 
 function ECMJammerBase:set_server_information(peer_id)
-	self._server_information = {owner_peer_id = peer_id}
+	self._server_information = {
+		owner_peer_id = peer_id
+	}
 
 	managers.network:session():peer(peer_id):set_used_deployable(true)
 end
@@ -380,7 +382,12 @@ function ECMJammerBase:_set_feedback_active(state)
 
 			if alive(self._owner) then
 				local retrigger = false
-				retrigger = self._owner_id == 1 and managers.player:has_category_upgrade("ecm_jammer", "can_retrigger") or self:owner():base():upgrade_value("ecm_jammer", "can_retrigger")
+
+				if self._owner_id == 1 then
+					retrigger = managers.player:has_category_upgrade("ecm_jammer", "can_retrigger")
+				else
+					retrigger = self:owner():base():upgrade_value("ecm_jammer", "can_retrigger")
+				end
 
 				if retrigger then
 					self._chk_feedback_retrigger_t = tweak_data.upgrades.ecm_feedback_retrigger_interval or 60
@@ -480,7 +487,9 @@ end
 function ECMJammerBase._detect_and_give_dmg(hit_pos, device_unit, user_unit, range)
 	local mvec3_dis_sq = mvector3.distance_sq
 	local slotmask = managers.slot:get_mask("bullet_impact_targets")
-	local splinters = {mvector3.copy(hit_pos)}
+	local splinters = {
+		mvector3.copy(hit_pos)
+	}
 	local dirs = {
 		Vector3(range, 0, 0),
 		Vector3(-range, 0, 0),
@@ -551,7 +560,7 @@ function ECMJammerBase._detect_and_give_dmg(hit_pos, device_unit, user_unit, ran
 					weapon_unit = device_unit,
 					col_ray = {
 						position = mvector3.copy(head_pos),
-						ray = (head_pos - s_pos):normalized()
+						ray = head_pos - s_pos:normalized()
 					}
 				}
 
@@ -616,4 +625,3 @@ function ECMJammerBase:destroy()
 	self:set_active(false)
 	self:_set_feedback_active(false)
 end
-

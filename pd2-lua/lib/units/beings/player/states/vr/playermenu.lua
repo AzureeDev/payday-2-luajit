@@ -22,6 +22,7 @@ end
 function PlayerMenuCamera:rotation()
 	return Rotation()
 end
+
 local hand_states_menu = require("lib/input/HandStatesPlayerMenu")
 TouchWheel = TouchWheel or class()
 
@@ -69,6 +70,7 @@ end
 function TouchWheel:value()
 	return self._value
 end
+
 StickWheel = StickWheel or class()
 
 function StickWheel:init()
@@ -123,6 +125,7 @@ end
 function StickWheel:value()
 	return self._value
 end
+
 PlayerMenu = PlayerMenu or class()
 PlayerMenu.STATE_IDLE = 0
 PlayerMenu.STATE_TARGETING = 1
@@ -132,7 +135,7 @@ PlayerMenu.STATE_EMPTY = 4
 PlayerMenu.WARP_SPEED = 3000
 PlayerMenu.MAX_WARP_DISTANCE = 500
 PlayerMenu.MAX_WARP_JUMP_DISTANCE = 450
-PlayerMenu.WARP_JUMP_TIME = (2 * tweak_data.player.movement_state.standard.movement.jump_velocity.z) / 982
+PlayerMenu.WARP_JUMP_TIME = 2 * tweak_data.player.movement_state.standard.movement.jump_velocity.z / 982
 PlayerMenu.MAX_WARP_JUMP_MOVE_SPEED = PlayerMenu.MAX_WARP_JUMP_DISTANCE / PlayerMenu.WARP_JUMP_TIME
 local mvec_temp1 = Vector3()
 local mvec_temp2 = Vector3()
@@ -304,6 +307,7 @@ function PlayerMenu:_get_max_walk_speed(t, force_run)
 
 	return movement_speed * multiplier
 end
+
 local mvec_prev_pos = Vector3()
 local mvec_mover_to_ghost = Vector3()
 
@@ -434,7 +438,7 @@ function PlayerMenu:update(t, dt)
 					hand.speed = hand.speed + 0.5 * dt
 				end
 
-				local t_slerp = math.min((speed * dt) / deg, 1)
+				local t_slerp = math.min(speed * dt / deg, 1)
 
 				mrotation.slerp(rot, hand.prev_rotation, rot, t_slerp)
 
@@ -477,7 +481,13 @@ local function intersect_ws(shape, normal, from, dir)
 	for i = 1, #shape, 1 do
 		local p1 = shape[i]
 		local p2 = nil
-		p2 = i ~= #shape and shape[i + 1] or shape[1]
+
+		if i ~= #shape then
+			p2 = shape[i + 1]
+		else
+			p2 = shape[1]
+		end
+
 		local d = p1 - p2
 
 		mvector3.normalize(d)
@@ -791,7 +801,9 @@ end
 function PlayerMenu:_setup_states()
 	self._current_state = nil
 	self._states = {
-		[PlayerMenu.STATE_IDLE] = {update = callback(self, self, "idle_update")},
+		[PlayerMenu.STATE_IDLE] = {
+			update = callback(self, self, "idle_update")
+		},
 		[PlayerMenu.STATE_TARGETING] = {
 			enter = callback(self, self, "target_enter"),
 			exit = callback(self, self, "target_exit"),
@@ -822,6 +834,7 @@ function PlayerMenu:_setup_states()
 
 	self._hand_state_machine:attach_controller(self._controller, true)
 end
+
 PlayerMenuHandBase = PlayerMenuHandBase or class()
 
 function PlayerMenuHandBase:init(config, laser_orientation_object)
@@ -881,6 +894,7 @@ end
 
 function PlayerMenuHandBase:set_orientation(position, rotation)
 end
+
 PlayerMenuHandUnit = PlayerMenuHandUnit or class(PlayerMenuHandBase)
 
 function PlayerMenuHandUnit:init(config)
@@ -913,6 +927,7 @@ end
 function PlayerMenuHandUnit:unit()
 	return self._unit
 end
+
 PlayerMenuHandObject = PlayerMenuHandObject or class(PlayerMenuHandBase)
 
 function PlayerMenuHandObject:init(config)
@@ -936,7 +951,9 @@ end
 
 function PlayerMenuHandObject:_set_visibility(object, visibility)
 	if object then
-		local objects = {object}
+		local objects = {
+			object
+		}
 
 		while #objects ~= 0 do
 			local cur = table.remove(objects, 1)
@@ -1045,6 +1062,7 @@ end
 function PlayerMenu:render_target_resolution()
 	return self._render_target_resolution
 end
+
 local ids_hdr_post_processor = Idstring("hdr_post_processor")
 local ids_hdr_post_composite = Idstring("post_DOF")
 local ids_radial_offset = Idstring("radial_offset")
@@ -1183,4 +1201,3 @@ function PlayerMenu:_setup_draw()
 		self._laser_dot_obj:set_visibility(false)
 	end
 end
-

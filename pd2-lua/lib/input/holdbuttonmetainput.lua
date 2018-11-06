@@ -28,4 +28,3 @@ function HoldButtonMetaInput:update(t, dt, controller, input)
 		input[self._subject_press_key] = true
 	end
 end
-

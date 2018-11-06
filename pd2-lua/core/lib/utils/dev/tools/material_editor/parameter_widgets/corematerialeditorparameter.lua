@@ -191,7 +191,13 @@ function CoreMaterialEditorParameter:_copy_to_parent(name)
 	end
 
 	local parent_param_node = nil
-	parent_param_node = self._parameter_info.type == "texture" and self._editor:_get_node(material_node, self._parameter_info.name:s()) or self._editor:_find_node(material_node, "variable", "name", self._parameter_info.name:s())
+
+	if self._parameter_info.type == "texture" then
+		parent_param_node = self._editor:_get_node(material_node, self._parameter_info.name:s())
+	else
+		parent_param_node = self._editor:_find_node(material_node, "variable", "name", self._parameter_info.name:s())
+	end
+
 	parent_param_node = parent_param_node or material_node:add_child(self._parameter_node)
 
 	if self._parameter_info.type == "texture" then

@@ -55,4 +55,3 @@ function ElementAlertTrigger:on_alert(alert_data)
 
 	self:do_synced_execute(instigator)
 end
-

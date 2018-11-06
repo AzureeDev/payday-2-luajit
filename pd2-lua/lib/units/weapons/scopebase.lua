@@ -1,4 +1,3 @@
-
 function NewRaycastWeaponBase:set_scope_enabled(enabled)
 	if self:is_npc() then
 		return
@@ -7,7 +6,12 @@ function NewRaycastWeaponBase:set_scope_enabled(enabled)
 	if self._scope_camera_configuration and _G.IS_VR then
 		local user_unit = managers.player:player_unit()
 		local camera = nil
-		camera = not user_unit and managers.menu:player() or user_unit:camera()
+
+		if not user_unit then
+			camera = managers.menu:player()
+		else
+			camera = user_unit:camera()
+		end
 
 		if camera then
 			if enabled then
@@ -59,4 +63,3 @@ function NewRaycastWeaponBase:configure_scope()
 		end
 	end
 end
-

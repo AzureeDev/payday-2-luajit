@@ -48,7 +48,9 @@ function _ScriptViewport:render_params()
 end
 
 function _ScriptViewport:set_render_params(...)
-	self._render_params = {...}
+	self._render_params = {
+		...
+	}
 end
 
 function _ScriptViewport:destroy()
@@ -115,6 +117,7 @@ end
 function _ScriptViewport:update_environment_value(data_path_key)
 	return self._env_handler:update_value(data_path_key)
 end
+
 local mvec1 = Vector3()
 local mvec2 = Vector3()
 
@@ -323,4 +326,3 @@ function _ScriptViewport:set_active(state)
 		self._vp:set_LOD_active(state)
 	end
 end
-

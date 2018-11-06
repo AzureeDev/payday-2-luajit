@@ -28,4 +28,3 @@ function PrepareLoadingFrontEnd:transition()
 		return CoreGameStateLoadingFrontEnd.LoadingFrontEnd
 	end
 end
-

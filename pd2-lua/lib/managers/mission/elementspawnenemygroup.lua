@@ -89,7 +89,9 @@ function ElementSpawnEnemyGroup:on_executed(instigator)
 			for i = 1, self:get_random_table_value(self._group_data.amount), 1 do
 				local element = self._spawn_points[self:_get_spawn_point(i)]
 
-				element:produce({team = self._values.team})
+				element:produce({
+					team = self._values.team
+				})
 			end
 		end
 	end
@@ -152,4 +154,3 @@ end
 function ElementSpawnEnemyGroup:spawn_groups()
 	return self._values.preferred_spawn_groups
 end
-

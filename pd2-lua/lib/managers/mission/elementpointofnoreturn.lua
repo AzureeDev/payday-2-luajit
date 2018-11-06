@@ -37,4 +37,3 @@ function ElementPointOfNoReturn:on_executed(instigator)
 
 	ElementPointOfNoReturn.super.on_executed(self, instigator)
 end
-

@@ -11,8 +11,7 @@ function Legal:transition()
 	local current_time = TimerManager:game():time()
 	local time_until_intro_screens = 1
 
-	if self._start_time + time_until_intro_screens <= current_time then
+	if current_time >= self._start_time + time_until_intro_screens then
 		return CoreMenuStateIntroScreens.IntroScreens
 	end
 end
-

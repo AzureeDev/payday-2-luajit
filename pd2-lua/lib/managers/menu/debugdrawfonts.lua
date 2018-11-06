@@ -2,7 +2,9 @@ DebugDrawFonts = DebugDrawFonts or class()
 
 function DebugDrawFonts:init(ws)
 	self._ws = ws
-	self._panel = ws:panel():panel({layer = 1000})
+	self._panel = ws:panel():panel({
+		layer = 1000
+	})
 	self._toggle = false
 	local massive_font = tweak_data.menu.pd2_massive_font
 	local large_font = tweak_data.menu.pd2_large_font
@@ -112,11 +114,16 @@ function DebugDrawFonts:init(ws)
 			local _, _, tw, th = text:text_rect()
 
 			text:set_size(tw, th)
-			side:rect({
+
+			slot43 = side.rect
+			slot45 = {
 				alpha = 0.6,
-				layer = 1,
-				color = i == 1 and Color.white or Color.black
-			}):set_shape(text:shape())
+				layer = 1
+			}
+			slot46 = i == 1 and Color.white or Color.black
+			slot45.color = slot46
+
+			side:rect(slot45):set_shape(text:shape())
 
 			y = y + math.round(th + 20)
 		end
@@ -141,4 +148,3 @@ end
 function DebugDrawFonts:close()
 	self._panel:parent():remove(self._panel)
 end
-

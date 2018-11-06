@@ -183,12 +183,14 @@ function HUDMissionBriefing:init(hud, workspace)
 			infamy:set_left(name:x())
 		end
 
-		BoxGuiObject:new(self._ready_slot_panel, {sides = {
-			1,
-			1,
-			1,
-			1
-		}})
+		BoxGuiObject:new(self._ready_slot_panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 	end
 
 	if not managers.job:has_active_job() then
@@ -399,7 +401,9 @@ function HUDMissionBriefing:init(hud, workspace)
 			align = "center",
 			blend_mode = "add",
 			name = "day_" .. tostring(i),
-			text = utf8.to_upper(managers.localization:text("menu_day_short", {day = tostring(i)})),
+			text = utf8.to_upper(managers.localization:text("menu_day_short", {
+				day = tostring(i)
+			})),
 			font_size = day_font_size,
 			font = day_font,
 			w = js_w,
@@ -481,7 +485,7 @@ function HUDMissionBriefing:init(hud, workspace)
 		})
 
 		payday_stamp:set_center(self._job_schedule_panel:child("day_" .. tostring(num_stages)):center())
-		payday_stamp:move((math.random(4) - 2) - 7, math.random(4) - 2 + 8)
+		payday_stamp:move(math.random(4) - 2 - 7, math.random(4) - 2 + 8)
 
 		if payday_stamp:rotation() == 0 then
 			payday_stamp:set_rotation(1)
@@ -524,12 +528,18 @@ function HUDMissionBriefing:init(hud, workspace)
 		local mission = managers.crime_spree:get_mission()
 		text = managers.localization:to_upper_text(name_id) .. ": "
 		text_len = utf8.len(text)
-		text = text .. "+" .. managers.localization:text("menu_cs_level", {level = mission and mission.add or 0})
+		text = text .. "+" .. managers.localization:text("menu_cs_level", {
+			level = mission and mission.add or 0
+		})
 		text_align = "right"
 	end
 
 	if managers.skirmish:is_skirmish() then
-		text = managers.skirmish:is_weekly_skirmish() and managers.localization:to_upper_text("menu_weekly_skirmish") or managers.localization:to_upper_text("menu_skirmish")
+		if managers.skirmish:is_weekly_skirmish() then
+			text = managers.localization:to_upper_text("menu_weekly_skirmish")
+		else
+			text = managers.localization:to_upper_text("menu_skirmish")
+		end
 	end
 
 	local job_text = self._foreground_layer_one:text({
@@ -873,4 +883,3 @@ function HUDMissionBriefing:reload()
 
 	HUDMissionBriefing.init(self, self._hud, self._workspace)
 end
-

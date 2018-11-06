@@ -167,4 +167,3 @@ function PlayerEquipment:throw_grenade()
 
 	managers.player:on_throw_grenade()
 end
-

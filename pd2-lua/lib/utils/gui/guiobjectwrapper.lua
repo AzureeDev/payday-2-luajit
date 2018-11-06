@@ -315,4 +315,3 @@ end
 function GUIObjectWrapper:alive(...)
 	return self._gui_obj:alive(...)
 end
-

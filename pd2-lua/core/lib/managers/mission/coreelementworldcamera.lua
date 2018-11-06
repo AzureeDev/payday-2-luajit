@@ -26,6 +26,7 @@ function ElementWorldCamera:on_executed(instigator)
 
 	ElementWorldCamera.super.on_executed(self, instigator)
 end
+
 ElementWorldCameraTrigger = ElementWorldCameraTrigger or class(CoreMissionScriptElement.MissionScriptElement)
 
 function ElementWorldCameraTrigger:init(...)
@@ -49,4 +50,3 @@ function ElementWorldCameraTrigger:on_executed(instigator)
 
 	ElementWorldCameraTrigger.super.on_executed(self, instigator)
 end
-

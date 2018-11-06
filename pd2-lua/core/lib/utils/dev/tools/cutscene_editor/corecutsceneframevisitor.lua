@@ -82,4 +82,3 @@ function CoreCutsceneFrameVisitor:_cleanup()
 
 	self.__sync_frames = nil
 end
-

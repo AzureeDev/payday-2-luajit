@@ -107,7 +107,9 @@ function CivilianBrain:on_cool_state_changed(state)
 		}
 	else
 		alert_listen_filter = managers.groupai:state():get_unit_type_filter("criminal")
-		alert_types = {bullet = true}
+		alert_types = {
+			bullet = true
+		}
 	end
 
 	managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
@@ -263,4 +265,3 @@ function CivilianBrain:save(save_data)
 		my_save_data.following_hostage_contour = true
 	end
 end
-

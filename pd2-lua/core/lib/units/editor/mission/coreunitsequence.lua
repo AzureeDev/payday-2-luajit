@@ -159,4 +159,3 @@ function CoreUnitSequenceUnitElement:add_to_mission_package()
 		continent = self._unit:unit_data().continent
 	})
 end
-

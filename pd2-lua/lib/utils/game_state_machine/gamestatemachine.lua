@@ -151,4 +151,3 @@ function GameStateMachine:verify_game_state(filter, state)
 
 	return filter[state]
 end
-

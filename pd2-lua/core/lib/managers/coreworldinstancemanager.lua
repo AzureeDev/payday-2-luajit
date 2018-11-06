@@ -81,7 +81,7 @@ function CoreWorldInstanceManager:get_safe_start_index(index_size, continent)
 	for _, instance_data in ipairs(self._instance_data) do
 		if instance_data.continent == continent then
 			table.insert(start_indices, instance_data.start_index)
-			table.insert(end_indices, (instance_data.start_index + (instance_data.index_size or 600)) - 1)
+			table.insert(end_indices, instance_data.start_index + (instance_data.index_size or 600) - 1)
 		end
 	end
 
@@ -114,7 +114,7 @@ function CoreWorldInstanceManager:get_used_indices(continent)
 	for _, instance_data in ipairs(self._instance_data) do
 		if instance_data.continent == continent then
 			table.insert(start_indices, instance_data.start_index)
-			table.insert(end_indices, (instance_data.start_index + (instance_data.index_size or 600)) - 1)
+			table.insert(end_indices, instance_data.start_index + (instance_data.index_size or 600) - 1)
 		end
 	end
 
@@ -542,7 +542,9 @@ function CoreWorldInstanceManager:get_instance_param(instance_name, var_name)
 end
 
 function CoreWorldInstanceManager:sync_save(data)
-	local state = {instance_params = self._instance_params}
+	local state = {
+		instance_params = self._instance_params
+	}
 	data.CoreWorldInstanceManager = state
 end
 
@@ -563,4 +565,3 @@ end
 function CoreWorldInstanceManager:clear()
 	self._instance_data = {}
 end
-

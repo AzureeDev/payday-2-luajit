@@ -99,4 +99,3 @@ function BlurZoneUnitElement:_build_panel(panel, panel_sizer)
 		ctrlr = height
 	})
 end
-

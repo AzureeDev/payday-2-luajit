@@ -17,4 +17,3 @@ function TeamAISound:set_voice(voice)
 	ss:set_switch("robber", voice)
 	ss:set_switch("int_ext", "third")
 end
-

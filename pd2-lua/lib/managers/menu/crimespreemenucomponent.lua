@@ -31,7 +31,9 @@ function CrimeSpreeMenuComponent:_setup()
 		parent:remove(self._panel)
 	end
 
-	self._panel = parent:panel({layer = self._init_layer})
+	self._panel = parent:panel({
+		layer = self._init_layer
+	})
 
 	self._panel:set_size(unpack(button_size))
 	self._panel:set_bottom(parent:bottom() - padding * 2)
@@ -45,7 +47,9 @@ function CrimeSpreeMenuComponent:_setup()
 
 		if managers.crime_spree:in_progress() then
 			btn:set_text("")
-			btn:set_level_text(managers.localization:text("menu_cs_level", {level = managers.experience:cash_string(managers.crime_spree:spree_level(), "")}))
+			btn:set_level_text(managers.localization:text("menu_cs_level", {
+				level = managers.experience:cash_string(managers.crime_spree:spree_level(), "")
+			}))
 			btn:set_callback(callback(self, self, "_continue_crime_spree"))
 		else
 			btn:set_text(managers.localization:to_upper_text("cn_crime_spree_start"))
@@ -127,15 +131,17 @@ function CrimeSpreeMenuComponent:_open_crime_spree_contract()
 	managers.menu_component:post_event("menu_enter")
 
 	local node = Global.game_settings.single_player and "crimenet_crime_spree_contract_singleplayer" or "crimenet_crime_spree_contract_host"
-	local data = {{
-		job_id = "crime_spree",
-		customize_contract = false,
-		competitive = false,
-		professional = false,
-		difficulty = tweak_data.crime_spree.base_difficulty,
-		difficulty_id = tweak_data.crime_spree.base_difficulty_index,
-		contract_visuals = {}
-	}}
+	local data = {
+		{
+			job_id = "crime_spree",
+			customize_contract = false,
+			competitive = false,
+			professional = false,
+			difficulty = tweak_data.crime_spree.base_difficulty,
+			difficulty_id = tweak_data.crime_spree.base_difficulty_index,
+			contract_visuals = {}
+		}
+	}
 
 	managers.menu:open_node(node, data)
 end
@@ -143,6 +149,7 @@ end
 function CrimeSpreeMenuComponent:_continue_crime_spree()
 	self:_open_crime_spree_contract()
 end
+
 CrimeSpreeStartButton = CrimeSpreeStartButton or class(MenuGuiItem)
 CrimeSpreeStartButton._type = "CrimeSpreeStartButton"
 
@@ -199,12 +206,14 @@ function CrimeSpreeStartButton:init(parent)
 		h = self._panel:h()
 	})
 
-	BoxGuiObject:new(self._panel, {sides = {
-		1,
-		1,
-		1,
-		1
-	}})
+	BoxGuiObject:new(self._panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
 	self:refresh()
 end
 
@@ -241,4 +250,3 @@ end
 
 function CrimeSpreeStartButton:update(t, dt)
 end
-

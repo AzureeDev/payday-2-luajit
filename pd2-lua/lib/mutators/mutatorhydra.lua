@@ -21,7 +21,9 @@ MutatorHydra.icon_coords = {
 	1
 }
 MutatorHydra.raw_enemy_list = {
-	["units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"] = {"units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"},
+	["units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"] = {
+		"units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"
+	},
 	["units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"] = {
 		{
 			"units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1",
@@ -43,7 +45,9 @@ MutatorHydra.raw_enemy_list = {
 		}
 	},
 	["units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1"] = {},
-	["units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1"] = {"units/payday2/characters/ene_tazer_1/ene_tazer_1"},
+	["units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1"] = {
+		"units/payday2/characters/ene_tazer_1/ene_tazer_1"
+	},
 	["units/payday2/characters/ene_shield_1/ene_shield_1"] = {
 		{
 			"units/payday2/characters/ene_tazer_1/ene_tazer_1",
@@ -74,9 +78,15 @@ MutatorHydra.raw_enemy_list = {
 		"units/payday2/characters/ene_spook_1/ene_spook_1",
 		"units/payday2/characters/ene_tazer_1/ene_tazer_1"
 	},
-	["units/payday2/characters/ene_spook_1/ene_spook_1"] = {"units/payday2/characters/ene_tazer_1/ene_tazer_1"},
-	["units/payday2/characters/ene_tazer_1/ene_tazer_1"] = {"units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"},
-	["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3"] = {"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer"},
+	["units/payday2/characters/ene_spook_1/ene_spook_1"] = {
+		"units/payday2/characters/ene_tazer_1/ene_tazer_1"
+	},
+	["units/payday2/characters/ene_tazer_1/ene_tazer_1"] = {
+		"units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"
+	},
+	["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3"] = {
+		"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer"
+	},
 	["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer"] = {
 		{
 			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2",
@@ -87,21 +97,41 @@ MutatorHydra.raw_enemy_list = {
 			1
 		}
 	},
-	["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2"] = {"units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"},
-	["units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"] = {"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"},
-	["units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker"] = {"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"},
-	["units/pd2_dlc_gitgud/characters/ene_zeal_tazer/ene_zeal_tazer"] = {"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"},
-	["units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"] = {"units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat"},
+	["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2"] = {
+		"units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"
+	},
+	["units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"] = {
+		"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"
+	},
+	["units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker"] = {
+		"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"
+	},
+	["units/pd2_dlc_gitgud/characters/ene_zeal_tazer/ene_zeal_tazer"] = {
+		"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"
+	},
+	["units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"] = {
+		"units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat"
+	},
 	["units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat"] = {
 		"units/payday2/characters/ene_city_swat_3/ene_city_swat_3",
 		"units/payday2/characters/ene_city_swat_2/ene_city_swat_2",
 		"units/payday2/characters/ene_city_swat_1/ene_city_swat_1"
 	},
-	["units/payday2/characters/ene_city_swat_3/ene_city_swat_3"] = {"units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"},
-	["units/payday2/characters/ene_city_swat_2/ene_city_swat_2"] = {"units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"},
-	["units/payday2/characters/ene_city_swat_1/ene_city_swat_1"] = {"units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"},
-	["units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"] = {"units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1"},
-	["units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1"] = {"units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"},
+	["units/payday2/characters/ene_city_swat_3/ene_city_swat_3"] = {
+		"units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"
+	},
+	["units/payday2/characters/ene_city_swat_2/ene_city_swat_2"] = {
+		"units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"
+	},
+	["units/payday2/characters/ene_city_swat_1/ene_city_swat_1"] = {
+		"units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"
+	},
+	["units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"] = {
+		"units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1"
+	},
+	["units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1"] = {
+		"units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"
+	},
 	["units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"] = {
 		"units/payday2/characters/ene_swat_2/ene_swat_2",
 		"units/payday2/characters/ene_swat_1/ene_swat_1"
@@ -158,7 +188,9 @@ MutatorHydra.raw_enemy_list = {
 		"units/payday2/characters/ene_cop_2/ene_cop_2",
 		"units/payday2/characters/ene_cop_3/ene_cop_3"
 	},
-	["units/pd2_dlc_mad/characters/ene_akan_fbi_tank_rpk_lmg/ene_akan_fbi_tank_rpk_lmg"] = {"units/pd2_dlc_mad/characters/ene_akan_fbi_tank_saiga/ene_akan_fbi_tank_saiga"},
+	["units/pd2_dlc_mad/characters/ene_akan_fbi_tank_rpk_lmg/ene_akan_fbi_tank_rpk_lmg"] = {
+		"units/pd2_dlc_mad/characters/ene_akan_fbi_tank_saiga/ene_akan_fbi_tank_saiga"
+	},
 	["units/pd2_dlc_mad/characters/ene_akan_fbi_tank_saiga/ene_akan_fbi_tank_saiga"] = {
 		{
 			"units/pd2_dlc_mad/characters/ene_akan_fbi_tank_r870/ene_akan_fbi_tank_r870",
@@ -199,8 +231,12 @@ MutatorHydra.raw_enemy_list = {
 			1
 		}
 	},
-	["units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg"] = {"units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass"},
-	["units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass"] = {"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"},
+	["units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg"] = {
+		"units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass"
+	},
+	["units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass"] = {
+		"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"
+	},
 	["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ak47_ass/ene_akan_fbi_swat_dw_ak47_ass"] = {
 		"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870",
 		"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"
@@ -213,21 +249,45 @@ MutatorHydra.raw_enemy_list = {
 		"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870",
 		"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"
 	},
-	["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870"] = {"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"},
-	["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"] = {"units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass"},
-	["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass"] = {"units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"},
-	["units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"] = {"units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass"},
-	["units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass"] = {"units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"},
+	["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870"] = {
+		"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"
+	},
+	["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"] = {
+		"units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass"
+	},
+	["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass"] = {
+		"units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"
+	},
+	["units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"] = {
+		"units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass"
+	},
+	["units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass"] = {
+		"units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"
+	},
 	["units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"] = {},
 	["units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870"] = {},
 	["units/pd2_dlc_mad/characters/ene_akan_cs_cop_asval_smg/ene_akan_cs_cop_asval_smg"] = {},
-	["units/payday2/characters/ene_murkywater_1/ene_murkywater_1"] = {"units/payday2/characters/ene_murkywater_1/ene_murkywater_1"},
-	["units/payday2/characters/ene_murkywater_2/ene_murkywater_2"] = {"units/payday2/characters/ene_murkywater_2/ene_murkywater_2"},
-	["units/pd2_dlc_berry/characters/ene_murkywater_no_light/ene_murkywater_no_light"] = {"units/pd2_dlc_berry/characters/ene_murkywater_no_light/ene_murkywater_no_light"},
-	["units/pd2_mcmansion/characters/ene_male_hector_1/ene_male_hector_1"] = {"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"},
-	["units/pd2_mcmansion/characters/ene_male_hector_2/ene_male_hector_2"] = {"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"},
-	["units/pd2_dlc_born/characters/ene_gang_biker_boss/ene_gang_biker_boss"] = {"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"},
-	["units/payday2/characters/ene_gang_mobster_boss/ene_gang_mobster_boss"] = {"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"},
+	["units/payday2/characters/ene_murkywater_1/ene_murkywater_1"] = {
+		"units/payday2/characters/ene_murkywater_1/ene_murkywater_1"
+	},
+	["units/payday2/characters/ene_murkywater_2/ene_murkywater_2"] = {
+		"units/payday2/characters/ene_murkywater_2/ene_murkywater_2"
+	},
+	["units/pd2_dlc_berry/characters/ene_murkywater_no_light/ene_murkywater_no_light"] = {
+		"units/pd2_dlc_berry/characters/ene_murkywater_no_light/ene_murkywater_no_light"
+	},
+	["units/pd2_mcmansion/characters/ene_male_hector_1/ene_male_hector_1"] = {
+		"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
+	},
+	["units/pd2_mcmansion/characters/ene_male_hector_2/ene_male_hector_2"] = {
+		"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
+	},
+	["units/pd2_dlc_born/characters/ene_gang_biker_boss/ene_gang_biker_boss"] = {
+		"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
+	},
+	["units/payday2/characters/ene_gang_mobster_boss/ene_gang_mobster_boss"] = {
+		"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
+	},
 	["units/payday2/characters/ene_gang_mobster_4/ene_gang_mobster_4"] = {
 		"units/payday2/characters/ene_gang_mobster_1/ene_gang_mobster_1",
 		"units/payday2/characters/ene_gang_mobster_2/ene_gang_mobster_2",
@@ -248,14 +308,22 @@ MutatorHydra.raw_enemy_list = {
 		"units/payday2/characters/ene_gang_mobster_3/ene_gang_mobster_3",
 		"units/payday2/characters/ene_gang_mobster_4/ene_gang_mobster_4"
 	},
-	["units/payday2/characters/ene_secret_service_2/ene_secret_service_2"] = {"units/payday2/characters/ene_secret_service_2/ene_secret_service_2"},
-	["units/payday2/characters/ene_secret_service_1/ene_secret_service_1"] = {"units/payday2/characters/ene_secret_service_1/ene_secret_service_1"},
+	["units/payday2/characters/ene_secret_service_2/ene_secret_service_2"] = {
+		"units/payday2/characters/ene_secret_service_2/ene_secret_service_2"
+	},
+	["units/payday2/characters/ene_secret_service_1/ene_secret_service_1"] = {
+		"units/payday2/characters/ene_secret_service_1/ene_secret_service_1"
+	},
 	["units/payday2/characters/ene_security_3/ene_security_3"] = {
 		"units/payday2/characters/ene_security_2/ene_security_2",
 		"units/payday2/characters/ene_security_1/ene_security_1"
 	},
-	["units/payday2/characters/ene_security_2/ene_security_2"] = {"units/payday2/characters/ene_security_1/ene_security_1"},
-	["units/payday2/characters/ene_security_1/ene_security_1"] = {"units/payday2/characters/ene_security_2/ene_security_2"},
+	["units/payday2/characters/ene_security_2/ene_security_2"] = {
+		"units/payday2/characters/ene_security_1/ene_security_1"
+	},
+	["units/payday2/characters/ene_security_1/ene_security_1"] = {
+		"units/payday2/characters/ene_security_2/ene_security_2"
+	},
 	["units/payday2/characters/ene_biker_4/ene_biker_4"] = {
 		"units/payday2/characters/ene_biker_3/ene_biker_3",
 		"units/payday2/characters/ene_biker_2/ene_biker_2",
@@ -325,7 +393,9 @@ function MutatorHydra:name()
 	local name = MutatorHydra.super.name(self)
 
 	if self:_mutate_name("max_unit_depth") then
-		local macros = {splits = self:value("max_unit_depth")}
+		local macros = {
+			splits = self:value("max_unit_depth")
+		}
 
 		return string.format("%s - %s", name, managers.localization:text("mutator_hydra_split_num", macros))
 	else
@@ -366,6 +436,7 @@ function MutatorHydra:update(t, dt)
 		end
 	end
 end
+
 MutatorHydra._sound_devices = 0
 
 function MutatorHydra.play_split_particle(position, rotation)
@@ -514,4 +585,3 @@ end
 function MutatorHydra:options_fill()
 	return self:_get_percentage_fill(1, self:_max_splits(), self:get_max_unit_depth())
 end
-

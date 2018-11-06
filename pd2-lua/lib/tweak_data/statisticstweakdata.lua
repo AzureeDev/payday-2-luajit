@@ -72,13 +72,57 @@ function StatisticsTweakData:statistics_table()
 			local contact = job_tweak.contact
 			local contact_tweak = contact and tweak_data.narrative.contacts[contact]
 			local allow_job = not contact or contact ~= "wip" and contact ~= "tests"
-			allow_job = not job_tweak.competitive and false
-			allow_job = not job_tweak.job_wrapper and false
-			allow_job = not job_tweak.hidden and false
-			allow_job = not job_tweak.ignore_statistics and false
+
+			if not job_tweak.competitive then
+				-- Nothing
+			else
+				allow_job = false
+
+				if false then
+					allow_job = true
+				end
+			end
+
+			if not job_tweak.job_wrapper then
+				-- Nothing
+			else
+				allow_job = false
+
+				if false then
+					allow_job = true
+				end
+			end
+
+			if not job_tweak.hidden then
+				-- Nothing
+			else
+				allow_job = false
+
+				if false then
+					allow_job = true
+				end
+			end
+
+			if not job_tweak.ignore_statistics then
+				-- Nothing
+			else
+				allow_job = false
+
+				if false then
+					allow_job = true
+				end
+			end
 
 			if contact_tweak then
-				allow_job = not contact_tweak.ignore_statistics and false
+				if not contact_tweak.ignore_statistics then
+					-- Nothing
+				else
+					allow_job = false
+
+					if false then
+						allow_job = true
+					end
+				end
 			end
 
 			if allow_job then
@@ -269,6 +313,7 @@ function StatisticsTweakData:resolution_statistics_table()
 end
 
 function StatisticsTweakData:mission_statistics_table()
-	return {"labrat"}
+	return {
+		"labrat"
+	}
 end
-

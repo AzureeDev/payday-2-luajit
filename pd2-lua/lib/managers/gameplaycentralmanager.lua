@@ -137,7 +137,7 @@ function GamePlayCentralManager:next_weapon()
 
 		self._blueprint_i = self._blueprint_i + 1
 
-		if #self._blueprints < self._blueprint_i then
+		if self._blueprint_i > #self._blueprints then
 			self._blueprint_i = 1
 		end
 
@@ -258,7 +258,7 @@ function GamePlayCentralManager:physics_push(col_ray, push_multiplier)
 			local nr_bodies = unit:num_bodies()
 			local i_body = 0
 
-			while i_body < nr_bodies do
+			while nr_bodies > i_body do
 				local test_body = unit:body(i_body)
 
 				if test_body:enabled() and test_body:dynamic() then
@@ -389,6 +389,7 @@ function GamePlayCentralManager:_flush_play_sounds()
 		self:_play_sound(table.remove(self._play_sounds, 1))
 	end
 end
+
 local zero_vector = Vector3()
 
 function GamePlayCentralManager:_play_bullet_hit(params)
@@ -429,7 +430,17 @@ function GamePlayCentralManager:_play_bullet_hit(params)
 	mvec3_spread(effect_normal, 10)
 
 	local material_name, pos, norm = World:pick_decal_material(col_ray.unit, decal_ray_from, decal_ray_to, slot_mask)
-	material_name = material_name ~= empty_idstr and false
+
+	if material_name ~= empty_idstr then
+		-- Nothing
+	else
+		material_name = false
+
+		if false then
+			material_name = true
+		end
+	end
+
 	local effect = params.effect
 
 	if material_name then
@@ -515,7 +526,15 @@ function GamePlayCentralManager:_flush_footsteps()
 				material_name, pos, norm = World:pick_decal_material(decal_ray_from, decal_ray_to, self._slotmask_footstep)
 			end
 
-			material_name = material_name ~= empty_idstr and false
+			if material_name ~= empty_idstr then
+				-- Nothing
+			else
+				material_name = false
+
+				if false then
+					material_name = true
+				end
+			end
 
 			if material_name then
 				sound_switch_name = material_name
@@ -706,7 +725,9 @@ function GamePlayCentralManager:queue_fire_raycast(expire_t, weapon_unit, ...)
 	local data = {
 		expire_t = expire_t,
 		weapon_unit = weapon_unit,
-		data = {...}
+		data = {
+			...
+		}
 	}
 
 	table.insert(self._queue_fire_raycast, data)
@@ -794,19 +815,20 @@ function GamePlayCentralManager:_do_shotgun_push(unit, hit_pos, dir, distance, a
 	local nr_u_bodies = unit:num_bodies()
 	local i_u_body = 0
 
-	while i_u_body < nr_u_bodies do
+	while nr_u_bodies > i_u_body do
 		local u_body = unit:body(i_u_body)
 
 		if u_body:enabled() and u_body:dynamic() then
 			local body_mass = u_body:mass()
 
-			World:play_physic_effect(Idstring("physic_effects/shotgun_hit"), u_body, Vector3(dir.x, dir.y, dir.z + 0.5) * 600 * scale, (4 * body_mass) / math.random(2), rot_acc, rot_time)
+			World:play_physic_effect(Idstring("physic_effects/shotgun_hit"), u_body, Vector3(dir.x, dir.y, dir.z + 0.5) * 600 * scale, 4 * body_mass / math.random(2), rot_acc, rot_time)
 			managers.mutators:notify(Message.OnShotgunPush, unit, hit_pos, dir, distance, attacker)
 		end
 
 		i_u_body = i_u_body + 1
 	end
 end
+
 local default_projectile_trail = Idstring("effects/payday2/particles/weapons/arrow_trail")
 
 function GamePlayCentralManager:add_projectile_trail(unit, object, effect)
@@ -819,7 +841,9 @@ function GamePlayCentralManager:add_projectile_trail(unit, object, effect)
 		effect = effect_ids,
 		parent = object
 	})
-	self._projectile_trails[unit:key()] = {effect = effect}
+	self._projectile_trails[unit:key()] = {
+		effect = effect
+	}
 end
 
 function GamePlayCentralManager:remove_projectile_trail(unit)
@@ -836,6 +860,7 @@ function GamePlayCentralManager:remove_projectile_trail(unit)
 	data.total_t = 0.5
 	data.t = data.total_t
 end
+
 local atom_ids = Idstring("Trail - Straight")
 local simulator_ids = Idstring("opacity_1")
 local opacity_ids = Idstring("opacity")
@@ -897,7 +922,9 @@ end
 
 function GamePlayCentralManager:debug_weapon()
 	managers.debug:set_enabled(true)
-	managers.debug:set_systems_enabled(true, {"gui"})
+	managers.debug:set_systems_enabled(true, {
+		"gui"
+	})
 
 	local gui = managers.debug._system_list.gui
 	local tweak_data = tweak_data.weapon.stats
@@ -955,4 +982,3 @@ function GamePlayCentralManager:debug_weapon()
 	gui:set_func(1, add_func)
 	gui:set_color(1, 1, 1, 1)
 end
-

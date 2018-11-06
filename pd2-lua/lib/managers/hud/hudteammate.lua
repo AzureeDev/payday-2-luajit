@@ -28,7 +28,9 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 		teammate_panel:set_halign("left")
 	end
 
-	self._player_panel = teammate_panel:panel({name = "player"})
+	self._player_panel = teammate_panel:panel({
+		name = "player"
+	})
 	self._health_data = {
 		current = 0,
 		total = 0
@@ -108,7 +110,7 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 		blend_mode = "normal",
 		texture = tabs_texture,
 		texture_rect = cs_rect,
-		color = (tweak_data.chat_colors[i] or tweak_data.chat_colors[#tweak_data.chat_colors]):with_alpha(1),
+		color = tweak_data.chat_colors[i] or tweak_data.chat_colors[#tweak_data.chat_colors]:with_alpha(1),
 		x = name:x() - name:h(),
 		y = name:y() + 1,
 		w = name:h() - 2,
@@ -142,7 +144,7 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 	local size = 64
 	local mask_pad = 2
 	local mask_pad_x = 3
-	local y = (teammate_panel:h() - name:h()) - size + mask_pad
+	local y = teammate_panel:h() - name:h() - size + mask_pad
 	local mask = teammate_panel:bitmap({
 		name = "mask",
 		visible = false,
@@ -372,7 +374,9 @@ function HUDTeammate:_create_radial_health(radial_health_panel)
 
 	radial_ability_icon:set_center(radial_ability_panel:center())
 
-	local radial_delayed_damage_panel = radial_health_panel:panel({name = "radial_delayed_damage"})
+	local radial_delayed_damage_panel = radial_health_panel:panel({
+		name = "radial_delayed_damage"
+	})
 	local radial_delayed_damage_armor = radial_delayed_damage_panel:bitmap({
 		texture = "guis/textures/pd2/hud_dot_shield",
 		name = "radial_delayed_damage_armor",
@@ -410,7 +414,7 @@ function HUDTeammate:_create_radial_health(radial_health_panel)
 			w = radial_health_panel:w(),
 			h = radial_health_panel:h()
 		})
-		local radial_rip_bg = radial_health_panel:bitmap({
+		slot15 = radial_health_panel:bitmap({
 			texture = "guis/textures/pd2/hud_rip_bg",
 			name = "radial_rip_bg",
 			layer = 1,
@@ -1265,9 +1269,15 @@ function HUDTeammate:create_waiting_panel(parent_panel)
 
 	bg:set_lefttop(detection:right() + PADD, detection:top())
 
-	local deploy_panel = panel:panel({name = "deploy"})
-	local throw_panel = panel:panel({name = "throw"})
-	local perk_panel = panel:panel({name = "perk"})
+	local deploy_panel = panel:panel({
+		name = "deploy"
+	})
+	local throw_panel = panel:panel({
+		name = "throw"
+	})
+	local perk_panel = panel:panel({
+		name = "perk"
+	})
 
 	self:_create_equipment(deploy_panel, "frag_grenade")
 	self:_create_equipment(throw_panel, "frag_grenade")
@@ -1594,7 +1604,7 @@ function HUDTeammate:set_callsign(id)
 	local callsign = teammate_panel:child("callsign")
 	local alpha = callsign:color().a
 
-	callsign:set_color((tweak_data.chat_colors[id] or tweak_data.chat_colors[#tweak_data.chat_colors]):with_alpha(alpha))
+	callsign:set_color(tweak_data.chat_colors[id] or tweak_data.chat_colors[#tweak_data.chat_colors]:with_alpha(alpha))
 end
 
 function HUDTeammate:set_cable_tie(data)
@@ -1917,7 +1927,7 @@ function HUDTeammate:update_delayed_damage()
 	local health_ratio = health_radial:color().r
 	local armor_damage = damage < armor_current and damage or armor_current
 	damage = damage - armor_damage
-	local health_damage = damage < health_current and damage or health_current
+	local health_damage = health_current > damage and damage or health_current
 	local armor_damage_ratio = armor_damage > 0 and armor_damage / armor_max or 0
 	local health_damage_ratio = health_damage / health_max
 
@@ -2069,7 +2079,7 @@ function HUDTeammate:layout_special_equipments()
 			panel:set_x(container_width - (panel:w() + 0) * (zi % row_width + 1))
 			panel:set_y(y_pos)
 		else
-			panel:set_x(48 + panel:w() * zi % row_width)
+			panel:set_x(48 + panel:w() * (zi % row_width))
 			panel:set_y(y_pos)
 		end
 	end
@@ -2204,9 +2214,30 @@ function HUDTeammate:_animate_timer_flash()
 	while t < 0.5 do
 		t = t + coroutine.yield()
 		local n = 1 - math.sin(t * 180)
-		local r = math.lerp(1 or self._point_of_no_return_color.r, 1, n)
-		local g = math.lerp(0 or self._point_of_no_return_color.g, 0.8, n)
-		local b = math.lerp(0 or self._point_of_no_return_color.b, 0.2, n)
+		slot4 = math.lerp
+		slot5 = 1
+
+		if 1 then
+			slot5 = self._point_of_no_return_color.r
+		end
+
+		local r = slot4(slot5, 1, n)
+		slot5 = math.lerp
+		slot6 = 0
+
+		if 0 then
+			slot6 = self._point_of_no_return_color.g
+		end
+
+		local g = slot5(slot6, 0.8, n)
+		slot6 = math.lerp
+		slot7 = 0
+
+		if 0 then
+			slot7 = self._point_of_no_return_color.b
+		end
+
+		local b = slot6(slot7, 0.2, n)
 
 		condition_timer:set_color(Color(r, g, b))
 		condition_timer:set_font_size(math.lerp(tweak_data.hud_players.timer_size, tweak_data.hud_players.timer_flash_size, n))
@@ -2370,4 +2401,3 @@ end
 if _G.IS_VR then
 	require("lib/managers/hud/vr/HUDTeammateVR")
 end
-

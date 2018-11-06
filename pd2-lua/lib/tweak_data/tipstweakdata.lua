@@ -1785,4 +1785,3 @@ function TipsTweakData:get_a_tip()
 		text = managers.localization:text(text_id)
 	}
 end
-

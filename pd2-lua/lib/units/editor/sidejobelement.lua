@@ -30,7 +30,9 @@ function SideJobAwardElement:_build_panel(panel, panel_sizer)
 		end
 	end
 
-	local objectives = {"all"}
+	local objectives = {
+		"all"
+	}
 
 	if self._hed.challenge then
 		local id = self._hed.challenge
@@ -74,6 +76,7 @@ function SideJobAwardElement:set_element_data(data)
 		self._objective_box:set_selection(0)
 	end
 end
+
 SideJobFilterElement = SideJobFilterElement or class(MissionElement)
 
 function SideJobFilterElement:init(unit)
@@ -104,7 +107,9 @@ function SideJobFilterElement:_build_panel(panel, panel_sizer)
 		end
 	end
 
-	local objectives = {"all"}
+	local objectives = {
+		"all"
+	}
 
 	if self._hed.challenge then
 		local id = self._hed.challenge
@@ -150,4 +155,3 @@ function SideJobFilterElement:set_element_data(data)
 		self._objective_box:set_selection(0)
 	end
 end
-

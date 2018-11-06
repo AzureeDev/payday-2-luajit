@@ -17,7 +17,9 @@ end
 
 function GameInstallingGui:update(install_progress)
 	if self._show_installing_text then
-		self._panel:child("installing_text"):set_text(managers.localization:text("menu_installing_progress", {progress = string.format("%.2f%%", install_progress * 100)}))
+		self._panel:child("installing_text"):set_text(managers.localization:text("menu_installing_progress", {
+			progress = string.format("%.2f%%", install_progress * 100)
+		}))
 	end
 end
 
@@ -28,4 +30,3 @@ function GameInstallingGui:close()
 		self._panel = nil
 	end
 end
-

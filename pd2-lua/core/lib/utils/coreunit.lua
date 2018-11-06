@@ -5,7 +5,9 @@ core:import("CoreCode")
 function table.get_ray_ignore_args(...)
 	local arg_list = {}
 
-	for _, unit in pairs({...}) do
+	for _, unit in pairs({
+		...
+	}) do
 		if CoreCode.alive(unit) then
 			table.insert(arg_list, "ignore_unit")
 			table.insert(arg_list, unit)
@@ -103,4 +105,3 @@ function safe_spawn_unit_without_extensions(unit_name, ...)
 
 	return World:spawn_unit_without_extensions(unit_name:id(), ...)
 end
-

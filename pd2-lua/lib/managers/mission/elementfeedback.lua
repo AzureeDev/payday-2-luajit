@@ -44,7 +44,7 @@ function ElementFeedback:on_executed(instigator)
 		self:_check_value(params, "rumble", "attack", self._values.rumble_attack)
 		self:_check_value(params, "rumble", "sustain", self._values.rumble_sustain)
 		self:_check_value(params, "rumble", "release", self._values.rumble_release)
-		self._feedback:set_enabled("above_camera_effect", 1 - self._values.above_camera_effect_distance <= multiplier)
+		self._feedback:set_enabled("above_camera_effect", multiplier >= 1 - self._values.above_camera_effect_distance)
 		table.insert(params, "above_camera_effect")
 		table.insert(params, "effect")
 		table.insert(params, self._values.above_camera_effect)
@@ -72,9 +72,8 @@ function ElementFeedback:_calc_multiplier(player)
 	end
 
 	local pos, _ = self:get_orientation(true)
-	local distance = (pos - player:position()):length()
+	local distance = pos - player:position():length()
 	local mul = math.clamp(1 - distance / self._values.range, 0, 1)
 
 	return mul
 end
-
