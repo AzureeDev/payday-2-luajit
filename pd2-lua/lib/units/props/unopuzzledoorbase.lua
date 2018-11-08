@@ -25,6 +25,8 @@ function UnoPuzzleDoorBase:init(unit)
 end
 
 function UnoPuzzleDoorBase:init_puzzle()
+	UnoPuzzleDoorBase.puzzle_initialized = true
+
 	self:set_riddle(1)
 end
 
@@ -99,7 +101,7 @@ end
 function UnoPuzzleDoorBase:revive_player()
 	local player = managers.player:player_unit()
 
-	if player then
+	if player and player:character_damage():need_revive() then
 		player:character_damage():revive(true)
 	end
 end

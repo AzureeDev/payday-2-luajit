@@ -6,6 +6,10 @@ function GenericDLCManager:has_ghx()
 	return self:is_dlc_unlocked("ghx")
 end
 
+function GenericDLCManager:has_maw()
+	return self:is_dlc_unlocked("maw")
+end
+
 function GenericDLCManager:has_mmh()
 	return self:is_dlc_unlocked("mmh")
 end
@@ -52,6 +56,10 @@ function WINDLCManager:init_generated()
 		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.ghx = {
+		app_id = "218620",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.maw = {
 		app_id = "218620",
 		no_install = true
 	}

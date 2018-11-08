@@ -31,6 +31,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		category = "pd2_clan",
 		ignore_ulti = true
 	}
+	self.global_values.maw = {
+		name_id = "bm_global_value_maw",
+		desc_id = "menu_l_global_value_infamous",
+		unlock_id = "bm_global_value_maw_unlock",
+		color = tweak_data.screen_colors.infamous_color,
+		dlc = true,
+		free = true,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 350,
+		category = "infamous",
+		ignore_ulti = true
+	}
 	self.global_values.mmh = {
 		name_id = "bm_global_value_mmh",
 		desc_id = "menu_l_global_value_infamous",

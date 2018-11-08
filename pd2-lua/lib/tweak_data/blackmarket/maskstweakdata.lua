@@ -7168,6 +7168,15 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		texture_bundle_folder = "smo",
 		sort_number = 72
 	}
+	self.masks.maw_01 = {
+		unit = "units/pd2_dlc_maw/masks/msk_maw_01",
+		name_id = "bm_msk_maw_01",
+		pcs = {},
+		value = 0,
+		texture_bundle_folder = "maw",
+		sort_number = 73,
+		global_value = "maw"
+	}
 	self.masks.sms_01 = {
 		unit = "units/pd2_dlc_sms/masks/sms_01/msk_sms_01",
 		name_id = "bm_msk_sms_01",

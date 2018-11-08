@@ -1192,7 +1192,8 @@ function LevelsTweakData:init()
 			"packages/narr_jerry1"
 		},
 		cube = "cube_apply_heist_bank",
-		max_bags = 20
+		max_bags = 20,
+		ai_group_type = murkywater
 	}
 	self.pbr2 = {
 		name_id = "heist_pbr2_hl",
@@ -1205,10 +1206,10 @@ function LevelsTweakData:init()
 		package = {
 			"packages/narr_jerry2"
 		},
-		cube = "cube_apply_heist_bank"
+		cube = "cube_apply_heist_bank",
+		max_bags = 20,
+		ai_group_type = america
 	}
-	self.pbr.max_bags = 20
-	self.pbr.ai_group_type = america
 	self.cane = {
 		name_id = "heist_cane_hl",
 		briefing_id = "heist_cane_briefing",
@@ -1770,7 +1771,7 @@ function LevelsTweakData:init()
 		music = "heist",
 		cube = "cube_apply_heist_bank",
 		max_bags = 20,
-		ai_group_type = america,
+		ai_group_type = murkywater,
 		narrator = "locke",
 		load_screen = "guis/dlcs/des/textures/loading/job_des_df"
 	}

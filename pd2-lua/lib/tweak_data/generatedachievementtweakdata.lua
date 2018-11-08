@@ -8519,6 +8519,7 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		uno_2 = {
+			additional_id = true,
 			sort_name = "C_Bain_H_DiamondStore_Hostage",
 			icon_id = "C_Bain_H_DiamondStore_Hostage",
 			tags = {

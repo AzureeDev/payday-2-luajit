@@ -505,6 +505,13 @@ function InteractionTweakData:init(tweak_data)
 		timer = 5,
 		interact_distance = 75
 	}
+	self.hospital_security_cable_yellow = {
+		text_id = "hud_int_hold_cut_wire_yellow",
+		icon = "interaction_wirecutter",
+		start_active = false,
+		timer = 5,
+		interact_distance = 75
+	}
 	self.hospital_veil = {
 		icon = "equipment_vial",
 		text_id = "debug_interact_hospital_veil_hold",
