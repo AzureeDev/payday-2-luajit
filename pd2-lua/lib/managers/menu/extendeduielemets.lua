@@ -267,20 +267,15 @@ function ScrollableList:scroll_to_show(top_or_item, bottom)
 		bottom = top_or_item:bottom()
 	else
 		top = top_or_item
-		bottom = top_or_item
+		bottom = bottom or top_or_item
 	end
 
-	bottom = bottom - self:h()
 	local cur = -self._canvas:y()
 
-	print("scroll", cur, top)
-
 	if top < cur then
-		print("scroll", top)
 		self._scroll:scroll_to(top)
-	elseif cur < bottom then
-		self._scroll:scroll_to(bottom)
-		print("scroll", bottom)
+	elseif bottom > cur + self._scroll:scroll_panel():h() then
+		self._scroll:scroll_to(bottom - self._scroll:scroll_panel():h())
 	end
 end
 
@@ -653,6 +648,10 @@ end
 
 function TextButton:_hover_changed(hover)
 	self._text:set_color(hover and self._hover_color or self._normal_color)
+
+	if hover then
+		managers.menu_component:post_event("highlight")
+	end
 end
 
 function TextButton:set_text(text)

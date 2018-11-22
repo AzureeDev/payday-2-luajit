@@ -18,6 +18,16 @@ function PlayerClean:_enter(enter_data)
 		managers.upgrades:setup_current_weapon()
 	end
 
+	for _, selection in ipairs(self._unit:inventory():available_selections()) do
+		local weapon_unit = selection.unit
+
+		if weapon_unit then
+			weapon_unit:base():set_gadget_on(0, false)
+		end
+	end
+
+	self._unit:network():send("set_weapon_gadget_state", 0)
+
 	if self._unit:camera():anim_data().equipped then
 		self._unit:camera():play_redirect(self:get_animation("unequip"))
 	end

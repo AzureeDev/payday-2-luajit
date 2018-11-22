@@ -11,7 +11,7 @@ end
 
 function StoryMissionsTweakData:_create_objective(data)
 	data = data or {}
-	data.complete = false
+	data.completed = false
 	data.max_progress = data.progress_id and data.max_progress or 1
 	data.progress = 0
 
@@ -881,6 +881,12 @@ function StoryMissionsTweakData:_init_missions(tweak_data)
 				}
 			},
 			rewards = self:_default_reward()
+		}),
+		self:_mission("sm_end", {
+			rewarded = true,
+			completed = true,
+			last_mission = true,
+			objectives = {}
 		})
 	}
 end

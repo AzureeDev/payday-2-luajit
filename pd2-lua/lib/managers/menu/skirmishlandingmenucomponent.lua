@@ -121,6 +121,7 @@ function SkirmishLandingMenuComponent:init(ws, fullscreen_ws, node)
 	local function open_node_callback(node_name)
 		return function ()
 			managers.menu:open_node(node_name)
+			managers.menu_component:post_event("menu_enter")
 		end
 	end
 
@@ -223,6 +224,10 @@ function ClickButton:_set_button_state(state)
 
 		if self.set_button_state then
 			self:set_button_state(state)
+		end
+
+		if state == ClickButton.STATE_HOVER then
+			managers.menu_component:post_event("highlight")
 		end
 	end
 end
@@ -818,6 +823,7 @@ end
 function RewardButton:flip()
 	self:set_scale(1)
 	self._reward_icon:animate(callback(self, self, "_animate_flip"))
+	managers.menu_component:post_event("loot_flip_card")
 end
 
 function RewardButton:_animate_flip(o)

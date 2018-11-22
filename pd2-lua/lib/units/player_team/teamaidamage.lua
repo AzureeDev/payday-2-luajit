@@ -942,7 +942,7 @@ function TeamAIDamage:arrested()
 	return self._arrested_timer
 end
 
-function TeamAIDamage:revive(reviving_unit)
+function TeamAIDamage:revive(reviving_unit, silent)
 	if self._dead then
 		return
 	end
@@ -999,7 +999,10 @@ function TeamAIDamage:revive(reviving_unit)
 	end
 
 	managers.hud:set_mugshot_normal(self._unit:unit_data().mugshot_id)
-	self._unit:sound():say("s05x_sin", true)
+
+	if not silent then
+		self._unit:sound():say("s05x_sin", true)
+	end
 
 	local dropped_bag = self._unit:movement():was_carrying_bag()
 

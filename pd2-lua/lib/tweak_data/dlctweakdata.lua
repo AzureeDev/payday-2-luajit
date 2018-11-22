@@ -111,6 +111,8 @@ function DLCTweakData:init(tweak_data)
 		}
 	end
 
+	self:init_generated()
+
 	self.starvr_free = {
 		free = true,
 		content = {}
@@ -7798,6 +7800,22 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-
-	self:init_generated()
+	self.scm_bundle = {
+		dlc = "has_stat",
+		stat_id = "uno_puzzle_door_activated",
+		content = {}
+	}
+	self.scm_bundle.content.loot_global_value = "infamous"
+	self.scm_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "scm_01",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "scm_02",
+			amount = 1
+		}
+	}
 end

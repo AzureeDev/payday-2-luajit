@@ -54,24 +54,26 @@ function SkirmishWeeklyContractMenuComponent:init(ws, fullscreen_ws, node)
 		}
 	})
 
-	local countdown_text = FineText:new(reward_panel, {
-		name = "countdown",
-		y = 5,
-		x = 10,
-		layer = 1,
-		text = managers.localization:to_upper_text("skirmish_weekly_time_left", managers.skirmish:weekly_time_left_params()),
-		color = tweak_data.screen_colors.text:with_alpha(0.5)
-	})
+	if managers.skirmish:host_weekly_match() then
+		local countdown_text = FineText:new(reward_panel, {
+			name = "countdown",
+			y = 5,
+			x = 10,
+			layer = 1,
+			text = managers.localization:to_upper_text("skirmish_weekly_time_left", managers.skirmish:weekly_time_left_params()),
+			color = tweak_data.screen_colors.text:with_alpha(0.5)
+		})
 
-	countdown_text:animate(function (o)
-		while true do
-			wait(1)
+		countdown_text:animate(function (o)
+			while true do
+				wait(1)
 
-			local time_text = managers.localization:to_upper_text("skirmish_weekly_time_left", managers.skirmish:weekly_time_left_params())
+				local time_text = managers.localization:to_upper_text("skirmish_weekly_time_left", managers.skirmish:weekly_time_left_params())
 
-			countdown_text:set_text(time_text)
-		end
-	end)
+				countdown_text:set_text(time_text)
+			end
+		end)
+	end
 
 	local max_weekly_wave = 9
 	local progress_text = FineText:new(reward_panel, {

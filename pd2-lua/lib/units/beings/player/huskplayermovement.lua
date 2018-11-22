@@ -3099,15 +3099,17 @@ function HuskPlayerMovement:sync_raise_weapon()
 end
 
 function HuskPlayerMovement:sync_stop_auto_fire_sound()
+	local equipped_weapon = self._unit:inventory():equipped_unit()
+
+	if equipped_weapon and equipped_weapon:base():shooting() then
+		equipped_weapon:base():stop_autofire()
+	end
+
 	if self.clean_states[self._state] then
 		return
 	end
 
 	if self._auto_firing > 0 then
-		local equipped_weapon = self._unit:inventory():equipped_unit()
-
-		equipped_weapon:base():stop_autofire()
-
 		self._auto_firing = 0
 		local stance = self._stance
 

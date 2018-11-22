@@ -47,6 +47,12 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.scm_bundle = {
+		free = true,
+		content = {}
+	}
+	self.scm_bundle.content.loot_global_value = "scm"
+	self.scm_bundle.content.loot_drops = {}
 	self.sdm_bundle = {
 		free = true,
 		content = {}

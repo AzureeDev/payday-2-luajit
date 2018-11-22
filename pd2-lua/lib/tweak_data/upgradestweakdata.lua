@@ -15433,7 +15433,6 @@ end
 
 function UpgradesTweakData:_coach_weapon_definitions()
 	self.definitions.coach = {
-		dlc = "pd2_clan",
 		factory_id = "wpn_fps_sho_coach",
 		weapon_id = "coach",
 		category = "weapon"

@@ -669,6 +669,12 @@ function PlayerInventory:_clbk_weapon_add(data)
 
 		managers.hud:set_mugshot_weapon(self._unit:unit_data().mugshot_id, icon, self:equipped_unit():base():weapon_tweak_data().use_data.selection_index)
 	end
+
+	self._weapon_load_finished = true
+end
+
+function PlayerInventory:has_finished_networked_weapon_load()
+	return self._weapon_load_finished or false
 end
 
 function PlayerInventory:mask_visibility()

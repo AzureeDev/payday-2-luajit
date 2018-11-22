@@ -14,6 +14,10 @@ function GenericDLCManager:has_mmh()
 	return self:is_dlc_unlocked("mmh")
 end
 
+function GenericDLCManager:has_scm()
+	return self:is_dlc_unlocked("scm")
+end
+
 function GenericDLCManager:has_sdm()
 	return self:is_dlc_unlocked("sdm")
 end
@@ -64,6 +68,10 @@ function WINDLCManager:init_generated()
 		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.mmh = {
+		app_id = "218620",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.scm = {
 		app_id = "218620",
 		no_install = true
 	}

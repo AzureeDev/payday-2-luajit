@@ -308,10 +308,8 @@ function PlayerStandard:exit(state_data, new_state_name)
 	end
 
 	if self._shooting then
-		self._shooting = false
-
-		self._equipped_unit:base():stop_shooting()
 		self._camera_unit:base():stop_shooting()
+		self:_check_stop_shooting()
 	end
 
 	self._headbob = 0
@@ -2849,7 +2847,7 @@ function PlayerStandard:is_equipping()
 	return self._equip_weapon_expire_t
 end
 
-function PlayerStandard:_add_unit_to_char_table(char_table, unit, unit_type, interaction_dist, interaction_through_walls, tight_area, priority, my_head_pos, cam_fwd, ray_ignore_units)
+function PlayerStandard:_add_unit_to_char_table(char_table, unit, unit_type, interaction_dist, interaction_through_walls, tight_area, priority, my_head_pos, cam_fwd, ray_ignore_units, ray_types)
 	if unit:unit_data().disable_shout and not unit:brain():interaction_voice() then
 		return
 	end
@@ -2873,9 +2871,9 @@ function PlayerStandard:_add_unit_to_char_table(char_table, unit, unit_type, int
 					unit_type = unit_type
 				})
 			else
-				local ray = World:raycast("ray", my_head_pos, u_head_pos, "slot_mask", self._slotmask_AI_visibility, "ray_type", "ai_vision", "ignore_unit", ray_ignore_units or {})
+				local ray = World:raycast("ray", my_head_pos, u_head_pos, "slot_mask", self._slotmask_AI_visibility, "ray_type", ray_types or "ai_vision", "ignore_unit", ray_ignore_units or {})
 
-				if not ray or mvector3.distance(ray.position, u_head_pos) < 30 then
+				if not ray or mvector3.distance_sq(ray.position, u_head_pos) < 900 then
 					table.insert(char_table, {
 						unit = unit,
 						inv_wgt = ing_wgt,
@@ -3149,12 +3147,12 @@ function PlayerStandard:_get_unit_intimidation_action(intimidate_enemies, intimi
 					if u_data.char_tweak.silent_priority_shout and u_data.unit:movement():cool() then
 						self:_add_unit_to_char_table(char_table, u_data.unit, unit_type_enemy, highlight_range, false, false, 0.01, my_head_pos, cam_fwd)
 					elseif not u_data.unit:movement():cool() then
-						self:_add_unit_to_char_table(char_table, u_data.unit, unit_type_enemy, intimidate_range_ene, false, false, 100, my_head_pos, cam_fwd)
+						self:_add_unit_to_char_table(char_table, u_data.unit, unit_type_enemy, intimidate_range_ene, false, false, 100, my_head_pos, cam_fwd, nil, "ai_vision mover")
 					end
 				elseif u_data.char_tweak.priority_shout then
 					self:_add_unit_to_char_table(char_table, u_data.unit, unit_type_enemy, highlight_range, false, false, 0.01, my_head_pos, cam_fwd)
 				else
-					self:_add_unit_to_char_table(char_table, u_data.unit, unit_type_enemy, intimidate_range_ene, false, false, 100, my_head_pos, cam_fwd)
+					self:_add_unit_to_char_table(char_table, u_data.unit, unit_type_enemy, intimidate_range_ene, false, false, 100, my_head_pos, cam_fwd, nil, "ai_vision mover")
 				end
 			end
 		end
@@ -4391,12 +4389,11 @@ function PlayerStandard:_check_stop_shooting()
 		self._camera_unit:base():stop_shooting(self._equipped_unit:base():recoil_wait())
 
 		local weap_base = self._equipped_unit:base()
+		local fire_mode = weap_base:fire_mode()
 
-		if not weap_base.akimbo or weap_base:weapon_tweak_data().allow_akimbo_autofire then
+		if fire_mode == "auto" and (not weap_base.akimbo or weap_base:weapon_tweak_data().allow_akimbo_autofire) then
 			self._ext_network:send("sync_stop_auto_fire_sound")
 		end
-
-		local fire_mode = weap_base:fire_mode()
 
 		if fire_mode == "auto" and not self:_is_reloading() and not self:_is_meleeing() then
 			self._unit:camera():play_redirect(self:get_animation("recoil_exit"))

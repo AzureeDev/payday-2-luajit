@@ -2118,7 +2118,10 @@ function StatisticsManager:_check_loaded_data()
 	self._global.sessions.jobs = self._global.sessions.jobs or {}
 	self._global.experience = self._global.experience or deep_clone(self._defaults.experience)
 	self._global.stat_check = self._global.stat_check or {}
-	self._global.stat_check.h = self._global.stat_check.h or tostring(math.floor(math.rand(0, 4294967295.0)))
+
+	if managers.achievment:get_info("fin_1").awarded then
+		self._global.stat_check.h = managers.custom_safehouse:uno_achievement_challenge():uno_ending_key()
+	end
 
 	self:_migrate_job_completion_stats()
 end

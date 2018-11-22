@@ -2046,7 +2046,7 @@ function PlayerDamage:set_revive_boost(revive_health_level)
 	print("PlayerDamage:set_revive_boost", "revive_health_level", revive_health_level, "revive_health_multiplier", tostring(self._revive_health_multiplier))
 end
 
-function PlayerDamage:revive(helped_self)
+function PlayerDamage:revive(silent)
 	if Application:digest_value(self._revives, false) == 0 then
 		self._revive_health_multiplier = nil
 
@@ -2057,7 +2057,7 @@ function PlayerDamage:revive(helped_self)
 
 	managers.player:set_player_state("standard")
 
-	if not helped_self then
+	if not silent then
 		PlayerStandard.say_line(self, "s05x_sin")
 	end
 

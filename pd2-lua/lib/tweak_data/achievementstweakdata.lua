@@ -7881,6 +7881,7 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 		}
 	}
 	self.visual.armored_2.need_unlock_icons = false
+	self.visual.fin_1.need_unlock_icons = false
 
 	for k, v in pairs(self.complete_heist_stats_achievements) do
 		if v.award and self.visual[v.award] then
@@ -8054,10 +8055,30 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 	end
 
 	local function from_mission_counter(counter, counter_total, inverted)
-		local counter_element, counter_total_element = nil
+		local counters = {}
+
+		local function get_counter(name)
+			counters[name] = counters[name] or managers.mission:get_mission_element_by_name(name)
+
+			return counters[name]
+		end
+
+		local get_max = nil
+
+		if type(counter_total) == "string" then
+			function get_max()
+				local max_counter = get_counter(counter_total)
+
+				return max_counter and max_counter:counter_value() or 0
+			end
+		elseif type(counter_total) == "number" then
+			function get_max()
+				return counter_total
+			end
+		end
 
 		local function get_current()
-			counter_element = counter_element or managers.mission:get_mission_element_by_name(counter)
+			local counter_element = get_counter(counter)
 
 			if not counter_element then
 				return 0
@@ -8066,26 +8087,15 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 			local current_count = counter_element:counter_value()
 
 			if inverted then
-				counter_total_element = counter_total_element or managers.mission:get_mission_element_by_name(counter_total)
-				current_count = counter_total_element:counter_value() - current_count
+				current_count = get_max() - current_count
 			end
 
 			return current_count
 		end
 
-		local function get_max()
-			counter_total_element = counter_total_element or managers.mission:get_mission_element_by_name(counter_total)
-
-			if not counter_total_element then
-				return 0
-			end
-
-			return counter_total_element:counter_value()
-		end
-
 		return {
 			get = get_current,
-			max = type(counter_total) == "string" and get_max or counter_total,
+			max = get_max,
 			update = tracking.realtime
 		}
 	end
@@ -8119,4 +8129,6 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 		end
 	}
 	self.visual.cac_33.progress = from_mission_counter("cac_33_counter", 200, false)
+	self.visual.uno_8.progress = from_mission_counter("uno_8_counter", 12, true)
+	self.visual.uno_9.progress = from_mission_counter("uno_9_counter", 40, true)
 end

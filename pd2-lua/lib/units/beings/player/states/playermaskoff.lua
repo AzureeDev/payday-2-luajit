@@ -20,13 +20,6 @@ function PlayerMaskOff:enter(state_data, enter_data)
 end
 
 function PlayerMaskOff:_enter(enter_data)
-	local equipped_weapon = self._unit:inventory():equipped_unit()
-
-	if equipped_weapon then
-		equipped_weapon:base():set_gadget_on(0, false)
-		self._unit:network():send("set_weapon_gadget_state", 0)
-	end
-
 	local equipped_selection = self._unit:inventory():equipped_selection()
 
 	if equipped_selection ~= 1 then
@@ -35,6 +28,16 @@ function PlayerMaskOff:_enter(enter_data)
 		self._ext_inventory:equip_selection(1, false)
 		managers.upgrades:setup_current_weapon()
 	end
+
+	for _, selection in ipairs(self._unit:inventory():available_selections()) do
+		local weapon_unit = selection.unit
+
+		if weapon_unit then
+			weapon_unit:base():set_gadget_on(0, false)
+		end
+	end
+
+	self._unit:network():send("set_weapon_gadget_state", 0)
 
 	if self._unit:camera():anim_data().equipped then
 		self._unit:camera():play_redirect(self:get_animation("unequip"))

@@ -1,5 +1,5 @@
 StoryMissionsManager = StoryMissionsManager or class()
-StoryMissionsManager._version = 1
+StoryMissionsManager._version = 2
 
 function StoryMissionsManager:init()
 	if not Global.story_mission_manager then
@@ -34,8 +34,6 @@ function StoryMissionsManager:init()
 				end
 			end
 		end
-
-		gm.mission_order[#gm.mission_order].last_mission = true
 	end
 
 	self._global = Global.story_mission_manager
@@ -256,6 +254,7 @@ function StoryMissionsManager:save(cache)
 
 		completed_missions[mission.id] = {
 			id = mission.id,
+			objectives = self:_save_objectives(mission),
 			rewarded = mission.rewarded
 		}
 	end
@@ -293,11 +292,40 @@ function StoryMissionsManager:_save_objectives(mission)
 	return res
 end
 
+function StoryMissionsManager:_migrate_save_data(version_from, version_to, state)
+	if version_to - version_from > 1 then
+		version_from = self:_migrate_save_data(version_from, version_to - 1, state)
+	end
+
+	if version_from == 1 then
+		for id, saved_mission in pairs(state.completed_missions or {}) do
+			local mission = self:get_mission(id)
+
+			if mission then
+				saved_mission.objectives = {}
+
+				for _, sub_obj in ipairs(mission.objectives[1] or {}) do
+					local objective_data = {
+						completed = true,
+						progress_id = sub_obj.progress_id,
+						progress = sub_obj.max_progress
+					}
+					saved_mission.objectives[sub_obj.progress_id] = objective_data
+				end
+			end
+		end
+	end
+end
+
 function StoryMissionsManager:load(cache, version)
 	local state = cache.story_missions_manager
 
-	if not state or state.version ~= StoryMissionsManager._version then
+	if not state then
 		return
+	end
+
+	if (state.version or 0) < self._version then
+		self:_migrate_save_data(state.version, self._version, state)
 	end
 
 	for id, c in pairs(state.completed_missions or {}) do
@@ -306,6 +334,15 @@ function StoryMissionsManager:load(cache, version)
 		if m then
 			m.completed = true
 			m.rewarded = c.rewarded
+
+			for id, o in pairs(c.objectives or {}) do
+				local my_o = m.objectives_flat[id]
+
+				if my_o then
+					my_o.completed = o.completed
+					my_o.progress = o.progress
+				end
+			end
 		end
 	end
 

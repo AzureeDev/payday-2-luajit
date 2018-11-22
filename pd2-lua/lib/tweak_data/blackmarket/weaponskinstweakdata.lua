@@ -31495,6 +31495,187 @@ function BlackMarketTweakData:_init_weapon_skins()
 		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df"),
 		pattern_tweak = Vector3(1, 0, 0)
 	}
+	self.weapon_skins.elastic_tam = {
+		name_id = "bm_wskn_elastic_tam",
+		desc_id = "bm_wskn_elastic_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "elastic",
+		global_value = "tam",
+		is_a_unlockable = true,
+		rarity = "epic",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df"),
+		pattern_tweak = Vector3(3.97329, 0, 1)
+	}
+	self.weapon_skins.komodo_tam = {
+		name_id = "bm_wskn_komodo_tam",
+		desc_id = "bm_wskn_komodo_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "komodo",
+		global_value = "tam",
+		is_a_unlockable = true,
+		rarity = "epic",
+		bonus = "concealment_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df"),
+		pattern_tweak = Vector3(2.25614, 0, 1)
+	}
+	self.weapon_skins.packrat_tam = {
+		name_id = "bm_wskn_packrat_tam",
+		desc_id = "bm_wskn_packrat_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "packrat",
+		global_value = "tam",
+		is_a_unlockable = true,
+		rarity = "epic",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df")
+	}
+	self.weapon_skins.legacy_tam = {
+		name_id = "bm_wskn_legacy_tam",
+		desc_id = "bm_wskn_legacy_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "legacy",
+		global_value = "tam",
+		is_a_unlockable = true,
+		rarity = "epic",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df"),
+		pattern_tweak = Vector3(0.634393, 0, 1)
+	}
+	self.weapon_skins.x_legacy_tam = {
+		name_id = "bm_wskn_x_legacy_tam",
+		desc_id = "bm_wskn_x_legacy_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "x_legacy",
+		global_value = "tam",
+		is_a_unlockable = true,
+		rarity = "epic",
+		bonus = "concealment_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df"),
+		pattern_tweak = Vector3(0.634393, 0, 1)
+	}
+	self.weapon_skins.coach_tam = {
+		name_id = "bm_wskn_coach_tam",
+		desc_id = "bm_wskn_coach_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "coach",
+		global_value = "tam",
+		is_a_unlockable = true,
+		rarity = "epic",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df"),
+		pattern_pos = Vector3(1.04603, 0.206535, 0)
+	}
+	self.weapon_skins.system_tam = {
+		name_id = "bm_wskn_system_tam",
+		desc_id = "bm_wskn_system_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "system",
+		global_value = "tam",
+		is_a_unlockable = true,
+		rarity = "epic",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df")
+	}
+	self.weapon_skins.shuno_tam = {
+		name_id = "bm_wskn_shuno_tam",
+		desc_id = "bm_wskn_shuno_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "shuno",
+		global_value = "tam",
+		rarity = "epic",
+		is_a_unlockable = true,
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df"),
+		pattern_tweak = Vector3(1.96995, 0, 1),
+		parts = {
+			wpn_fps_lmg_shuno_body_standard = {
+				[Idstring("mat_battery_and_drum"):key()] = {
+					pattern_tweak = Vector3(1.77916, 0, 1)
+				},
+				[Idstring("mat_grip_standard"):key()] = {
+					pattern_tweak = Vector3(1.20678, 0, 1)
+				},
+				[Idstring("mat_body_standard"):key()] = {
+					pattern_tweak = Vector3(1.77916, 0, 1)
+				}
+			},
+			wpn_fps_lmg_shuno_b_standard = {
+				[Idstring("mat_barrel_standard"):key()] = {
+					pattern_tweak = Vector3(0.872886, 0, 1)
+				}
+			},
+			wpn_fps_lmg_shuno_s_standard = {
+				[Idstring("mat_stock"):key()] = {
+					pattern_tweak = Vector3(1.96995, 0, 1),
+					pattern_pos = Vector3(0.330551, 0.511806, 0)
+				}
+			}
+		}
+	}
+	self.weapon_skins.x_packrat_tam = {
+		name_id = "bm_wskn_x_packrat_tam",
+		desc_id = "bm_wskn_x_packrat_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "x_packrat",
+		global_value = "tam",
+		rarity = "epic",
+		is_a_unlockable = true,
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df")
+	}
+	self.weapon_skins.ecp_tam = {
+		name_id = "bm_wskn_ecp_tam",
+		desc_id = "bm_wskn_ecp_tam_desc",
+		lock_id = "bm_wskn_tam_locked",
+		weapon_id = "ecp",
+		global_value = "tam",
+		rarity = "epic",
+		is_a_unlockable = true,
+		bonus = "concealment_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "tam/textures/pd2/blackmarket/icons",
+		base_gradient = Idstring("units/pd2_dlc_tam/base_gradient/tam_basegradient_001_df"),
+		pattern_gradient = Idstring("units/pd2_dlc_tam/pattern_gradient/tam_patterngradient_001_df"),
+		pattern = Idstring("units/pd2_dlc_tam/pattern/tam_pattern_001_df"),
+		pattern_tweak = Vector3(1.25447, 0, 1)
+	}
 	self.weapon_skins.mp7_cat = {
 		name_id = "bm_wskn_mp7_cat",
 		desc_id = "bm_wskn_mp7_cat_desc",

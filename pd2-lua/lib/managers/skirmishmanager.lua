@@ -14,6 +14,10 @@ function SkirmishManager:init_finalize()
 
 	if self:is_weekly_skirmish() then
 		self:_apply_weekly_modifiers()
+
+		if Network:is_client() and not self:host_weekly_match() then
+			self:block_weekly_progress()
+		end
 	end
 
 	if Network:is_server() then
@@ -48,6 +52,25 @@ function SkirmishManager:wave_range()
 	return 1, 9
 end
 
+function SkirmishManager:host_weekly_match()
+	if Network:is_server() then
+		return true
+	end
+
+	if not self:active_weekly() then
+		return false
+	end
+
+	local host_job = managers.job:current_job_id()
+	local end_timestamp = self:active_weekly().end_timestamp
+	local host_weekly_string = string.join(";", table.list_add({
+		host_job,
+		end_timestamp
+	}, self:weekly_modifiers()))
+
+	return self:active_weekly().key == host_weekly_string:key()
+end
+
 function SkirmishManager:_apply_modifiers_for_wave(wave_number)
 	local modifiers_data = tweak_data.skirmish.wave_modifiers[wave_number]
 
@@ -65,7 +88,7 @@ function SkirmishManager:_apply_modifiers_for_wave(wave_number)
 end
 
 function SkirmishManager:_apply_weekly_modifiers()
-	for _, modifier_name in ipairs(self:active_weekly().modifiers) do
+	for _, modifier_name in ipairs(self:weekly_modifiers()) do
 		local modifier_data = tweak_data.skirmish.weekly_modifiers[modifier_name]
 		local modifier_class = _G[modifier_data.class]
 		local modifier_opts = modifier_data.data
@@ -214,43 +237,25 @@ function SkirmishManager:on_left_lobby()
 end
 
 function SkirmishManager:save(data)
-	local save = {}
-
-	if self:active_weekly() then
-		save.weekly = {
-			key = self:active_weekly().key,
-			progress = self._global.weekly_progress,
-			weekly_rewards = self._global.weekly_rewards,
-			claimed_rewards = self._global.claimed_rewards
-		}
-	end
-
-	data.skirmish = save
+	data.skirmish = {
+		active_weekly = self._global.active_weekly,
+		weekly_progress = self._global.weekly_progress,
+		weekly_rewards = self._global.weekly_rewards,
+		claimed_rewards = self._global.claimed_rewards
+	}
 end
 
 function SkirmishManager:load(data)
-	local load = data.skirmish
+	data = data.skirmish
 
-	if not load then
+	if not data then
 		return
 	end
 
-	if load.weekly then
-		if not self:active_weekly() then
-			self._load_data = load.weekly
-		else
-			self:_do_load(load.weekly)
-		end
-	end
-end
-
-function SkirmishManager:_do_load(data)
+	self._global.active_weekly = data.active_weekly
+	self._global.weekly_progress = data.weekly_progress
+	self._global.weekly_rewards = data.weekly_rewards
 	self._global.claimed_rewards = data.claimed_rewards
-
-	if data.key == self:active_weekly().key then
-		self._global.weekly_progress = data.progress
-		self._global.weekly_rewards = data.weekly_rewards
-	end
 end
 
 function SkirmishManager:activate_weekly_skirmish(weekly_skirmish_string, force)
@@ -281,10 +286,6 @@ function SkirmishManager:activate_weekly_skirmish(weekly_skirmish_string, force)
 	self._global.active_weekly = active_weekly
 	self._global.weekly_progress = nil
 	self._global.weekly_rewards = nil
-
-	if self._load_data then
-		self:_do_load(self._load_data)
-	end
 end
 
 function SkirmishManager:active_weekly()
@@ -293,9 +294,12 @@ end
 
 function SkirmishManager:weekly_modifiers()
 	if self:is_weekly_skirmish() and Network:is_client() then
-		local modifiers_string = managers.network.matchmake.lobby_handler:get_lobby_data("skirmish_weekly_modifiers")
+		if not self._host_weekly_modifiers then
+			local modifiers_string = managers.network.matchmake.lobby_handler:get_lobby_data("skirmish_weekly_modifiers")
+			self._host_weekly_modifiers = string.split(modifiers_string, ";")
+		end
 
-		return string.split(modifiers_string, ";")
+		return self._host_weekly_modifiers
 	end
 
 	return self._global.active_weekly.modifiers

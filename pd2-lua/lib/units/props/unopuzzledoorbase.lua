@@ -25,8 +25,7 @@ function UnoPuzzleDoorBase:init(unit)
 end
 
 function UnoPuzzleDoorBase:init_puzzle()
-	UnoPuzzleDoorBase.puzzle_initialized = true
-
+	Steam:sa_handler():set_stat("uno_puzzle_door_activated", 1)
 	self:set_riddle(1)
 end
 
@@ -103,6 +102,14 @@ function UnoPuzzleDoorBase:revive_player()
 
 	if player and player:character_damage():need_revive() then
 		player:character_damage():revive(true)
+	end
+
+	if Network:is_server() then
+		for _, character in ipairs(managers.criminals:characters()) do
+			if character.data.ai and alive(character.unit) then
+				character.unit:character_damage():revive(nil, true)
+			end
+		end
 	end
 end
 

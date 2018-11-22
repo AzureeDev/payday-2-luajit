@@ -3289,7 +3289,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_BankAny_SaintFrancis = {
+	self.C_Bain_H_BankVarious_SaintFrancis = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas4",
 		texture_rect = {
 			696,
@@ -4090,7 +4090,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportAny_ButWait = {
+	self.C_Bain_H_TransportVarious_ButWait = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas8",
 		texture_rect = {
 			348,
@@ -4099,7 +4099,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportAny_IDoWhat = {
+	self.C_Bain_H_TransportVarious_IDoWhat = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas5",
 		texture_rect = {
 			348,
@@ -4108,7 +4108,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportAny_IfYouLikedIt = {
+	self.C_Bain_H_TransportVarious_IfYouLikedIt = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas4",
 		texture_rect = {
 			87,
@@ -4369,7 +4369,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_AllDiffs_D0 = {
+	self.C_Bain_H_TrainHeist_AllDiffs_D0 = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas",
 		texture_rect = {
 			348,
@@ -4378,7 +4378,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_AllDiffs_D1 = {
+	self.C_Bain_H_TrainHeist_AllDiffs_D1 = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas8",
 		texture_rect = {
 			87,
@@ -4387,7 +4387,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_AllDiffs_D2 = {
+	self.C_Bain_H_TrainHeist_AllDiffs_D2 = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas7",
 		texture_rect = {
 			696,
@@ -4396,7 +4396,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_AllDiffs_D3 = {
+	self.C_Bain_H_TrainHeist_AllDiffs_D3 = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas6",
 		texture_rect = {
 			783,
@@ -4405,7 +4405,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_AllDiffs_D4 = {
+	self.C_Bain_H_TrainHeist_AllDiffs_D4 = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas3",
 		texture_rect = {
 			522,
@@ -4414,7 +4414,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_AllDiffs_D5 = {
+	self.C_Bain_H_TrainHeist_AllDiffs_D5 = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas2",
 		texture_rect = {
 			609,
@@ -4423,7 +4423,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_AllDiffs_D6 = {
+	self.C_Bain_H_TrainHeist_AllDiffs_D6 = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas4",
 		texture_rect = {
 			174,
@@ -4432,7 +4432,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_LetThem = {
+	self.C_Bain_H_TrainHeist_LetThem = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas5",
 		texture_rect = {
 			609,
@@ -6943,7 +6943,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Elephant_H_FramingFrame_Afraid = {
+	self.C_Elephant_H_FramingFrame_Dark = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas6",
 		texture_rect = {
 			174,
@@ -10696,7 +10696,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.Other_H_BigBank_FundingFather = {
+	self.Other_H_Any_FundingFather = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas4",
 		texture_rect = {
 			348,
@@ -11494,7 +11494,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_AllDiffs_OD_D6 = {
+	self.C_Bain_H_TrainHeist_AllDiffs_OD_D6 = {
 		texture = "guis/dlcs/trk/textures/pd2/ggez_achievements_atlas",
 		texture_rect = {
 			2,
@@ -12232,7 +12232,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Classics_H_Any_DownPayment = {
+	self.C_Classics_H_FirstWorldBank_DownPayment = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_cac",
 		texture_rect = {
 			263,
@@ -13123,7 +13123,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_BankAny_AGoodHaul = {
+	self.C_Bain_H_BankVarious_AGoodHaul = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
 		texture_rect = {
 			263,
@@ -13141,7 +13141,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_Mallcrasher_SelfCheck = {
+	self.C_Vlad_H_Mallcrasher_SelfCheck = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_uno",
 		texture_rect = {
 			2,
@@ -13204,7 +13204,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Locke_H_WhiteHouse_Finale = {
+	self.Other_The_End_Offshore_PAYDAY = {
 		texture = "guis/dlcs/trk/atlases/fin_1",
 		texture_rect = {
 			0,

@@ -20,6 +20,8 @@ function UnoAchievementChallenge:init_finalize()
 		self:set_peer_completed(managers.network:session():local_peer():id(), self:challenge_completed())
 		managers.mission:add_global_event_listener({}, "on_peer_removed", callback(self, self, "on_peer_removed"))
 	end
+
+	managers.mission:add_global_event_listener({}, Message.OnAchievement, callback(self, self, "on_achievement_awarded"))
 end
 
 function UnoAchievementChallenge:generate_challenge(trigger_save)
@@ -45,6 +47,18 @@ function UnoAchievementChallenge:set_peer_completed(peer_id, completed)
 	self._peer_completion[peer_id] = completed
 
 	self:attempt_access_notification()
+end
+
+function UnoAchievementChallenge:uno_ending_key()
+	return Application:md5_encrypt("9x7XhhdHVse6hmRBTmz2" .. Steam:userid())
+end
+
+function UnoAchievementChallenge:on_achievement_awarded(achievement_id)
+	if achievement_id == "fin_1" then
+		Global.statistics_manager.stat_check.h = self:uno_ending_key()
+
+		managers.statistics:check_stats()
+	end
 end
 
 function UnoAchievementChallenge:attempt_access_notification()
