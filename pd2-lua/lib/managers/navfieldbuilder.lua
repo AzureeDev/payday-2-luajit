@@ -282,7 +282,6 @@ function NavFieldBuilder:build_visibility_graph(complete_clbk, all_visible, ray_
 	--- BLOCK #11 56-57, warpins: 1 ---
 	local visible_groups = vis_group.vis_groups
 	local i = 1
-
 	--- END OF BLOCK #11 ---
 
 	FLOW; TARGET BLOCK #12
@@ -298,50 +297,36 @@ function NavFieldBuilder:build_visibility_graph(complete_clbk, all_visible, ray_
 
 
 	-- Decompilation error in this vicinity:
-	--- BLOCK #13 58-65, warpins: 0 ---
-	repeat
-
-		-- Decompilation error in this vicinity:
-		--- BLOCK #12 58-58, warpins: 2 ---
-		--- END OF BLOCK #12 ---
-
-		FLOW; TARGET BLOCK #13
-
-
-
-		-- Decompilation error in this vicinity:
-		--- BLOCK #13 59-60, warpins: 1 ---
-		--- END OF BLOCK #13 ---
-
-		if i ~= i_vis_group then
-		JUMP TO BLOCK #14
-		else
-		JUMP TO BLOCK #15
-		end
-
-
-
-		-- Decompilation error in this vicinity:
-		--- BLOCK #14 61-62, warpins: 1 ---
-		visible_groups[i] = true
-		--- END OF BLOCK #14 ---
-
-		FLOW; TARGET BLOCK #15
-
-
-
-		-- Decompilation error in this vicinity:
-		--- BLOCK #15 63-65, warpins: 2 ---
-		i = i + 1
-		--- END OF BLOCK #15 ---
-
-
-
-	until nr_vis_groups < i
-
+	--- BLOCK #13 59-60, warpins: 1 ---
 	--- END OF BLOCK #13 ---
 
-	FLOW; TARGET BLOCK #16
+	if i ~= i_vis_group then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #14 61-62, warpins: 1 ---
+	visible_groups[i] = true
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #15 63-65, warpins: 2 ---
+	i = i + 1
+	--- END OF BLOCK #15 ---
+
+	if nr_vis_groups < i then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #12
+	end
 
 
 
@@ -795,6 +780,7 @@ function NavFieldBuilder:delete_segment(id)
 	-- Decompilation error in this vicinity:
 	--- BLOCK #22 92-93, warpins: 2 ---
 	i = i - 1
+
 	--- END OF BLOCK #22 ---
 
 	UNCONDITIONAL JUMP; TARGET BLOCK #18
@@ -825,7 +811,11 @@ function NavFieldBuilder:delete_segment(id)
 	--- BLOCK #25 98-101, warpins: 1 ---
 	--- END OF BLOCK #25 ---
 
-	FLOW; TARGET BLOCK #26
+	for u_id, segment in pairs(all_blockers)
+
+
+	LOOP BLOCK #26
+	GO OUT TO BLOCK #29
 
 
 
@@ -855,6 +845,7 @@ function NavFieldBuilder:delete_segment(id)
 	--- BLOCK #28 106-107, warpins: 3 ---
 	--- END OF BLOCK #28 ---
 
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
 
 
 
