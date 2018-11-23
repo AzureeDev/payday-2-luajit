@@ -8063,20 +8063,6 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 			return counters[name]
 		end
 
-		local get_max = nil
-
-		if type(counter_total) == "string" then
-			function get_max()
-				local max_counter = get_counter(counter_total)
-
-				return max_counter and max_counter:counter_value() or 0
-			end
-		elseif type(counter_total) == "number" then
-			function get_max()
-				return counter_total
-			end
-		end
-
 		local function get_current()
 			local counter_element = get_counter(counter)
 
@@ -8087,7 +8073,7 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 			local current_count = counter_element:counter_value()
 
 			if inverted then
-				current_count = get_max() - current_count
+				current_count = counter_total - current_count
 			end
 
 			return current_count
@@ -8095,7 +8081,7 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 
 		return {
 			get = get_current,
-			max = get_max,
+			max = counter_total,
 			update = tracking.realtime
 		}
 	end

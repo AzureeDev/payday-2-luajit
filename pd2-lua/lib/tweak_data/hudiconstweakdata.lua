@@ -4441,7 +4441,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_TransportTrainHeist_WereGonnaNeed = {
+	self.C_Bain_H_TrainHeist_WereGonnaNeed = {
 		texture = "guis/dlcs/trk/textures/pd2/achievements_atlas6",
 		texture_rect = {
 			435,
