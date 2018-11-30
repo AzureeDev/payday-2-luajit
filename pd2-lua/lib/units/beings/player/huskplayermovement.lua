@@ -3101,7 +3101,7 @@ end
 function HuskPlayerMovement:sync_stop_auto_fire_sound()
 	local equipped_weapon = self._unit:inventory():equipped_unit()
 
-	if equipped_weapon and equipped_weapon:base():shooting() then
+	if equipped_weapon and equipped_weapon:base().shooting and equipped_weapon:base():shooting() then
 		equipped_weapon:base():stop_autofire()
 	end
 

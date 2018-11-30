@@ -191,10 +191,6 @@ function NewNPCRaycastWeaponBase:stop_autofire()
 	self._shooting = nil
 end
 
-function NewNPCRaycastWeaponBase:shooting()
-	return self._shooting
-end
-
 function NewNPCRaycastWeaponBase:singleshot(...)
 	local fired = self:fire(...)
 

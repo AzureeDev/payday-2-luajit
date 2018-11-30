@@ -490,10 +490,6 @@ function UnitNetworkHandler:shot_blank(shooting_unit, impact, sender)
 		return
 	end
 
-	if not shooting_unit:inventory():has_finished_networked_weapon_load() then
-		return
-	end
-
 	shooting_unit:movement():sync_shot_blank(impact)
 end
 
@@ -502,19 +498,11 @@ function UnitNetworkHandler:sync_start_auto_fire_sound(shooting_unit, sender)
 		return
 	end
 
-	if not shooting_unit:inventory():has_finished_networked_weapon_load() then
-		return
-	end
-
 	shooting_unit:movement():sync_start_auto_fire_sound()
 end
 
 function UnitNetworkHandler:sync_stop_auto_fire_sound(shooting_unit, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_character_and_sender(shooting_unit, sender) then
-		return
-	end
-
-	if not shooting_unit:inventory():has_finished_networked_weapon_load() then
 		return
 	end
 

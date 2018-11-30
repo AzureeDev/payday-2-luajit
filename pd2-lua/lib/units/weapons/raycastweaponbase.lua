@@ -72,6 +72,10 @@ function RaycastWeaponBase:init(unit)
 	self._magazine_empty_objects = {}
 end
 
+function RaycastWeaponBase:shooting()
+	return self._shooting
+end
+
 function RaycastWeaponBase:change_fire_object(new_obj)
 	self._obj_fire = new_obj
 	self._muzzle_effect_table.parent = new_obj
