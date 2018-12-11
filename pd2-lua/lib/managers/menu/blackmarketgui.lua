@@ -7187,6 +7187,15 @@ function BlackMarketGui:update_info_text()
 		info_text:set_h(th)
 
 		if updated_texts[i].below_stats then
+			if slot_data.comparision_data and alive(self._stats_text_modslist) then
+				info_text:set_world_y(below_y or self._stats_text_modslist:world_top())
+
+				below_y = (below_y or info_text:world_y()) + th
+			else
+				info_text:set_top((below_y or info_text:top()) + 20)
+
+				below_y = (below_y or info_text:top()) + th
+			end
 		end
 
 		local scale = 1

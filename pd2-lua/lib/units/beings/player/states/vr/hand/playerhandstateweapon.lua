@@ -300,15 +300,7 @@ function PlayerHandStateWeapon:update(t, dt)
 						local closest_dis, closest = nil
 
 						for _, assist_data in ipairs(assist_tweak.points) do
-							slot16 = mvector3.distance_sq
-							slot17 = other_hand
-							slot18 = weapon_pos + assist_data.position:rotate_with(self._weapon_unit:rotation())
-
-							if not tweak_data.vr.weapon_offsets.weapons[self._weapon_id] then
-								slot19 = tweak_data.vr.weapon_offsets.default
-							end
-
-							local dis = slot16(slot17, slot18 + slot19.position:rotate_with(self._weapon_unit:rotation()))
+							local dis = mvector3.distance_sq(other_hand, weapon_pos + assist_data.position:rotate_with(self._weapon_unit:rotation()) + tweak_data.vr.weapon_offsets.weapons[self._weapon_id] or tweak_data.vr.weapon_offsets.default.position:rotate_with(self._weapon_unit:rotation()))
 
 							if not closest_dis or dis < closest_dis then
 								closest_dis = dis

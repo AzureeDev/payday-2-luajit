@@ -584,41 +584,45 @@ function HuskPlayerMovement:update(unit, t, dt)
 		end
 	end
 
-	if self._ext_anim and self._ext_anim.reload and not alive(self._left_hand_obj) then
-		self._left_hand_obj = self._unit:get_object(Idstring("LeftHandMiddle1"))
+	if self._ext_anim and self._ext_anim.reload then
+		if not alive(self._left_hand_obj) then
+			self._left_hand_obj = self._unit:get_object(Idstring("LeftHandMiddle1"))
+		end
 
-		if alive(self._left_hand_obj) and self._left_hand_pos then
-			self._left_hand_direction = self._left_hand_direction or Vector3()
+		if alive(self._left_hand_obj) then
+			if self._left_hand_pos then
+				self._left_hand_direction = self._left_hand_direction or Vector3()
 
-			mvec3_set(self._left_hand_direction, self._left_hand_pos)
-			mvec3_sub(self._left_hand_direction, self._left_hand_obj:position())
+				mvec3_set(self._left_hand_direction, self._left_hand_pos)
+				mvec3_sub(self._left_hand_direction, self._left_hand_obj:position())
 
-			self._left_hand_velocity = mvec3_len(self._left_hand_direction)
+				self._left_hand_velocity = mvec3_len(self._left_hand_direction)
 
-			mvec3_norm(self._left_hand_direction)
+				mvec3_norm(self._left_hand_direction)
+			end
 
 			self._left_hand_pos = self._left_hand_pos or Vector3()
 
 			mvec3_set(self._left_hand_pos, self._left_hand_obj:position())
+		end
+	end
 
-			if self._delayed_redirects then
-				for i, redirect in ipairs(self._delayed_redirects) do
-					redirect.t = redirect.t - dt
+	if self._delayed_redirects then
+		for i, redirect in ipairs(self._delayed_redirects) do
+			redirect.t = redirect.t - dt
 
-					if redirect.t <= 0 then
-						self:play_redirect(unpack(redirect.args))
-						table.remove(self._delayed_redirects, i)
-					end
-				end
+			if redirect.t <= 0 then
+				self:play_redirect(unpack(redirect.args))
+				table.remove(self._delayed_redirects, i)
 			end
+		end
+	end
 
-			if self._retry_sync_movement_state_driving then
-				self._retry_sync_movement_state_driving = nil
+	if self._retry_sync_movement_state_driving then
+		self._retry_sync_movement_state_driving = nil
 
-				if self._state == "driving" then
-					self:_sync_movement_state_driving()
-				end
-			end
+		if self._state == "driving" then
+			self:_sync_movement_state_driving()
 		end
 	end
 end
