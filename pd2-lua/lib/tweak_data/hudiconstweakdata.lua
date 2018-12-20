@@ -12826,7 +12826,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_AllDiffs_D0 = {
+	self.C_Classics_H_NoMercy_AllDiffs_D0 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			89,
@@ -12835,7 +12835,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_AllDiffs_D1 = {
+	self.C_Classics_H_NoMercy_AllDiffs_D1 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			176,
@@ -12844,7 +12844,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_AllDiffs_D2 = {
+	self.C_Classics_H_NoMercy_AllDiffs_D2 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			2,
@@ -12853,7 +12853,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_AllDiffs_D3 = {
+	self.C_Classics_H_NoMercy_AllDiffs_D3 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			89,
@@ -12862,7 +12862,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_AllDiffs_D4 = {
+	self.C_Classics_H_NoMercy_AllDiffs_D4 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			176,
@@ -12871,7 +12871,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_AllDiffs_D5 = {
+	self.C_Classics_H_NoMercy_AllDiffs_D5 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			263,
@@ -12880,7 +12880,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_AllDiffs_D6 = {
+	self.C_Classics_H_NoMercy_AllDiffs_D6 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			2,
@@ -12889,7 +12889,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_AllDiffs_OD_D6 = {
+	self.C_Classics_H_NoMercy_AllDiffs_OD_D6 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			89,
@@ -12898,7 +12898,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_KeepingTheCool = {
+	self.C_Classics_H_NoMercy_KeepingTheCool = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			2,
@@ -12907,7 +12907,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_Nyctophobia = {
+	self.C_Classics_H_NoMercy_Nyctophobia = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			2,
@@ -12916,7 +12916,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.C_Bain_H_NoMercy_OrWasIt = {
+	self.C_Classics_H_NoMercy_OrWasIt = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_nmh",
 		texture_rect = {
 			2,

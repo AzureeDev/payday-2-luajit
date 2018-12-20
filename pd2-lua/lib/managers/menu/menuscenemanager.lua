@@ -2507,6 +2507,16 @@ function MenuSceneManager:set_scene_template(template, data, custom_name, skip_t
 			self._character_unit:set_position(self._character_values.pos_target)
 		end
 
+		if _G.IS_VR then
+			if template_data.character_rot then
+				self._character_unit:set_rotation(template_data.character_rot)
+			else
+				local a = self._bg_unit:get_object(Idstring("a_reference"))
+
+				self._character_unit:set_rotation(a:rotation())
+			end
+		end
+
 		if template_data and template_data.recreate_character and self._player_character_name then
 			self:set_character(self._player_character_name, true)
 		end

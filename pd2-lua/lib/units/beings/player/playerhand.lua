@@ -2,6 +2,7 @@ require("lib/units/beings/player/PlayerHandStateMachine")
 require("lib/units/beings/player/PlayerWatch")
 require("lib/input/HandStateMachine")
 require("lib/input/HandStatesPlayer")
+require("lib/utils/ArmSimulator")
 
 PlayerHand = PlayerHand or class()
 PlayerHand.RIGHT = 1
@@ -26,6 +27,11 @@ function PlayerHand:init(unit)
 		PackageManager:load("packages/vr_base")
 	end
 
+	self._unit = unit
+end
+
+function PlayerHand:post_init()
+	local unit = self._unit
 	local camera = unit:camera()
 	local camera_unit = camera:camera_unit()
 	local controller = unit:base():controller()
@@ -54,7 +60,6 @@ function PlayerHand:init(unit)
 	self._vr_controller = controller:get_controller("vr")
 	local base_rotation = camera_unit:base():base_rotation()
 	self._base_rotation = base_rotation
-	self._unit = unit
 	self._unit_movement_ext = unit:movement()
 	self._camera_unit = camera_unit
 	self._belt_yaw = base_rotation:yaw()
@@ -143,6 +148,20 @@ function PlayerHand:init(unit)
 	self._belt_size_changed_clbk = callback(self, self, "on_belt_size_changed")
 
 	managers.vr:add_setting_changed_callback("belt_size", self._belt_size_changed_clbk)
+
+	self._default_weapon_hand_changed_clbk = callback(self, self, "on_default_weapon_hand_changed")
+
+	managers.vr:add_setting_changed_callback("default_weapon_hand", self._default_weapon_hand_changed_clbk)
+
+	self._arm_peer_filter = self._arm_peer_filter or {}
+	self._arm_simulator = ArmSimulator:new("gamedata/arms", self._vr_controller)
+	self._sync_listener_key = {}
+
+	managers.network:add_event_listener(self._sync_listener_key, "session_peer_sync_complete", callback(self, self, "on_peer_sync_complete"))
+
+	self._arm_animation_changed_clbk = callback(self, self, "on_arm_animation_changed")
+
+	managers.vr:add_setting_changed_callback("arm_animation", self._arm_animation_changed_clbk)
 end
 
 function PlayerHand:destroy()
@@ -157,6 +176,51 @@ function PlayerHand:destroy()
 
 	managers.vr:remove_setting_changed_callback("default_tablet_hand", self._tablet_hand_changed_clbk)
 	managers.vr:remove_setting_changed_callback("belt_size", self._belt_size_changed_clbk)
+	managers.vr:remove_setting_changed_callback("default_weapon_hand", self._default_weapon_hand_changed_clbk)
+	managers.vr:remove_setting_changed_callback("arm_animation", self._arm_animation_changed_clbk)
+	managers.network:remove_event_listener(self._sync_listener_key)
+end
+
+function PlayerHand:primary_hand_id()
+	local primary_hand_id = self:get_active_hand_id("weapon") or self:get_active_hand_id("melee") or self.hand_id(managers.vr:get_setting("default_weapon_hand") or "right")
+
+	return primary_hand_id
+end
+
+function PlayerHand:sync_state()
+	local weapon_hand_id = self:primary_hand_id()
+
+	if self._weapon_hand_id ~= weapon_hand_id then
+		self._unit:network():send("set_primary_hand", weapon_hand_id - 1)
+
+		self._weapon_hand_id = weapon_hand_id
+	end
+end
+
+function PlayerHand:on_peer_sync_complete(peer)
+	if self._arm_simulator:enabled() then
+		peer:send_queued_sync("set_arm_setting", self._unit, ArmSetting.SET_ARM_ANIMATOR_ENABLED, 1)
+
+		local weapon_hand_id = self:primary_hand_id()
+
+		peer:send_queued_sync("set_primary_hand", self._unit, weapon_hand_id - 1)
+
+		local melee_hand_id = self:get_active_hand_id("melee")
+
+		if melee_hand_id then
+			peer:send_queued_sync("sync_melee_start", self._unit, melee_hand_id)
+		end
+	end
+end
+
+function PlayerHand:on_default_weapon_hand_changed(setting, old, new)
+	self:sync_state()
+end
+
+function PlayerHand:on_arm_animation_changed(setting, old, new)
+	if new == false then
+		self._unit:network():send("set_arm_setting", ArmSetting.SET_ARM_ANIMATOR_ENABLED, 0)
+	end
 end
 
 function PlayerHand:on_tablet_hand_changed(setting, old, new)
@@ -401,8 +465,43 @@ end
 local tablet_normal = Vector3(-1, 0, 0)
 local rotated_tablet_normal = Vector3(0, 0, 0)
 
+function PlayerHand:aim_target(hand, weapon, origin, melee_hand)
+	if weapon and hand ~= melee_hand then
+		local fo = weapon:base():fire_object()
+		local rotation = weapon:rotation()
+		local wa = fo:position() - weapon:position():rotate_with(rotation:inverse())
+
+		if alive(weapon) then
+			local weapon_id = weapon:base().name_id
+		end
+
+		local tweak = tweak_data.vr:get_offset_by_id(weapon_id)
+		local position = self._hand_data[hand].position
+		local fop = position
+		local fod = rotation:y()
+
+		if tweak and tweak.position then
+			fop = fop + tweak.position:rotate_with(rotation)
+		end
+
+		fop = fop + wa:rotate_with(rotation)
+		local target = fop + fod * 3000 - origin
+
+		return target, wa
+	end
+end
+
+function PlayerHand:set_moving(moving, dir)
+	self._moving = moving
+	self._moving_dir = dir
+end
+
 function PlayerHand:update(unit, t, dt)
 	if self._block_input then
+		if self._arm_simulator:enabled() then
+			self:_update_arms(t, dt)
+		end
+
 		return
 	end
 
@@ -418,6 +517,137 @@ function PlayerHand:update(unit, t, dt)
 	end
 
 	self:update_tablet(t, dt, hmd_forward)
+
+	local weapon_main = self._unit:inventory():equipped_unit()
+
+	if weapon_main then
+		local melee_hand = self:get_active_hand_id("melee")
+		local weapon_main_base = weapon_main:base()
+		local weapon_second = nil
+
+		if weapon_main_base.AKIMBO then
+			weapon_second = weapon_main_base._second_gun
+		end
+
+		local player_pos = self._unit:position() + Vector3(0, 0, 150)
+		local t1, a1 = self:aim_target(self._weapon_hand_id, weapon_main, player_pos, melee_hand)
+		local t2, a2 = self:aim_target(self.other_hand_id(self._weapon_hand_id), weapon_second, player_pos, melee_hand)
+		local target = nil
+
+		if weapon_main_base:enabled() then
+			if self._weapon_hand_id == 1 then
+				target = {
+					t1,
+					a1,
+					t2,
+					a2,
+					swap = false
+				}
+			else
+				target = {
+					t2,
+					a2,
+					t1,
+					a1,
+					swap = true
+				}
+			end
+		end
+
+		if self._arm_simulator:enabled() then
+			self._arm_simulator:update(t, dt, self._base_rotation, target, self._moving, self._moving_dir)
+			self:_update_arms(t, dt)
+		end
+	end
+end
+
+INV_ARM_SIMULATION_RATE = 1 / tweak_data.vr.arm_simulator.rate
+
+function PlayerHand:send_filtered(message, ...)
+	local session = managers.network:session()
+
+	if session then
+		local peers = session:peers()
+
+		for peer_id, peer in pairs(peers) do
+			if self._arm_peer_filter and not self._arm_peer_filter[peer_id] then
+				peer:send_queued_sync(message, self._unit, ...)
+			end
+		end
+	end
+end
+
+function PlayerHand:send_inv_filtered(message, ...)
+	local session = managers.network:session()
+
+	if session then
+		local peers = session:peers()
+
+		for peer_id, peer in pairs(peers) do
+			if self._arm_peer_filter and self._arm_peer_filter[peer_id] then
+				peer:send_queued_sync(message, self._unit, ...)
+			end
+		end
+	end
+end
+
+function PlayerHand:arm_simulation_enabled()
+	return self._arm_simulator:enabled()
+end
+
+function PlayerHand:_update_arms(t, dt)
+	if not self._next_sync_t then
+		slot3 = 0
+	end
+
+	self._next_sync_t = slot3
+
+	if self._next_sync_t < t then
+		local arm_sim = self._arm_simulator
+		local pose = arm_sim:pose()
+
+		if not pose then
+			return
+		end
+
+		if not self._arm_frame_index then
+			slot5 = 0
+		end
+
+		self._arm_frame_index = slot5
+
+		self:send_filtered("set_arm_pose", self._arm_frame_index, pose.shoulder[1], pose.arm[1], pose.fore_arm[1], pose.hand[1], pose.shoulder[2], pose.arm[2], pose.fore_arm[2], pose.hand[2])
+
+		self._arm_frame_index = (self._arm_frame_index + 1) % 256
+		self._next_sync_t = t + INV_ARM_SIMULATION_RATE
+	end
+end
+
+function PlayerHand:set_arm_setting(peer_id, setting_id, setting_param)
+	if setting_id == ArmSetting.SET_ARM_ANIMATOR_PRESENT then
+		slot4 = print
+		slot5 = "Peer "
+		slot6 = peer_id
+		slot7 = " requested arm sync "
+
+		if setting_param > 0 then
+			slot8 = "enable"
+		else
+			slot8 = "disable"
+		end
+
+		slot4(slot5, slot6, slot7, slot8)
+
+		if setting_param > 0 then
+			self._arm_peer_filter[peer_id] = nil
+		else
+			self._arm_peer_filter[peer_id] = true
+		end
+	end
+end
+
+function PlayerHand:arm_simulator()
+	return self._arm_simulator
 end
 
 function PlayerHand:update_tablet(t, dt, hmd_forward)

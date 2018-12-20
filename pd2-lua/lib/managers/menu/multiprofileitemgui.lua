@@ -357,6 +357,10 @@ function MultiProfileItemGui:set_editing(editing)
 		local n = utf8.len(self._name_text:text())
 
 		self._name_text:set_selection(n, n)
+
+		if _G.IS_VR then
+			Input:keyboard():show_with_text(self._name_text:text(), self._max_length)
+		end
 	else
 		managers.menu:active_menu().input:activate_mouse()
 		managers.menu:active_menu().input:accept_input(true)
@@ -481,10 +485,14 @@ function MultiProfileItemGui:enter_text(o, s)
 		return
 	end
 
-	local s_len = utf8.len(self._name_text:text())
-	s = utf8.sub(s, 1, self._max_length - s_len)
+	if _G.IS_VR then
+		self._name_text:set_text(s)
+	else
+		local s_len = utf8.len(self._name_text:text())
+		s = utf8.sub(s, 1, self._max_length - s_len)
 
-	self._name_text:replace_text(s)
+		self._name_text:replace_text(s)
+	end
 end
 
 function MultiProfileItemGui:handle_key(k, pressed)

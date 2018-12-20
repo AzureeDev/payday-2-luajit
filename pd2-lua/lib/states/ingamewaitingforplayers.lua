@@ -397,6 +397,8 @@ function IngameWaitingForPlayersState:at_enter()
 		local rich_presence = is_safe_house and "SafeHousePlaying" or "SPPlaying"
 
 		managers.platform:set_rich_presence(rich_presence)
+	else
+		managers.platform:set_rich_presence("MPPlaying")
 	end
 
 	if Global.exe_argument_auto_enter_level then
@@ -477,7 +479,7 @@ function IngameWaitingForPlayersState:check_is_dropin()
 	return not self._started_from_beginning
 end
 
-function IngameWaitingForPlayersState:at_exit()
+function IngameWaitingForPlayersState:at_exit(next_state)
 	if _G.IS_VR then
 		managers.menu:close_menu("waiting_for_players")
 	end
@@ -540,7 +542,9 @@ function IngameWaitingForPlayersState:at_exit()
 	local is_safe_house = managers.job:current_job_data() and managers.job:current_job_id() == "safehouse"
 	local rich_presence = nil
 
-	if is_safe_house then
+	if not game_state_machine:verify_game_state(GameStateFilters.any_ingame, next_state:name()) then
+		rich_presence = "Idle"
+	elseif is_safe_house then
 		rich_presence = "SafeHousePlaying"
 	elseif Global.game_settings.single_player then
 		rich_presence = "SPPlaying"

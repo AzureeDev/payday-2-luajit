@@ -5916,6 +5916,11 @@ function BlackMarketGui:_start_rename_item(category, slot)
 		}
 
 		self._ws:connect_keyboard(Input:keyboard())
+
+		if _G.IS_VR then
+			Input:keyboard():show_with_text(custom_name)
+		end
+
 		self._panel:enter_text(callback(self, self, "enter_text"))
 		self._panel:key_press(callback(self, self, "key_press"))
 		self._panel:key_release(callback(self, self, "key_release"))
@@ -6009,9 +6014,15 @@ end
 function BlackMarketGui:enter_text(o, s)
 	if self._renaming_item then
 		local m = tweak_data:get_raw_value("gui", "rename_max_letters") or 20
-		local n = utf8.len(self._renaming_item.custom_name)
-		s = utf8.sub(s, 1, m - n)
-		self._renaming_item.custom_name = self._renaming_item.custom_name .. tostring(s)
+
+		if _G.IS_VR then
+			s = utf8.sub(s, 1, m)
+			self._renaming_item.custom_name = tostring(s)
+		else
+			local n = utf8.len(self._renaming_item.custom_name)
+			s = utf8.sub(s, 1, m - n)
+			self._renaming_item.custom_name = self._renaming_item.custom_name .. tostring(s)
+		end
 
 		self:update_info_text()
 	end
@@ -6081,7 +6092,11 @@ function BlackMarketGui:key_press(o, k)
 	elseif self._key_pressed == Idstring("home") then
 		-- Nothing
 	elseif k == Idstring("enter") then
-		-- Nothing
+		if _G.IS_VR then
+			self:_stop_rename_item()
+
+			return
+		end
 	elseif k == Idstring("esc") then
 		self:_cancel_rename_item()
 

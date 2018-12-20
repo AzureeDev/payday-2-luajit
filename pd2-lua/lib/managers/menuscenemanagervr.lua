@@ -141,6 +141,10 @@ function MenuSceneManagerVR:_set_up_templates()
 	self._scene_templates.lobby_vr = deep_clone(self._scene_templates.lobby)
 	self._scene_templates.lobby_vr.lobby_characters_visible = true
 	self._scene_templates.safe.character_visible = false
+	self._scene_templates.calibrate = deep_clone(self._scene_templates.standard)
+	self._scene_templates.calibrate.character_pos = Vector3(-350, 0, 0)
+	self._scene_templates.calibrate.character_rot = Rotation(-90, 0, 0)
+	self._scene_templates.allow_item = false
 	local item_templates = {
 		"blackmarket_item",
 		"blackmarket_mask",
@@ -285,6 +289,10 @@ function MenuSceneManagerVR:_create_economy_safe_scene()
 	self._economy_drill = World:spawn_unit(self._safe_scene_data.drill_data.drill_name, self._economy_safe:get_object(Idstring("spawn_drill")):position(), rot)
 
 	self:_start_safe_drill_sequence()
+end
+
+function MenuSceneManagerVR:character_unit()
+	return self._character_unit
 end
 
 local __load_safe_result_content = MenuSceneManager.load_safe_result_content

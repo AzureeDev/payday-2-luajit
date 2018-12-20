@@ -142,6 +142,7 @@ function GenericUserManager:setup_setting_map()
 	self:setup_setting(90, "crimenet_filter_skirmish_wave", 99)
 	self:setup_setting(300, "adaptive_quality", true)
 	self:setup_setting(301, "window_zoom", true)
+	self:setup_setting(302, "arm_animation", true)
 end
 
 function GenericUserManager:setup_setting(id, name, default_value)
@@ -227,7 +228,8 @@ function GenericUserManager:reset_video_setting_map()
 		"video_aa",
 		"corpse_limit",
 		"adaptive_quality",
-		"window_zoom"
+		"window_zoom",
+		"arm_animation"
 	}
 
 	for _, name in pairs(settings) do

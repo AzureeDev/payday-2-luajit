@@ -1831,6 +1831,11 @@ function AchievementListGui:connect_search_input()
 	end
 
 	self._ws:connect_keyboard(Input:keyboard())
+
+	if _G.IS_VR then
+		Input:keyboard():show_with_text(self._search.text:text())
+	end
+
 	self._search.panel:key_press(callback(self, self, "search_key_press"))
 	self._search.panel:key_release(callback(self, self, "search_key_release"))
 
@@ -1942,8 +1947,11 @@ function AchievementListGui:search_key_press(o, k)
 			self._enter_callback()
 		end
 	elseif k == Idstring("esc") and type(self._esc_callback) ~= "number" then
-		text:set_text("")
-		text:set_selection(0, 0)
+		if not _G.IS_VR then
+			text:set_text("")
+			text:set_selection(0, 0)
+		end
+
 		self._esc_callback()
 	end
 
@@ -2029,7 +2037,11 @@ function AchievementListGui:enter_text(o, s)
 	local text = self._search.text
 
 	if #text:text() < AchievementListGui.MAX_SEARCH_LENGTH then
-		text:replace_text(s)
+		if _G.IS_VR then
+			text:set_text(s)
+		else
+			text:replace_text(s)
+		end
 	end
 
 	local lbs = text:line_breaks()

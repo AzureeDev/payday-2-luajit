@@ -1,5 +1,6 @@
 require("lib/managers/HUDManager")
 require("lib/managers/HUDManagerVR")
+require("lib/utils/VRBodyCalibrator")
 
 local function make_fine_text(text)
 	local x, y, w, h = text:text_rect()
@@ -133,6 +134,41 @@ function VRButton:init(panel, id, params)
 	})
 
 	make_fine_text(self._text)
+
+	if params.date_updated then
+		local current_date = {
+			tonumber(os.date("%Y")),
+			tonumber(os.date("%m")),
+			tonumber(os.date("%d"))
+		}
+		local date_value = current_date[1] * 12 * 30 + current_date[2] * 30 + current_date[3]
+		local release_window = 7
+		date_value = params.date_updated[1] * 12 * 30 + params.date_updated[2] * 30 + params.date_updated[3] - date_value
+
+		if date_value >= -release_window then
+			self._sub_panel = panel:panel({
+				w = 100,
+				h = params.w,
+				x = params.x - 45,
+				y = params.y + self._text:top(),
+				layer = OBJECT_LAYER
+			})
+			local new_name = self._sub_panel:text({
+				alpha = 1,
+				vertical = "top",
+				align = "left",
+				halign = "left",
+				valign = "top",
+				text = managers.localization:to_upper_text("menu_new"),
+				font = tweak_data.menu.pd2_large_font,
+				font_size = tweak_data.menu.pd2_medium_font_size * 0.9,
+				color = Color(255, 105, 254, 59) / 255,
+				layer = TEXT_LAYER + 1
+			})
+
+			make_fine_text(new_name)
+		end
+	end
 end
 
 function VRButton:set_selected(selected)
@@ -912,6 +948,7 @@ end
 function VRCustomizationGui:initialize()
 	if not self._initialized then
 		self:_setup_gui()
+		managers.vr:show_notify_procedural_animation()
 
 		if not managers.vr:has_set_height() then
 			managers.menu:show_vr_settings_dialog({
@@ -985,7 +1022,40 @@ function VRCustomizationGui:_setup_gui()
 		self._controls_images[key] = controls_image
 	end
 
+	local calibration_steps = {
+		"guis/dlcs/vr/textures/pd2/menu_controls_vive_calibrate_01",
+		"guis/dlcs/vr/textures/pd2/menu_controls_vive_calibrate_02",
+		"guis/dlcs/vr/textures/pd2/menu_controls_vive_calibrate_03"
+	}
+	self._calibration_step_images = {}
+
+	for _, path in ipairs(calibration_steps) do
+		local image = self._panel:bitmap({
+			visible = false,
+			h = 720,
+			y = 0,
+			w = 720,
+			x = 0,
+			texture = path,
+			layer = BG_LAYER1
+		})
+		local width = image:width()
+
+		image:set_x((self._panel:w() - width) * 0.5)
+
+		local height = image:height()
+
+		image:set_y((self._panel:h() - height) * 0.5 + 20)
+		table.insert(self._calibration_step_images, image)
+	end
+
 	self:_show_main()
+end
+
+function VRCustomizationGui:show_calibration_step(step)
+	for i, image in ipairs(self._calibration_step_images) do
+		image:set_visible(i == step)
+	end
 end
 
 function VRCustomizationGui:_hide_main()
@@ -1301,6 +1371,105 @@ function VRCustomizationGui:_setup_sub_menus()
 			}
 		}
 	})
+	self:add_settings_menu("arm_animation", {
+		{
+			setting = "arm_length",
+			type = "slider",
+			text_id = "menu_vr_arm_length",
+			params = {
+				snap = 1,
+				desc_data = {
+					text_id = "menu_vr_arm_length_desc"
+				}
+			}
+		},
+		{
+			setting = "head_to_shoulder",
+			type = "slider",
+			text_id = "menu_vr_head_to_shoulder",
+			params = {
+				snap = 1,
+				desc_data = {
+					text_id = "menu_vr_head_to_shoulder_desc"
+				}
+			}
+		},
+		{
+			setting = "shoulder_width",
+			type = "slider",
+			text_id = "menu_vr_shoulder_width",
+			params = {
+				snap = 1,
+				desc_data = {
+					text_id = "menu_vr_shoulder_width_desc"
+				}
+			}
+		},
+		{
+			id = "menu_vr_calibrate_body",
+			text_id = "menu_vr_calibrate_body",
+			buttons = {
+				{
+					text = "menu_vr_start_calibrate",
+					enabled = true,
+					id = "calibrate",
+					clbk = function (btn)
+						self:open_sub_menu("arm_animation_calibrate")
+					end,
+					params = {
+						w = 200,
+						desc_data = {
+							text_id = "menu_vr_calibrate_body_desc"
+						}
+					}
+				}
+			}
+		},
+		{
+			setting = "arm_animation",
+			type = "button",
+			text_id = "menu_vr_arm_animation",
+			params = {
+				desc_data = {
+					text_id = "menu_vr_arm_animation_desc"
+				}
+			}
+		},
+		date_updated = {
+			2018,
+			12,
+			13
+		}
+	}, function (menu, enabled)
+		if enabled then
+			for _, menu in pairs(self._sub_menus) do
+				if menu._settings then
+					for setting, item in pairs(menu._settings) do
+						if item.button then
+							item.button:setting_changed()
+						end
+					end
+				end
+			end
+		end
+	end)
+
+	local calibrate_menu = self:add_sub_menu("arm_animation_calibrate", function (menu, enabled)
+	end)
+
+	calibrate_menu:add_object("calibrator", VRCalibrator:new(self, calibrate_menu, function (succeeded)
+		self:open_sub_menu("arm_animation")
+	end))
+	calibrate_menu:add_button("back", "menu_vr_back", function ()
+		self:open_sub_menu("arm_animation")
+	end)
+	calibrate_menu:set_enabled_clbk(function (menu, enabled)
+		if enabled then
+			calibrate_menu:object("calibrator"):start()
+		else
+			calibrate_menu:object("calibrator"):stop()
+		end
+	end)
 	self:add_settings_menu("advanced", {
 		{
 			setting = "zipline_screen",
@@ -1393,7 +1562,17 @@ function VRCustomizationGui:add_settings_menu(id, settings, clbk)
 
 	self._sub_menus[id] = menu
 
-	self:add_menu_button(id)
+	self:add_menu_button(id, settings.date_updated)
+end
+
+function VRCustomizationGui:add_sub_menu(id, clbk)
+	local menu = VRSubMenu:new(self, self._panel, id)
+
+	menu:set_enabled_clbk(clbk)
+
+	self._sub_menus[id] = menu
+
+	return menu
 end
 
 function VRCustomizationGui:add_image_menu(id, params, clbk)
@@ -1430,14 +1609,15 @@ function VRCustomizationGui:close_sub_menu()
 	end
 end
 
-function VRCustomizationGui:add_menu_button(id)
+function VRCustomizationGui:add_menu_button(id, date_updated)
 	local x = PADDING * 5
 	local last_y = self._buttons[#self._buttons] and self._buttons[#self._buttons].button:bottom() or self._title:bottom() + PADDING
 	local y = last_y + PADDING
 	local button = VRButton:new(self._main_buttons_panel, id, {
 		text_id = "menu_vr_open_" .. id,
 		x = x,
-		y = y
+		y = y,
+		date_updated = date_updated
 	})
 
 	table.insert(self._buttons, {
@@ -2011,5 +2191,225 @@ end
 function VRBeltCustomization:update(t, dt)
 	if self._updator then
 		self:_updator(t, dt)
+	end
+end
+
+VRCalibrator = VRCalibrator or class()
+
+function VRCalibrator:init(gui, menu, stop_clbk)
+	self._body_calibrator = VRBodyCalibrator:new(managers.controller:get_vr_controller())
+	self._gui = gui
+	self._menu = menu
+	self._stop_clbk = stop_clbk
+	self._enabled = false
+	self._step = 1
+	self._step_t = nil
+	local panel = menu._panel
+	self._stats = {
+		{
+			name = "arm_length",
+			caption = managers.localization:to_upper_text("menu_vr_calibrate_arm_length")
+		},
+		{
+			name = "head_to_shoulder",
+			caption = managers.localization:to_upper_text("menu_vr_calibrate_shoulder_to_head")
+		},
+		{
+			name = "shoulder_width",
+			caption = managers.localization:to_upper_text("menu_vr_calibrate_shoulder_width")
+		}
+	}
+	local i = 0
+	local w = self._menu._title:bottom()
+	local x = self._menu._title:left()
+
+	for _, stat in ipairs(self._stats) do
+		stat.text = panel:text({
+			font_size = 30,
+			text = stat.caption,
+			font = tweak_data.menu.pd2_massive_font,
+			x = x,
+			y = PADDING + w + 30 * i,
+			layer = TEXT_LAYER
+		})
+		stat.text_value = panel:text({
+			font_size = 30,
+			text = tostring(0),
+			font = tweak_data.menu.pd2_massive_font,
+			x = x + 220,
+			y = PADDING + w + 30 * i,
+			layer = TEXT_LAYER
+		})
+
+		make_fine_text(stat.text)
+		make_fine_text(stat.text_value)
+
+		i = i + 1
+	end
+
+	local xpos = panel:w() * 0.5 + panel:w() / 18 * 2
+	self._calibration_desc = panel:text({
+		font_size = 30,
+		name = "calibration_step",
+		h = 300,
+		wrap = true,
+		word_wrap = true,
+		text = managers.localization:to_upper_text("menu_vr_calibrate_instructions"),
+		font = tweak_data.menu.pd2_massive_font,
+		x = xpos,
+		y = w + PADDING,
+		w = panel:w() - xpos,
+		layer = TEXT_LAYER
+	})
+
+	self._calibration_desc:set_visible(false)
+	make_fine_text(self._calibration_desc)
+
+	self._calibration_step = {}
+	local ypos = math.max(panel:h() / 9.5 * 4, self._calibration_desc:y() + self._calibration_desc:h() + PADDING)
+	local steps = {}
+
+	for i = 1, 3, 1 do
+		local text = panel:text({
+			font_size = 25,
+			word_wrap = true,
+			wrap = true,
+			name = "calibration_step" .. tostring(i),
+			text = managers.localization:to_upper_text("menu_vr_calibrate_step" .. tostring(i)),
+			font = tweak_data.menu.pd2_massive_font,
+			x = xpos,
+			y = ypos,
+			w = panel:w() - xpos,
+			layer = TEXT_LAYER
+		})
+
+		make_fine_text(text)
+		text:set_w(panel:w() - xpos)
+
+		ypos = ypos + text:h() + PADDING
+
+		table.insert(self._calibration_step, text)
+	end
+
+	local radius = 40
+	local x = panel:left() + panel:w() * 0.5 - radius
+	local h = 4 * (panel:bottom() - panel:top()) / 9.5
+	local y = h - radius
+	self._bitmap = panel:bitmap({
+		texture = "guis/textures/pd2/hud_progress_active",
+		blend_mode = "normal",
+		layer = TEXT_LAYER,
+		color = Color.white:with_alpha(0.2),
+		x = x,
+		y = y
+	})
+
+	self._bitmap:set_size(radius * 2, radius * 2)
+
+	self._circle = CircleBitmapGuiObject:new(panel, {
+		current = 1,
+		total = 1,
+		blend_mode = "normal",
+		radius = radius,
+		sides = radius / 10,
+		color = Color.white:with_alpha(1),
+		layer = TEXT_LAYER + 1,
+		x = x,
+		y = y
+	})
+end
+
+function VRCalibrator:show_calibration_step(step)
+	self._gui:show_calibration_step(step)
+
+	if step > 0 then
+		self._calibration_desc:set_visible(true)
+	else
+		self._calibration_desc:set_visible(false)
+	end
+
+	for i = 1, 3, 1 do
+		self._calibration_step[i]:set_visible(step > 0)
+		self._calibration_step[i]:set_alpha(step == i and 1 or 0.4)
+	end
+end
+
+function VRCalibrator:start()
+	if managers.menu_scene then
+		self._prev_scene_template = managers.menu_scene:get_current_scene_template()
+
+		managers.menu_scene:set_scene_template("calibrate")
+
+		self._machine = managers.menu_scene:character_unit():anim_state_machine()
+		self._state = self._machine:play_redirect(Idstring("calibrate"))
+
+		self._machine:set_parameter(self._state, "calibrate", 1)
+	end
+
+	self:show_calibration_step(1)
+
+	self._enabled = true
+	self._step = 1
+	self._step_t = nil
+
+	self._body_calibrator:start_calibration()
+end
+
+function VRCalibrator:stop(succeeded)
+	if managers.menu_scene then
+		managers.menu_scene:set_scene_template(self._prev_scene_template)
+		self._machine:play_redirect(Idstring("idle_menu"))
+	end
+
+	if not self._enabled then
+		return
+	end
+
+	self:show_calibration_step(0)
+	self._body_calibrator:stop_calibration(succeeded)
+
+	self._enabled = false
+
+	if self._stop_clbk then
+		self._stop_clbk(succeeded or false)
+	end
+end
+
+function VRCalibrator:update(t, dt)
+	if not self._enabled then
+		return
+	end
+
+	self._body_calibrator:update(t, dt)
+
+	if not self._step_t then
+		self._step_t = t + 5
+	end
+
+	local config = self._body_calibrator:body_config()
+
+	for _, stat in ipairs(self._stats) do
+		local cm_value = math.round(config[stat.name] * 10) / 10
+		local in_value = math.round(config[stat.name] * 0.393701 * 10) / 10
+
+		stat.text_value:set_text(tostring(cm_value) .. "cm | " .. tostring(in_value) .. "in")
+		make_fine_text(stat.text_value)
+	end
+
+	self._circle:set_current(1 - math.clamp(self._step_t - t, 0, 5) / 5)
+
+	if self._step_t < t then
+		if self._step < 3 then
+			self._step_t = nil
+			self._step = math.min(self._step + 1, 3)
+
+			if self._machine then
+				self._machine:set_parameter(self._state, "calibrate", self._step)
+			end
+
+			self:show_calibration_step(self._step)
+		else
+			self:stop(true)
+		end
 	end
 end

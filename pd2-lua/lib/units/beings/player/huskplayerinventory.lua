@@ -12,6 +12,7 @@ function HuskPlayerInventory:init(unit)
 		obj3d_name = Idstring("a_weapon_left_front")
 	}
 	self._peer_weapons = {}
+	self._primary_hand = nil
 end
 
 function HuskPlayerInventory:_send_equipped_weapon()
@@ -54,6 +55,34 @@ function HuskPlayerInventory:check_peer_weapon_spawn()
 	else
 		return true
 	end
+end
+
+function HuskPlayerInventory:refresh_primary_hand()
+	local hand = self._unit:movement():primary_hand()
+
+	if hand ~= self._primary_hand then
+		self._primary_hand = hand
+		local selection = self._available_selections[self._equipped_selection]
+
+		if selection and alive(selection.unit) then
+			local align_place = hand == 0 and "right_hand" or "left_hand"
+			local secondary = hand == 0 and "left_hand" or "right_hand"
+
+			self:_link_weapon(selection.unit, self._align_places[align_place])
+
+			if selection.unit:base().AKIMBO then
+				selection.unit:base():link_secondary_weapon(self._align_places[secondary].obj3d_name)
+			end
+
+			selection.unit:base():apply_grip(true)
+		end
+	end
+end
+
+function HuskPlayerInventory:on_weapon_add()
+	local ext = self._unit:movement()
+
+	ext:on_weapon_add()
 end
 
 function HuskPlayerInventory:set_melee_weapon_by_peer(peer)
@@ -145,11 +174,14 @@ function HuskPlayerInventory:add_unit_by_factory_blueprint(factory_name, equip, 
 	}
 
 	new_unit:base():setup(setup_data)
-	self:add_unit(new_unit, equip, instant)
 
 	if new_unit:base().AKIMBO then
-		new_unit:base():create_second_gun()
+		local first, second = self:_align_place(equip, new_unit, "left_hand")
+
+		new_unit:base():create_second_gun(nil, second and second.obj3d_name or first.obj3d_name)
 	end
+
+	self:add_unit(new_unit, equip, instant)
 end
 
 function HuskPlayerInventory:synch_weapon_gadget_state(state)

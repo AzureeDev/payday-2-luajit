@@ -65,9 +65,9 @@ function PlayerHandStateBelt:update(t, dt)
 
 		if managers.vr:hand_state_machine():controller():get_input_pressed(self._belt_button) then
 			if self._belt_state == "weapon" then
+				local hsm = self:hsm()
 				local inv = player:inventory()
 				local _, wanted_selection = player:inventory():get_next_selection()
-				local hsm = self:hsm()
 
 				player:movement():current_state():swap_weapon(wanted_selection)
 				player:sound():play("m4_equip")

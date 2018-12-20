@@ -238,6 +238,9 @@ function PlayerStandardVR:init(unit)
 	})
 
 	self._warp_state_machine:set_debug(false)
+
+	self._ext_hand = unit:hand()
+
 	managers.menu:add_active_changed_callback(callback(self, self, "_on_menu_active_changed_vr"))
 
 	self._zipline_screen_setting_changed_clbk = callback(self, self, "_on_zipline_screen_setting_changed")
@@ -552,9 +555,11 @@ function PlayerStandardVR:update(t, dt)
 end
 
 local mvec_pos_new = Vector3()
+local mvec_pos_prev = Vector3()
 local mvec_hmd_delta = Vector3()
 local mvec_prev_pos = Vector3()
 local mvec_mover_to_ghost = Vector3()
+local mvec_moving_dir = Vector3()
 
 function PlayerStandardVR:_update_movement(t, dt)
 	local pos_new = mvec_pos_new
@@ -562,6 +567,7 @@ function PlayerStandardVR:_update_movement(t, dt)
 	mvector3.set(pos_new, self._ext_movement:ghost_position())
 	mvector3.set(mvec_mover_to_ghost, pos_new)
 	mvector3.subtract(mvec_mover_to_ghost, self._pos)
+	mvector3.set(mvec_pos_prev, self._pos)
 
 	if self._state_data.warping and self._state_data._warp_target then
 		local dir = self._state_data._warp_target - pos_new
@@ -678,6 +684,13 @@ function PlayerStandardVR:_update_movement(t, dt)
 		self._moving = false
 		self._post_warp_skill_t = nil
 	end
+
+	local moving_dir = mvec_moving_dir
+
+	mvector3.set(moving_dir, pos_new)
+	mvector3.subtract(moving_dir, mvec_pos_prev)
+	mvector3.normalize(moving_dir)
+	self._ext_hand:set_moving(self._is_jumping or self._moving or self._state_data.warping, moving_dir)
 end
 
 function PlayerStandardVR:_check_action_duck(t, input)
@@ -1014,12 +1027,14 @@ function PlayerStandardVR:set_throwing_projectile(id)
 end
 
 function PlayerStandardVR:_check_stop_shooting()
+	local akimbo = self._equipped_unit:base().AKIMBO
+
 	if self._shooting and self._shooting_weapons then
 		self._camera_unit:base():stop_shooting(self._equipped_unit:base():recoil_wait())
 
 		for k, weap_base in pairs(self._shooting_weapons) do
 			weap_base:stop_shooting()
-			self._ext_network:send("sync_stop_auto_fire_sound")
+			self._ext_network:send("sync_stop_auto_fire_sound", k - 1)
 
 			self._shooting_weapons[k] = nil
 		end
@@ -1032,7 +1047,7 @@ function PlayerStandardVR:_check_stop_shooting()
 end
 
 function PlayerStandardVR:_check_action_primary_attack(t, input)
-	local new_action = nil
+	local new_action1, new_action2 = nil
 	local action_wanted = input.btn_primary_attack_state or input.btn_primary_attack_release or input.btn_akimbo_fire_state or input.btn_akimbo_fire_release
 
 	if action_wanted then
@@ -1057,18 +1072,37 @@ function PlayerStandardVR:_check_action_primary_attack(t, input)
 				end
 
 				if self._equipped_unit:base().akimbo then
-					new_action = self:_check_fire_per_weapon(t, input.btn_akimbo_fire_press, input.btn_akimbo_fire_state, input.btn_akimbo_fire_release, self._equipped_unit:base()._second_gun:base(), true) or new_action
+					new_action2 = self:_check_fire_per_weapon(t, input.btn_akimbo_fire_press, input.btn_akimbo_fire_state, input.btn_akimbo_fire_release, self._equipped_unit:base()._second_gun:base(), true)
 				end
 
-				new_action = self:_check_fire_per_weapon(t, input.btn_primary_attack_press, input.btn_primary_attack_state, input.btn_primary_attack_release, self._equipped_unit:base()) or new_action
+				new_action1 = self:_check_fire_per_weapon(t, input.btn_primary_attack_press, input.btn_primary_attack_state, input.btn_primary_attack_release, self._equipped_unit:base())
 			end
 		elseif self:_is_reloading() and self._equipped_unit:base():reload_interuptable() and (input.btn_primary_attack_press or input.btn_akimbo_fire_press) then
 			self._queue_reload_interupt = true
 		end
 	end
 
-	if not new_action then
-		self:_check_stop_shooting()
+	if self._shooting_weapons then
+		if not new_action1 and not new_action2 then
+			self:_check_stop_shooting()
+		else
+			if not new_action1 and self._shooting_weapons[1] then
+				self:_stop_shooting_weapon(1)
+			end
+
+			if not new_action2 and self._shooting_weapons[2] then
+				self:_stop_shooting_weapon(2)
+			end
+		end
+	end
+end
+
+function PlayerStandardVR:_stop_shooting_weapon(index)
+	if self._shooting_weapons[index] then
+		self._shooting_weapons[index]:stop_shooting()
+		self._ext_network:send("sync_stop_auto_fire_sound", index - 1)
+
+		self._shooting_weapons[index] = nil
 	end
 end
 
@@ -1139,7 +1173,7 @@ function PlayerStandardVR:_check_fire_per_weapon(t, pressed, held, released, wea
 					start_shooting = true
 
 					if fire_mode == "auto" and (not weap_base.third_person_important or weap_base.third_person_important and not weap_base:third_person_important()) then
-						self._ext_network:send("sync_start_auto_fire_sound")
+						self._ext_network:send("sync_start_auto_fire_sound", akimbo and 1 or 0)
 					end
 				end
 			else
@@ -1266,9 +1300,9 @@ function PlayerStandardVR:_check_fire_per_weapon(t, pressed, held, released, wea
 			local impact = not fired.hit_enemy
 
 			if weap_base.third_person_important and weap_base:third_person_important() then
-				self._ext_network:send("shot_blank_reliable", impact)
-			elseif fire_mode == "single" or weap_base.akimbo then
-				self._ext_network:send("shot_blank", impact)
+				self._ext_network:send("shot_blank_reliable", impact, akimbo and 1 or 0)
+			elseif fire_mode == "single" or (weap_base.akimbo or akimbo) and not weap_base:weapon_tweak_data().allow_akimbo_autofire then
+				self._ext_network:send("shot_blank", impact, akimbo and 1 or 0)
 			end
 		elseif fire_mode == "single" or self._shooting_forbidden then
 			new_action = false
@@ -1287,8 +1321,7 @@ function PlayerStandardVR:_check_fire_per_weapon(t, pressed, held, released, wea
 		local pitch = math.clamp(rot:pitch(), -85, 85) + 85
 		pitch = math.floor(127 * pitch / 170)
 
-		self._unit:network():send("set_look_dir", yaw, pitch)
-		self._unit:camera():set_forced_sync_delay(t + 1)
+		self._unit:camera():set_timed_locked_look_dir(t + 1, yaw, pitch)
 	end
 
 	return new_action

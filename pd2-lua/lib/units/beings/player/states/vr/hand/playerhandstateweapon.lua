@@ -55,12 +55,16 @@ end
 function PlayerHandStateWeapon:at_enter(prev_state)
 	PlayerHandStateWeapon.super.at_enter(self, prev_state)
 
-	if alive(managers.player:player_unit()) then
-		local weapon_unit = managers.player:player_unit():inventory():equipped_unit()
+	local player_unit = managers.player:player_unit()
+
+	if alive(player_unit) then
+		player_unit:hand():sync_state()
+
+		local weapon_unit = player_unit:inventory():equipped_unit()
 		self._weapon_id = alive(weapon_unit) and weapon_unit:base().name_id
 
 		self:_link_weapon(weapon_unit)
-		managers.player:player_unit():inventory():add_listener("PlayerHandStateWeapon_" .. tostring(self:hsm():hand_id()), nil, callback(self, self, "inventory_changed"))
+		player_unit:inventory():add_listener("PlayerHandStateWeapon_" .. tostring(self:hsm():hand_id()), nil, callback(self, self, "inventory_changed"))
 	end
 
 	managers.hud:link_ammo_hud(self._hand_unit, self:hsm():hand_id())

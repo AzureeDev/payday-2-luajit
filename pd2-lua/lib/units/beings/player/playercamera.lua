@@ -285,19 +285,36 @@ function PlayerCamera:set_rotation(rot)
 	end
 
 	sync_yaw = math.floor(255 * sync_yaw / 360)
-	local sync_pitch = math.clamp(rot:pitch(), -85, 85) + 85
+	local sync_pitch = nil
+
+	if _G.IS_VR then
+		sync_pitch = math.clamp(rot:pitch(), -30, 60) + 85
+	else
+		sync_pitch = math.clamp(rot:pitch(), -85, 85) + 85
+	end
+
 	sync_pitch = math.floor(127 * sync_pitch / 170)
 	local angle_delta = math.abs(self._sync_dir.yaw - sync_yaw) + math.abs(self._sync_dir.pitch - sync_pitch)
 
 	if tweak_data.network then
 		local update_network = tweak_data.network.camera.network_sync_delta_t < sync_dt and angle_delta > 0 or tweak_data.network.camera.network_angle_delta < angle_delta
-
-		if self._forced_next_sync_t and t < self._forced_next_sync_t then
-			update_network = false
-		end
+		local locked_look_dir = self._locked_look_dir_t and t < self._locked_look_dir_t
 
 		if update_network then
-			self._unit:network():send("set_look_dir", sync_yaw, sync_pitch)
+			if _G.IS_VR then
+				if locked_look_dir then
+					if self._unit:hand():arm_simulation_enabled() then
+						self._unit:hand():send_filtered("set_look_dir", sync_yaw, sync_pitch)
+						self._unit:hand():send_inv_filtered("set_look_dir", self._locked_yaw, self._locked_pitch)
+					else
+						self._unit:network():send("set_look_dir", self._locked_yaw, self._locked_pitch)
+					end
+				else
+					self._unit:network():send("set_look_dir", sync_yaw, sync_pitch)
+				end
+			else
+				self._unit:network():send("set_look_dir", sync_yaw, sync_pitch)
+			end
 
 			self._sync_dir.yaw = sync_yaw
 			self._sync_dir.pitch = sync_pitch
@@ -306,8 +323,10 @@ function PlayerCamera:set_rotation(rot)
 	end
 end
 
-function PlayerCamera:set_forced_sync_delay(t)
-	self._forced_next_sync_t = t
+function PlayerCamera:set_timed_locked_look_dir(t, yaw, pitch)
+	self._locked_look_dir_t = t
+	self._locked_yaw = yaw
+	self._locked_pitch = pitch
 end
 
 function PlayerCamera:set_FOV(fov_value)

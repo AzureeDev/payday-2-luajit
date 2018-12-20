@@ -326,6 +326,10 @@ function ChatGui:init(ws)
 	self:_layout_input_panel()
 	self:_layout_output_panel(true)
 	self:set_layer(20)
+
+	if _G.IS_VR then
+		Input:keyboard():clear()
+	end
 end
 
 function ChatGui:start_hud_blur()

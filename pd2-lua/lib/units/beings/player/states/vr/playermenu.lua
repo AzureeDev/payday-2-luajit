@@ -701,8 +701,15 @@ function PlayerMenu:draw()
 	self:_laser_ray(p ~= nil, from, to)
 end
 
+function PlayerMenu:set_block_input(block)
+	self._block_input = block
+end
+
 function PlayerMenu:update_base(t, dt)
-	self:update_input()
+	if not self._block_input then
+		self:update_input()
+	end
+
 	self:draw()
 end
 

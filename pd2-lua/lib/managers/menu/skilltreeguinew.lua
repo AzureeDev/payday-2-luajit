@@ -2736,6 +2736,11 @@ function NewSkillTreeGui:_start_rename_skill_switch()
 		self._renaming_skill_switch = self._skilltree:has_skill_switch_name(selected_skill_switch) and self._skilltree:get_skill_switch_name(selected_skill_switch, false) or ""
 
 		self._ws:connect_keyboard(Input:keyboard())
+
+		if _G.IS_VR then
+			Input:keyboard():show_with_text(self._renaming_skill_switch)
+		end
+
 		self._skillset_panel:enter_text(callback(self, self, "enter_text"))
 		self._skillset_panel:key_press(callback(self, self, "key_press"))
 		self._skillset_panel:key_release(callback(self, self, "key_release"))
@@ -2857,8 +2862,14 @@ function NewSkillTreeGui:enter_text(o, s)
 	if self._renaming_skill_switch then
 		local m = tweak_data:get_raw_value("gui", "rename_skill_set_max_letters") or 15
 		local n = utf8.len(self._renaming_skill_switch)
-		s = utf8.sub(s, 1, m - n)
-		self._renaming_skill_switch = self._renaming_skill_switch .. tostring(s)
+
+		if _G.IS_VR then
+			s = utf8.sub(s, 1, m)
+			self._renaming_skill_switch = tostring(s)
+		else
+			s = utf8.sub(s, 1, m - n)
+			self._renaming_skill_switch = self._renaming_skill_switch .. tostring(s)
+		end
 
 		self:_update_rename_skill_switch()
 	end
@@ -2928,7 +2939,11 @@ function NewSkillTreeGui:key_press(o, k)
 	elseif self._key_pressed == Idstring("home") then
 		-- Nothing
 	elseif k == Idstring("enter") then
-		-- Nothing
+		if _G.IS_VR then
+			self:_stop_rename_skill_switch()
+
+			return
+		end
 	elseif k == Idstring("esc") then
 		self:_cancel_rename_skill_switch()
 

@@ -95,12 +95,13 @@ function VRManagerPD2:init()
 		warp_zone_size = 0,
 		belt_size = 96,
 		fadeout_type = "fadeout_smooth",
-		collision_instant_teleport = false,
 		default_tablet_hand = "left",
 		enable_dead_zone_warp = true,
 		zipline_screen = true,
 		rotate_player_angle = 45,
+		collision_instant_teleport = false,
 		default_weapon_hand = "right",
+		arm_animation = false,
 		movement_type = "warp",
 		belt_distance = 10,
 		grip_toggle = true,
@@ -164,7 +165,10 @@ function VRManagerPD2:init()
 				2,
 				2
 			}
-		}
+		},
+		arm_length = tweak_data.vr.default_body_metrics.arm_length,
+		head_to_shoulder = tweak_data.vr.default_body_metrics.head_to_shoulder,
+		shoulder_width = tweak_data.vr.default_body_metrics.shoulder_width
 	}
 	self._limits = {
 		height = {
@@ -198,6 +202,18 @@ function VRManagerPD2:init()
 		dead_zone_size = {
 			max = 100,
 			min = 0
+		},
+		arm_length = {
+			max = 150,
+			min = 10
+		},
+		head_to_shoulder = {
+			max = 50,
+			min = 10
+		},
+		shoulder_width = {
+			max = 120,
+			min = 20
 		}
 	}
 
@@ -427,6 +443,7 @@ function VRManagerPD2:save(data)
 	end
 
 	data.vr.has_set_height = self._global.has_set_height
+	data.vr.has_notified_procedural_animation = self._global.has_notified_procedural_animation
 end
 
 function VRManagerPD2:load(data)
@@ -438,9 +455,10 @@ function VRManagerPD2:load(data)
 		if data.vr[setting] ~= nil then
 			self._global[setting] = data.vr[setting]
 		end
-
-		self._global.has_set_height = data.vr.has_set_height
 	end
+
+	self._global.has_set_height = data.vr.has_set_height
+	self._global.has_notified_procedural_animation = data.vr.has_notified_procedural_animation
 end
 
 function VRManagerPD2:add_setting_changed_callback(setting, callback)
@@ -469,6 +487,10 @@ end
 
 function VRManagerPD2:has_set_height()
 	return self._global.has_set_height
+end
+
+function VRManagerPD2:has_notified_procedural_animation()
+	return self._global.has_notified_procedural_animation
 end
 
 function VRManagerPD2:set_setting(setting, value)
@@ -507,6 +529,17 @@ end
 
 function VRManagerPD2:walking_mode()
 	return self:get_setting("movement_type") == "warp_walk"
+end
+
+function VRManagerPD2:show_notify_procedural_animation()
+	if not self._global.has_notified_procedural_animation then
+		managers.menu:show_vr_procedural_animation()
+
+		self._global.has_notified_procedural_animation = true
+
+		managers.savefile:setting_changed()
+		managers.savefile:save_setting()
+	end
 end
 
 local rt_swap = {

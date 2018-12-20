@@ -217,11 +217,11 @@ function NewNPCRaycastWeaponBase:trigger_held(...)
 	return fired
 end
 
-function NewNPCRaycastWeaponBase:auto_trigger_held(direction, impact)
+function NewNPCRaycastWeaponBase:auto_trigger_held(direction, impact, sub_ids, override_direction)
 	local fired = false
 
 	if self._next_fire_allowed <= Application:time() then
-		fired = self:auto_fire_blank(direction, impact)
+		fired = self:auto_fire_blank(direction, impact, sub_ids, override_direction)
 
 		if fired then
 			local fire_rate = tweak_data.weapon[self._name_id] and tweak_data.weapon[self._name_id].auto and tweak_data.weapon[self._name_id].auto.fire_rate
@@ -237,10 +237,14 @@ local mto = Vector3()
 local mfrom = Vector3()
 local mspread = Vector3()
 
-function NewNPCRaycastWeaponBase:auto_fire_blank(direction, impact)
+function NewNPCRaycastWeaponBase:auto_fire_blank(direction, impact, sub_ids, override_direction)
 	local user_unit = self._setup.user_unit
 
 	self._unit:m_position(mfrom)
+
+	if override_direction then
+		direction = self:fire_object():rotation():y()
+	end
 
 	local rays = {}
 	local right = direction:cross(math.UP):normalized()
@@ -310,10 +314,14 @@ function NewNPCRaycastWeaponBase:auto_fire_blank(direction, impact)
 	return true
 end
 
-function NewNPCRaycastWeaponBase:fire_blank(direction, impact)
+function NewNPCRaycastWeaponBase:fire_blank(direction, impact, sub_id, override_direction)
 	local user_unit = self._setup.user_unit
 
 	self._unit:m_position(mfrom)
+
+	if override_direction then
+		direction = self:fire_object():rotation():y()
+	end
 
 	local rays = {}
 	local right = direction:cross(math.UP):normalized()

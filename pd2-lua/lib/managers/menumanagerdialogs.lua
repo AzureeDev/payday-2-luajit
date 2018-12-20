@@ -2689,6 +2689,21 @@ function MenuManager:show_vr_settings_dialog(params)
 	managers.system_menu:show(dialog_data)
 end
 
+function MenuManager:show_vr_procedural_animation()
+	local dialog_data = {
+		title = managers.localization:text("dialog_vr_procedural_animation_title"),
+		text = managers.localization:text("dialog_vr_procedural_animation_text")
+	}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
+
+	managers.system_menu:show(dialog_data)
+end
+
 function MenuManager:show_heist_is_locked_dialog()
 	local dialog_data = {
 		title = managers.localization:text("dialog_heist_locked_title"),

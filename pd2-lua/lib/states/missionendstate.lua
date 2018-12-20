@@ -34,7 +34,22 @@ function MissionEndState:at_enter(old_state, params)
 	managers.platform:set_presence("Mission_end")
 
 	if not is_safe_house then
-		managers.platform:set_rich_presence(Global.game_settings.single_player and "SPEnd" or "MPEnd")
+		local rp_state = nil
+
+		if table.contains({
+			"victoryscreen",
+			"gameoverscreen"
+		}, self:name()) then
+			if Global.game_settings.single_player then
+				rp_state = "SPEnd"
+			else
+				rp_state = "MPEnd"
+			end
+		else
+			rp_state = "Idle"
+		end
+
+		managers.platform:set_rich_presence(rp_state)
 	end
 
 	managers.platform:set_playing(false)

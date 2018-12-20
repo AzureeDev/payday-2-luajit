@@ -8235,7 +8235,7 @@ function init_auto_generated_achievement_data(tags)
 				tags.difficulty.overkill,
 				tags.tactics.loud,
 				tags.tactics.stealth,
-				tags.teamwork.players_4,
+				tags.teamwork.players_1_to_4,
 				tags.contracts.locke
 			}
 		},
@@ -8621,7 +8621,6 @@ function init_auto_generated_achievement_data(tags)
 		uno_8 = {
 			sort_name = "C_Hector_H_Watchdogs_OutOf",
 			icon_id = "C_Hector_H_Watchdogs_OutOf",
-			progress = true,
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.overkill,
@@ -8632,7 +8631,6 @@ function init_auto_generated_achievement_data(tags)
 		uno_9 = {
 			sort_name = "C_Vlad_H_XMas_Whats",
 			icon_id = "C_Vlad_H_XMas_Whats",
-			progress = true,
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.overkill,
@@ -9307,10 +9305,9 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		cac_33 = {
-			icon_id = "C_Locke_H_BirthOfSky_Expert",
-			progress = true,
-			sort_name = "C_Locke_H_BirthOfSky_Expert",
 			additional_id = true,
+			sort_name = "C_Locke_H_BirthOfSky_Expert",
+			icon_id = "C_Locke_H_BirthOfSky_Expert",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.death_wish,
@@ -9546,129 +9543,129 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		nmh_1 = {
-			icon_id = "C_Bain_H_NoMercy_AllDiffs_D0",
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D0",
 			ladder = "H_NoMercy",
-			sort_name = "C_Bain_H_NoMercy_AllDiffs_D0",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D0",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.normal,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_10 = {
-			sort_name = "C_Bain_H_NoMercy_KeepingTheCool",
-			icon_id = "C_Bain_H_NoMercy_KeepingTheCool",
+			sort_name = "C_Classics_H_NoMercy_KeepingTheCool",
+			icon_id = "C_Classics_H_NoMercy_KeepingTheCool",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.hard,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_11 = {
-			sort_name = "C_Bain_H_NoMercy_Nyctophobia",
-			icon_id = "C_Bain_H_NoMercy_Nyctophobia",
+			sort_name = "C_Classics_H_NoMercy_Nyctophobia",
+			icon_id = "C_Classics_H_NoMercy_Nyctophobia",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.hard,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_2 = {
-			icon_id = "C_Bain_H_NoMercy_AllDiffs_D1",
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D1",
 			ladder = "H_NoMercy",
-			sort_name = "C_Bain_H_NoMercy_AllDiffs_D1",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D1",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.hard,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_3 = {
-			icon_id = "C_Bain_H_NoMercy_AllDiffs_D2",
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D2",
 			ladder = "H_NoMercy",
-			sort_name = "C_Bain_H_NoMercy_AllDiffs_D2",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D2",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.very_hard,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_4 = {
-			icon_id = "C_Bain_H_NoMercy_AllDiffs_D3",
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D3",
 			ladder = "H_NoMercy",
-			sort_name = "C_Bain_H_NoMercy_AllDiffs_D3",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D3",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.overkill,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_5 = {
-			icon_id = "C_Bain_H_NoMercy_AllDiffs_D4",
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D4",
 			ladder = "H_NoMercy",
-			sort_name = "C_Bain_H_NoMercy_AllDiffs_D4",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D4",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.mayhem,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_6 = {
-			icon_id = "C_Bain_H_NoMercy_AllDiffs_D5",
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D5",
 			ladder = "H_NoMercy",
-			sort_name = "C_Bain_H_NoMercy_AllDiffs_D5",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D5",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_wish,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_7 = {
-			icon_id = "C_Bain_H_NoMercy_AllDiffs_D6",
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D6",
 			ladder = "H_NoMercy",
-			sort_name = "C_Bain_H_NoMercy_AllDiffs_D6",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D6",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_sentence,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_8 = {
-			icon_id = "C_Bain_H_NoMercy_AllDiffs_OD_D6",
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_OD_D6",
 			ladder = "H_NoMercy",
-			sort_name = "C_Bain_H_NoMercy_AllDiffs_OD_D6",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_OD_D6",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_sentence,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		nmh_9 = {
-			sort_name = "C_Bain_H_NoMercy_OrWasIt",
-			icon_id = "C_Bain_H_NoMercy_OrWasIt",
+			sort_name = "C_Classics_H_NoMercy_OrWasIt",
+			icon_id = "C_Classics_H_NoMercy_OrWasIt",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.normal,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.classic
 			}
 		},
 		dah_1 = {

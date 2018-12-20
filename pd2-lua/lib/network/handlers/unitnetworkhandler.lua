@@ -100,7 +100,62 @@ function UnitNetworkHandler:set_look_dir(unit, yaw_in, pitch_in, sender)
 	local rot = Rotation(yaw, pitch, 0)
 
 	mrotation.y(rot, dir)
-	unit:movement():sync_look_dir(dir)
+	unit:movement():sync_look_dir(dir, yaw, pitch)
+end
+
+function UnitNetworkHandler:set_arm_pose(unit, frame_index, rs, ra, rf, rh, ls, la, lf, lh, sender)
+	if not self._verify_character_and_sender(unit, sender) then
+		return
+	end
+
+	local pose = {
+		shoulder = {
+			rs,
+			ls
+		},
+		arm = {
+			ra,
+			la
+		},
+		fore_arm = {
+			rf,
+			lf
+		},
+		hand = {
+			rh,
+			lh
+		}
+	}
+
+	unit:movement():sync_arm_frame_pose(frame_index, pose)
+end
+
+function UnitNetworkHandler:set_primary_hand(unit, hand, sender)
+	if not self._verify_character_and_sender(unit, sender) then
+		return
+	end
+
+	unit:movement():set_primary_hand(hand)
+end
+
+function UnitNetworkHandler:set_arm_setting(unit, setting_id, setting_param, sender)
+	local peer = self._verify_sender(sender)
+
+	if not peer or not self._verify_character(unit) then
+		return
+	end
+
+	local hand_ext = unit:hand()
+
+	if hand_ext and hand_ext.set_arm_setting then
+		hand_ext:set_arm_setting(peer:id(), setting_id, setting_param)
+	end
+
+	local movement_ext = unit:movement()
+
+	if movement_ext.set_arm_setting then
+		movement_ext:set_arm_setting(setting_id, setting_param)
+	end
 end
 
 function UnitNetworkHandler:action_walk_start(unit, first_nav_point, nav_link_yaw, nav_link_act_index, from_idle, haste_code, end_yaw, no_walk, no_strafe, pose_code, end_pose_code)
@@ -485,36 +540,36 @@ function UnitNetworkHandler:from_server_unit_recovered(subject_unit)
 	subject_unit:character_damage():sync_unit_recovered()
 end
 
-function UnitNetworkHandler:shot_blank(shooting_unit, impact, sender)
+function UnitNetworkHandler:shot_blank(shooting_unit, impact, sub_id, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_character_and_sender(shooting_unit, sender) then
 		return
 	end
 
-	shooting_unit:movement():sync_shot_blank(impact)
+	shooting_unit:movement():sync_shot_blank(impact, sub_id)
 end
 
-function UnitNetworkHandler:sync_start_auto_fire_sound(shooting_unit, sender)
+function UnitNetworkHandler:sync_start_auto_fire_sound(shooting_unit, sub_id, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_character_and_sender(shooting_unit, sender) then
 		return
 	end
 
-	shooting_unit:movement():sync_start_auto_fire_sound()
+	shooting_unit:movement():sync_start_auto_fire_sound(sub_id)
 end
 
-function UnitNetworkHandler:sync_stop_auto_fire_sound(shooting_unit, sender)
+function UnitNetworkHandler:sync_stop_auto_fire_sound(shooting_unit, sub_id, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_character_and_sender(shooting_unit, sender) then
 		return
 	end
 
-	shooting_unit:movement():sync_stop_auto_fire_sound()
+	shooting_unit:movement():sync_stop_auto_fire_sound(sub_id)
 end
 
-function UnitNetworkHandler:shot_blank_reliable(shooting_unit, impact, sender)
+function UnitNetworkHandler:shot_blank_reliable(shooting_unit, impact, sub_id, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_character_and_sender(shooting_unit, sender) then
 		return
 	end
 
-	shooting_unit:movement():sync_shot_blank(impact)
+	shooting_unit:movement():sync_shot_blank(impact, sub_id)
 end
 
 function UnitNetworkHandler:reload_weapon(unit, empty_reload, reload_speed_multiplier, sender)
@@ -3920,7 +3975,7 @@ function UnitNetworkHandler:sync_spawn_smoke_screen(unit, dodge_bonus)
 	managers.player:_sync_activate_smoke_screen(unit, dodge_bonus)
 end
 
-function UnitNetworkHandler:sync_melee_start(unit, sender)
+function UnitNetworkHandler:sync_melee_start(unit, hand, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
 		return
 	end
@@ -3929,7 +3984,19 @@ function UnitNetworkHandler:sync_melee_start(unit, sender)
 		return
 	end
 
-	unit:movement():sync_melee_start()
+	unit:movement():sync_melee_start(hand)
+end
+
+function UnitNetworkHandler:sync_melee_stop(unit, sender)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
+		return
+	end
+
+	if not alive(unit) then
+		return
+	end
+
+	unit:movement():sync_melee_stop()
 end
 
 function UnitNetworkHandler:sync_melee_discharge(unit, sender)

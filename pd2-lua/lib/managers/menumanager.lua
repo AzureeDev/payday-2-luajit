@@ -3519,6 +3519,10 @@ function MenuCallbackHandler:toggle_window_zoom(item)
 	managers.user:set_setting("window_zoom", item:value() == "on")
 end
 
+function MenuCallbackHandler:toggle_arm_animation(item)
+	managers.user:set_setting("arm_animation", item:value() == "on")
+end
+
 function MenuCallbackHandler:choice_choose_video_adapter(item)
 	managers.viewport:set_adapter_index(item:value())
 end
@@ -9835,6 +9839,12 @@ function MenuOptionInitiator:modify_adv_video(node)
 
 	if toggle_adaptive_quality then
 		toggle_adaptive_quality:set_value(managers.user:get_setting("adaptive_quality") and "on" or "off")
+	end
+
+	local toggle_arm_animation = node:item("toggle_arm_animation")
+
+	if toggle_arm_animation then
+		toggle_arm_animation:set_value(managers.user:get_setting("arm_animation") and "on" or "off")
 	end
 
 	return node

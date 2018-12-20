@@ -210,3 +210,7 @@ function CrossbowWeaponBase:add_damage_result(unit, is_dead, attacker, damage_pe
 		weapon_unit = self._unit
 	})
 end
+
+if _G.IS_VR then
+	require("lib/units/weapons/vr/BowWeaponBaseVR")
+end

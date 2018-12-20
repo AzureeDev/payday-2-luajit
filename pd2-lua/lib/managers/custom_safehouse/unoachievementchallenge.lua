@@ -80,16 +80,14 @@ function UnoAchievementChallenge:group_challenge_completed()
 	end
 
 	local peers = session:all_peers()
-	local worthy_players_required = 4
-	local worthy_count = 0
 
 	for _, peer in pairs(peers) do
-		if self._peer_completion[peer:id()] then
-			worthy_count = worthy_count + 1
+		if not self._peer_completion[peer:id()] then
+			return false
 		end
 	end
 
-	return worthy_players_required <= worthy_count
+	return true
 end
 
 function UnoAchievementChallenge:challenge_completed()

@@ -89,6 +89,7 @@ else
 	end
 end
 
+require("lib/utils/ArmSettings")
 require("lib/network/base/extensions/NetworkBaseExtension")
 require("lib/units/beings/player/HuskPlayerMovement")
 require("lib/units/beings/player/HuskPlayerInventory")
@@ -241,6 +242,7 @@ require("lib/units/props/SafehouseVaultMoneyStacks")
 require("lib/units/props/UnoPuzzleDoorBase")
 require("lib/units/props/UnoDeviceBase")
 require("lib/units/props/UnoPianoBase")
+require("lib/units/vehicles/VitHelicopterSync")
 require("lib/units/characters/PlayerBodyBoneMergeBase")
 require("lib/units/SyncMaterials")
 require("lib/managers/menu/FadeoutGuiObject")

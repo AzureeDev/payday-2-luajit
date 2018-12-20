@@ -1,3 +1,5 @@
+require("lib/utils/ArmAnimator")
+
 local mvec3_set = mvector3.set
 local mvec3_sub = mvector3.subtract
 local mvec3_add = mvector3.add
@@ -305,6 +307,7 @@ function HuskPlayerMovement:init(unit)
 	self._m_pos = unit:position()
 	self._m_rot = unit:rotation()
 	self._auto_firing = 0
+	self._firing = 0
 	self._look_dir = self._m_rot:y()
 	self._sync_look_dir = nil
 	self._look_ang_vel = 0
@@ -363,6 +366,15 @@ function HuskPlayerMovement:init(unit)
 	self._slotmask_gnd_ray = managers.slot:get_mask("player_ground_check")
 
 	self:set_friendly_fire(true)
+
+	self._arm_animation_enabled = managers.user:get_setting("arm_animation")
+	self._arm_animator = ArmAnimator:new(self._machine, callback(self, self, "clbk_arm_animator"))
+	self._primary_hand = 0
+	self._desired_primary_hand = 0
+	self._weapon_align_points = {
+		unit:get_object(Idstring("a_weapon_right_front")),
+		unit:get_object(Idstring("a_weapon_left_front"))
+	}
 end
 
 function HuskPlayerMovement:post_init()
@@ -391,6 +403,7 @@ function HuskPlayerMovement:post_init()
 	managers.groupai:state():add_listener(self._enemy_weapons_hot_listen_id, {
 		"enemy_weapons_hot"
 	}, callback(self, PlayerMovement, "clbk_enemy_weapons_hot"))
+	self._unit:network():send("set_arm_setting", ArmSetting.SET_ARM_ANIMATOR_PRESENT, self._arm_animation_enabled and 1 or 0)
 end
 
 function HuskPlayerMovement:set_character_anim_variables()
@@ -533,6 +546,11 @@ function HuskPlayerMovement:_has_finished_loading()
 	return not self._load_data
 end
 
+function HuskPlayerMovement:_use_weapon_fire_dir()
+	return self._arm_animator:enabled() and not self._arm_animator:is_blocked()
+	return false
+end
+
 function HuskPlayerMovement:update(unit, t, dt)
 	if not self:_has_finished_loading() then
 		return
@@ -574,11 +592,11 @@ function HuskPlayerMovement:update(unit, t, dt)
 		end
 	end
 
-	if self._auto_firing >= 2 then
+	if self._auto_firing >= 2 and not self._ext_anim.reload then
 		local equipped_weapon = self._unit:inventory():equipped_unit()
 
 		if alive(equipped_weapon) and equipped_weapon:base().auto_trigger_held then
-			equipped_weapon:base():auto_trigger_held(self._look_dir, true)
+			equipped_weapon:base():auto_trigger_held(self._look_dir, true, self._firing, self:_use_weapon_fire_dir())
 
 			self._aim_up_expire_t = TimerManager:game():time() + 2
 		end
@@ -625,15 +643,185 @@ function HuskPlayerMovement:update(unit, t, dt)
 			self:_sync_movement_state_driving()
 		end
 	end
+
+	self._arm_animator:update(t, dt)
 end
 
 function HuskPlayerMovement:enable_update()
 end
 
-function HuskPlayerMovement:sync_look_dir(fwd)
+function HuskPlayerMovement:sync_look_dir(fwd, yaw, pitch)
 	mvector3.normalize(fwd)
 
 	self._sync_look_dir = fwd
+
+	if self._arm_animator:enabled() then
+		self._arm_animator:set_look_dir(yaw, pitch)
+	end
+end
+
+function HuskPlayerMovement:sync_arm_frame_pose(frame_index, pose)
+	if self._arm_animation_enabled then
+		if not self._arm_animator:enabled() then
+			self._arm_animator:set_enabled(true)
+			self:refresh_primary_hand()
+		end
+
+		local r, l = nil
+		local base = self._unit:inventory():equipped_unit():base()
+
+		if base:enabled() then
+			local interact = self._ext_anim.interact
+			local akimbo = base.AKIMBO and not interact
+			local melee = self._ext_anim.melee
+			local skip_l = melee and self._melee_hand and self._melee_hand == 0
+			local skip_r = melee and self._melee_hand and self._melee_hand == 1
+
+			if (akimbo or self._primary_hand == 0) and not skip_r then
+				r = self._weapon_align_points[1]:local_rotation()
+			end
+
+			if (akimbo or self._primary_hand == 1) and not skip_l then
+				l = self._weapon_align_points[2]:local_rotation()
+			end
+		end
+
+		self._arm_animator:record_keyframe(frame_index, pose, r, l)
+	else
+		self._unit:network():send("set_arm_setting", ArmSetting.SET_ARM_ANIMATOR_PRESENT, 0)
+	end
+end
+
+function HuskPlayerMovement:set_arm_setting(setting_id, setting_param)
+	if self._arm_animation_enabled and setting_id == ArmSetting.SET_ARM_ANIMATOR_ENABLED then
+		if setting_param > 0 then
+			self._arm_animator:set_enabled(true)
+			self:refresh_primary_hand()
+		else
+			self._arm_animator:set_enabled(false)
+			self:refresh_primary_hand(true)
+
+			if self._ext_anim.melee then
+				self._machine:stop_segment(Idstring("upper_body_ext"))
+				self._machine:stop_segment(Idstring("upper_body"))
+			end
+		end
+	end
+end
+
+function HuskPlayerMovement:set_primary_hand(hand)
+	self._desired_primary_hand = hand
+
+	self:refresh_primary_hand()
+end
+
+function HuskPlayerMovement:primary_hand()
+	return self._primary_hand
+end
+
+function HuskPlayerMovement:refresh_primary_hand(force)
+	local enabled = self:arm_animation_enabled()
+
+	if not enabled and not force then
+		return
+	end
+
+	if enabled then
+		self._primary_hand = self._desired_primary_hand
+
+		if self._arm_animator:is_state_blocked("bow") then
+			self._primary_hand = 1
+
+			self._arm_animator:set_primary_hand(self._primary_hand)
+		elseif self._arm_animator:is_state_blocked("arrested") then
+			self._primary_hand = 0
+
+			self._arm_animator:set_primary_hand(self._primary_hand)
+		elseif self._ext_anim.melee then
+			self._use_primary_melee_hand = self._primary_hand ~= self._melee_hand
+
+			self._arm_animator:set_primary_hand(self._melee_hand)
+
+			local weapon = self._unit:inventory():equipped_unit()
+
+			if weapon and not self._use_primary_melee_hand then
+				if weapon:base().AKIMBO then
+					weapon:base():on_melee_item_hidden(true)
+					weapon:base():on_melee_item_shown(false)
+				else
+					weapon:base():on_enabled()
+				end
+			end
+		else
+			self._arm_animator:set_primary_hand(self._primary_hand)
+		end
+	else
+		self._primary_hand = 0
+	end
+
+	self._unit:inventory():refresh_primary_hand()
+end
+
+function HuskPlayerMovement:arm_animation_enabled()
+	return self._arm_animation_enabled and self._arm_animator:enabled()
+end
+
+function HuskPlayerMovement:arm_animation_blocked()
+	return self._arm_animation_enabled and self._arm_animator:enabled() and self._arm_animator:is_blocked()
+end
+
+function HuskPlayerMovement:unblock_melee()
+	if not self:arm_animation_enabled() then
+		return
+	end
+
+	if self._ext_anim.reload then
+		return
+	end
+
+	if self._melee_equipped then
+		self:sync_melee_start()
+	end
+end
+
+function HuskPlayerMovement:block_melee()
+	if not self:arm_animation_enabled() then
+		return
+	end
+
+	if self._ext_anim.melee then
+		self._machine:stop_segment(Idstring("upper_body_ext"))
+
+		if alive(self._unit:inventory():equipped_unit()) then
+			if self._unit:inventory():equipped_unit():base().AKIMBO then
+				self._unit:inventory():equipped_unit():base():on_melee_item_hidden(self._use_primary_melee_hand)
+				self._unit:inventory():equipped_unit():base():on_melee_item_hidden(not self._use_primary_melee_hand)
+			else
+				self._unit:inventory():equipped_unit():base():on_enabled()
+				self._unit:inventory():equipped_unit():base():apply_grip(true)
+			end
+		end
+	end
+end
+
+function HuskPlayerMovement:anim_clbk_reload_exit()
+	self:unblock_melee()
+end
+
+function HuskPlayerMovement:on_weapon_add()
+	self:refresh_primary_hand()
+end
+
+function HuskPlayerMovement:clbk_arm_animator(enabled)
+	if not self:arm_animation_enabled() then
+		return
+	end
+
+	if enabled then
+		self:unblock_melee()
+	else
+		self:block_melee()
+	end
 end
 
 function HuskPlayerMovement:set_look_dir_instant(fwd)
@@ -846,13 +1034,55 @@ function HuskPlayerMovement:play_state_idstr(state_name, at_time)
 	Application:stack_dump()
 end
 
-function HuskPlayerMovement:sync_melee_start()
+function HuskPlayerMovement:sync_melee_start(hand)
+	if hand and hand > 0 then
+		self._melee_hand = hand % 2
+
+		if self._primary_hand ~= self._melee_hand then
+			self._use_primary_melee_hand = true
+		else
+			self._use_primary_melee_hand = false
+		end
+	end
+
+	self._melee_equipped = true
+
+	if self:arm_animation_enabled() then
+		if self._ext_anim.reload then
+			self._machine:stop_segment("upper_body")
+		end
+
+		if self:arm_animation_blocked() then
+			return
+		end
+	elseif hand > 0 then
+		return
+	end
+
 	self:destroy_magazine_in_hand()
 
-	local redir_res = self:play_redirect("melee_start")
+	local use_ext = nil
+	use_ext = self:arm_animation_enabled()
+	local redir_res = self:play_redirect(use_ext and "melee_start_ext" or "melee_start")
 
-	if redir_res and alive(self._unit:inventory():equipped_unit()) and self._unit:inventory():equipped_unit():base().AKIMBO then
-		self._unit:inventory():equipped_unit():base():on_melee_item_shown()
+	if redir_res and alive(self._unit:inventory():equipped_unit()) then
+		if self._unit:inventory():equipped_unit():base().AKIMBO then
+			self._unit:inventory():equipped_unit():base():on_melee_item_shown(self._use_primary_melee_hand or false)
+		elseif self._use_primary_melee_hand then
+			self._unit:inventory():equipped_unit():base():on_disabled()
+		end
+	end
+end
+
+function HuskPlayerMovement:sync_melee_stop()
+	self._melee_equipped = false
+
+	if self._ext_anim.melee then
+		self:anim_cbk_unspawn_melee_item()
+
+		self._ext_anim.melee = false
+
+		self._machine:stop_segment(Idstring("upper_body_ext"))
 	end
 end
 
@@ -864,14 +1094,22 @@ function HuskPlayerMovement:sync_melee_discharge()
 	end
 end
 
-function HuskPlayerMovement:anim_cbk_set_melee_start_state_vars(unit)
-	local state = self._unit:anim_state_machine():segment_state(Idstring("upper_body"))
+function HuskPlayerMovement:anim_cbk_set_melee_start_state_vars(unit, name, segment_name)
+	local state = self._unit:anim_state_machine():segment_state(segment_name or Idstring("upper_body"))
 	local peer_id = managers.network:session():peer_by_unit(self._unit):id()
 	local peer = managers.network:session():peer(peer_id)
 	local melee_entry = peer:melee_id()
 	local anim_global_param = tweak_data.blackmarket.melee_weapons[melee_entry].anim_global_param
 
 	self._unit:anim_state_machine():set_parameter(state, anim_global_param, 1)
+end
+
+function HuskPlayerMovement:anim_cbk_set_melee_start_ext_state_vars(unit)
+	self:anim_cbk_set_melee_start_state_vars(unit, nil, Idstring("upper_body_ext"))
+end
+
+function HuskPlayerMovement:anim_cbk_set_melee_charge_ext_state_vars(unit)
+	self:anim_cbk_set_melee_start_state_vars(unit, nil, Idstring("upper_body_ext"))
 end
 
 function HuskPlayerMovement:anim_cbk_set_melee_charge_state_vars(unit)
@@ -905,6 +1143,15 @@ function HuskPlayerMovement:anim_cbk_spawn_melee_item(unit, graphic_object)
 	end
 
 	local align_obj_name = Idstring("a_weapon_left_front")
+
+	if self:arm_animation_enabled() then
+		self:refresh_primary_hand()
+
+		if self._melee_hand == 1 then
+			align_obj_name = Idstring("a_weapon_right_front")
+		end
+	end
+
 	local align_obj = self._unit:get_object(align_obj_name)
 	local peer_id = managers.network:session():peer_by_unit(self._unit):id()
 	local peer = managers.network:session():peer(peer_id)
@@ -918,6 +1165,33 @@ function HuskPlayerMovement:anim_cbk_spawn_melee_item(unit, graphic_object)
 
 		self._unit:link(align_obj:name(), self._melee_item_unit, self._melee_item_unit:orientation_object():name())
 
+		if self:arm_animation_enabled() then
+			local offset = tweak_data.vr.melee_offsets.weapons_npc[melee_entry]
+
+			if offset then
+				if offset.right and self._melee_hand == 1 then
+					self._melee_item_unit:set_local_position(offset.right.position or Vector3())
+					self._melee_item_unit:set_local_rotation(offset.right.rotation or Rotation())
+				elseif offset.left and self._melee_hand == 0 then
+					self._melee_item_unit:set_local_position(offset.left.position or Vector3())
+					self._melee_item_unit:set_local_rotation(offset.left.rotation or Rotation())
+				else
+					self._melee_item_unit:set_local_position(offset.position or Vector3())
+					self._melee_item_unit:set_local_rotation(offset.rotation or Rotation())
+				end
+
+				if offset.hidden_objects then
+					for _, object in ipairs(offset.hidden_objects) do
+						local obj = self._melee_item_unit:get_object(object)
+
+						if obj then
+							obj:set_visibility(false)
+						end
+					end
+				end
+			end
+		end
+
 		for a_object, g_object in pairs(graphic_objects) do
 			local g_obj_name = Idstring(g_object)
 			local g_obj = self._melee_item_unit:get_object(g_obj_name)
@@ -930,8 +1204,12 @@ function HuskPlayerMovement:anim_cbk_spawn_melee_item(unit, graphic_object)
 		end
 	end
 
-	if alive(self._unit:inventory():equipped_unit()) and self._unit:inventory():equipped_unit():base().AKIMBO then
-		self._unit:inventory():equipped_unit():base():on_melee_item_shown()
+	if alive(self._unit:inventory():equipped_unit()) then
+		if self._unit:inventory():equipped_unit():base().AKIMBO then
+			self._unit:inventory():equipped_unit():base():on_melee_item_shown(self._use_primary_melee_hand)
+		elseif self._use_primary_melee_hand then
+			self._unit:inventory():equipped_unit():base():on_disabled()
+		end
 	end
 end
 
@@ -943,8 +1221,17 @@ function HuskPlayerMovement:anim_cbk_unspawn_melee_item(unit)
 		self._melee_item_unit = nil
 	end
 
-	if alive(self._unit:inventory():equipped_unit()) and self._unit:inventory():equipped_unit():base().AKIMBO then
-		self._unit:inventory():equipped_unit():base():on_melee_item_hidden()
+	if self:arm_animation_enabled() then
+		self:refresh_primary_hand()
+	end
+
+	if alive(self._unit:inventory():equipped_unit()) then
+		if self._unit:inventory():equipped_unit():base().AKIMBO then
+			self._unit:inventory():equipped_unit():base():on_melee_item_hidden(self._use_primary_melee_hand)
+		elseif self._use_primary_melee_hand then
+			self._unit:inventory():equipped_unit():base():on_enabled()
+			self._unit:inventory():equipped_unit():base():apply_grip(true)
+		end
 	end
 
 	if self._unit:inventory().on_melee_item_hidden then
@@ -1145,8 +1432,13 @@ function HuskPlayerMovement:_upd_attention_mask_off(dt)
 		local error_axis = self._look_dir:cross(self._sync_look_dir)
 		local rot_adj = Rotation(error_axis, rot_amount)
 		self._look_dir = self._look_dir:rotate_with(rot_adj)
+		local look_dir = self._look_dir
 
-		self._mask_off_modifier:set_target_z(self._look_dir)
+		if self._arm_animator:enabled() and self._arm_animator:is_facing_allowed() then
+			look_dir = self._arm_animator:facing_dir()
+		end
+
+		self._mask_off_modifier:set_target_z(look_dir)
 
 		if rot_amount == error_angle then
 			self._sync_look_dir = nil
@@ -1221,8 +1513,13 @@ function HuskPlayerMovement:_sync_look_direction(t, dt)
 		local error_axis = self._look_dir:cross(tar_look_dir)
 		local rot_adj = Rotation(error_axis, rot_amount)
 		self._look_dir = self._look_dir:rotate_with(rot_adj)
+		local look_dir = self._look_dir
 
-		self._look_modifier:set_target_y(self._look_dir)
+		if self._arm_animator:enabled() and self._arm_animator:is_facing_allowed() then
+			look_dir = self._arm_animator:facing_dir()
+		end
+
+		self._look_modifier:set_target_y(look_dir)
 
 		if rot_amount == error_angle and not wait_for_turn then
 			-- Nothing
@@ -2115,6 +2412,10 @@ function HuskPlayerMovement:_update_rotation_standard(t, dt)
 	local look_dir_flat = self._look_dir:with_z(0)
 
 	mvector3.normalize(look_dir_flat)
+
+	if self._arm_animator:enabled() and self._arm_animator:is_facing_allowed() then
+		look_dir_flat = self._arm_animator:facing_dir()
+	end
 
 	local leg_fwd_cur = self._m_rot:y()
 	local waist_twist = look_dir_flat:to_polar_with_reference(leg_fwd_cur, math.UP).spin
@@ -3022,29 +3323,46 @@ function HuskPlayerMovement:_adjust_walk_anim_speed(dt, target_speed)
 	end
 end
 
-function HuskPlayerMovement:sync_shot_blank(impact)
+function HuskPlayerMovement:sync_shot_blank(impact, sub_id)
 	if self.clean_states[self._state] then
 		return
 	end
 
+	sub_id = self._arm_animator:enabled() and sub_id + 1 or 0
 	local delay = self._stance.values[3] < 0.7
 	local f = false
 
 	if not delay then
-		self:_shoot_blank(impact)
+		self:_shoot_blank(impact, sub_id)
 
 		self._aim_up_expire_t = TimerManager:game():time() + 2
 	else
 		function f(impact)
-			self:_shoot_blank(impact)
+			self:_shoot_blank(impact, sub_id)
 		end
 	end
 
 	self:_change_stance(3, f)
 end
 
-function HuskPlayerMovement:sync_start_auto_fire_sound()
+function HuskPlayerMovement:sync_start_auto_fire_sound(sub_id)
 	if self.clean_states[self._state] then
+		return
+	end
+
+	sub_id = self._arm_animator:enabled() and sub_id + 1 or 0
+	self._firing = self._firing or 0
+	self._firing = bit.bor(self._firing, sub_id)
+
+	if sub_id > 0 then
+		local equipped_weapon = self._unit:inventory():equipped_unit()
+
+		equipped_weapon:base():start_autofire(nil, sub_id)
+		self:_change_stance(3, false)
+
+		self._auto_firing = 2
+		self._aim_up_expire_t = TimerManager:game():time() + 2
+
 		return
 	end
 
@@ -3102,7 +3420,28 @@ function HuskPlayerMovement:sync_raise_weapon()
 	end
 end
 
-function HuskPlayerMovement:sync_stop_auto_fire_sound()
+function HuskPlayerMovement:sync_stop_auto_fire_sound(sub_id)
+	sub_id = self._arm_animator:enabled() and sub_id + 1 or 0
+	self._firing = self._firing or 0
+	self._firing = bit.band(self._firing, bit.bnot(sub_id))
+
+	if sub_id > 0 then
+		local equipped_weapon = self._unit:inventory():equipped_unit()
+
+		equipped_weapon:base():stop_autofire(sub_id)
+
+		if self._firing == 0 then
+			self._auto_firing = 0
+			local stance = self._stance
+
+			if stance.transition then
+				stance.transition.delayed_shot = nil
+			end
+		end
+
+		return
+	end
+
 	local equipped_weapon = self._unit:inventory():equipped_unit()
 
 	if equipped_weapon and equipped_weapon:base().shooting and equipped_weapon:base():shooting() then
@@ -3129,11 +3468,11 @@ function HuskPlayerMovement:set_cbt_permanent(on)
 	self:_chk_change_stance()
 end
 
-function HuskPlayerMovement:_shoot_blank(impact)
+function HuskPlayerMovement:_shoot_blank(impact, sub_id)
 	local equipped_weapon = self._unit:inventory():equipped_unit()
 
 	if equipped_weapon and equipped_weapon:base().fire_blank then
-		equipped_weapon:base():fire_blank(self._look_dir, impact)
+		equipped_weapon:base():fire_blank(self._look_dir, impact, sub_id, self:_use_weapon_fire_dir())
 
 		if self._aim_up_expire_t ~= -1 then
 			self._aim_up_expire_t = TimerManager:game():time() + 2
@@ -3222,6 +3561,9 @@ function HuskPlayerMovement:sync_reload_weapon(empty_reload, reload_speed_multip
 	local anim_multiplier = 1
 	local anim_redirect = "reload"
 	local anim_hold_type, anim_reload_type = nil
+
+	self._arm_animator:set_state_blocked("reload", true)
+
 	self._reload_speed_multiplier = reload_speed_multiplier
 	local w_td = self:_equipped_weapon_tweak_data()
 	local w_td_crew = self:_equipped_weapon_crew_tweak_data() or {}
@@ -3308,6 +3650,8 @@ function HuskPlayerMovement:anim_clbk_start_reload_looped()
 end
 
 function HuskPlayerMovement:sync_reload_weapon_interupt()
+	self._arm_animator:set_state_blocked("reload", false)
+
 	if self._ext_anim.reload then
 		local w_td_crew = self:_equipped_weapon_crew_tweak_data() or {}
 
@@ -3520,7 +3864,7 @@ function HuskPlayerMovement:anim_clbk_show_magazine_in_hand(unit, name)
 				}
 
 				self:_set_unit_bullet_objects_visible(self._magazine_data.unit, part.bullet_objects, false)
-				self._unit:link(Idstring("LeftHandMiddle2"), self._magazine_data.unit)
+				self._unit:link((not self._primary_hand or self._primary_hand == 0) and Idstring("LeftHandMiddle2") or Idstring("RightHandMiddle2"), self._magazine_data.unit)
 
 				break
 			end
@@ -3549,7 +3893,7 @@ function HuskPlayerMovement:anim_clbk_spawn_dropped_magazine()
 			return
 		end
 
-		local attach_bone = Idstring("LeftHandMiddle2")
+		local attach_bone = (not self._primary_hand or self._primary_hand == 0) and Idstring("LeftHandMiddle2") or Idstring("RightHandMiddle2")
 		local bone_hand = self._unit:get_object(attach_bone)
 
 		self:anim_clbk_show_magazine_in_hand()
@@ -3644,6 +3988,8 @@ function HuskPlayerMovement:anim_clbk_show_new_magazine_in_hand(unit, name)
 end
 
 function HuskPlayerMovement:anim_clbk_hide_magazine_in_hand()
+	self._arm_animator:set_state_blocked("reload", false)
+
 	if not self:allow_dropped_magazines() then
 		return
 	end
@@ -3881,6 +4227,8 @@ function HuskPlayerMovement:_sync_movement_state_standard(event_descriptor)
 		self:sync_action_walk_nav_point(nil, nil, "exit_bleedout", sync_action_force_and_execute)
 	end
 
+	self._arm_animator:clear_state_blocked()
+	self:refresh_primary_hand()
 	self:set_need_revive(false)
 	self:set_need_assistance(false)
 	managers.hud:set_mugshot_normal(self._unit:unit_data().mugshot_id)
@@ -3962,6 +4310,7 @@ end
 
 function HuskPlayerMovement:_sync_movement_state_tased(event_descriptor)
 	self:play_redirect("tased")
+	self._arm_animator:set_state_blocked("tased", true)
 	self._unit:set_slot(3)
 	self:set_need_revive(false)
 	managers.hud:set_mugshot_tased(self._unit:unit_data().mugshot_id)
@@ -3985,6 +4334,7 @@ function HuskPlayerMovement:_sync_movement_state_tased(event_descriptor)
 end
 
 function HuskPlayerMovement:_sync_movement_state_bleed_out(event_descriptor)
+	self._arm_animator:set_state_blocked("bleed_out", true)
 	self._unit:set_slot(3)
 	managers.hud:set_mugshot_downed(self._unit:unit_data().mugshot_id)
 	managers.groupai:state():on_criminal_disabled(self._unit)
@@ -4009,6 +4359,7 @@ function HuskPlayerMovement:_sync_movement_state_incapacitated(event_descriptor)
 end
 
 function HuskPlayerMovement:_sync_movement_state_fatal(event_descriptor)
+	self._arm_animator:set_state_blocked("fatal", true)
 	self:play_redirect("fatal")
 	self._unit:set_slot(5)
 	managers.hud:set_mugshot_downed(self._unit:unit_data().mugshot_id)
@@ -4030,6 +4381,8 @@ function HuskPlayerMovement:_sync_movement_state_fatal(event_descriptor)
 end
 
 function HuskPlayerMovement:_sync_movement_state_dead(event_descriptor)
+	self._arm_animator:set_state_blocked("dead", true)
+
 	local peer_id = managers.network:session():peer_by_unit(self._unit):id()
 
 	managers.groupai:state():on_player_criminal_death(peer_id)
@@ -4054,6 +4407,8 @@ function HuskPlayerMovement:_sync_movement_state_dead(event_descriptor)
 end
 
 function HuskPlayerMovement:_sync_movement_state_arrested(event_descriptor)
+	self._arm_animator:set_state_blocked("arrested", true)
+	self:refresh_primary_hand()
 	self._unit:set_slot(5)
 	managers.hud:set_mugshot_cuffed(self._unit:unit_data().mugshot_id)
 	managers.groupai:state():on_criminal_neutralized(self._unit)
@@ -4095,6 +4450,7 @@ function HuskPlayerMovement:_sync_movement_state_driving(event_descriptor)
 		self._unit:inventory():hide_equipped_unit()
 	end
 
+	self._arm_animator:set_state_blocked("driving", true)
 	self:play_redirect(animation)
 
 	self.seat_third = vehicle_unit:get_object(Idstring(VehicleDrivingExt.THIRD_PREFIX .. vehicle_data.seat))
@@ -4232,12 +4588,29 @@ function HuskPlayerMovement:clbk_inventory_event(unit, event)
 
 		local weapon_usage = weap_tweak.anim_usage or weap_tweak.usage
 
+		if self:arm_animation_enabled() then
+			self._arm_animator:set_state_blocked("bow", weapon_usage == "bow")
+			self:refresh_primary_hand()
+		end
+
 		self._machine:set_global(weapon_usage, 1)
 
 		self._weapon_anim_global = weapon_usage
 
 		if self:_can_play_weapon_switch_anim() then
 			self:play_state("std/stand/still/idle/look")
+		end
+
+		if self:arm_animation_enabled() then
+			weapon:base():apply_grip(true)
+
+			if self._ext_anim.melee then
+				if weapon:base().AKIMBO then
+					weapon:base():on_melee_item_shown(self._use_primary_melee_hand or false)
+				elseif self._use_primary_melee_hand then
+					weapon:base():on_disabled()
+				end
+			end
 		end
 	end
 end
@@ -4694,6 +5067,8 @@ function HuskPlayerMovement:zipline_unit()
 end
 
 function HuskPlayerMovement:on_exit_vehicle()
+	self._arm_animator:set_state_blocked("driving", false)
+
 	self._vehicle = nil
 
 	self._look_modifier:set_target_y(self._look_dir)
@@ -4861,6 +5236,10 @@ end
 
 function HuskPlayerMovement:anim_clbk_wanted_item(unit, item_type, align_place, droppable)
 	self._wanted_items = self._wanted_items or {}
+
+	if self:arm_animation_enabled() and not self:arm_animation_blocked() and self._primary_hand == 1 then
+		align_place = "hand_r"
+	end
 
 	table.insert(self._wanted_items, {
 		item_type,

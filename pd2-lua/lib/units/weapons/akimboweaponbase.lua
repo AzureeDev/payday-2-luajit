@@ -332,38 +332,53 @@ function NPCAkimboWeaponBase:update(unit, t, dt)
 	end
 end
 
-function NPCAkimboWeaponBase:create_second_gun(create_second_gun)
+function NPCAkimboWeaponBase:link_secondary_weapon(secondary)
+	if alive(self._second_gun) then
+		self._setup.user_unit:link(secondary or Idstring("a_weapon_left_front"), self._second_gun, self._second_gun:orientation_object():name())
+	end
+end
+
+function NPCAkimboWeaponBase:create_second_gun(create_second_gun, align_point)
 	AkimboWeaponBase._create_second_gun(self, create_second_gun)
-	self._setup.user_unit:link(Idstring("a_weapon_left_front"), self._second_gun, self._second_gun:orientation_object():name())
+	self._setup.user_unit:link(align_point or Idstring("a_weapon_left_front"), self._second_gun, self._second_gun:orientation_object():name())
 end
 
 function NPCAkimboWeaponBase:get_fire_time()
 	return AkimboWeaponBase.get_fire_time(self)
 end
 
-function NPCAkimboWeaponBase:fire_blank(...)
-	if not self._manual_fire_second_gun then
-		NPCAkimboWeaponBase.super.fire_blank(self, ...)
+function NPCAkimboWeaponBase:fire_blank(direction, impact, sub_id, override_direction)
+	if sub_id == 0 then
+		if not self._manual_fire_second_gun then
+			NPCAkimboWeaponBase.super.fire_blank(self, direction, impact, sub_id, override_direction)
 
-		if alive(self._second_gun) then
-			if self._setup.user_unit:movement():current_state_name() == "bleed_out" or self._setup.user_unit:movement():zipline_unit() then
-				return
+			if alive(self._second_gun) then
+				if self._setup.user_unit:movement():current_state_name() == "bleed_out" or self._setup.user_unit:movement():zipline_unit() then
+					return
+				end
+
+				managers.enemy:add_delayed_clbk("NPCAkimboWeaponBase", callback(self, self, "_fire_blank_second", {
+					direction,
+					impact,
+					sub_id,
+					override_direction
+				}), TimerManager:game():time() + self:get_fire_time())
+			end
+		elseif self._fire_second_gun_next then
+			if alive(self._second_gun) and alive(self._setup.user_unit) then
+				self._second_gun:base():fire_blank(direction, impact, sub_id, override_direction)
 			end
 
-			managers.enemy:add_delayed_clbk("NPCAkimboWeaponBase", callback(self, self, "_fire_blank_second", {
-				...
-			}), TimerManager:game():time() + self:get_fire_time())
-		end
-	elseif self._fire_second_gun_next then
-		if alive(self._second_gun) and alive(self._setup.user_unit) then
-			self._second_gun:base():fire_blank(...)
-		end
+			self._fire_second_gun_next = false
+		else
+			NPCAkimboWeaponBase.super.fire_blank(self, direction, impact, sub_id, override_direction)
 
-		self._fire_second_gun_next = false
-	else
-		NPCAkimboWeaponBase.super.fire_blank(self, ...)
-
-		self._fire_second_gun_next = true
+			self._fire_second_gun_next = true
+		end
+	elseif sub_id == 1 then
+		NPCAkimboWeaponBase.super.fire_blank(self, direction, impact, sub_id, override_direction)
+	elseif sub_id == 2 then
+		NPCAkimboWeaponBase.super.fire_blank(self._second_gun:base(), direction, impact, sub_id, override_direction)
 	end
 end
 
@@ -373,17 +388,29 @@ function NPCAkimboWeaponBase:_fire_blank_second(params)
 	end
 end
 
-function NPCAkimboWeaponBase:auto_fire_blank(direction, impact)
-	NPCAkimboWeaponBase.super.auto_fire_blank(self, direction, impact)
+function NPCAkimboWeaponBase:auto_fire_blank(direction, impact, sub_ids, override_direction)
+	if not sub_ids or sub_ids == 0 then
+		NPCAkimboWeaponBase.super.auto_fire_blank(self, direction, impact, sub_ids, override_direction)
 
-	if alive(self._second_gun) and impact then
-		table.insert(self._fire_callbacks, {
-			t = self:get_fire_time(),
-			callback = callback(self, self, "_auto_fire_blank_second", {
-				direction,
-				impact
+		if alive(self._second_gun) and impact then
+			table.insert(self._fire_callbacks, {
+				t = self:get_fire_time(),
+				callback = callback(self, self, "_auto_fire_blank_second", {
+					direction,
+					impact,
+					sub_ids,
+					override_direction
+				})
 			})
-		})
+		end
+	end
+
+	if bit.band(sub_ids, 1) == 1 then
+		NPCAkimboWeaponBase.super.auto_fire_blank(self, direction, impact, 1, override_direction)
+	end
+
+	if bit.band(sub_ids, 2) == 2 then
+		NPCAkimboWeaponBase.super.auto_fire_blank(self._second_gun:base(), direction, impact, 1, override_direction)
 	end
 
 	return true
@@ -395,14 +422,26 @@ function NPCAkimboWeaponBase:_auto_fire_blank_second(params)
 	end
 end
 
-function NPCAkimboWeaponBase:start_autofire(nr_shots)
-	NPCAkimboWeaponBase.super.start_autofire(self, nr_shots)
+function NPCAkimboWeaponBase:start_autofire(nr_shots, sub_id)
+	if not sub_id or sub_id == 0 then
+		NPCAkimboWeaponBase.super.start_autofire(self, nr_shots)
 
-	if alive(self._second_gun) then
-		table.insert(self._fire_callbacks, {
-			t = self:get_fire_time(),
-			callback = callback(self, self, "_start_autofire_second", nr_shots or false)
-		})
+		if alive(self._second_gun) then
+			table.insert(self._fire_callbacks, {
+				t = self:get_fire_time(),
+				callback = callback(self, self, "_start_autofire_second", nr_shots or false)
+			})
+		end
+	end
+
+	if sub_id == 1 then
+		NPCAkimboWeaponBase.super.start_autofire(self, nr_shots)
+	end
+
+	if sub_id == 2 then
+		self._next_fire_allowed = math.max(self._next_fire_allowed, Application:time())
+
+		NPCAkimboWeaponBase.super.start_autofire(self._second_gun:base(), nr_shots)
 	end
 end
 
@@ -412,14 +451,20 @@ function NPCAkimboWeaponBase:_start_autofire_second(nr_shots)
 	end
 end
 
-function NPCAkimboWeaponBase:stop_autofire()
-	NPCAkimboWeaponBase.super.stop_autofire(self)
+function NPCAkimboWeaponBase:stop_autofire(sub_id)
+	if not sub_id then
+		NPCAkimboWeaponBase.super.stop_autofire(self)
 
-	if alive(self._second_gun) then
-		table.insert(self._fire_callbacks, {
-			t = self:get_fire_time(),
-			callback = callback(self, self, "_stop_autofire_second")
-		})
+		if alive(self._second_gun) then
+			table.insert(self._fire_callbacks, {
+				t = self:get_fire_time(),
+				callback = callback(self, self, "_stop_autofire_second")
+			})
+		end
+	elseif sub_id == 1 then
+		NPCAkimboWeaponBase.super.stop_autofire(self)
+	elseif sub_id == 2 then
+		NPCAkimboWeaponBase.super.stop_autofire(self._second_gun:base())
 	end
 end
 
@@ -445,14 +490,28 @@ function NPCAkimboWeaponBase:on_disabled(...)
 	end
 end
 
-function NPCAkimboWeaponBase:on_melee_item_shown()
-	if alive(self._second_gun) then
+function NPCAkimboWeaponBase:on_melee_item_shown(use_primary)
+	if use_primary then
+		NPCAkimboWeaponBase.super.on_disabled(self)
+	elseif alive(self._second_gun) then
 		self._second_gun:base():on_disabled()
 	end
 end
 
-function NPCAkimboWeaponBase:on_melee_item_hidden()
-	if alive(self._second_gun) then
+function NPCAkimboWeaponBase:on_melee_item_hidden(use_primary)
+	if use_primary then
+		NPCAkimboWeaponBase.super.on_enabled(self)
+
+		local active, part_id = self:get_active_gadget()
+
+		if part_id then
+			self:set_gadget_on_by_part_id(part_id)
+
+			if self.gadget_color and self:gadget_color() then
+				self:set_gadget_color(self:gadget_color())
+			end
+		end
+	elseif alive(self._second_gun) then
 		self._second_gun:base():on_enabled()
 
 		local active, part_id = self:get_active_gadget()

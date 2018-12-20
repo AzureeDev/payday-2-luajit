@@ -2107,7 +2107,7 @@ function PlayerStandard:_start_action_melee(t, input, instant)
 	local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
 
 	if not instant_hit then
-		self._ext_network:send("sync_melee_start")
+		self._ext_network:send("sync_melee_start", 0)
 	end
 
 	if current_state_name == self:get_animation("melee_attack_state") then
@@ -4227,7 +4227,7 @@ function PlayerStandard:_check_action_primary_attack(t, input)
 									self._unit:camera():play_redirect(self:get_animation("recoil_enter"))
 
 									if (not weap_base.akimbo or weap_base:weapon_tweak_data().allow_akimbo_autofire) and (not weap_base.third_person_important or weap_base.third_person_important and not weap_base:third_person_important()) then
-										self._ext_network:send("sync_start_auto_fire_sound")
+										self._ext_network:send("sync_start_auto_fire_sound", 0)
 									end
 								end
 							end
@@ -4362,9 +4362,9 @@ function PlayerStandard:_check_action_primary_attack(t, input)
 						local impact = not fired.hit_enemy
 
 						if weap_base.third_person_important and weap_base:third_person_important() then
-							self._ext_network:send("shot_blank_reliable", impact)
+							self._ext_network:send("shot_blank_reliable", impact, 0)
 						elseif weap_base.akimbo and not weap_base:weapon_tweak_data().allow_akimbo_autofire or fire_mode == "single" then
-							self._ext_network:send("shot_blank", impact)
+							self._ext_network:send("shot_blank", impact, 0)
 						end
 					elseif fire_mode == "single" then
 						new_action = false
@@ -4392,7 +4392,7 @@ function PlayerStandard:_check_stop_shooting()
 		local fire_mode = weap_base:fire_mode()
 
 		if fire_mode == "auto" and (not weap_base.akimbo or weap_base:weapon_tweak_data().allow_akimbo_autofire) then
-			self._ext_network:send("sync_stop_auto_fire_sound")
+			self._ext_network:send("sync_stop_auto_fire_sound", 0)
 		end
 
 		if fire_mode == "auto" and not self:_is_reloading() and not self:_is_meleeing() then

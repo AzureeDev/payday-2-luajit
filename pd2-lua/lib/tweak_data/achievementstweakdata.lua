@@ -5967,7 +5967,8 @@ function AchievementsTweakData:init(tweak_data)
 			"flat",
 			"run",
 			"glace",
-			"dah"
+			"dah",
+			"nmh"
 		},
 		locke = {
 			"pbr",
@@ -5975,7 +5976,10 @@ function AchievementsTweakData:init(tweak_data)
 			"wwh",
 			"brb",
 			"tag",
-			"des"
+			"des",
+			"sah",
+			"bph",
+			"vit"
 		},
 		jimmy = {
 			"mad",
@@ -8054,38 +8058,6 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 		return 0
 	end
 
-	local function from_mission_counter(counter, counter_total, inverted)
-		local counters = {}
-
-		local function get_counter(name)
-			counters[name] = counters[name] or managers.mission:get_mission_element_by_name(name)
-
-			return counters[name]
-		end
-
-		local function get_current()
-			local counter_element = get_counter(counter)
-
-			if not counter_element then
-				return 0
-			end
-
-			local current_count = counter_element:counter_value()
-
-			if inverted then
-				current_count = counter_total - current_count
-			end
-
-			return current_count
-		end
-
-		return {
-			get = get_current,
-			max = counter_total,
-			update = tracking.realtime
-		}
-	end
-
 	self.visual.cac_2.progress = {
 		max = 0,
 		get = dummy_progress,
@@ -8114,7 +8086,4 @@ function AchievementsTweakData:_init_non_auto_generated(tweak_data)
 			return count
 		end
 	}
-	self.visual.cac_33.progress = from_mission_counter("cac_33_counter", 200, false)
-	self.visual.uno_8.progress = from_mission_counter("uno_8_counter", 12, true)
-	self.visual.uno_9.progress = from_mission_counter("uno_9_counter", 40, true)
 end

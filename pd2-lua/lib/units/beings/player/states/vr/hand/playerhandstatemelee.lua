@@ -79,6 +79,16 @@ function PlayerHandStateMelee:_spawn_melee_unit()
 			if offset.anim then
 				self._melee_unit:anim_play(Idstring(offset.anim))
 			end
+
+			if offset.hidden_objects then
+				for _, object in ipairs(offset.hidden_objects) do
+					local obj = self._melee_unit:get_object(object)
+
+					if obj then
+						obj:set_visibility(false)
+					end
+				end
+			end
 		end
 
 		local align_obj_name = Idstring(align)
@@ -112,6 +122,16 @@ function PlayerHandStateMelee:at_enter(prev_state, params)
 
 	self:hsm():enter_controller_state("item")
 	managers.hud:belt():set_state("melee", "active")
+
+	local other_hand = self:hsm():other_hand()
+
+	if other_hand:current_state_name() == "melee" then
+		managers.player:player_unit():network():send("sync_melee_stop")
+	end
+
+	managers.player:player_unit():network():send("sync_melee_start", self:hsm():hand_id())
+
+	self._first_update = true
 end
 
 function PlayerHandStateMelee:at_exit(next_state)
@@ -123,12 +143,18 @@ function PlayerHandStateMelee:at_exit(next_state)
 		self._melee_unit:unlink()
 		World:delete_unit(self._melee_unit)
 	end
+
+	local other_hand = self:hsm():other_hand()
+
+	if other_hand:current_state_name() ~= "melee" then
+		managers.player:player_unit():network():send("sync_melee_stop")
+	end
 end
 
 function PlayerHandStateMelee:update(t, dt)
 	local controller = managers.vr:hand_state_machine():controller()
 
-	if controller:get_input_pressed("unequip") then
+	if controller:get_input_pressed("unequip") and not self._first_update then
 		managers.hud:belt():set_state("melee", "default")
 		self:hsm():change_to_default()
 	end
@@ -146,4 +172,6 @@ function PlayerHandStateMelee:update(t, dt)
 
 		managers.controller:get_vr_controller():trigger_haptic_pulse(self:hsm():hand_id() - 1, 0, charge_value * 1000 + 500)
 	end
+
+	self._first_update = nil
 end

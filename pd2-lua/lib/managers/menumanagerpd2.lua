@@ -159,6 +159,8 @@ function MenuCallbackHandler:start_job(job_data)
 	else
 		managers.network.matchmake:create_lobby(matchmake_attributes)
 	end
+
+	managers.platform:set_rich_presence(managers.platform:rich_presence())
 end
 
 function MenuCallbackHandler:play_single_player_job(item)

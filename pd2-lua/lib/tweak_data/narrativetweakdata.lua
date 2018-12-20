@@ -3495,7 +3495,7 @@ function NarrativeTweakData:init(tweak_data)
 			"loc_jr1_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			60000,
@@ -3559,7 +3559,7 @@ function NarrativeTweakData:init(tweak_data)
 			"loc_jr2_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			115000,
@@ -4768,7 +4768,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_run_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			110000,
@@ -5098,7 +5098,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_brb_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			8000,
@@ -5298,7 +5298,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_wwh_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			60000,
@@ -5552,7 +5552,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_tag_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			20000,
@@ -5621,7 +5621,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_des_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			50000,
@@ -5690,7 +5690,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_vit_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			50000,
@@ -5759,7 +5759,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_bph_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			60000,
@@ -6033,7 +6033,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_sah_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = {
 			100000,
@@ -6118,7 +6118,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_tag_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = skirmish_payout,
 		contract_cost = {
@@ -6164,7 +6164,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_tag_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = skirmish_payout,
 		contract_cost = {
@@ -6210,7 +6210,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_tag_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = skirmish_payout,
 		contract_cost = {
@@ -6256,7 +6256,7 @@ function NarrativeTweakData:init(tweak_data)
 			"Play_loc_tag_cnc_01"
 		},
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		},
 		payout = skirmish_payout,
 		contract_cost = {

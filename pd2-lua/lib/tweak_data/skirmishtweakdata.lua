@@ -843,7 +843,7 @@ end
 function SkirmishTweakData:_init_briefing()
 	self.random_skirmish = {
 		crimenet_videos = {
-			"contact_locke1"
+			"codex/locke1"
 		}
 	}
 end

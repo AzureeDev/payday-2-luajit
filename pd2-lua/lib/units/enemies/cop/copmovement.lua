@@ -3179,3 +3179,6 @@ function CopMovement:_play_weapon_reload_animation_sfx(unit, event)
 		end
 	end
 end
+
+function CopMovement:on_weapon_add()
+end

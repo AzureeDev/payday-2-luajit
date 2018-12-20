@@ -146,6 +146,11 @@ function HUDChat:_create_input_panel()
 		color = Color(0.05, 1, 1, 1)
 	})
 
+	if _G.IS_VR then
+		say:set_visible(false)
+		caret:set_visible(false)
+	end
+
 	self._input_panel:gradient({
 		blend_mode = "sub",
 		name = "input_bg",
@@ -244,6 +249,11 @@ function HUDChat:_on_focus()
 
 	self._input_panel:child("focus_indicator"):set_color(Color(0.8, 1, 0.8):with_alpha(0.2))
 	self._ws:connect_keyboard(Input:keyboard())
+
+	if _G.IS_VR then
+		Input:keyboard():show()
+	end
+
 	self._input_panel:key_press(callback(self, self, "key_press"))
 	self._input_panel:key_release(callback(self, self, "key_release"))
 

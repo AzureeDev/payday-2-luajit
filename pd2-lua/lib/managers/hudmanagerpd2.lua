@@ -596,7 +596,9 @@ function HUDManager:_create_hud_chat()
 	self._hud_chat_ingame = HUDChat:new(self._saferect, hud)
 	self._hud_chat = self._hud_chat_ingame
 
-	self:_create_hud_chat_access()
+	if not _G.IS_VR then
+		self:_create_hud_chat_access()
+	end
 end
 
 function HUDManager:_create_hud_chat_access()

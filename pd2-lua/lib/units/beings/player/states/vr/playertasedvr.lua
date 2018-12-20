@@ -274,7 +274,7 @@ function PlayerTasedVR:_check_fire_per_weapon(t, pressed, held, released, weap_b
 			if self._ext_network then
 				local impact = not fired.hit_enemy
 
-				self._ext_network:send("shot_blank", impact)
+				self._ext_network:send("shot_blank", impact, 0)
 			end
 		elseif fire_mode == "single" then
 			new_action = false

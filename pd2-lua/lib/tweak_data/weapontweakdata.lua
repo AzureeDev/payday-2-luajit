@@ -3415,6 +3415,9 @@ function WeaponTweakData:_init_data_ray_crew()
 	self.ray_crew.alert_size = 2800
 	self.ray_crew.suppression = 1
 	self.ray_crew.FIRE_MODE = "auto"
+	self.ray_crew.vr = {
+		grip_offset = Vector3(-5, -16.5, 0)
+	}
 end
 
 function WeaponTweakData:_init_data_tti_crew()

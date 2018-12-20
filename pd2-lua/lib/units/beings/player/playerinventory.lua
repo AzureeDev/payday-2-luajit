@@ -394,11 +394,19 @@ function PlayerInventory:num_selections()
 	return table.size(self._available_selections)
 end
 
+function PlayerInventory:_align_place(equip, unit, align_place)
+	if equip and self._primary_hand ~= nil then
+		return self._primary_hand == 0 and self._align_places.right_hand or self._align_places.left_hand, unit:base().AKIMBO and self._primary_hand == 0 and self._align_places.left_hand or self._align_places.right_hand
+	end
+
+	return self._align_places[align_place]
+end
+
 function PlayerInventory:_place_selection(selection_index, is_equip)
 	local selection = self._available_selections[selection_index]
 	local unit = selection.unit
 	local weap_align_data = selection.use_data[is_equip and "equip" or "unequip"]
-	local align_place = self._align_places[weap_align_data.align_place]
+	local align_place = self:_align_place(is_equip, unit, weap_align_data.align_place)
 
 	if align_place then
 		if is_equip then
@@ -664,11 +672,16 @@ function PlayerInventory:_clbk_weapon_add(data)
 		self._unit:inventory():add_unit_by_name(eq_weap_name, true, true)
 	end
 
+	self:on_weapon_add()
+
 	if self._unit:unit_data().mugshot_id then
 		local icon = self:equipped_unit():base():weapon_tweak_data().hud_icon
 
 		managers.hud:set_mugshot_weapon(self._unit:unit_data().mugshot_id, icon, self:equipped_unit():base():weapon_tweak_data().use_data.selection_index)
 	end
+end
+
+function PlayerInventory:on_weapon_add()
 end
 
 function PlayerInventory:mask_visibility()

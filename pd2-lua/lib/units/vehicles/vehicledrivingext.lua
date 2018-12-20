@@ -719,6 +719,10 @@ function VehicleDrivingExt:exit_vehicle(player)
 	if count == 0 then
 		self:_evacuate_vehicle()
 	end
+
+	if self.on_exit_vehicle then
+		self.on_exit_vehicle(player)
+	end
 end
 
 function VehicleDrivingExt:_evacuate_vehicle()

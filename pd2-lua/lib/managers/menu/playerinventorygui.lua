@@ -1422,10 +1422,6 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 
 	self._multi_profile_item = MultiProfileItemGui:new(self._ws, self._panel)
 
-	if _G.IS_VR then
-		self._multi_profile_item:set_name_editing_enabled(false)
-	end
-
 	self:_round_everything()
 
 	local box = self:_get_selected_box()
