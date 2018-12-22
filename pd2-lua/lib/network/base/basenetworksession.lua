@@ -259,7 +259,7 @@ function BaseNetworkSession:add_peer(name, rpc, in_lobby, loading, synched, id, 
 	end
 
 	if managers.platform then
-		managers.platform:set_rich_presence(managers.platform:rich_presence())
+		managers.platform:refresh_rich_presence()
 	end
 
 	if rpc then
@@ -298,7 +298,7 @@ function BaseNetworkSession:remove_peer(peer, peer_id, reason)
 	self:_on_peer_removed(peer, peer_id, reason)
 
 	if managers.platform then
-		managers.platform:set_rich_presence(managers.platform:rich_presence())
+		managers.platform:refresh_rich_presence()
 	end
 
 	if peer:rpc() then

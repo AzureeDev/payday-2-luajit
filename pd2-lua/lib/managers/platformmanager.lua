@@ -78,6 +78,10 @@ function GenericPlatformManager:set_rich_presence(name)
 	self._current_rich_presence = name
 end
 
+function GenericPlatformManager:refresh_rich_presence()
+	self:set_rich_presence(self._current_rich_presence)
+end
+
 function GenericPlatformManager:rich_presence()
 	return self._current_rich_presence
 end
