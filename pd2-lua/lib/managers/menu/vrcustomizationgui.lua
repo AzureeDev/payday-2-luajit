@@ -142,7 +142,7 @@ function VRButton:init(panel, id, params)
 			tonumber(os.date("%d"))
 		}
 		local date_value = current_date[1] * 12 * 30 + current_date[2] * 30 + current_date[3]
-		local release_window = 7
+		local release_window = 30
 		date_value = params.date_updated[1] * 12 * 30 + params.date_updated[2] * 30 + params.date_updated[3] - date_value
 
 		if date_value >= -release_window then
@@ -1436,9 +1436,9 @@ function VRCustomizationGui:_setup_sub_menus()
 			}
 		},
 		date_updated = {
-			2018,
-			12,
-			13
+			2019,
+			1,
+			16
 		}
 	}, function (menu, enabled)
 		if enabled then

@@ -305,7 +305,7 @@ function WinPlatformManager:set_rich_presence(name)
 		if name == "Idle" then
 			Steam:set_rich_presence("status", "")
 			Steam:set_rich_presence("steam_display", "")
-		else
+		elseif managers.network.matchmake.lobby_handler then
 			local rich_presence_allowed = true
 			rich_presence_allowed = rich_presence_allowed and Global.game_settings.permission ~= "private"
 

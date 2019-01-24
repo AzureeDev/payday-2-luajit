@@ -701,7 +701,7 @@ function HuskPlayerMovement:set_arm_setting(setting_id, setting_param)
 			self._arm_animator:set_enabled(false)
 			self:refresh_primary_hand(true)
 
-			if self._ext_anim.melee then
+			if self._ext_anim.melee and alive(self._machine) then
 				self._machine:stop_segment(Idstring("upper_body_ext"))
 				self._machine:stop_segment(Idstring("upper_body"))
 			end
@@ -790,7 +790,9 @@ function HuskPlayerMovement:block_melee()
 	end
 
 	if self._ext_anim.melee then
-		self._machine:stop_segment(Idstring("upper_body_ext"))
+		if alive(self._machine) then
+			self._machine:stop_segment(Idstring("upper_body_ext"))
+		end
 
 		if alive(self._unit:inventory():equipped_unit()) then
 			if self._unit:inventory():equipped_unit():base().AKIMBO then
@@ -1048,7 +1050,7 @@ function HuskPlayerMovement:sync_melee_start(hand)
 	self._melee_equipped = true
 
 	if self:arm_animation_enabled() then
-		if self._ext_anim.reload then
+		if self._ext_anim.reload and alive(self._machine) then
 			self._machine:stop_segment("upper_body")
 		end
 
@@ -1082,7 +1084,9 @@ function HuskPlayerMovement:sync_melee_stop()
 
 		self._ext_anim.melee = false
 
-		self._machine:stop_segment(Idstring("upper_body_ext"))
+		if alive(self._machine) then
+			self._machine:stop_segment(Idstring("upper_body_ext"))
+		end
 	end
 end
 
