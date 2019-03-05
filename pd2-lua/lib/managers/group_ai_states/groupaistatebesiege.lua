@@ -1388,12 +1388,12 @@ function GroupAIStateBesiege:_spawn_in_group(spawn_group, spawn_group_type, grp_
 		end
 	end
 
-	if wanted_nr_units > 0 and #valid_unit_types ~= 0 then
-		local rand_wght = math.random() * total_wgt
-		local rand_i = 1
-		local rand_entry = nil
+	if wanted_nr_units > 0 then
+		while wanted_nr_units > 0 and #valid_unit_types ~= 0 do
+			local rand_wght = math.random() * total_wgt
+			local rand_i = 1
+			local rand_entry = nil
 
-		while wanted_nr_units > 0 and #valid_unit_types ~= 0 and nil do
 			while true do
 				rand_entry = valid_unit_types[rand_i]
 				rand_wght = rand_wght - rand_entry.freq
