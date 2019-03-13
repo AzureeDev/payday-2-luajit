@@ -12500,35 +12500,37 @@ function BlackMarketGui:create_steam_inventory(data)
 	local index = 0
 
 	for i, instance_id in ipairs(new_givens) do
-		params.amount_more = #new_givens - (index - 1)
+		if max_items_to_show <= index and index < #new_givens then
+			params.amount_more = #new_givens - (index - 1)
 
-		managers.menu:show_and_more_tradable_item_received(params)
+			managers.menu:show_and_more_tradable_item_received(params)
 
-		break
-
-		index = index + 1
-		params.instance_id = instance_id
-		params.item = inventory_tradable[instance_id]
-		params.amount_more = #new_givens - (index - 1)
-
-		if params.item.category == "weapon_skins" then
-			ti_td = tweak_data:get_raw_value("blackmarket", params.item.category, params.item.entry)
+			break
 		else
-			ti_td = tweak_data:get_raw_value("economy", params.item.category, params.item.entry)
+			index = index + 1
+			params.instance_id = instance_id
+			params.item = inventory_tradable[instance_id]
+			params.amount_more = #new_givens - (index - 1)
+
+			if params.item.category == "weapon_skins" then
+				ti_td = tweak_data:get_raw_value("blackmarket", params.item.category, params.item.entry)
+			else
+				ti_td = tweak_data:get_raw_value("economy", params.item.category, params.item.entry)
+			end
+
+			params.item_name = managers.localization:text(ti_td.name_id)
+			params.rarity_name = managers.localization:text(tweak_data.economy.rarities[ti_td.rarity or "common"] and tweak_data.economy.rarities[ti_td.rarity or "common"].name_id or "nil")
+			params.quality_name = managers.localization:text(tweak_data.economy.qualities[params.item.quality or "poor"] and tweak_data.economy.qualities[params.item.quality or "poor"].name_id or "nil")
+			slot16 = {
+				content = tweak_data.economy.safes[params.item.entry] and tweak_data.economy.safes[params.item.entry].content,
+				drill = ti_td.drill,
+				safe = params.item.entry,
+				safe_id = params.item.instance_id
+			}
+			params.container = params.item.instance_id
+
+			managers.menu:show_new_tradable_item_received(params)
 		end
-
-		params.item_name = managers.localization:text(ti_td.name_id)
-		params.rarity_name = managers.localization:text(tweak_data.economy.rarities[ti_td.rarity or "common"] and tweak_data.economy.rarities[ti_td.rarity or "common"].name_id or "nil")
-		params.quality_name = managers.localization:text(tweak_data.economy.qualities[params.item.quality or "poor"] and tweak_data.economy.qualities[params.item.quality or "poor"].name_id or "nil")
-		slot16 = {
-			content = tweak_data.economy.safes[params.item.entry] and tweak_data.economy.safes[params.item.entry].content,
-			drill = ti_td.drill,
-			safe = params.item.entry,
-			safe_id = params.item.instance_id
-		}
-		params.container = params.item.instance_id
-
-		managers.menu:show_new_tradable_item_received(params)
 	end
 end
 

@@ -3462,34 +3462,36 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 		end
 
 		for _, objective in ipairs(challenge.objectives or {}) do
-			local name_text = self._info_panel:text({
-				blend_mode = "add",
-				name = "name_text_objective_" .. tostring(_),
-				text = objective.name_s or objective.name_id and managers.localization:text(objective.name_id) or "",
-				font = tweak_data.menu.pd2_small_font,
-				font_size = tweak_data.menu.pd2_small_font_size,
-				color = tweak_data.screen_colors.text
-			})
-			local desc_text = self._info_panel:text({
-				blend_mode = "add",
-				name = "desc_text_objective_" .. tostring(_),
-				text = managers.localization:text(objective.desc_id, {
-					progress = objective.progress and managers.money:add_decimal_marks_to_string(tostring(objective.progress)),
-					max_progress = objective.max_progress and managers.money:add_decimal_marks_to_string(tostring(objective.max_progress))
-				}) or "",
-				font = tweak_data.menu.pd2_small_font,
-				font_size = tweak_data.menu.pd2_small_font_size,
-				color = tweak_data.screen_colors.text
-			})
+			if objective.desc_s or objective.desc_id then
+				local name_text = self._info_panel:text({
+					blend_mode = "add",
+					name = "name_text_objective_" .. tostring(_),
+					text = objective.name_s or objective.name_id and managers.localization:text(objective.name_id) or "",
+					font = tweak_data.menu.pd2_small_font,
+					font_size = tweak_data.menu.pd2_small_font_size,
+					color = tweak_data.screen_colors.text
+				})
+				local desc_text = self._info_panel:text({
+					blend_mode = "add",
+					name = "desc_text_objective_" .. tostring(_),
+					text = managers.localization:text(objective.desc_id, {
+						progress = objective.progress and managers.money:add_decimal_marks_to_string(tostring(objective.progress)),
+						max_progress = objective.max_progress and managers.money:add_decimal_marks_to_string(tostring(objective.max_progress))
+					}) or "",
+					font = tweak_data.menu.pd2_small_font,
+					font_size = tweak_data.menu.pd2_small_font_size,
+					color = tweak_data.screen_colors.text
+				})
 
-			make_fine_text(name_text)
-			make_fine_text(desc_text)
-			name_text:set_left(objective_title_text:left() + 15)
-			name_text:set_top(y)
-			desc_text:set_left(name_text:right())
-			desc_text:set_top(y)
+				make_fine_text(name_text)
+				make_fine_text(desc_text)
+				name_text:set_left(objective_title_text:left() + 15)
+				name_text:set_top(y)
+				desc_text:set_left(name_text:right())
+				desc_text:set_top(y)
 
-			y = math.max(name_text:bottom(), desc_text:bottom())
+				y = math.max(name_text:bottom(), desc_text:bottom())
+			end
 		end
 
 		local rewards_panel = nil
