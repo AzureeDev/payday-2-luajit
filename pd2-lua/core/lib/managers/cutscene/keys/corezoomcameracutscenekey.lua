@@ -40,6 +40,7 @@ function CoreZoomCameraCutsceneKey:populate_from_editor(cutscene_editor)
 	local camera_attributes = cutscene_editor:camera_attributes()
 
 	self:set_start_fov(camera_attributes.fov)
+	self:set_end_fov(camera_attributes.fov)
 end
 
 function CoreZoomCameraCutsceneKey:play(player, undo, fast_forward)
