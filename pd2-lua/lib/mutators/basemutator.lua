@@ -347,66 +347,297 @@ function BaseMutator:partial_uncompress_data(str_dat)
 	local ret = string.format("%s ", self:id())
 
 	for key, data in pairs(self:values()) do
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #0 14-23, warpins: 1 ---
 		local default = data.default
 		local idx = string.find(str_dat, " ", 1, true)
 
 		if idx == nil then
+
+			-- Decompilation error in this vicinity:
+			--- BLOCK #1 24-26, warpins: 1 ---
 			return nil, ""
+			--- END OF BLOCK #1 ---
+
+
+
 		end
 
+		--- END OF BLOCK #0 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #1 24-26, warpins: 1 ---
+		return nil, ""
+
+		--- END OF BLOCK #1 ---
+
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #2 27-43, warpins: 2 ---
 		local new_value = string.sub(str_dat, 1, idx)
 		str_dat = string.sub(str_dat, idx + 1)
+
+		--- END OF BLOCK #2 ---
+
+		if type(default)
+
+		 == "number" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #3 100-101, warpins: 5 ---
 		local number = tonumber(new_value)
 		ret = number == nil and ret .. string.format("%s %.4f ", data.network_key, default) or ret .. string.format("%s %.4f ", data.network_key, number) or type(default) == "boolean" and ret .. string.format("%s %s ", data.network_key, tostring(tonumber(new_value) == 1)) or ret .. string.format("%s %s ", data.network_key, tostring(new_value))
+		--- END OF BLOCK #3 ---
+
+
+
 	end
 
 	return ret, str_dat
 end
 
 function BaseMutator:get_data_from_attribute_string(string_table)
-	if #string_table > 0 and #string_table % 2 ~= 0 then
-		Application:error("Warning! Mismatched attribute string table, should have an even amount of elements!", self:id())
-		print(inspect(string_table))
 
-		return nil
+	-- Decompilation error in this vicinity:
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if #string_table > 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
 	end
 
+
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if #string_table % 2 ~= 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #2 9-23, warpins: 1 ---
+	Application:error("Warning! Mismatched attribute string table, should have an even amount of elements!", self:id())
+	print(inspect(string_table))
+
+	return nil
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #3 24-28, warpins: 3 ---
 	local data = {}
 
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #4 29-67, warpins: 0 ---
 	for i = 1, #string_table, 2 do
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #0 29-38, warpins: 2 ---
 		local key = string_table[i]
 		local value = string.trim(string_table[i + 1])
 
+		--- END OF BLOCK #0 ---
+
+		FLOW; TARGET BLOCK #1
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #1 39-45, warpins: 0 ---
 		for id, data in pairs(self._values) do
+
+			-- Decompilation error in this vicinity:
+			--- BLOCK #0 39-41, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
 			if key == data.network_key then
-				key = id
-
-				break
-			end
-		end
-
-		if value == "true" or value == "false" then
-			data[key] = toboolean(string_table[i + 1])
-		else
-			local number = tonumber(string_table[i + 1])
-
-			if number == nil then
-				data[key] = string_table[i + 1]
+			JUMP TO BLOCK #1
 			else
-				data[key] = number
+			JUMP TO BLOCK #3
 			end
+
+
+
+			-- Decompilation error in this vicinity:
+			--- BLOCK #1 42-43, warpins: 1 ---
+			key = id
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+
+			-- Decompilation error in this vicinity:
+			--- BLOCK #2 44-44, warpins: 1 ---
+			break
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+
+			-- Decompilation error in this vicinity:
+			--- BLOCK #3 44-45, warpins: 2 ---
+			--- END OF BLOCK #3 ---
+
+
+
 		end
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #2 46-47, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		if value ~= "true" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #3 48-49, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if value == "false" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #4 50-55, warpins: 2 ---
+		data[key] = toboolean(string_table[i + 1])
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #5 56-61, warpins: 1 ---
+		local number = tonumber(string_table[i + 1])
+		--- END OF BLOCK #5 ---
+
+		if number == nil then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #6 62-65, warpins: 1 ---
+		data[key] = string_table[i + 1]
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #7 66-66, warpins: 1 ---
+		data[key] = number
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+
+		-- Decompilation error in this vicinity:
+		--- BLOCK #8 67-67, warpins: 3 ---
+		--- END OF BLOCK #8 ---
+
+
+
 	end
 
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #5 68-68, warpins: 1 ---
 	return data
+	--- END OF BLOCK #5 ---
+
+
+
 end
 
 function BaseMutator:modify_character_tweak_data(character_tweak)
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return
+	--- END OF BLOCK #0 ---
+
+
+
 end
 
 function BaseMutator:modify_tweak_data(id, value)
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return
+	--- END OF BLOCK #0 ---
+
+
+
 end
 
 function BaseMutator:modify_value(id, value)
+
+	-- Decompilation error in this vicinity:
+	--- BLOCK #0 1-1, warpins: 1 ---
 	return value
+	--- END OF BLOCK #0 ---
+
+
+
 end
