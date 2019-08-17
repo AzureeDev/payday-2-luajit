@@ -381,7 +381,7 @@ function CopLogicAttack._peek_for_pos_sideways(data, my_data, from_racker, peek_
 	}
 	local ray_res = managers.navigation:raycast(ray_params)
 	back_pos = ray_params.trace[1]
-	local back_polar = back_pos - my_pos:to_polar()
+	local back_polar = (back_pos - my_pos):to_polar()
 	local right_polar = back_polar:with_spin(back_polar.spin + 90):with_r(100 + 80 * my_data.cover_test_step)
 	local right_vec = right_polar:to_vector()
 	local right_pos = back_pos + right_vec

@@ -282,7 +282,7 @@ function CrimeNetSidebarGui:update(t, dt)
 		local closest_y = 0
 		local mx, my = managers.mouse_pointer:modified_mouse_pos()
 
-		if self:collapsed() and self._icons_panel or self._panel:inside(mx, my) then
+		if (self:collapsed() and self._icons_panel or self._panel):inside(mx, my) then
 			for _, btn in ipairs(self._buttons) do
 				if btn:accepts_interaction() then
 					local btn_y = btn:panel():center_y()

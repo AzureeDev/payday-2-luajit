@@ -346,7 +346,7 @@ function MutatorsCategoryPage:refresh()
 
 	if self._achievements_text then
 		self._achievements_text:set_visible(managers.mutators:are_mutators_enabled())
-		self._achievements_text:set_top(not compatible and self._incompatibilities_text or self._mutator_longdesc:bottom() + PANEL_PADDING)
+		self._achievements_text:set_top((not compatible and self._incompatibilities_text or self._mutator_longdesc):bottom() + PANEL_PADDING)
 	end
 
 	if self._reduction_text then

@@ -114,16 +114,11 @@ function DebugDrawFonts:init(ws)
 			local _, _, tw, th = text:text_rect()
 
 			text:set_size(tw, th)
-
-			slot43 = side.rect
-			slot45 = {
+			side:rect({
 				alpha = 0.6,
-				layer = 1
-			}
-			slot46 = i == 1 and Color.white or Color.black
-			slot45.color = slot46
-
-			side:rect(slot45):set_shape(text:shape())
+				layer = 1,
+				color = i == 1 and Color.white or Color.black
+			}):set_shape(text:shape())
 
 			y = y + math.round(th + 20)
 		end

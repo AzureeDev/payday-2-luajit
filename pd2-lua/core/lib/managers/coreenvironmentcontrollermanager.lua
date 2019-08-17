@@ -343,11 +343,11 @@ function CoreEnvironmentControllerManager:blurzone_check_cylinder(blurzone, came
 	local len = nil
 
 	if cam_z < pos_z then
-		len = blurzone.pos - camera_pos:length()
+		len = (blurzone.pos - camera_pos):length()
 	elseif cam_z > pos_z + blurzone.height then
-		len = blurzone.pos:with_z(pos_z + blurzone.height) - camera_pos:length()
+		len = (blurzone.pos:with_z(pos_z + blurzone.height) - camera_pos):length()
 	else
-		len = blurzone.pos:with_z(cam_z) - camera_pos:length()
+		len = (blurzone.pos:with_z(cam_z) - camera_pos):length()
 	end
 
 	local result = math.min(len / blurzone.radius, 1)
@@ -357,7 +357,7 @@ function CoreEnvironmentControllerManager:blurzone_check_cylinder(blurzone, came
 end
 
 function CoreEnvironmentControllerManager:blurzone_check_sphere(blurzone, camera_pos)
-	local len = blurzone.pos - camera_pos:length()
+	local len = (blurzone.pos - camera_pos):length()
 	local result = math.min(len / blurzone.radius, 1)
 	result = result * result
 
@@ -955,7 +955,7 @@ function CoreEnvironmentControllerManager:set_dome_occ_params(occ_pos, occ_size,
 end
 
 function CoreEnvironmentControllerManager:_refresh_occ_params(vp)
-	local deferred_processor = vp or self._vp:vp():get_post_processor_effect("World", Idstring("deferred"))
+	local deferred_processor = (vp or self._vp):vp():get_post_processor_effect("World", Idstring("deferred"))
 
 	if deferred_processor then
 		local apply_ambient = deferred_processor:modifier(Idstring("apply_ambient"))

@@ -1127,7 +1127,7 @@ function MenuManager:show_new_tradable_item_received(params)
 			})
 		end
 
-		local entry_data = tweak_data.economy[item.category] or tweak_data.blackmarket[item.category][item.entry]
+		local entry_data = (tweak_data.economy[item.category] or tweak_data.blackmarket[item.category])[item.entry]
 
 		if item.bonus and entry_data.bonus then
 			local bonus_tweak = tweak_data.economy.bonuses[entry_data.bonus]

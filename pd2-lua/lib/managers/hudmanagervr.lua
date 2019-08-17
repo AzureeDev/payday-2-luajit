@@ -477,9 +477,9 @@ function HUDManagerVR:link_watch_prompt_as_hand(hand_unit, side, offset)
 	local hand_rot = hand_unit:rotation()
 
 	if side == 1 or side == "right" then
-		self._watch_prompt_ws:set_linked(800, 80, hand_obj, hand_obj:position() + Vector3(-24, 0, 24) + offset:rotate_with(hand_rot), Vector3(24, 0, 0):rotate_with(hand_rot), Vector3(0, -1.7, -1.7):rotate_with(hand_rot))
+		self._watch_prompt_ws:set_linked(800, 80, hand_obj, hand_obj:position() + (Vector3(-24, 0, 24) + offset):rotate_with(hand_rot), Vector3(24, 0, 0):rotate_with(hand_rot), Vector3(0, -1.7, -1.7):rotate_with(hand_rot))
 	elseif side == 2 or side == "left" then
-		self._watch_prompt_ws:set_linked(800, 80, hand_obj, hand_obj:position() + Vector3(0, 0, 24) + offset:rotate_with(hand_rot), Vector3(24, 0, 0):rotate_with(hand_rot), Vector3(0, -1.7, -1.7):rotate_with(hand_rot))
+		self._watch_prompt_ws:set_linked(800, 80, hand_obj, hand_obj:position() + (Vector3(0, 0, 24) + offset):rotate_with(hand_rot), Vector3(24, 0, 0):rotate_with(hand_rot), Vector3(0, -1.7, -1.7):rotate_with(hand_rot))
 	end
 end
 
@@ -738,7 +738,7 @@ function HUDManagerVR:_add_name_label(data)
 		x = 1,
 		texture = tabs_texture,
 		texture_rect = bag_rect,
-		color = crim_color * 1.1:with_alpha(1)
+		color = (crim_color * 1.1):with_alpha(1)
 	})
 
 	panel:text({
@@ -769,7 +769,7 @@ function HUDManagerVR:_add_name_label(data)
 		text = utf8.to_upper("Fixing"),
 		font = tweak_data.hud.medium_font,
 		font_size = tweak_data.hud.name_label_font_size,
-		color = crim_color * 1.1:with_alpha(1)
+		color = (crim_color * 1.1):with_alpha(1)
 	})
 
 	if rank > 0 then
@@ -858,7 +858,7 @@ function HUDManager:add_vehicle_name_label(data)
 		x = 1,
 		texture = tabs_texture,
 		texture_rect = bag_rect,
-		color = crim_color * 1.1:with_alpha(1)
+		color = (crim_color * 1.1):with_alpha(1)
 	})
 	local bag_number = panel:text({
 		name = "bag_number",
@@ -904,7 +904,7 @@ function HUDManager:add_vehicle_name_label(data)
 		text = utf8.to_upper("Fixing"),
 		font = tweak_data.hud.medium_font,
 		font_size = tweak_data.hud.name_label_font_size,
-		color = crim_color * 1.1:with_alpha(1)
+		color = (crim_color * 1.1):with_alpha(1)
 	})
 	self:align_teammate_name_label(panel, interact)
 	table.insert(self._hud.name_labels, {
@@ -1032,7 +1032,7 @@ function HUDManager:add_waypoint(id, data)
 		name = "arrow" .. id,
 		texture = arrow_icon,
 		texture_rect = arrow_texture_rect,
-		color = data.color or Color.white:with_alpha(0.75),
+		color = (data.color or Color.white):with_alpha(0.75),
 		w = arrow_texture_rect[3],
 		h = arrow_texture_rect[4],
 		blend_mode = data.blend_mode

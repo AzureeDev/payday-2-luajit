@@ -1072,7 +1072,7 @@ function NavigationManager:_draw_anim_nav_links()
 	for element, _ in pairs(self._nav_links) do
 		local start_pos = element:value("position")
 
-		element:nav_link():is_obstructed() and brush_obstructed or brush:cone(element:nav_link_end_pos(), start_pos, 20)
+		(element:nav_link():is_obstructed() and brush_obstructed or brush):cone(element:nav_link_end_pos(), start_pos, 20)
 	end
 end
 

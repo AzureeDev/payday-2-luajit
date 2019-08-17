@@ -42,7 +42,9 @@ function CoreUnitTestBrowser:error_frame()
 	self._error_frame:connect("", "EVT_CLOSE_WINDOW", callback(self, self, "on_close"), "")
 
 	local error_box = EWS:BoxSizer("VERTICAL")
-	self._error_box = {tree_ctrl = EWS:TreeCtrl(self._error_frame, "", "")}
+	self._error_box = {
+		tree_ctrl = EWS:TreeCtrl(self._error_frame, "", "")
+	}
 
 	self._error_box.tree_ctrl:connect("", "EVT_COMMAND_TREE_SEL_CHANGED", callback(self, self, "on_tree_ctrl_change"), "")
 	self._error_box.tree_ctrl:connect("", "EVT_RIGHT_UP", callback(self, self, "on_popup"), "")
@@ -67,7 +69,9 @@ function CoreUnitTestBrowser:search_frame()
 
 	local search_box = EWS:BoxSizer("VERTICAL")
 	local top_search_box = EWS:BoxSizer("HORIZONTAL")
-	self._search_box = {type_combobox = EWS:ComboBox(self._search_frame, "", "", "CB_READONLY")}
+	self._search_box = {
+		type_combobox = EWS:ComboBox(self._search_frame, "", "", "CB_READONLY")
+	}
 
 	self._search_box.type_combobox:connect("", "EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "on_search"), "")
 	self._search_box.type_combobox:append("Search By Author")
@@ -453,11 +457,10 @@ function CoreUnitTestBrowser:init_tree_view()
 			num_units = num_units + 1
 			local found_error = false
 			local found_critical = false
-			self._unit_msg[unit_node:parameter("name")] = {
-				msg = "",
-				author = unit_node:parameter("author"),
-				diesel = unit_node:parameter("diesel")
-			}
+			self._unit_msg[unit_node:parameter("name")] = {}
+			self._unit_msg[unit_node:parameter("name")].msg = ""
+			self._unit_msg[unit_node:parameter("name")].author = unit_node:parameter("author")
+			self._unit_msg[unit_node:parameter("name")].diesel = unit_node:parameter("diesel")
 
 			for info_node in unit_node:children() do
 				if info_node:data() ~= "" then
@@ -494,11 +497,20 @@ function CoreUnitTestBrowser:init_tree_view()
 		end
 	end
 
-	self._unit_msg.Units = {msg = tostring(num_units) .. " units tested."}
-	self._unit_msg.Passed = {msg = tostring(num_passed) .. " / " .. tostring(num_units) .. " units passed the test."}
-	self._unit_msg.Failed = {msg = tostring(num_failed) .. " / " .. tostring(num_units) .. " units failed the test."}
-	self._unit_msg.Critical = {msg = tostring(num_critical) .. " / " .. tostring(num_units) .. " units is in a critical condition."}
+	self._unit_msg.Units = {
+		msg = tostring(num_units) .. " units tested."
+	}
+	self._unit_msg.Passed = {
+		msg = tostring(num_passed) .. " / " .. tostring(num_units) .. " units passed the test."
+	}
+	self._unit_msg.Failed = {
+		msg = tostring(num_failed) .. " / " .. tostring(num_units) .. " units failed the test."
+	}
+	self._unit_msg.Critical = {
+		msg = tostring(num_critical) .. " / " .. tostring(num_units) .. " units is in a critical condition."
+	}
 end
+
 CoreUnitTestBrowserInputDialog = CoreUnitTestBrowserInputDialog or class()
 
 function CoreUnitTestBrowserInputDialog:init(p)
@@ -557,4 +569,3 @@ end
 function CoreUnitTestBrowserInputDialog:get_value()
 	return self._key
 end
-

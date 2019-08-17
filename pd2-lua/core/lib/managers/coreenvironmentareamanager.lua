@@ -157,7 +157,7 @@ function EnvironmentArea:_generate_id()
 		end
 	end
 
-	self._id = self._properties.environment .. filter_list_id:key()
+	self._id = (self._properties.environment .. filter_list_id):key()
 end
 
 function EnvironmentArea:save_level_data()

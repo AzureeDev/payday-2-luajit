@@ -264,7 +264,7 @@ function PlayerHandStateWeapon:update(t, dt)
 				end
 
 				for _, position in ipairs(positions) do
-					pen:sphere(weapon_pos + position:rotate_with(self._weapon_unit:rotation()) + tweak_data.vr.weapon_offsets.weapons[self._weapon_id] or tweak_data.vr.weapon_offsets.default.position:rotate_with(self._weapon_unit:rotation()), 5)
+					pen:sphere(weapon_pos + position:rotate_with(self._weapon_unit:rotation()) + (tweak_data.vr.weapon_offsets.weapons[self._weapon_id] or tweak_data.vr.weapon_offsets.default).position:rotate_with(self._weapon_unit:rotation()), 5)
 				end
 			end
 
@@ -304,7 +304,7 @@ function PlayerHandStateWeapon:update(t, dt)
 						local closest_dis, closest = nil
 
 						for _, assist_data in ipairs(assist_tweak.points) do
-							local dis = mvector3.distance_sq(other_hand, weapon_pos + assist_data.position:rotate_with(self._weapon_unit:rotation()) + tweak_data.vr.weapon_offsets.weapons[self._weapon_id] or tweak_data.vr.weapon_offsets.default.position:rotate_with(self._weapon_unit:rotation()))
+							local dis = mvector3.distance_sq(other_hand, weapon_pos + assist_data.position:rotate_with(self._weapon_unit:rotation()) + (tweak_data.vr.weapon_offsets.weapons[self._weapon_id] or tweak_data.vr.weapon_offsets.default).position:rotate_with(self._weapon_unit:rotation()))
 
 							if not closest_dis or dis < closest_dis then
 								closest_dis = dis

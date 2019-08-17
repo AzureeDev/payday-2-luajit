@@ -11,7 +11,7 @@ function FlashGrenade:_detonate()
 
 	for _, unit in ipairs(units) do
 		local col_ray = {
-			ray = unit:position() - self._unit:position():normalized(),
+			ray = (unit:position() - self._unit:position()):normalized(),
 			position = self._unit:position()
 		}
 

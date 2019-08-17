@@ -318,7 +318,7 @@ function PlayerWarp:update(unit, t, dt)
 				local ladder_pos = ladder_data.going_down and ladder:top() or ladder:bottom()
 				local dis = mvector3.distance_sq(pos, ladder_pos)
 
-				if mvector3.dot(forward, ladder_pos - pos:normalized()) > 0.95 then
+				if mvector3.dot(forward, (ladder_pos - pos):normalized()) > 0.95 then
 					if not closest_ladder_data or dis < closest_ladder_data.dis then
 						closest_ladder_data = {
 							dis = dis,
@@ -377,8 +377,8 @@ function PlayerWarp:update(unit, t, dt)
 				"Max range: " .. tostring(math.round(self._max_range, 0.01)),
 				"Max jump: " .. tostring(math.round(self._max_jump_distance, 0.01)),
 				"Warp type: " .. tostring(warp_type),
-				"Distance: " .. tostring(math.round(self._target.position - ppos:length(), 0.01)),
-				"Elevation: " .. tostring(math.round(self._target.position - ppos.z, 0.01))
+				"Distance: " .. tostring(math.round((self._target.position - ppos):length(), 0.01)),
+				"Elevation: " .. tostring(math.round((self._target.position - ppos).z, 0.01))
 			}
 			local dir = self._target.position - ppos
 
@@ -482,7 +482,7 @@ function PlayerWarp:_draw(brush, geo, unit_pos)
 		geo:set_local_rotation(Rotation(dir, Vector3(0, 0, 1)))
 		geo:bezier_cylinder(Vector3(0, 0, 0), math.Y, math.Z, Vector3(length, 0, 0), Vector3(length * 0.5, 0, 0), Vector3(length * 0.5, 0, 0), Vector3(0, 0, 0), 1, 10, Color(1, 1, 1, 1))
 	elseif PlayerWarp.TARGET_TYPE == 1 and self._target.position then
-		self:_draw_bezier(brush, unit_pos, self._target.position, self._aim_position - unit_pos:normalized())
+		self:_draw_bezier(brush, unit_pos, self._target.position, (self._aim_position - unit_pos):normalized())
 	elseif PlayerWarp.TARGET_TYPE == 2 and self._target.position then
 		local v = (self._target.position - self._player_unit:position()) * 0.5 + Vector3(0, 0, 50)
 

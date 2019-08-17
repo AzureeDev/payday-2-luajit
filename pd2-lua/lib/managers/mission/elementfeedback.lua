@@ -72,7 +72,7 @@ function ElementFeedback:_calc_multiplier(player)
 	end
 
 	local pos, _ = self:get_orientation(true)
-	local distance = pos - player:position():length()
+	local distance = (pos - player:position()):length()
 	local mul = math.clamp(1 - distance / self._values.range, 0, 1)
 
 	return mul

@@ -174,7 +174,7 @@ function ChangeVanSkinUnitElement:add_triggers(vc)
 end
 
 function ChangeVanSkinUnitElement:can_select_unit(unit)
-	local default_sequence = tweak_data.van.skins[tweak_data.van.default_skin_id] or {}.sequence_name
+	local default_sequence = (tweak_data.van.skins[tweak_data.van.default_skin_id] or {}).sequence_name
 
 	return unit and unit.damage and unit:damage() and unit:damage():has_sequence(default_sequence)
 end

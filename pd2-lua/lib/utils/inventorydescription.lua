@@ -117,8 +117,8 @@ function InventoryDescription.create_description_safe(safe_entry, ingame_format)
 	local x_td, y_td, xr_td, yr_td = nil
 
 	local function sort_func(x, y)
-		x_td = tweak_data.economy[x.category] or tweak_data.blackmarket[x.category][x.entry]
-		y_td = tweak_data.economy[y.category] or tweak_data.blackmarket[y.category][y.entry]
+		x_td = (tweak_data.economy[x.category] or tweak_data.blackmarket[x.category])[x.entry]
+		y_td = (tweak_data.economy[y.category] or tweak_data.blackmarket[y.category])[y.entry]
 		xr_td = tweak_data.economy.rarities[x_td.rarity or "common"]
 		yr_td = tweak_data.economy.rarities[y_td.rarity or "common"]
 
@@ -134,7 +134,7 @@ function InventoryDescription.create_description_safe(safe_entry, ingame_format)
 	local td = nil
 
 	for i, item in ipairs(items_list) do
-		td = tweak_data.economy[item.category] or tweak_data.blackmarket[item.category][item.entry]
+		td = (tweak_data.economy[item.category] or tweak_data.blackmarket[item.category])[item.entry]
 		local item_text = ""
 		item_text = (item.category ~= "contents" or td.rarity ~= "legendary" or managers.localization:text("bm_menu_rarity_legendary_item_long")) and (td.weapon_id and utf8.to_upper(managers.weapon_factory:get_weapon_name_by_weapon_id(td.weapon_id)) .. " | " or "") .. managers.localization:text(td.name_id)
 		text = text .. func_color_text(item_text, func_hex_color(tweak_data.economy.rarities[td.rarity or "common"].color), ingame_format)
@@ -405,10 +405,10 @@ function WeaponDescription.get_weapon_ammo_info(weapon_id, extra_ammo, total_amm
 	ammo_max_per_clip = math.min(ammo_max_per_clip, ammo_max)
 	local ammo_data = {
 		base = tweak_data.weapon[weapon_id].AMMO_MAX,
-		mod = ammo_from_mods + managers.player:upgrade_value(weapon_id, "clip_amount_increase") * ammo_max_per_clip,
-		skill = (ammo_data.base + ammo_data.mod) * ammo_max_multiplier - ammo_data.base - ammo_data.mod,
-		skill_in_effect = managers.player:has_category_upgrade("player", "extra_ammo_multiplier") or category_skill_in_effect or managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul")
+		mod = ammo_from_mods + managers.player:upgrade_value(weapon_id, "clip_amount_increase") * ammo_max_per_clip
 	}
+	ammo_data.skill = (ammo_data.base + ammo_data.mod) * ammo_max_multiplier - ammo_data.base - ammo_data.mod
+	ammo_data.skill_in_effect = managers.player:has_category_upgrade("player", "extra_ammo_multiplier") or category_skill_in_effect or managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul")
 
 	return ammo_max_per_clip, ammo_max, ammo_data
 end

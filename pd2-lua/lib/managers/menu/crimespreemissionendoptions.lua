@@ -193,7 +193,8 @@ function CrimeSpreeMissionEndOptions:mouse_moved(o, x, y)
 		return
 	end
 
-	used, pointer, self._selected_item = nil
+	local used, pointer = nil
+	self._selected_item = nil
 
 	for idx, btn in ipairs(self._buttons) do
 		btn:set_selected(btn:inside(x, y))

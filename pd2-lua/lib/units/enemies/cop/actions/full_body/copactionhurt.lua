@@ -339,7 +339,7 @@ function CopActionHurt:init(action_desc, common_data)
 
 						if fwd_dot < 0 then
 							local hit_pos = action_desc.hit_pos
-							local hit_vec = hit_pos - common_data.pos:with_z(0):normalized()
+							local hit_vec = (hit_pos - common_data.pos):with_z(0):normalized()
 
 							if mvector3.dot(hit_vec, common_data.right) > 0 then
 								dir_str = "r"
@@ -394,7 +394,7 @@ function CopActionHurt:init(action_desc, common_data)
 
 			if fwd_dot < 0 then
 				local hit_pos = action_desc.hit_pos
-				local hit_vec = hit_pos - common_data.pos:with_z(0):normalized()
+				local hit_vec = (hit_pos - common_data.pos):with_z(0):normalized()
 
 				if mvector3.dot(hit_vec, common_data.right) > 0 then
 					dir_str = "r"

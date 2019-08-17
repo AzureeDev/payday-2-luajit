@@ -219,7 +219,7 @@ function HUDBeltInteraction:set_amount(amount)
 	make_fine_text(self._amount_text)
 	self._amount_text:set_right(self._panel:w() - 6)
 	self._amount_text:set_bottom(self._panel:h() - 6)
-	self._amount_text:set_color(amount > 0 and Color.white or Color.red:with_alpha(self._alpha + self._alpha_diff))
+	self._amount_text:set_color((amount > 0 and Color.white or Color.red):with_alpha(self._alpha + self._alpha_diff))
 end
 
 function HUDBeltInteraction:set_state(state)

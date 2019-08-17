@@ -79,7 +79,7 @@ function CoreMaterialEditor:_create_main_frame()
 
 	self._main_scroll_window = EWS:ScrolledWindow(self._main_frame, "", "SUNKEN_BORDER")
 
-	self._main_scroll_window:set_background_colour(EWS:get_system_colour("3DFACE") * 128:unpack())
+	self._main_scroll_window:set_background_colour((EWS:get_system_colour("3DFACE") * 128):unpack())
 
 	local main_frame_box = EWS:BoxSizer("VERTICAL")
 	local main_scroll_window_box = EWS:BoxSizer("VERTICAL")
@@ -88,7 +88,7 @@ function CoreMaterialEditor:_create_main_frame()
 	self._material_collapse_box = CoreEWS:CollapseBox(main_panel, "VERTICAL", "Material", nil, true, "NO_BORDER")
 
 	self._material_collapse_box:connect("", "EVT_COMMAND_BUTTON_CLICKED", self._layout_all, self)
-	self._material_collapse_box:lower_panel():set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
+	self._material_collapse_box:lower_panel():set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
 	panel_box:add(self._material_collapse_box:panel(), 0, 4, "ALL,EXPAND")
 
 	self._material_list_box = EWS:ListBox(self._material_collapse_box:lower_panel(), "", "LB_SORT")
@@ -101,7 +101,7 @@ function CoreMaterialEditor:_create_main_frame()
 	self._shader_collapse_box = CoreEWS:CollapseBox(main_panel, "VERTICAL", "Shader", nil, true, "NO_BORDER")
 
 	self._shader_collapse_box:connect("", "EVT_COMMAND_BUTTON_CLICKED", self._layout_all, self)
-	self._shader_collapse_box:lower_panel():set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
+	self._shader_collapse_box:lower_panel():set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
 	panel_box:add(self._shader_collapse_box:panel(), 0, 4, "ALL,EXPAND")
 
 	local box = EWS:BoxSizer("HORIZONTAL")
@@ -158,7 +158,7 @@ function CoreMaterialEditor:_create_main_frame()
 	self._parameter_collapse_box = CoreEWS:CollapseBox(main_panel, "VERTICAL", "Parameter", nil, true, "NO_BORDER")
 
 	self._parameter_collapse_box:connect("", "EVT_COMMAND_BUTTON_CLICKED", self._layout_all, self)
-	self._parameter_collapse_box:lower_panel():set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
+	self._parameter_collapse_box:lower_panel():set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
 	panel_box:add(self._parameter_collapse_box:panel(), 0, 4, "ALL,EXPAND")
 
 	box = EWS:BoxSizer("HORIZONTAL")
@@ -179,13 +179,13 @@ function CoreMaterialEditor:_create_main_frame()
 	self._output_collapse_box = CoreEWS:CollapseBox(main_panel, "VERTICAL", "Output", nil, false, "NO_BORDER")
 
 	self._output_collapse_box:connect("", "EVT_COMMAND_BUTTON_CLICKED", self._layout_all, self)
-	self._output_collapse_box:lower_panel():set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
+	self._output_collapse_box:lower_panel():set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
 	panel_box:add(self._output_collapse_box:panel(), 0, 4, "ALL,EXPAND")
 
 	self._material_output_collapse_box = CoreEWS:CollapseBox(self._output_collapse_box:lower_panel(), "VERTICAL", "Material", nil, false, "NO_BORDER")
 
 	self._material_output_collapse_box:connect("", "EVT_COMMAND_BUTTON_CLICKED", self._layout_output, self)
-	self._material_output_collapse_box:lower_panel():set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
+	self._material_output_collapse_box:lower_panel():set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
 	self._output_collapse_box:box():add(self._material_output_collapse_box:panel(), 0, 4, "ALL,EXPAND")
 
 	self._output_text_ctrl = CoreEWS:XMLTextCtrl(self._material_output_collapse_box:lower_panel(), nil, nil, nil, "TE_MULTILINE,TE_RICH2,TE_DONTWRAP,TE_READONLY")
@@ -196,7 +196,7 @@ function CoreMaterialEditor:_create_main_frame()
 	self._global_output_collapse_box = CoreEWS:CollapseBox(self._output_collapse_box:lower_panel(), "VERTICAL", "Global", nil, false, "NO_BORDER")
 
 	self._global_output_collapse_box:connect("", "EVT_COMMAND_BUTTON_CLICKED", self._layout_output, self)
-	self._global_output_collapse_box:lower_panel():set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
+	self._global_output_collapse_box:lower_panel():set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
 	self._output_collapse_box:box():add(self._global_output_collapse_box:panel(), 0, 4, "ALL,EXPAND")
 
 	self._global_text_ctrl = CoreEWS:XMLTextCtrl(self._global_output_collapse_box:lower_panel(), nil, nil, nil, "TE_MULTILINE,TE_RICH2,TE_DONTWRAP,TE_READONLY")

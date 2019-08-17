@@ -204,7 +204,8 @@ function CrimeSpreeRewardsMenuComponent:mouse_moved(o, x, y)
 		return
 	end
 
-	used, pointer, self._selected_item = nil
+	local used, pointer = nil
+	self._selected_item = nil
 
 	for idx, btn in ipairs(self._buttons) do
 		btn:set_selected(btn:inside(x, y))
@@ -519,7 +520,7 @@ function CrimeSpreeRewardsMenuComponent:_create_coins_reward(idx, panel_w)
 end
 
 function CrimeSpreeRewardsMenuComponent:get_reward(id)
-	return self._rewards_table or {}[id] or 0
+	return (self._rewards_table or {})[id] or 0
 end
 
 function CrimeSpreeRewardsMenuComponent:_add_item_textures(lootdrop_data, panel)

@@ -67,9 +67,9 @@ function out(...)
 			...
 		}
 		local sel = {
-			args[1] .. " " .. tostring(sel[1]),
 			select(2, ...)
 		}
+		sel[1] = args[1] .. " " .. tostring(sel[1])
 
 		return unpack(sel)
 	end

@@ -9,7 +9,7 @@ PlatformManager.PLATFORM_CLASS_MAP = {}
 function PlatformManager:new(...)
 	local platform = SystemInfo:platform()
 
-	return self.PLATFORM_CLASS_MAP[platform:key()] or GenericPlatformManager:new(...)
+	return (self.PLATFORM_CLASS_MAP[platform:key()] or GenericPlatformManager):new(...)
 end
 
 GenericPlatformManager = GenericPlatformManager or class()

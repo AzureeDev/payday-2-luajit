@@ -4,7 +4,7 @@ DLCManager.PLATFORM_CLASS_MAP = {}
 function DLCManager:new(...)
 	local platform = SystemInfo:platform()
 
-	return self.PLATFORM_CLASS_MAP[platform:key()] or GenericDLCManager:new(...)
+	return (self.PLATFORM_CLASS_MAP[platform:key()] or GenericDLCManager):new(...)
 end
 
 GenericDLCManager = GenericDLCManager or class()

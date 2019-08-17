@@ -2916,7 +2916,7 @@ function GroupAIStateBase:fill_criminal_team_with_AI(is_drop_in)
 		local index = 1
 
 		if managers.criminals:nr_taken_criminals() < CriminalsManager.MAX_NR_CRIMINALS then
-			while managers.criminals.nr_taken_criminals() < CriminalsManager.MAX_NR_CRIMINALS and managers.criminals:nr_AI_criminals() < managers.criminals.MAX_NR_TEAM_AI do
+			while managers.criminals:nr_taken_criminals() < CriminalsManager.MAX_NR_CRIMINALS and managers.criminals:nr_AI_criminals() < managers.criminals.MAX_NR_TEAM_AI do
 				local char_name = managers.criminals:get_team_ai_character(index)
 				index = index + 1
 
@@ -3076,7 +3076,7 @@ old_GroupAIStateBase_determine_objective_for_criminal_AI = old_GroupAIStateBase_
 
 function GroupAIStateBase:_determine_objective_for_criminal_AI(unit)
 	local objective, closest_dis, closest_record = nil
-	local ai_pos = self._ai_criminals[unit:key()] or self._police[unit:key()].m_pos
+	local ai_pos = (self._ai_criminals[unit:key()] or self._police[unit:key()]).m_pos
 
 	for pl_key, pl_record in pairs(self._player_criminals) do
 		if pl_record.status ~= "dead" then
@@ -3098,7 +3098,7 @@ function GroupAIStateBase:_determine_objective_for_criminal_AI(unit)
 		}
 	end
 
-	local ai_pos = self._ai_criminals[unit:key()] or self._police[unit:key()].m_pos
+	local ai_pos = (self._ai_criminals[unit:key()] or self._police[unit:key()]).m_pos
 	local skip_hostage_trade_time_reset = nil
 
 	if not objective and self:is_ai_trade_possible() then

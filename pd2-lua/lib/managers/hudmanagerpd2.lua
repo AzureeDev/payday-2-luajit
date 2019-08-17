@@ -1340,7 +1340,7 @@ function HUDManager:_add_name_label(data)
 		x = 1,
 		texture = tabs_texture,
 		texture_rect = bag_rect,
-		color = crim_color * 1.1:with_alpha(1)
+		color = (crim_color * 1.1):with_alpha(1)
 	})
 
 	panel:text({
@@ -1367,7 +1367,7 @@ function HUDManager:_add_name_label(data)
 		text = utf8.to_upper("Fixing"),
 		font = tweak_data.hud.medium_font,
 		font_size = tweak_data.hud.name_label_font_size,
-		color = crim_color * 1.1:with_alpha(1)
+		color = (crim_color * 1.1):with_alpha(1)
 	})
 
 	if rank > 0 then
@@ -1445,7 +1445,7 @@ function HUDManager:add_vehicle_name_label(data)
 		x = 1,
 		texture = tabs_texture,
 		texture_rect = bag_rect,
-		color = crim_color * 1.1:with_alpha(1)
+		color = (crim_color * 1.1):with_alpha(1)
 	})
 	local bag_number = panel:text({
 		name = "bag_number",
@@ -1485,7 +1485,7 @@ function HUDManager:add_vehicle_name_label(data)
 		text = utf8.to_upper("Fixing"),
 		font = tweak_data.hud.medium_font,
 		font_size = tweak_data.hud.name_label_font_size,
-		color = crim_color * 1.1:with_alpha(1)
+		color = (crim_color * 1.1):with_alpha(1)
 	})
 	self:align_teammate_name_label(panel, interact)
 	table.insert(self._hud.name_labels, {

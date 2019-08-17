@@ -113,10 +113,7 @@ function CoreCutsceneSequencerPanel:set_active_film_track(active_track)
 	self._active_film_track = active_track
 
 	for _, track in ipairs(self:film_tracks()) do
-		slot9 = self._track_background_colour
-		slot11 = track == self._active_film_track
-
-		track:set_background_colour(self:_track_background_colour(slot11):unpack())
+		track:set_background_colour(self:_track_background_colour(track == self._active_film_track):unpack())
 	end
 
 	self:_send_event("EVT_EVALUATE_FRAME_AT_PLAYHEAD", {
@@ -464,27 +461,11 @@ function CoreCutsceneSequencerPanel:_on_mouse_left_down(sender, event)
 end
 
 function CoreCutsceneSequencerPanel:_on_mouse_left_up(sender, event)
-	slot4 = self
-	slot3 = self._propagate_event_to_all_components
-	slot5 = "on_mouse_left_up"
-
-	if not self:track_at_screen_position(event:get_position_on_screen()) then
-		slot6 = sender
-	end
-
-	slot3(slot4, slot5, slot6, event)
+	self:_propagate_event_to_all_components("on_mouse_left_up", self:track_at_screen_position(event:get_position_on_screen()) or sender, event)
 end
 
 function CoreCutsceneSequencerPanel:_on_mouse_motion(sender, event)
-	slot4 = self
-	slot3 = self._propagate_event_to_all_components
-	slot5 = "on_mouse_motion"
-
-	if not self:track_at_screen_position(event:get_position_on_screen()) then
-		slot6 = sender
-	end
-
-	slot3(slot4, slot5, slot6, event)
+	self:_propagate_event_to_all_components("on_mouse_motion", self:track_at_screen_position(event:get_position_on_screen()) or sender, event)
 end
 
 function CoreCutsceneSequencerPanel:_on_mouse_right_up(sender, event)
@@ -522,13 +503,7 @@ function CoreCutsceneSequencerPanel:_on_drag_box_selection(event)
 		all_clips_within_box = table.list_add(all_clips_within_box, selection_box:clips_within_box())
 	end
 
-	slot3 = ipairs
-
-	if not self._all_clips_within_box_at_last_update then
-		slot4 = {}
-	end
-
-	for _, clip in slot3(slot4) do
+	for _, clip in ipairs(self._all_clips_within_box_at_last_update or {}) do
 		clip:set_selected(false)
 	end
 

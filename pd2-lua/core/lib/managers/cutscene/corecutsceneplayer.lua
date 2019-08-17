@@ -638,12 +638,12 @@ function CoreCutscenePlayer:_wide_viewport_rect()
 		x = viewport_x,
 		y = viewport_y,
 		w = viewport_width,
-		h = viewport_height,
-		px = rect.x * resolution.x,
-		py = rect.y * resolution.y,
-		pw = rect.w * resolution.x,
-		ph = rect.h * resolution.y
+		h = viewport_height
 	}
+	rect.px = rect.x * resolution.x
+	rect.py = rect.y * resolution.y
+	rect.pw = rect.w * resolution.x
+	rect.ph = rect.h * resolution.y
 
 	return rect
 end

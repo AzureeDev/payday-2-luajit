@@ -374,14 +374,14 @@ function HUDBlackScreen:_create_stages()
 
 		if (not is_completed or not {
 			0,
-			Color(120, 255, 120) / 255:with_alpha(0.25),
+			(Color(120, 255, 120) / 255):with_alpha(0.25),
 			1,
-			Color(120, 255, 120) / 255:with_alpha(0)
+			(Color(120, 255, 120) / 255):with_alpha(0)
 		}) and (not is_current_stage or not {
 			0,
-			Color(230, 200, 150) / 255:with_alpha(0.5),
+			(Color(230, 200, 150) / 255):with_alpha(0.5),
 			1,
-			Color(230, 200, 150) / 255:with_alpha(0)
+			(Color(230, 200, 150) / 255):with_alpha(0)
 		}) then
 			local gradient_points = {
 				0,

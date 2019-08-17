@@ -72,7 +72,7 @@ function MenuNodeEconomySafe:_safe_result_recieved(error, items_new, items_remov
 
 	print("result.category: ", result.category, tweak_data.economy[result.category], tweak_data.blackmarket[result.category])
 
-	local entry_data = tweak_data.economy[result.category] or tweak_data.blackmarket[result.category][result.entry]
+	local entry_data = (tweak_data.economy[result.category] or tweak_data.blackmarket[result.category])[result.entry]
 
 	if entry_data.rarity ~= "legendary" and entry_data.rarity ~= "epic" then
 		managers.menu:set_cash_safe_scene_done(true, true)
@@ -587,7 +587,7 @@ function MenuNodeEconomySafe:_build_result_panel()
 		self.safe_rect_panel:remove(self.safe_rect_panel:child("result_panel"))
 	end
 
-	local item_data = tweak_data.economy[self._result.category] or tweak_data.blackmarket[self._result.category][self._result.entry]
+	local item_data = (tweak_data.economy[self._result.category] or tweak_data.blackmarket[self._result.category])[self._result.entry]
 	local rarity_data = tweak_data.economy.rarities[item_data.rarity]
 	local safe_rect_pixels = managers.gui_data:scaled_size()
 	local w_pad = 200

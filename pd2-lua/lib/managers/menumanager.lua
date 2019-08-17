@@ -8605,7 +8605,7 @@ function MenuCrimeNetSpecialInitiator:create_job(node, contract)
 				elseif achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
 					text_id = text_id .. "  " .. managers.localization:to_upper_text("menu_bm_achievement_locked_" .. tostring(achievement))
 
-					if text_id .. "  " .. managers.localization.to_upper_text("menu_bm_achievement_locked_" .. tostring(achievement)) then
+					if text_id .. "  " .. managers.localization:to_upper_text("menu_bm_achievement_locked_" .. tostring(achievement)) then
 					end
 				end
 			end

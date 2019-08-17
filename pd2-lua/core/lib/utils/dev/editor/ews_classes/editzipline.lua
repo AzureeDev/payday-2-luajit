@@ -4,7 +4,7 @@ core:import("CoreEws")
 EditZipLine = EditZipLine or class(EditUnitBase)
 
 function EditZipLine:init(editor)
-	local panel, sizer = editor or managers.editor:add_unit_edit_page({
+	local panel, sizer = (editor or managers.editor):add_unit_edit_page({
 		name = "ZipLine",
 		class = self
 	})

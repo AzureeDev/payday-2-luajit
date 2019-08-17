@@ -5373,8 +5373,8 @@ function GuiTweakData:tradable_inventory_sort_func(index)
 		return function (x, y)
 			x_item = inventory_tradable[x]
 			y_item = inventory_tradable[y]
-			x_td = tweak_data.economy[x_item.category] or tweak_data.blackmarket[x_item.category][x_item.entry]
-			y_td = tweak_data.economy[y_item.category] or tweak_data.blackmarket[y_item.category][y_item.entry]
+			x_td = (tweak_data.economy[x_item.category] or tweak_data.blackmarket[x_item.category])[x_item.entry]
+			y_td = (tweak_data.economy[y_item.category] or tweak_data.blackmarket[y_item.category])[y_item.entry]
 
 			if x_td.name_id ~= y_td.name_id then
 				localization_cache[x_td.name_id] = localization_cache[x_td.name_id] or managers.localization:to_upper_text(x_td.name_id)
@@ -5422,8 +5422,8 @@ function GuiTweakData:tradable_inventory_sort_func(index)
 		return function (x, y)
 			x_item = inventory_tradable[x]
 			y_item = inventory_tradable[y]
-			x_td = tweak_data.economy[x_item.category] or tweak_data.blackmarket[x_item.category][x_item.entry]
-			y_td = tweak_data.economy[y_item.category] or tweak_data.blackmarket[y_item.category][y_item.entry]
+			x_td = (tweak_data.economy[x_item.category] or tweak_data.blackmarket[x_item.category])[x_item.entry]
+			y_td = (tweak_data.economy[y_item.category] or tweak_data.blackmarket[y_item.category])[y_item.entry]
 			x_rarity = tweak_data.economy.rarities[x_td.rarity or "common"]
 			y_rarity = tweak_data.economy.rarities[y_td.rarity or "common"]
 

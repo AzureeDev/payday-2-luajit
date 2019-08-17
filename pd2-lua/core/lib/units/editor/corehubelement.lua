@@ -276,8 +276,8 @@ function CoreHubElement:draw_arrow(from, to, r, g, b, thick)
 	b = math.clamp(b * mul, 0, 1)
 	from = from:position()
 	to = to:position()
-	local len = from - to:length()
-	local dir = to - from:normalized()
+	local len = (from - to):length()
+	local dir = (to - from):normalized()
 	len = len - 50
 
 	if thick then
@@ -287,8 +287,8 @@ function CoreHubElement:draw_arrow(from, to, r, g, b, thick)
 		Application:draw_line(from, to, r, g, b)
 	end
 
-	self._arrow_brush:cone(to, to + from - to:normalized() * 150, 48)
-	Application:draw_cone(to, to + from - to:normalized() * 150, 48, r, g, b)
+	self._arrow_brush:cone(to, to + (from - to):normalized() * 150, 48)
+	Application:draw_cone(to, to + (from - to):normalized() * 150, 48, r, g, b)
 end
 
 function CoreHubElement:clear()

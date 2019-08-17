@@ -231,7 +231,7 @@ function SkillTreeManager:_spend_points(tree, tier, points, points_tier, skill_i
 end
 
 function SkillTreeManager:points(switch_data)
-	return Application:digest_value(switch_data or self._global.points, false)
+	return Application:digest_value((switch_data or self._global).points, false)
 end
 
 function SkillTreeManager:_set_points(value)
@@ -243,7 +243,7 @@ function SkillTreeManager:_set_points(value)
 end
 
 function SkillTreeManager:points_spent(tree, switch_data)
-	return Application:digest_value(switch_data or self._global.trees[tree].points_spent, false)
+	return Application:digest_value((switch_data or self._global).trees[tree].points_spent, false)
 end
 
 function SkillTreeManager:points_spent_in_skilltree(tree_name, switch_data)
@@ -312,7 +312,7 @@ function SkillTreeManager:current_max_tier(tree)
 end
 
 function SkillTreeManager:skill_completed(skill_id, switch_data)
-	return switch_data or self._global.skills[skill_id].unlocked == switch_data or self._global.skills[skill_id].total
+	return (switch_data or self._global).skills[skill_id].unlocked == (switch_data or self._global).skills[skill_id].total
 end
 
 function SkillTreeManager:skill_step(skill_id)
@@ -320,7 +320,7 @@ function SkillTreeManager:skill_step(skill_id)
 end
 
 function SkillTreeManager:next_skill_step(skill_id, switch_data)
-	return switch_data or self._global.skills[skill_id].unlocked + 1
+	return (switch_data or self._global).skills[skill_id].unlocked + 1
 end
 
 function SkillTreeManager:next_skill_step_data(skill_id)
@@ -623,7 +623,7 @@ function SkillTreeManager:tier_unlocked(tree, tier, switch_data)
 end
 
 function SkillTreeManager:tree_unlocked(tree, switch_data)
-	return switch_data or self._global.trees[tree].unlocked
+	return (switch_data or self._global).trees[tree].unlocked
 end
 
 function SkillTreeManager:trees_unlocked(switch_trees)
@@ -815,7 +815,7 @@ function SkillTreeManager:can_unlock_skill_switch(selected_skill_switch)
 			table.insert(fail_reasons, "level")
 		end
 
-		if locks.achievement and not managers.achievment:get_info(locks.achievement) or {}.awarded then
+		if locks.achievement and not (managers.achievment:get_info(locks.achievement) or {}).awarded then
 			table.insert(fail_reasons, "achievement")
 		end
 

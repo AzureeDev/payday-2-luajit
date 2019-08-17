@@ -168,14 +168,14 @@ end
 
 function Quickhull:shrink_segment(points, line)
 	local shrink_factor = 2
-	local length = line[2] - line[1]:length()
+	local length = (line[2] - line[1]):length()
 	local dist_factor = length * shrink_factor
 	local points = self:get_points_within_distance_to_line(points, line, 500)
 	local added = 0
 
 	for _, point in ipairs(points) do
-		local ang1 = line[2] - line[1]:angle(point - line[1])
-		local ang2 = line[2] - line[1]:angle(point - line[2])
+		local ang1 = (line[2] - line[1]):angle(point - line[1])
+		local ang2 = (line[2] - line[1]):angle(point - line[2])
 
 		if ang1 < 30 and ang2 < 30 then
 			table.insert(self._additional_points, point)

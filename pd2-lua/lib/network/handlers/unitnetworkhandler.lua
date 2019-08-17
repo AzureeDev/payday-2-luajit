@@ -3236,7 +3236,7 @@ function UnitNetworkHandler:suppression(unit, ratio, sender)
 		return
 	end
 
-	local amount_max = sup_tweak.brown_point or sup_tweak.react_point[2]
+	local amount_max = (sup_tweak.brown_point or sup_tweak.react_point)[2]
 	local amount, panic_chance = nil
 
 	if ratio == 16 then

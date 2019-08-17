@@ -204,7 +204,7 @@ function CrimeSpreeModifierDetailsPage:add_modifiers_panel(parent, modifiers, is
 		extra_padding_right = padding
 	end
 
-	local max_level = modifiers[#modifiers] or {}.level or 0
+	local max_level = (modifiers[#modifiers] or {}).level or 0
 	local max_level_text = parent:text({
 		vertical = "top",
 		halign = "right",

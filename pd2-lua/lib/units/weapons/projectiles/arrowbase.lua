@@ -322,7 +322,7 @@ function ArrowBase:_attach_to_hit_unit(is_remote, dynamic_pickup_wanted)
 						global_pos = projected_pos + max_dist_from_segment * dir_from_segment
 					end
 
-					local_pos = global_pos - parent_pos:rotate_with(parent_obj:rotation():inverse())
+					local_pos = (global_pos - parent_pos):rotate_with(parent_obj:rotation():inverse())
 				end
 			end
 
@@ -332,12 +332,12 @@ function ArrowBase:_attach_to_hit_unit(is_remote, dynamic_pickup_wanted)
 		elseif damage_ext and damage_ext.can_attach_projectiles and not damage_ext:can_attach_projectiles() then
 			switch_to_dynamic_pickup = true
 		elseif not alive(self._col_ray.body) or not self._col_ray.body:enabled() then
-			local_pos = global_pos - hit_unit:position():rotate_with(hit_unit:rotation():inverse())
+			local_pos = (global_pos - hit_unit:position()):rotate_with(hit_unit:rotation():inverse())
 			switch_to_dynamic_pickup = true
 		else
 			parent_body = self._col_ray.body
 			parent_obj = self._col_ray.body:root_object()
-			local_pos = global_pos - parent_obj:position():rotate_with(parent_obj:rotation():inverse())
+			local_pos = (global_pos - parent_obj:position()):rotate_with(parent_obj:rotation():inverse())
 		end
 
 		if damage_ext and not damage_ext:dead() and damage_ext.add_listener and not self._death_listener_id then

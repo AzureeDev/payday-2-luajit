@@ -4,7 +4,7 @@ core:import("CoreEws")
 EditLadder = EditLadder or class(EditUnitBase)
 
 function EditLadder:init(editor)
-	local panel, sizer = editor or managers.editor:add_unit_edit_page({
+	local panel, sizer = (editor or managers.editor):add_unit_edit_page({
 		name = "Ladder",
 		class = self
 	})

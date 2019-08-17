@@ -8,7 +8,7 @@ EditUnitLight.DEFAULT_SPOT_PROJECTION_TEXTURE = "units/lights/spot_light_project
 function EditUnitLight:init(editor)
 	EditUnitLight.super.init(self)
 
-	local panel, sizer = editor or managers.editor:add_unit_edit_page({
+	local panel, sizer = (editor or managers.editor):add_unit_edit_page({
 		name = "Light",
 		class = self
 	})

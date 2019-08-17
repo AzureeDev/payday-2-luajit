@@ -178,7 +178,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		})
 
 		make_fine_text(new_name)
-		new_name:set_left(dlc_name:text() ~= "" and dlc_name or contact_name:right() + 5)
+		new_name:set_left((dlc_name:text() ~= "" and dlc_name or contact_name):right() + 5)
 		new_name:set_bottom(job_name:top())
 	end
 
@@ -299,7 +299,7 @@ function ContractBrokerHeistItem:get_last_played_text()
 	local time_str = managers.localization:to_upper_text("menu_time_never")
 
 	if last_played_date then
-		local diff = current_date - last_played_date:value()
+		local diff = (current_date - last_played_date):value()
 
 		if diff == 0 then
 			time_str = managers.localization:to_upper_text("menu_time_today")

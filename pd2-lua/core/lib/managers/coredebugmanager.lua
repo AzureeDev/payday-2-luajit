@@ -171,7 +171,7 @@ function DebugManager.draw_point(index, count, old_point, point, skip_lines)
 	end
 
 	if not skip_lines and old_point then
-		local dir = point._pos - old_point._pos:normalized()
+		local dir = (point._pos - old_point._pos):normalized()
 
 		Application:draw_line_unpaused(old_point._pos, point._pos, unpack(color))
 		Application:draw_cone(point._pos, point._pos - dir * point._radius * 2, point._radius, unpack(color))
@@ -350,7 +350,7 @@ function DebugRaycast:set_from(from)
 	self._from = from
 
 	if self._to then
-		self._dir = self._to - self._from:normalized()
+		self._dir = (self._to - self._from):normalized()
 	end
 end
 
@@ -366,8 +366,8 @@ end
 
 function DebugRaycast:update_from_to_vars()
 	if self._from and self._to then
-		self._dir = self._to - self._from:normalized()
-		self._distance = self._to - self._from:length()
+		self._dir = (self._to - self._from):normalized()
+		self._distance = (self._to - self._from):length()
 
 		if self._distance < self.MAX_ARROW_SIZE then
 			self._arrow_size = self._distance

@@ -750,5 +750,5 @@ function CrimeSpreeMissionButton:_get_mission_category(mission)
 end
 
 function CrimeSpreeMissionButton:mission_id()
-	return self._mission_data or {}.id
+	return (self._mission_data or {}).id
 end

@@ -642,10 +642,7 @@ function CoreDatabaseBrowser:on_read_database()
 		data_table, database_type = apply_type_filter(self._tree_box.type_combobox, self._search_box.type_combobox)
 	end
 
-	slot5 = ipairs
-	slot6 = data_table or {}
-
-	for _, entry in slot5(slot6) do
+	for _, entry in ipairs(data_table or {}) do
 		if not self._browser_data or entry:num_properties() == 0 or database_type ~= "texture" then
 			self._entrys[self:create_unique_name(entry)] = entry
 		end
@@ -689,11 +686,7 @@ function CoreDatabaseBrowser:on_view_metadata()
 				local entry = self._active_database:lookup(self._entrys[selected]:type(), self._entrys[selected]:name(), self._entrys[selected]:properties())
 
 				for k, v in pairs(entry:metadatas()) do
-					if not str then
-						slot13 = ""
-					end
-
-					str = slot13 .. k .. "->" .. v .. "\n"
+					str = (str or "") .. k .. "->" .. v .. "\n"
 				end
 			end
 		end
@@ -706,21 +699,13 @@ function CoreDatabaseBrowser:on_view_metadata()
 				local entry = self._active_database:lookup(self._entrys[selected]:type(), self._entrys[selected]:name(), self._entrys[selected]:properties())
 
 				for k, v in pairs(entry:metadatas()) do
-					if not str then
-						slot14 = ""
-					end
-
-					str = slot14 .. k .. "->" .. v .. "\n"
+					str = (str or "") .. k .. "->" .. v .. "\n"
 				end
 			end
 		end
 	end
 
-	slot2 = EWS.MessageDialog
-	slot4 = self._main_frame
-	slot5 = str or "No metadata!"
-
-	EWS:MessageDialog(slot4, slot5, "Metadata", "OK,ICON_INFORMATION"):show_modal()
+	EWS:MessageDialog(self._main_frame, str or "No metadata!", "Metadata", "OK,ICON_INFORMATION"):show_modal()
 end
 
 function CoreDatabaseBrowser:on_set_metadata()
@@ -894,15 +879,7 @@ end
 
 function CoreDatabaseBrowser:update_preview(entry)
 	local function valid_node(node)
-		if node then
-			if node:to_xml() == "</>\n" then
-				slot1 = false
-			else
-				slot1 = true
-			end
-		end
-
-		return slot1
+		return node and node:to_xml() ~= "</>\n"
 	end
 
 	local function preview_model_xml(self, node, valid_node)
@@ -1143,12 +1120,7 @@ function CoreDatabaseBrowser:on_search()
 					if folder ~= "" then
 						self:build_tree(folder)
 
-						if search_str == "" then
-							slot9 = false
-						else
-							local expand = true
-						end
-
+						local expand = search_str ~= ""
 						local folder_id = self:get_tree_id(folder, expand)
 
 						self._tree_box.tree_ctrl:append(folder_id, key)
@@ -1236,10 +1208,7 @@ end
 function CoreDatabaseBrowser:_rename_and_transfer_metadata(entry, new_name)
 	local old_name = entry:name()
 	local old_ref = self._active_database:lookup(entry:type(), old_name, entry:properties())
-
-	if not old_ref or not old_ref:metadatas() then
-		local metadatas = {}
-	end
+	local metadatas = old_ref and old_ref:metadatas() or {}
 
 	for k, _ in pairs(metadatas) do
 		self._active_database:clear_metadata(old_ref, k)

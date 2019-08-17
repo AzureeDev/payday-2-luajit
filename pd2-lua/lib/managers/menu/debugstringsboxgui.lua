@@ -60,7 +60,7 @@ function DebugStringsBoxGui:_create_text_box(ws, title, text, content_data, conf
 			name = "bg",
 			layer = 1,
 			halign = "grow",
-			color = even and Color.white / 1.5 or Color.white / 2:with_alpha(0.25)
+			color = (even and Color.white / 1.5 or Color.white / 2):with_alpha(0.25)
 		})
 
 		local text_id = string_panel:text({

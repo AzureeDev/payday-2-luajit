@@ -165,7 +165,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		mvector3.add(mvec_to, from_pos)
 
 		local ray_from_unit = shoot_through_data and alive(shoot_through_data.ray_from_unit) and shoot_through_data.ray_from_unit or nil
-		local col_ray = ray_from_unit or World:raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+		local col_ray = (ray_from_unit or World):raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
 
 		if col_rays then
 			if col_ray then

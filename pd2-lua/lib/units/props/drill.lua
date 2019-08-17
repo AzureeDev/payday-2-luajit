@@ -246,7 +246,7 @@ Drill.REMINDER_COMMENTS = {
 function Drill:_drill_remind_clbk()
 	if not managers.groupai:state():whisper_mode() then
 		local device = self.is_drill and "drill" or self.is_saw and "saw" or self.is_hacking_device and "hacking_device" or "default"
-		local reminder = Drill.REMINDER_COMMENTS[device] or Drill.REMINDER_COMMENTS.default[self._jammed_count <= 1 and 1 or 2]
+		local reminder = (Drill.REMINDER_COMMENTS[device] or Drill.REMINDER_COMMENTS.default)[self._jammed_count <= 1 and 1 or 2]
 
 		if reminder then
 			managers.groupai:state():teammate_comment(nil, reminder, nil, false, nil, false)

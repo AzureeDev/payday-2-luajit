@@ -304,7 +304,7 @@ function Layer:_update_drag_select(t, dt)
 		})
 	end
 
-	local len = self._drag_start_pos - end_pos:length()
+	local len = (self._drag_start_pos - end_pos):length()
 
 	if len > 0.05 then
 		local top_left = self._drag_start_pos
@@ -908,7 +908,7 @@ function Layer:recreate_units(name, data)
 	self._continent_locked_picked = true
 
 	for _, params in ipairs(data) do
-		local unit_name = name or params.name:id()
+		local unit_name = (name or params.name):id()
 		local continent = params.continent
 		local pos = params.position
 		local rot = params.rotation
@@ -1342,7 +1342,7 @@ end
 function Layer:recalc_locals(unit, reference)
 	local pos = reference:position()
 	local rot = reference:rotation()
-	unit:unit_data().local_pos = unit:unit_data().world_pos - pos:rotate_with(rot:inverse())
+	unit:unit_data().local_pos = (unit:unit_data().world_pos - pos):rotate_with(rot:inverse())
 	unit:unit_data().local_rot = rot:inverse() * unit:rotation()
 end
 

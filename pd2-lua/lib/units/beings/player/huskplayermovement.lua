@@ -2114,8 +2114,8 @@ function HuskPlayerMovement:_update_zipline_sled(t, dt)
 
 		if zipline then
 			local closest_pos = math.point_on_line(zipline:start_pos(), zipline:end_pos(), self:m_pos())
-			local distance = zipline:start_pos() - closest_pos:length()
-			local length = zipline:start_pos() - zipline:end_pos():length()
+			local distance = (zipline:start_pos() - closest_pos):length()
+			local length = (zipline:start_pos() - zipline:end_pos()):length()
 			local t = distance / length
 
 			zipline:update_and_get_pos_at_time_linear(math.clamp(t, 0, 1))
@@ -3005,7 +3005,7 @@ function HuskPlayerMovement:_upd_move_bipod(t, dt)
 
 	local husk_original_look_direction = Vector3(self._look_dir.x, self._look_dir.y, 0)
 	local target_angle = self._sync_look_dir:angle(self._look_dir)
-	local rotate_direction = math.sign(self._sync_look_dir - self._look_dir:to_polar_with_reference(self._look_dir, math.UP).spin)
+	local rotate_direction = math.sign((self._sync_look_dir - self._look_dir):to_polar_with_reference(self._look_dir, math.UP).spin)
 	local rotate_angle = target_angle * rotate_direction
 	rotate_angle = math.lerp(self._bipod_last_angle, rotate_angle, dt * 2)
 

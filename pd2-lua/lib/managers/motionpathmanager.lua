@@ -830,7 +830,7 @@ function MotionPathManager:find_nearest_ground_path(ground_unit_id)
 		if path.path_type == "ground" then
 			for _, marker in ipairs(path.markers) do
 				local marker_position = self:_get_marker_position(path, marker)
-				local distance_to_ground_unit = marker_position - ground_unit_position:length()
+				local distance_to_ground_unit = (marker_position - ground_unit_position):length()
 				local ray_hit = ground_unit:raycast(ground_unit_position, marker_position)
 
 				if not ray_hit and distance_to_ground_unit <= min_distance_marker.distance and distance_to_ground_unit > 500 then
@@ -867,8 +867,8 @@ function MotionPathManager:_choose_target_path_direction(ground_unit_position, t
 		return
 	end
 
-	local distance_forward = ground_unit_position - point_forward.point:length()
-	local distance_backward = ground_unit_position - point_backward.point:length()
+	local distance_forward = (ground_unit_position - point_forward.point):length()
+	local distance_backward = (ground_unit_position - point_backward.point):length()
 	local retval = nil
 
 	if distance_backward <= distance_forward then

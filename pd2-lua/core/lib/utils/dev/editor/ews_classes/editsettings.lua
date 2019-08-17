@@ -4,7 +4,7 @@ core:import("CoreEws")
 EditUnitSettings = EditUnitSettings or class(EditUnitBase)
 
 function EditUnitSettings:init(editor)
-	local panel, sizer = editor or managers.editor:add_unit_edit_page({
+	local panel, sizer = (editor or managers.editor):add_unit_edit_page({
 		name = "Settings",
 		class = self
 	})

@@ -580,7 +580,7 @@ function ShapeSphere:set_radius(radius)
 end
 
 function ShapeSphere:is_inside(pos)
-	return pos - self:position():length() < self._properties.radius
+	return (pos - self:position()):length() < self._properties.radius
 end
 
 function ShapeSphere:draw(t, dt, r, g, b)

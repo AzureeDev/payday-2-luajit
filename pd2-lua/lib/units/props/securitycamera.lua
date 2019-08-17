@@ -244,7 +244,7 @@ function SecurityCamera:_upd_acquire_new_attention_objects(t)
 						local in_cone = true
 
 						if self._cone_angle ~= nil then
-							local dir = attention_pos - my_pos:normalized()
+							local dir = (attention_pos - my_pos):normalized()
 							in_cone = my_fwd:angle(dir) <= self._cone_angle * 0.5
 						end
 

@@ -72,7 +72,7 @@ function ConcussionGrenade:_can_stun_unit(unit)
 	end
 
 	if unit_name then
-		return not tweak_data.character[unit_name] or {}.immune_to_concussion
+		return not (tweak_data.character[unit_name] or {}).immune_to_concussion
 	else
 		return true
 	end

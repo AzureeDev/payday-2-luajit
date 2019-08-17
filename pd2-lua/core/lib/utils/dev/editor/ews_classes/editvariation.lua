@@ -4,7 +4,7 @@ core:import("CoreEws")
 EditUnitVariation = EditUnitVariation or class(EditUnitBase)
 
 function EditUnitVariation:init(editor)
-	local panel, sizer = editor or managers.editor:add_unit_edit_page({
+	local panel, sizer = (editor or managers.editor):add_unit_edit_page({
 		name = "Variations",
 		class = self
 	})

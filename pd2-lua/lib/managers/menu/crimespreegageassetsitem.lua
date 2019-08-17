@@ -195,7 +195,7 @@ function GageAssetsItem:create_assets()
 			})
 
 			lock:set_center(rect:center())
-			asset:set_color(asset_data.data.class and Color.black or Color.red:with_alpha(0.6))
+			asset:set_color((asset_data.data.class and Color.black or Color.red):with_alpha(0.6))
 			table.insert(self._assets_list, {
 				locked = true,
 				id = asset_data.id,

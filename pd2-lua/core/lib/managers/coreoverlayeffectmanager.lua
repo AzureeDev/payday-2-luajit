@@ -119,7 +119,7 @@ function OverlayEffectManager:progress_effects(t, dt, paused)
 					effect.rectangle:set_color(data.color:with_alpha(new_alpha))
 				end
 
-				effect.text:set_color(data.text_color or Color.white:with_alpha(new_alpha * (data.text_color and data.text_color.alpha or 1)))
+				effect.text:set_color((data.text_color or Color.white):with_alpha(new_alpha * (data.text_color and data.text_color.alpha or 1)))
 			end
 		end
 	end
@@ -191,7 +191,7 @@ function OverlayEffectManager:play_effect(data)
 			font = data.font or "core/fonts/system_font",
 			font_size = data.font_size or 21,
 			blend_mode = data.text_blend_mode or data.blend_mode or "normal",
-			color = data.text_color or Color.white:with_alpha(spawn_alpha * (data.text_color and data.text_color.alpha or 1)),
+			color = (data.text_color or Color.white):with_alpha(spawn_alpha * (data.text_color and data.text_color.alpha or 1)),
 			layer = self._default_layer + 1
 		})
 
@@ -202,7 +202,7 @@ function OverlayEffectManager:play_effect(data)
 		local effect = {
 			rectangle = rectangle,
 			text = text,
-			start_t = data.timer or TimerManager:game():time(),
+			start_t = (data.timer or TimerManager:game()):time(),
 			data = {},
 			current_alpha = spawn_alpha,
 			gradient_points = data.gradient_points
@@ -271,14 +271,14 @@ function OverlayEffectManager:fade_out_effect(id)
 		local effect = self._playing_effects[id]
 
 		if effect then
-			effect.start_t = effect.data.timer or TimerManager:game():time()
+			effect.start_t = (effect.data.timer or TimerManager:game()):time()
 			effect.data.sustain = 0
 			effect.data.fade_in = 0
 			effect.data.color = effect.data.color:with_alpha(effect.current_alpha)
 		end
 	else
 		for key, effect in pairs(self._playing_effects) do
-			effect.start_t = effect.data.timer or TimerManager:game():time()
+			effect.start_t = (effect.data.timer or TimerManager:game()):time()
 			effect.data.sustain = 0
 			effect.data.fade_in = 0
 			effect.data.color = effect.data.color:with_alpha(effect.current_alpha)

@@ -55,12 +55,13 @@ function HUDManager:init()
 
 	self._chatinput_changed_callback_handler = CoreEvent.CallbackEventHandler:new()
 	self._chat_focus = false
-	HUDManager.HIDEABLE_HUDS = {}
-	HUDManager.HIDEABLE_HUDS[PlayerBase.PLAYER_INFO_HUD_PD2:key()] = true
-	HUDManager.HIDEABLE_HUDS[PlayerBase.PLAYER_INFO_HUD_FULLSCREEN_PD2:key()] = true
-	HUDManager.HIDEABLE_HUDS[PlayerBase.PLAYER_DOWNED_HUD:key()] = true
-	HUDManager.HIDEABLE_HUDS[IngameWaitingForRespawnState.GUI_SPECTATOR:key()] = true
-	HUDManager.HIDEABLE_HUDS[Idstring("guis/mask_off_hud"):key()] = true
+	HUDManager.HIDEABLE_HUDS = {
+		[PlayerBase.PLAYER_INFO_HUD_PD2:key()] = true,
+		[PlayerBase.PLAYER_INFO_HUD_FULLSCREEN_PD2:key()] = true,
+		[PlayerBase.PLAYER_DOWNED_HUD:key()] = true,
+		[IngameWaitingForRespawnState.GUI_SPECTATOR:key()] = true,
+		[Idstring("guis/mask_off_hud"):key()] = true
+	}
 
 	if Global.debug_show_coords then
 		self:debug_show_coordinates()
@@ -94,12 +95,14 @@ function HUDManager:destroy()
 end
 
 function HUDManager:_setup_workspaces()
-	self._workspaces = {overlay = {
-		mid_saferect = managers.gui_data:create_saferect_workspace("screen", Overlay:gui()),
-		fullscreen_workspace = managers.gui_data:create_fullscreen_16_9_workspace("screen", Overlay:gui()),
-		saferect = managers.gui_data:create_saferect_workspace("screen", Overlay:gui()),
-		workspace = managers.gui_data:create_fullscreen_workspace("screen", Overlay:gui())
-	}}
+	self._workspaces = {
+		overlay = {
+			mid_saferect = managers.gui_data:create_saferect_workspace("screen", Overlay:gui()),
+			fullscreen_workspace = managers.gui_data:create_fullscreen_16_9_workspace("screen", Overlay:gui()),
+			saferect = managers.gui_data:create_saferect_workspace("screen", Overlay:gui()),
+			workspace = managers.gui_data:create_fullscreen_workspace("screen", Overlay:gui())
+		}
+	}
 
 	managers.gui_data:layout_corner_saferect_1280_workspace(self._workspaces.overlay.saferect)
 
@@ -180,6 +183,7 @@ end
 function HUDManager:remove_chatinput_changed_callback(callback_func)
 	self._chatinput_changed_callback_handler:remove(callback_func)
 end
+
 local is_PS3 = SystemInfo:platform() == Idstring("PS3")
 
 function HUDManager:init_finalize()
@@ -240,7 +244,16 @@ function HUDManager:load_hud(name, visible, using_collision, using_saferect, mut
 	local bounding_box = {}
 	group = group or "overlay"
 	local panel = nil
-	panel = using_16_9_fullscreen and self._workspaces[group].fullscreen_workspace:panel():gui(name, {}) or using_mid_saferect and self._workspaces[group].mid_saferect:panel():gui(name, {}) or using_saferect and self._workspaces[group].saferect:panel():gui(name, {}) or self._workspaces[group].workspace:panel():gui(name, {})
+
+	if using_16_9_fullscreen then
+		panel = self._workspaces[group].fullscreen_workspace:panel():gui(name, {})
+	elseif using_mid_saferect then
+		panel = self._workspaces[group].mid_saferect:panel():gui(name, {})
+	elseif using_saferect then
+		panel = self._workspaces[group].saferect:panel():gui(name, {})
+	else
+		panel = self._workspaces[group].workspace:panel():gui(name, {})
+	end
 
 	panel:hide()
 
@@ -280,16 +293,15 @@ function HUDManager:load_hud(name, visible, using_collision, using_saferect, mut
 		bounding_box = self:_create_bounding_boxes(panel)
 	end
 
-	self._component_map[name:key()] = {
-		panel = panel,
-		bb_list = bounding_box,
-		mutex_list = {},
-		overlay_list = {},
-		idstring = name,
-		load_visible = visible,
-		load_using_collision = using_collision,
-		load_using_saferect = using_saferect
-	}
+	self._component_map[name:key()] = {}
+	self._component_map[name:key()].panel = panel
+	self._component_map[name:key()].bb_list = bounding_box
+	self._component_map[name:key()].mutex_list = {}
+	self._component_map[name:key()].overlay_list = {}
+	self._component_map[name:key()].idstring = name
+	self._component_map[name:key()].load_visible = visible
+	self._component_map[name:key()].load_using_collision = using_collision
+	self._component_map[name:key()].load_using_saferect = using_saferect
 
 	if mutex_list then
 		self._component_map[name:key()].mutex_list = mutex_list
@@ -753,6 +765,7 @@ end
 function HUDManager:remove_updator(id)
 	self._updators[id] = nil
 end
+
 local nl_w_pos = Vector3()
 local nl_pos = Vector3()
 local nl_dir = Vector3()
@@ -944,18 +957,21 @@ function HUDManager:add_waypoint(id, data)
 		distance:set_visible(false)
 	end
 
-	local timer = data.timer and waypoint_panel:text({
-		font_size = 32,
-		h = 32,
-		vertical = "center",
-		w = 32,
-		align = "center",
-		rotation = 360,
-		layer = 0,
-		name = "timer" .. id,
-		text = (math.round(data.timer) < 10 and "0" or "") .. math.round(data.timer),
-		font = tweak_data.hud.medium_font_noshadow
-	})
+	if data.timer then
+		local timer = waypoint_panel:text({
+			font_size = 32,
+			h = 32,
+			vertical = "center",
+			w = 32,
+			align = "center",
+			rotation = 360,
+			layer = 0,
+			name = "timer" .. id,
+			text = (math.round(data.timer) < 10 and "0" or "") .. math.round(data.timer),
+			font = tweak_data.hud.medium_font_noshadow
+		})
+	end
+
 	text = waypoint_panel:text({
 		h = 24,
 		vertical = "center",
@@ -1014,11 +1030,11 @@ function HUDManager:add_waypoint(id, data)
 	if self._hud.waypoints[id].slot == 2 then
 		self._hud.waypoints[id].slot_x = t[1] / 2 + self._hud.waypoints[id].text:w() / 2 + 10
 	elseif self._hud.waypoints[id].slot == 3 then
-		self._hud.waypoints[id].slot_x = (-t[1] / 2 - self._hud.waypoints[id].text:w() / 2) - 10
+		self._hud.waypoints[id].slot_x = -t[1] / 2 - self._hud.waypoints[id].text:w() / 2 - 10
 	elseif self._hud.waypoints[id].slot == 4 then
 		self._hud.waypoints[id].slot_x = t[1] / 2 + t[2] + self._hud.waypoints[id].text:w() / 2 + 20
 	elseif self._hud.waypoints[id].slot == 5 then
-		self._hud.waypoints[id].slot_x = ((-t[1] / 2 - t[3]) - self._hud.waypoints[id].text:w() / 2) - 20
+		self._hud.waypoints[id].slot_x = -t[1] / 2 - t[3] - self._hud.waypoints[id].text:w() / 2 - 20
 	end
 end
 
@@ -1553,6 +1569,7 @@ end
 
 function HUDManager:_update_crosshair_offset(t, dt)
 end
+
 local wp_pos = Vector3()
 local wp_dir = Vector3()
 local wp_dir_normalized = Vector3()
@@ -1848,14 +1865,16 @@ function HUDManager:pd_start_progress(current, total, msg, icon_id)
 
 	self._pd2_hud_interaction = HUDInteraction:new(managers.hud:script(PlayerBase.PLAYER_DOWNED_HUD))
 
-	self._pd2_hud_interaction:show_interact({text = utf8.to_upper(managers.localization:text(msg))})
+	self._pd2_hud_interaction:show_interact({
+		text = utf8.to_upper(managers.localization:text(msg))
+	})
 	self._pd2_hud_interaction:show_interaction_bar(current, total)
 	self._hud_player_downed:hide_timer()
 
 	local function feed_circle(o, total)
 		local t = 0
 
-		while t < total do
+		while total > t do
 			t = t + coroutine.yield()
 
 			self._pd2_hud_interaction:set_interaction_bar_width(t, total)
@@ -1946,7 +1965,9 @@ function HUDManager:debug_show_coordinates()
 		return
 	end
 
-	self._debug = {ws = Overlay:newgui():create_screen_workspace()}
+	self._debug = {
+		ws = Overlay:newgui():create_screen_workspace()
+	}
 	self._debug.panel = self._debug.ws:panel()
 	self._debug.coord = self._debug.panel:text({
 		text = "",
@@ -2007,4 +2028,3 @@ function HUDManager:load(data)
 end
 
 require("lib/managers/HUDManagerPD2")
-

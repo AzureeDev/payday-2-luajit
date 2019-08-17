@@ -145,7 +145,7 @@ function NpcVehicleStatePursuit:_loco_unit_proximity(npc_driving_ext, target_ste
 
 	local player_position = player_unit:position()
 	local cop_position = self._unit:position()
-	local distance_to_player = math.abs(player_position - cop_position:length()) / 100
+	local distance_to_player = math.abs((player_position - cop_position):length()) / 100
 	local acceleration = 0
 	local brake = 0
 	local handbrake = 0
@@ -198,7 +198,7 @@ function NpcVehicleStatePursuit:handle_stuck_vehicle(npc_driving_ext, t, dt)
 	if self._tachograph.tick_at < t then
 		local cop_position = self._unit:position()
 		self._tachograph.tick_at = t + self._tachograph.timeframe
-		self._tachograph.distance = cop_position - self._tachograph.last_pos:length() / 100
+		self._tachograph.distance = (cop_position - self._tachograph.last_pos):length() / 100
 		self._tachograph.last_pos = cop_position
 
 		if self._tachograph.distance <= 1 then

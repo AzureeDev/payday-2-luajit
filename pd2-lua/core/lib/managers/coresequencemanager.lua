@@ -397,11 +397,11 @@ function SequenceManager:_add_start_time_callback(element_id, env, delay, repeat
 		id = self._last_start_time_callback_id,
 		element_id = element_id,
 		env = env,
-		delay = tonumber(delay) or 0,
-		start_time = time_callback.delay,
-		repeat_nr = tonumber(repeat_nr) or 1,
-		sequence_name = sequence_name
+		delay = tonumber(delay) or 0
 	}
+	time_callback.start_time = time_callback.delay
+	time_callback.repeat_nr = tonumber(repeat_nr) or 1
+	time_callback.sequence_name = sequence_name
 
 	table.insert(self._start_time_callback_list, time_callback)
 
@@ -1126,7 +1126,7 @@ function SequenceManager:do_area_damage(damage_type, attack_unit, pos, range, co
 
 			if body_extension then
 				local hit_pos = body:center_of_mass()
-				local dir = hit_pos - pos:normalized()
+				local dir = (hit_pos - pos):normalized()
 				local unit_extension = unit:damage()
 				local body_damage = nil
 
@@ -1172,7 +1172,7 @@ function SequenceManager:do_area_damage(damage_type, attack_unit, pos, range, co
 			local hit, hit_pos = self:is_hit_by_area_damage(unit, pos, ray_caller, ignore_unit)
 
 			if hit then
-				local dir = unit:position() - pos:normalized()
+				local dir = (unit:position() - pos):normalized()
 				local unit_damage = nil
 
 				if get_damage_func then
@@ -1180,7 +1180,7 @@ function SequenceManager:do_area_damage(damage_type, attack_unit, pos, range, co
 				elseif constant_damage then
 					unit_damage = damage
 				else
-					unit_damage = damage * (1 - math.clamp(hit_pos - pos:length() / range, 0, 1))
+					unit_damage = damage * (1 - math.clamp((hit_pos - pos):length() / range, 0, 1))
 				end
 
 				local dead, damage = self:do_area_damage_on_unit(unit, nil, unit_extension, damage_type, attack_unit, -dir, pos, dir, unit_damage, velocity, ignore_unit, direct_attack_unit)
@@ -1711,13 +1711,13 @@ function SequenceEnvironment.angle(v1, v2, up)
 end
 
 function SequenceEnvironment.pos_side(obj, pos)
-	local dir = pos - obj:position():normalized()
+	local dir = (pos - obj:position()):normalized()
 
 	return SequenceEnvironment.dir_side(obj, dir)
 end
 
 function SequenceEnvironment.dir_side(obj, dir)
-	local world_dir = -dir:rotate_with(obj:rotation())
+	local world_dir = (-dir):rotate_with(obj:rotation())
 	local abs_x = math.abs(world_dir.x)
 	local abs_y = math.abs(world_dir.y)
 	local abs_z = math.abs(world_dir.z)
@@ -2713,7 +2713,7 @@ function ZoneFilterElement:is_allowed(env)
 	local obj = obj_name and env.dest_unit:get_object(obj_name:id())
 
 	if obj then
-		local zone_vector = env.pos - obj:position():rotate_with(obj:rotation():inverse())
+		local zone_vector = (env.pos - obj:position()):rotate_with(obj:rotation():inverse())
 		local allowed = true
 
 		for _, func in ipairs(self._func_list) do
@@ -3819,7 +3819,7 @@ function AreaDamageElement:get_falloff_preset1_damage(params, unit, body, dir, h
 end
 
 function AreaDamageElement:get_distance(body, hit_pos, pos)
-	return body and get_distance_to_body(body, pos) or hit_pos - pos:length()
+	return body and get_distance_to_body(body, pos) or (hit_pos - pos):length()
 end
 
 AreaDamageKeyElement = AreaDamageKeyElement or class(BaseElement)
@@ -5174,7 +5174,7 @@ function ProjectDecalElement:activate_callback(env)
 		end
 
 		if ray_distance then
-			local ray = ignore_unit or World:raycast("ray", position, position + direction * ray_distance, "slot_mask", slotmask)
+			local ray = (ignore_unit or World):raycast("ray", position, position + direction * ray_distance, "slot_mask", slotmask)
 
 			if ray then
 				position = ray.position

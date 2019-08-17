@@ -114,7 +114,7 @@ function CopLogicIdle.enter(data, new_logic_name, enter_params)
 	end
 
 	local usage = data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage
-	my_data.weapon_range = data.char_tweak.weapon[usage] or {}.range
+	my_data.weapon_range = (data.char_tweak.weapon[usage] or {}).range
 
 	data.unit:brain():set_update_enabled_state(false)
 	CopLogicIdle._perform_objective_action(data, my_data, objective)
@@ -1400,7 +1400,7 @@ function CopLogicIdle._upd_curious_reaction(data)
 	end
 
 	local function _get_spin_to_att_obj()
-		return attention_obj.m_pos - data.m_pos:to_polar_with_reference(data.unit:movement():m_rot():y(), math.UP).spin
+		return (attention_obj.m_pos - data.m_pos):to_polar_with_reference(data.unit:movement():m_rot():y(), math.UP).spin
 	end
 
 	local turned_around = nil

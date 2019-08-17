@@ -3154,7 +3154,7 @@ function CivilianHeisterInteractionExt:update(unit, t, dt)
 
 	for id, data in pairs(managers.criminals:characters()) do
 		if data.taken and alive(data.unit) and data.unit:id() ~= -1 then
-			local dist = data.unit:position() - unit:position():length()
+			local dist = (data.unit:position() - unit:position()):length()
 
 			if dist < self.heister_data.idle_line_dist then
 				can_play_idle_line = true

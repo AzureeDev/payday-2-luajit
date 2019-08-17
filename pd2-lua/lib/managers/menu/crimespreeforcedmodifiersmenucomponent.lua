@@ -193,7 +193,8 @@ function CrimeSpreeForcedModifiersMenuComponent:mouse_moved(o, x, y)
 	end
 
 	local used = false
-	pointer, self._selected_item = nil
+	local pointer = nil
+	self._selected_item = nil
 	used, pointer = self._modifiers_scroll:mouse_moved(nil, x, y)
 
 	self._back_btn:set_selected(self._back_btn:inside(x, y))

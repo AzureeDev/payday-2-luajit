@@ -24,9 +24,9 @@ function CoreUnitDamage:init(unit, default_body_extension_class, body_extension_
 			interval = element:get_interval(),
 			quick = element:is_quick(),
 			is_within = element:get_start_within(),
-			slotmask = element:get_slotmask(),
-			last_check_time = TimerManager:game():time() + math.rand(math.min(data.interval, 0))
+			slotmask = element:get_slotmask()
 		}
+		data.last_check_time = TimerManager:game():time() + math.rand(math.min(data.interval, 0))
 
 		self:populate_proximity_range_data(data, "within_data", element:get_within_element())
 		self:populate_proximity_range_data(data, "outside_data", element:get_outside_element())
@@ -58,7 +58,7 @@ function CoreUnitDamage:init(unit, default_body_extension_class, body_extension_
 		if body then
 			body:set_extension(body:extension() or {})
 
-			local body_ext = body_extension_class_map[body_element._name] or default_body_extension_class:new(self._unit, self, body, body_element)
+			local body_ext = (body_extension_class_map[body_element._name] or default_body_extension_class):new(self._unit, self, body, body_element)
 			body:extension().damage = body_ext
 			local body_key = nil
 
@@ -2620,7 +2620,7 @@ end
 
 function CoreInflictFireUpdator:set_fire_height(height)
 	self._fire_height = height
-	self._sphere_check_range = self._fire_object:oobb():size() / 2:length() + self._fire_height + self.SPHERE_CHECK_PADDING
+	self._sphere_check_range = (self._fire_object:oobb():size() / 2):length() + self._fire_height + self.SPHERE_CHECK_PADDING
 end
 
 function CoreInflictFireUpdator:set_velocity(velocity)

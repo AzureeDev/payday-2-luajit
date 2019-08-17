@@ -379,7 +379,7 @@ function ZipLine:total_time()
 end
 
 function ZipLine:_update_total_time()
-	self:set_total_time(self:start_pos() - self:end_pos():length() / self._speed)
+	self:set_total_time((self:start_pos() - self:end_pos()):length() / self._speed)
 end
 
 function ZipLine:start_pos()
@@ -419,8 +419,8 @@ function ZipLine:_update_pos_data()
 	self._line_data.start_pos = self._start_pos + self._line_data.offset
 	self._line_data.end_pos = self._end_pos + self._line_data.offset
 	self._line_data.dir = self._line_data.end_pos - self._start_pos
-	self._line_data.dir_s = self:pos_at_time(0.5) + self._line_data.offset - self._line_data.start_pos:normalized()
-	self._line_data.dir_e = self._line_data.end_pos - (self:pos_at_time(0.5) + self._line_data.offset):normalized()
+	self._line_data.dir_s = (self:pos_at_time(0.5) + self._line_data.offset - self._line_data.start_pos):normalized()
+	self._line_data.dir_e = (self._line_data.end_pos - (self:pos_at_time(0.5) + self._line_data.offset)):normalized()
 
 	mvector3.set_z(self._line_data.dir, 0)
 	mvector3.normalize(self._line_data.dir)

@@ -108,7 +108,7 @@ function FormulaMixerDummy:update(t, dt)
 	local value = self._formula(self._master:get_value(), unpack(self._params))
 	local t = type(value)
 
-	if t == "string" and value ~= self._value or t == "number" and self._tol < math.abs(value - self._value) or t == "userdata" and self._tol < value - self._value:length() then
+	if t == "string" and value ~= self._value or t == "number" and self._tol < math.abs(value - self._value) or t == "userdata" and self._tol < (value - self._value):length() then
 		self._value = value
 	end
 end

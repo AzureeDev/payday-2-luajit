@@ -104,7 +104,7 @@ function AIAttentionObject:remove_attention(id)
 		self._attention_data[id] = nil
 
 		if not next(self._attention_data) then
-			managers.groupai:state():unregister_AI_attention_object(self._parent_unit or self._unit:key())
+			managers.groupai:state():unregister_AI_attention_object((self._parent_unit or self._unit):key())
 
 			self._attention_data = nil
 		end
@@ -122,7 +122,7 @@ function AIAttentionObject:set_attention(settings, id)
 		else
 			self._attention_data = nil
 
-			managers.groupai:state():unregister_AI_attention_object(self._parent_unit or self._unit:key())
+			managers.groupai:state():unregister_AI_attention_object((self._parent_unit or self._unit):key())
 		end
 
 		self:_call_listeners()
@@ -224,7 +224,7 @@ function AIAttentionObject:remove_listener(key)
 end
 
 function AIAttentionObject:_call_listeners()
-	local u_key = self._parent_unit or self._unit:key()
+	local u_key = (self._parent_unit or self._unit):key()
 
 	managers.groupai:state():on_AI_attention_changed(u_key)
 	self._listener_holder:call(u_key)

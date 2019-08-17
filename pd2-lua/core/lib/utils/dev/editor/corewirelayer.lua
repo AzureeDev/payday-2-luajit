@@ -139,7 +139,7 @@ function WireLayer:update(t, dt)
 		local n = ray.normal
 		local u_rot = Rotation()
 		local z = n
-		local x = u_rot:x() - z * z:dot(u_rot:x()):normalized()
+		local x = (u_rot:x() - z * z:dot(u_rot:x())):normalized()
 		local y = z:cross(x)
 		local rot = Rotation(x, y, z)
 		self._current_rot = rot

@@ -395,7 +395,7 @@ function HUDAssaultCorner:should_display_waves()
 end
 
 function HUDAssaultCorner:_animate_text(text_panel, bg_box, color, color_function)
-	local text_list = bg_box or self._bg_box:script().text_list
+	local text_list = (bg_box or self._bg_box):script().text_list
 	local text_index = 0
 	local texts = {}
 	local padding = 10

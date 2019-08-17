@@ -517,7 +517,7 @@ function StopwatchFilterUnitElement:add_triggers(vc)
 end
 
 function StopwatchFilterUnitElement:_add_stopwatch_value_unit(params)
-	local dialog = params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal:new("Add Stopwatch Unit", params.add_filter)
+	local dialog = (params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal):new("Add Stopwatch Unit", params.add_filter)
 
 	for _, unit in ipairs(dialog:selected_units()) do
 		local id = unit:unit_data().unit_id

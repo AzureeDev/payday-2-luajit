@@ -327,7 +327,7 @@ function ArmAnimator:_set_pose(pose)
 		end
 	end
 
-	self._facing = pose.shoulder[1]:x() + pose.shoulder[2]:x():with_z(0)
+	self._facing = (pose.shoulder[1]:x() + pose.shoulder[2]:x()):with_z(0)
 
 	mvector3.cross(self._facing, self._facing, math.UP)
 	mvector3.normalize(self._facing)

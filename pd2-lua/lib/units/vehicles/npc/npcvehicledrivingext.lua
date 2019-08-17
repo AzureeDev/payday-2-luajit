@@ -300,8 +300,8 @@ function NpcVehicleDrivingExt:_choose_target_path_direction(player_path, target_
 		return
 	end
 
-	local distance_forward = player_position - point_forward.point:length()
-	local distance_backward = player_position - point_backward.point:length()
+	local distance_forward = (player_position - point_forward.point):length()
+	local distance_backward = (player_position - point_backward.point):length()
 	local retval = nil
 
 	if distance_forward <= distance_backward then
@@ -506,7 +506,7 @@ function NpcVehicleDrivingExt:_find_bridge(cop_path, target_path, unit_and_pos)
 			if marker_from == cop_on_checkpoint then
 				local path_direction = self:_choose_target_path_direction(target_path, marker_to)
 				local marker_to_position = self:_get_marker_position(target_path, marker_to)
-				local distance_to_player = marker_to_position - player_position:length()
+				local distance_to_player = (marker_to_position - player_position):length()
 
 				if distance_to_player <= min_distance_marker.distance then
 					min_distance_marker.marker_to = marker_to

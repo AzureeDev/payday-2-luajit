@@ -638,7 +638,7 @@ function InventoryIconCreator:_setup_camera()
 	end
 
 	if not self._custom_ctrlrs.use_camera_setting:get_value() then
-		local oobb = self._weapon_unit or self._mask_unit or self._melee_unit or self._throwable_unit:oobb()
+		local oobb = (self._weapon_unit or self._mask_unit or self._melee_unit or self._throwable_unit):oobb()
 		local center = oobb:center()
 
 		managers.editor:set_camera(Vector3(job_setting.pos.x, center.y, center.z), job_setting.rot)

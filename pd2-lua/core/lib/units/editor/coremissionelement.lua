@@ -1585,7 +1585,7 @@ function CoreMissionElement:_build_add_remove_static_unit_from_list(panel, sizer
 end
 
 function CoreMissionElement:_add_static_unit_list_btn(params)
-	local dialog = params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal:new("Add Unit", params.add_filter)
+	local dialog = (params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal):new("Add Unit", params.add_filter)
 
 	for _, unit in ipairs(dialog:selected_units()) do
 		local id = unit:unit_data().unit_id
@@ -1595,7 +1595,7 @@ function CoreMissionElement:_add_static_unit_list_btn(params)
 end
 
 function CoreMissionElement:_remove_static_unit_list_btn(params)
-	local dialog = params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal:new("Remove Unit", params.remove_filter)
+	local dialog = (params.single and SingleSelectUnitByNameModal or SelectUnitByNameModal):new("Remove Unit", params.remove_filter)
 
 	for _, unit in ipairs(dialog:selected_units()) do
 		params.remove_result(unit)

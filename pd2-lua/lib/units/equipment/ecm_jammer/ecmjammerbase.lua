@@ -560,7 +560,7 @@ function ECMJammerBase._detect_and_give_dmg(hit_pos, device_unit, user_unit, ran
 					weapon_unit = device_unit,
 					col_ray = {
 						position = mvector3.copy(head_pos),
-						ray = head_pos - s_pos:normalized()
+						ray = (head_pos - s_pos):normalized()
 					}
 				}
 

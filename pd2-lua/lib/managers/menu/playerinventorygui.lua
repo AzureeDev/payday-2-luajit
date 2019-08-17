@@ -1624,7 +1624,7 @@ function PlayerInventoryGui:set_info_text(text, color_ranges, recursive)
 		local font_size = self._info_text:font_size()
 
 		if self._info_panel:parent():h() < self._info_text:bottom() then
-			while self._info_panel.parent().h() < self._info_text.bottom() and min_font_size < font_size do
+			while self._info_panel:parent():h() < self._info_text:bottom() and min_font_size < font_size do
 				self._info_text:set_font_size(font_size)
 
 				local _, _, _, h = self._info_text:text_rect()

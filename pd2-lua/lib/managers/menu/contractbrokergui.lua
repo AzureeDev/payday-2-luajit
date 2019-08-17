@@ -694,7 +694,7 @@ function ContractBrokerGui:_setup_filter_favourite()
 end
 
 function ContractBrokerGui:perform_filter_contact(value)
-	return value == self._contact_filter_list[self._current_filter] or self._contact_filter_list[1] or {}.id
+	return value == (self._contact_filter_list[self._current_filter] or self._contact_filter_list[1] or {}).id
 end
 
 function ContractBrokerGui:perform_filter_time(value)

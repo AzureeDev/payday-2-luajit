@@ -24,7 +24,7 @@ SystemMenuManager.PLATFORM_CLASS_MAP = {}
 function SystemMenuManager:new(...)
 	local platform = SystemInfo:platform()
 
-	return self.PLATFORM_CLASS_MAP[platform:key()] or GenericSystemMenuManager:new(...)
+	return (self.PLATFORM_CLASS_MAP[platform:key()] or GenericSystemMenuManager):new(...)
 end
 
 GenericSystemMenuManager = GenericSystemMenuManager or class()

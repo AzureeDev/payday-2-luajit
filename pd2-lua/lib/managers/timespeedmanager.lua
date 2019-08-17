@@ -87,13 +87,13 @@ end
 function TimeSpeedManager:play_effect(id, effect_desc)
 	local effect = {
 		desc = effect_desc,
-		timer = effect_desc.timer == "pausable" and self._pausable_timer or self._game_timer,
-		start_t = effect.timer:time(),
-		fade_in_delay_end_t = effect.start_t + (effect_desc.fade_in_delay or 0),
-		fade_in_end_t = effect.fade_in_delay_end_t + effect_desc.fade_in,
-		sustain_end_t = effect_desc.sustain and effect.fade_in_end_t + effect_desc.sustain,
-		effect_end_t = effect.sustain_end_t and effect.sustain_end_t + (effect_desc.fade_out or 0)
+		timer = effect_desc.timer == "pausable" and self._pausable_timer or self._game_timer
 	}
+	effect.start_t = effect.timer:time()
+	effect.fade_in_delay_end_t = effect.start_t + (effect_desc.fade_in_delay or 0)
+	effect.fade_in_end_t = effect.fade_in_delay_end_t + effect_desc.fade_in
+	effect.sustain_end_t = effect_desc.sustain and effect.fade_in_end_t + effect_desc.sustain
+	effect.effect_end_t = effect.sustain_end_t and effect.sustain_end_t + (effect_desc.fade_out or 0)
 
 	if effect_desc.affect_timer then
 		if type(effect_desc.affect_timer) == "table" then

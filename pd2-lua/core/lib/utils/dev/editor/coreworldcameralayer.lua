@@ -88,7 +88,7 @@ function WorldCameraLayer:update(t, dt)
 			local pos, t_pos = self._current_world_camera:positions_at_time(self._current_time)
 
 			if pos and t_pos then
-				local rot1 = Rotation(t_pos - pos:normalized(), roll)
+				local rot1 = Rotation((t_pos - pos):normalized(), roll)
 				local rot = Rotation:look_at(pos, t_pos, rot1:z())
 
 				managers.editor:set_camera(pos, rot)
@@ -901,7 +901,7 @@ function WorldCameraLayer:set_near_dof()
 		local ray = managers.editor:select_unit_by_raycast(managers.slot:get_mask("editor_all"), "body editor")
 
 		if ray and ray.position then
-			local dist = ray.position - managers.editor:camera():position():length()
+			local dist = (ray.position - managers.editor:camera():position()):length()
 
 			self._key_types.near_dof:set_value(math.round(dist))
 		end
@@ -915,7 +915,7 @@ function WorldCameraLayer:set_far_dof()
 		local ray = managers.editor:select_unit_by_raycast(managers.slot:get_mask("editor_all"), "body editor")
 
 		if ray and ray.position then
-			local dist = ray.position - managers.editor:camera():position():length()
+			local dist = (ray.position - managers.editor:camera():position()):length()
 
 			self._key_types.far_dof:set_value(math.round(dist))
 		end
@@ -968,7 +968,7 @@ end
 
 function WorldCameraLayer:set_key_values(time, fov, near_dof, far_dof, roll)
 	for _, ctrl in pairs(self._key_types) do
-		ctrl.number_ctrlr or ctrl:set_enabled(false)
+		(ctrl.number_ctrlr or ctrl):set_enabled(false)
 	end
 
 	if fov then

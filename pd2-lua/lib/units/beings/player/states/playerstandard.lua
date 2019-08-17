@@ -870,7 +870,7 @@ function PlayerStandard:_update_movement(t, dt)
 			local fwd_dot = jump_dir:dot(input_move_vec)
 
 			if fwd_dot < jump_vel then
-				local sustain_dot = input_move_vec:normalized() * jump_vel:dot(jump_dir)
+				local sustain_dot = (input_move_vec:normalized() * jump_vel):dot(jump_dir)
 				local new_move_vec = input_move_vec + jump_dir * (sustain_dot - fwd_dot)
 
 				mvector3.step(achieved_walk_vel, self._last_velocity_xy, new_move_vec, 700 * dt)
@@ -3562,11 +3562,11 @@ function PlayerStandard:_perform_jump(jump_vec)
 	self._send_jump_vec = jump_vec * 0.87
 	local t = managers.game_play_central and managers.game_play_central:get_heist_timer() or 0
 
-	if not managers.achievment:get_info(tweak_data.achievement.jordan_1) or {}.awarded then
+	if not (managers.achievment:get_info(tweak_data.achievement.jordan_1) or {}).awarded then
 		managers.achievment:award(tweak_data.achievement.jordan_1)
 	end
 
-	if not managers.achievment:get_info(tweak_data.achievement.jordan_2.award) or {}.awarded then
+	if not (managers.achievment:get_info(tweak_data.achievement.jordan_2.award) or {}).awarded then
 		local memory = managers.job:get_memory("jordan_2", true) or {}
 
 		table.insert(memory, t)
@@ -3620,8 +3620,9 @@ function PlayerStandard:_update_network_jump(pos, is_exit)
 		self._is_jumping = nil
 	elseif self._send_jump_vec and not is_exit then
 		if self._is_jumping and type(self._gnd_ray) ~= "boolean" then
-			slot5 = self._ext_network
-			slot4 = self._ext_network.send
+			slot4 = self._ext_network
+			slot5 = slot4
+			slot4 = slot4.send
 			slot6 = "action_walk_nav_point"
 
 			if self._gnd_ray then
@@ -3677,7 +3678,7 @@ function PlayerStandard:_start_action_zipline(t, input, zipline_unit)
 		self._state_data.zipline_data.start_pos = self._unit:position()
 		self._state_data.zipline_data.end_pos = self._fwd_ray.position
 		self._state_data.zipline_data.slack = math.max(0, math.abs(self._state_data.zipline_data.start_pos.z - self._state_data.zipline_data.end_pos.z) / 3)
-		self._state_data.zipline_data.tot_t = self._state_data.zipline_data.end_pos - self._state_data.zipline_data.start_pos:length() / 1000
+		self._state_data.zipline_data.tot_t = (self._state_data.zipline_data.end_pos - self._state_data.zipline_data.start_pos):length() / 1000
 	end
 
 	self._state_data.zipline_data.t = 0
@@ -3799,7 +3800,7 @@ function PlayerStandard:set_stance_switch_delay(delay)
 end
 
 function PlayerStandard:_is_underbarrel_attachment_active(weapon_unit)
-	local weapon = weapon_unit or self._equipped_unit:base()
+	local weapon = (weapon_unit or self._equipped_unit):base()
 	local underbarrel_names = managers.weapon_factory:get_parts_from_weapon_by_type_or_perk("underbarrel", weapon._factory_id, weapon._blueprint)
 
 	if underbarrel_names and underbarrel_names[1] then

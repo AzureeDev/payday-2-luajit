@@ -104,6 +104,7 @@ end
 function CoreEditorEwsDialog:destroy()
 	self._dialog:destroy()
 end
+
 UnitList = UnitList or class()
 
 function UnitList:init()
@@ -345,22 +346,27 @@ function UnitList:column_click_list(data, event)
 
 	self._column_states[column].state = state
 	local f = nil
-	f = state == "ascending" and function (item1, item2)
-		if item1[value] < item2[value] then
-			return -1
-		elseif item2[value] < item1[value] then
-			return 1
-		end
 
-		return 0
-	end or function (item1, item2)
-		if item2[value] < item1[value] then
-			return -1
-		elseif item1[value] < item2[value] then
-			return 1
-		end
+	if state == "ascending" then
+		function f(item1, item2)
+			if item1[value] < item2[value] then
+				return -1
+			elseif item2[value] < item1[value] then
+				return 1
+			end
 
-		return 0
+			return 0
+		end
+	else
+		function f(item1, item2)
+			if item2[value] < item1[value] then
+				return -1
+			elseif item1[value] < item2[value] then
+				return 1
+			end
+
+			return 0
+		end
 	end
 
 	self._list:sort(f)
@@ -613,6 +619,7 @@ function UnitList:thaw()
 	self._unit_list:thaw()
 	self._list:thaw()
 end
+
 UnitDuplicateIdList = UnitDuplicateIdList or class()
 
 function UnitDuplicateIdList:init()
@@ -722,22 +729,27 @@ function UnitDuplicateIdList:column_click_list(data, event)
 
 	self._column_states[column].state = state
 	local f = nil
-	f = state == "ascending" and function (item1, item2)
-		if item1[value] < item2[value] then
-			return -1
-		elseif item2[value] < item1[value] then
-			return 1
-		end
 
-		return 0
-	end or function (item1, item2)
-		if item2[value] < item1[value] then
-			return -1
-		elseif item1[value] < item2[value] then
-			return 1
-		end
+	if state == "ascending" then
+		function f(item1, item2)
+			if item1[value] < item2[value] then
+				return -1
+			elseif item2[value] < item1[value] then
+				return 1
+			end
 
-		return 0
+			return 0
+		end
+	else
+		function f(item1, item2)
+			if item2[value] < item1[value] then
+				return -1
+			elseif item1[value] < item2[value] then
+				return 1
+			end
+
+			return 0
+		end
 	end
 
 	self._list:sort(f)
@@ -809,7 +821,8 @@ function UnitDuplicateIdList:fill_unit_list(type)
 				end
 
 				if unit:unit_data().unit_id ~= 0 and not captured then
-					seen[unit:unit_data().unit_id] = {[#seen[unit:unit_data().unit_id] + 1] = unit:unit_data()}
+					seen[unit:unit_data().unit_id] = {}
+					seen[unit:unit_data().unit_id][#seen[unit:unit_data().unit_id] + 1] = unit:unit_data()
 				end
 			else
 				seen[unit:unit_data().unit_id][#seen[unit:unit_data().unit_id] + 1] = unit:unit_data()
@@ -857,6 +870,7 @@ function UnitDuplicateIdList:thaw()
 	self._unit_list:thaw()
 	self._list:thaw()
 end
+
 UnitTreeBrowser = UnitTreeBrowser or class(CoreEditorEwsDialog)
 
 function UnitTreeBrowser:init(...)
@@ -1124,6 +1138,7 @@ function UnitTreeBrowser:collapse_children(children)
 		self._unit_tree:collapse(child)
 	end
 end
+
 GlobalSelectUnit = GlobalSelectUnit or class(CoreEditorEwsDialog)
 
 function GlobalSelectUnit:init(...)
@@ -1158,7 +1173,9 @@ function GlobalSelectUnit:init(...)
 	local cb = EWS:CheckBox(self._panel, "Only list used units", "", "ALIGN_LEFT")
 
 	cb:set_value(self._only_list_used_units)
-	cb:connect("EVT_COMMAND_CHECKBOX_CLICKED", callback(self, self, "on_only_list_used_units"), {cb = cb})
+	cb:connect("EVT_COMMAND_CHECKBOX_CLICKED", callback(self, self, "on_only_list_used_units"), {
+		cb = cb
+	})
 	cb:connect("EVT_KEY_DOWN", callback(self, self, "key_cancel"), "")
 	list_sizer:add(cb, 0, 5, "TOP,BOTTOM,LEFT")
 
@@ -1301,7 +1318,12 @@ function GlobalSelectUnit:_on_unit_preview_update()
 	local degrees_per_second = 45
 	local time = Application:time()
 	local dt = nil
-	dt = self._last_preview_update_time == nil and 0.01667 or time - self._last_preview_update_time
+
+	if self._last_preview_update_time == nil then
+		dt = 0.01667
+	else
+		dt = time - self._last_preview_update_time
+	end
 
 	if dt >= 0.01667 then
 		self:_rotate_around_point(self._preview_unit, self._rotation_point_for_preview, math.UP, dt, degrees_per_second)
@@ -1424,7 +1446,9 @@ function GlobalSelectUnit:on_reload()
 	if i ~= -1 then
 		local name = managers.editor:get_real_name(self._units:get_item_data(i))
 
-		managers.editor:reload_units({Idstring(name)}, true)
+		managers.editor:reload_units({
+			Idstring(name)
+		}, true)
 	end
 end
 
@@ -1440,18 +1464,11 @@ end
 
 function GlobalSelectUnit:update_list(current)
 	local filter = self._filter:get_value()
-	local filter_pattern = filter
+	local sub_filters = {}
 
 	if string.len(string.gsub(filter, "%s", "")) > 0 then
-		filter_pattern = ".*"
-		local sub_filters = {}
-
 		for sub_filter in filter:gmatch("%w+") do
 			sub_filters[#sub_filters + 1] = sub_filter
-		end
-
-		for key, value in ipairs(sub_filters) do
-			filter_pattern = filter_pattern .. value .. ".*"
 		end
 	end
 
@@ -1467,8 +1484,15 @@ function GlobalSelectUnit:update_list(current)
 
 			if self._layer_cbs[type]:get_value() then
 				local stripped_name = self._short_name:get_value() and self:_stripped_unit_name(name) or name
+				local isMatching = true
 
-				if string.find(stripped_name, filter_pattern, 1) then
+				for key, value in ipairs(sub_filters) do
+					if not string.find(stripped_name, value) then
+						isMatching = false
+					end
+				end
+
+				if isMatching then
 					table.insert(self._units_to_append, {
 						stripped_name = stripped_name,
 						name = name
@@ -1482,8 +1506,15 @@ function GlobalSelectUnit:update_list(current)
 
 			if self._layer_cbs[type]:get_value() then
 				local stripped_name = self._short_name:get_value() and self:_stripped_unit_name(name) or name
+				local isMatching = true
 
-				if string.find(stripped_name, filter_pattern, 1) then
+				for key, value in ipairs(sub_filters) do
+					if not string.find(stripped_name, value) then
+						isMatching = false
+					end
+				end
+
+				if isMatching then
 					table.insert(self._units_to_append, {
 						stripped_name = stripped_name,
 						name = name
@@ -1603,6 +1634,7 @@ end
 function GlobalSelectUnit:on_layer_cb(data)
 	self:update_list()
 end
+
 ReplaceUnit = ReplaceUnit or class(CoreEditorEwsDialog)
 
 function ReplaceUnit:init(name, types)
@@ -1695,12 +1727,16 @@ function ReplaceUnit:init(name, types)
 	local btn_sizer = EWS:BoxSizer("HORIZONTAL")
 	local ok_btn = EWS:Button(self._panel, "OK", "_ok_dialog", "BU_EXACTFIT,NO_BORDER")
 
-	ok_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "close_replace_unit"), {value = true})
+	ok_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "close_replace_unit"), {
+		value = true
+	})
 	btn_sizer:add(ok_btn, 0, 5, "RIGHT")
 
 	local none_btn = EWS:Button(self._panel, "None", "_none_dialog", "BU_EXACTFIT,NO_BORDER")
 
-	none_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "close_replace_unit"), {value = false})
+	none_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "close_replace_unit"), {
+		value = false
+	})
 	btn_sizer:add(none_btn, 0, 5, "RIGHT")
 	self._panel_sizer:add(btn_sizer, 0, 0, "ALIGN_RIGHT")
 	self._dialog_sizer:add(self._panel, 1, 0, "EXPAND")
@@ -1753,6 +1789,7 @@ function ReplaceUnit:result()
 
 	return false
 end
+
 LayerReplaceUnit = LayerReplaceUnit or class(CoreEditorEwsDialog)
 
 function LayerReplaceUnit:init(layer)
@@ -1772,7 +1809,9 @@ function LayerReplaceUnit:init(layer)
 	local cb = EWS:CheckBox(self._panel, "Only list used units", "", "ALIGN_RIGHT")
 
 	cb:set_value(self._only_list_used_units)
-	cb:connect("EVT_COMMAND_CHECKBOX_CLICKED", callback(self, self, "on_only_list_used_units"), {cb = cb})
+	cb:connect("EVT_COMMAND_CHECKBOX_CLICKED", callback(self, self, "on_only_list_used_units"), {
+		cb = cb
+	})
 	cb:connect("EVT_KEY_DOWN", callback(self, self, "key_cancel"), "")
 	self._panel_sizer:add(cb, 0, 5, "TOP,BOTTOM,RIGHT")
 
@@ -1944,6 +1983,7 @@ end
 function LayerReplaceUnit:reset()
 	self:update_list()
 end
+
 MoveTransformTypeIn = MoveTransformTypeIn or class(CoreEditorEwsDialog)
 
 function MoveTransformTypeIn:init()
@@ -2100,6 +2140,7 @@ function MoveTransformTypeIn:update(t, dt)
 		end
 	end
 end
+
 RotateTransformTypeIn = RotateTransformTypeIn or class(CoreEditorEwsDialog)
 
 function RotateTransformTypeIn:init()
@@ -2261,6 +2302,7 @@ function RotateTransformTypeIn:update(t, dt)
 		end
 	end
 end
+
 CameraTransformTypeIn = CameraTransformTypeIn or class(CoreEditorEwsDialog)
 
 function CameraTransformTypeIn:init()
@@ -2508,6 +2550,7 @@ function CameraTransformTypeIn:update(t, dt)
 		self._far_range:change_value(string.format("%.2f", managers.editor:camera_far_range() / 100))
 	end
 end
+
 EditControllerBindings = EditControllerBindings or class(CoreEditorEwsDialog)
 
 function EditControllerBindings:init(...)
@@ -2564,6 +2607,7 @@ function EditControllerBindings:add_list(list)
 		self._list:set_item(i, 1, list[name])
 	end
 end
+
 MissionGraph = MissionGraph or class(CoreEditorEwsDialog)
 
 function MissionGraph:init(...)
@@ -2604,6 +2648,7 @@ function MissionGraph:update(t, dt)
 	self._graph_view:update_graph(dt)
 	self._graph:notify_views()
 end
+
 WorldEditorNews = WorldEditorNews or class(CoreEditorEwsDialog)
 
 function WorldEditorNews:init()
@@ -2650,6 +2695,7 @@ end
 function WorldEditorNews:version()
 	return self._text:get_last_position()
 end
+
 UnitDuality = UnitDuality or class(CoreEditorEwsDialog)
 
 function UnitDuality:create_panel(orientation)
@@ -2805,6 +2851,7 @@ end
 function UnitDuality:on_check_again()
 	managers.editor:on_check_duality()
 end
+
 BrushLayerDebug = BrushLayerDebug or class(CoreEditorEwsDialog)
 
 function BrushLayerDebug:init(...)
@@ -2967,4 +3014,3 @@ end
 function BrushLayerDebug:thaw()
 	self._unit_list:thaw()
 end
-

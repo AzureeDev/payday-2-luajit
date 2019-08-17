@@ -27,7 +27,7 @@ function NpcVehicleStatePlayerProximity:change_state(npc_driving_ext)
 
 	local player_position = player_unit:position()
 	local cop_position = self._unit:position()
-	local distance_to_player = math.abs(player_position - cop_position:length()) / 100
+	local distance_to_player = math.abs((player_position - cop_position):length()) / 100
 
 	if npc_driving_ext._debug.nav_paths then
 		npc_driving_ext._debug.nav_paths.distance_to_player = distance_to_player

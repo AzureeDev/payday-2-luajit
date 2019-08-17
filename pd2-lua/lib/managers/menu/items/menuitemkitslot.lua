@@ -128,7 +128,7 @@ function MenuItemKitSlot:text()
 	elseif self._parameters.category == "equipment" then
 		local id = self._options[self._current_index]
 		local equipment_id = tweak_data.upgrades.definitions[id].equipment_id
-		local name_id = tweak_data.equipments.specials[equipment_id] or tweak_data.equipments[equipment_id].text_id
+		local name_id = (tweak_data.equipments.specials[equipment_id] or tweak_data.equipments[equipment_id]).text_id
 
 		return managers.localization:text(name_id)
 	end

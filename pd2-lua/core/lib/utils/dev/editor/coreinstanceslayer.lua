@@ -452,9 +452,9 @@ function InstancesLayer:add_instance(name, folder, index_size, script, pos, rot,
 		position = pos or self._current_pos,
 		rotation = rot or self._current_rot or Rotation(),
 		script = script,
-		index_size = index_size,
-		start_index = managers.world_instance:get_safe_start_index(instance.index_size, instance.continent)
+		index_size = index_size
 	}
+	instance.start_index = managers.world_instance:get_safe_start_index(instance.index_size, instance.continent)
 
 	managers.world_instance:add_instance_data(instance)
 

@@ -131,7 +131,7 @@ function PlayerBipod:update(t, dt)
 	PlayerBipod.super.update(self, t, dt)
 
 	local deploy_valid = self._equipped_unit:base():is_bipod_usable()
-	local movement_distance = self._unit_deploy_position - managers.player:player_unit():position():length()
+	local movement_distance = (self._unit_deploy_position - managers.player:player_unit():position()):length()
 
 	if not managers.player:player_unit():mover():standing() or movement_distance > 10 or not deploy_valid then
 		self:exit(nil, "standard")

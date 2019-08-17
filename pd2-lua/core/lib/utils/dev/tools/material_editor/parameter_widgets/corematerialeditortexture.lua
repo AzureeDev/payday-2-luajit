@@ -9,7 +9,7 @@ function CoreMaterialEditorTexture:init(parent, editor, parameter_info, paramete
 	local text = self._value .. (self._global_texture and " (Global)" or "")
 	self._text = EWS:TextCtrl(self._right_panel, text, "", "TE_READONLY")
 
-	self._text:set_background_colour(EWS:get_system_colour("3DFACE") * 255:unpack())
+	self._text:set_background_colour((EWS:get_system_colour("3DFACE") * 255):unpack())
 	self._text:set_font_weight("FONTWEIGHT_BOLD")
 	self._right_box:add(self._text, 1, 4, "ALL,EXPAND")
 

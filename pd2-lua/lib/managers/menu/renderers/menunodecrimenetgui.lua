@@ -4762,8 +4762,8 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	local x_td, y_td, x_rtd, y_rtd = nil
 
 	local function sort_func(x, y)
-		x_td = x.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[x.category][x.entry]
-		y_td = y.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[y.category][y.entry]
+		x_td = (x.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[x.category])[x.entry]
+		y_td = (y.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[y.category])[y.entry]
 		x_rtd = tweak_data.economy.rarities[x_td.rarity or "common"]
 		y_rtd = tweak_data.economy.rarities[y_td.rarity or "common"]
 
@@ -4795,7 +4795,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 		local show_skins = is_weapon_skin
 		local is_armor_skin = content.category == "armor_skins"
 		show_skins = show_skins or is_armor_skin
-		c_td = content.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[content.category][content.entry]
+		c_td = (content.category == "weapon_skins" and tweak_data.blackmarket.weapon_skins or tweak_data.economy[content.category])[content.entry]
 		new_content = content_panel:panel({
 			layer = 1,
 			name = i,

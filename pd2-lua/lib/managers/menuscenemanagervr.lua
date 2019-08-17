@@ -175,9 +175,7 @@ function MenuSceneManagerVR:_set_item_unit(unit, oobb_object, max_mod, type, sec
 	__set_item_unit(self, unit, oobb_object, max_mod, type, second_unit, custom_data)
 
 	local player = managers.menu:player()
-	slot8 = player.hand
-	slot10 = player:primary_hand_index() or 1
-	local hand_unit = player:hand(3 - slot10):unit()
+	local hand_unit = player:hand(3 - (player:primary_hand_index() or 1)):unit()
 
 	hand_unit:link(Idstring("g_glove"), unit, unit:orientation_object():name())
 
@@ -206,14 +204,7 @@ function MenuSceneManagerVR:remove_item()
 	__remove_item(self)
 
 	local player = managers.menu:player()
-	slot3 = player
-	slot2 = player.hand
-
-	if not player:primary_hand_index() then
-		slot4 = 1
-	end
-
-	local hand_unit = slot2(slot3, 3 - slot4):unit()
+	local hand_unit = player:hand(3 - (player:primary_hand_index() or 1)):unit()
 
 	hand_unit:set_visible(true)
 end
@@ -223,9 +214,7 @@ local __set_scene_template = MenuSceneManager.set_scene_template
 function MenuSceneManagerVR:set_scene_template(template, data, custom_name, skip_transition)
 	__set_scene_template(self, template, data, custom_name, skip_transition)
 
-	if not data then
-		local template_data = self._scene_templates[template]
-	end
+	local template_data = data or self._scene_templates[template]
 
 	if not template_data.allow_item then
 		self:remove_item()
@@ -243,11 +232,7 @@ function MenuSceneManagerVR:get_henchmen_positioning(index)
 end
 
 function MenuSceneManagerVR:create_character_text_panel(peer_id)
-	if not self._character_text_ws then
-		slot2 = {}
-	end
-
-	self._character_text_ws = slot2
+	self._character_text_ws = self._character_text_ws or {}
 	local character = self._lobby_characters[peer_id]
 
 	if not alive(character) then

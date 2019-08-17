@@ -444,7 +444,7 @@ function CoreCutsceneKeyBase:validate_control_for_attribute(attribute_name)
 	local value_is_valid = self:is_valid_attribute_value(attribute_name, self:attribute_value_from_string(attribute_name, control:get_value()))
 	local colour = value_is_valid and EWS:get_system_colour("WINDOW") or Color("ff9999")
 
-	control:set_background_colour(colour * 255:unpack())
+	control:set_background_colour((colour * 255):unpack())
 
 	if type_name(control) ~= "table" then
 		control:refresh()

@@ -39,7 +39,7 @@ if Vector3 then
 		local rot = Rotation(self, start_dir or Vector3(0, 0, -1))
 
 		return function (ratio)
-			return -rot:z() * math.cos(180 + 360 * ratio) + rot:x() * math.cos(90 + 360 * ratio):normalized()
+			return (-rot:z() * math.cos(180 + 360 * ratio) + rot:x() * math.cos(90 + 360 * ratio)):normalized()
 		end
 	end
 
@@ -104,8 +104,8 @@ if AppClass then
 
 	function AppClass:draw_arrow(from, to, r, g, b, scale)
 		scale = scale or 1
-		local len = to - from:length()
-		local dir = to - from:normalized()
+		local len = (to - from):length()
+		local dir = (to - from):normalized()
 		local arrow_end_pos = from + dir * (len - 100 * scale)
 
 		Application:draw_cylinder(from, arrow_end_pos, 10 * scale, r, g, b)
@@ -123,8 +123,8 @@ if Draw then
 
 	function Pen:arrow(from, to, scale)
 		scale = scale or 1
-		local len = to - from:length()
-		local dir = to - from:normalized()
+		local len = (to - from):length()
+		local dir = (to - from):normalized()
 		local arrow_end_pos = from + dir * (len - 100 * scale)
 
 		self:cylinder(from, arrow_end_pos, 10 * scale)
