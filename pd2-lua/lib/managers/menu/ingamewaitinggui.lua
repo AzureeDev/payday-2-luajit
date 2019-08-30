@@ -540,7 +540,7 @@ function IngameWaitingGui:create_item(panel, outfit_item, tweak_data, folder)
 			guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
 		end
 
-		slot9 = panel:bitmap({
+		local item_bitmap = panel:bitmap({
 			alpha = 0.8,
 			texture = guis_catalog .. folder .. outfit_item,
 			w = w,

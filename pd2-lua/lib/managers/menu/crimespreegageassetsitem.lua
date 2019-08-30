@@ -21,7 +21,7 @@ function GageAssetsItem.animate_select(o, center_helper, instant)
 	local center_x, center_y = o:center()
 
 	if alive(center_helper) then
-		slot6, slot7 = center_helper:center()
+		local center_x, center_y = center_helper:center()
 	end
 
 	if instant then
@@ -57,7 +57,7 @@ function GageAssetsItem.animate_deselect(o, center_helper)
 	local center_x, center_y = o:center()
 
 	if alive(center_helper) then
-		slot5, slot6 = center_helper:center()
+		local center_x, center_y = center_helper:center()
 	end
 
 	over(math.abs(65 - size) / 100, function (p)

@@ -3917,7 +3917,7 @@ function MenuSceneManager:load_safe_result_content(result, ready_clbk)
 
 		managers.dyn_resource:load(ids_unit, weapon_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, callback(self, self, "_set_safe_result_ready_flag", "weapon_ready"))
 
-		slot8 = managers.weapon_factory:preload_blueprint(factory_id, blueprint, false, false, callback(self, self, "_safe_result_parts_loaded"), false)
+		local parts = managers.weapon_factory:preload_blueprint(factory_id, blueprint, false, false, callback(self, self, "_safe_result_parts_loaded"), false)
 	elseif result.category == "armor_skins" then
 		self._safe_result_content_data.armor_id = result.entry
 
@@ -4026,7 +4026,7 @@ function MenuSceneManager:_create_safe_result(created_clbk)
 			id = self._safe_result_content_data.result.entry,
 			quality = self._safe_result_content_data.result.quality
 		}
-		slot5 = self:spawn_item_weapon(self._safe_result_content_data.factory_id, self._safe_result_content_data.blueprint, cosmetics, nil, custom_data)
+		local weapon_unit = self:spawn_item_weapon(self._safe_result_content_data.factory_id, self._safe_result_content_data.blueprint, cosmetics, nil, custom_data)
 	elseif self._safe_result_content_data.armor_id and alive(self._economy_character) then
 		self._economy_character:set_visible(true)
 

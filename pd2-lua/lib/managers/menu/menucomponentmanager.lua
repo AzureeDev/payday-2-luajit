@@ -3611,14 +3611,7 @@ function MenuComponentManager:get_texture_from_mod_type(type, sub_type, gadget, 
 			local part_id = mods[1][1]
 			type = weapon_factory_tweak_data[part_id].type
 			sub_type = weapon_factory_tweak_data[part_id].sub_type
-			slot13 = "guis/textures/pd2/blackmarket/inv_mod_"
-			slot14 = tostring
-
-			if not sub_type then
-				slot15 = type
-			end
-
-			texture = slot13 .. slot14(slot15)
+			texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
 		end
 
 		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)

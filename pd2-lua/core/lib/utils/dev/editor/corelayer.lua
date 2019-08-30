@@ -1817,7 +1817,7 @@ function Layer:test_spawn(type)
 			if math.mod(i, prow) == 0 then
 				c_rad = max_rad * 1
 
-				for slot21, slot22 in ipairs(row_units) do
+				for _, unit in ipairs(row_units) do
 				end
 
 				max_rad = 0

@@ -47,7 +47,7 @@ function MenuKitRenderer:open(...)
 	MenuKitRenderer.super.open(self, ...)
 
 	if self._player_slots then
-		for slot4, slot5 in ipairs(self._player_slots) do
+		for _, slot in ipairs(self._player_slots) do
 		end
 	end
 end

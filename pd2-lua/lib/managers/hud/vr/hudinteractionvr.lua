@@ -78,11 +78,9 @@ end
 HUDInteractionVR.default_show_interact = HUDInteraction.show_interact
 
 function HUDInteractionVR:show_interact(data)
-	if not data then
-		data = {
-			text = self._last_interaction_text or ""
-		}
-	end
+	data = data or {
+		text = self._last_interaction_text or ""
+	}
 
 	self:default_show_interact(data)
 	self._hud_panel:child(self._child_name_text .. "_bg"):set_visible(true)

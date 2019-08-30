@@ -111,7 +111,7 @@ function CivilianLogicSurrender.enter(data, new_logic_name, enter_params)
 				body_part = 1,
 				type = "act"
 			}
-			slot11 = data.unit:brain():action_request(action_data)
+			local action_res = data.unit:brain():action_request(action_data)
 		end
 	end
 end

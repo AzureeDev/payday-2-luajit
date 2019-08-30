@@ -5071,8 +5071,7 @@ function BlackMarketManager:place_crafted_item(category, slot)
 	local tmp = self:get_crafted_category_slot(category, slot)
 	self._global.crafted_items[category][slot] = self:get_crafted_category_slot(self._hold_crafted_item.category, self._hold_crafted_item.slot)
 	self._global.crafted_items[self._hold_crafted_item.category][self._hold_crafted_item.slot] = tmp
-	tmp = nil
-	self._hold_crafted_item = nil
+	tmp, self._hold_crafted_item = nil
 end
 
 function BlackMarketManager:on_aquired_armor(upgrade, id, loading)

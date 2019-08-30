@@ -59,11 +59,11 @@ function TeamAIMovement:add_weapons()
 			self._unit:inventory():add_unit_by_factory_name(loadout.primary, false, false, nil, "")
 		else
 			local weapon = self._ext_base:default_weapon_name("primary")
-			slot5 = weapon and self._unit:inventory():add_unit_by_factory_name(weapon, false, false, nil, "")
+			local _ = weapon and self._unit:inventory():add_unit_by_factory_name(weapon, false, false, nil, "")
 		end
 
 		local sec_weap_name = self._ext_base:default_weapon_name("secondary")
-		slot5 = sec_weap_name and self._unit:inventory():add_unit_by_name(sec_weap_name)
+		local _ = sec_weap_name and self._unit:inventory():add_unit_by_name(sec_weap_name)
 	else
 		TeamAIMovement.super.add_weapons(self)
 	end

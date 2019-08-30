@@ -848,13 +848,10 @@ function CopActionShoot:_chk_start_melee(target_vec, target_dis, autotarget, tar
 
 	if state then
 		if not is_weapon then
-			if not self._common_data.char_tweak.melee_anims then
-				local anim_attack_vars = {
-					"var1",
-					"var2"
-				}
-			end
-
+			local anim_attack_vars = self._common_data.char_tweak.melee_anims or {
+				"var1",
+				"var2"
+			}
 			local melee_var = self:_pseudorandom(#anim_attack_vars)
 
 			self._common_data.machine:set_parameter(state, anim_attack_vars[melee_var], 1)

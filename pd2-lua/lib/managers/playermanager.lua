@@ -899,7 +899,7 @@ function PlayerManager:setup_viewports()
 	local configs = self._viewport_configs[self._last_id]
 
 	if configs then
-		for slot5, slot6 in ipairs(self._players) do
+		for k, player in ipairs(self._players) do
 		end
 	else
 		Application:error("Unsupported number of players: " .. tostring(self._last_id))
@@ -4100,7 +4100,7 @@ function PlayerManager:add_special(params)
 	if special_equipment then
 		if equipment.max_quantity or equipment.quantity or params.transfer and equipment.transfer_quantity then
 			local dedigested_amount = special_equipment.amount and Application:digest_value(special_equipment.amount, false) or 1
-			local new_amount = self:has_category_upgrade(name, "quantity_unlimited") and -1 or slot10(slot11, slot12 + extra)
+			local new_amount = self:has_category_upgrade(name, "quantity_unlimited") and -1 or math.min(dedigested_amount + amount, (params.transfer and equipment.transfer_quantity or equipment.max_quantity or equipment.quantity) + extra)
 			special_equipment.amount = Application:digest_value(new_amount, true)
 
 			if special_equipment.is_cable_tie then

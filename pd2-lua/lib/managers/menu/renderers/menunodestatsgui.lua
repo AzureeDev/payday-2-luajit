@@ -129,7 +129,7 @@ function MenuNodeStatsGui:_add_stats(params)
 	panel:set_h(h)
 
 	if params.type == "text" then
-		slot9 = panel:text({
+		local text = panel:text({
 			halign = "left",
 			vertical = "center",
 			align = "left",
@@ -174,7 +174,7 @@ function MenuNodeStatsGui:_add_stats(params)
 			h = bg:h() - 4,
 			layer = self.layers.items
 		})
-		slot11 = panel:text({
+		local text = panel:text({
 			y = 0,
 			vertical = "center",
 			align = "center",

@@ -608,9 +608,9 @@ function CopActionWalk:_init()
 
 		if pose and not self._unit:anim_data()[pose] then
 			if pose == "stand" then
-				slot4, slot5 = CopActionStand:new(action_desc, self._common_data)
+				local action, success = CopActionStand:new(action_desc, self._common_data)
 			else
-				slot4, slot5 = CopActionCrouch:new(action_desc, self._common_data)
+				local action, success = CopActionCrouch:new(action_desc, self._common_data)
 			end
 		end
 	end

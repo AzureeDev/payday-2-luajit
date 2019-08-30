@@ -1077,22 +1077,20 @@ function HUDManager:add_waypoint(id, data)
 		distance:set_visible(false)
 	end
 
-	if data.timer then
-		local timer = ws:panel():text({
-			font_size = 32,
-			h = 32,
-			vertical = "center",
-			w = 32,
-			align = "center",
-			render_template = "OverlayText",
-			depth_mode = "disabled",
-			rotation = 360,
-			layer = 0,
-			name = "timer" .. id,
-			text = (math.round(data.timer) < 10 and "0" or "") .. math.round(data.timer),
-			font = tweak_data.hud.medium_font_noshadow
-		})
-	end
+	local timer = data.timer and ws:panel():text({
+		font_size = 32,
+		h = 32,
+		vertical = "center",
+		w = 32,
+		align = "center",
+		render_template = "OverlayText",
+		depth_mode = "disabled",
+		rotation = 360,
+		layer = 0,
+		name = "timer" .. id,
+		text = (math.round(data.timer) < 10 and "0" or "") .. math.round(data.timer),
+		font = tweak_data.hud.medium_font_noshadow
+	})
 
 	if timer then
 		timer:set_bottom(ws:panel():h())

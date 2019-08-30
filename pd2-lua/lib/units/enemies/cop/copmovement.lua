@@ -2643,7 +2643,7 @@ function CopMovement:sync_action_hurt_end()
 					walk = -1
 				}
 			}
-			slot4 = CopMovement.action_request(self, action_data)
+			local res = CopMovement.action_request(self, action_data)
 		else
 			self:_chk_start_queued_action()
 			self._ext_brain:action_complete_clbk(action)

@@ -414,7 +414,7 @@ function HUDTeammate:_create_radial_health(radial_health_panel)
 			w = radial_health_panel:w(),
 			h = radial_health_panel:h()
 		})
-		slot15 = radial_health_panel:bitmap({
+		local radial_rip_bg = radial_health_panel:bitmap({
 			texture = "guis/textures/pd2/hud_rip_bg",
 			name = "radial_rip_bg",
 			layer = 1,

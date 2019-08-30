@@ -171,39 +171,32 @@ function MultiProfileItemGui:update()
 	self._name_text:set_left(text_width * 0.1)
 
 	local arrow_left = self._profile_panel:child("arrow_left")
-
-	if not arrow_left then
-		arrow_left = self._profile_panel:bitmap({
-			texture = "guis/textures/menu_arrows",
-			name = "arrow_left",
-			size = 32,
-			texture_rect = {
-				0,
-				0,
-				24,
-				24
-			},
-			color = mult:has_previous() and tweak_data.screen_colors.button_stage_3 or tweak_data.menu.default_disabled_text_color
-		})
-	end
-
+	arrow_left = arrow_left or self._profile_panel:bitmap({
+		texture = "guis/textures/menu_arrows",
+		name = "arrow_left",
+		size = 32,
+		texture_rect = {
+			0,
+			0,
+			24,
+			24
+		},
+		color = mult:has_previous() and tweak_data.screen_colors.button_stage_3 or tweak_data.menu.default_disabled_text_color
+	})
 	local arrow_right = self._profile_panel:child("arrow_right")
-
-	if not arrow_right then
-		arrow_right = self._profile_panel:bitmap({
-			texture = "guis/textures/menu_arrows",
-			name = "arrow_right",
-			size = 32,
-			rotation = 180,
-			texture_rect = {
-				0,
-				0,
-				24,
-				24
-			},
-			color = mult:has_next() and tweak_data.screen_colors.button_stage_3 or tweak_data.menu.default_disabled_text_color
-		})
-	end
+	arrow_right = arrow_right or self._profile_panel:bitmap({
+		texture = "guis/textures/menu_arrows",
+		name = "arrow_right",
+		size = 32,
+		rotation = 180,
+		texture_rect = {
+			0,
+			0,
+			24,
+			24
+		},
+		color = mult:has_next() and tweak_data.screen_colors.button_stage_3 or tweak_data.menu.default_disabled_text_color
+	})
 
 	arrow_left:set_left(0)
 	arrow_right:set_right(self._profile_panel:w())

@@ -456,7 +456,7 @@ function StoryMissionsGui:_update_info(mission)
 						font_size = small_font_size,
 						color = text_col
 					}, objective.progress), nil, 0)
-					slot20 = BoxGuiObject:new(progress, {
+					local box = BoxGuiObject:new(progress, {
 						sides = {
 							1,
 							1,

@@ -5771,7 +5771,7 @@ function SpawnSystemUnitEnabledElement:activate_callback(env)
 		local spawn_system_ext = env.dest_unit:spawn_system()
 
 		if spawn_system_ext then
-			slot6 = spawn_system_ext:set_unit_enabled(socket_name, unit_name, enabled)
+			local unit = spawn_system_ext:set_unit_enabled(socket_name, unit_name, enabled)
 		else
 			self:print_error("No spawn_system extension found on unit \"" .. tostring(env.dest_unit) .. "\".", true, env)
 		end

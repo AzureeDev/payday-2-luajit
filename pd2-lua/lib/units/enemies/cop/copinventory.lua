@@ -124,7 +124,7 @@ function CopInventory:anim_clbk_weapon_attached(unit, state)
 		local weap_align_data = selection.use_data.equip
 		local align_place = self._align_places[weap_align_data.align_place]
 		local parent_unit = self._unit
-		slot7 = parent_unit:link(align_place.obj3d_name, weap_unit, weap_unit:orientation_object():name())
+		local res = parent_unit:link(align_place.obj3d_name, weap_unit, weap_unit:orientation_object():name())
 	else
 		print("unlinking")
 		self._equipped_selection.unit:unlink()

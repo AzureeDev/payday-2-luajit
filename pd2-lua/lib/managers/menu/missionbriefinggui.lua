@@ -241,7 +241,7 @@ function MissionBriefingTabItem.animate_select(o, center_helper, instant)
 	local center_x, center_y = o:center()
 
 	if alive(center_helper) then
-		slot6, slot7 = center_helper:center()
+		local center_x, center_y = center_helper:center()
 	end
 
 	local aspect = o:texture_width() / math.max(1, o:texture_height())
@@ -279,7 +279,7 @@ function MissionBriefingTabItem.animate_deselect(o, center_helper)
 	local center_x, center_y = o:center()
 
 	if alive(center_helper) then
-		slot5, slot6 = center_helper:center()
+		local center_x, center_y = center_helper:center()
 	end
 
 	local aspect = o:texture_width() / math.max(1, o:texture_height())
@@ -775,7 +775,7 @@ function AssetsItem:chk_preplanning_textures_done()
 		text:set_visible(managers.menu:is_pc_controller())
 
 		local level_id = managers.job:current_level_id()
-		slot4 = preplanning_panel:bitmap({
+		local button = preplanning_panel:bitmap({
 			name = "button",
 			alpha = 0.8,
 			blend_mode = "add",

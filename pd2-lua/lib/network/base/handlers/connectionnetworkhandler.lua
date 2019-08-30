@@ -890,7 +890,7 @@ function ConnectionNetworkHandler:sync_fire_results(count_cops, count_gangsters,
 			})
 		end
 
-		slot14, slot15, slot16, slot17 = nil
+		slot14, slot15, slot16, all_pass = nil
 	end
 end
 

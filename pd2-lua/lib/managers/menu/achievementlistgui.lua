@@ -1128,7 +1128,7 @@ function AchievementListGui:generate_side_panel()
 				font_size = medium_font_size
 			}, managers.localization:to_upper_text("menu_filtered_achievements"), string.format("%d / %d", count_done(self._current_list), #self._current_list)), 0)
 		elseif milestone then
-			slot4 = placer:add_bottom(LeftRightText:new(self._filter_panel, {
+			local t = placer:add_bottom(LeftRightText:new(self._filter_panel, {
 				w = self._filter_panel:row_w(),
 				font = medium_font,
 				font_size = medium_font_size

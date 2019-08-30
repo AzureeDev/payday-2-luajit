@@ -221,7 +221,7 @@ function AchievementDetailGui:init(parent, achievement_data_or_id, back_callback
 	end
 
 	if tag_str then
-		slot16 = detail_placer:add_row(detail_canvas:fine_text({
+		local item = detail_placer:add_row(detail_canvas:fine_text({
 			wrap = true,
 			word_wrap = true,
 			text = tag_str,

@@ -2418,7 +2418,7 @@ function MissionDoorDeviceInteractionExt:interact(player)
 	if Network:is_client() then
 		managers.network:session():send_to_host("server_place_mission_door_device", self._unit, player)
 	else
-		slot2 = self:server_place_mission_door_device(player)
+		local result = self:server_place_mission_door_device(player)
 	end
 end
 

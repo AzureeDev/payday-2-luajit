@@ -909,13 +909,9 @@ function ButtonLegendsBar:add_item(data, id, dont_update)
 		table.insert(self._items, self:_create_legend(nil, text))
 	else
 		local macro_name = data.macro_name or "MY_BTN"
-
-		if not data.text then
-			local text = managers.localization:to_upper_text(data.text_id, {
-				[macro_name] = managers.localization:btn_macro(data.binding, true) or ""
-			})
-		end
-
+		local text = data.text or managers.localization:to_upper_text(data.text_id, {
+			[macro_name] = managers.localization:btn_macro(data.binding, true) or ""
+		})
 		local item = nil
 
 		if data.func and not self._legends_only then

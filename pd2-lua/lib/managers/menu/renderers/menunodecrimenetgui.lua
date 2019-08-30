@@ -83,7 +83,7 @@ function MenuNodeCrimenetFiltersGui:_setup_item_panel(safe_rect, res)
 		max_layer = math.max(max_layer, child_layer)
 	end
 
-	for slot9, slot10 in ipairs(self.item_panel:children()) do
+	for _, child in ipairs(self.item_panel:children()) do
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -2892,7 +2892,7 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 			}
 		})
 	elseif ids == Idstring("_introduction") then
-		slot7 = self._info_panel:text({
+		local introduction_text = self._info_panel:text({
 			name = "introduction_text",
 			wrap = true,
 			word_wrap = true,
@@ -3632,7 +3632,7 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 			self._expire_text = expire_text
 		end
 	elseif ids == Idstring("_introduction") then
-		slot8 = self._info_panel:text({
+		local introduction_text = self._info_panel:text({
 			name = "introduction_text",
 			wrap = true,
 			word_wrap = true,
@@ -3643,7 +3643,7 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 			color = tweak_data.screen_colors.text
 		})
 	elseif ids == Idstring("_summary") then
-		slot8 = self._info_panel:text({
+		local summary_text = self._info_panel:text({
 			name = "summary_text",
 			wrap = true,
 			word_wrap = true,
@@ -4240,7 +4240,7 @@ function MenuNodeChooseWeaponRewardGui:_setup_item_panel(safe_rect, res)
 		max_layer = math.max(max_layer, child_layer)
 	end
 
-	for slot9, slot10 in ipairs(self.item_panel:children()) do
+	for _, child in ipairs(self.item_panel:children()) do
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -4386,7 +4386,7 @@ function MenuNodeChooseWeaponCosmeticGui:_setup_item_panel(safe_rect, res)
 		max_layer = math.max(max_layer, child_layer)
 	end
 
-	for slot9, slot10 in ipairs(self.item_panel:children()) do
+	for _, child in ipairs(self.item_panel:children()) do
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -4697,7 +4697,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 		if not managers.blackmarket:have_inventory_tradable_item("drills", data.drill) then
 			drill_bitmap_panel:set_alpha(0.5)
 
-			slot31 = "add"
+			local blend_mode = "add"
 		end
 
 		self:request_texture(bitmap_texture, drill_bitmap_panel, true, blend_mode)

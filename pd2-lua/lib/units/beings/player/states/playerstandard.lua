@@ -879,7 +879,7 @@ function PlayerStandard:_update_movement(t, dt)
 				mvector3.step(achieved_walk_vel, self._last_velocity_xy, wanted_walk_speed * self._move_dir:normalized(), acceleration * dt)
 			end
 
-			slot16 = nil
+			local fwd_component = nil
 		else
 			mvector3.multiply(mvec_move_dir_normalized, wanted_walk_speed)
 			mvector3.step(achieved_walk_vel, self._last_velocity_xy, mvec_move_dir_normalized, acceleration * dt)
@@ -3089,11 +3089,7 @@ function PlayerStandard:_get_intimidation_action(prime_target, char_table, amoun
 				for _, char in pairs(char_table) do
 					if char.unit_type ~= unit_type_camera and char.unit_type ~= unit_type_teammate and (not is_whisper_mode or not char.unit:movement():cool()) then
 						if char.unit_type == unit_type_civilian then
-							if not amount then
-								slot23 = tweak_data.player.long_dis_interaction.intimidate_strength
-							end
-
-							amount = slot23 * managers.player:upgrade_value("player", "civ_intimidation_mul", 1) * managers.player:team_upgrade_value("player", "civ_intimidation_mul", 1)
+							amount = (amount or tweak_data.player.long_dis_interaction.intimidate_strength) * managers.player:upgrade_value("player", "civ_intimidation_mul", 1) * managers.player:team_upgrade_value("player", "civ_intimidation_mul", 1)
 						end
 
 						if prime_target_key == char.unit:key() then
@@ -3620,16 +3616,7 @@ function PlayerStandard:_update_network_jump(pos, is_exit)
 		self._is_jumping = nil
 	elseif self._send_jump_vec and not is_exit then
 		if self._is_jumping and type(self._gnd_ray) ~= "boolean" then
-			slot4 = self._ext_network
-			slot5 = slot4
-			slot4 = slot4.send
-			slot6 = "action_walk_nav_point"
-
-			if self._gnd_ray then
-				slot7 = self._gnd_ray.position
-			end
-
-			slot4(slot5, slot6, slot7)
+			self._ext_network:send("action_walk_nav_point", self._gnd_ray and self._gnd_ray.position)
 		end
 
 		self._ext_network:send("action_jump", pos or self._pos, self._send_jump_vec)

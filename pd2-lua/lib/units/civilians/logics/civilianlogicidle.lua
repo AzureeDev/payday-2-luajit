@@ -208,7 +208,7 @@ function CivilianLogicIdle.on_alert(data, alert_data)
 	end
 
 	if alert_data[5] then
-		slot7, slot8 = CopLogicBase.identify_attention_obj_instant(data, alert_data[5]:key())
+		local att_obj_data, is_new = CopLogicBase.identify_attention_obj_instant(data, alert_data[5]:key())
 	end
 
 	if my_data == data.internal_data and not data.char_tweak.ignores_aggression then

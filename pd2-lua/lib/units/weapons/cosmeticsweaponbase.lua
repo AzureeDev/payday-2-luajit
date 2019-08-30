@@ -188,16 +188,11 @@ function NewRaycastWeaponBase:_apply_cosmetics(async_clbk)
 
 				if mat_texture or type_texture or base_texture then
 					texture_key = mat_texture and mat_texture:key() or type_texture and type_texture:key() or base_texture and base_texture:key()
-
-					if not textures[texture_key] then
-						slot30 = {
-							applied = false,
-							ready = false,
-							name = mat_texture or type_texture or base_texture
-						}
-					end
-
-					textures[texture_key] = slot30
+					textures[texture_key] = textures[texture_key] or {
+						applied = false,
+						ready = false,
+						name = mat_texture or type_texture or base_texture
+					}
 
 					if type(textures[texture_key].name) == "string" then
 						textures[texture_key].name = Idstring(textures[texture_key].name)

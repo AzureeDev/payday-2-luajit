@@ -371,7 +371,7 @@ function HUDAssaultCorner:setup_wave_display(top, right)
 		waves_icon:set_center_y(self._wave_bg_box:h() * 0.5)
 		self._wave_bg_box:set_right(waves_icon:left())
 
-		slot7 = self._wave_bg_box:text({
+		local num_waves = self._wave_bg_box:text({
 			vertical = "center",
 			name = "num_waves",
 			layer = 1,

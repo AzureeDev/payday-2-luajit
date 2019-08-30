@@ -414,7 +414,7 @@ function PlayerInventory:_place_selection(selection_index, is_equip)
 			unit:base():on_enabled()
 		end
 
-		slot7 = self:_link_weapon(unit, align_place)
+		local res = self:_link_weapon(unit, align_place)
 	else
 		unit:unlink()
 		unit:base():set_visibility_state(false)

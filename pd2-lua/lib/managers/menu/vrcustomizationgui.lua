@@ -629,7 +629,7 @@ function VRSubMenu:add_desc(desc_data)
 
 	make_fine_text(desc)
 
-	slot6 = desc_data.image and self._desc_panel:bitmap({
+	local desc_image = desc_data.image and self._desc_panel:bitmap({
 		texture = desc_data.image,
 		y = desc:bottom() + PADDING,
 		layer = OBJECT_LAYER

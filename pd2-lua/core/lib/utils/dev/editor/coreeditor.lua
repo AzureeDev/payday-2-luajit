@@ -3117,7 +3117,7 @@ function CoreEditor:_copy_files(src, dest, rules)
 			end
 
 			local to = to .. name .. "." .. type
-			slot14 = SystemFS:copy_file(file.file, to)
+			local success = SystemFS:copy_file(file.file, to)
 		end
 	end
 end
@@ -4014,7 +4014,7 @@ function CoreEditor:load_continents(world_holder, offset)
 	local continents = world_holder:create_world("world", "continents", offset)
 
 	for name, data in pairs(continents) do
-		slot9 = self:create_continent(name, data)
+		local continent = self:create_continent(name, data)
 	end
 
 	self:set_continent("world")

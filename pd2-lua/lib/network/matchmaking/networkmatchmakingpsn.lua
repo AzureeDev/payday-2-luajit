@@ -588,7 +588,7 @@ function NetworkMatchMakingPSN:psn_member_joined(info)
 		if info.user_id == managers.network.account:player_id() then
 			-- Nothing
 		else
-			slot2 = 10
+			local time_left = 10
 		end
 	end
 

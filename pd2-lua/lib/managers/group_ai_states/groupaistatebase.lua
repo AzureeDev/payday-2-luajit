@@ -2274,7 +2274,7 @@ function GroupAIStateBase:add_special_objective(id, objective_data)
 
 	if objective_data.objective and objective_data.objective.nav_seg then
 		local nav_seg = objective_data.objective.nav_seg
-		slot6 = self:get_area_from_nav_seg_id(nav_seg)
+		local area_data = self:get_area_from_nav_seg_id(nav_seg)
 	end
 end
 

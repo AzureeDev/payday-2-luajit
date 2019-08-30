@@ -299,7 +299,7 @@ function MenuNodeSkillSwitchGui:_setup_item_panel(safe_rect, res)
 		max_layer = math.max(max_layer, child_layer)
 	end
 
-	for slot9, slot10 in ipairs(self.item_panel:children()) do
+	for _, child in ipairs(self.item_panel:children()) do
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))

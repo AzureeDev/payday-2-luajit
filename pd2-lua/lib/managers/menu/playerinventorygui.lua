@@ -1489,7 +1489,7 @@ function PlayerInventoryGui:_update_legends(name)
 				self._legends.select:set_right(x)
 
 				if show_select then
-					slot7 = self._legends.select:left() - 5 or x
+					x = self._legends.select:left() - 5 or x
 				end
 			end
 		else

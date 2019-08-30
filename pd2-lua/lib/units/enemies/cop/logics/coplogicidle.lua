@@ -464,7 +464,7 @@ function CopLogicIdle.on_alert(data, alert_data)
 		local attention_obj = alert_unit and alert_unit:brain() and alert_unit:brain()._logic_data.attention_obj
 
 		if attention_obj then
-			slot6, slot7 = CopLogicBase.identify_attention_obj_instant(data, attention_obj.u_key)
+			local att_obj_data, is_new = CopLogicBase.identify_attention_obj_instant(data, attention_obj.u_key)
 		end
 	end
 end

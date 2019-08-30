@@ -86,7 +86,7 @@ function MenuItemExpand:get_item(name)
 end
 
 function MenuItemExpand:visible_items()
-	for slot4, slot5 in ipairs(self._items) do
+	for _, item in ipairs(self._items) do
 	end
 
 	return self._items

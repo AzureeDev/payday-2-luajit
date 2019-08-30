@@ -294,21 +294,17 @@ function MissionManager:add_fading_debug_output(debug, color, as_subtitle)
 end
 
 function MissionManager:_show_debug_subtitle(debug, color)
-	if not self._debug_subtitle_text then
-		slot3 = self._workspace:panel():text({
-			font_size = 20,
-			wrap = true,
-			word_wrap = true,
-			align = "center",
-			font = "core/fonts/diesel",
-			halign = "center",
-			valign = "center",
-			text = debug,
-			color = color or Color.white
-		})
-	end
-
-	self._debug_subtitle_text = slot3
+	self._debug_subtitle_text = self._debug_subtitle_text or self._workspace:panel():text({
+		font_size = 20,
+		wrap = true,
+		word_wrap = true,
+		align = "center",
+		font = "core/fonts/diesel",
+		halign = "center",
+		valign = "center",
+		text = debug,
+		color = color or Color.white
+	})
 
 	self._debug_subtitle_text:set_w(self._workspace:panel():w() / 2)
 	self._debug_subtitle_text:set_text(debug)

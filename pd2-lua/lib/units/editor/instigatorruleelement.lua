@@ -112,7 +112,7 @@ function InstigatorRuleUnitElement:_update_rules_panel(panel, panel_sizer)
 			value = self._hed.rules[instigator] and self._hed.rules[instigator].mission_equipment,
 			updated_callback = callback(self, self, "_rule_updated", "mission_equipment")
 		}
-		slot10 = CoreEws.list_selector(mission_equipment_params)
+		local states = CoreEws.list_selector(mission_equipment_params)
 	elseif instigator == "enemies" then
 		local carry_ids_params = {
 			name = "Enemy name:",
@@ -133,7 +133,7 @@ function InstigatorRuleUnitElement:_update_rules_panel(panel, panel_sizer)
 			value = self._hed.rules[instigator] and self._hed.rules[instigator].pickup,
 			updated_callback = callback(self, self, "_rule_updated", "pickup")
 		}
-		slot7 = CoreEws.list_selector(pickups_params)
+		local pickup = CoreEws.list_selector(pickups_params)
 	elseif instigator == "civilians" then
 		local civilian_names_params = {
 			name = "Civilian name:",
@@ -154,7 +154,7 @@ function InstigatorRuleUnitElement:_update_rules_panel(panel, panel_sizer)
 			value = self._hed.rules[instigator] and self._hed.rules[instigator].pickup,
 			updated_callback = callback(self, self, "_rule_updated", "pickup")
 		}
-		slot7 = CoreEws.list_selector(pickups_params)
+		local pickup = CoreEws.list_selector(pickups_params)
 	elseif instigator == "loot" then
 		local params = {
 			name = "Carry ids:",
@@ -165,7 +165,7 @@ function InstigatorRuleUnitElement:_update_rules_panel(panel, panel_sizer)
 			value = self._hed.rules[instigator] and self._hed.rules[instigator].carry_ids,
 			updated_callback = callback(self, self, "_rule_updated", "carry_ids")
 		}
-		slot5 = CoreEws.list_selector(params)
+		local list = CoreEws.list_selector(params)
 	elseif instigator == "vehicle" then
 		local options = {}
 
@@ -184,7 +184,7 @@ function InstigatorRuleUnitElement:_update_rules_panel(panel, panel_sizer)
 			value = self._hed.rules[instigator] and self._hed.rules[instigator].vehicle_names,
 			updated_callback = callback(self, self, "_rule_updated", "vehicle_names")
 		}
-		slot6 = CoreEws.list_selector(vehicle_names_params)
+		local states = CoreEws.list_selector(vehicle_names_params)
 	end
 
 	self._rules_panel:layout()

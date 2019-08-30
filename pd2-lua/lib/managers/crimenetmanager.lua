@@ -1510,9 +1510,12 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 
 		while true do
 			wait(0.009, self._fixed_dt)
-			over(0.045, function (p)
+
+			local function slot7(p)
 				o:set_alpha(math.lerp(alpha, wanted_alpha, p))
-			end, self._fixed_dt)
+			end
+
+			over(0.045, slot7, self._fixed_dt)
 
 			flicker_up = not flicker_up
 			alpha = o:alpha()
@@ -1892,7 +1895,7 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 	if has_ghost_bonus then
 		local ghost_bonus_mul = managers.job:get_ghost_bonus()
 		local job_ghost_string = mul_to_procent_string(ghost_bonus_mul)
-		slot22 = global_bonuses_panel:text({
+		local ghost_text = global_bonuses_panel:text({
 			blend_mode = "add",
 			align = "center",
 			font = tweak_data.menu.pd2_small_font,
@@ -1910,7 +1913,7 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 
 		if skill_bonus > 0 then
 			local skill_string = mul_to_procent_string(skill_bonus)
-			slot22 = global_bonuses_panel:text({
+			local skill_text = global_bonuses_panel:text({
 				blend_mode = "add",
 				align = "center",
 				font = tweak_data.menu.pd2_small_font,
@@ -1927,7 +1930,7 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 
 		if infamy_bonus > 0 then
 			local infamy_string = mul_to_procent_string(infamy_bonus)
-			slot23 = global_bonuses_panel:text({
+			local infamy_text = global_bonuses_panel:text({
 				blend_mode = "add",
 				align = "center",
 				font = tweak_data.menu.pd2_small_font,
@@ -1944,7 +1947,7 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 
 		if limited_bonus > 0 then
 			local limited_string = mul_to_procent_string(limited_bonus)
-			slot24 = global_bonuses_panel:text({
+			local limited_text = global_bonuses_panel:text({
 				blend_mode = "add",
 				align = "center",
 				font = tweak_data.menu.pd2_small_font,
@@ -2009,7 +2012,7 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 	end
 
 	if not no_servers and not is_xb1 then
-		slot13 = is_x360 and "menu_cn_friends" or "menu_cn_filter"
+		local id = is_x360 and "menu_cn_friends" or "menu_cn_filter"
 	elseif not no_servers and is_xb1 then
 		local id = "menu_cn_smart_matchmaking"
 		local smart_matchmaking_button = self._panel:text({
@@ -3696,7 +3699,7 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 			local level = is_crime_spree and managers.crime_spree:spree_level() or tonumber(data.crime_spree)
 
 			if level >= 0 then
-				slot76 = spree_panel:text({
+				local spree_level = spree_panel:text({
 					halign = "left",
 					vertical = "center",
 					layer = 1,
@@ -3735,7 +3738,7 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 				text = managers.localization:to_upper_text("menu_lobby_server_state_" .. tweak_data:index_to_server_state(data.state))
 			end
 
-			slot77 = skirmish_panel:text({
+			local skirmish_wave = skirmish_panel:text({
 				layer = 1,
 				vertical = "center",
 				blend_mode = "add",
@@ -4535,7 +4538,7 @@ function CrimeNetGui:goto_lobby(lobby)
 end
 
 function CrimeNetGui:goto_bain()
-	for slot4, slot5 in pairs(self._jobs) do
+	for _, job in pairs(self._jobs) do
 	end
 end
 
@@ -4685,9 +4688,6 @@ function CrimeNetGui:update_job_gui(job, inside)
 			if inside and job.callout and self._crimenet_enabled then
 				Application:debug(job.callout)
 				managers.menu_component:post_event(job.callout, true)
-			end
-
-			if alpha_met and glow_met then
 			end
 
 			while not alpha_met or not glow_met or not expand_met or not pushout_met do

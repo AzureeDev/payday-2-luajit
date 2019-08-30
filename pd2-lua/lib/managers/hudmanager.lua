@@ -957,21 +957,18 @@ function HUDManager:add_waypoint(id, data)
 		distance:set_visible(false)
 	end
 
-	if data.timer then
-		local timer = waypoint_panel:text({
-			font_size = 32,
-			h = 32,
-			vertical = "center",
-			w = 32,
-			align = "center",
-			rotation = 360,
-			layer = 0,
-			name = "timer" .. id,
-			text = (math.round(data.timer) < 10 and "0" or "") .. math.round(data.timer),
-			font = tweak_data.hud.medium_font_noshadow
-		})
-	end
-
+	local timer = data.timer and waypoint_panel:text({
+		font_size = 32,
+		h = 32,
+		vertical = "center",
+		w = 32,
+		align = "center",
+		rotation = 360,
+		layer = 0,
+		name = "timer" .. id,
+		text = (math.round(data.timer) < 10 and "0" or "") .. math.round(data.timer),
+		font = tweak_data.hud.medium_font_noshadow
+	})
 	text = waypoint_panel:text({
 		h = 24,
 		vertical = "center",

@@ -225,7 +225,7 @@ function ProfileBoxGui:_add_stats(params)
 	panel:set_h(math.ceil(h))
 
 	if params.type == "text" then
-		slot10 = panel:text({
+		local text = panel:text({
 			name = "text",
 			halign = "right",
 			align = "right",
@@ -276,7 +276,7 @@ function ProfileBoxGui:_add_stats(params)
 			w = (bg:w() - 4) * params.data,
 			h = bg:h() - 4
 		})
-		slot12 = panel:text({
+		local text = panel:text({
 			name = "bar_text",
 			halign = "right",
 			align = "right",

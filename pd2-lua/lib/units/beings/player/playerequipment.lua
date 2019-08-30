@@ -118,7 +118,7 @@ function PlayerEquipment:use_ammo_bag()
 		if Network:is_client() then
 			managers.network:session():send_to_host("place_ammo_bag", pos, rot, ammo_upgrade_lvl, bullet_storm_level)
 		else
-			slot6 = AmmoBagBase.spawn(pos, rot, ammo_upgrade_lvl, managers.network:session():local_peer():id(), bullet_storm_level)
+			local unit = AmmoBagBase.spawn(pos, rot, ammo_upgrade_lvl, managers.network:session():local_peer():id(), bullet_storm_level)
 		end
 
 		return true
@@ -153,7 +153,7 @@ function PlayerEquipment:use_doctor_bag()
 		if Network:is_client() then
 			managers.network:session():send_to_host("place_deployable_bag", "DoctorBagBase", pos, rot, bits)
 		else
-			slot7 = DoctorBagBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
+			local unit = DoctorBagBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
 		end
 
 		return true
@@ -180,7 +180,7 @@ function PlayerEquipment:use_first_aid_kit()
 		if Network:is_client() then
 			managers.network:session():send_to_host("place_deployable_bag", "FirstAidKitBase", pos, rot, bits)
 		else
-			slot7 = FirstAidKitBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
+			local unit = FirstAidKitBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
 		end
 
 		return true
@@ -228,7 +228,7 @@ function PlayerEquipment:use_bodybags_bag()
 		if Network:is_client() then
 			managers.network:session():send_to_host("place_deployable_bag", "BodyBagsBagBase", pos, rot, amount_upgrade_lvl)
 		else
-			slot5 = BodyBagsBagBase.spawn(pos, rot, amount_upgrade_lvl, managers.network:session():local_peer():id())
+			local unit = BodyBagsBagBase.spawn(pos, rot, amount_upgrade_lvl, managers.network:session():local_peer():id())
 		end
 
 		return true
