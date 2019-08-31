@@ -1510,12 +1510,9 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 
 		while true do
 			wait(0.009, self._fixed_dt)
-
-			local function slot7(p)
+			over(0.045, function (p)
 				o:set_alpha(math.lerp(alpha, wanted_alpha, p))
-			end
-
-			over(0.045, slot7, self._fixed_dt)
+			end, self._fixed_dt)
 
 			flicker_up = not flicker_up
 			alpha = o:alpha()

@@ -853,8 +853,7 @@ function CrimeSpreeRewardsMenuComponent:flip_item_card(card, item_type, delay)
 	end
 
 	managers.menu_component:post_event("loot_flip_card")
-
-	local function slot13(p)
+	over(0.25, function (p)
 		card:set_rotation(start_rotation + math.sin(p * 45) * diff)
 
 		if card:rotation() == 0 then
@@ -863,9 +862,7 @@ function CrimeSpreeRewardsMenuComponent:flip_item_card(card, item_type, delay)
 
 		card:set_w(start_w * math.cos(p * 90))
 		card:set_center(cx, cy)
-	end
-
-	over(0.25, slot13)
+	end)
 
 	local texture, rect, coords = tweak_data.hud_icons:get_icon_data(item_type or "downcard_overkill_deck")
 

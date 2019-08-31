@@ -252,12 +252,9 @@ function MenuBackdropGUI:enable_light(enabled)
 
 		while true do
 			wait(math.rand(0.1), self._fixed_dt)
-
-			local function slot7(p)
+			over(math.rand(0.3), function (p)
 				o:set_alpha(math.lerp(alpha, wanted_alpha, p))
-			end
-
-			over(math.rand(0.3), slot7, self._fixed_dt)
+			end, self._fixed_dt)
 
 			flicker_up = not flicker_up
 			alpha = o:alpha()

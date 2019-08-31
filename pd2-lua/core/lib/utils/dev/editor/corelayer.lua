@@ -1550,18 +1550,7 @@ function Layer:clone_edited_values(unit, source)
 
 		if projection_texture then
 			local is_projection = CoreEditorUtils.is_projection_light(source, light, "projection")
-
-			if string.match(light:properties(), "omni") then
-				if false then
-					slot12 = true
-				else
-					slot12 = false
-
-					if false then
-						local is_spot = true
-					end
-				end
-			end
+			local is_spot = (not string.match(light:properties(), "omni") or false) and true
 
 			if is_projection and is_spot then
 				new_light:set_projection_texture(Idstring(projection_texture), false, false)
