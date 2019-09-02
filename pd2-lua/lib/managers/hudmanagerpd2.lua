@@ -212,7 +212,7 @@ function HUDManager:add_waiting(peer_id, override_index)
 	if panel and peer then
 		panel:set_waiting(true, peer)
 
-		slot6 = not self._waiting_legend:is_set() and self._waiting_legend:show_on(panel, peer)
+		local _ = not self._waiting_legend:is_set() and self._waiting_legend:show_on(panel, peer)
 	end
 end
 

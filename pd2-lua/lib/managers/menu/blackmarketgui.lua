@@ -10861,119 +10861,120 @@ function BlackMarketGui:populate_weapon_category_new(data)
 			if _G.IS_VR then
 				new_data.vr_locked = tweak_data.vr:is_locked("weapons", crafted.weapon_id)
 				new_data.unlocked = new_data.unlocked and not tweak_data.vr:is_locked("weapons", crafted.weapon_id)
-				new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or nil
-				new_data.lock_texture = new_data.ignore_slot or self:get_lock_icon(new_data)
-				new_data.holding = currently_holding and hold_crafted_item.slot == index
-				new_data.part_dlc_lock = part_dlc_lock
-				new_data.global_value = tweak_data.weapon[new_data.name] and tweak_data.weapon[new_data.name].global_value or "normal"
+			end
 
-				if data.equip_weapon_cosmetics then
-					new_data.equipped_slot = new_data.slot
-					new_data.equipped_name = new_data.name
-				end
+			new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or nil
+			new_data.lock_texture = new_data.ignore_slot or self:get_lock_icon(new_data)
+			new_data.holding = currently_holding and hold_crafted_item.slot == index
+			new_data.part_dlc_lock = part_dlc_lock
+			new_data.global_value = tweak_data.weapon[new_data.name] and tweak_data.weapon[new_data.name].global_value or "normal"
 
-				local icon_list = managers.menu_component:create_weapon_mod_icon_list(crafted.weapon_id, category, crafted.factory_id, index)
-				local icon_index = 1
-				local new_parts = {}
+			if data.equip_weapon_cosmetics then
+				new_data.equipped_slot = new_data.slot
+				new_data.equipped_name = new_data.name
+			end
 
-				for _, part in pairs(managers.blackmarket:get_weapon_new_part_drops(crafted.factory_id) or {}) do
-					local type = tweak_data.weapon.factory.parts[part].type
-					new_parts[type] = true
-				end
+			local icon_list = managers.menu_component:create_weapon_mod_icon_list(crafted.weapon_id, category, crafted.factory_id, index)
+			local icon_index = 1
+			local new_parts = {}
 
-				if table.size(new_parts) > 0 then
-					new_data.new_drop_data = {}
-				end
+			for _, part in pairs(managers.blackmarket:get_weapon_new_part_drops(crafted.factory_id) or {}) do
+				local type = tweak_data.weapon.factory.parts[part].type
+				new_parts[type] = true
+			end
 
-				new_data.mini_icons = {}
+			if table.size(new_parts) > 0 then
+				new_data.new_drop_data = {}
+			end
 
-				if not new_data.ignore_slot then
-					for _, icon in pairs(icon_list) do
+			new_data.mini_icons = {}
+
+			if not new_data.ignore_slot then
+				for _, icon in pairs(icon_list) do
+					table.insert(new_data.mini_icons, {
+						layer = 1,
+						h = 16,
+						stream = false,
+						w = 16,
+						texture = icon.texture,
+						right = (icon_index - 1) % 11 * 18,
+						bottom = math.floor((icon_index - 1) / 11) * 25,
+						alpha = icon.equipped and 1 or 0.25
+					})
+
+					if new_parts[icon.type] then
 						table.insert(new_data.mini_icons, {
+							texture = "guis/textures/pd2/blackmarket/inv_mod_new",
 							layer = 1,
-							h = 16,
+							h = 8,
 							stream = false,
 							w = 16,
-							texture = icon.texture,
+							alpha = 1,
 							right = (icon_index - 1) % 11 * 18,
-							bottom = math.floor((icon_index - 1) / 11) * 25,
-							alpha = icon.equipped and 1 or 0.25
+							bottom = math.floor((icon_index - 1) / 11) * 25 + 16
 						})
-
-						if new_parts[icon.type] then
-							table.insert(new_data.mini_icons, {
-								texture = "guis/textures/pd2/blackmarket/inv_mod_new",
-								layer = 1,
-								h = 8,
-								stream = false,
-								w = 16,
-								alpha = 1,
-								right = (icon_index - 1) % 11 * 18,
-								bottom = math.floor((icon_index - 1) / 11) * 25 + 16
-							})
-						end
-
-						icon_index = icon_index + 1
 					end
+
+					icon_index = icon_index + 1
 				end
+			end
 
-				new_data.hide_unselected_mini_icons = true
+			new_data.hide_unselected_mini_icons = true
 
-				if not new_data.unlocked then
-					new_data.last_weapon = last_weapon
+			if not new_data.unlocked then
+				new_data.last_weapon = last_weapon
+			else
+				new_data.last_weapon = last_weapon or last_unlocked_weapon
+			end
+
+			if new_data.equipped then
+				self._equipped_comparision_data = self._equipped_comparision_data or {}
+				self._equipped_comparision_data[category] = new_data.comparision_data
+			end
+
+			local active = true
+
+			if not new_data.ignore_slot then
+				if data.equip_weapon_cosmetics and data.equip_weapon_cosmetics.weapon_id == crafted.weapon_id then
+					if active then
+						table.insert(new_data, "wcc_equip")
+					end
+
+					new_data.equip_weapon_cosmetics = data.equip_weapon_cosmetics
+				elseif currently_holding then
+					new_data.selected_text = managers.localization:to_upper_text("bm_menu_btn_swap_weapon")
+
+					if new_data.slot ~= hold_crafted_item.slot then
+						table.insert(new_data, "w_swap")
+					end
+
+					table.insert(new_data, "i_stop_move")
 				else
-					new_data.last_weapon = last_weapon or last_unlocked_weapon
-				end
+					local has_mods = managers.weapon_factory:has_weapon_more_than_default_parts(crafted.factory_id)
+					local can_mod = true
 
-				if new_data.equipped then
-					self._equipped_comparision_data = self._equipped_comparision_data or {}
-					self._equipped_comparision_data[category] = new_data.comparision_data
-				end
+					if can_mod and data.allow_modify ~= false and has_mods and active then
+						table.insert(new_data, "w_mod")
+					end
 
-				local active = true
+					if data.allow_skinning ~= false and has_mods and active and managers.workshop and managers.workshop:enabled() and not table.contains(managers.blackmarket:skin_editor():get_excluded_weapons(), new_data.name) then
+						table.insert(new_data, "w_skin")
+					end
 
-				if not new_data.ignore_slot then
-					if data.equip_weapon_cosmetics and data.equip_weapon_cosmetics.weapon_id == crafted.weapon_id then
-						if active then
-							table.insert(new_data, "wcc_equip")
-						end
+					if data.allow_sell ~= false and not new_data.last_weapon then
+						table.insert(new_data, "w_sell")
+					end
 
-						new_data.equip_weapon_cosmetics = data.equip_weapon_cosmetics
-					elseif currently_holding then
-						new_data.selected_text = managers.localization:to_upper_text("bm_menu_btn_swap_weapon")
+					if active and not new_data.equipped and new_data.unlocked then
+						table.insert(new_data, "w_equip")
+					end
 
-						if new_data.slot ~= hold_crafted_item.slot then
-							table.insert(new_data, "w_swap")
-						end
+					if new_data.equipped and new_data.unlocked then
+						table.insert(new_data, "w_move")
+					end
 
-						table.insert(new_data, "i_stop_move")
-					else
-						local has_mods = managers.weapon_factory:has_weapon_more_than_default_parts(crafted.factory_id)
-						local can_mod = true
-
-						if can_mod and data.allow_modify ~= false and has_mods and active then
-							table.insert(new_data, "w_mod")
-						end
-
-						if data.allow_skinning ~= false and has_mods and active and managers.workshop and managers.workshop:enabled() and not table.contains(managers.blackmarket:skin_editor():get_excluded_weapons(), new_data.name) then
-							table.insert(new_data, "w_skin")
-						end
-
-						if data.allow_sell ~= false and not new_data.last_weapon then
-							table.insert(new_data, "w_sell")
-						end
-
-						if active and not new_data.equipped and new_data.unlocked then
-							table.insert(new_data, "w_equip")
-						end
-
-						if new_data.equipped and new_data.unlocked then
-							table.insert(new_data, "w_move")
-						end
-
-						if data.allow_preview ~= false and active then
-							table.insert(new_data, "w_preview")
-						end
+					if data.allow_preview ~= false and active then
+						table.insert(new_data, "w_preview")
 					end
 				end
 			end
@@ -12499,7 +12500,7 @@ function BlackMarketGui:create_steam_inventory(data)
 			managers.menu:show_and_more_tradable_item_received(params)
 
 			break
-		else
+		elseif inventory_tradable[instance_id] then
 			index = index + 1
 			params.instance_id = instance_id
 			params.item = inventory_tradable[instance_id]
@@ -12511,18 +12512,19 @@ function BlackMarketGui:create_steam_inventory(data)
 				ti_td = tweak_data:get_raw_value("economy", params.item.category, params.item.entry)
 			end
 
-			params.item_name = managers.localization:text(ti_td.name_id)
-			params.rarity_name = managers.localization:text(tweak_data.economy.rarities[ti_td.rarity or "common"] and tweak_data.economy.rarities[ti_td.rarity or "common"].name_id or "nil")
-			params.quality_name = managers.localization:text(tweak_data.economy.qualities[params.item.quality or "poor"] and tweak_data.economy.qualities[params.item.quality or "poor"].name_id or "nil")
-			slot16 = {
-				content = tweak_data.economy.safes[params.item.entry] and tweak_data.economy.safes[params.item.entry].content,
-				drill = ti_td.drill,
-				safe = params.item.entry,
-				safe_id = params.item.instance_id
-			}
-			params.container = params.item.instance_id
+			if ti_td then
+				params.item_name = managers.localization:text(ti_td.name_id)
+				params.rarity_name = managers.localization:text(tweak_data.economy.rarities[ti_td.rarity or "common"] and tweak_data.economy.rarities[ti_td.rarity or "common"].name_id or "nil")
+				params.quality_name = managers.localization:text(tweak_data.economy.qualities[params.item.quality or "poor"] and tweak_data.economy.qualities[params.item.quality or "poor"].name_id or "nil")
+				params.container = params.item.category == "safes" and {
+					content = tweak_data.economy.safes[params.item.entry] and tweak_data.economy.safes[params.item.entry].content,
+					drill = ti_td.drill,
+					safe = params.item.entry,
+					safe_id = params.item.instance_id
+				}
 
-			managers.menu:show_new_tradable_item_received(params)
+				managers.menu:show_new_tradable_item_received(params)
+			end
 		end
 	end
 end
@@ -15005,18 +15007,8 @@ function BlackMarketGui:remove_mod_callback(data)
 		add = false,
 		ignore_lost_mods = data.free_of_charge
 	}
-	slot3 = managers.blackmarket
-	slot4 = slot3
-	slot3 = slot3.get_modify_weapon_consequence
-	slot5 = data.category
-	slot6 = data.slot
-	slot7 = data.default_mod or data.name
 
-	if data.default_mod then
-		-- Nothing
-	end
-
-	local replaces, removes = slot3(slot4, slot5, slot6, slot7, true)
+	local replaces, removes = managers.blackmarket:get_modify_weapon_consequence(data.category, data.slot, data.default_mod or data.name, data.default_mod and true)
 	local weapon_id = managers.blackmarket:get_crafted_category(data.category)[data.slot].weapon_id
 	local cost = managers.money:get_weapon_modify_price(weapon_id, data.name, data.global_value) or 0
 	params.money = cost > 0 and managers.experience:cash_string(cost)

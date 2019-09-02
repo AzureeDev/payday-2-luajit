@@ -349,13 +349,13 @@ function ascii_table(t, raw)
 		end
 	end
 
-	out = out .. "-":rep(klen + vlen + 5) .. "\n"
+	out = out .. ("-"):rep(klen + vlen + 5) .. "\n"
 
 	for k, v in sort_iterator(t, raw) do
 		out = out .. "| " .. line_representation(k, nil, raw):left(klen) .. "| " .. line_representation(v, nil, raw):left(vlen) .. "|\n"
 	end
 
-	out = out .. "-":rep(klen + vlen + 5) .. "\n"
+	out = out .. ("-"):rep(klen + vlen + 5) .. "\n"
 
 	return out
 end

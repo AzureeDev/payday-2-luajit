@@ -949,30 +949,9 @@ function HUDAssaultCorner:flash_point_of_no_return_timer(beep)
 		while t < 0.5 do
 			t = t + coroutine.yield()
 			local n = 1 - math.sin(t * 180)
-			slot3 = math.lerp
-			slot4 = 1
-
-			if 1 then
-				slot4 = self._point_of_no_return_color.r
-			end
-
-			local r = slot3(slot4, 1, n)
-			slot4 = math.lerp
-			slot5 = 0
-
-			if 0 then
-				slot5 = self._point_of_no_return_color.g
-			end
-
-			local g = slot4(slot5, 0.8, n)
-			slot5 = math.lerp
-			slot6 = 0
-
-			if 0 then
-				slot6 = self._point_of_no_return_color.b
-			end
-
-			local b = slot5(slot6, 0.2, n)
+			local r = math.lerp(1 or self._point_of_no_return_color.r, 1, n)
+			local g = math.lerp(0 or self._point_of_no_return_color.g, 0.8, n)
+			local b = math.lerp(0 or self._point_of_no_return_color.b, 0.2, n)
 
 			o:set_color(Color(r, g, b))
 			o:set_font_size(math.lerp(tweak_data.hud_corner.noreturn_size, tweak_data.hud_corner.noreturn_size * 1.25, n))
