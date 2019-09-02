@@ -15007,18 +15007,8 @@ function BlackMarketGui:remove_mod_callback(data)
 		add = false,
 		ignore_lost_mods = data.free_of_charge
 	}
-	slot3 = managers.blackmarket
-	slot4 = slot3
-	slot3 = slot3.get_modify_weapon_consequence
-	slot5 = data.category
-	slot6 = data.slot
-	slot7 = data.default_mod or data.name
 
-	if data.default_mod then
-		-- Nothing
-	end
-
-	local replaces, removes = slot3(slot4, slot5, slot6, slot7, true)
+	local replaces, removes = managers.blackmarket:get_modify_weapon_consequence(data.category, data.slot, data.default_mod or data.name, data.default_mod and true)
 	local weapon_id = managers.blackmarket:get_crafted_category(data.category)[data.slot].weapon_id
 	local cost = managers.money:get_weapon_modify_price(weapon_id, data.name, data.global_value) or 0
 	params.money = cost > 0 and managers.experience:cash_string(cost)

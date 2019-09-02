@@ -957,11 +957,9 @@ function NavigationManager:_draw_room(room, instant)
 					rad = 2.2
 					color = Vector3(0, 1, 0)
 				elseif obstacle_type == "stairs" then
-					slot28 = 8
 					rad = 1
 					color = Vector3(1, 0.4, 0)
 				elseif obstacle_type == "cliffs" then
-					slot28 = 6
 					rad = 1
 					color = Vector3(0.2, 0.1, 0)
 				else
