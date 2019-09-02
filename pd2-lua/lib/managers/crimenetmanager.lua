@@ -3069,7 +3069,7 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 		end
 	end
 
-	local job_plan_icon = nil
+	local job_plan_icon
 
 	if is_server and data.job_plan and data.job_plan ~= -1 then
 		local texture = data.job_plan == 1 and "guis/textures/pd2/cn_playstyle_loud" or "guis/textures/pd2/cn_playstyle_stealth"
@@ -3168,6 +3168,9 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 		layer = 10,
 		color = color:with_alpha(0.6)
 	})
+	
+	do
+	
 	local x = job_plan_icon and job_plan_icon:right() + 2 or 0
 	local _, _, w, h = host_name:text_rect()
 
@@ -3176,6 +3179,8 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 
 	if not is_server then
 		-- Nothing
+	end
+		
 	end
 
 	local _, _, w, h = job_name:text_rect()
@@ -3231,10 +3236,21 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 		heat_name:set_text(" ")
 		heat_name:set_w(0, 0)
 		heat_name:set_position(0, host_name:bottom())
-
+	elseif data.is_crime_spree then
 		local text = ""
-		local mission_data = managers.crime_spree:get_mission(data.crime_spree_mission)
-		text = (not mission_data or managers.localization:text(tweak and tweak.name_id or "No level")) and ("No mission ID" or managers.localization:text("menu_lobby_server_state_in_lobby"))
+
+		if tweak_data:server_state_to_index("in_lobby") < data.state then
+			local mission_data = managers.crime_spree:get_mission(data.crime_spree_mission)
+
+			if mission_data then
+				local tweak = tweak_data.levels[mission_data.level.level_id]
+				text = managers.localization:text(tweak and tweak.name_id or "No level")
+			else
+				text = "No mission ID"
+			end
+		else
+			text = managers.localization:text("menu_lobby_server_state_in_lobby")
+		end
 
 		job_name:set_text(utf8.to_upper(text))
 
@@ -3254,51 +3270,48 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 		heat_name:set_text(" ")
 		heat_name:set_w(0, 0)
 		heat_name:set_position(0, host_name:bottom())
+	elseif data.is_skirmish then
+		local is_weekly = data.skirmish == SkirmishManager.LOBBY_WEEKLY
+		local text = managers.localization:text(is_weekly and "menu_weekly_skirmish" or "menu_skirmish")
 
-		if "ljd_decompile_error_something_goes_here_fadklsdfajsdlkjf" then
-			if data.is_skirmish then
-				local is_weekly = data.skirmish == SkirmishManager.LOBBY_WEEKLY
-				local text = managers.localization:text(is_weekly and "menu_weekly_skirmish" or "menu_skirmish")
+		job_name:set_text(utf8.to_upper(text))
 
-				job_name:set_text(utf8.to_upper(text))
+		local _, _, w, h = job_name:text_rect()
 
-				local _, _, w, h = job_name:text_rect()
+		job_name:set_size(w, h)
+		job_name:set_position(0, host_name:bottom())
+		contact_name:set_text(" ")
+		contact_name:set_w(0, 0)
+		contact_name:set_position(0, host_name:bottom())
+		info_name:set_text(" ")
+		info_name:set_size(0, 0)
+		info_name:set_position(0, host_name:bottom())
+		difficulty_name:set_text(" ")
+		difficulty_name:set_w(0, 0)
+		difficulty_name:set_position(0, host_name:bottom())
+		heat_name:set_text(" ")
+		heat_name:set_w(0, 0)
+		heat_name:set_position(0, host_name:bottom())
+	elseif not got_job then
+		job_name:set_text(data.state_name or managers.localization:to_upper_text("menu_lobby_server_state_in_lobby"))
 
-				job_name:set_size(w, h)
-				job_name:set_position(0, host_name:bottom())
-				contact_name:set_text(" ")
-				contact_name:set_w(0, 0)
-				contact_name:set_position(0, host_name:bottom())
-				info_name:set_text(" ")
-				info_name:set_size(0, 0)
-				info_name:set_position(0, host_name:bottom())
-				difficulty_name:set_text(" ")
-				difficulty_name:set_w(0, 0)
-				difficulty_name:set_position(0, host_name:bottom())
-				heat_name:set_text(" ")
-				heat_name:set_w(0, 0)
-				heat_name:set_position(0, host_name:bottom())
-			elseif not got_job then
-				job_name:set_text(data.state_name or managers.localization:to_upper_text("menu_lobby_server_state_in_lobby"))
+		local _, _, w, h = job_name:text_rect()
 
-				local _, _, w, h = job_name:text_rect()
-
-				job_name:set_size(w, h)
-				job_name:set_position(0, host_name:bottom())
-				contact_name:set_text(" ")
-				contact_name:set_w(0, 0)
-				contact_name:set_position(0, host_name:bottom())
-				info_name:set_text(" ")
-				info_name:set_size(0, 0)
-				info_name:set_position(0, host_name:bottom())
-				difficulty_name:set_text(" ")
-				difficulty_name:set_w(0, 0)
-				difficulty_name:set_position(0, host_name:bottom())
-				heat_name:set_text(" ")
-				heat_name:set_w(0, 0)
-				heat_name:set_position(0, host_name:bottom())
-			end
-		end
+		job_name:set_size(w, h)
+		job_name:set_position(0, host_name:bottom())
+		contact_name:set_text(" ")
+		contact_name:set_w(0, 0)
+		contact_name:set_position(0, host_name:bottom())
+		info_name:set_text(" ")
+		info_name:set_size(0, 0)
+		info_name:set_position(0, host_name:bottom())
+		difficulty_name:set_text(" ")
+		difficulty_name:set_w(0, 0)
+		difficulty_name:set_position(0, host_name:bottom())
+		heat_name:set_text(" ")
+		heat_name:set_w(0, 0)
+		heat_name:set_position(0, host_name:bottom())
+	end
 
 		stars_panel:set_position(0, job_name:bottom())
 		side_panel:set_h(math.round(host_name:h() + job_name:h() + stars_panel:h()))
