@@ -94,5 +94,5 @@ function string:rep(n)
 end
 
 function string:left(n)
-	return self .. " ":rep(n - self:len())
+	return self .. (" "):rep(n - self:len())
 end

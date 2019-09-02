@@ -2866,11 +2866,7 @@ function CopMovement:_material_config_name(part_id, unit_name, use_cc_material_c
 	end
 
 	local cc_string = use_cc_material_config and "_cc" or ""
-	slot6 = "_thq"
-
-	if "_thq" then
-		local thq_string = ""
-	end
+	local thq_string = "_thq" or ""
 
 	return Idstring(unit_name .. cc_string .. thq_string)
 end

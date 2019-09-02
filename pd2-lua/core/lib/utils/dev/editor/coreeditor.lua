@@ -4397,7 +4397,7 @@ function CoreEditor:parse_simulation_world_setting_path(path)
 
 		return t
 	else
-		return PackageManager:editor_load_script_data("world_setting":id(), path:id())
+		return PackageManager:editor_load_script_data(("world_setting"):id(), path:id())
 	end
 end
 

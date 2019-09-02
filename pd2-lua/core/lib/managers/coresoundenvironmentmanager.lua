@@ -361,7 +361,7 @@ function CoreSoundEnvironmentManager:add_soundbank(soundbank)
 	end
 
 	if Application:editor() then
-		CoreEngineAccess._editor_load("bnk":id(), soundbank:id())
+		CoreEngineAccess._editor_load(("bnk"):id(), soundbank:id())
 	end
 end
 

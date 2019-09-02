@@ -2925,7 +2925,7 @@ function CharacterTweakData:_init_taser(presets)
 	self.taser.die_sound_event = "tsr_x02a_any_3p"
 	self.taser.special_deaths = {
 		bullet = {
-			["head":id():key()] = {
+			[("head"):id():key()] = {
 				sequence = "kill_tazer_headshot",
 				special_comment = "x01",
 				weapon_id = "model70",

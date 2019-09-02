@@ -1235,16 +1235,7 @@ function MenuNodeCrimenetContactInfoGui:mouse_moved(o, x, y)
 
 			if file:inside(x, y) then
 				is_inside = i
-
-				if self._current_file ~= i then
-					highlighted_file = i
-				else
-					highlighted_file = false
-
-					if false then
-						highlighted_file = true
-					end
-				end
+				highlighted_file = self._current_file ~= i and i
 			end
 		end
 	end
@@ -1733,16 +1724,7 @@ function MenuNodeCrimenetContactShortGui:mouse_moved(o, x, y)
 
 			if file:inside(x, y) then
 				is_inside = i
-
-				if self._current_file ~= i then
-					highlighted_file = i
-				else
-					highlighted_file = false
-
-					if false then
-						highlighted_file = true
-					end
-				end
+				highlighted_file = self._current_file ~= i and i
 			end
 		end
 	end
@@ -2323,16 +2305,7 @@ function MenuNodeCrimenetContactChillGui:mouse_moved(o, x, y)
 
 			if file:inside(x, y) then
 				is_inside = i
-
-				if self._current_file ~= i then
-					highlighted_file = i
-				else
-					highlighted_file = false
-
-					if false then
-						highlighted_file = true
-					end
-				end
+				highlighted_file = self._current_file ~= i and i
 			end
 		end
 	end
@@ -3900,16 +3873,7 @@ function MenuNodeCrimenetChallengeGui:mouse_moved(o, x, y)
 			if inside then
 				inside_text = file:child("reward_text")
 				is_inside = i
-
-				if self._current_file ~= i then
-					highlighted_file = i
-				else
-					highlighted_file = false
-
-					if false then
-						highlighted_file = true
-					end
-				end
+				highlighted_file = self._current_file ~= i and i
 			end
 		end
 

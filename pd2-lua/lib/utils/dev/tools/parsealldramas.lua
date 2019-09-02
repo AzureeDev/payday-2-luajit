@@ -9,7 +9,7 @@ end
 
 function ParseAllDramas:load_all_soundbanks()
 	for i, soundbank in pairs(SoundDevice:sound_banks()) do
-		CoreEngineAccess._editor_load("bnk":id(), Idstring(soundbank))
+		CoreEngineAccess._editor_load(("bnk"):id(), Idstring(soundbank))
 	end
 end
 
