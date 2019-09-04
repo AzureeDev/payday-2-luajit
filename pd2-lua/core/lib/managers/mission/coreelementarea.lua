@@ -342,13 +342,11 @@ end
 function ElementAreaTrigger:_clean_destroyed_units()
 	local i = 1
 
-	if next(self._inside) then
-		while next(self._inside) and i <= #self._inside do
-			if alive(self._inside[i]) then
-				i = i + 1
-			else
-				table.remove(self._inside, i)
-			end
+	while next(self._inside) and i <= #self._inside do
+		if alive(self._inside[i]) then
+			i = i + 1
+		else
+			table.remove(self._inside, i)
 		end
 	end
 end
@@ -566,19 +564,17 @@ end
 function ElementAreaReportTrigger:_clean_destroyed_units()
 	local i = 1
 
-	if next(self._inside) then
-		while next(self._inside) and i <= #self._inside do
-			local unit = self._inside[i]
+	while next(self._inside) and i <= #self._inside do
+		local unit = self._inside[i]
 
-			if alive(unit) and (not unit:character_damage() or not unit:character_damage():dead()) then
-				i = i + 1
-			else
-				if alive(unit) and unit:character_damage() and unit:character_damage():dead() then
-					self:on_executed(unit, "on_death")
-				end
-
-				self:_remove_inside_by_index(i)
+		if alive(unit) and (not unit:character_damage() or not unit:character_damage():dead()) then
+			i = i + 1
+		else
+			if alive(unit) and unit:character_damage() and unit:character_damage():dead() then
+				self:on_executed(unit, "on_death")
 			end
+
+			self:_remove_inside_by_index(i)
 		end
 	end
 end

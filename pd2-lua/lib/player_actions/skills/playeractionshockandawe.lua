@@ -34,10 +34,8 @@ PlayerAction.ShockAndAwe = {
 		player_manager:register_message(Message.OnSwitchWeapon, co, on_switch_weapon_quit)
 		player_manager:register_message(Message.OnPlayerReload, co, on_player_reload)
 
-		if running and alive(weapon_unit) then
-			while running and alive(weapon_unit) and weapon_unit == player_manager:equipped_weapon_unit() do
-				coroutine.yield(co)
-			end
+		while running and alive(weapon_unit) and weapon_unit == player_manager:equipped_weapon_unit() do
+			coroutine.yield(co)
 		end
 
 		player_manager:unregister_message(Message.OnSwitchWeapon, co)

@@ -636,7 +636,11 @@ function CopActionHurt:init(action_desc, common_data)
 						death_type = action_desc.death_type
 					end
 
-					variant = (not is_female or self.death_anim_fe_variants[death_type][crouching and "crouching" or "not_crouching"][dir_str][height]) and self.death_anim_variants[death_type][crouching and "crouching" or "not_crouching"][dir_str][height]
+					if is_female then
+						variant = self.death_anim_fe_variants[death_type][crouching and "crouching" or "not_crouching"][dir_str][height]
+					else
+						variant = self.death_anim_variants[death_type][crouching and "crouching" or "not_crouching"][dir_str][height]
+					end
 
 					if variant > 1 then
 						variant = self:_pseudorandom(variant)

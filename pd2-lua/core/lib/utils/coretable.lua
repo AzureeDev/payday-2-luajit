@@ -470,11 +470,9 @@ function table.insert_sorted(t, item, comparator_func)
 	local index = 1
 	local examined_item = t[index]
 
-	if examined_item then
-		while examined_item and comparator_func(examined_item, item) do
-			index = index + 1
-			examined_item = t[index]
-		end
+	while examined_item and comparator_func(examined_item, item) do
+		index = index + 1
+		examined_item = t[index]
 	end
 
 	table.insert(t, index, item)
@@ -489,13 +487,11 @@ end
 function table.remove_condition(t, func)
 	local i = 1
 
-	if next(t) then
-		while next(t) and i <= #t do
-			if func(t[i]) then
-				table.remove(t, i)
-			else
-				i = i + 1
-			end
+	while next(t) and i <= #t do
+		if func(t[i]) then
+			table.remove(t, i)
+		else
+			i = i + 1
 		end
 	end
 end

@@ -1469,7 +1469,12 @@ function PlayerStandardVR:_start_action_reload(t)
 		end
 
 		local tweak = weapon:weapon_tweak_data()
-		reload_time = weapon:clip_empty() and reload_time + (tweak.timers.reload_empty or weapon:reload_expire_t() or 2.6) / speed_multiplier or reload_time + (tweak.timers.reload_not_empty or weapon:reload_expire_t() or 2.2) / speed_multiplier
+
+		if weapon:clip_empty() then
+			reload_time = reload_time + (tweak.timers.reload_empty or weapon:reload_expire_t() or 2.6) / speed_multiplier
+		else
+			reload_time = reload_time + (tweak.timers.reload_not_empty or weapon:reload_expire_t() or 2.2) / speed_multiplier
+		end
 
 		if not managers.vr:get_setting("auto_reload") then
 			if table.contains(tweak.categories, "bow") then

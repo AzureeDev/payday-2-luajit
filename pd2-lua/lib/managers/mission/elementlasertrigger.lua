@@ -358,13 +358,11 @@ end
 function ElementLaserTrigger:_clean_destroyed_units()
 	local i = 1
 
-	if next(self._inside) then
-		while next(self._inside) and i <= #self._inside do
-			if alive(self._inside[i]) then
-				i = i + 1
-			else
-				self:_remove_inside_by_index(i)
-			end
+	while next(self._inside) and i <= #self._inside do
+		if alive(self._inside[i]) then
+			i = i + 1
+		else
+			self:_remove_inside_by_index(i)
 		end
 	end
 end

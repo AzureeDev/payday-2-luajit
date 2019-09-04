@@ -55,14 +55,12 @@ end
 function CoreEWS.topdown_layout(w)
 	local q = w
 
-	if q then
-		while q and q.type_name == "EWSPanel" do
-			q:set_sizer_min_size()
-			q:layout()
-			q:refresh()
+	while q and q.type_name == "EWSPanel" do
+		q:set_sizer_min_size()
+		q:layout()
+		q:refresh()
 
-			q = q:parent()
-		end
+		q = q:parent()
 	end
 end
 

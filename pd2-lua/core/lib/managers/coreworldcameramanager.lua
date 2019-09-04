@@ -1009,9 +1009,6 @@ function CoreWorldCamera:play_to_time_sine(s_t)
 		local wanted_dis = math.clamp(s_t * metadata.spline_length, 0, metadata.spline_length)
 		local adv_seg = nil
 
-		if runtime_data.seg_i ~= 0 then
-		end
-
 		while runtime_data.seg_i == 0 or runtime_data.seg_dis < wanted_dis do
 			runtime_data.seg_i = runtime_data.seg_i + 1
 			runtime_data.seg_dis = metadata.segment_lengths[runtime_data.seg_i]
@@ -1033,15 +1030,13 @@ function CoreWorldCamera:play_to_time_sine(s_t)
 		local seg_p1 = metadata.ctrl_points[runtime_data.seg_i + 1].p1
 		local seg_p2 = metadata.ctrl_points[runtime_data.seg_i].p2
 
-		if not runtime_data.subseg_pos or runtime_data.subseg_dis < wanted_dis_in_seg then
-			while (not runtime_data.subseg_pos or runtime_data.subseg_dis < wanted_dis_in_seg) and runtime_data.subseg_i < metadata.nr_subseg_per_seg do
-				runtime_data.subseg_i = runtime_data.subseg_i + 1
-				local new_subseg_pos = self:position_at_time_on_segment(runtime_data.subseg_i / metadata.nr_subseg_per_seg, seg_pos, next_seg_pos, seg_p1, seg_p2)
-				runtime_data.subseg_len = mvector3.distance(runtime_data.subseg_pos or runtime_data.subseg_prev_pos, new_subseg_pos)
-				runtime_data.subseg_dis = runtime_data.subseg_dis + runtime_data.subseg_len
-				runtime_data.subseg_prev_pos = runtime_data.subseg_pos or runtime_data.subseg_prev_pos
-				runtime_data.subseg_pos = new_subseg_pos
-			end
+		while (not runtime_data.subseg_pos or runtime_data.subseg_dis < wanted_dis_in_seg) and runtime_data.subseg_i < metadata.nr_subseg_per_seg do
+			runtime_data.subseg_i = runtime_data.subseg_i + 1
+			local new_subseg_pos = self:position_at_time_on_segment(runtime_data.subseg_i / metadata.nr_subseg_per_seg, seg_pos, next_seg_pos, seg_p1, seg_p2)
+			runtime_data.subseg_len = mvector3.distance(runtime_data.subseg_pos or runtime_data.subseg_prev_pos, new_subseg_pos)
+			runtime_data.subseg_dis = runtime_data.subseg_dis + runtime_data.subseg_len
+			runtime_data.subseg_prev_pos = runtime_data.subseg_pos or runtime_data.subseg_prev_pos
+			runtime_data.subseg_pos = new_subseg_pos
 		end
 
 		local percentage_in_subseg = 1 - (runtime_data.subseg_dis - wanted_dis_in_seg) / runtime_data.subseg_len
@@ -1079,15 +1074,13 @@ function CoreWorldCamera:cam_look_vec_on_segment(perc_in_seg, seg_i)
 	local seg_p1 = metadata.tar_ctrl_points[seg_i + 1].p1
 	local seg_p2 = metadata.tar_ctrl_points[seg_i].p2
 
-	if not runtime_data.subseg_pos or runtime_data.subseg_dis < wanted_dis_in_seg then
-		while (not runtime_data.subseg_pos or runtime_data.subseg_dis < wanted_dis_in_seg) and runtime_data.subseg_i < metadata.nr_subseg_per_seg do
-			runtime_data.subseg_i = runtime_data.subseg_i + 1
-			local new_subseg_pos = self:position_at_time_on_segment(runtime_data.subseg_i / metadata.nr_subseg_per_seg, seg_pos, next_seg_pos, seg_p1, seg_p2)
-			runtime_data.subseg_len = mvector3.distance(runtime_data.subseg_pos or runtime_data.subseg_prev_pos, new_subseg_pos)
-			runtime_data.subseg_dis = runtime_data.subseg_dis + runtime_data.subseg_len
-			runtime_data.subseg_prev_pos = runtime_data.subseg_pos or runtime_data.subseg_prev_pos
-			runtime_data.subseg_pos = new_subseg_pos
-		end
+	while (not runtime_data.subseg_pos or runtime_data.subseg_dis < wanted_dis_in_seg) and runtime_data.subseg_i < metadata.nr_subseg_per_seg do
+		runtime_data.subseg_i = runtime_data.subseg_i + 1
+		local new_subseg_pos = self:position_at_time_on_segment(runtime_data.subseg_i / metadata.nr_subseg_per_seg, seg_pos, next_seg_pos, seg_p1, seg_p2)
+		runtime_data.subseg_len = mvector3.distance(runtime_data.subseg_pos or runtime_data.subseg_prev_pos, new_subseg_pos)
+		runtime_data.subseg_dis = runtime_data.subseg_dis + runtime_data.subseg_len
+		runtime_data.subseg_prev_pos = runtime_data.subseg_pos or runtime_data.subseg_prev_pos
+		runtime_data.subseg_pos = new_subseg_pos
 	end
 
 	local percentage_in_subseg = 1 - (runtime_data.subseg_dis - wanted_dis_in_seg) / runtime_data.subseg_len

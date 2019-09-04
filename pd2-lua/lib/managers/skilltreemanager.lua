@@ -430,18 +430,16 @@ function SkillTreeManager:_get_heighst_tier_points(current_tier, tiers)
 	local next_tier = prev_next_tier
 	local num_unlocked_skills_above = prev_num_unlocked_skills_above
 
-	if num_unlocked_skills_above > 0 then
-		while num_unlocked_skills_above > 0 and next_tier < #tiers do
-			next_tier = next_tier + 1
-			num_unlocked_skills_above = self:get_num_unlocked_skills(tiers[next_tier])
+	while num_unlocked_skills_above > 0 and next_tier < #tiers do
+		next_tier = next_tier + 1
+		num_unlocked_skills_above = self:get_num_unlocked_skills(tiers[next_tier])
 
-			if num_unlocked_skills_above == 0 then
-				return prev_next_tier, prev_num_unlocked_skills_above
-			end
-
-			prev_next_tier = next_tier
-			prev_num_unlocked_skills_above = num_unlocked_skills_above
+		if num_unlocked_skills_above == 0 then
+			return prev_next_tier, prev_num_unlocked_skills_above
 		end
+
+		prev_next_tier = next_tier
+		prev_num_unlocked_skills_above = num_unlocked_skills_above
 	end
 
 	return prev_next_tier, prev_num_unlocked_skills_above

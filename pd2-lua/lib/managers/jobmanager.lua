@@ -421,43 +421,41 @@ function JobManager:_chk_fill_heat_containers()
 	local reached_end = false
 	local loop_breaker = 100
 
-	if not reached_end then
-		while not reached_end and loop_breaker > 0 do
-			reached_end = true
+	while not reached_end and loop_breaker > 0 do
+		reached_end = true
 
-			for index, container in ipairs(jobs_in_containers) do
-				local max_jobs = container.max_jobs
-				local heat = container.heat
+		for index, container in ipairs(jobs_in_containers) do
+			local max_jobs = container.max_jobs
+			local heat = container.heat
 
-				if max_jobs and max_jobs < #container then
-					reached_end = false
-					local num_to_move = #container - max_jobs
-					local new_container = nil
+			if max_jobs and max_jobs < #container then
+				reached_end = false
+				local num_to_move = #container - max_jobs
+				local new_container = nil
 
-					if heat < 0 then
-						new_container = jobs_in_containers[index + 1]
+				if heat < 0 then
+					new_container = jobs_in_containers[index + 1]
 
-						for i = 1, num_to_move, 1 do
-							local t = table.remove(container, #container)
+					for i = 1, num_to_move, 1 do
+						local t = table.remove(container, #container)
 
-							table.insert(new_container, 1, t)
-						end
-					elseif heat > 0 then
-						new_container = jobs_in_containers[index - 1]
-
-						for i = 1, num_to_move, 1 do
-							local t = table.remove(container, 1)
-
-							table.insert(new_container, t)
-						end
-
-						break
+						table.insert(new_container, 1, t)
 					end
+				elseif heat > 0 then
+					new_container = jobs_in_containers[index - 1]
+
+					for i = 1, num_to_move, 1 do
+						local t = table.remove(container, 1)
+
+						table.insert(new_container, t)
+					end
+
+					break
 				end
 			end
-
-			loop_breaker = loop_breaker - 1
 		end
+
+		loop_breaker = loop_breaker - 1
 	end
 
 	self._global.heat_containers = {}

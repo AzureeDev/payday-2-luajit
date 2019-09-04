@@ -461,18 +461,23 @@ function MainMenuGui:create_box(params, index)
 		local bg_select_area = params.bg_select_area or false
 		local bg_rotation = params.bg_rotation or false
 		local gui_object = nil
-		gui_object = (not background_image or (bg_select_area and select_object or panel):bitmap({
-			layer = 0,
-			texture = background_image,
-			color = unselected_color,
-			blend_mode = unselected_blend_mode,
-			visible = not selectable
-		})) and (bg_select_area and select_object or panel):rect({
-			layer = 0,
-			color = unselected_color,
-			blend_mode = unselected_blend_mode,
-			visible = not selectable
-		})
+
+		if background_image then
+			gui_object = (bg_select_area and select_object or panel):bitmap({
+				layer = 0,
+				texture = background_image,
+				color = unselected_color,
+				blend_mode = unselected_blend_mode,
+				visible = not selectable
+			})
+		else
+			gui_object = (bg_select_area and select_object or panel):rect({
+				layer = 0,
+				color = unselected_color,
+				blend_mode = unselected_blend_mode,
+				visible = not selectable
+			})
+		end
 
 		if bg_rotation then
 			gui_object:set_rotation(bg_rotation)

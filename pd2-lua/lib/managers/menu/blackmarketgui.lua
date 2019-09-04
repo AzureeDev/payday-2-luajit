@@ -7218,19 +7218,17 @@ function BlackMarketGui:update_info_text()
 			local font_size = info_text:font_size()
 			local wanted_h = max_h
 
-			if info_text:h() ~= 0 and not math.within(math.ceil(info_text:h()), wanted_h - 10, wanted_h) then
-				while info_text:h() ~= 0 and not math.within(math.ceil(info_text:h()), wanted_h - 10, wanted_h) and attempts > 0 do
-					scale = wanted_h / info_text:h()
-					font_size = math.clamp(font_size * scale, 0, small_font_size)
+			while info_text:h() ~= 0 and not math.within(math.ceil(info_text:h()), wanted_h - 10, wanted_h) and attempts > 0 do
+				scale = wanted_h / info_text:h()
+				font_size = math.clamp(font_size * scale, 0, small_font_size)
 
-					info_text:set_font_size(font_size)
+				info_text:set_font_size(font_size)
 
-					_, _, _, th = info_text:text_rect()
+				_, _, _, th = info_text:text_rect()
 
-					info_text:set_h(th)
+				info_text:set_h(th)
 
-					attempts = attempts - 1
-				end
+				attempts = attempts - 1
 			end
 
 			if info_text:h() ~= 0 and info_text:h() > self._info_texts_panel:h() - info_text:top() then
@@ -7321,7 +7319,12 @@ function BlackMarketGui.create_safe_content_text(safe_entry)
 
 	for _, item in ipairs(items_list) do
 		td = (tweak_data.economy[item.category] or tweak_data.blackmarket[item.category])[item.entry]
-		text = item.category == "contents" and td.rarity == "legendary" and text .. "##" .. managers.localization:text("bm_menu_rarity_legendary_item_long") .. "##" or text .. "##" .. (td.weapon_id and utf8.to_upper(managers.weapon_factory:get_weapon_name_by_weapon_id(td.weapon_id)) .. " | " or "") .. managers.localization:text(td.name_id or "NONAME") .. "##"
+
+		if item.category == "contents" and td.rarity == "legendary" then
+			text = text .. "##" .. managers.localization:text("bm_menu_rarity_legendary_item_long") .. "##"
+		else
+			text = text .. "##" .. (td.weapon_id and utf8.to_upper(managers.weapon_factory:get_weapon_name_by_weapon_id(td.weapon_id)) .. " | " or "") .. managers.localization:text(td.name_id or "NONAME") .. "##"
+		end
 
 		table.insert(color_ranges, tweak_data.economy.rarities[td.rarity or "common"].color)
 
@@ -15007,8 +15010,18 @@ function BlackMarketGui:remove_mod_callback(data)
 		add = false,
 		ignore_lost_mods = data.free_of_charge
 	}
+	slot3 = managers.blackmarket
+	local removes = slot3
+	local replaces = slot3.get_modify_weapon_consequence
+	local weapon_id = data.category
+	local cost = data.slot
+	slot7 = data.default_mod or data.name
 
-	local replaces, removes = managers.blackmarket:get_modify_weapon_consequence(data.category, data.slot, data.default_mod or data.name, data.default_mod and true)
+	if data.default_mod then
+		-- Nothing
+	end
+
+	local replaces, removes = replaces(removes, weapon_id, cost, slot7, true)
 	local weapon_id = managers.blackmarket:get_crafted_category(data.category)[data.slot].weapon_id
 	local cost = managers.money:get_weapon_modify_price(weapon_id, data.name, data.global_value) or 0
 	params.money = cost > 0 and managers.experience:cash_string(cost)

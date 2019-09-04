@@ -85,14 +85,12 @@ function BrushLayer:reposition_all()
 			local dynamic_unit = false
 			local index = 0
 
-			if index < unit:num_bodies() then
-				while index < unit:num_bodies() and not dynamic_unit do
-					if unit:body_by_index(index):dynamic() then
-						dynamic_unit = true
-					end
-
-					index = index + 1
+			while index < unit:num_bodies() and not dynamic_unit do
+				if unit:body_by_index(index):dynamic() then
+					dynamic_unit = true
 				end
+
+				index = index + 1
 			end
 
 			World:delete_unit(unit)
@@ -285,17 +283,15 @@ function BrushLayer:update(time, rel_time)
 		if self._spraying then
 			local created = 0
 
-			if created < self._brush_pressure then
-				while created < self._brush_pressure and density <= self._brush_density do
-					local nudge_amount = 1 - math.rand(self._brush_size * self._brush_size) / (self._brush_size * self._brush_size)
-					local rand_nudge = ray.normal:random_orthogonal() * self._brush_size * nudge_amount
-					local place_ray = managers.editor:select_unit_by_raycast(self._place_slot_mask, ray_type, tip + rand_nudge, base + rand_nudge)
+			while created < self._brush_pressure and density <= self._brush_density do
+				local nudge_amount = 1 - math.rand(self._brush_size * self._brush_size) / (self._brush_size * self._brush_size)
+				local rand_nudge = ray.normal:random_orthogonal() * self._brush_size * nudge_amount
+				local place_ray = managers.editor:select_unit_by_raycast(self._place_slot_mask, ray_type, tip + rand_nudge, base + rand_nudge)
 
-					self:create_brush(place_ray)
+				self:create_brush(place_ray)
 
-					created = created + 1
-					density = (#units + created) / area
-				end
+				created = created + 1
+				density = (#units + created) / area
 			end
 
 			if self._brush_density == 0 then
@@ -305,30 +301,26 @@ function BrushLayer:update(time, rel_time)
 			if self._erase_with_pressure and ray then
 				local removed = 0
 
-				if removed < self._brush_pressure then
-					while removed < self._brush_pressure and removed < #units do
-						removed = removed + 1
-						local found = true
+				while removed < self._brush_pressure and removed < #units do
+					removed = removed + 1
+					local found = true
 
-						if self._erase_with_units then
-							found = false
+					if self._erase_with_units then
+						found = false
 
-							if not found then
-								while not found and removed <= #units do
-									if table.contains(self._brush_names, units[removed]:name():s()) then
-										found = true
-									else
-										removed = removed + 1
-									end
-								end
+						while not found and removed <= #units do
+							if table.contains(self._brush_names, units[removed]:name():s()) then
+								found = true
+							else
+								removed = removed + 1
 							end
 						end
+					end
 
-						if found then
-							World:delete_unit(units[removed])
+					if found then
+						World:delete_unit(units[removed])
 
-							self._amount_dirty = true
-						end
+						self._amount_dirty = true
 					end
 				end
 

@@ -3159,10 +3159,8 @@ function RootBodyElement:init(node, unit_element)
 				else
 					local next_element = self._first_endurance[k]
 
-					if next_element._next[k] then
-						while next_element._next[k] and next_element._next[k]._endurance[k] <= v do
-							next_element = next_element._next[k]
-						end
+					while next_element._next[k] and next_element._next[k]._endurance[k] <= v do
+						next_element = next_element._next[k]
 					end
 
 					element._next[k] = next_element._next[k]

@@ -1363,11 +1363,9 @@ function Layer:verify_selected_units()
 
 	local i = 1
 
-	if not alive(self._selected_unit) then
-		while not alive(self._selected_unit) and i < #self._selected_units do
-			self._selected_unit = self._selected_units[i]
-			i = i + 1
-		end
+	while not alive(self._selected_unit) and i < #self._selected_units do
+		self._selected_unit = self._selected_units[i]
+		i = i + 1
 	end
 
 	return alive(self._selected_unit)

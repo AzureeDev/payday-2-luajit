@@ -555,10 +555,8 @@ function EnemyManager:add_delayed_clbk(id, clbk, execute_t)
 	local all_clbks = self._delayed_clbks
 	local i = #all_clbks
 
-	if i > 0 then
-		while i > 0 and execute_t < all_clbks[i][2] do
-			i = i - 1
-		end
+	while i > 0 and execute_t < all_clbks[i][2] do
+		i = i - 1
 	end
 
 	table.insert(all_clbks, i + 1, clbk_data)
@@ -608,10 +606,8 @@ function EnemyManager:reschedule_delayed_clbk(id, execute_t)
 		clbk_data[2] = execute_t
 		local i = #all_clbks
 
-		if i > 0 then
-			while i > 0 and execute_t < all_clbks[i][2] do
-				i = i - 1
-			end
+		while i > 0 and execute_t < all_clbks[i][2] do
+			i = i - 1
 		end
 
 		table.insert(all_clbks, i + 1, clbk_data)

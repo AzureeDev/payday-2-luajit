@@ -652,7 +652,13 @@ function NetworkMatchMakingXBL:_join_by_smartmatch(mode_filter, job_id_filter, d
 	XboxLive:set_context("game_mode", "ONLINE")
 
 	local mission, difficulty = nil
-	mission = (mode_filter ~= 1 or tweak_data.crime_spree:get_id_from_index(job_id_filter)) and tostring(job_id_filter == -1 and job_id_filter or tweak_data.narrative:get_index_from_job_id(job_id_filter))
+
+	if mode_filter == 1 then
+		mission = tweak_data.crime_spree:get_id_from_index(job_id_filter)
+	else
+		mission = tostring(job_id_filter == -1 and job_id_filter or tweak_data.narrative:get_index_from_job_id(job_id_filter))
+	end
+
 	self._hopper_variables = {
 		NrHosts = 0,
 		NrClients = 1,

@@ -5,18 +5,16 @@ PlayerAction.EscapeTase = {
 		local controller = player_manager:player_unit():base():controller()
 		local co = coroutine.running()
 
-		if time < target_time then
-			while time < target_time and player_manager:current_state() == "tased" do
-				time = Application:time()
+		while time < target_time and player_manager:current_state() == "tased" do
+			time = Application:time()
 
-				if controller:get_input_pressed("interact") then
-					player_manager:send_message(Message.EscapeTase, nil, nil)
+			if controller:get_input_pressed("interact") then
+				player_manager:send_message(Message.EscapeTase, nil, nil)
 
-					break
-				end
-
-				coroutine.yield(co)
+				break
 			end
+
+			coroutine.yield(co)
 		end
 	end
 }

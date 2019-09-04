@@ -219,29 +219,24 @@ function SpecializationBoxGui._update(o, self)
 
 	managers.menu_component:post_event("count_1")
 
-	if self._anim_data and not self._anim_data.goto_end then
-		if self._anim_data.xp_present == self._anim_data.end_xp_present then
-		end
+	while self._anim_data and not self._anim_data.goto_end and (self._anim_data.xp_present ~= self._anim_data.end_xp_present or self._anim_data.points_present ~= self._anim_data.end_points_present) do
+		dt = coroutine.yield()
+		self._anim_data.xp_present = math.step(self._anim_data.xp_present, self._anim_data.end_xp_present, self._anim_data.conversion_rate * dt * speed)
+		self._anim_data.points_present = math.step(self._anim_data.points_present, self._anim_data.end_points_present, dt * speed)
+		self._anim_data.available_points_present = self._anim_data.start_available_points_present + self._anim_data.points_present
 
-		while self._anim_data and not self._anim_data.goto_end and (self._anim_data.xp_present ~= self._anim_data.end_xp_present or self._anim_data.points_present ~= self._anim_data.end_points_present) do
-			dt = coroutine.yield()
-			self._anim_data.xp_present = math.step(self._anim_data.xp_present, self._anim_data.end_xp_present, self._anim_data.conversion_rate * dt * speed)
-			self._anim_data.points_present = math.step(self._anim_data.points_present, self._anim_data.end_points_present, dt * speed)
-			self._anim_data.available_points_present = self._anim_data.start_available_points_present + self._anim_data.points_present
+		self._anim_data.exp_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.xp_present))))
+		make_fine_text(self._anim_data.exp_count_text)
+		self._anim_data.points_gained_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.points_present))))
+		make_fine_text(self._anim_data.points_gained_count_text)
+		self._anim_data.available_points_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.available_points_present))))
+		make_fine_text(self._anim_data.available_points_count_text)
 
-			self._anim_data.exp_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.xp_present))))
-			make_fine_text(self._anim_data.exp_count_text)
-			self._anim_data.points_gained_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.points_present))))
-			make_fine_text(self._anim_data.points_gained_count_text)
-			self._anim_data.available_points_count_text:set_text(managers.money:add_decimal_marks_to_string(tostring(math.round(self._anim_data.available_points_present))))
-			make_fine_text(self._anim_data.available_points_count_text)
+		self._anim_data.progress_width = math.lerp(self._anim_data.start_progress_width, self._anim_data.end_progress_width, self._anim_data.points_present / self._anim_data.end_points_present)
 
-			self._anim_data.progress_width = math.lerp(self._anim_data.start_progress_width, self._anim_data.end_progress_width, self._anim_data.points_present / self._anim_data.end_points_present)
+		self._anim_data.progress_bar:set_width(self._anim_data.progress_width)
 
-			self._anim_data.progress_bar:set_width(self._anim_data.progress_width)
-
-			speed = speed + speed * 0.2 * dt
-		end
+		speed = speed + speed * 0.2 * dt
 	end
 
 	managers.menu_component:post_event("count_1_finished")

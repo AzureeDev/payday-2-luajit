@@ -1005,7 +1005,7 @@ function GroupAIStateBase:_calculate_difficulty_ratio()
 	local diff = self._difficulty_value
 	local i = 1
 
-	while diff > (ramp[i] or 1) do
+	while diff > slot4 do
 		i = i + 1
 	end
 
@@ -1944,10 +1944,8 @@ function GroupAIStateBase:_debug_draw_drama(t)
 		end
 	end
 
-	if drama_hist[2] then
-		while drama_hist[2] and t_span < t - drama_hist[2][2] do
-			table.remove(drama_hist, 1)
-		end
+	while drama_hist[2] and t_span < t - drama_hist[2][2] do
+		table.remove(drama_hist, 1)
 	end
 
 	local mvec3_set_st = mvector3.set_static
@@ -1990,10 +1988,8 @@ function GroupAIStateBase:_debug_draw_drama(t)
 		end
 	end
 
-	if pop_hist[2] then
-		while pop_hist[2] and t_span < t - pop_hist[2][2] do
-			table.remove(pop_hist, 1)
-		end
+	while pop_hist[2] and t_span < t - pop_hist[2][2] do
+		table.remove(pop_hist, 1)
 	end
 
 	local max_force = 25
@@ -2019,10 +2015,8 @@ function GroupAIStateBase:_debug_draw_drama(t)
 	local bottom_r = Vector3(0, draw_data.bg_bottom_l.y, 90)
 
 	local function _draw_events(event_brush, event_list)
-		if event_list[1] and event_list[1][2] then
-			while event_list[1] and event_list[1][2] and t_span < t - event_list[1][2] do
-				table.remove(event_list, 1)
-			end
+		while event_list[1] and event_list[1][2] and t_span < t - event_list[1][2] do
+			table.remove(event_list, 1)
 		end
 
 		for i, entry in ipairs(event_list) do
@@ -2915,14 +2909,12 @@ function GroupAIStateBase:fill_criminal_team_with_AI(is_drop_in)
 	if managers.navigation:is_data_ready() and self._ai_enabled and managers.groupai:state():team_ai_enabled() then
 		local index = 1
 
-		if managers.criminals:nr_taken_criminals() < CriminalsManager.MAX_NR_CRIMINALS then
-			while managers.criminals:nr_taken_criminals() < CriminalsManager.MAX_NR_CRIMINALS and managers.criminals:nr_AI_criminals() < managers.criminals.MAX_NR_TEAM_AI do
-				local char_name = managers.criminals:get_team_ai_character(index)
-				index = index + 1
+		while managers.criminals:nr_taken_criminals() < CriminalsManager.MAX_NR_CRIMINALS and managers.criminals:nr_AI_criminals() < managers.criminals.MAX_NR_TEAM_AI do
+			local char_name = managers.criminals:get_team_ai_character(index)
+			index = index + 1
 
-				if not self:spawn_one_teamAI(is_drop_in or not not char_name, char_name, nil, nil, true) then
-					break
-				end
+			if not self:spawn_one_teamAI(is_drop_in or not not char_name, char_name, nil, nil, true) then
+				break
 			end
 		end
 	end
@@ -5809,21 +5801,19 @@ function GroupAIStateBase:trim_coarse_path_to_areas(coarse_path)
 	local all_areas = self._area_data
 	local i = 1
 
-	if #coarse_path >= 3 then
-		while #coarse_path >= 3 and i < #coarse_path do
-			local node = coarse_path[i]
-			local nav_seg = node[1]
-			local area = self:get_area_from_nav_seg_id(nav_seg)
-			local next_node = coarse_path[i + 1]
-			local next_nav_seg = next_node[1]
+	while #coarse_path >= 3 and i < #coarse_path do
+		local node = coarse_path[i]
+		local nav_seg = node[1]
+		local area = self:get_area_from_nav_seg_id(nav_seg)
+		local next_node = coarse_path[i + 1]
+		local next_nav_seg = next_node[1]
 
-			if area.nav_segs[next_nav_seg] then
-				table.remove(coarse_path, i + 1)
-			elseif i == #coarse_path - 1 then
-				break
-			else
-				i = i + 1
-			end
+		if area.nav_segs[next_nav_seg] then
+			table.remove(coarse_path, i + 1)
+		elseif i == #coarse_path - 1 then
+			break
+		else
+			i = i + 1
 		end
 	end
 end

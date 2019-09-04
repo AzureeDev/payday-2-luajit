@@ -54,10 +54,8 @@ PlayerAction.TagTeam = {
 		managers.network:session():send_to_peers("sync_tag_team", tagged, owner)
 		update_ability_radial()
 
-		if alive(owner) then
-			while alive(owner) and timer:time() < end_time do
-				coroutine.yield()
-			end
+		while alive(owner) and timer:time() < end_time do
+			coroutine.yield()
 		end
 
 		CopDamage.unregister_listener(on_damage_key)
@@ -116,10 +114,8 @@ PlayerAction.TagTeamTagged = {
 
 		local timer = TimerManager:game()
 
-		if not ended_by_owner and alive(tagged) then
-			while not ended_by_owner and alive(tagged) and (alive(owner) or timer:time() < end_time) do
-				coroutine.yield()
-			end
+		while not ended_by_owner and alive(tagged) and (alive(owner) or timer:time() < end_time) do
+			coroutine.yield()
 		end
 
 		CopDamage.unregister_listener(on_damage_key)

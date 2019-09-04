@@ -3710,12 +3710,10 @@ function SkillTreeGui:max_specialization(tree, tier)
 		local points_to_spend = managers.skilltree:get_specialization_value("points")
 		local afford_tier = current_tier
 
-		if points_to_spend >= total_cost + next_cost then
-			while points_to_spend >= total_cost + next_cost and afford_tier < max_tier do
-				total_cost = total_cost + next_cost
-				afford_tier = afford_tier + 1
-				next_cost = max_tier > afford_tier and tweak_data.skilltree.specializations[tree][afford_tier + 1].cost or 0
-			end
+		while points_to_spend >= total_cost + next_cost and afford_tier < max_tier do
+			total_cost = total_cost + next_cost
+			afford_tier = afford_tier + 1
+			next_cost = max_tier > afford_tier and tweak_data.skilltree.specializations[tree][afford_tier + 1].cost or 0
 		end
 
 		local deck_name = managers.localization:text(tweak_data.skilltree.specializations[tree].name_id)

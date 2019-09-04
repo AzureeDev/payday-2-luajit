@@ -47,16 +47,14 @@ function Logic:_queue_action(action_name, ...)
 end
 
 function Logic:_execute_action_queue()
-	if self._accept_input then
-		while self._accept_input and #self._action_queue > 0 do
-			local action = self._action_queue[1]
+	while self._accept_input and #self._action_queue > 0 do
+		local action = self._action_queue[1]
 
-			if self._action_callback_map[action.action_name] then
-				self._action_callback_map[action.action_name](unpack(action.parameters))
-			end
-
-			table.remove(self._action_queue, 1)
+		if self._action_callback_map[action.action_name] then
+			self._action_callback_map[action.action_name](unpack(action.parameters))
 		end
+
+		table.remove(self._action_queue, 1)
 	end
 end
 

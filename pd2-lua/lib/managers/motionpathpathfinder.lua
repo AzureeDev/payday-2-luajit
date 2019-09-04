@@ -118,11 +118,9 @@ function MotionPathPathFinder:find_path(start_pos, end_pos)
 	local last_path = end_node.path
 	local current_node = end_node
 
-	if current_node then
-		while current_node and start_node.path ~= current_node.path do
-			last_path = current_node.path
-			current_node = current_node.came_from
-		end
+	while current_node and start_node.path ~= current_node.path do
+		last_path = current_node.path
+		current_node = current_node.came_from
 	end
 
 	return last_path

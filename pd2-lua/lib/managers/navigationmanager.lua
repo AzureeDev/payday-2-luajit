@@ -739,16 +739,14 @@ function NavigationManager:_draw_rooms(progress)
 	local i_room = data.next_draw_i_room
 	local wanted_index = math.clamp(math.ceil(nr_rooms * progress), 1, nr_rooms)
 
-	if i_room <= wanted_index then
-		while i_room <= wanted_index and i_room <= nr_rooms do
-			local room = rooms[i_room]
+	while i_room <= wanted_index and i_room <= nr_rooms do
+		local room = rooms[i_room]
 
-			if not room_mask or room_mask[i_room] then
-				self:_draw_room(room)
-			end
-
-			i_room = i_room + 1
+		if not room_mask or room_mask[i_room] then
+			self:_draw_room(room)
 		end
+
+		i_room = i_room + 1
 	end
 
 	if progress == 1 then
@@ -957,9 +955,11 @@ function NavigationManager:_draw_room(room, instant)
 					rad = 2.2
 					color = Vector3(0, 1, 0)
 				elseif obstacle_type == "stairs" then
+					slot28 = 8
 					rad = 1
 					color = Vector3(1, 0.4, 0)
 				elseif obstacle_type == "cliffs" then
+					slot28 = 6
 					rad = 1
 					color = Vector3(0.2, 0.1, 0)
 				else
@@ -1034,16 +1034,14 @@ function NavigationManager:_draw_doors(progress)
 	local i_door = data.next_draw_i_door
 	local wanted_index = math.clamp(math.ceil(nr_doors * progress), 1, nr_doors)
 
-	if i_door <= wanted_index then
-		while i_door <= wanted_index and i_door <= nr_doors do
-			local door = doors[i_door]
+	while i_door <= wanted_index and i_door <= nr_doors do
+		local door = doors[i_door]
 
-			if not room_mask or room_mask[door.rooms[1]] or room_mask[door.rooms[2]] then
-				self:_draw_door(door)
-			end
-
-			i_door = i_door + 1
+		if not room_mask or room_mask[door.rooms[1]] or room_mask[door.rooms[2]] then
+			self:_draw_door(door)
 		end
+
+		i_door = i_door + 1
 	end
 
 	if progress == 1 then
@@ -1161,30 +1159,28 @@ function NavigationManager:_draw_visibility_groups(progress)
 	local i_vis_group = draw_data.next_draw_i_vis
 	local wanted_index = math.clamp(math.floor(nr_vis_groups * progress), 0, nr_vis_groups)
 
-	if wanted_index > 0 then
-		while wanted_index > 0 and i_vis_group <= wanted_index do
-			local vis_group = all_vis_groups[selected_vis_groups[i_vis_group]]
+	while wanted_index > 0 and i_vis_group <= wanted_index do
+		local vis_group = all_vis_groups[selected_vis_groups[i_vis_group]]
 
-			brush_node:sphere(vis_group.pos, 30)
+		brush_node:sphere(vis_group.pos, 30)
 
-			for i_vis_room, _ in pairs(vis_group.rooms) do
-				local room_c = builder:_calculate_room_center(all_rooms[i_vis_room])
+		for i_vis_room, _ in pairs(vis_group.rooms) do
+			local room_c = builder:_calculate_room_center(all_rooms[i_vis_room])
 
-				brush_rooms:line(vis_group.pos, room_c)
-			end
-
-			for i_neigh_group, _ in pairs(vis_group.vis_groups) do
-				local neigh_group = all_vis_groups[i_neigh_group]
-
-				brush_links:cylinder(vis_group.pos, neigh_group.pos, 2)
-
-				if neigh_group.seg ~= selected_seg then
-					brush_links:sphere(neigh_group.pos, 20)
-				end
-			end
-
-			i_vis_group = i_vis_group + 1
+			brush_rooms:line(vis_group.pos, room_c)
 		end
+
+		for i_neigh_group, _ in pairs(vis_group.vis_groups) do
+			local neigh_group = all_vis_groups[i_neigh_group]
+
+			brush_links:cylinder(vis_group.pos, neigh_group.pos, 2)
+
+			if neigh_group.seg ~= selected_seg then
+				brush_links:sphere(neigh_group.pos, 20)
+			end
+		end
+
+		i_vis_group = i_vis_group + 1
 	end
 
 	if progress == 1 then
@@ -1805,10 +1801,8 @@ function NavigationManager:_execute_coarce_search(search_data)
 				local new_seg_weight = seg_data.weight
 				local search_index = #to_search
 
-				if search_index > 0 then
-					while search_index > 0 and to_search[search_index].weight < new_seg_weight do
-						search_index = search_index - 1
-					end
+				while search_index > 0 and to_search[search_index].weight < new_seg_weight do
+					search_index = search_index - 1
 				end
 
 				table.insert(to_search, search_index + 1, seg_data)

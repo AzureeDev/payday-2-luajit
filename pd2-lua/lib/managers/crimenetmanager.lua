@@ -965,11 +965,9 @@ function CrimeNetManager:_find_online_games_ps4(friends_only)
 
 	local rooms = {}
 
-	if #rooms_original > 0 then
-		while #rooms_original > 0 and #rooms > 20 do
-			print("-----------GN: #rooms_original = ", #rooms_original)
-			table.insert(rooms, table.remove(rooms_original, math.random(#rooms_original)))
-		end
+	while #rooms_original > 0 and #rooms > 20 do
+		print("-----------GN: #rooms_original = ", #rooms_original)
+		table.insert(rooms, table.remove(rooms_original, math.random(#rooms_original)))
 	end
 
 	local function updated_session_attributes(active_info_list)
@@ -3069,7 +3067,7 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 		end
 	end
 
-	local job_plan_icon
+	local job_plan_icon = nil
 
 	if is_server and data.job_plan and data.job_plan ~= -1 then
 		local texture = data.job_plan == 1 and "guis/textures/pd2/cn_playstyle_loud" or "guis/textures/pd2/cn_playstyle_stealth"
@@ -3168,9 +3166,6 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 		layer = 10,
 		color = color:with_alpha(0.6)
 	})
-	
-	do
-	
 	local x = job_plan_icon and job_plan_icon:right() + 2 or 0
 	local _, _, w, h = host_name:text_rect()
 
@@ -3179,8 +3174,6 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 
 	if not is_server then
 		-- Nothing
-	end
-		
 	end
 
 	local _, _, w, h = job_name:text_rect()
@@ -3313,454 +3306,453 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 		heat_name:set_position(0, host_name:bottom())
 	end
 
-		stars_panel:set_position(0, job_name:bottom())
-		side_panel:set_h(math.round(host_name:h() + job_name:h() + stars_panel:h()))
-		side_panel:set_w(300)
+	stars_panel:set_position(0, job_name:bottom())
+	side_panel:set_h(math.round(host_name:h() + job_name:h() + stars_panel:h()))
+	side_panel:set_w(300)
 
-		self._num_layer_jobs = (self._num_layer_jobs + 1) % 1
-		local marker_panel = self._pan_panel:panel({
-			w = 36,
+	self._num_layer_jobs = (self._num_layer_jobs + 1) % 1
+	local marker_panel = self._pan_panel:panel({
+		w = 36,
+		alpha = 0,
+		h = 66,
+		layer = 11 + self._num_layer_jobs * 3
+	})
+	local select_panel = marker_panel:panel({
+		name = "select_panel",
+		h = 38,
+		y = 0,
+		w = 36,
+		x = -2
+	})
+	local glow_panel = self._pan_panel:panel({
+		w = 960,
+		alpha = 0,
+		h = 192,
+		layer = 10
+	})
+	local glow_center = glow_panel:bitmap({
+		texture = "guis/textures/pd2/crimenet_marker_glow",
+		name = "glow_center",
+		h = 192,
+		blend_mode = "add",
+		w = 192,
+		alpha = 0.55,
+		color = data.pulse_color or is_professional and pro_color or regular_color
+	})
+	local glow_stretch = glow_panel:bitmap({
+		texture = "guis/textures/pd2/crimenet_marker_glow",
+		name = "glow_stretch",
+		h = 75,
+		blend_mode = "add",
+		w = 960,
+		alpha = 0.55,
+		color = data.pulse_color or is_professional and pro_color or regular_color
+	})
+	local glow_center_dark = glow_panel:bitmap({
+		texture = "guis/textures/pd2/crimenet_marker_glow",
+		name = "glow_center_dark",
+		h = 175,
+		blend_mode = "normal",
+		w = 175,
+		alpha = 0.7,
+		layer = -1,
+		color = Color.black
+	})
+	local glow_stretch_dark = glow_panel:bitmap({
+		texture = "guis/textures/pd2/crimenet_marker_glow",
+		name = "glow_stretch_dark",
+		h = 75,
+		blend_mode = "normal",
+		w = 990,
+		alpha = 0.75,
+		layer = -1,
+		color = Color.black
+	})
+
+	glow_center:set_center(glow_panel:w() / 2, glow_panel:h() / 2)
+	glow_stretch:set_center(glow_panel:w() / 2, glow_panel:h() / 2)
+	glow_center_dark:set_center(glow_panel:w() / 2, glow_panel:h() / 2)
+	glow_stretch_dark:set_center(glow_panel:w() / 2, glow_panel:h() / 2)
+
+	local marker_dot_texture = (is_special and data.icon or "guis/textures/pd2/crimenet_marker_" .. (is_server and "join" or "host")) .. (is_professional and "_pro" or "")
+	local marker_dot = marker_panel:bitmap({
+		name = "marker_dot",
+		h = 64,
+		y = 2,
+		w = 32,
+		x = 2,
+		layer = 1,
+		texture = marker_dot_texture,
+		color = data.marker_dot_color or color
+	})
+
+	if is_professional then
+		marker_panel:bitmap({
+			texture = "guis/textures/pd2/crimenet_marker_pro_outline",
+			name = "marker_pro_outline",
+			h = 64,
+			rotation = 0,
+			w = 64,
+			alpha = 1,
+			blend_mode = "add",
+			y = 0,
+			x = 0,
+			layer = 0
+		})
+	end
+
+	if data.mutators then
+		marker_dot:set_color(tweak_data.screen_colors.mutators_color)
+	end
+
+	if data.is_crime_spree then
+		marker_dot:set_color(tweak_data.screen_colors.crime_spree_risk)
+	end
+
+	if data.is_skirmish then
+		marker_dot:set_color(tweak_data.screen_colors.skirmish_color)
+	end
+
+	local timer_rect, peers_panel = nil
+	local icon_panel = self._pan_panel:panel({
+		alpha = 1,
+		w = 18,
+		h = 64,
+		layer = 26
+	})
+	local next_icon_right = 16
+	local side_icons_top = 0
+
+	for child in ipairs(icon_panel:children()) do
+		side_icons_top = math.max(side_icons_top, child:bottom())
+	end
+
+	local ghost_icon = nil
+
+	if data.job_id and managers.job:is_job_ghostable(data.job_id) then
+		ghost_icon = icon_panel:bitmap({
+			texture = "guis/textures/pd2/cn_minighost",
+			name = "ghost_icon",
+			blend_mode = "add",
+			color = tweak_data.screen_colors.ghost_color
+		})
+
+		ghost_icon:set_top(side_icons_top)
+		ghost_icon:set_right(next_icon_right)
+
+		next_icon_right = next_icon_right - 12
+	end
+
+	if one_down_active then
+		local one_down_icon = icon_panel:bitmap({
+			blend_mode = "add",
+			name = "one_down_icon",
+			texture = "guis/textures/pd2/cn_mini_onedown",
+			rotation = 360,
+			color = tweak_data.screen_colors.one_down
+		})
+
+		one_down_icon:set_top(side_icons_top)
+		one_down_icon:set_right(next_icon_right)
+
+		next_icon_right = next_icon_right - 12
+	end
+
+	if is_server then
+		peers_panel = self._pan_panel:panel({
 			alpha = 0,
-			h = 66,
+			h = 62,
+			visible = true,
+			w = 32,
 			layer = 11 + self._num_layer_jobs * 3
 		})
-		local select_panel = marker_panel:panel({
-			name = "select_panel",
-			h = 38,
-			y = 0,
-			w = 36,
-			x = -2
-		})
-		local glow_panel = self._pan_panel:panel({
-			w = 960,
-			alpha = 0,
-			h = 192,
-			layer = 10
-		})
-		local glow_center = glow_panel:bitmap({
-			texture = "guis/textures/pd2/crimenet_marker_glow",
-			name = "glow_center",
-			h = 192,
-			blend_mode = "add",
-			w = 192,
-			alpha = 0.55,
-			color = data.pulse_color or is_professional and pro_color or regular_color
-		})
-		local glow_stretch = glow_panel:bitmap({
-			texture = "guis/textures/pd2/crimenet_marker_glow",
-			name = "glow_stretch",
-			h = 75,
-			blend_mode = "add",
-			w = 960,
-			alpha = 0.55,
-			color = data.pulse_color or is_professional and pro_color or regular_color
-		})
-		local glow_center_dark = glow_panel:bitmap({
-			texture = "guis/textures/pd2/crimenet_marker_glow",
-			name = "glow_center_dark",
-			h = 175,
-			blend_mode = "normal",
-			w = 175,
-			alpha = 0.7,
-			layer = -1,
-			color = Color.black
-		})
-		local glow_stretch_dark = glow_panel:bitmap({
-			texture = "guis/textures/pd2/crimenet_marker_glow",
-			name = "glow_stretch_dark",
-			h = 75,
-			blend_mode = "normal",
-			w = 990,
-			alpha = 0.75,
-			layer = -1,
-			color = Color.black
-		})
+		local cx = 0
+		local cy = 0
 
-		glow_center:set_center(glow_panel:w() / 2, glow_panel:h() / 2)
-		glow_stretch:set_center(glow_panel:w() / 2, glow_panel:h() / 2)
-		glow_center_dark:set_center(glow_panel:w() / 2, glow_panel:h() / 2)
-		glow_stretch_dark:set_center(glow_panel:w() / 2, glow_panel:h() / 2)
-
-		local marker_dot_texture = (is_special and data.icon or "guis/textures/pd2/crimenet_marker_" .. (is_server and "join" or "host")) .. (is_professional and "_pro" or "")
-		local marker_dot = marker_panel:bitmap({
-			name = "marker_dot",
-			h = 64,
-			y = 2,
-			w = 32,
-			x = 2,
-			layer = 1,
-			texture = marker_dot_texture,
-			color = data.marker_dot_color or color
-		})
-
-		if is_professional then
-			marker_panel:bitmap({
-				texture = "guis/textures/pd2/crimenet_marker_pro_outline",
-				name = "marker_pro_outline",
-				h = 64,
-				rotation = 0,
-				w = 64,
-				alpha = 1,
-				blend_mode = "add",
-				y = 0,
-				x = 0,
-				layer = 0
-			})
-		end
-
-		if data.mutators then
-			marker_dot:set_color(tweak_data.screen_colors.mutators_color)
-		end
-
-		if data.is_crime_spree then
-			marker_dot:set_color(tweak_data.screen_colors.crime_spree_risk)
-		end
-
-		if data.is_skirmish then
-			marker_dot:set_color(tweak_data.screen_colors.skirmish_color)
-		end
-
-		local timer_rect, peers_panel = nil
-		local icon_panel = self._pan_panel:panel({
-			alpha = 1,
-			w = 18,
-			h = 64,
-			layer = 26
-		})
-		local next_icon_right = 16
-		local side_icons_top = 0
-
-		for child in ipairs(icon_panel:children()) do
-			side_icons_top = math.max(side_icons_top, child:bottom())
-		end
-
-		local ghost_icon = nil
-
-		if data.job_id and managers.job:is_job_ghostable(data.job_id) then
-			ghost_icon = icon_panel:bitmap({
-				texture = "guis/textures/pd2/cn_minighost",
-				name = "ghost_icon",
-				blend_mode = "add",
-				color = tweak_data.screen_colors.ghost_color
-			})
-
-			ghost_icon:set_top(side_icons_top)
-			ghost_icon:set_right(next_icon_right)
-
-			next_icon_right = next_icon_right - 12
-		end
-
-		if one_down_active then
-			local one_down_icon = icon_panel:bitmap({
-				blend_mode = "add",
-				name = "one_down_icon",
-				texture = "guis/textures/pd2/cn_mini_onedown",
-				rotation = 360,
-				color = tweak_data.screen_colors.one_down
-			})
-
-			one_down_icon:set_top(side_icons_top)
-			one_down_icon:set_right(next_icon_right)
-
-			next_icon_right = next_icon_right - 12
-		end
-
-		if is_server then
-			peers_panel = self._pan_panel:panel({
-				alpha = 0,
-				h = 62,
-				visible = true,
-				w = 32,
-				layer = 11 + self._num_layer_jobs * 3
-			})
-			local cx = 0
-			local cy = 0
-
-			for i = 1, 4, 1 do
-				cx = 3 + 6 * (i - 1)
-				cy = 8
-				local player_marker = peers_panel:bitmap({
-					texture = "guis/textures/pd2/crimenet_marker_peerflag",
-					h = 16,
-					w = 8,
-					blend_mode = "normal",
-					layer = 2,
-					name = tostring(i),
-					color = color,
-					visible = i <= data.num_plrs
-				})
-
-				player_marker:set_position(cx, cy)
-
-				if data.mutators then
-					player_marker:set_color(tweak_data.screen_colors.mutators_color)
-				end
-
-				if data.is_crime_spree then
-					player_marker:set_color(tweak_data.screen_colors.crime_spree_risk)
-				end
-
-				if data.is_skirmish then
-					player_marker:set_color(tweak_data.screen_colors.skirmish_color)
-				end
-			end
-
-			local kick_none_icon = icon_panel:bitmap({
-				texture = "guis/textures/pd2/cn_kick_marker",
-				name = "kick_none_icon",
-				blend_mode = "add",
-				alpha = 0
-			})
-			local kick_vote_icon = icon_panel:bitmap({
-				texture = "guis/textures/pd2/cn_votekick_marker",
-				name = "kick_vote_icon",
-				blend_mode = "add",
-				alpha = 0
-			})
-			local y = 0
-
-			for i = 1, #icon_panel:children() - 1, 1 do
-				y = math.max(y, icon_panel:children()[i]:bottom())
-			end
-
-			kick_none_icon:set_y(y)
-			kick_vote_icon:set_y(y)
-		elseif not is_special then
-			timer_rect = marker_panel:bitmap({
-				texture = "guis/textures/pd2/crimenet_timer",
-				name = "timer_rect",
-				h = 32,
-				x = 1,
-				w = 32,
-				y = 2,
-				render_template = "VertexColorTexturedRadial",
+		for i = 1, 4, 1 do
+			cx = 3 + 6 * (i - 1)
+			cy = 8
+			local player_marker = peers_panel:bitmap({
+				texture = "guis/textures/pd2/crimenet_marker_peerflag",
+				h = 16,
+				w = 8,
+				blend_mode = "normal",
 				layer = 2,
-				color = Color.white
+				name = tostring(i),
+				color = color,
+				visible = i <= data.num_plrs
 			})
 
-			timer_rect:set_texture_rect(32, 0, -32, 32)
-		end
+			player_marker:set_position(cx, cy)
 
-		marker_panel:set_center(x * self._zoom, y * self._zoom)
-		focus:set_center(marker_panel:center())
-		glow_panel:set_world_center(marker_panel:child("select_panel"):world_center())
+			if data.mutators then
+				player_marker:set_color(tweak_data.screen_colors.mutators_color)
+			end
 
-		if heat_glow then
-			heat_glow:set_world_center(marker_panel:child("select_panel"):world_center())
-		end
+			if data.is_crime_spree then
+				player_marker:set_color(tweak_data.screen_colors.crime_spree_risk)
+			end
 
-		local num_containers = managers.job:get_num_containers()
-		local middle_container = math.ceil(num_containers / 2)
-		local job_container_index = managers.job:get_job_container_index(data.job_id) or middle_container
-		local diff_containers = job_container_index - middle_container
-
-		if diff_containers == 0 then
-			if job_heat_mul < 0 then
-				diff_containers = -1
-			elseif job_heat_mul > 0 then
-				diff_containers = 1
+			if data.is_skirmish then
+				player_marker:set_color(tweak_data.screen_colors.skirmish_color)
 			end
 		end
 
-		local container_panel = nil
+		local kick_none_icon = icon_panel:bitmap({
+			texture = "guis/textures/pd2/cn_kick_marker",
+			name = "kick_none_icon",
+			blend_mode = "add",
+			alpha = 0
+		})
+		local kick_vote_icon = icon_panel:bitmap({
+			texture = "guis/textures/pd2/cn_votekick_marker",
+			name = "kick_vote_icon",
+			blend_mode = "add",
+			alpha = 0
+		})
+		local y = 0
 
-		if diff_containers ~= 0 and job_heat_mul ~= 0 then
-			container_panel = self._pan_panel:panel({
-				alpha = 0,
-				layer = 11 + self._num_layer_jobs * 3
-			})
-
-			container_panel:set_w(math.abs(num_containers - middle_container) * 10 + 6)
-			container_panel:set_h(8)
-			container_panel:set_center_x(marker_panel:center_x())
-			container_panel:set_bottom(marker_panel:top())
-			container_panel:set_x(math.round(container_panel:x()))
-
-			local texture = "guis/textures/pd2/blackmarket/stat_plusminus"
-			local texture_rect = diff_containers > 0 and {
-				0,
-				0,
-				8,
-				8
-			} or {
-				8,
-				0,
-				8,
-				8
-			}
-
-			for i = 1, math.abs(diff_containers), 1 do
-				container_panel:bitmap({
-					texture = texture,
-					texture_rect = texture_rect,
-					x = (i - 1) * 10 + 3
-				})
-			end
+		for i = 1, #icon_panel:children() - 1, 1 do
+			y = math.max(y, icon_panel:children()[i]:bottom())
 		end
 
-		local text_on_right = x < self._map_size_w - 200
+		kick_none_icon:set_y(y)
+		kick_vote_icon:set_y(y)
+	elseif not is_special then
+		timer_rect = marker_panel:bitmap({
+			texture = "guis/textures/pd2/crimenet_timer",
+			name = "timer_rect",
+			h = 32,
+			x = 1,
+			w = 32,
+			y = 2,
+			render_template = "VertexColorTexturedRadial",
+			layer = 2,
+			color = Color.white
+		})
 
-		if text_on_right then
-			side_panel:set_left(marker_panel:right())
-		else
-			job_name:set_text(contact_name:text() .. job_name:text())
-			contact_name:set_text("")
-			contact_name:set_w(0)
+		timer_rect:set_texture_rect(32, 0, -32, 32)
+	end
 
-			local _, _, w, h = job_name:text_rect()
+	marker_panel:set_center(x * self._zoom, y * self._zoom)
+	focus:set_center(marker_panel:center())
+	glow_panel:set_world_center(marker_panel:child("select_panel"):world_center())
 
-			job_name:set_size(w, h)
-			host_name:set_right(side_panel:w())
-			job_name:set_right(side_panel:w())
-			contact_name:set_left(side_panel:w())
-			info_name:set_left(side_panel:w())
-			difficulty_name:set_left(side_panel:w())
-			heat_name:set_left(side_panel:w())
-			stars_panel:set_right(side_panel:w())
-			side_panel:set_right(marker_panel:left())
+	if heat_glow then
+		heat_glow:set_world_center(marker_panel:child("select_panel"):world_center())
+	end
+
+	local num_containers = managers.job:get_num_containers()
+	local middle_container = math.ceil(num_containers / 2)
+	local job_container_index = managers.job:get_job_container_index(data.job_id) or middle_container
+	local diff_containers = job_container_index - middle_container
+
+	if diff_containers == 0 then
+		if job_heat_mul < 0 then
+			diff_containers = -1
+		elseif job_heat_mul > 0 then
+			diff_containers = 1
 		end
+	end
 
-		side_panel:set_top(marker_panel:top() - job_name:top() + 1)
+	local container_panel = nil
 
-		if icon_panel then
-			if text_on_right then
-				icon_panel:set_right(marker_panel:left() + 2)
-			else
-				icon_panel:set_left(marker_panel:right() - 2)
-			end
+	if diff_containers ~= 0 and job_heat_mul ~= 0 then
+		container_panel = self._pan_panel:panel({
+			alpha = 0,
+			layer = 11 + self._num_layer_jobs * 3
+		})
 
-			icon_panel:set_top(math.round(marker_panel:top() + 1))
-		end
+		container_panel:set_w(math.abs(num_containers - middle_container) * 10 + 6)
+		container_panel:set_h(8)
+		container_panel:set_center_x(marker_panel:center_x())
+		container_panel:set_bottom(marker_panel:top())
+		container_panel:set_x(math.round(container_panel:x()))
 
-		if peers_panel then
-			peers_panel:set_center_x(marker_panel:center_x())
-			peers_panel:set_center_y(marker_panel:center_y())
-		end
-
-		local callout = nil
-
-		if narrative_data and narrative_data.crimenet_callouts and #narrative_data.crimenet_callouts > 0 then
-			local variant = math.random(#narrative_data.crimenet_callouts)
-			callout = narrative_data.crimenet_callouts[variant]
-		end
-
-		if location then
-			location[3] = true
-		end
-
-		managers.menu:post_event("job_appear")
-
-		local job = {
-			room_id = data.room_id,
-			info = data.info,
-			job_id = data.job_id,
-			host_id = data.host_id,
-			level_id = level_id,
-			level_data = level_data,
-			marker_panel = marker_panel,
-			peers_panel = peers_panel,
-			kick_option = data.kick_option,
-			job_plan = data.job_plan,
-			container_panel = container_panel,
-			is_friend = data.is_friend,
-			marker_dot = marker_dot,
-			timer_rect = timer_rect,
-			side_panel = side_panel,
-			icon_panel = icon_panel,
-			focus = focus,
-			difficulty = data.difficulty,
-			difficulty_id = data.difficulty_id,
-			one_down = data.one_down,
-			num_plrs = data.num_plrs,
-			job_x = x,
-			job_y = y,
-			state = data.state,
-			layer = 11 + self._num_layer_jobs * 3,
-			glow_panel = glow_panel,
-			callout = callout,
-			text_on_right = text_on_right,
-			location = location,
-			heat_glow = heat_glow,
-			mutators = data.mutators,
-			is_crime_spree = data.crime_spree and data.crime_spree >= 0,
-			crime_spree = data.crime_spree,
-			crime_spree_mission = data.crime_spree_mission,
-			color_lerp = data.color_lerp,
-			server_data = data,
-			mods = data.mods,
-			is_skirmish = data.skirmish and data.skirmish > 0,
-			skirmish = data.skirmish,
-			skirmish_wave = data.skirmish_wave,
-			skirmish_weekly_modifiers = data.skirmish_weekly_modifiers
+		local texture = "guis/textures/pd2/blackmarket/stat_plusminus"
+		local texture_rect = diff_containers > 0 and {
+			0,
+			0,
+			8,
+			8
+		} or {
+			8,
+			0,
+			8,
+			8
 		}
 
-		if is_crime_spree or data.is_crime_spree then
-			stars_panel:set_visible(false)
-
-			local spree_panel = side_panel:panel({
-				visible = true,
-				name = "spree_panel",
-				layer = -1,
-				h = tweak_data.menu.pd2_small_font_size
+		for i = 1, math.abs(diff_containers), 1 do
+			container_panel:bitmap({
+				texture = texture,
+				texture_rect = texture_rect,
+				x = (i - 1) * 10 + 3
 			})
+		end
+	end
 
-			spree_panel:set_bottom(side_panel:h())
+	local text_on_right = x < self._map_size_w - 200
 
-			local level = is_crime_spree and managers.crime_spree:spree_level() or tonumber(data.crime_spree)
+	if text_on_right then
+		side_panel:set_left(marker_panel:right())
+	else
+		job_name:set_text(contact_name:text() .. job_name:text())
+		contact_name:set_text("")
+		contact_name:set_w(0)
 
-			if level >= 0 then
-				local spree_level = spree_panel:text({
-					halign = "left",
-					vertical = "center",
-					layer = 1,
-					align = "left",
-					y = 0,
-					x = 0,
-					valign = "center",
-					text = managers.experience:cash_string(level or 0, "") .. managers.localization:get_default_macro("BTN_SPREE_TICKET"),
-					color = tweak_data.screen_colors.crime_spree_risk,
-					font = tweak_data.menu.pd2_small_font,
-					font_size = tweak_data.menu.pd2_small_font_size
-				})
-			end
+		local _, _, w, h = job_name:text_rect()
+
+		job_name:set_size(w, h)
+		host_name:set_right(side_panel:w())
+		job_name:set_right(side_panel:w())
+		contact_name:set_left(side_panel:w())
+		info_name:set_left(side_panel:w())
+		difficulty_name:set_left(side_panel:w())
+		heat_name:set_left(side_panel:w())
+		stars_panel:set_right(side_panel:w())
+		side_panel:set_right(marker_panel:left())
+	end
+
+	side_panel:set_top(marker_panel:top() - job_name:top() + 1)
+
+	if icon_panel then
+		if text_on_right then
+			icon_panel:set_right(marker_panel:left() + 2)
+		else
+			icon_panel:set_left(marker_panel:right() - 2)
 		end
 
-		if data.is_skirmish then
-			stars_panel:set_visible(false)
+		icon_panel:set_top(math.round(marker_panel:top() + 1))
+	end
 
-			local skirmish_panel = side_panel:panel({
-				visible = true,
-				name = "skirmish_panel",
-				layer = -1,
-				h = tweak_data.menu.pd2_small_font_size
-			})
+	if peers_panel then
+		peers_panel:set_center_x(marker_panel:center_x())
+		peers_panel:set_center_y(marker_panel:center_y())
+	end
 
-			skirmish_panel:set_bottom(side_panel:h())
+	local callout = nil
 
-			local wave = data.skirmish_wave
-			local text = nil
+	if narrative_data and narrative_data.crimenet_callouts and #narrative_data.crimenet_callouts > 0 then
+		local variant = math.random(#narrative_data.crimenet_callouts)
+		callout = narrative_data.crimenet_callouts[variant]
+	end
 
-			if data.state == tweak_data:server_state_to_index("in_game") then
-				text = managers.localization:to_upper_text("menu_skirmish_wave_number", {
-					wave = wave
-				})
-			else
-				text = managers.localization:to_upper_text("menu_lobby_server_state_" .. tweak_data:index_to_server_state(data.state))
-			end
+	if location then
+		location[3] = true
+	end
 
-			local skirmish_wave = skirmish_panel:text({
-				layer = 1,
-				vertical = "center",
-				blend_mode = "add",
-				align = "left",
+	managers.menu:post_event("job_appear")
+
+	local job = {
+		room_id = data.room_id,
+		info = data.info,
+		job_id = data.job_id,
+		host_id = data.host_id,
+		level_id = level_id,
+		level_data = level_data,
+		marker_panel = marker_panel,
+		peers_panel = peers_panel,
+		kick_option = data.kick_option,
+		job_plan = data.job_plan,
+		container_panel = container_panel,
+		is_friend = data.is_friend,
+		marker_dot = marker_dot,
+		timer_rect = timer_rect,
+		side_panel = side_panel,
+		icon_panel = icon_panel,
+		focus = focus,
+		difficulty = data.difficulty,
+		difficulty_id = data.difficulty_id,
+		one_down = data.one_down,
+		num_plrs = data.num_plrs,
+		job_x = x,
+		job_y = y,
+		state = data.state,
+		layer = 11 + self._num_layer_jobs * 3,
+		glow_panel = glow_panel,
+		callout = callout,
+		text_on_right = text_on_right,
+		location = location,
+		heat_glow = heat_glow,
+		mutators = data.mutators,
+		is_crime_spree = data.crime_spree and data.crime_spree >= 0,
+		crime_spree = data.crime_spree,
+		crime_spree_mission = data.crime_spree_mission,
+		color_lerp = data.color_lerp,
+		server_data = data,
+		mods = data.mods,
+		is_skirmish = data.skirmish and data.skirmish > 0,
+		skirmish = data.skirmish,
+		skirmish_wave = data.skirmish_wave,
+		skirmish_weekly_modifiers = data.skirmish_weekly_modifiers
+	}
+
+	if is_crime_spree or data.is_crime_spree then
+		stars_panel:set_visible(false)
+
+		local spree_panel = side_panel:panel({
+			visible = true,
+			name = "spree_panel",
+			layer = -1,
+			h = tweak_data.menu.pd2_small_font_size
+		})
+
+		spree_panel:set_bottom(side_panel:h())
+
+		local level = is_crime_spree and managers.crime_spree:spree_level() or tonumber(data.crime_spree)
+
+		if level >= 0 then
+			local spree_level = spree_panel:text({
 				halign = "left",
+				vertical = "center",
+				layer = 1,
+				align = "left",
+				y = 0,
+				x = 0,
 				valign = "center",
-				text = text,
-				color = tweak_data.screen_colors.skirmish_color,
+				text = managers.experience:cash_string(level or 0, "") .. managers.localization:get_default_macro("BTN_SPREE_TICKET"),
+				color = tweak_data.screen_colors.crime_spree_risk,
 				font = tweak_data.menu.pd2_small_font,
 				font_size = tweak_data.menu.pd2_small_font_size
 			})
 		end
+	end
+
+	if data.is_skirmish then
+		stars_panel:set_visible(false)
+
+		local skirmish_panel = side_panel:panel({
+			visible = true,
+			name = "skirmish_panel",
+			layer = -1,
+			h = tweak_data.menu.pd2_small_font_size
+		})
+
+		skirmish_panel:set_bottom(side_panel:h())
+
+		local wave = data.skirmish_wave
+		local text = nil
+
+		if data.state == tweak_data:server_state_to_index("in_game") then
+			text = managers.localization:to_upper_text("menu_skirmish_wave_number", {
+				wave = wave
+			})
+		else
+			text = managers.localization:to_upper_text("menu_lobby_server_state_" .. tweak_data:index_to_server_state(data.state))
+		end
+
+		local skirmish_wave = skirmish_panel:text({
+			layer = 1,
+			vertical = "center",
+			blend_mode = "add",
+			align = "left",
+			halign = "left",
+			valign = "center",
+			text = text,
+			color = tweak_data.screen_colors.skirmish_color,
+			font = tweak_data.menu.pd2_small_font,
+			font_size = tweak_data.menu.pd2_small_font_size
+		})
 	end
 
 	self:update_job_gui(job, 3)
@@ -4684,7 +4676,13 @@ function CrimeNetGui:update_job_gui(job, inside)
 			local expand_h = math.round(base_h + info_name:h() + difficulty_name:h() + (one_down_label and one_down_label:h() or 0) + heat_name:h() + math.max(contact_name:h() - job_name:h(), 0))
 			local start_x = 0
 			local max_x = math.round(math.max(contact_name:w(), info_name:w(), difficulty_name:w(), one_down_label and one_down_label:w() or 0, heat_name:w()))
-			start_x = (not job.text_on_right or math.round(math.max(contact_name:right(), info_name:right(), difficulty_name:right(), one_down_label and one_down_label:right() or 0, heat_name:right()))) and math.round(job.side_panel:w() - math.min(contact_name:left(), info_name:left(), difficulty_name:left(), one_down_label and one_down_label:left() or 0, heat_name:left()))
+
+			if job.text_on_right then
+				start_x = math.round(math.max(contact_name:right(), info_name:right(), difficulty_name:right(), one_down_label and one_down_label:right() or 0, heat_name:right()))
+			else
+				start_x = math.round(job.side_panel:w() - math.min(contact_name:left(), info_name:left(), difficulty_name:left(), one_down_label and one_down_label:left() or 0, heat_name:left()))
+			end
+
 			local x = start_x
 			local object_alpha = {}
 			local text_alpha = job.side_panel:alpha()

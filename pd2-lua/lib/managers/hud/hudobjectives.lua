@@ -262,9 +262,6 @@ function HUDBGBox_animate_bg_attention(bg, config)
 	local TOTAL_T = 3
 	local t = TOTAL_T
 
-	if t <= 0 then
-	end
-
 	while t > 0 or forever do
 		local dt = coroutine.yield()
 		t = t - dt

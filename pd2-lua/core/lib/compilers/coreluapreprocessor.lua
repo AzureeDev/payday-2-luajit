@@ -222,19 +222,17 @@ function CoreLuaPreprocessor:_find_corresponding_closing_bracket(source_str, sou
 	local current_pos = bracket_open_pos + 1
 	local nr_open_brackets = 1
 
-	if nr_open_brackets > 0 then
-		while nr_open_brackets > 0 and current_pos <= source_len do
-			local closing_bracket_pos = string.find(source_str, self._CLOSING_BRACKET, current_pos, true)
+	while nr_open_brackets > 0 and current_pos <= source_len do
+		local closing_bracket_pos = string.find(source_str, self._CLOSING_BRACKET, current_pos, true)
 
-			if closing_bracket_pos then
-				nr_open_brackets = nr_open_brackets - 1
-				nr_open_brackets = nr_open_brackets + self:_count_opening_brackets(source_str, current_pos, closing_bracket_pos - 1)
-				current_pos = closing_bracket_pos + 1
-			else
-				self:print_error("[CoreLuaPreprocessor:_find_corresponding_closing_bracket_pos] Did not find corresponding closing bracket for opening bracket at " .. tostring(self:_line_number_at_pos(bracket_open_pos)) .. ". file: ", self._source_path)
+		if closing_bracket_pos then
+			nr_open_brackets = nr_open_brackets - 1
+			nr_open_brackets = nr_open_brackets + self:_count_opening_brackets(source_str, current_pos, closing_bracket_pos - 1)
+			current_pos = closing_bracket_pos + 1
+		else
+			self:print_error("[CoreLuaPreprocessor:_find_corresponding_closing_bracket_pos] Did not find corresponding closing bracket for opening bracket at " .. tostring(self:_line_number_at_pos(bracket_open_pos)) .. ". file: ", self._source_path)
 
-				break
-			end
+			break
 		end
 	end
 

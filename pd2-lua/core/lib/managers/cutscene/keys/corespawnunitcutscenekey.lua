@@ -219,10 +219,8 @@ end
 function CoreSpawnUnitCutsceneKey:_on_database_browser_button_clicked(button)
 	self._cutscene_editor_window = button:parent()
 
-	if self._cutscene_editor_window then
-		while self._cutscene_editor_window and type_name(self._cutscene_editor_window) ~= "EWSFrame" do
-			self._cutscene_editor_window = self._cutscene_editor_window:parent()
-		end
+	while self._cutscene_editor_window and type_name(self._cutscene_editor_window) ~= "EWSFrame" do
+		self._cutscene_editor_window = self._cutscene_editor_window:parent()
 	end
 
 	assert(self._cutscene_editor_window, "Button is not inside a top-level window.")

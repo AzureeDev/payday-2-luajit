@@ -555,17 +555,15 @@ function NavFieldBuilder:_expand_rooms()
 	for i_room, room in ipairs(self._rooms) do
 		local expansion_segments = room.expansion_segments
 
-		if not progress then
-			while not progress and can_room_expand(expansion_segments) do
-				local text = "expanding room " .. tostring(i_room) .. " of " .. tostring(#self._rooms)
+		while not progress and can_room_expand(expansion_segments) do
+			local text = "expanding room " .. tostring(i_room) .. " of " .. tostring(#self._rooms)
 
-				self:_update_progress_bar(1, text)
+			self:_update_progress_bar(1, text)
 
-				progress = expand_room(room)
+			progress = expand_room(room)
 
-				if progress then
-					break
-				end
+			if progress then
+				break
 			end
 		end
 	end
@@ -3083,10 +3081,8 @@ function NavFieldBuilder:_sort_rooms_according_to_visibility()
 		}
 		local search_index = #sorted_vis_list
 
-		if search_index > 0 then
-			while search_index > 0 and my_total_area < sorted_vis_list[search_index].area do
-				search_index = search_index - 1
-			end
+		while search_index > 0 and my_total_area < sorted_vis_list[search_index].area do
+			search_index = search_index - 1
 		end
 
 		table.insert(sorted_vis_list, search_index + 1, my_data)

@@ -649,10 +649,8 @@ function Setup:render()
 end
 
 function Setup:end_frame(t, dt)
-	if self._end_frame_callbacks then
-		while self._end_frame_callbacks and #self._end_frame_callbacks > 0 do
-			table.remove(self._end_frame_callbacks)()
-		end
+	while self._end_frame_callbacks and #self._end_frame_callbacks > 0 do
+		table.remove(self._end_frame_callbacks)()
 	end
 end
 

@@ -253,26 +253,24 @@ function NewHeistsGui:_move_pages(pages)
 		local start_pos = o:x()
 		local final_pos = start_pos - swipe_distance - 5
 
-		if alive(o) and alive(other_object) then
-			while alive(o) and alive(other_object) and final_pos <= o:x() do
-				local dt = coroutine.yield()
-				t = t + dt
+		while alive(o) and alive(other_object) and final_pos <= o:x() do
+			local dt = coroutine.yield()
+			t = t + dt
 
-				o:move(-dt * speed, 0)
+			o:move(-dt * speed, 0)
 
-				if start_pos <= other_object:x() then
-					other_object:set_left(o:right() - 5)
+			if start_pos <= other_object:x() then
+				other_object:set_left(o:right() - 5)
+			end
+
+			if t < fade_text_t then
+				self._text:set_alpha(1 - t / fade_text_t)
+			else
+				if not text_changed then
+					self:_set_text(managers.localization:to_upper_text(tweak_data.gui.new_heists[target_page].name_id))
 				end
 
-				if t < fade_text_t then
-					self._text:set_alpha(1 - t / fade_text_t)
-				else
-					if not text_changed then
-						self:_set_text(managers.localization:to_upper_text(tweak_data.gui.new_heists[target_page].name_id))
-					end
-
-					self._text:set_alpha((t - fade_text_t) / fade_text_t)
-				end
+				self._text:set_alpha((t - fade_text_t) / fade_text_t)
 			end
 		end
 

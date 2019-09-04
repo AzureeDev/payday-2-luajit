@@ -140,7 +140,13 @@ function InventoryDescription.create_description_safe(safe_entry, ingame_format)
 	for i, item in ipairs(items_list) do
 		td = (tweak_data.economy[item.category] or tweak_data.blackmarket[item.category])[item.entry]
 		local item_text = ""
-		item_text = (item.category ~= "contents" or td.rarity ~= "legendary" or managers.localization:text("bm_menu_rarity_legendary_item_long")) and (td.weapon_id and utf8.to_upper(managers.weapon_factory:get_weapon_name_by_weapon_id(td.weapon_id)) .. " | " or "") .. managers.localization:text(td.name_id)
+
+		if item.category == "contents" and td.rarity == "legendary" then
+			item_text = managers.localization:text("bm_menu_rarity_legendary_item_long")
+		else
+			item_text = (td.weapon_id and utf8.to_upper(managers.weapon_factory:get_weapon_name_by_weapon_id(td.weapon_id)) .. " | " or "") .. managers.localization:text(td.name_id)
+		end
+
 		text = text .. func_color_text(item_text, func_hex_color(tweak_data.economy.rarities[td.rarity or "common"].color), ingame_format)
 
 		if i ~= #items_list then

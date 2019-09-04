@@ -520,32 +520,30 @@ function MutatorsManager:matchmake_unpack_string(str_dat)
 	local mutators_list = {}
 	local limit = 0
 
-	if #str_dat > 0 then
-		while #str_dat > 0 and limit < 50 do
-			local mutator_index = string.byte(str_dat, 1) - string.byte("a")
-			local mutator = self:mutators()[mutator_index]
+	while #str_dat > 0 and limit < 50 do
+		local mutator_index = string.byte(str_dat, 1) - string.byte("a")
+		local mutator = self:mutators()[mutator_index]
 
-			if #str_dat > 1 then
-				str_dat = string.sub(str_dat, -(#str_dat - 1))
-			else
-				str_dat = ""
-			end
+		if #str_dat > 1 then
+			str_dat = string.sub(str_dat, -(#str_dat - 1))
+		else
+			str_dat = ""
+		end
 
-			if mutator then
-				local mutator_data, new_str_dat = mutator:uncompress_data(str_dat)
+		if mutator then
+			local mutator_data, new_str_dat = mutator:uncompress_data(str_dat)
 
-				if mutator_data == nil then
-					return mutators_list
-				end
-
-				mutators_list[mutator:id()] = mutator_data
-				str_dat = new_str_dat
-			else
+			if mutator_data == nil then
 				return mutators_list
 			end
 
-			limit = limit + 1
+			mutators_list[mutator:id()] = mutator_data
+			str_dat = new_str_dat
+		else
+			return mutators_list
 		end
+
+		limit = limit + 1
 	end
 
 	return mutators_list
@@ -555,32 +553,30 @@ function MutatorsManager:matchmake_partial_unpack_string(str_dat)
 	local mutators = {}
 	local count = 0
 
-	if #str_dat > 0 then
-		while #str_dat > 0 and count < 50 do
-			local mutator_index = string.byte(str_dat, 1) - string.byte("a")
-			local mutator = self:mutators()[mutator_index]
+	while #str_dat > 0 and count < 50 do
+		local mutator_index = string.byte(str_dat, 1) - string.byte("a")
+		local mutator = self:mutators()[mutator_index]
 
-			if #str_dat > 1 then
-				str_dat = string.sub(str_dat, -(#str_dat - 1))
-			else
-				str_dat = ""
-			end
+		if #str_dat > 1 then
+			str_dat = string.sub(str_dat, -(#str_dat - 1))
+		else
+			str_dat = ""
+		end
 
-			if mutator then
-				local mutator_data, new_str_dat = mutator:partial_uncompress_data(str_dat)
+		if mutator then
+			local mutator_data, new_str_dat = mutator:partial_uncompress_data(str_dat)
 
-				if mutator_data == nil then
-					return mutators
-				end
-
-				mutators["mutator_" .. tostring(count + 1)] = mutator_data
-				str_dat = new_str_dat
-			else
+			if mutator_data == nil then
 				return mutators
 			end
 
-			count = count + 1
+			mutators["mutator_" .. tostring(count + 1)] = mutator_data
+			str_dat = new_str_dat
+		else
+			return mutators
 		end
+
+		count = count + 1
 	end
 
 	if count > 0 then

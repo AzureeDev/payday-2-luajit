@@ -1312,10 +1312,8 @@ function PlayerManager:chk_wild_kill_counter(killed_unit, variant)
 		self._wild_kill_triggers = self._wild_kill_triggers or {}
 		local t = Application:time()
 
-		if self._wild_kill_triggers[1] then
-			while self._wild_kill_triggers[1] and self._wild_kill_triggers[1] <= t do
-				table.remove(self._wild_kill_triggers, 1)
-			end
+		while self._wild_kill_triggers[1] and self._wild_kill_triggers[1] <= t do
+			table.remove(self._wild_kill_triggers, 1)
 		end
 
 		if tweak_data.upgrades.wild_max_triggers_per_time <= #self._wild_kill_triggers then
@@ -1358,10 +1356,8 @@ function PlayerManager:chk_wild_kill_counter(killed_unit, variant)
 		local trigger_time = t + math.max(trigger_cooldown, 0)
 		local insert_index = #self._wild_kill_triggers
 
-		if insert_index > 0 then
-			while insert_index > 0 and trigger_time < self._wild_kill_triggers[insert_index] do
-				insert_index = insert_index - 1
-			end
+		while insert_index > 0 and trigger_time < self._wild_kill_triggers[insert_index] do
+			insert_index = insert_index - 1
 		end
 
 		table.insert(self._wild_kill_triggers, insert_index + 1, trigger_time)

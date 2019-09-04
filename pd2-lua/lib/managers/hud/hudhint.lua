@@ -117,14 +117,12 @@ function HUDHint:_animate_show(hint_panel, done_cb, seconds, text)
 		marker:set_right(clip_panel:right())
 	end
 
-	if t > 0 or forever then
-		while (t > 0 or forever) and not self._stop do
-			local dt = coroutine.yield()
-			t = t - dt
+	while (t > 0 or forever) and not self._stop do
+		local dt = coroutine.yield()
+		t = t - dt
 
-			marker:set_alpha((1 + math.sin(Application:time() * 800)) / 2)
-			marker:set_right(clip_panel:right())
-		end
+		marker:set_alpha((1 + math.sin(Application:time() * 800)) / 2)
+		marker:set_right(clip_panel:right())
 	end
 
 	self._stop = false

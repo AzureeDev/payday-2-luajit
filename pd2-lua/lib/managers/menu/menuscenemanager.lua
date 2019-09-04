@@ -1053,10 +1053,8 @@ function MenuSceneManager:add_callback(clbk, delay, param)
 	local callbacks = self._delayed_callbacks
 	local i = #callbacks
 
-	if i > 0 then
-		while i > 0 and clbk_data[1] < callbacks[i][1] do
-			i = i - 1
-		end
+	while i > 0 and clbk_data[1] < callbacks[i][1] do
+		i = i - 1
 	end
 
 	table.insert(callbacks, i + 1, clbk_data)

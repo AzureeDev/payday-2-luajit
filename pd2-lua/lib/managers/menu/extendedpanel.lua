@@ -221,6 +221,18 @@ function ExtendedPanel.scale_font_to_fit(text, w_limit, h_limit, smallest_allowe
 	local size = text:font_size()
 	local start_w = text:w()
 
+	while w_limit and w_limit < text:w() or h_limit and h_limit < text:h() do
+		if size == smallest_allowed then
+			return false
+		end
+
+		size = size - 1
+
+		text:set_w(start_w)
+		text:set_font_size(size)
+		ExtendedPanel.make_fine_text(text)
+	end
+
 	return true
 end
 

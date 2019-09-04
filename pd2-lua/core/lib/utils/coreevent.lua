@@ -107,13 +107,8 @@ end
 function CallbackHandler:__insert_sorted(cb)
 	local i = 1
 
-	if self._sorted[i] then
-		if self._sorted[i].next ~= nil then
-		end
-
-		while self._sorted[i] and (self._sorted[i].next == nil or self._sorted[i].next < cb.next) do
-			i = i + 1
-		end
+	while self._sorted[i] and (self._sorted[i].next == nil or self._sorted[i].next < cb.next) do
+		i = i + 1
 	end
 
 	table.insert(self._sorted, i, cb)

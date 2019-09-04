@@ -275,6 +275,16 @@ function HUDBeltInteraction:_animate_size_alpha(o, size_ratio, alpha)
 	local alpha_comp_func = self._alpha_diff < alpha and math.min or math.max
 	local new_ratio = current_ratio
 
+	while flip > 0 and new_ratio < size_ratio or flip <= 0 and size_ratio < new_ratio do
+		local dt = coroutine.yield()
+		new_ratio = new_ratio + dt * anim_speed * flip
+
+		panel:set_size(self._w * new_ratio, self._h * new_ratio)
+		panel:set_center(cx, cy)
+
+		self._alpha_diff = alpha_comp_func(self._alpha_diff + dt * anim_speed * flip * 2, alpha)
+	end
+
 	panel:set_size(self._w * size_ratio, self._h * size_ratio)
 	panel:set_center(cx, cy)
 

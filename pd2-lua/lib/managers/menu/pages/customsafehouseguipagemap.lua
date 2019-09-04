@@ -1955,7 +1955,11 @@ function CustomSafehouseMapPoint:update_help_text(tier_id)
 	local help_text = managers.localization:text(self._room_data.help_id .. "_" .. tier_id)
 
 	if managers.custom_safehouse:is_room_tier_unlocked(self._id, next_tier) then
-		help_text = next_tier == #tweak_data.safehouse.prices.rooms and help_text .. "\n\n" .. managers.localization:text("menu_cs_upgrade_max") or help_text .. "\n\n" .. (next_tier == 1 and "" or managers.localization:text("menu_cs_upgrade_owned"))
+		if next_tier == #tweak_data.safehouse.prices.rooms then
+			help_text = help_text .. "\n\n" .. managers.localization:text("menu_cs_upgrade_max")
+		else
+			help_text = help_text .. "\n\n" .. (next_tier == 1 and "" or managers.localization:text("menu_cs_upgrade_owned"))
+		end
 
 		self._parent:set_help_text(help_text)
 		self._parent:set_warning_text(nil)

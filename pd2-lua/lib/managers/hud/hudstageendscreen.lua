@@ -1537,13 +1537,11 @@ function HUDStageEndScreen:_wait_for_video()
 	local fade_t = 1
 	local alpha = 0
 
-	if alive(video) then
-		while alive(video) and video:loop_count() == 0 do
-			local dt = coroutine.yield() * (self._speed_up or 1)
-			time = time + dt
+	while alive(video) and video:loop_count() == 0 do
+		local dt = coroutine.yield() * (self._speed_up or 1)
+		time = time + dt
 
-			video:set_alpha(math.min(time, 1) * 0.2)
-		end
+		video:set_alpha(math.min(time, 1) * 0.2)
 	end
 
 	if alive(video) then

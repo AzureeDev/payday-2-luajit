@@ -1698,12 +1698,10 @@ function CoreUnitDamage:_process_sequence_queue()
 		return
 	end
 
-	if not self._sequence_block_state and self._queued_sequences then
-		while not self._sequence_block_state and self._queued_sequences and next(self._queued_sequences) do
-			local front_seq = table.remove(self._queued_sequences, 1)
+	while not self._sequence_block_state and self._queued_sequences and next(self._queued_sequences) do
+		local front_seq = table.remove(self._queued_sequences, 1)
 
-			self:run_sequence_simple(front_seq.name, front_seq.params)
-		end
+		self:run_sequence_simple(front_seq.name, front_seq.params)
 	end
 
 	if not next(self._queued_sequences) then
@@ -1796,10 +1794,8 @@ function CoreBodyDamage:set_damage(damage_type, damage)
 	self._damage[damage_type] = damage
 	local element = self._body_element._first_endurance[damage_type]
 
-	if element then
-		while element and element._endurance[damage_type] <= self._damage[damage_type] do
-			element = element._next[damage_type]
-		end
+	while element and element._endurance[damage_type] <= self._damage[damage_type] do
+		element = element._next[damage_type]
 	end
 
 	self._endurance[damage_type] = element
