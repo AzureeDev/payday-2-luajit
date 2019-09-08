@@ -140,11 +140,7 @@ function TeamAIMovement:downed()
 end
 
 function TeamAIMovement:set_cool(state)
-	if state then
-		state = true
-	else
-		state = false
-	end
+	state = state and true or false
 
 	if state == self._cool then
 		return

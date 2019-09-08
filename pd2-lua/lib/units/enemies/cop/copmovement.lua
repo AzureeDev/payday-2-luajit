@@ -1137,11 +1137,7 @@ function CopMovement:_chk_play_equip_weapon()
 end
 
 function CopMovement:set_cool(state, giveaway)
-	if state then
-		state = true
-	else
-		state = false
-	end
+	state = state and true or false
 
 	if not state and not managers.groupai:state():enemy_weapons_hot() then
 		self._coolness_giveaway = managers.groupai:state():fetch_highest_giveaway(self._coolness_giveaway, giveaway)
@@ -1800,11 +1796,7 @@ function CopMovement:anim_clbk_melee_strike(unit)
 end
 
 function CopMovement:anim_clbk_set_visibility(unit, state)
-	if state == true then
-		state = true
-	else
-		state = false
-	end
+	state = state == true and true or false
 
 	self._unit:set_visible(state)
 end

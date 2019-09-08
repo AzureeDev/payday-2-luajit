@@ -158,9 +158,7 @@ function StateMachine:change_state(state, params)
 
 	cat_print("state_machine", "[StateMachine] Requested state change " .. transition_debug_string)
 
-	if not self:can_change_state(state) then
-		-- Nothing
-	else
+	if self:can_change_state(state) then
 		self._transition_queue:queue_transition(state, params, self)
 	end
 end

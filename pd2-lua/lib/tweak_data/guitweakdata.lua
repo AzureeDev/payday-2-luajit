@@ -5349,8 +5349,14 @@ function GuiTweakData:serializeTable(val, name, skipnewlines, depth)
 		end
 
 		tmp = tmp .. "}" .. (depth <= 1 and ", \n" or "")
+	elseif type(val) == "number" then
+		tmp = tmp .. tostring(val)
+	elseif type(val) == "string" then
+		tmp = tmp .. string.format("%q", val)
+	elseif type(val) == "boolean" then
+		tmp = tmp .. (val and "true" or "false")
 	else
-		tmp = type(val) == "number" and tmp .. tostring(val) or type(val) == "string" and tmp .. string.format("%q", val) or type(val) == "boolean" and tmp .. (val and "true" or "false") or tmp .. "\"[inserializeable datatype:" .. type(val) .. "]\""
+		tmp = tmp .. "\"[inserializeable datatype:" .. type(val) .. "]\""
 	end
 
 	return tmp

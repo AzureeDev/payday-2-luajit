@@ -983,9 +983,6 @@ function CopLogicTravel._get_pos_on_wall(from_pos, max_dist, step_offset, is_rec
 				managers.navigation:destroy_nav_tracker(from_tracker)
 
 				return ray_params.trace[1]
-
-				if ray_params.trace[1] then
-				end
 			end
 		elseif not fail_position then
 			rsrv_desc.position = ray_params.trace[1]

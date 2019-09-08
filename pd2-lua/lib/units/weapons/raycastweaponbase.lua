@@ -2103,9 +2103,7 @@ function InstantExplosiveBulletBase:on_collision(col_ray, weapon_unit, user_unit
 		self:play_impact_sound_and_effects(weapon_unit, col_ray)
 	end
 
-	if blank then
-		-- Nothing
-	else
+	if not blank then
 		mvec3_set(tmp_vec1, col_ray.position)
 		mvec3_set(tmp_vec2, col_ray.ray)
 		mvec3_norm(tmp_vec2)

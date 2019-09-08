@@ -32,12 +32,7 @@ function MenuNodeCrimenetGui:_setup_item_panel(safe_rect, res)
 
 	if SystemInfo:platform() ~= Idstring("WIN32") then
 		width = 900
-
-		if is_nextgen then
-			height = 570
-		else
-			height = 525
-		end
+		height = is_nextgen and 570 or 525
 	end
 
 	self.item_panel:set_rightbottom(self.item_panel:parent():w() * 0.5 + width / 2 - 10, self.item_panel:parent():h() * 0.5 + height / 2 - 10)
@@ -84,6 +79,7 @@ function MenuNodeCrimenetFiltersGui:_setup_item_panel(safe_rect, res)
 	end
 
 	for _, child in ipairs(self.item_panel:children()) do
+		-- Nothing
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -3474,7 +3470,7 @@ function MenuNodeCrimenetChallengeGui:set_contact_info(id, name, files, override
 				local desc_text = self._info_panel:text({
 					blend_mode = "add",
 					name = "desc_text_objective_" .. tostring(_),
-					text = managers.localization:text(objective.desc_id, {
+					text = objective.desc_s or objective.desc_id and managers.localization:text(objective.desc_id, {
 						progress = objective.progress and managers.money:add_decimal_marks_to_string(tostring(objective.progress)),
 						max_progress = objective.max_progress and managers.money:add_decimal_marks_to_string(tostring(objective.max_progress))
 					}) or "",
@@ -4241,6 +4237,7 @@ function MenuNodeChooseWeaponRewardGui:_setup_item_panel(safe_rect, res)
 	end
 
 	for _, child in ipairs(self.item_panel:children()) do
+		-- Nothing
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))
@@ -4387,6 +4384,7 @@ function MenuNodeChooseWeaponCosmeticGui:_setup_item_panel(safe_rect, res)
 	end
 
 	for _, child in ipairs(self.item_panel:children()) do
+		-- Nothing
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))

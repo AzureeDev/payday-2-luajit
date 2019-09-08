@@ -78,11 +78,7 @@ function MenuNodeSkillSwitchGui:_create_menu_item(row_item)
 			local reasons_text = nil
 
 			for _, reason in ipairs(reasons) do
-				if not reasons_text then
-					reasons_text = ""
-				else
-					reasons_text = reasons_text .. " + "
-				end
+				reasons_text = not reasons_text and "" or reasons_text .. " + "
 
 				if reason == "money" then
 					reasons_text = reasons_text .. self:get_unlock_cost_text(skill_switch, false)
@@ -300,6 +296,7 @@ function MenuNodeSkillSwitchGui:_setup_item_panel(safe_rect, res)
 	end
 
 	for _, child in ipairs(self.item_panel:children()) do
+		-- Nothing
 	end
 
 	self.item_panel:set_w(safe_rect.width * (1 - self._align_line_proportions))

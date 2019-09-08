@@ -618,12 +618,7 @@ function StatisticsManager:stop_session(data)
 			if managers.job:on_last_stage() then
 				stat_name = stat_name .. (dropped_in and "_completed_dropin" or "_completed")
 				job_stats[stat_name] = (job_stats[stat_name] or 0) + 1
-
-				if dropped_in then
-					completion = "win_dropin"
-				else
-					completion = "win_begin"
-				end
+				completion = dropped_in and "win_dropin" or "win_begin"
 			else
 				completion = "done"
 			end

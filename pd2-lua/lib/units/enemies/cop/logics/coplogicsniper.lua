@@ -150,11 +150,7 @@ function CopLogicSniper._upd_enemy_detection(data)
 
 	CopLogicSniper._upd_aim(data, my_data)
 
-	if data.important then
-		delay = 0
-	else
-		delay = 0.5 + delay * 1.5
-	end
+	delay = data.important and 0 or 0.5 + delay * 1.5
 
 	CopLogicBase.queue_task(my_data, my_data.detection_task_key, CopLogicSniper._upd_enemy_detection, data, data.t + delay)
 	CopLogicBase._report_detections(data.detected_attention_objects)

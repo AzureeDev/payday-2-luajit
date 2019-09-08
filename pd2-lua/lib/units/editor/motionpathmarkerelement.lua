@@ -563,12 +563,7 @@ function MotionpathMarkerUnitElement:_recreate_motion_path(selected_unit, force_
 
 			for _, point in ipairs(self._bezier_points) do
 				current_z = current_z + z_step
-
-				if current_speed == -1 then
-					final_speed = -1
-				else
-					final_speed = (current_speed + speed_step) * 27.77
-				end
+				final_speed = current_speed == -1 and -1 or (current_speed + speed_step) * 27.77
 
 				table.insert(entire_path_points, {
 					point = point:with_z(current_z),

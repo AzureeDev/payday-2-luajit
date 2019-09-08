@@ -835,9 +835,7 @@ function MoneyManager:_get_pc_entry(entry)
 	if not pcs then
 		local pc = entry.pc
 
-		if not pc then
-			-- Nothing
-		else
+		if pc then
 			pc_value = pc
 		end
 	else

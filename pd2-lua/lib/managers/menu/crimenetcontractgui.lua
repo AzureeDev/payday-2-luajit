@@ -27,12 +27,7 @@ function CrimeNetContractGui:init(ws, fullscreen_ws, node)
 
 	if not is_win_32 then
 		width = 900
-
-		if is_nextgen then
-			height = 550
-		else
-			height = 525
-		end
+		height = is_nextgen and 550 or 525
 	end
 
 	local blur = self._fullscreen_panel:bitmap({
@@ -1694,9 +1689,7 @@ function CrimeNetContractGui:set_potential_rewards(show_max)
 		end
 	end
 
-	if #start_ci ~= #end_ci then
-		-- Nothing
-	else
+	if #start_ci == #end_ci then
 		for i = 1, #start_ci, 1 do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
@@ -1847,9 +1840,7 @@ function CrimeNetContractGui:set_all(t, dt)
 		end
 	end
 
-	if #start_ci ~= #end_ci then
-		-- Nothing
-	else
+	if #start_ci == #end_ci then
 		for i = 1, #start_ci, 1 do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)

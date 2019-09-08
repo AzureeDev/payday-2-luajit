@@ -18,9 +18,7 @@ function ElementUnitSequenceTrigger:init(...)
 end
 
 function ElementUnitSequenceTrigger:on_script_activated()
-	if Network:is_client() then
-		-- Nothing
-	else
+	if not Network:is_client() then
 		self._mission_script:add_save_state_cb(self._id)
 
 		for _, data in pairs(self._values.sequence_list) do

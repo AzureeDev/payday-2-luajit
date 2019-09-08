@@ -2157,7 +2157,7 @@ function NavigationManager:reserve_pos(start_t, duration, pos, step_clbk, radius
 	local search_pos = entry.position
 	local found_pos = nil
 
-	while true do
+	repeat
 		if free_chk_func(quad_field, entry) then
 			self:add_pos_reservation(entry)
 
@@ -2165,10 +2165,7 @@ function NavigationManager:reserve_pos(start_t, duration, pos, step_clbk, radius
 		elseif not step_clbk or not step_clbk(search_pos) then
 			return
 		end
-
-		if true then
-		end
-	end
+	until false
 end
 
 function NavigationManager:is_pos_free(desc)

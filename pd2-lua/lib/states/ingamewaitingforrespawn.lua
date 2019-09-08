@@ -611,13 +611,7 @@ function IngameWaitingForRespawnState:cb_next_player()
 	end
 
 	local i_watch = self:_get_teammate_index_by_unit_key(watch_u_key)
-
-	if i_watch == #self._spectator_data.teammate_list then
-		i_watch = 1
-	else
-		i_watch = i_watch + 1
-	end
-
+	i_watch = i_watch == #self._spectator_data.teammate_list and 1 or i_watch + 1
 	watch_u_key = self._spectator_data.teammate_list[i_watch]
 	self._spectator_data.watch_u_key = watch_u_key
 	self._dis_curr = nil

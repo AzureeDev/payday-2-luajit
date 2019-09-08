@@ -274,26 +274,8 @@ function CoreAreaTriggerUnitElement:_set_shape_type()
 	local is_box = self._hed.shape_type == "box"
 	local is_cylinder = self._hed.shape_type == "cylinder"
 	local uses_external = self._hed.use_shape_element_ids
-
-	if not uses_external then
-		-- Nothing
-	else
-		is_box = false
-
-		if false then
-			is_box = true
-		end
-	end
-
-	if not uses_external then
-		-- Nothing
-	else
-		is_cylinder = false
-
-		if false then
-			is_cylinder = true
-		end
-	end
+	is_box = not uses_external and is_box
+	is_cylinder = not uses_external and is_cylinder
 
 	self._depth_params.number_ctrlr:set_enabled(is_box)
 	self._width_params.number_ctrlr:set_enabled(is_box)

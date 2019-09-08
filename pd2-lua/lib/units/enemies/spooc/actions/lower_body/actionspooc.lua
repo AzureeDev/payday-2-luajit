@@ -1144,9 +1144,7 @@ function ActionSpooc:anim_act_clbk(anim_act)
 		elseif not self:is_flying_strike() then
 			if spooc_res and self._strike_unit:character_damage():is_downed() then
 				self._beating_end_t = self._stroke_t + math.lerp(self._common_data.char_tweak.spooc_attack_beating_time[1], self._common_data.char_tweak.spooc_attack_beating_time[2], math.random())
-			elseif Network:is_server() then
-				-- Nothing
-			else
+			elseif not Network:is_server() then
 				self._ext_network:send_to_host("action_spooc_stop", self._ext_movement:m_pos(), 1, self._action_id)
 			end
 

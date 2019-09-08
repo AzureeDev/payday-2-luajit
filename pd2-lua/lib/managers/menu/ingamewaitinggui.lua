@@ -649,12 +649,7 @@ function IngameWaitingGui:create_weapon(weapon, panel)
 		for _, part_id in ipairs(parts) do
 			stats = factory[part_id] and factory[part_id].stats or false
 			custom_stats = factory[part_id] and factory[part_id].custom_stats or false
-
-			if stats and table.size(stats) > 1 then
-				has_stat = true
-			else
-				has_stat = false
-			end
+			has_stat = stats and table.size(stats) > 1 and true or false
 
 			if custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier) then
 				has_team = true
@@ -673,18 +668,8 @@ function IngameWaitingGui:create_weapon(weapon, panel)
 
 		if #textures == 0 and weapon.cosmetics and weapon.cosmetics.bonus and not managers.job:is_current_job_competitive() then
 			local bonus_data = tweak_data.economy.bonuses[tweak_data.blackmarket.weapon_skins[weapon.cosmetics.id].bonus]
-
-			if bonus_data and bonus_data.stats then
-				has_stat = true
-			else
-				has_stat = false
-			end
-
-			if bonus_data and (bonus_data.exp_multiplier or bonus_data.money_multiplier) then
-				has_team = true
-			else
-				has_team = false
-			end
+			has_stat = bonus_data and bonus_data.stats and true or false
+			has_team = bonus_data and (bonus_data.exp_multiplier or bonus_data.money_multiplier) and true or false
 
 			if has_stat then
 				table.insert(textures, "guis/textures/pd2/blackmarket/inv_mod_bonus_stats")

@@ -239,9 +239,7 @@ function CrimeNetManager:_setup()
 
 			if not jobs_by_jc[jcs[i]] then
 				-- Nothing
-			elseif #jobs_by_jc[jcs[i]] == 0 then
-				-- Nothing
-			else
+			elseif #jobs_by_jc[jcs[i]] ~= 0 then
 				local job_data = nil
 
 				if self._debug_mass_spawning then
@@ -2199,9 +2197,7 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 
 	self:add_special_contracts(node:parameters().no_casino, no_servers)
 
-	if false and managers.features:can_announce("crimenet_hacked") then
-		-- Nothing
-	else
+	if not false or not managers.features:can_announce("crimenet_hacked") then
 		managers.features:announce_feature("crimenet_welcome")
 
 		if is_win32 then
@@ -2253,9 +2249,7 @@ function CrimeNetGui:make_color_text(text_object, color)
 		end
 	end
 
-	if #start_ci ~= #end_ci then
-		-- Nothing
-	else
+	if #start_ci == #end_ci then
 		for i = 1, #start_ci, 1 do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
@@ -4541,6 +4535,7 @@ end
 
 function CrimeNetGui:goto_bain()
 	for _, job in pairs(self._jobs) do
+		-- Nothing
 	end
 end
 

@@ -90,8 +90,8 @@ function LootDropManager:new_debug_drop(amount, add_to_inventory, stars)
 
 	if stars == "random" then
 		-- Nothing
-	else
-		stars = stars or 5
+	elseif not stars then
+		stars = 5
 	end
 
 	self._debug_drop_result = {}
@@ -494,8 +494,8 @@ function LootDropManager:debug_drop(amount, add_to_inventory, stars)
 
 	if stars == "random" then
 		-- Nothing
-	else
-		stars = stars or 5
+	elseif not stars then
+		stars = 5
 	end
 
 	self._debug_drop_result = {}

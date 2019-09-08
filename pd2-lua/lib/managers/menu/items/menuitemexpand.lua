@@ -87,6 +87,7 @@ end
 
 function MenuItemExpand:visible_items()
 	for _, item in ipairs(self._items) do
+		-- Nothing
 	end
 
 	return self._items

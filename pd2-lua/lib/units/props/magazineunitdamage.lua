@@ -19,15 +19,7 @@ function MagazineUnitDamage:play_collision_sfx(other_unit, position, normal, col
 		material_name = World:pick_decal_material(collision_ray.unit, ray_from, ray_to, slot_mask)
 	end
 
-	if material_name ~= empty_idstr then
-		-- Nothing
-	else
-		material_name = false
-
-		if false then
-			material_name = true
-		end
-	end
+	material_name = material_name ~= empty_idstr and material_name
 
 	if material_name then
 		sound_switch_name = material_name

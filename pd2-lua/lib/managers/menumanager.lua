@@ -8604,9 +8604,6 @@ function MenuCrimeNetSpecialInitiator:create_job(node, contract)
 					-- Nothing
 				elseif achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
 					text_id = text_id .. "  " .. managers.localization:to_upper_text("menu_bm_achievement_locked_" .. tostring(achievement))
-
-					if text_id .. "  " .. managers.localization:to_upper_text("menu_bm_achievement_locked_" .. tostring(achievement)) then
-					end
 				end
 			end
 		elseif not pass_level then
@@ -11293,22 +11290,8 @@ function MenuCustomizeGadgetInitiator:setup_node(node, data)
 	if mod_td.adds then
 		for _, part_id in ipairs(mod_td.adds) do
 			local sub_type = tweak_data.weapon.factory.parts[part_id].sub_type
-
-			if sub_type ~= "laser" then
-				if false then
-					show_laser = false
-				end
-			else
-				show_laser = true
-			end
-
-			if sub_type ~= "flashlight" then
-				if false then
-					show_flashlight = false
-				end
-			else
-				show_flashlight = true
-			end
+			show_laser = sub_type == "laser" or show_laser
+			show_flashlight = sub_type == "flashlight" or show_flashlight
 		end
 	end
 

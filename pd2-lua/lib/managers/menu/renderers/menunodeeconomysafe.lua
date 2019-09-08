@@ -363,15 +363,9 @@ function MenuNodeEconomySafe:_create_raffle_panel(x, data, index)
 		local entry_data = tweak_data.blackmarket[data.category][data.entry]
 		local weapon_id = entry_data.weapon_id or entry_data.weapons[1]
 		is_legendary = entry_data.rarity == "legendary"
-
-		if is_legendary then
-			texture_name = "guis/dlcs/cash/textures/pd2/safe_raffle/icon_legendary"
-		else
-			texture_name = managers.blackmarket:get_weapon_icon_path(weapon_id, {
-				id = data.entry
-			})
-		end
-
+		texture_name = is_legendary and "guis/dlcs/cash/textures/pd2/safe_raffle/icon_legendary" or managers.blackmarket:get_weapon_icon_path(weapon_id, {
+			id = data.entry
+		})
 		name_id = entry_data.name_id
 		rarity_color = tweak_data.economy.rarities[entry_data.rarity].color
 		texture_rarity_name = tweak_data.economy.rarities[entry_data.rarity].header_col

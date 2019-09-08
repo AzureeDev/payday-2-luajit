@@ -195,9 +195,7 @@ function CivilianLogicFlee.update(data)
 		local best_cover = my_data.best_cover
 
 		if not my_data.moving_to_cover or my_data.moving_to_cover ~= best_cover then
-			if my_data.in_cover and my_data.in_cover == best_cover then
-				-- Nothing
-			else
+			if not my_data.in_cover or my_data.in_cover ~= best_cover then
 				if not unit:anim_data().panic then
 					local action_data = {
 						clamp_to_graph = true,

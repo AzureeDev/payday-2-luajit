@@ -285,9 +285,7 @@ function GenericDLCManager:list_dlc_package(dlcs)
 			for _, loot_drop in ipairs(data.content.loot_drops or {}) do
 				t.items = t.items or {}
 
-				if #loot_drop > 0 then
-					-- Nothing
-				else
+				if #loot_drop <= 0 then
 					local global_value = loot_drop.global_value or data.content.loot_global_value or package_id
 					local category = loot_drop.type_items
 					local entry = loot_drop.item_entry

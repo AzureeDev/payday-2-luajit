@@ -200,8 +200,7 @@ function PrePlanningPoint:init(map_panel, element, shape, rotation, active_node,
 					wall:set_top(panel:h() / 2 + (value.y or value.top))
 				end
 			elseif false then
-				if false then
-				end
+				-- Nothing
 			end
 		end
 	end

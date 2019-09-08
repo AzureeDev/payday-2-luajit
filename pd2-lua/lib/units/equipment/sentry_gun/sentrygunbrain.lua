@@ -89,11 +89,7 @@ function SentryGunBrain:is_active()
 end
 
 function SentryGunBrain:set_active(state)
-	if state then
-		state = true
-	else
-		state = false
-	end
+	state = state and true or false
 
 	if self._active == state then
 		return

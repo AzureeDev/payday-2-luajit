@@ -77,11 +77,7 @@ function InventoryDescription._create_list(list, ingame_format)
 	table.sort(list)
 
 	for i, text in ipairs(list) do
-		if ingame_format then
-			list_text = list_text .. (i > 1 and ", " or "") .. text
-		else
-			list_text = list_text .. "[*]" .. text
-		end
+		list_text = ingame_format and list_text .. (i > 1 and ", " or "") .. text or list_text .. "[*]" .. text
 	end
 
 	return ingame_format and list_text or "[list]" .. list_text .. "[/list]"

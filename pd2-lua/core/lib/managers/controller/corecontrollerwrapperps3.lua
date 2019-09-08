@@ -21,21 +21,13 @@ function ControllerWrapperPS3:init(manager, id, name, controller, setup, debug, 
 end
 
 function ControllerWrapperPS3:virtual_connect_confirm(controller_id, controller, input_name, connection_name, connection)
-	if self:is_confirm_cancel_inverted() then
-		input_name = "circle"
-	else
-		input_name = "cross"
-	end
+	input_name = self:is_confirm_cancel_inverted() and "circle" or "cross"
 
 	self:virtual_connect2(controller_id, controller, input_name, connection_name, connection)
 end
 
 function ControllerWrapperPS3:virtual_connect_cancel(controller_id, controller, input_name, connection_name, connection)
-	if self:is_confirm_cancel_inverted() then
-		input_name = "cross"
-	else
-		input_name = "circle"
-	end
+	input_name = self:is_confirm_cancel_inverted() and "cross" or "circle"
 
 	self:virtual_connect2(controller_id, controller, input_name, connection_name, connection)
 end

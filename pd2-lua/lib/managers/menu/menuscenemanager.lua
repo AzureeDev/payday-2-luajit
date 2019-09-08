@@ -3326,15 +3326,11 @@ function MenuSceneManager:controller_move(x, y)
 		local yaw_cos = math.cos(self._item_yaw)
 		local treshhold = math.sin(45)
 
-		if yaw_cos > -treshhold and yaw_cos < treshhold then
-			-- Nothing
-		else
+		if yaw_cos <= -treshhold or yaw_cos >= treshhold then
 			self._item_pitch = math.clamp(self._item_pitch + diff * yaw_cos, -30, 30)
 		end
 
-		if yaw_sin > -treshhold and yaw_sin < treshhold then
-			-- Nothing
-		else
+		if yaw_sin <= -treshhold or yaw_sin >= treshhold then
 			self._item_roll = math.clamp(self._item_roll - diff * yaw_sin, -30, 30)
 		end
 

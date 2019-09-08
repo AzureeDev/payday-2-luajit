@@ -12,12 +12,7 @@ function SimpleGUIEffectSpewer:_particles_update(t, dt)
 
 	for key, particle_data in pairs(self.__living_particles) do
 		particle_data.pt = particle_data.pt + dt
-
-		if particle_data.plive_time == 0 then
-			particle_live_p = 1
-		else
-			particle_live_p = particle_data.pt / particle_data.plive_time
-		end
+		particle_live_p = particle_data.plive_time == 0 and 1 or particle_data.pt / particle_data.plive_time
 
 		particle_data.particle:set_alpha(math.clamp(math.sin((particle_live_p + 0.2) * 150), 0, 1))
 

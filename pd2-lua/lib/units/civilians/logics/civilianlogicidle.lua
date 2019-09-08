@@ -495,9 +495,6 @@ function CivilianLogicIdle._get_priority_attention(data, attention_objects)
 		elseif attention_data.pause_expire_t then
 			if attention_data.pause_expire_t < data.t and (not attention_data.settings.attract_chance or math.random() < attention_data.settings.attract_chance) then
 				attention_data.pause_expire_t = nil
-
-				if nil then
-				end
 			end
 		elseif attention_data.stare_expire_t and attention_data.stare_expire_t < data.t then
 			if attention_data.settings.pause then

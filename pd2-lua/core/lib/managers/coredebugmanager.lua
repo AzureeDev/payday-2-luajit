@@ -2823,10 +2823,6 @@ function MacroDebug:check_dangerous_network_slot(slot_list)
 					network_sync = sync_type
 				else
 					network_sync = false
-
-					if false then
-						network_sync = true
-					end
 				end
 			elseif child_node_name == "object" then
 				object_file = child_node:parameter("file")

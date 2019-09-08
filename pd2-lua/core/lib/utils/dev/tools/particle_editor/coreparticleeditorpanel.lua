@@ -336,9 +336,7 @@ function CoreParticleEditorPanel:on_select_stack_member(stacktype)
 	local stacklist = self._stacklist_boxes[stacktype]
 	local selected = stacklist:selected_index()
 
-	if selected < 0 then
-		-- Nothing
-	else
+	if selected >= 0 then
 		self._atom:stack(stacktype):stack()[selected + 1]:fill_property_container_sheet(self._stack_panels[stacktype], self)
 		self._stack_panels[stacktype]:fit_inside()
 	end

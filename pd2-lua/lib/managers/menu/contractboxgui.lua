@@ -83,26 +83,24 @@ function ContractBoxGui:init(ws, fullscreen_ws)
 			MenuBackdropGUI.animate_bg_text(self, bg_text)
 		end
 
-		if managers.menu:is_pc_controller() and wfs_text then
-			if false then
-				local bg_text = self._fullscreen_panel:text({
-					vertical = "bottom",
-					h = 90,
-					alpha = 0.4,
-					align = "right",
-					layer = 1,
-					text = wfs_text:text(),
-					font_size = tweak_data.menu.pd2_massive_font_size,
-					font = tweak_data.menu.pd2_massive_font,
-					color = tweak_data.screen_colors.button_stage_3
-				})
-				local x, y = managers.gui_data:safe_to_full_16_9(wfs_text:world_right(), wfs_text:world_center_y())
+		if managers.menu:is_pc_controller() and wfs_text and false then
+			local bg_text = self._fullscreen_panel:text({
+				vertical = "bottom",
+				h = 90,
+				alpha = 0.4,
+				align = "right",
+				layer = 1,
+				text = wfs_text:text(),
+				font_size = tweak_data.menu.pd2_massive_font_size,
+				font = tweak_data.menu.pd2_massive_font,
+				color = tweak_data.screen_colors.button_stage_3
+			})
+			local x, y = managers.gui_data:safe_to_full_16_9(wfs_text:world_right(), wfs_text:world_center_y())
 
-				bg_text:set_world_right(x)
-				bg_text:set_world_center_y(y)
-				bg_text:move(13, -9)
-				MenuBackdropGUI.animate_bg_text(self, bg_text)
-			end
+			bg_text:set_world_right(x)
+			bg_text:set_world_center_y(y)
+			bg_text:move(13, -9)
+			MenuBackdropGUI.animate_bg_text(self, bg_text)
 		end
 	end
 

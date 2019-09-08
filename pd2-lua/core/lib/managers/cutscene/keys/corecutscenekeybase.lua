@@ -311,12 +311,7 @@ function CoreCutsceneKeyBase:populate_sizer_with_editable_attributes(grid_sizer,
 
 			if value_is_valid then
 				local value = control:get_value()
-
-				if value == nil then
-					value = ""
-				else
-					value = tostring(value)
-				end
+				value = value == nil and "" or tostring(value)
 
 				self:set_attribute_value_from_string(attribute_name, value)
 				self:refresh_controls_dependent_on(attribute_name)

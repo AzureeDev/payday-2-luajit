@@ -1805,6 +1805,7 @@ function Layer:test_spawn(type)
 				c_rad = max_rad * 1
 
 				for _, unit in ipairs(row_units) do
+					-- Nothing
 				end
 
 				max_rad = 0

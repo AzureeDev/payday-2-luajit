@@ -233,12 +233,7 @@ function IngameLobbyMenuState:set_lootdrop(drop_category, drop_item_id)
 		item_category = self._lootdrop_data.type_items
 		item_id = self._lootdrop_data.item_entry
 		max_pc = self._lootdrop_data.total_stars
-
-		if self._lootdrop_data.joker then
-			item_pc = 0
-		else
-			item_pc = math.ceil(self._lootdrop_data.item_payclass / 10)
-		end
+		item_pc = self._lootdrop_data.joker and 0 or math.ceil(self._lootdrop_data.item_payclass / 10)
 	end
 
 	local peer = managers.network:session() and managers.network:session():local_peer() or false

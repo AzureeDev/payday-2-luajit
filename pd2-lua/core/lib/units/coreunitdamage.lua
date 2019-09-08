@@ -1676,11 +1676,7 @@ function CoreUnitDamage:set_variable(key, val)
 end
 
 function CoreUnitDamage:anim_clbk_set_sequence_block_state(unit, state)
-	if state == "true" then
-		state = true
-	else
-		state = false
-	end
+	state = state == "true" and true or false
 
 	self:set_sequence_block_state(state)
 end

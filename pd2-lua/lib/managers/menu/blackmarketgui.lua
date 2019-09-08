@@ -7387,9 +7387,7 @@ function BlackMarketGui:set_info_text(id, new_string, resource_color)
 			end
 		end
 
-		if #start_ci ~= #end_ci then
-			-- Nothing
-		else
+		if #start_ci == #end_ci then
 			for i = 1, #start_ci, 1 do
 				start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 				end_ci[i] = end_ci[i] - (i * 4 - 1)
@@ -7566,12 +7564,7 @@ function BlackMarketGui:mouse_moved(o, x, y)
 				self._tabs[self._highlighted]:set_highlight(self._selected ~= self._highlighted)
 
 				used = true
-
-				if self._highlighted == self._selected then
-					pointer = "arrow"
-				else
-					pointer = "link"
-				end
+				pointer = self._highlighted == self._selected and "arrow" or "link"
 			end
 		end
 	end
@@ -10003,9 +9996,7 @@ function BlackMarketGui:populate_masks(data)
 			local pattern = crafted.blueprint.pattern.id
 
 			if pattern ~= "solidfirst" then
-				if pattern == "solidsecond" then
-					-- Nothing
-				else
+				if pattern ~= "solidsecond" then
 					local material_id = crafted.blueprint.material.id
 					guis_catalog = "guis/"
 					local bundle_folder = tweak_data.blackmarket.materials[material_id] and tweak_data.blackmarket.materials[material_id].texture_bundle_folder
@@ -10585,9 +10576,7 @@ function BlackMarketGui:populate_masks_new(data)
 				local pattern = crafted.blueprint.pattern.id
 
 				if pattern ~= "solidfirst" then
-					if pattern == "solidsecond" then
-						-- Nothing
-					else
+					if pattern ~= "solidsecond" then
 						local material_id = crafted.blueprint.material.id
 						guis_catalog = "guis/"
 						local bundle_folder = tweak_data.blackmarket.materials[material_id] and tweak_data.blackmarket.materials[material_id].texture_bundle_folder
@@ -15010,18 +14999,12 @@ function BlackMarketGui:remove_mod_callback(data)
 		add = false,
 		ignore_lost_mods = data.free_of_charge
 	}
-	slot3 = managers.blackmarket
-	local removes = slot3
-	local replaces = slot3.get_modify_weapon_consequence
-	local weapon_id = data.category
-	local cost = data.slot
-	slot7 = data.default_mod or data.name
 
 	if data.default_mod then
 		-- Nothing
 	end
 
-	local replaces, removes = replaces(removes, weapon_id, cost, slot7, true)
+	local replaces, removes = managers.blackmarket:get_modify_weapon_consequence(data.category, data.slot, data.default_mod or data.name, true)
 	local weapon_id = managers.blackmarket:get_crafted_category(data.category)[data.slot].weapon_id
 	local cost = managers.money:get_weapon_modify_price(weapon_id, data.name, data.global_value) or 0
 	params.money = cost > 0 and managers.experience:cash_string(cost)
@@ -15407,11 +15390,12 @@ function BlackMarketGui:create_preload_ws()
 	panel:set_layer(tweak_data.gui.DIALOG_LAYER)
 
 	local new_script = {
-		progress = 1,
-		step_progress = function ()
-			new_script.set_progress(new_script.progress + 1)
-		end
+		progress = 1
 	}
+
+	function new_script.step_progress()
+		new_script.set_progress(new_script.progress + 1)
+	end
 
 	function new_script.set_progress(progress)
 		new_script.progress = progress

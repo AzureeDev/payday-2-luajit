@@ -1393,7 +1393,7 @@ function GroupAIStateBesiege:_spawn_in_group(spawn_group, spawn_group_type, grp_
 		local rand_i = 1
 		local rand_entry = nil
 
-		while true do
+		repeat
 			rand_entry = valid_unit_types[rand_i]
 			rand_wght = rand_wght - rand_entry.freq
 
@@ -1402,10 +1402,7 @@ function GroupAIStateBesiege:_spawn_in_group(spawn_group, spawn_group_type, grp_
 			else
 				rand_i = rand_i + 1
 			end
-
-			if true then
-			end
-		end
+		until false
 
 		local cat_data = unit_categories[rand_entry.unit]
 		local spawn_limit = managers.job:current_spawn_limit(cat_data.special_type)

@@ -636,12 +636,7 @@ function PlayerMovement:_calc_suspicion_ratio_and_sync(observer_unit, status)
 		end
 	elseif type(status) == "boolean" then
 		self._suspicion_ratio = status
-
-		if status then
-			suspicion_sync = 255
-		else
-			suspicion_sync = 0
-		end
+		suspicion_sync = status and 255 or 0
 	else
 		self._suspicion_ratio = false
 		suspicion_sync = 0

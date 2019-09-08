@@ -528,9 +528,7 @@ function CoreEnvironmentControllerManager:set_post_composite(t, dt)
 	if lut_post then
 		local lut_modifier = lut_post:modifier(ids_LUT_settings)
 
-		if lut_modifier then
-			-- Nothing
-		else
+		if not lut_modifier then
 			return
 		end
 

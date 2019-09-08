@@ -320,9 +320,7 @@ function ClientNetworkSession:peer_handshake(name, peer_id, peer_user_id, in_lob
 		Network:add_co_client(rpc)
 	end
 
-	if SystemInfo:platform() == self._ids_WIN32 then
-		-- Nothing
-	else
+	if SystemInfo:platform() ~= self._ids_WIN32 then
 		peer_user_id = false
 	end
 

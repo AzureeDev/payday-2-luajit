@@ -150,11 +150,7 @@ function Drill:_kill_jammed_effect()
 end
 
 function Drill:set_jammed(jammed)
-	if jammed then
-		jammed = true
-	else
-		jammed = false
-	end
+	jammed = jammed and true or false
 
 	if self._jammed == jammed then
 		return

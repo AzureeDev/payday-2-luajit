@@ -55,12 +55,7 @@ function CrimeSpreeContractMenuComponent:_setup()
 
 	if not is_win_32 then
 		width = 900
-
-		if is_nextgen then
-			height = 570
-		else
-			height = 525
-		end
+		height = is_nextgen and 570 or 525
 	end
 
 	self._fullscreen_panel:rect({
@@ -638,13 +633,7 @@ function CrimeSpreeStartingLevelItem:init(parent, data)
 		color = tweak_data.screen_colors.button_stage_3
 	})
 	local level_w = self._level / (data.highest_level or 100)
-
-	if level_w == 0 then
-		level_w = 10
-	else
-		level_w = self._panel:w() * level_w
-	end
-
+	level_w = level_w == 0 and 10 or self._panel:w() * level_w
 	self._level_bg = self._panel:rect({
 		blend_mode = "add",
 		alpha = 0.2,

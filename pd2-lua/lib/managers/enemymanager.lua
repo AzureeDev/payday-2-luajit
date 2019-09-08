@@ -186,11 +186,7 @@ function EnemyManager:_update_gfx_lod()
 									t_ins(imp_wgt_list, i_wgt, my_wgt)
 									t_ins(imp_i_list, i_wgt, i)
 
-									if i_wgt <= nr_lod_1 then
-										lod_stage = 1
-									else
-										lod_stage = 2
-									end
+									lod_stage = i_wgt <= nr_lod_1 and 1 or 2
 								else
 									lod_stage = 3
 

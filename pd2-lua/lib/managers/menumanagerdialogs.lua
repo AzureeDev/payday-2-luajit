@@ -1026,9 +1026,7 @@ function MenuManager:show_new_item_gained(params)
 	elseif category == "textures" then
 		texture = _G.tweak_data.blackmarket.textures[id].texture
 		render_template = Idstring("VertexColorTexturedPatterns")
-	elseif category == "announcements" then
-		-- Nothing
-	else
+	elseif category ~= "announcements" then
 		local bundle_folder = tweak_data.blackmarket[category] and tweak_data.blackmarket[category][id] and tweak_data.blackmarket[category][id].texture_bundle_folder
 
 		if bundle_folder then
@@ -2612,9 +2610,7 @@ function MenuManager:show_challenge_reward(reward)
 		texture_path = "guis/textures/pd2/blackmarket/cash_drop"
 	elseif category == "xp" then
 		texture_path = "guis/textures/pd2/blackmarket/xp_drop"
-	elseif category == "colors" then
-		-- Nothing
-	else
+	elseif category ~= "colors" then
 		texture_path = guis_catalog .. "textures/pd2/blackmarket/icons/" .. (category == "weapon_mods" and "mods" or category) .. "/" .. id
 	end
 

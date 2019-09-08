@@ -48,6 +48,7 @@ function MenuKitRenderer:open(...)
 
 	if self._player_slots then
 		for _, slot in ipairs(self._player_slots) do
+			-- Nothing
 		end
 	end
 end

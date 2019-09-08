@@ -274,14 +274,8 @@ function ObjectInteractionManager:_update_targeted(player_pos, player_unit, hand
 						has_distance_passed = has_distance_passed or distance_pass
 
 						if not distance_pass then
-							if not has_distance_passed then
-								-- Nothing
-							else
+							if has_distance_passed then
 								interaction_passed = false
-
-								if false then
-									interaction_passed = true
-								end
 							end
 						end
 

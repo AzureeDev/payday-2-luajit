@@ -718,9 +718,7 @@ function PlayerManager:_internal_load()
 	})
 	self:_set_body_bags_amount(self._local_player_body_bags or self:total_body_bags())
 
-	if self._respawn then
-		-- Nothing
-	else
+	if not self._respawn then
 		self:_add_level_equipment(player)
 
 		for i, name in ipairs(self._global.default_kit.special_equipment_slots) do
@@ -900,6 +898,7 @@ function PlayerManager:setup_viewports()
 
 	if configs then
 		for k, player in ipairs(self._players) do
+			-- Nothing
 		end
 	else
 		Application:error("Unsupported number of players: " .. tostring(self._last_id))
@@ -3081,6 +3080,7 @@ function PlayerManager:get_contour_for_marked_enemy(enemy_type)
 			contour_type = "mark_unit_dangerous_damage_bonus_distance"
 
 			if "mark_unit_dangerous_damage_bonus_distance" then
+				-- Nothing
 			end
 		end
 	else

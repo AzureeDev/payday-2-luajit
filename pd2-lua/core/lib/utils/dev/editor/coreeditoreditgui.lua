@@ -19,9 +19,7 @@ function EditGui:init(parent, toolbar, btn, name)
 end
 
 function EditGui:has(unit)
-	if alive(unit) then
-		-- Nothing
-	else
+	if not alive(unit) then
 		self:disable()
 
 		return false

@@ -861,9 +861,7 @@ function MenuNodeUpdatesGui:move_highlight(x, y)
 	local previous_updates_panel = panel:child("previous_content_updates")
 	local content_highlighted = self._content_highlighted
 
-	if not content_highlighted then
-		-- Nothing
-	else
+	if content_highlighted then
 		self._select_x = self._select_x + x
 	end
 

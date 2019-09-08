@@ -387,9 +387,7 @@ function Setup:_start_loading_screen()
 		end
 
 		if show_controller then
-			if using_steam_controller then
-				-- Nothing
-			else
+			if not using_steam_controller then
 				local coords = tweak_data:get_controller_help_coords()
 				load_level_data.controller_coords = coords and coords[table.random({
 					"normal",

@@ -728,9 +728,6 @@ function GroupAIStateBase:_hostage_hint_clbk()
 			self._first_hostage_hint = nil
 
 			managers.enemy:add_delayed_clbk("_hostage_hint_clbk", self._hstg_hint_clbk, Application:time() + 120)
-
-			if "ljd_decompile_error_something_goes_here_fadklsdfajsdlkjf" then
-			end
 		end
 	else
 		self._hstg_hint_clbk = nil
@@ -1005,7 +1002,7 @@ function GroupAIStateBase:_calculate_difficulty_ratio()
 	local diff = self._difficulty_value
 	local i = 1
 
-	while diff > slot4 do
+	while diff > (ramp[i] or 1) do
 		i = i + 1
 	end
 
@@ -3216,11 +3213,7 @@ function GroupAIStateBase:set_ambience_flag()
 end
 
 function GroupAIStateBase:set_whisper_mode(enabled)
-	if enabled then
-		enabled = true
-	else
-		enabled = false
-	end
+	enabled = enabled and true or false
 
 	if enabled == self._whisper_mode then
 		return

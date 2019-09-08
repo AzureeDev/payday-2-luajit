@@ -1760,11 +1760,12 @@ function BlackMarketManager:create_preload_ws()
 	panel:set_layer(tweak_data.gui.DIALOG_LAYER)
 
 	local new_script = {
-		progress = 1,
-		step_progress = function ()
-			new_script.set_progress(new_script.progress + 1)
-		end
+		progress = 1
 	}
+
+	function new_script.step_progress()
+		new_script.set_progress(new_script.progress + 1)
+	end
 
 	function new_script.set_progress(progress)
 		new_script.progress = progress
@@ -3116,9 +3117,7 @@ function BlackMarketManager:get_crafted_item_amount(category, id)
 			end
 		elseif category == "character" then
 			-- Nothing
-		elseif category == "armors" then
-			-- Nothing
-		else
+		elseif category ~= "armors" then
 			break
 		end
 	end
@@ -8607,12 +8606,7 @@ function BlackMarketManager:check_frog_1()
 						pass_primary = outfit.primary.factory_id == "wpn_fps_ass_akm_gold"
 						pass_secondary = outfit.secondary.factory_id == "wpn_fps_smg_thompson"
 						pass_armor = outfit.armor == "level_1"
-
-						if pass_skills and pass_primary and pass_secondary and pass_armor then
-							all_passed = true
-						else
-							all_passed = false
-						end
+						all_passed = pass_skills and pass_primary and pass_secondary and pass_armor and true or false
 					else
 						all_passed = false
 					end

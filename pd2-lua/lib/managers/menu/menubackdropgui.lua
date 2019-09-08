@@ -351,13 +351,7 @@ function MenuBackdropGUI:set_pattern(bitmap_texture, alpha, blend_mode)
 
 			move_on_x_axis = not move_on_x_axis
 			diff = move_on_x_axis and wanted_x - start_x or wanted_y - start_y
-
-			if diff == 0 then
-				dir = 0
-			else
-				dir = diff / math.abs(diff)
-			end
-
+			dir = diff == 0 and 0 or diff / math.abs(diff)
 			overshoot = move_on_x_axis and math.random(bg_layer:w() * 0.008) or math.random(bg_layer:h() * 0.008) * dir
 		end
 	end

@@ -1031,13 +1031,7 @@ function CopDamage:damage_fire(attack_data)
 		local fire_dot_data = attack_data.fire_dot_data
 		local flammable = nil
 		local char_tweak = tweak_data.character[self._unit:base()._tweak_table]
-
-		if char_tweak.flammable == nil then
-			flammable = true
-		else
-			flammable = char_tweak.flammable
-		end
-
+		flammable = char_tweak.flammable == nil and true or char_tweak.flammable
 		local distance = 1000
 		local hit_loc = attack_data.col_ray.hit_position
 
@@ -2242,11 +2236,7 @@ function CopDamage:set_mover_collision_state(state)
 end
 
 function CopDamage:anim_clbk_mover_collision_state(unit, state)
-	if state == "true" then
-		state = true
-	else
-		state = false
-	end
+	state = state == "true" and true or false
 
 	self:set_mover_collision_state(state)
 end
@@ -3188,7 +3178,14 @@ function CopDamage:build_suppression(amount, panic_chance)
 	end
 
 	local amount_val = nil
-	amount_val = (amount ~= "max" and amount ~= "panic" or (sup_tweak.brown_point or sup_tweak.react_point)[2]) and (Network:is_server() and self._suppression_hardness_t and t < self._suppression_hardness_t and amount * 0.5 or amount)
+
+	if amount == "max" or amount == "panic" then
+		amount_val = (sup_tweak.brown_point or sup_tweak.react_point)[2]
+	elseif Network:is_server() and self._suppression_hardness_t and t < self._suppression_hardness_t then
+		amount_val = amount * 0.5
+	else
+		amount_val = amount
+	end
 
 	if not Network:is_server() then
 		local sync_amount = nil

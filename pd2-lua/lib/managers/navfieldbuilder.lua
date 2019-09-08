@@ -2411,9 +2411,7 @@ function NavFieldBuilder:_expansion_check_obstacles(dir_str, dir_vec, exp_space,
 					front_ground_ray = not front_ray and self:_sphere_ray(front_gnd_pos + self._up_vec, front_gnd_pos + self._down_vec, void_ray_rad)
 
 					if not front_ray then
-						if front_ground_ray and math.abs(front_ground_ray.position.z + ray_rad_dif - back_ground_ray.position.z) < 40 then
-							-- Nothing
-						else
+						if not front_ground_ray or math.abs(front_ground_ray.position.z + ray_rad_dif - back_ground_ray.position.z) >= 40 then
 							obstacle_found = "cliffs"
 						end
 					end
@@ -2547,9 +2545,7 @@ function NavFieldBuilder:_expansion_check_neighbours(dir_str, exp_space)
 				local min_h_diff = 150
 
 				if min_h_diff >= z1_test_room - z1_exp_room or min_h_diff >= z2_test_room - z2_exp_room then
-					if z1_test_room - z1_exp_room < -min_h_diff and z2_test_room - z2_exp_room < -min_h_diff then
-						-- Nothing
-					else
+					if z1_test_room - z1_exp_room >= -min_h_diff or z2_test_room - z2_exp_room >= -min_h_diff then
 						mvector3.set_z(overlap_seg[1], (z1_test_room + z1_exp_room) * 0.5)
 						mvector3.set_z(overlap_seg[2], (z2_test_room + z2_exp_room) * 0.5)
 						table.insert(neighbours, {

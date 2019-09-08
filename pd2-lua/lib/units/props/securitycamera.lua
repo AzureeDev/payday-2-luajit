@@ -87,11 +87,15 @@ function SecurityCamera:set_detection_enabled(state, settings, mission_element)
 			self._SO_access_str
 		})
 		self._visibility_slotmask = managers.slot:get_mask("AI_visibility")
-		self._cone_angle = settings.fov
-		self._detection_delay = settings.detection_delay
-		self._range = settings.detection_range
-		self._suspicion_range = settings.suspicion_range
-		self._team = managers.groupai:state():team_data(settings.team_id or tweak_data.levels:get_default_team_ID("combatant"))
+
+		if settings then
+			self._cone_angle = settings.fov
+			self._detection_delay = settings.detection_delay
+			self._range = settings.detection_range
+			self._suspicion_range = settings.suspicion_range
+			self._team = managers.groupai:state():team_data(settings.team_id or tweak_data.levels:get_default_team_ID("combatant"))
+		end
+
 		self._detected_attention_objects = self._detected_attention_objects or {}
 		self._look_obj = self._unit:get_object(Idstring("CameraLens"))
 		self._yaw_obj = self._unit:get_object(Idstring("CameraYaw"))
@@ -100,34 +104,32 @@ function SecurityCamera:set_detection_enabled(state, settings, mission_element)
 		self._look_fwd = nil
 		self._tmp_vec1 = self._tmp_vec1 or Vector3()
 		self._suspicion_lvl_sync = 0
+	else
+		self._last_detect_t = nil
 
-		if 0 then
-			self._last_detect_t = nil
+		self:_destroy_all_detected_attention_object_data()
 
-			self:_destroy_all_detected_attention_object_data()
+		self._brush = nil
+		self._visibility_slotmask = nil
+		self._detection_delay = nil
+		self._look_obj = nil
+		self._yaw_obj = nil
+		self._pitch_obj = nil
+		self._pos = nil
+		self._look_fwd = nil
+		self._tmp_vec1 = nil
+		self._detected_attention_objects = nil
+		self._suspicion_lvl_sync = nil
+		self._team = nil
 
-			self._brush = nil
-			self._visibility_slotmask = nil
-			self._detection_delay = nil
-			self._look_obj = nil
-			self._yaw_obj = nil
-			self._pitch_obj = nil
-			self._pos = nil
-			self._look_fwd = nil
-			self._tmp_vec1 = nil
-			self._detected_attention_objects = nil
-			self._suspicion_lvl_sync = nil
-			self._team = nil
-
-			if not self._destroying then
-				self:_stop_all_sounds()
-				self:_deactivate_tape_loop()
-			end
+		if not self._destroying then
+			self:_stop_all_sounds()
+			self:_deactivate_tape_loop()
 		end
+	end
 
-		if settings then
-			self:apply_rotations(settings.yaw, settings.pitch)
-		end
+	if settings then
+		self:apply_rotations(settings.yaw, settings.pitch)
 	end
 
 	managers.groupai:state():register_security_camera(self._unit, state)
@@ -266,9 +268,7 @@ function SecurityCamera:_upd_detect_attention_objects(t)
 	local det_delay = self._detection_delay
 
 	for u_key, attention_info in pairs(detected_obj) do
-		if t < attention_info.next_verify_t then
-			-- Nothing
-		else
+		if t >= attention_info.next_verify_t then
 			attention_info.next_verify_t = t + (attention_info.identified and attention_info.verified and attention_info.settings.verification_interval * 1.3 or attention_info.settings.verification_interval * 0.3)
 
 			if not attention_info.identified then

@@ -430,17 +430,7 @@ function GamePlayCentralManager:_play_bullet_hit(params)
 	mvec3_spread(effect_normal, 10)
 
 	local material_name, pos, norm = World:pick_decal_material(col_ray.unit, decal_ray_from, decal_ray_to, slot_mask)
-
-	if material_name ~= empty_idstr then
-		-- Nothing
-	else
-		material_name = false
-
-		if false then
-			material_name = true
-		end
-	end
-
+	material_name = material_name ~= empty_idstr and material_name
 	local effect = params.effect
 
 	if material_name then
@@ -526,15 +516,7 @@ function GamePlayCentralManager:_flush_footsteps()
 				material_name, pos, norm = World:pick_decal_material(decal_ray_from, decal_ray_to, self._slotmask_footstep)
 			end
 
-			if material_name ~= empty_idstr then
-				-- Nothing
-			else
-				material_name = false
-
-				if false then
-					material_name = true
-				end
-			end
+			material_name = material_name ~= empty_idstr and material_name
 
 			if material_name then
 				sound_switch_name = material_name

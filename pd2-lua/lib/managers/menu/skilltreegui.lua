@@ -379,9 +379,7 @@ function SkillTreeSkillItem:refresh(locked)
 	end
 
 	if unlocked then
-		if step == 2 then
-			-- Nothing
-		else
+		if step ~= 2 then
 			self._skill_panel:child("state_indicator"):set_alpha(0)
 		end
 	elseif selected then
@@ -2039,9 +2037,7 @@ function SkillTreeGui:update_spec_descriptions(item)
 		end
 	end
 
-	if #start_ci ~= #end_ci then
-		-- Nothing
-	else
+	if #start_ci == #end_ci then
 		for i = 1, #start_ci, 1 do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
@@ -2303,9 +2299,7 @@ function SkillTreeGui:_set_selected_skill_item(item, no_sound)
 		end
 	end
 
-	if #start_ci ~= #end_ci then
-		-- Nothing
-	else
+	if #start_ci == #end_ci then
 		for i = 1, #start_ci, 1 do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
@@ -2496,12 +2490,7 @@ function SkillTreeGui:mouse_moved(o, x, y)
 				self:set_selected_item(tab_item, true)
 
 				inside = true
-
-				if same_tab_item then
-					pointer = "arrow"
-				else
-					pointer = "link"
-				end
+				pointer = same_tab_item and "arrow" or "link"
 			end
 		end
 	elseif not self._is_skilltree_page_active and self._use_specialization then
@@ -2519,12 +2508,7 @@ function SkillTreeGui:mouse_moved(o, x, y)
 					self:set_selected_item(tab_item, true)
 
 					inside = true
-
-					if same_tab_item then
-						pointer = "arrow"
-					else
-						pointer = "link"
-					end
+					pointer = same_tab_item and "arrow" or "link"
 				end
 			end
 		end
