@@ -263,7 +263,7 @@ function StatsTabItem:set_stats(stats_data)
 			prev_stat_panel = new_stat_panel
 		end
 
-		break
+		return
 	end
 
 	for i, stat in ipairs(self._stats) do
