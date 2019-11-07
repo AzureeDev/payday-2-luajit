@@ -218,7 +218,13 @@ function TeamAILogicDisabled.on_recovered(data, reviving_unit)
 		TeamAILogicDisabled._unregister_revive_SO(my_data)
 	end
 
-	CopLogicBase._exit(data.unit, "assault")
+	local objective = data.objective
+
+	if objective and objective.forced and objective.path_style == "warp" then
+		CopLogicBase._exit(data.unit, "travel")
+	else
+		CopLogicBase._exit(data.unit, "assault")
+	end
 end
 
 function TeamAILogicDisabled._register_revive_SO(data, my_data, rescue_type)

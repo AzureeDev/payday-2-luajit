@@ -466,38 +466,44 @@ function WeaponFactoryManager:_get_forbidden_parts(factory_id, blueprint)
 	local override = self:_get_override_parts(factory_id, blueprint)
 
 	for _, part_id in ipairs(blueprint) do
-		local part = self:_part_data(part_id, factory_id, override)
+		if self:is_part_valid(part_id) then
+			local part = self:_part_data(part_id, factory_id, override)
 
-		if part.depends_on then
-			local part_forbidden = true
+			if part.depends_on then
+				local part_forbidden = true
 
-			for _, other_part_id in ipairs(blueprint) do
-				local other_part = self:_part_data(other_part_id, factory_id, override)
+				for _, other_part_id in ipairs(blueprint) do
+					local other_part = self:_part_data(other_part_id, factory_id, override)
 
-				if part.depends_on == other_part.type then
-					part_forbidden = false
+					if part.depends_on == other_part.type then
+						part_forbidden = false
 
-					break
+						break
+					end
+				end
+
+				if part_forbidden then
+					forbidden[part_id] = part.depends_on
 				end
 			end
 
-			if part_forbidden then
-				forbidden[part_id] = part.depends_on
+			if part.forbids then
+				for _, forbidden_id in ipairs(part.forbids) do
+					forbidden[forbidden_id] = part_id
+				end
 			end
-		end
 
-		if part.forbids then
-			for _, forbidden_id in ipairs(part.forbids) do
-				forbidden[forbidden_id] = part_id
+			if part.adds then
+				local add_forbidden = self:_get_forbidden_parts(factory_id, part.adds)
+
+				for forbidden_id, part_id in pairs(add_forbidden) do
+					forbidden[forbidden_id] = part_id
+				end
 			end
-		end
+		else
+			Application:error("[WeaponFactoryManager:_get_forbidden_parts] Part do not exist!", part_id, "factory_id", factory_id)
 
-		if part.adds then
-			local add_forbidden = self:_get_forbidden_parts(factory_id, part.adds)
-
-			for forbidden_id, part_id in pairs(add_forbidden) do
-				forbidden[forbidden_id] = part_id
-			end
+			forbidden[forbidden_id] = part_id
 		end
 	end
 
@@ -622,10 +628,16 @@ function WeaponFactoryManager:_add_parts(p_unit, factory_id, factory_weapon, blu
 	return parts, blueprint
 end
 
+function WeaponFactoryManager:is_part_valid(part_id)
+	local valid_part = not not tweak_data.weapon.factory.parts[part_id]
+
+	return valid_part
+end
+
 function WeaponFactoryManager:_part_data(part_id, factory_id, override)
 	local factory = tweak_data.weapon.factory
 
-	if not factory.parts[part_id] then
+	if not self:is_part_valid(part_id) then
 		Application:error("[WeaponFactoryManager:_part_data] Part do not exist!", part_id, "factory_id", factory_id)
 
 		return {}

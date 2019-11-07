@@ -2441,11 +2441,13 @@ function MenuComponentManager:add_game_chat()
 end
 
 function MenuComponentManager:set_max_lines_game_chat(max_lines)
-	if self._game_chat_gui then
-		self._game_chat_gui:set_max_lines(max_lines)
-	else
-		self._game_chat_params = self._game_chat_params or {}
-		self._game_chat_params.max_lines = max_lines
+	if SystemInfo:platform() == Idstring("WIN32") then
+		if self._game_chat_gui then
+			self._game_chat_gui:set_max_lines(max_lines)
+		else
+			self._game_chat_params = self._game_chat_params or {}
+			self._game_chat_params.max_lines = max_lines
+		end
 	end
 end
 
@@ -3981,9 +3983,9 @@ function MenuComponentManager:update_preplanning_element(type, id)
 	end
 end
 
-function MenuComponentManager:preplanning_post_event(event, listener_clbk)
+function MenuComponentManager:preplanning_post_event(event, listener_clbk, ignore_prefix)
 	if self._preplanning_map then
-		return self._preplanning_map:post_event(event, listener_clbk)
+		return self._preplanning_map:post_event(event, listener_clbk, ignore_prefix)
 	end
 end
 
@@ -4199,11 +4201,12 @@ end
 function MenuComponentManager:create_debug_strings_gui()
 	self:close_debug_strings_gui()
 
+	local gui_width, gui_height = managers.gui_data:get_base_res()
 	self._debug_strings_book = BookBoxGui:new(self._ws, nil, {
 		no_close_legend = true,
 		no_scroll_legend = true,
-		h = 612,
-		w = 1088
+		w = gui_width * 0.85,
+		h = gui_height * 0.85
 	})
 
 	self._debug_strings_book._info_box:close()
@@ -4390,6 +4393,13 @@ function MenuComponentManager:_request_done_callback(texture_ids)
 end
 
 function MenuComponentManager:request_texture(texture, done_cb)
+	if type_name(texture) ~= "string" then
+		Application:error("[MenuComponentManager:request_texture] texture needs to be of type string", texture, type_name(texture))
+		Application:stack_dump()
+
+		return false
+	end
+
 	if self._block_texture_requests then
 		debug_pause(string.format("[MenuComponentManager:request_texture] Requesting texture is blocked! %s", texture))
 

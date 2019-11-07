@@ -173,10 +173,27 @@ function GenericDLCManager:give_dlc_package()
 
 				for _, loot_drop in ipairs(data.content.loot_drops or {}) do
 					local loot_drop = #loot_drop > 0 and loot_drop[math.random(#loot_drop)] or loot_drop
+					local add_to_inventory = true
 
-					if loot_drop.type_items == "armor_skins" then
+					if add_to_inventory and loot_drop.type_items == "armor_skins" then
 						managers.blackmarket:on_aquired_armor_skin(loot_drop.item_entry)
-					else
+
+						add_to_inventory = false
+					end
+
+					if add_to_inventory and loot_drop.type_items == "player_styles" then
+						managers.blackmarket:on_aquired_player_style(loot_drop.item_entry)
+
+						add_to_inventory = false
+					end
+
+					if add_to_inventory and loot_drop.type_items == "suit_variations" then
+						managers.blackmarket:on_aquired_suit_variation(loot_drop.item_entry[1], loot_drop.item_entry[2])
+
+						add_to_inventory = false
+					end
+
+					if add_to_inventory then
 						for i = 1, loot_drop.amount or 1, 1 do
 							local entry = tweak_data.blackmarket[loot_drop.type_items][loot_drop.item_entry]
 							local global_value = loot_drop.global_value or data.content.loot_global_value or package_id
@@ -212,63 +229,75 @@ function GenericDLCManager:give_missing_package()
 		materials = "material",
 		textures = "pattern"
 	}
-	local entry, global_value, passed, has_item, name = nil
+	local entry, global_value, passed, has_item, name, check_loot_drop = nil
 
 	for package_id, data in pairs(tweak_data.dlc) do
 		if Global.dlc_save.packages[package_id] and self:is_dlc_unlocked(package_id) then
 			for _, loot_drop in ipairs(data.content and data.content.loot_drops or {}) do
-				if #loot_drop == 0 then
-					if loot_drop.type_items == "armor_skins" then
-						entry = tweak_data.economy.armor_skins[loot_drop.item_entry]
-						has_item = managers.blackmarket:armor_skin_unlocked(loot_drop.item_entry)
+				check_loot_drop = #loot_drop == 0
 
-						if not entry.steam_economy and not has_item then
-							managers.blackmarket:on_aquired_armor_skin(loot_drop.item_entry)
-						end
-					else
-						entry = tweak_data.blackmarket[loot_drop.type_items][loot_drop.item_entry]
-						global_value = loot_drop.global_value or data.content.loot_global_value or package_id
-						passed = false
+				if check_loot_drop and loot_drop.type_items == "armor_skins" then
+					entry = tweak_data.economy.armor_skins[loot_drop.item_entry]
+					has_item = managers.blackmarket:armor_skin_unlocked(loot_drop.item_entry)
 
-						if (loot_drop.type_items == "weapon_mods" or loot_drop.type_items == "weapon_skins") and entry.is_a_unlockable then
-							has_item = managers.blackmarket:get_item_amount(global_value, loot_drop.type_items, loot_drop.item_entry, true) > 0
-							passed = not has_item
-						elseif loot_drop.type_items ~= "weapon_mods" and entry.value == 0 then
-							has_item = managers.blackmarket:get_item_amount(global_value, loot_drop.type_items, loot_drop.item_entry, true) > 0
+					if not entry.steam_economy and not has_item then
+						managers.blackmarket:on_aquired_armor_skin(loot_drop.item_entry)
+					end
 
-							if not has_item then
-								if loot_drop.type_items == "masks" then
-									for slot, crafted in pairs(Global.blackmarket_manager.crafted_items.masks) do
-										if slot ~= 1 and crafted.mask_id == loot_drop.item_entry and crafted.global_value == global_value then
+					check_loot_drop = false
+				end
+
+				if check_loot_drop and loot_drop.type_items == "player_styles" then
+					if not managers.blackmarket:player_style_unlocked(loot_drop.item_entry) then
+						managers.blackmarket:on_aquired_player_style(loot_drop.item_entry)
+					end
+
+					check_loot_drop = false
+				end
+
+				if check_loot_drop then
+					entry = tweak_data.blackmarket[loot_drop.type_items][loot_drop.item_entry]
+					global_value = loot_drop.global_value or data.content.loot_global_value or package_id
+					passed = false
+
+					if (loot_drop.type_items == "weapon_mods" or loot_drop.type_items == "weapon_skins") and entry.is_a_unlockable then
+						has_item = managers.blackmarket:get_item_amount(global_value, loot_drop.type_items, loot_drop.item_entry, true) > 0
+						passed = not has_item
+					elseif loot_drop.type_items ~= "weapon_mods" and entry.value == 0 then
+						has_item = managers.blackmarket:get_item_amount(global_value, loot_drop.type_items, loot_drop.item_entry, true) > 0
+
+						if not has_item then
+							if loot_drop.type_items == "masks" then
+								for slot, crafted in pairs(Global.blackmarket_manager.crafted_items.masks) do
+									if slot ~= 1 and crafted.mask_id == loot_drop.item_entry and crafted.global_value == global_value then
+										has_item = true
+
+										break
+									end
+								end
+							elseif loot_drop.type_items == "materials" or loot_drop.type_items == "textures" or loot_drop.type_items == "colors" then
+								for slot, crafted in pairs(Global.blackmarket_manager.crafted_items.masks) do
+									if slot ~= 1 then
+										name = name_converter[loot_drop.type_items]
+
+										if crafted.blueprint[name].id == loot_drop.item_entry and crafted.blueprint[name].global_value == global_value then
 											has_item = true
 
 											break
 										end
 									end
-								elseif loot_drop.type_items == "materials" or loot_drop.type_items == "textures" or loot_drop.type_items == "colors" then
-									for slot, crafted in pairs(Global.blackmarket_manager.crafted_items.masks) do
-										if slot ~= 1 then
-											name = name_converter[loot_drop.type_items]
-
-											if crafted.blueprint[name].id == loot_drop.item_entry and crafted.blueprint[name].global_value == global_value then
-												has_item = true
-
-												break
-											end
-										end
-									end
 								end
-
-								passed = not has_item
 							end
+
+							passed = not has_item
 						end
+					end
 
-						if passed then
-							print("[GenericDLCManager:give_missing_package] Found missing Item!", loot_drop.amount, global_value, loot_drop.type_items, loot_drop.item_entry)
+					if passed then
+						print("[GenericDLCManager:give_missing_package] Found missing Item!", loot_drop.amount, global_value, loot_drop.type_items, loot_drop.item_entry)
 
-							for i = 1, loot_drop.amount or 1, 1 do
-								managers.blackmarket:add_to_inventory(global_value, loot_drop.type_items, loot_drop.item_entry)
-							end
+						for i = 1, loot_drop.amount or 1, 1 do
+							managers.blackmarket:add_to_inventory(global_value, loot_drop.type_items, loot_drop.item_entry)
 						end
 					end
 				end
@@ -334,6 +363,18 @@ function GenericDLCManager:on_achievement_award_loot()
 end
 
 function GenericDLCManager:on_signin_complete()
+end
+
+function GenericDLCManager:global_value_to_dlc(global_value)
+	local gv_tweak = tweak_data.lootdrop.global_values[global_value]
+
+	return gv_tweak and gv_tweak.dlc and global_value or nil
+end
+
+function GenericDLCManager:is_global_value_unlocked(global_value)
+	local dlc = self:global_value_to_dlc(global_value)
+
+	return dlc and self:is_dlcs_unlocked(dlc) or true
 end
 
 function GenericDLCManager:is_dlcs_unlocked(list_of_dlcs)
@@ -1743,9 +1784,8 @@ function WINDLCManager:init()
 					no_install = true
 				},
 				pal = {
-					no_install = true,
 					app_id = "441600",
-					external = true
+					no_install = true
 				},
 				opera = {
 					app_id = "468410",
@@ -1959,6 +1999,57 @@ function WINDLCManager:init()
 		self:init_generated()
 		self:_verify_dlcs()
 	end
+
+	self:_init_promoted_dlc_list()
+end
+
+function WINDLCManager:_init_promoted_dlc_list()
+	self._promoted_dlc_list = {
+		"mex",
+		"mwm",
+		"trd",
+		"ecp",
+		"grv",
+		"spa",
+		"friend",
+		"chico",
+		"tango",
+		"pim",
+		"born",
+		"wild",
+		"opera",
+		"pal",
+		"peta",
+		"berry",
+		"steel",
+		"dragon",
+		"turtles",
+		"character_pack_sokol",
+		"kenaz",
+		"arena",
+		"west",
+		"bbq",
+		"overkill_pack",
+		"akm4_pack",
+		"character_pack_dragan",
+		"the_bomb",
+		"character_pack_clover",
+		"hope_diamond",
+		"gage_pack_historical",
+		"hl_miami",
+		"gage_pack_assault",
+		"gage_pack_shotgun",
+		"big_bank",
+		"gage_pack_snp",
+		"gage_pack_jobs",
+		"gage_pack_lmg",
+		"gage_pack",
+		"armored_transport"
+	}
+end
+
+function WINDLCManager:get_promoted_dlc_list()
+	return self._promoted_dlc_list
 end
 
 function WINDLCManager:_check_dlc_data(dlc_data)

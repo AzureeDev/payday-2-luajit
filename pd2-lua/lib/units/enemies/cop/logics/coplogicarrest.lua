@@ -257,7 +257,7 @@ function CopLogicArrest._upd_advance(data, my_data, attention_obj, arrest_data)
 			else
 				data.unit:brain():search_for_path_to_unit(my_data.path_search_id, attention_obj.unit)
 			end
-		elseif my_data.should_stand_close then
+		elseif my_data.should_stand_close and attention_obj then
 			CopLogicArrest._say_scary_stuff_discovered(data)
 
 			local close_pos = CopLogicArrest._get_att_obj_close_pos(data, my_data)
@@ -271,7 +271,7 @@ function CopLogicArrest._upd_advance(data, my_data, attention_obj, arrest_data)
 				my_data.in_position = true
 			end
 		else
-			debug_pause_unit(data.unit, "not sure what I am supposed to do", data.unit, data.attention_obj)
+			debug_pause_unit(data.unit, "not sure what I am supposed to do", data.unit, inspect(data.attention_obj), inspect(my_data))
 		end
 	end
 end

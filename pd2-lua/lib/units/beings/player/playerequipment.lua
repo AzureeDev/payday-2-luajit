@@ -393,8 +393,8 @@ function PlayerEquipment:_sentry_gun_ammo_cost(sentry_uid)
 	}
 
 	for index, weapon in pairs(inventory:available_selections()) do
-		local percent_taken = weapon.unit:base():remove_ammo(deployement_cost)
-		self._sentry_ammo_cost[sentry_uid][index] = percent_taken
+		local ammo_taken = weapon.unit:base():remove_ammo(deployement_cost)
+		self._sentry_ammo_cost[sentry_uid][index] = ammo_taken
 
 		hud:set_ammo_amount(index, weapon.unit:base():ammo_info())
 	end

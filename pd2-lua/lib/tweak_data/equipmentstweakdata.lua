@@ -702,4 +702,9 @@ function EquipmentsTweakData:init()
 		icon = "equipment_briefcase",
 		text_id = "hud_briefcase"
 	}
+	self.specials.equipment_blueprint = {
+		sync_possession = true,
+		icon = "equipment_blueprint",
+		text_id = "hud_equipment_blueprints"
+	}
 end

@@ -302,7 +302,7 @@ function ConnectionNetworkHandler:set_peer_entered_lobby(sender)
 	managers.network:session():on_peer_entered_lobby(peer)
 end
 
-function ConnectionNetworkHandler:sync_game_settings(job_index, level_id_index, difficulty_index, one_down, sender)
+function ConnectionNetworkHandler:sync_game_settings(job_index, level_id_index, difficulty_index, one_down, weekly_skirmish, sender)
 	local peer = self._verify_sender(sender)
 
 	if not peer then
@@ -320,6 +320,7 @@ function ConnectionNetworkHandler:sync_game_settings(job_index, level_id_index, 
 	Global.game_settings.world_setting = managers.job:current_world_setting()
 	Global.game_settings.difficulty = difficulty
 	Global.game_settings.one_down = one_down
+	Global.game_settings.weekly_skirmish = weekly_skirmish
 
 	if managers.platform then
 		managers.platform:update_discord_heist()

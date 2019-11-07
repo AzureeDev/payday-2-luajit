@@ -46,6 +46,18 @@ function TeamAILogicBase.actually_revive(data, revive_unit, show_hint_locally)
 	end
 end
 
+function TeamAILogicBase.on_new_objective(data, old_objective)
+	CopLogicBase.on_new_objective(data, old_objective)
+
+	local new_objective = data.objective
+	local need_revive = alive(data.unit) and data.unit:character_damage() and data.unit:character_damage():need_revive()
+	local revive_ai = need_revive and new_objective and new_objective.forced and new_objective.path_style == "warp"
+
+	if revive_ai then
+		TeamAILogicBase.actually_revive(data, data.unit, false)
+	end
+end
+
 function TeamAILogicBase._set_attention_obj(data, new_att_obj, new_reaction)
 	local old_att_obj = data.attention_obj
 	data.attention_obj = new_att_obj

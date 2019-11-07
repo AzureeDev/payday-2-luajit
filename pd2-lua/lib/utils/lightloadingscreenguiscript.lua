@@ -35,7 +35,7 @@ function LightLoadingScreenGuiScript:init(scene_gui, res, progress, base_layer, 
 		text_id = "debug_loading_level",
 		font_size = 32,
 		align = "left",
-		font = "fonts/font_medium_mf",
+		font = "fonts/font_large_mf",
 		halign = "left",
 		color = Color.white,
 		layer = self._base_layer + 1
@@ -73,14 +73,13 @@ function LightLoadingScreenGuiScript:init(scene_gui, res, progress, base_layer, 
 end
 
 function LightLoadingScreenGuiScript:layout_saferect()
-	local scaled_size = {
-		x = 0,
-		height = 674,
-		width = 1198,
-		y = 0
+	local base_res = {
+		x = 1280,
+		y = 720
 	}
-	local w = scaled_size.width
-	local h = scaled_size.height
+	local safe_rect = self:get_safe_rect()
+	local w = math.round(safe_rect.width * base_res.x)
+	local h = math.round(safe_rect.height * base_res.y)
 	local sh = math.min(self._safe_rect_pixels.height, self._safe_rect_pixels.width / (w / h))
 	local sw = math.min(self._safe_rect_pixels.width, self._safe_rect_pixels.height * w / h)
 	local x = math.round(self._res.x / 2 - sh * w / h / 2)
@@ -90,7 +89,7 @@ function LightLoadingScreenGuiScript:layout_saferect()
 end
 
 function LightLoadingScreenGuiScript:get_safe_rect()
-	local a = self._is_win32 and 0.032 or 0.075
+	local a = self._is_win32 and 0.032 or 0.05
 	local b = 1 - a * 2
 
 	return {
@@ -121,15 +120,15 @@ function LightLoadingScreenGuiScript:setup(res, progress)
 
 	self._title_text:set_font_size(32)
 	self._stonecold_small_logo:set_size(256, 56)
-	self._title_text:set_shape(0, 0, self._safe_rect_pixels.width, self._gui_tweak_data.upper_saferect_border - self._gui_tweak_data.border_pad)
+	self._title_text:set_position(0, self._gui_tweak_data.border_pad)
 
-	local _, _, w, _ = self._title_text:text_rect()
+	local _, _, w, h = self._title_text:text_rect()
 
-	self._title_text:set_w(w)
-	self._stonecold_small_logo:set_right(self._stonecold_small_logo:parent():w())
-	self._stonecold_small_logo:set_bottom(self._gui_tweak_data.upper_saferect_border - self._gui_tweak_data.border_pad)
-	self._indicator:set_left(self._title_text:right() + 8)
-	self._indicator:set_bottom(self._gui_tweak_data.upper_saferect_border - self._gui_tweak_data.border_pad)
+	self._title_text:set_size(math.round(w), math.round(h))
+	self._stonecold_small_logo:set_righttop(math.floor(self._saferect_panel:w()), 0)
+	self._indicator:set_center_y(self._title_text:center_y() - 2)
+	self._indicator:set_y(math.round(self._indicator:y()))
+	self._indicator:set_left(math.round(self._title_text:right() + 8))
 	self._bg_gui:set_size(res.x, res.y)
 
 	if progress > 0 then

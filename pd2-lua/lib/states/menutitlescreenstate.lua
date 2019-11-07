@@ -1,4 +1,5 @@
 require("lib/states/GameState")
+require("lib/utils/gui/Blackborders")
 
 MenuTitlescreenState = MenuTitlescreenState or class(GameState)
 
@@ -26,10 +27,7 @@ function MenuTitlescreenState:setup()
 	self._full_workspace = managers.gui_data:create_fullscreen_workspace()
 
 	self._full_workspace:hide()
-
-	self._back_drop_gui = MenuBackdropGUI:new()
-
-	self._back_drop_gui:hide()
+	BlackBorders:new(self._full_workspace:panel())
 
 	local bitmap = self._workspace:panel():bitmap({
 		texture = "guis/textures/menu_title_screen",
@@ -374,8 +372,7 @@ function MenuTitlescreenState:play_attract_video()
 
 	local screen_width = self._full_workspace:width()
 	local screen_height = self._full_workspace:height()
-	local src_width = 1280
-	local src_height = 720
+	local src_width, src_height = managers.gui_data:get_base_res()
 	local dest_width, dest_height = nil
 
 	if src_width / src_height > screen_width / screen_height then
@@ -403,20 +400,19 @@ end
 
 function MenuTitlescreenState:at_exit()
 	managers.platform:remove_event_callback("media_player_control", self._clbk_game_has_music_control_callback)
+	setup:add_end_frame_callback(function ()
+		if alive(self._workspace) then
+			managers.gui_data:destroy_workspace(self._workspace)
 
-	if alive(self._workspace) then
-		managers.gui_data:destroy_workspace(self._workspace)
+			self._workspace = nil
+		end
 
-		self._workspace = nil
-	end
+		if alive(self._full_workspace) then
+			managers.gui_data:destroy_workspace(self._full_workspace)
 
-	if alive(self._full_workspace) then
-		managers.gui_data:destroy_workspace(self._full_workspace)
-
-		self._full_workspace = nil
-	end
-
-	self._back_drop_gui:destroy()
+			self._full_workspace = nil
+		end
+	end)
 
 	if self._controller_list then
 		for _, controller in ipairs(self._controller_list) do

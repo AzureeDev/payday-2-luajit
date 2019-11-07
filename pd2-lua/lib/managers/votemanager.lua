@@ -23,6 +23,7 @@ VoteManager.REASON = {
 	many_equipments = 5,
 	invalid_henchmen = 11,
 	many_bags_pickup = 2,
+	invalid_player_style = 12,
 	wrong_equipment = 6,
 	invalid_job = 7,
 	many_bags = 3,
@@ -102,7 +103,8 @@ function VoteManager:kick_reason_to_string(reason)
 		"menu_chat_peer_cheated_invalid_mask",
 		"menu_chat_peer_cheated_invalid_weapon",
 		"menu_chat_peer_cheated_invalid_character",
-		"menu_chat_peer_cheated_invalid_henchmen"
+		"menu_chat_peer_cheated_invalid_henchmen",
+		"menu_chat_peer_cheated_invalid_player_style"
 	}
 
 	return reason_texts[reason]

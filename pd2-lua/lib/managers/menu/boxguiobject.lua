@@ -26,7 +26,7 @@ function BoxGuiObject:create_sides(panel, config)
 	self._panel = panel:panel({
 		halign = "scale",
 		valign = "scale",
-		name = config.name,
+		name = config.name or "BoxGuiObject" .. tostring(panel:num_children()),
 		w = config.w,
 		h = config.h,
 		layer = config.layer or 1
@@ -73,9 +73,11 @@ function BoxGuiObject:_create_side(panel, side, type, texture)
 		return
 	elseif type == 1 or type == 3 or type == 4 then
 		local one = side_panel:bitmap({
+			wrap_mode = "wrap",
 			texture = texture or "guis/textures/pd2/shared_lines"
 		})
 		local two = side_panel:bitmap({
+			wrap_mode = "wrap",
 			texture = texture or "guis/textures/pd2/shared_lines"
 		})
 		local x = math.random(1, 255)
@@ -133,6 +135,7 @@ function BoxGuiObject:_create_side(panel, side, type, texture)
 		two:set_visible(type == 1 or type == 4)
 	elseif type == 2 then
 		local full = side_panel:bitmap({
+			wrap_mode = "wrap",
 			texture = texture or "guis/textures/pd2/shared_lines",
 			w = side_panel:w(),
 			h = side_panel:h()

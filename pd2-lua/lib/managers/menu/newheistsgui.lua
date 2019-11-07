@@ -90,6 +90,9 @@ function NewHeistsGui:init(ws, fullscreen_ws)
 		h = 16,
 		y = self._internal_content_panel:bottom() + PANEL_PADDING
 	})
+	local button_width_padding = 35
+	local middle_button = self._page_count / 2 + 0.5
+	local page_center_x = self._page_panel:w() / 2
 	self._page_buttons = {}
 
 	for i = 1, self._page_count, 1 do
@@ -97,7 +100,7 @@ function NewHeistsGui:init(ws, fullscreen_ws)
 			texture = "guis/textures/pd2/ad_spot"
 		})
 
-		page_button:set_center_x(i / (self._page_count + 1) * self._page_panel:w() / 2 + self._page_panel:w() / 4)
+		page_button:set_center_x(page_center_x + (i - middle_button) * button_width_padding)
 		page_button:set_center_y((self._page_panel:h() - page_button:h()) / 2)
 		table.insert(self._page_buttons, page_button)
 	end

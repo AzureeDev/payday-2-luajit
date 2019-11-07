@@ -299,7 +299,7 @@ function NetworkMatchMakingXBL:_save_globals()
 		is_client = self._is_client_var,
 		players = self._players,
 		hopper_variables = self._hopper_variables,
-		_host_session_attributes = self._host_session_attributes
+		host_session_attributes = self._host_session_attributes
 	}
 end
 
@@ -326,7 +326,7 @@ function NetworkMatchMakingXBL:update()
 end
 
 function NetworkMatchMakingXBL:_chk_advertise_session_for_smartmatch()
-	if self._session and managers.network:session() and managers.network:session():is_host() and self:is_server_joinable() and XboxLive:smartmatch_state() ~= "searching" and (self:is_host_lobby_public() or XboxLive:smartmatch_state() ~= "expired") then
+	if self._session and managers.network:session() and managers.network:session():is_host() and self:is_server_joinable() and XboxLive:smartmatch_state() ~= "searching" and self:is_host_lobby_public() and XboxLive:smartmatch_state() ~= "expired" then
 		self._smartmatch_idle_start_t = self._smartmatch_idle_start_t or TimerManager:wall_running():time()
 
 		if self.SMARTMATCH_RE_ADVERTISE_PAUSE_T < TimerManager:wall_running():time() - self._smartmatch_idle_start_t then
@@ -849,7 +849,6 @@ function NetworkMatchMakingXBL:clbk_join_session_result(status)
 			managers.menu:on_enter_lobby()
 		elseif res == "JOINED_GAME" then
 			Application:stack_dump()
-			print("GN: HEre 1")
 
 			local level_id = tweak_data.levels:get_level_name_from_index(level_index)
 			Global.game_settings.level_id = level_id
@@ -1234,7 +1233,7 @@ function NetworkMatchMakingXBL:clbk_smartmatch_client(params, session, smartmatc
 				}
 
 				print("GN: found_session_mission_index = ", found_session_mission_index)
-				print("GN: job_name = ", job_name)
+				print("GN: job_name = ", params.job_name)
 				managers.menu:show_smartmatch_inexact_match_dialog(params)
 			else
 				self:clbk_join_session_result(true)

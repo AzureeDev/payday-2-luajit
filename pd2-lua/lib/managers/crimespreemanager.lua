@@ -172,9 +172,9 @@ function CrimeSpreeManager:load(data, version)
 			end
 		end
 	else
-		self:reset_crime_spree()
+		self._global.cleared = save_data.cs_version and save_data.cs_version < CrimeSpreeManager.CS_VERSION
 
-		self._global.cleared = true
+		self:reset_crime_spree()
 	end
 
 	self._global.highest_level = save_data.highest_level or 0
@@ -581,6 +581,7 @@ end
 
 function CrimeSpreeManager:_get_modifiers(table_name, max_count, add_repeating)
 	local modifiers = {}
+	local default_modifier_level = tweak_data.crime_spree.modifier_levels[table_name] or 0
 	local modifiers_table = tweak_data.crime_spree.modifiers[table_name]
 	local repeating_modifiers_table = tweak_data.crime_spree.repeating_modifiers[table_name]
 
@@ -752,7 +753,12 @@ function CrimeSpreeManager:continue_crime_spree()
 	self._global.randomization_cost = false
 
 	self:generate_new_mission_set()
-	self:_send_crime_spree_level_to_peers()
+
+	if Network:multiplayer() and managers.network:session() then
+		self:_send_crime_spree_level_to_peers()
+	else
+		print("[CrimeSpreeManager:continue_crime_spree] offline")
+	end
 
 	return true
 end
@@ -1254,7 +1260,13 @@ function CrimeSpreeManager:on_mission_failed(mission_id)
 end
 
 function CrimeSpreeManager:_on_mission_failed(mission_id)
+	print("[CrimeSpreeManager:_on_mission_failed]")
+
 	if not self:_is_host() and self:server_spree_level() + tweak_data.crime_spree.protection_threshold < self:spree_level() then
+		return
+	end
+
+	if not self._global.start_data then
 		return
 	end
 
@@ -1293,6 +1305,7 @@ function CrimeSpreeManager:on_spree_complete()
 
 	local rewards = self:calculate_rewards()
 
+	managers.custom_safehouse:update_previous_coins()
 	self:award_rewards(rewards)
 	self:_check_highest_level(self:spree_level() or 0)
 
@@ -1455,7 +1468,9 @@ function CrimeSpreeManager:send_crime_spree_mission_data(mission_slot, mission_i
 		perform_randomize ~= nil and perform_randomize or false
 	}
 
-	managers.network:session():send_to_peers("sync_crime_spree_mission", unpack(params))
+	if managers.network:session() then
+		managers.network:session():send_to_peers("sync_crime_spree_mission", unpack(params))
+	end
 end
 
 function CrimeSpreeManager:send_crime_spree_modifier(peer, modifier_data, announce)

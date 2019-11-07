@@ -97,7 +97,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 			word_wrap = true,
 			layer = 2,
 			text = error_message,
-			font = tweak_data.menu.pd2_large_font,
+			font = tweak_data.menu.pd2_small_font,
 			font_size = tweak_data.menu.pd2_small_font_size
 		})
 		BoxGuiObject:new(self._image_panel:panel({
@@ -119,7 +119,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		halign = "left",
 		valign = "top",
 		text = managers.localization:to_upper_text(job_tweak.name_id),
-		font = tweak_data.menu.pd2_large_font,
+		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size,
 		color = job_data.enabled and tweak_data.screen_colors.text or tweak_data.screen_colors.important_1
 	})
@@ -136,7 +136,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		halign = "left",
 		valign = "top",
 		text = managers.localization:to_upper_text(contact_tweak.name_id),
-		font = tweak_data.menu.pd2_large_font,
+		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size * 0.9,
 		color = tweak_data.screen_colors.text
 	})
@@ -154,7 +154,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		halign = "left",
 		valign = "top",
 		text = dlc_name,
-		font = tweak_data.menu.pd2_large_font,
+		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size * 0.9,
 		color = dlc_color
 	})
@@ -172,7 +172,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 			halign = "left",
 			valign = "top",
 			text = managers.localization:to_upper_text("menu_new"),
-			font = tweak_data.menu.pd2_large_font,
+			font = tweak_data.menu.pd2_medium_font,
 			font_size = tweak_data.menu.pd2_medium_font_size * 0.9,
 			color = Color(255, 105, 254, 59) / 255
 		})
@@ -190,7 +190,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		halign = "right",
 		valign = "top",
 		text = self:get_last_played_text(),
-		font = tweak_data.menu.pd2_large_font,
+		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size * 0.8,
 		color = tweak_data.screen_colors.text
 	})
@@ -231,7 +231,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		halign = "right",
 		valign = "top",
 		text = self:get_heist_day_text(),
-		font = tweak_data.menu.pd2_large_font,
+		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size * 0.9,
 		color = tweak_data.screen_colors.text
 	})
@@ -248,7 +248,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		halign = "right",
 		valign = "top",
 		text = self:get_heist_day_icon(),
-		font = tweak_data.menu.pd2_large_font,
+		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size * 0.8,
 		color = tweak_data.screen_colors.text
 	})
@@ -267,7 +267,7 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 			halign = "right",
 			valign = "top",
 			text = managers.localization:get_default_macro("BTN_GHOST"),
-			font = tweak_data.menu.pd2_large_font,
+			font = tweak_data.menu.pd2_medium_font,
 			font_size = tweak_data.menu.pd2_medium_font_size,
 			color = tweak_data.screen_colors.text
 		})
@@ -351,7 +351,7 @@ function ContractBrokerHeistItem:get_dlc_name_and_color(job_tweak)
 				end
 			else
 				dlc_color = tweak_data.screen_colors.dlc_color
-				dlc_name = managers.localization:to_upper_text("menu_ultimate_edition_short")
+				dlc_name = managers.localization:to_upper_text("cn_menu_dlc")
 			end
 		end
 	elseif job_tweak.competitive then

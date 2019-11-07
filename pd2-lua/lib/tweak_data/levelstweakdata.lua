@@ -1642,7 +1642,7 @@ function LevelsTweakData:init()
 		equipment = {
 			"saw"
 		},
-		player_sequence = "spawn_prop_raincoat"
+		player_style = "raincoat"
 	}
 	self.dah = {
 		name_id = "heist_dah_hl",
@@ -1660,7 +1660,7 @@ function LevelsTweakData:init()
 		max_bags = 20,
 		ghost_bonus = 0.1,
 		ai_group_type = america,
-		player_sequence = "spawn_prop_sneak_suit",
+		player_style = "sneak_suit",
 		load_screen = "guis/dlcs/pic/textures/loading/job_diamond_heist_df"
 	}
 	self.rvd1 = {
@@ -1722,7 +1722,7 @@ function LevelsTweakData:init()
 		environment_effects = {
 			"snow"
 		},
-		player_sequence = "spawn_prop_winter_suit",
+		player_style = "winter_suit",
 		max_bags = 12,
 		ai_group_type = america,
 		drop_pickups_to_ground = true
@@ -1809,7 +1809,7 @@ function LevelsTweakData:init()
 		ghost_bonus = 0.1,
 		ai_group_type = america,
 		narrator = "locke",
-		player_sequence = "spawn_prop_tux"
+		player_style = "tux"
 	}
 	self.bph = {
 		name_id = "heist_bph_hl",
@@ -1824,7 +1824,7 @@ function LevelsTweakData:init()
 		cube = "cube_apply_heist_bank",
 		max_bags = 20,
 		ai_group_type = murkywater,
-		player_sequence = "spawn_prop_sneak_suit",
+		player_style = "sneak_suit",
 		narrator = "locke",
 		load_screen = "guis/dlcs/bph/textures/loading/job_bph_df"
 	}
@@ -1917,8 +1917,46 @@ function LevelsTweakData:init()
 		max_bags = 20,
 		ai_group_type = murkywater,
 		narrator = "locke",
-		player_sequence = "spawn_prop_murky_suit",
+		player_style = "murky_suit",
 		load_screen = "guis/dlcs/vit/textures/loading/job_vit_df"
+	}
+	self.mex = {
+		name_id = "heist_mex_hl",
+		briefing_id = "heist_mex_briefing",
+		package = "packages/job_mex",
+		briefing_dialog = "Play_loc_mex_brf_01",
+		world_name = "narratives/locke/mex",
+		intro_event = "Play_loc_med_intro",
+		outro_event = {
+			"Play_loc_mex_end_stealth_01",
+			"Play_loc_mex_end_loud_01"
+		},
+		music = "heist",
+		cube = "cube_apply_heist_bank",
+		max_bags = 100,
+		ai_group_type = murkywater,
+		narrator = "locke",
+		load_screen = "guis/dlcs/mex/textures/loading/job_mex_df"
+	}
+	self.mex_cooking = {
+		name_id = "heist_mex_cooking_hl",
+		briefing_id = "heist_mex_cooking_briefing",
+		package = "packages/job_mex2",
+		briefing_dialog = "Play_loc_mex_cook_brf_01",
+		world_name = "narratives/locke/mex",
+		intro_event = "Play_loc_mex_cook_intro",
+		outro_event = {
+			"Play_loc_count_gen_13",
+			"Play_loc_count_gen_14",
+			"Play_loc_count_gen_15",
+			"Play_loc_count_gen_16"
+		},
+		music = "heist",
+		cube = "cube_apply_heist_bank",
+		max_bags = 100,
+		ai_group_type = murkywater,
+		narrator = "locke",
+		load_screen = "guis/dlcs/mex/textures/loading/job_mex_cooking_df"
 	}
 	self._level_index = {
 		"welcome_to_the_jungle_1",
@@ -2030,7 +2068,9 @@ function LevelsTweakData:init()
 		"skm_run",
 		"skm_watchdogs_stage2",
 		"vit",
-		"bph"
+		"bph",
+		"mex",
+		"mex_cooking"
 	}
 
 	if SystemInfo:distribution() == Idstring("STEAM") then

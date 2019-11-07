@@ -26,16 +26,10 @@ local IS_WIN_32 = SystemInfo:platform() == Idstring("WIN32")
 local NOT_WIN_32 = not IS_WIN_32
 local TOP_ADJUSTMENT = NOT_WIN_32 and 45 or 45
 local BOT_ADJUSTMENT = NOT_WIN_32 and 45 or 45
-local BIG_PADDING = 10
+local BIG_PADDING = 13.5
 local PADDING = 10
 local PAGE_TREE_OVERLAP = 2
-local _saferect_width_estimate = 1198
-local _info_width_estimate = 268
-local _num_trees_per_page = 3
-local TIER_WIDTH_PERCENT = (_saferect_width_estimate - _info_width_estimate - BIG_PADDING - PADDING * (_num_trees_per_page - 1)) / _num_trees_per_page
-local SKILLS_WIDTH_PERCENT = TIER_WIDTH_PERCENT * _num_trees_per_page + PADDING * (_num_trees_per_page - 1)
-TIER_WIDTH_PERCENT = TIER_WIDTH_PERCENT / _saferect_width_estimate
-SKILLS_WIDTH_PERCENT = SKILLS_WIDTH_PERCENT / _saferect_width_estimate
+local SKILLS_WIDTH_PERCENT = 0.7
 local PAGE_TAB_H = medium_font_size + 10
 NewSkillTreeGui = NewSkillTreeGui or class()
 
@@ -1892,6 +1886,7 @@ function NewSkillTreeTreeItem:init(tree, tree_data, tree_panel, fullscreen_panel
 	})
 
 	self._progress:set_width(tree_panel:w())
+	self._progress:set_height(tree_panel:h())
 	self._progress:set_y(self._progress_pos_current)
 end
 

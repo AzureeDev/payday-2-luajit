@@ -105,6 +105,32 @@ function CrimeSpreeForcedModifiersMenuComponent:_setup()
 	self._back_btn:set_callback(callback(self, self, "_on_back"))
 	self._back_btn:shrink_wrap_button(0, 0)
 	self._back_btn:panel():set_right(self._button_panel:w() - padding * 2)
+	self._back_btn:panel():set_visible(managers.menu:is_pc_controller())
+
+	if not managers.menu:is_pc_controller() then
+		self._legend_text = self._button_panel:text({
+			halign = "right",
+			vertical = "bottom",
+			layer = 1,
+			blend_mode = "add",
+			align = "right",
+			text = "",
+			y = 0,
+			x = 0,
+			valign = "bottom",
+			color = tweak_data.screen_colors.text,
+			font = tweak_data.menu.pd2_medium_font,
+			font_size = tweak_data.menu.pd2_medium_font_size
+		})
+
+		self._legend_text:set_right(self._back_btn:panel():right())
+
+		local legend_string = managers.localization:to_upper_text("menu_legend_back")
+
+		self._legend_text:set_text(legend_string)
+		self._legend_text:set_rotation(360)
+	end
+
 	self._panel:set_w(self._modifiers_scroll:panel():w())
 	self._panel:set_h(self._button_panel:bottom() + padding)
 	self._panel:set_center_x(parent:center_x())
@@ -137,10 +163,6 @@ function CrimeSpreeForcedModifiersMenuComponent:_setup()
 			1
 		}
 	})
-
-	if not managers.menu:is_pc_controller() then
-		self:_select_back_btn()
-	end
 end
 
 function CrimeSpreeForcedModifiersMenuComponent:get_modifers()

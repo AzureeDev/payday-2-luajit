@@ -94,8 +94,12 @@ function LevelLoadingScreenGuiScript:init(scene_gui, res, progress, base_layer)
 	})
 
 	level_image:set_alpha(0.5)
-	level_image:set_size(level_image:parent():h() * level_image:texture_width() / level_image:texture_height(), level_image:parent():h())
-	level_image:set_position(0, 0)
+
+	local level_image_ratio = level_image:texture_width() / level_image:texture_height()
+
+	level_image:set_size(level_image:parent():h() * level_image_ratio, level_image:parent():h())
+	level_image:set_center_x(level_image:parent():w() / 2)
+	level_image:set_y(0)
 
 	local background_fullpanel = self._back_drop_gui:get_new_background_layer()
 	local background_safepanel = self._back_drop_gui:get_new_background_layer()

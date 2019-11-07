@@ -1,8 +1,12 @@
 InventoryIconCreator = InventoryIconCreator or class()
 InventoryIconCreator.OPTIONAL = "<optional>"
+InventoryIconCreator.ANIM_POSES_PATH = "anims/units/menu_character/player_criminal/menu_criminal"
+InventoryIconCreator.ANIM_POSES_FILE_EXTENSION = "animation_states"
+InventoryIconCreator.ANIM_POSES_STATE_NAME = "std/stand/still/idle/menu"
 
 function InventoryIconCreator:init()
 	self:_set_job_settings()
+	self:_set_anim_poses()
 end
 
 function InventoryIconCreator:_set_job_settings()
@@ -26,8 +30,36 @@ function InventoryIconCreator:_set_job_settings()
 			pos = Vector3(4500, 0, 0),
 			rot = Rotation(90, 0, 0),
 			res = Vector3(2500, 1000, 0)
+		},
+		character = {
+			fov = 5,
+			pos = Vector3(4500, 0, 0),
+			rot = Rotation(90, 0, 0),
+			res = Vector3(1500, 3000, 0)
 		}
 	}
+end
+
+function InventoryIconCreator:_set_anim_poses()
+	self._anim_poses = {}
+
+	if DB:has(self.ANIM_POSES_FILE_EXTENSION, self.ANIM_POSES_PATH) then
+		local node = DB:load_node(self.ANIM_POSES_FILE_EXTENSION, self.ANIM_POSES_PATH)
+
+		for node_child in node:children() do
+			if node_child:name() == "state" and node_child:parameter("name") == self.ANIM_POSES_STATE_NAME then
+				for state_data in node_child:children() do
+					if state_data:name() == "param" then
+						table.insert(self._anim_poses, state_data:parameter("name"))
+					end
+				end
+
+				table.sort(self._anim_poses)
+
+				return
+			end
+		end
+	end
 end
 
 function InventoryIconCreator:_create_weapon(factory_id, blueprint, weapon_skin)
@@ -107,6 +139,41 @@ function InventoryIconCreator:_create_throwable(throwable_id)
 	end
 
 	self._throwable_unit:set_moving(true)
+end
+
+function InventoryIconCreator:_create_character(character_name, anim_pose)
+	self:destroy_items()
+
+	self._current_texture_name = character_name
+	local thisrot = self._item_rotation
+	local rot = Rotation(thisrot[1] - 90, thisrot[2], thisrot[3])
+	local character_id = managers.blackmarket:get_character_id_by_character_name(character_name)
+	local unit_name = tweak_data.blackmarket.characters[character_id].menu_unit
+
+	managers.dyn_resource:load(Idstring("unit"), Idstring(unit_name), DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
+
+	self._character_unit = World:spawn_unit(Idstring(unit_name), self._item_position, rot)
+
+	self._character_unit:base():set_character_name(CriminalsManager.convert_new_to_old_character_workname(character_name))
+	self._character_unit:base():update_character_visuals()
+
+	local state = self._character_unit:play_redirect(Idstring("idle_menu"))
+
+	if anim_pose then
+		self._character_unit:anim_state_machine():set_parameter(state, anim_pose, 1)
+	end
+
+	self._character_unit:set_moving(true)
+end
+
+function InventoryIconCreator:_create_player_style(player_style, material_variation, character_name, anim_pose)
+	self:destroy_items()
+	self:_create_character(character_name, anim_pose)
+
+	self._current_texture_name = player_style
+
+	self._character_unit:base():set_player_style(player_style, material_variation)
+	self._character_unit:set_visible(false)
 end
 
 function InventoryIconCreator:_assemble_completed(parts, blueprint)
@@ -489,6 +556,120 @@ function InventoryIconCreator:_get_all_throwable()
 	return t
 end
 
+function InventoryIconCreator:start_all_character()
+	local confirm = EWS:message_box(Global.frame_panel, "Really, all of them?", "Icon creator", "YES_NO,ICON_QUESTION", Vector3(-1, -1, 0))
+
+	if confirm == "NO" then
+		return
+	end
+
+	local jobs = {}
+	local anim_pose = self._ctrlrs.character.anim_pose:get_value()
+
+	for _, character_id in ipairs(self:_get_all_characters()) do
+		table.insert(jobs, {
+			character_id = character_id,
+			anim_pose = anim_pose
+		})
+	end
+
+	self:start_jobs(jobs)
+end
+
+function InventoryIconCreator:start_one_character()
+	local character_id = self._ctrlrs.character.character_id:get_value()
+	local anim_pose = self._ctrlrs.character.anim_pose:get_value()
+
+	self:start_jobs({
+		{
+			character_id = character_id,
+			anim_pose = anim_pose
+		}
+	})
+end
+
+function InventoryIconCreator:preview_one_character()
+	local character_id = self._ctrlrs.character.character_id:get_value()
+	local anim_pose = self._ctrlrs.character.anim_pose:get_value()
+
+	self:_create_character(character_id, anim_pose)
+end
+
+function InventoryIconCreator:_get_all_characters()
+	local t = {}
+
+	for _, character in ipairs(CriminalsManager.character_names()) do
+		table.insert(t, CriminalsManager.convert_old_to_new_character_workname(character))
+	end
+
+	return t
+end
+
+function InventoryIconCreator:_get_all_anim_poses()
+	return self._anim_poses
+end
+
+function InventoryIconCreator:start_all_player_style()
+	local confirm = EWS:message_box(Global.frame_panel, "Really, all of them?", "Icon creator", "YES_NO,ICON_QUESTION", Vector3(-1, -1, 0))
+
+	if confirm == "NO" then
+		return
+	end
+
+	local jobs = {}
+	local material_variation = "default"
+	local character_id = self._ctrlrs.player_style.character_id:get_value()
+	local anim_pose = self._ctrlrs.player_style.anim_pose:get_value()
+
+	for _, player_style in ipairs(self:_get_all_player_style()) do
+		table.insert(jobs, {
+			player_style = player_style,
+			material_variation = material_variation,
+			character_id = character_id,
+			anim_pose = anim_pose
+		})
+	end
+
+	self:start_jobs(jobs)
+end
+
+function InventoryIconCreator:start_one_player_style()
+	local player_style = self._ctrlrs.player_style.player_style:get_value()
+	local material_variation = self._ctrlrs.player_style.material_variation:get_value()
+	local character_id = self._ctrlrs.player_style.character_id:get_value()
+	local anim_pose = self._ctrlrs.player_style.anim_pose:get_value()
+
+	self:start_jobs({
+		{
+			player_style = player_style,
+			material_variation = material_variation,
+			character_id = character_id,
+			anim_pose = anim_pose
+		}
+	})
+end
+
+function InventoryIconCreator:preview_one_player_style()
+	local player_style = self._ctrlrs.player_style.player_style:get_value()
+	local material_variation = self._ctrlrs.player_style.material_variation:get_value()
+	local character_id = self._ctrlrs.player_style.character_id:get_value()
+	local anim_pose = self._ctrlrs.player_style.anim_pose:get_value()
+
+	self:_create_player_style(player_style, material_variation, character_id, anim_pose)
+end
+
+function InventoryIconCreator:_get_all_player_style()
+	local t = clone(tweak_data.blackmarket.player_style_list)
+
+	table.delete(t, "none")
+
+	return t
+end
+
+function InventoryIconCreator:_get_all_suit_variations(player_style)
+	return managers.blackmarket:get_all_suit_variations(player_style)
+end
+
 function InventoryIconCreator:_start_job()
 	self._has_job = true
 	local job = self._jobs[self._current_job]
@@ -501,6 +682,10 @@ function InventoryIconCreator:_start_job()
 		self:_create_melee(job.melee_id)
 	elseif job.throwable_id then
 		self:_create_throwable(job.throwable_id)
+	elseif job.player_style then
+		self:_create_player_style(job.player_style, job.material_variation, job.character_id, job.anim_pose)
+	elseif job.character_id then
+		self:_create_character(job.character_id, job.anim_pose)
 	end
 
 	self:start_create()
@@ -607,14 +792,16 @@ function InventoryIconCreator:_setup_camera()
 		job_setting = self._job_settings.melee
 	elseif self._jobs[1].throwable_id then
 		job_setting = self._job_settings.throwable
+	elseif self._jobs[1].character_id then
+		job_setting = self._job_settings.character
 	end
 
 	if not self._custom_ctrlrs.use_camera_setting:get_value() then
-		local oobb = (self._weapon_unit or self._mask_unit or self._melee_unit or self._throwable_unit):oobb()
+		local oobb = (self._weapon_unit or self._mask_unit or self._melee_unit or self._throwable_unit or self._character_unit):oobb()
 		local center = oobb:center()
 
 		managers.editor:set_camera(Vector3(job_setting.pos.x, center.y, center.z), job_setting.rot)
-		managers.editor:set_camera_fov(1)
+		managers.editor:set_camera_fov(job_setting.fov or 1)
 	end
 
 	local w = job_setting.res.x
@@ -665,6 +852,8 @@ function InventoryIconCreator:destroy_items()
 	self:destroy_mask()
 	self:destroy_melee()
 	self:destroy_throwable()
+	self:destroy_character()
+	self:destroy_player_style()
 end
 
 function InventoryIconCreator:destroy_weapon()
@@ -705,6 +894,20 @@ function InventoryIconCreator:destroy_throwable()
 	self._throwable_unit:set_slot(0)
 
 	self._throwable_unit = nil
+end
+
+function InventoryIconCreator:destroy_character()
+	if not alive(self._character_unit) then
+		return
+	end
+
+	self._character_unit:set_slot(0)
+
+	self._character_unit = nil
+end
+
+function InventoryIconCreator:destroy_player_style()
+	self:destroy_character()
 end
 
 function InventoryIconCreator:show_ews()
@@ -750,13 +953,17 @@ function InventoryIconCreator:create_ews()
 		weapon = {},
 		mask = {},
 		melee = {},
-		throwable = {}
+		throwable = {},
+		character = {},
+		player_style = {}
 	}
 
 	notebook:add_page(self:_create_weapons_page(notebook), "Weapons", true)
 	notebook:add_page(self:_create_masks_page(notebook), "Masks", false)
 	notebook:add_page(self:_create_melee_page(notebook), "Melee", false)
 	notebook:add_page(self:_create_throwable_page(notebook), "Throwable", false)
+	notebook:add_page(self:_create_character_page(notebook), "Character", false)
+	notebook:add_page(self:_create_player_style_page(notebook), "Outfit", false)
 	self._main_frame:set_sizer(main_box)
 	self._main_frame:set_visible(true)
 end
@@ -1439,6 +1646,206 @@ function InventoryIconCreator:_update_throwable_combobox_text(params)
 		print(value, tweak_data.blackmarket.projectiles[value].name_id)
 
 		text = managers.localization:text(tweak_data.blackmarket.projectiles[value].name_id or "N/A")
+	end
+
+	params.text_ctrlr:set_value(text)
+
+	if not params.no_layout then
+		params.text_ctrlr:parent():layout()
+	end
+end
+
+function InventoryIconCreator:_create_character_page(notebook)
+	local panel = EWS:Panel(notebook, "", "TAB_TRAVERSAL")
+	local panel_sizer = EWS:BoxSizer("VERTICAL")
+
+	panel:set_sizer(panel_sizer)
+
+	local btn_sizer = EWS:StaticBoxSizer(panel, "HORIZONTAL", "")
+
+	panel_sizer:add(btn_sizer, 0, 0, "EXPAND")
+
+	local _btn = EWS:Button(panel, "All", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "start_all_character"), false)
+
+	local _btn = EWS:Button(panel, "Selected", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "start_one_character"), false)
+
+	local _btn = EWS:Button(panel, "Preview", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "preview_one_character"), false)
+
+	local comboboxes_sizer = EWS:StaticBoxSizer(panel, "VERTICAL", "")
+
+	panel_sizer:add(comboboxes_sizer, 0, 0, "EXPAND")
+	self:_add_character_ctrlr(panel, comboboxes_sizer, "character_id", self:_get_all_characters())
+	self:_add_character_ctrlr(panel, comboboxes_sizer, "anim_pose", self:_get_all_anim_poses())
+
+	return panel
+end
+
+function InventoryIconCreator:_add_character_ctrlr(panel, sizer, name, options, value)
+	local combobox_params = {
+		sizer_proportions = 1,
+		name_proportions = 1,
+		tooltip = "",
+		sorted = false,
+		ctrlr_proportions = 2,
+		name = string.pretty(name, true) .. ":",
+		panel = panel,
+		sizer = sizer,
+		options = options,
+		value = value or options[1]
+	}
+	local ctrlr = CoreEws.combobox(combobox_params)
+	self._ctrlrs.character[name] = ctrlr
+	local text_ctrlr = EWS:StaticText(panel, "", 0, "ALIGN_RIGHT")
+
+	sizer:add(text_ctrlr, 0, 0, "ALIGN_RIGHT")
+	self:_update_character_combobox_text({
+		no_layout = true,
+		name = name,
+		ctrlr = ctrlr,
+		text_ctrlr = text_ctrlr
+	})
+	ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_update_character_combobox_text"), {
+		name = name,
+		ctrlr = ctrlr,
+		text_ctrlr = text_ctrlr
+	})
+
+	return ctrlr
+end
+
+function InventoryIconCreator:_update_character_combobox_text(params)
+	local name = params.name
+	local value = params.ctrlr:get_value()
+	local text = nil
+
+	if name == "character_id" then
+		text = managers.blackmarket:_character_tweak_data_by_name(value).name_id
+		text = text and managers.localization:text(text) or "N/A"
+	elseif name == "anim_pose" then
+		text = value
+	end
+
+	params.text_ctrlr:set_value(text)
+
+	if not params.no_layout then
+		params.text_ctrlr:parent():layout()
+	end
+end
+
+function InventoryIconCreator:_create_player_style_page(notebook)
+	local panel = EWS:Panel(notebook, "", "TAB_TRAVERSAL")
+	local panel_sizer = EWS:BoxSizer("VERTICAL")
+
+	panel:set_sizer(panel_sizer)
+
+	local btn_sizer = EWS:StaticBoxSizer(panel, "HORIZONTAL", "")
+
+	panel_sizer:add(btn_sizer, 0, 0, "EXPAND")
+
+	local _btn = EWS:Button(panel, "All", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "start_all_player_style"), false)
+
+	local _btn = EWS:Button(panel, "Selected", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "start_one_player_style"), false)
+
+	local _btn = EWS:Button(panel, "Preview", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "preview_one_player_style"), false)
+
+	local comboboxes_sizer = EWS:StaticBoxSizer(panel, "VERTICAL", "")
+
+	panel_sizer:add(comboboxes_sizer, 0, 0, "EXPAND")
+
+	local player_styles = self:_get_all_player_style()
+
+	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "player_style", player_styles)
+	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "material_variation", self._get_all_suit_variations(player_styles[1]))
+	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "character_id", self:_get_all_characters())
+	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "anim_pose", self:_get_all_anim_poses())
+
+	return panel
+end
+
+function InventoryIconCreator:_add_player_style_ctrlr(panel, sizer, name, options, value)
+	local combobox_params = {
+		sizer_proportions = 1,
+		name_proportions = 1,
+		tooltip = "",
+		sorted = false,
+		ctrlr_proportions = 2,
+		name = string.pretty(name, true) .. ":",
+		panel = panel,
+		sizer = sizer,
+		options = options,
+		value = value or options[1]
+	}
+	local ctrlr = CoreEws.combobox(combobox_params)
+	self._ctrlrs.player_style[name] = ctrlr
+	local text_ctrlr = EWS:StaticText(panel, "", 0, "ALIGN_RIGHT")
+
+	sizer:add(text_ctrlr, 0, 0, "ALIGN_RIGHT")
+	self:_update_player_style_combobox_text({
+		no_layout = true,
+		name = name,
+		ctrlr = ctrlr,
+		text_ctrlr = text_ctrlr
+	})
+	ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_update_player_style_combobox_text"), {
+		name = name,
+		ctrlr = ctrlr,
+		text_ctrlr = text_ctrlr
+	})
+
+	return ctrlr
+end
+
+function InventoryIconCreator:_update_player_style_combobox_text(params)
+	local name = params.name
+	local value = params.ctrlr:get_value()
+	local text = nil
+
+	if name == "player_style" then
+		local character_ctrlr = self._ctrlrs.player_style.character_id
+		local character_id = character_ctrlr and character_ctrlr:get_value() or "dallas"
+		local name_id = tweak_data.blackmarket:get_player_style_value(value, character_id, "name_id")
+		text = name_id and managers.localization:text(name_id) or "N/A"
+		local material_variation_ctrlr = self._ctrlrs.player_style.material_variation
+
+		if material_variation_ctrlr then
+			material_variation_ctrlr:clear()
+
+			local suit_variations = self._get_all_suit_variations(value)
+
+			for _, option in ipairs(suit_variations) do
+				material_variation_ctrlr:append(option)
+			end
+
+			material_variation_ctrlr:set_value(suit_variations[1])
+			material_variation_ctrlr:parent():layout()
+		end
+	elseif name == "material_variation" then
+		local character_ctrlr = self._ctrlrs.player_style.character_id
+		local character_id = character_ctrlr and character_ctrlr:get_value() or "dallas"
+		local player_style_ctrlr = self._ctrlrs.player_style.player_style
+		local player_style = player_style_ctrlr and player_style_ctrlr:get_value() or "none"
+		local name_id = tweak_data.blackmarket:get_suit_variation_value(player_style, value, character_id, "name_id")
+		text = name_id and managers.localization:text(name_id) or "N/A"
+	else
+		return self:_update_character_combobox_text(params)
 	end
 
 	params.text_ctrlr:set_value(text)

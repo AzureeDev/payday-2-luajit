@@ -191,7 +191,15 @@ function MenuLobbyRenderer:_update_difficulty(difficulty)
 	Application:debug("_update_difficulty", difficulty)
 end
 
+function MenuLobbyRenderer:_verify_player_slot(slot)
+	return self._player_slots and self._player_slots[slot] and true or false
+end
+
 function MenuLobbyRenderer:set_slot_joining(peer, peer_id)
+	if not self:_verify_player_slot(peer_id) then
+		return
+	end
+
 	managers.hud:set_slot_joining(peer, peer_id)
 
 	local slot = self._player_slots[peer_id]
@@ -211,19 +219,25 @@ function MenuLobbyRenderer:set_slot_not_ready(peer, peer_id)
 end
 
 function MenuLobbyRenderer:set_player_slots_kit(slot)
+	if not self:_verify_player_slot(slot) then
+		return
+	end
+
 	local peer_id = self._player_slots[slot].peer_id
 
 	Application:debug("set_player_slots_kit", slot)
 end
 
 function MenuLobbyRenderer:set_slot_outfit(slot, criminal_name, outfit_string)
-	if self._player_slots then
-		local outfit = managers.blackmarket:unpack_outfit_from_string(outfit_string)
-		self._player_slots[slot].outfit = outfit
-
-		managers.menu_component:set_slot_outfit_mission_briefing_gui(slot, criminal_name, outfit)
-		managers.hud:set_slot_outfit(slot, criminal_name, outfit)
+	if not self:_verify_player_slot(slot) then
+		return
 	end
+
+	local outfit = managers.blackmarket:unpack_outfit_from_string(outfit_string)
+	self._player_slots[slot].outfit = outfit
+
+	managers.menu_component:set_slot_outfit_mission_briefing_gui(slot, criminal_name, outfit)
+	managers.hud:set_slot_outfit(slot, criminal_name, outfit)
 end
 
 function MenuLobbyRenderer:set_kit_selection(peer_id, category, id, slot)
@@ -236,6 +250,10 @@ function MenuLobbyRenderer:set_slot_voice(peer, peer_id, active)
 end
 
 function MenuLobbyRenderer:_set_player_slot(nr, params)
+	if not self:_verify_player_slot(nr) then
+		return
+	end
+
 	local slot = self._player_slots[nr]
 	slot.free = false
 	slot.peer_id = params.peer_id

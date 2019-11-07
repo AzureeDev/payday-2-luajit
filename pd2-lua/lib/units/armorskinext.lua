@@ -303,7 +303,7 @@ function ArmorSkinExt:_update_materials()
 		local new_material_config_ids = self:_get_cc_material_config()
 
 		if new_material_config_ids then
-			self._unit:set_material_config(new_material_config_ids, true)
+			-- Nothing
 		end
 
 		self._materials = {}

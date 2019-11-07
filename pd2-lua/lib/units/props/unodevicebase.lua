@@ -53,15 +53,19 @@ function UnoDeviceBase:show_text(text)
 end
 
 function UnoDeviceBase:cycle_hints()
-	local uno_challenge = managers.custom_safehouse:uno_achievement_challenge()
-	local achievement_id = uno_challenge:challenge()[self._next_hint]
+	local uno_challenge = nil
+	uno_challenge = managers.custom_safehouse:uno_achievement_challenge()
 
-	self:show_hint(achievement_id)
+	if uno_challenge then
+		local achievement_id = uno_challenge:challenge()[self._next_hint]
 
-	self._next_hint = self._next_hint + 1
+		self:show_hint(achievement_id)
 
-	if UnoAchievementChallenge.CHALLENGE_COUNT < self._next_hint then
-		self._next_hint = 1
+		self._next_hint = self._next_hint + 1
+
+		if UnoAchievementChallenge.CHALLENGE_COUNT < self._next_hint then
+			self._next_hint = 1
+		end
 	end
 end
 
@@ -72,11 +76,14 @@ function UnoDeviceBase:show_hint(achievement_id)
 end
 
 function UnoDeviceBase:generate_challenge()
-	local uno_challenge = managers.custom_safehouse:uno_achievement_challenge()
+	local uno_challenge = nil
+	uno_challenge = managers.custom_safehouse:uno_achievement_challenge()
 
-	uno_challenge:generate_challenge()
+	if uno_challenge then
+		uno_challenge:generate_challenge()
 
-	self._next_hint = 1
+		self._next_hint = 1
+	end
 end
 
 function UnoDeviceBase:destroy()

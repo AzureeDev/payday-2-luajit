@@ -1,3 +1,5 @@
+require("lib/tweak_data/GeneratedMarketLinkTweakData")
+
 EconomyTweakData = EconomyTweakData or class()
 
 function EconomyTweakData:init()
@@ -8,6 +10,7 @@ function EconomyTweakData:init()
 	self.bundles = {}
 	self.rarities = {}
 	self.qualities = {}
+	self.market_links = init_auto_generated_steam_market_links()
 	self.rarities.common = {
 		index = 1,
 		fake_chance = 75,
@@ -1177,6 +1180,49 @@ function EconomyTweakData:init()
 			weapon_skins = table.list_add(self.contents.cat_01.contains.weapon_skins, self.contents.cat_01_legendary.contains.weapon_skins)
 		}
 	}
+	self.contents.ait_01 = {
+		def_id = 10056,
+		contains = {
+			weapon_skins = {
+				"lemming_ait",
+				"b92fs_ait",
+				"sub2000_ait",
+				"deagle_ait",
+				"elastic_ait",
+				"slap_ait",
+				"m16_ait",
+				"system_ait",
+				"mac10_ait",
+				"polymer_ait",
+				"spas12_ait",
+				"rota_ait",
+				"komodo_ait",
+				"tecci_ait",
+				"uzi_ait"
+			},
+			contents = {
+				"ait_01_legendary"
+			}
+		}
+	}
+	self.contents.ait_01_legendary = {
+		def_id = 10057,
+		contains = {
+			weapon_skins = {
+				"scar_ait"
+			}
+		},
+		rarity = "legendary"
+	}
+	self.bundles.ait_01 = {
+		def_id = 30008,
+		dlc_id = "892410",
+		quality = "mint",
+		bonus = false,
+		contains = {
+			weapon_skins = table.list_add(self.contents.ait_01.contains.weapon_skins, self.contents.ait_01_legendary.contains.weapon_skins)
+		}
+	}
 	self.safes.overkill_01 = {
 		def_id = 50000,
 		promo = true,
@@ -1457,6 +1503,16 @@ function EconomyTweakData:init()
 		texture_bundle_folder = "cash/safes/cat",
 		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%207"
 	}
+	self.safes.ait_01 = {
+		free = true,
+		drill = "ait_01",
+		content = "ait_01",
+		bundle = "ait_01",
+		name_id = "bm_menu_safe_ait_01",
+		unit_name = "units/payday2_cash/safes/ait/safe/eco_safe_ait",
+		texture_bundle_folder = "cash/safes/ait",
+		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%208"
+	}
 	self.drills.overkill_01 = {
 		safe = "overkill_01",
 		def_id = 70000,
@@ -1641,6 +1697,10 @@ function EconomyTweakData:init()
 	self.drills.cat_01 = {
 		safe = "cat_01",
 		unit_name = "units/payday2_cash/safes/cat/drill/eco_drill_cat"
+	}
+	self.drills.ait_01 = {
+		safe = "ait_01",
+		unit_name = "units/payday2_cash/safes/ait/drill/eco_drill_ait"
 	}
 	self.bonuses = {
 		concealment_p1 = {}
@@ -1839,7 +1899,15 @@ function EconomyTweakData:get_bonus_icons(entry)
 	return bonuses
 end
 
+EconomyTweakData.market_link_search = "https://steamcommunity.com/market/search?appid=218620&q="
+
 function EconomyTweakData:create_weapon_skin_market_search_url(weapon_id, cosmetic_id)
+	local market_link = self.market_links.weapon_skins[cosmetic_id]
+
+	if market_link then
+		return EconomyTweakData.market_link_search .. market_link
+	end
+
 	local cosmetic_name = tweak_data.blackmarket.weapon_skins[cosmetic_id] and managers.localization:text(tweak_data.blackmarket.weapon_skins[cosmetic_id].name_id)
 	local weapon_name = managers.weapon_factory:get_weapon_name_by_weapon_id(weapon_id)
 
@@ -1847,19 +1915,25 @@ function EconomyTweakData:create_weapon_skin_market_search_url(weapon_id, cosmet
 		cosmetic_name = string.gsub(cosmetic_name, " ", "+")
 		weapon_name = string.gsub(weapon_name, " ", "+")
 
-		return string.gsub("http://steamcommunity.com/market/search?appid=218620&q=" .. cosmetic_name .. "+" .. weapon_name, "++", "+")
+		return string.gsub(EconomyTweakData.market_link_search .. cosmetic_name .. "+" .. weapon_name, "++", "+")
 	end
 
 	return nil
 end
 
 function EconomyTweakData:create_armor_skin_market_search_url(cosmetic_id)
+	local market_link = self.market_links.armor_skins[cosmetic_id]
+
+	if market_link then
+		return EconomyTweakData.market_link_search .. market_link
+	end
+
 	local cosmetic_name = tweak_data.economy.armor_skins[cosmetic_id] and managers.localization:text(tweak_data.economy.armor_skins[cosmetic_id].name_id)
 
 	if cosmetic_name then
 		cosmetic_name = string.gsub(cosmetic_name, " ", "+")
 
-		return string.gsub("http://steamcommunity.com/market/search?appid=218620&q=" .. cosmetic_name .. "+", "++", "+")
+		return string.gsub(EconomyTweakData.market_link_search .. cosmetic_name .. "+", "++", "+")
 	end
 
 	return nil

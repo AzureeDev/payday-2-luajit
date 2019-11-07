@@ -258,8 +258,7 @@ function MovieTheaterGui:play_movie(item, blockingtag)
 
 	local screen_width = self._fullscreen_ws:width()
 	local screen_height = self._fullscreen_ws:height()
-	local src_width = 1280
-	local src_height = 720
+	local src_width, src_height = managers.gui_data:get_base_res()
 	local dest_width, dest_height = nil
 
 	if src_width / src_height > screen_width / screen_height then

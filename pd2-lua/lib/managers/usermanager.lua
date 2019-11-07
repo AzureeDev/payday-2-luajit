@@ -243,7 +243,8 @@ function GenericUserManager:reset_sound_setting_map()
 		"sfx_volume",
 		"voice_volume",
 		"voice_chat",
-		"push_to_talk"
+		"push_to_talk",
+		"mute_heist_vo"
 	}
 
 	for _, name in pairs(settings) do
@@ -255,7 +256,8 @@ function GenericUserManager:reset_network_setting_map()
 	local settings = {
 		"net_packet_throttling",
 		"net_forwarding",
-		"net_use_compression"
+		"net_use_compression",
+		"disable_reconnect_popup"
 	}
 
 	for _, name in pairs(settings) do
@@ -263,8 +265,10 @@ function GenericUserManager:reset_network_setting_map()
 	end
 end
 
-function GenericUserManager:reset_gameplay_setting_map()
+function GenericUserManager:reset_user_interface_setting_map()
 	local settings = {
+		"loading_screen_show_hints",
+		"show_vr_descs",
 		"throwable_contour",
 		"ammo_contour"
 	}

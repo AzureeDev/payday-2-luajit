@@ -5808,6 +5808,152 @@ function NarrativeTweakData:init(tweak_data)
 		10,
 		26
 	}
+	self.stages.mex = {
+		type = "d",
+		type_id = "heist_type_assault",
+		level_id = "mex",
+		mission_filter = {
+			1
+		}
+	}
+	self.stages.mex_cooking = {
+		type = "d",
+		type_id = "heist_type_assault",
+		level_id = "mex_cooking",
+		mission_filter = {
+			2
+		}
+	}
+	self.jobs.mex = {
+		name_id = "heist_mex",
+		briefing_id = "heist_mex_crimenet",
+		contact = "locke",
+		region = "street",
+		jc = 30,
+		dlc = "mex",
+		chain = {
+			self.stages.mex
+		},
+		briefing_event = "Play_loc_mex_cbf_01",
+		debrief_event = nil,
+		crimenet_callouts = {
+			"Play_loc_mex_cnc_01"
+		},
+		crimenet_videos = {
+			"codex/locke1"
+		},
+		payout = {
+			50000,
+			125000,
+			250000,
+			550000,
+			700000,
+			700000,
+			700000
+		},
+		contract_cost = {
+			24000,
+			48000,
+			120000,
+			240000,
+			300000,
+			300000,
+			300000
+		},
+		contract_visuals = {}
+	}
+	self.jobs.mex.contract_visuals.min_mission_xp = {
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200
+	}
+	self.jobs.mex.contract_visuals.max_mission_xp = {
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200
+	}
+	self.jobs.mex.contract_visuals.preview_image = {
+		id = "mex",
+		folder = "mex"
+	}
+	self.jobs.mex.date_added = {
+		2019,
+		11,
+		7
+	}
+	self.jobs.mex_cooking = {
+		name_id = "heist_mex_cooking",
+		briefing_id = "heist_mex_cooking_crimenet",
+		contact = "locke",
+		region = "street",
+		jc = 30,
+		dlc = "mex",
+		chain = {
+			self.stages.mex_cooking
+		},
+		briefing_event = "Play_loc_mex_cook_cbf_01",
+		debrief_event = nil,
+		crimenet_callouts = {
+			"Play_loc_mex_cook_cnc_01"
+		},
+		crimenet_videos = {
+			"codex/locke1"
+		},
+		payout = {
+			50000,
+			125000,
+			250000,
+			550000,
+			700000,
+			700000,
+			700000
+		},
+		contract_cost = {
+			24000,
+			48000,
+			120000,
+			240000,
+			300000,
+			300000,
+			300000
+		},
+		contract_visuals = {}
+	}
+	self.jobs.mex_cooking.contract_visuals.min_mission_xp = {
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200
+	}
+	self.jobs.mex_cooking.contract_visuals.max_mission_xp = {
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200
+	}
+	self.jobs.mex_cooking.contract_visuals.preview_image = {
+		id = "mex_cooking",
+		folder = "mex"
+	}
+	self.jobs.mex_cooking.date_added = {
+		2019,
+		11,
+		7
+	}
 	self.stages.lbe_lobby_end = {
 		type = "d",
 		type_id = "heist_type_assault",
@@ -6365,7 +6511,9 @@ function NarrativeTweakData:init(tweak_data)
 		"skm_run",
 		"skm_watchdogs_stage2",
 		"vit",
-		"bph"
+		"bph",
+		"mex",
+		"mex_cooking"
 	}
 	self.forced_jobs = {
 		firestarter = true,
@@ -6517,7 +6665,7 @@ function NarrativeTweakData:create_job_name(job_id, skip_professional)
 				pro_text = pro_text .. managers.localization:to_upper_text("cn_menu_community")
 			end
 		else
-			pro_text = pro_text .. managers.localization:to_upper_text("menu_ultimate_edition_short")
+			pro_text = pro_text .. managers.localization:to_upper_text("cn_menu_dlc")
 		end
 
 		local s_len = utf8.len(text_id)

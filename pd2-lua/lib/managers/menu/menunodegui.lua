@@ -308,15 +308,16 @@ function MenuNodeGui:_create_align(node)
 end
 
 function MenuNodeGui:_create_marker(node)
-	self._marker_data = {
-		marker = self.item_panel:panel({
-			h = 10,
-			y = 0,
-			w = 1280,
-			x = 0,
-			layer = self.layers.marker
-		})
-	}
+	self._marker_data = {}
+	local width, _ = managers.gui_data:get_base_res()
+	local height = 10
+	self._marker_data.marker = self.item_panel:panel({
+		y = 0,
+		x = 0,
+		w = width,
+		h = height,
+		layer = self.layers.marker
+	})
 	self._marker_data.gradient = self._marker_data.marker:bitmap({
 		texture = "guis/textures/menu_selected",
 		blend_mode = "add",

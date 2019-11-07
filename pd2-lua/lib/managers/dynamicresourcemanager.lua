@@ -158,6 +158,14 @@ function DynamicResourceManager:unload(resource_type, resource_name, package_nam
 
 	local key = self._get_resource_key(resource_type, resource_name, package_name)
 	local entry = self._dyn_resources[key]
+
+	if entry == nil then
+		Application:error("[DynamicResourceManager:unload] No entry to unload!", resource_type, resource_name, package_name, key)
+		Application:stack_dump()
+
+		return
+	end
+
 	entry.ref_c = entry.ref_c - 1
 
 	if entry.ref_c ~= 0 then
@@ -206,8 +214,13 @@ function DynamicResourceManager:clbk_resource_loaded(status, resource_type, reso
 	end
 end
 
-function DynamicResourceManager:change_material_config(name, unit)
-	unit:set_material_config(name, true, callback(self, self, "on_material_applied", unit), 100)
+function DynamicResourceManager:change_material_config(name, unit, synchronous)
+	if synchronous then
+		unit:set_material_config(name, true)
+		self:on_material_applied(unit)
+	else
+		unit:set_material_config(name, true, callback(self, self, "on_material_applied", unit), 100)
+	end
 end
 
 function DynamicResourceManager:on_material_applied(unit)

@@ -671,11 +671,8 @@ function CrimeNetSidebarAttentionItem:init(sidebar, panel, parameters)
 
 	if parameters.calling_attention then
 		self._unplayed_pulse = self:create_glow(sidebar._fullscreen_panel, glow_color, 0.85)
-		local center_x, center_y = nil
-		center_x = self._icon:right() + self._icon:w() + 14 - 2
-		center_y = self._panel:bottom() + self._panel:h() * 0.5 - 2
 
-		self._unplayed_pulse:set_center(center_x, center_y)
+		self._unplayed_pulse:set_world_center(managers.gui_data:safe_to_full_16_9(self._icon:world_center()))
 
 		self._pulse_offset = math.random()
 	end
@@ -732,7 +729,7 @@ function CrimeNetSidebarSafehouseItem:init(sidebar, panel, parameters)
 	if managers.custom_safehouse:unlocked() and not managers.custom_safehouse:has_entered_safehouse() then
 		self._unplayed_pulse = self:create_glow(sidebar._fullscreen_panel, tweak_data.screen_colors.heat_warm_color, 0.85)
 
-		self._unplayed_pulse:set_center(self._icon:right() + self._icon:w() + 14 - 2, self._panel:bottom() + self._panel:h() * 0.5 - 2)
+		self._unplayed_pulse:set_world_center(managers.gui_data:safe_to_full_16_9(self._icon:world_center()))
 
 		self._pulse_offset = math.random()
 		self._unplayed = true

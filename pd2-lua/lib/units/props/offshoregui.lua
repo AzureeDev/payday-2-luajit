@@ -19,7 +19,8 @@ function OffshoreGui:init(unit)
 end
 
 function OffshoreGui:add_workspace(gui_object)
-	self._ws = self._new_gui:create_object_workspace(1280, 720, gui_object, Vector3(0, 0, 0))
+	local gui_width, gui_height = managers.gui_data:get_base_res()
+	self._ws = self._new_gui:create_object_workspace(gui_width, gui_height, gui_object, Vector3(0, 0, 0))
 end
 
 function OffshoreGui:setup()

@@ -207,7 +207,8 @@ function StatisticsTweakData:statistics_table()
 		"bolivian",
 		"bolivian_indoors",
 		"drug_lord_boss",
-		"drug_lord_boss_stealth"
+		"drug_lord_boss_stealth",
+		"bolivian_indoors_mex"
 	}
 	local armor_list = {
 		"level_1",
@@ -254,7 +255,11 @@ function StatisticsTweakData:statistics_table()
 		"sentry_gun_silent"
 	}
 
-	return self._level_list, self._job_list, self._mask_list, self._weapon_list, self._melee_list, self._grenade_list, enemy_list, armor_list, character_list, deployable_list
+	if not self._suit_list then
+		self._suit_list = tweak_data.blackmarket:create_suit_strings()
+	end
+
+	return self._level_list, self._job_list, self._mask_list, self._weapon_list, self._melee_list, self._grenade_list, enemy_list, armor_list, character_list, deployable_list, self._suit_list
 end
 
 function StatisticsTweakData:resolution_statistics_table()

@@ -425,16 +425,6 @@ function HuskPlayerMovement:set_character_anim_variables()
 	if color_id then
 		self._unit:contour():change_color("teammate", tweak_data.peer_vector_colors[color_id])
 	end
-
-	if self._unit:armor_skin() then
-		local peer = managers.network:session():peer_by_unit(self._unit)
-		local outfit = managers.blackmarket:unpack_outfit_from_string(peer:profile().outfit_string)
-
-		if outfit.armor_skin then
-			self._unit:armor_skin():set_character(char_name)
-			self._unit:armor_skin():set_cosmetics_data(outfit.armor_skin, true)
-		end
-	end
 end
 
 function HuskPlayerMovement:check_visual_equipment()

@@ -213,6 +213,9 @@ function CustomSafehouseManager:total_coins_earned()
 	return Application:digest_value(self._global.total_collected, false)
 end
 
+function CustomSafehouseManager:update_previous_coins()
+end
+
 function CustomSafehouseManager:coins_spent()
 	return self:total_coins_earned() - self:coins()
 end

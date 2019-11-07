@@ -727,6 +727,109 @@ function SequenceManager:remove(unit_name)
 	return unit_element ~= nil
 end
 
+function SequenceManager:verify_material_configs(skip_unit_map, processed_unit_map, processed_unit_list)
+	local index_file = DB:open("index", "indices/types/unit")
+	local unit_list_string = index_file:read()
+	local unit_list = string.split(unit_list_string, "[\r\n]")
+	local unit_id = Idstring("unit")
+	local assets_path = Application:base_path() .. "../../assets/"
+
+	if managers.debug then
+		assets_path = managers.debug.macro:get_cleaned_path(assets_path) or assets_path
+	end
+
+	cat_print("debug", "Verifying " .. #unit_list .. " units...")
+
+	local printed_progress = 0
+
+	for index, unit_name in ipairs(unit_list) do
+		local progress = math.floor(100 * index / #unit_list)
+
+		if printed_progress < progress then
+			cat_print("debug", "Progress " .. progress .. "% (" .. index .. "/" .. #unit_list .. ")")
+
+			printed_progress = progress
+		end
+
+		if not skip_unit_map or not skip_unit_map[unit_name] then
+			if processed_unit_map then
+				processed_unit_map[unit_name] = true
+			end
+
+			if processed_unit_list then
+				table.insert(processed_unit_list, unit_name)
+			end
+
+			local unit_xml = DB:open("unit", unit_name):read()
+			local unit_data = ScriptSerializer:from_custom_xml(unit_xml)
+
+			if unit_data.object and unit_data.object.file then
+				local object_xml = DB:open("object", unit_data.object.file):read()
+				local object_data = ScriptSerializer:from_custom_xml(object_xml)
+
+				if object_data.sequence_manager and object_data.sequence_manager.file then
+					if not DB:has("sequence_manager", object_data.sequence_manager.file) then
+						cat_print("debug", "Unit \"" .. assets_path .. unit_name .. ".unit\" specified an non-existing sequence file \"" .. assets_path .. object_data.sequence_manager.file .. ".sequence_manager\".")
+					elseif not object_data.diesel or not object_data.diesel.materials then
+						cat_print("debug", "Unit \"" .. assets_path .. unit_name .. ".unit\" lacks material config in its object file \"" .. assets_path .. unit_data.object.file .. ".object\".")
+					else
+						local sequence_binary = DB:open("sequence_manager", object_data.sequence_manager.file):read()
+						local sequence_data = ScriptSerializer:from_binary(sequence_binary)
+						local material_xml = DB:open("material_config", object_data.diesel.materials):read()
+						local material_data = ScriptSerializer:from_custom_xml(material_xml)
+						local material_config_map = {}
+
+						self:_verify_material_configs(sequence_data, material_config_map, material_data.group, object_data.sequence_manager.file)
+
+						if next(material_config_map) then
+							if not material_data.group then
+								cat_print("debug", "Unit \"" .. assets_path .. unit_name .. ".unit\" material config lacks a group attribute.")
+							else
+								for material_config, material_group in pairs(material_config_map) do
+									cat_print("debug", "Unit \"" .. assets_path .. unit_name .. ".unit\" can switch to material config \"" .. assets_path .. material_config .. ".material_config\" but it lacks the group \"" .. material_data.group .. "\" (it was \"" .. material_group .. "\").")
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+	cat_print("debug", "Done")
+end
+
+function SequenceManager:_verify_material_configs(data, material_config_map, material_group, sequence_file_name)
+	for _, sub_data in ipairs(data) do
+		if sub_data._meta == "material_config" then
+			local name_func, error_msg = loadstring("return " .. tostring(sub_data.name))
+
+			if name_func then
+				setfenv(name_func, SequenceEnvironment)
+
+				local material_config_path = name_func()
+
+				if not material_config_path or not material_config_map[material_config_path] then
+					if material_config_path and DB:has("material_config", material_config_path) then
+						local material_xml = DB:open("material_config", material_config_path):read()
+						local material_data = ScriptSerializer:from_custom_xml(material_xml)
+
+						if material_data.group ~= material_group then
+							material_config_map[material_config_path] = material_data.group or ""
+						end
+					else
+						cat_print("debug", "Invalid material_config attribute \"" .. tostring(material_config_path) .. "\" in \"" .. sequence_file_name .. "\".")
+					end
+				end
+			else
+				cat_print("debug", "Failed to read material_config attribute in \"" .. sequence_file_name .. "\". Error message: " .. tostring(error_msg))
+			end
+		else
+			self:_verify_material_configs(sub_data, material_config_map, material_group, sequence_file_name)
+		end
+	end
+end
+
 function SequenceManager:test_unit_by_name(unit_name, pos, rot)
 	local pos = pos or Vector3(math.random(-5000, 5000), math.random(-5000, 5000), math.random(-5000, 5000))
 	local rot = rot or Rotation()
@@ -4779,15 +4882,17 @@ function MaterialConfigElement:init(node, unit_element)
 	BaseElement.init(self, node, unit_element)
 
 	self._name = self:get("name")
+	self._synchronous = self:get("synchronous")
 end
 
 function MaterialConfigElement:activate_callback(env)
 	local name = self:run_parsed_func(env, self._name)
+	local synchronous = self:run_parsed_func(env, self._synchronous)
 
 	if not name then
 		self:print_attribute_error("name", name, nil, true, env)
 	else
-		managers.dyn_resource:change_material_config(Idstring(name), env.dest_unit)
+		managers.dyn_resource:change_material_config(Idstring(name), env.dest_unit, synchronous)
 
 		if self.SAVE_STATE then
 			self:set_cat_state(env.dest_unit, "material", Idstring(name))

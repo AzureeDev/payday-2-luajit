@@ -375,6 +375,12 @@ function EnvironmentManager:_load(path)
 
 	self:_load_env_data(nil, env_data, raw_data.data)
 
+	for data_path_key, feeder in pairs(self._feeder_class_map) do
+		if not env_data[data_path_key] and feeder and feeder.DEFAULT_VALUE then
+			env_data[data_path_key] = feeder.DEFAULT_VALUE
+		end
+	end
+
 	return env_data
 end
 

@@ -7,7 +7,22 @@ function ConsolesSafehouseManager:init()
 	self.prices_crew_ability = 6
 	self.prices_weapon_mod = 6
 	self.prices_event_weapon_mod = 18
-	self.rewards_experience_ratio = 1000000
+	self.rewards_experience_ratio = 500000
+	self.level_limit = 0
+end
+
+function ConsolesSafehouseManager:unlocked()
+	return true
+end
+
+function ConsolesSafehouseManager:reset()
+	Global.consoles_safehouse_manager_manager = nil
+	self._global = nil
+
+	self:_setup()
+end
+
+function ConsolesSafehouseManager:init_finalize()
 end
 
 function ConsolesSafehouseManager:_setup()
@@ -74,6 +89,9 @@ function ConsolesSafehouseManager:coins_spent()
 	return self:total_coins_earned() - self:coins()
 end
 
+function ConsolesSafehouseManager:update_previous_coins()
+end
+
 function ConsolesSafehouseManager:add_coins(amount)
 	print("[ConsolesSafehouseManager:add_coins]")
 
@@ -110,6 +128,9 @@ function ConsolesSafehouseManager:get_coins_income()
 end
 
 function ConsolesSafehouseManager:give_upgrade_points(exp)
-	print("[ConsolesSafehouseManager:give_upgrade_points]")
-	self:add_coins(exp / rewards_experience_ratio)
+	print("[ConsolesSafehouseManager:give_upgrade_points]: ", exp)
+	self:add_coins(exp / self.rewards_experience_ratio)
+end
+
+function ConsolesSafehouseManager:add_coins_ingore_locked(amount)
 end

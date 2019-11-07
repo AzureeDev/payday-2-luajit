@@ -51,6 +51,10 @@ function CopActionWarp:init(action_desc, common_data)
 		end
 
 		common_data.ext_network:send("action_warp_start", has_sync_pos, sync_pos, has_rotation, sync_yaw)
+
+		if self._unit:movement() and self._unit:movement().set_should_stay then
+			self._unit:movement():set_should_stay(false)
+		end
 	end
 
 	common_data.ext_movement:enable_update()

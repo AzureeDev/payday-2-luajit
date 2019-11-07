@@ -151,11 +151,6 @@ function AmmoBagBase:take_ammo(unit)
 
 	if taken > 0 then
 		unit:sound():play("pickup_ammo")
-
-		if self._ammo_amount <= 0 then
-			taken = 1
-		end
-
 		managers.network:session():send_to_peers_synched("sync_ammo_bag_ammo_taken", self._unit, taken)
 	end
 
@@ -208,6 +203,8 @@ function AmmoBagBase:_take_ammo(unit)
 			self._ammo_amount = self:round_value(self._ammo_amount - took)
 
 			if self._ammo_amount <= 0 then
+				taken = self._max_ammo_amount
+
 				self:_set_empty()
 
 				return taken
@@ -222,7 +219,13 @@ function AmmoBagBase:_set_empty()
 	self._ammo_amount = 0
 	self._empty = true
 
-	self._unit:set_slot(0)
+	if Network:is_server() then
+		self._unit:set_slot(0)
+	else
+		self._unit:set_enabled(false)
+		self._unit:set_visible(false)
+		self._unit:interaction():set_active(false)
+	end
 end
 
 function AmmoBagBase:save(data)

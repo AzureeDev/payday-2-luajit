@@ -1129,7 +1129,7 @@ function PrePlanningCustomPoint:mouse_moved(x, y, used)
 	end
 
 	if mouse_check then
-		return true, "link", true, true
+		return true, self._post_event and "link" or "arrow", true, true
 	end
 end
 
@@ -1157,7 +1157,7 @@ function PrePlanningCustomPoint:mouse_released(x, y)
 	managers.menu_component:post_event("menu_enter")
 
 	if self._post_event then
-		managers.menu_component:preplanning_post_event(self._post_event, self._name)
+		managers.menu_component:preplanning_post_event(self._post_event, self._name, true)
 		self:start_custom_talk()
 	end
 
@@ -1274,6 +1274,10 @@ function PrePlanningLocation:init(panel, index, size, active_node)
 	self._points_by_category = {}
 	self._custom_points = {}
 	self._active = true
+end
+
+function PrePlanningLocation:skip_for_grid()
+	return self._location.skip_for_grid
 end
 
 function PrePlanningLocation:name()
@@ -1808,6 +1812,8 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 
 	self._map_x, self._map_y = self._map_panel:position()
 	self._map_zoom = 1
+	local location_data = managers.preplanning:current_location_data()
+	self._post_event_prefix = (location_data.post_event_prefix or "gus") .. "_"
 	local location_indexed = {}
 	self._locations = {}
 	self._current_location = false
@@ -1858,17 +1864,18 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 	local li = 0
 
 	for location_group, location in pairs(self._locations) do
-		x, y, w, h = location:map_shape()
-		li = li + 1
-		gw = gw + w
-		gh = gh + h
-		grid_width = math.max(grid_width, math.abs(x - center_x), math.abs(x + w - center_x))
-		grid_height = math.max(grid_height, math.abs(y - center_y), math.abs(y + h - center_y))
+		if not location:skip_for_grid() then
+			x, y, w, h = location:map_shape()
+			li = li + 1
+			gw = gw + w
+			gh = gh + h
+			grid_width = math.max(grid_width, math.abs(x - center_x), math.abs(x + w - center_x))
+			grid_height = math.max(grid_height, math.abs(y - center_y), math.abs(y + h - center_y))
+		end
 	end
 
 	gw = li > 0 and gw / li or 0
 	gh = li > 0 and gh / li or 0
-	local location_data = managers.preplanning:current_location_data()
 	local gw_mul = location_data.grid_width_mul or 1.5
 	local gh_mul = location_data.grid_height_mul or 0.5
 	grid_width = grid_width * 2 + gw * gw_mul
@@ -2141,18 +2148,19 @@ function PrePlanningMapGui:_setup_blackborders()
 		layer = tweak_data.gui.MOUSE_LAYER - 100,
 		color = Color.black
 	})
+	local gui_width, gui_height = managers.gui_data:get_base_res()
 
 	managers.gui_data:layout_fullscreen_workspace(self._blackborder_workspace)
 
 	local border_w = self._blackborder_workspace:panel():w()
-	local border_h = (self._blackborder_workspace:panel():h() - 720) / 2
+	local border_h = (self._blackborder_workspace:panel():h() - gui_height) / 2
 
 	top_border:set_position(0, -2)
 	top_border:set_size(border_w, border_h + 2)
-	bottom_border:set_position(0, 720 + border_h)
+	bottom_border:set_position(0, gui_height + border_h)
 	bottom_border:set_size(border_w, border_h + 2)
 
-	local border_w = (self._blackborder_workspace:panel():w() - 1280) / 2
+	local border_w = (self._blackborder_workspace:panel():w() - gui_width) / 2
 	local border_h = self._blackborder_workspace:panel():h()
 
 	left_border:set_left(0)
@@ -2784,9 +2792,11 @@ function PrePlanningMapGui:post_event_end_clbk(type, event, cookie)
 	end
 end
 
-function PrePlanningMapGui:post_event(event, custom_end_id)
+function PrePlanningMapGui:post_event(event, custom_end_id, ignore_prefix)
+	local prefix_string = ignore_prefix and "" or self._post_event_prefix
+
 	if custom_end_id then
-		managers.briefing:post_event(event, {
+		managers.briefing:post_event(prefix_string .. tostring(event), {
 			show_subtitle = true,
 			cookie = custom_end_id,
 			listener = {
@@ -2795,7 +2805,7 @@ function PrePlanningMapGui:post_event(event, custom_end_id)
 			}
 		})
 	else
-		managers.briefing:post_event_simple(event)
+		managers.briefing:post_event_simple(prefix_string .. tostring(event))
 	end
 end
 
@@ -3011,7 +3021,7 @@ function PrePlanningMapGui:set_active_node(node)
 			end
 
 			managers.menu_component:play_transition(true)
-			self:post_event("gus_preplan_01")
+			self:post_event("preplan_01")
 
 			local location_data = managers.preplanning:current_location_data()
 			local start_location = location_data.start_location
@@ -3102,7 +3112,7 @@ function PrePlanningMapGui:disable()
 		self._panel:hide()
 		self._fullscreen_panel:hide()
 		self._blackborder_workspace:hide()
-		self:post_event("gus_preplan_18")
+		self:post_event("preplan_18")
 	end
 end
 

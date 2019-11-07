@@ -680,8 +680,7 @@ function MissionEndState:generate_safehouse_statistics()
 		end
 	end
 
-	local coins = 0
-	coins = managers.custom_safehouse:coins()
+	local coins = managers.custom_safehouse:coins()
 	local coins_total = managers.experience:cash_string(math.floor(coins), "")
 	stage_safehouse_summary_string = stage_safehouse_summary_string .. "\n" .. managers.localization:text("menu_es_safehouse_total_coins", {
 		amount = coins_total
@@ -804,6 +803,9 @@ function MissionEndState:update(t, dt)
 	if self._total_xp_bonus then
 		if self._total_xp_bonus >= 0 then
 			local level = managers.experience:current_level()
+
+			managers.custom_safehouse:update_previous_coins()
+
 			local data = managers.experience:give_experience(self._total_xp_bonus)
 			data.bonuses = self._bonuses
 

@@ -167,6 +167,7 @@ function Setup:init_category_print()
 		"exec_manager",
 		"savefile_manager",
 		"loading_environment",
+		"character_cosmetics",
 		"player_intel",
 		"player_damage",
 		"player_action",

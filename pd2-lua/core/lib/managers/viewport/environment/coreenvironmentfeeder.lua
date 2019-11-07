@@ -486,6 +486,7 @@ end
 PostFogMaxDensityFeeder = PostFogMaxDensityFeeder or CoreClass.class(Feeder)
 PostFogMaxDensityFeeder.DATA_PATH_KEY = Idstring("post_effect/deferred/deferred_lighting/apply_ambient/fog_max_density"):key()
 PostFogMaxDensityFeeder.APPLY_GROUP_ID = Feeder.get_next_id()
+PostFogMaxDensityFeeder.DEFAULT_VALUE = 1
 PostFogMaxDensityFeeder.IS_GLOBAL = nil
 PostFogMaxDensityFeeder.FILTER_CATEGORY = "Fog"
 

@@ -220,6 +220,7 @@ function StoryMissionsGui:_update(mission)
 
 	self:_update_side(mission)
 	self:_update_info(mission)
+	self:round_main_panel()
 	managers.menu_component:post_event("menu_enter")
 end
 

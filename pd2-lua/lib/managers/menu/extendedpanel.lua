@@ -180,6 +180,24 @@ function ExtendedPanel:remove_self()
 	end
 end
 
+function ExtendedPanel:round_main_panel()
+	ExtendedPanel.round_gui_object(self._panel)
+end
+
+function ExtendedPanel.round_gui_object(object)
+	if alive(object) then
+		local x, y = object:world_position()
+
+		object:set_world_position(math.round(x), math.round(y))
+
+		if object.children then
+			for i, d in ipairs(object:children()) do
+				ExtendedPanel.round_gui_object(d)
+			end
+		end
+	end
+end
+
 function ExtendedPanel.make_fine_text(text, keep_w, keep_h)
 	local x, y, w, h = text:text_rect()
 

@@ -43,6 +43,9 @@ end
 function ContourExt:set_active()
 end
 
+function ContourExt:update_materials()
+end
+
 SyncUnitData = SyncUnitData or class()
 
 function SyncUnitData:init(unit)

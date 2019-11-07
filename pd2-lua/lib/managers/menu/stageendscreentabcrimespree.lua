@@ -184,7 +184,7 @@ function CrimeSpreeResultTabItem:_create_timeline(total_w)
 		for i = 0, math.min(count, math.floor(max_step / step) - 1), 1 do
 			local level = managers.crime_spree:next_modifier_level(category, start_level, i)
 
-			if level then
+			if level and not table.contains(modifier_levels, level) then
 				table.insert(modifier_levels, level)
 			end
 		end
@@ -204,6 +204,8 @@ function CrimeSpreeResultTabItem:_create_timeline(total_w)
 			end_val = level
 		end
 	end
+
+	table.sort(modifier_levels)
 
 	local real_w = timeline_max - timeline_zero
 	local bg_rect = self._timeline_panel:rect({
@@ -269,7 +271,7 @@ function CrimeSpreeResultTabItem:_create_timeline(total_w)
 	local level_gap = 5
 	local used_levels = {}
 
-	local function add_modifier_marker(level, text)
+	local function add_modifier_marker(level, text, previous_marker)
 		local p = 1 / ((end_val - start_level) / (level - start_level))
 
 		if level == start_level then
@@ -330,6 +332,16 @@ function CrimeSpreeResultTabItem:_create_timeline(total_w)
 			used_levels[i] = true
 		end
 
+		if previous_marker and marker:left() < previous_marker[1]:right() + 4 then
+			local move_len = tweak_data.menu.pd2_medium_font_size - 4
+
+			marker_line:grow(0, move_len)
+			marker:move(0, move_len)
+			ticket:move(0, move_len)
+			marker:set_rotation(360)
+			ticket:set_rotation(360)
+		end
+
 		marker_i = marker_i + 1
 
 		return {
@@ -339,9 +351,11 @@ function CrimeSpreeResultTabItem:_create_timeline(total_w)
 	end
 
 	local markers = {}
+	local previous_marker = nil
 
 	for _, level in ipairs(modifier_levels) do
-		local marker = add_modifier_marker(level, managers.experience:cash_string(level, ""))
+		local marker = add_modifier_marker(level, managers.experience:cash_string(level, ""), previous_marker)
+		previous_marker = marker
 
 		table.insert(markers, {
 			level,

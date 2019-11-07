@@ -1,14 +1,15 @@
 MenuBackdropGUI = MenuBackdropGUI or class()
-MenuBackdropGUI.BASE_RES = {
-	w = 1280,
-	h = 720
-}
 
 function MenuBackdropGUI:init(ws, gui_data_manager, fixed_dt)
 	self._fixed_dt = fixed_dt
 	self._gui_data_manager = gui_data_manager
 	self._gui_data_scene_gui = (self._gui_data_manager or managers.gui_data):get_scene_gui()
 	self._workspace = ws or (self._gui_data_manager or managers.gui_data):create_fullscreen_16_9_workspace()
+	local src_width, src_height = (self._gui_data_manager or managers.gui_data):get_base_res()
+	self.BASE_RES = {
+		w = src_width,
+		h = src_height
+	}
 
 	if not ws then
 		self._black_bg_ws = self._gui_data_scene_gui:create_screen_workspace()
@@ -395,8 +396,8 @@ function MenuBackdropGUI:_create_particle()
 	})
 	local from_longside = math.random(2) == 1
 	local otherside_start = math.random(2) == 1
-	local cx = from_longside and math.random(MenuBackdropGUI.BASE_RES.w) or otherside_start and -32 or MenuBackdropGUI.BASE_RES.w + 32
-	local cy = not from_longside and math.random(MenuBackdropGUI.BASE_RES.h) or otherside_start and -32 or MenuBackdropGUI.BASE_RES.h + 32
+	local cx = from_longside and math.random(self.BASE_RES.w) or otherside_start and -32 or self.BASE_RES.w + 32
+	local cy = not from_longside and math.random(self.BASE_RES.h) or otherside_start and -32 or self.BASE_RES.h + 32
 
 	particle:set_center(cx, cy)
 	particle:rotate(math.rand(180))
@@ -405,8 +406,8 @@ function MenuBackdropGUI:_create_particle()
 		local start_x = o:center_x()
 		local start_y = o:center_y()
 		otherside_start = not otherside_start
-		local end_x = from_longside and math.random(MenuBackdropGUI.BASE_RES.w) or otherside_start and -32 or MenuBackdropGUI.BASE_RES.w + 32
-		local end_y = not from_longside and math.random(MenuBackdropGUI.BASE_RES.h) or otherside_start and -32 or MenuBackdropGUI.BASE_RES.h + 32
+		local end_x = from_longside and math.random(self.BASE_RES.w) or otherside_start and -32 or self.BASE_RES.w + 32
+		local end_y = not from_longside and math.random(self.BASE_RES.h) or otherside_start and -32 or self.BASE_RES.h + 32
 		local diff_x = end_x - start_x
 		local diff_y = end_y - start_y
 		local distance = diff_x * diff_x + diff_y * diff_y

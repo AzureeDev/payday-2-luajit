@@ -1,5 +1,4 @@
 CrimeSpreeContractMenuComponent = CrimeSpreeContractMenuComponent or class(MenuGuiComponentGeneric)
-local padding = 10
 
 function CrimeSpreeContractMenuComponent:init(ws, fullscreen_ws, node)
 	self._ws = ws
@@ -48,15 +47,14 @@ function CrimeSpreeContractMenuComponent:_setup()
 		self:_setup_controller_input()
 	end
 
-	local is_win_32 = SystemInfo:platform() == Idstring("WIN32")
-	local is_nextgen = SystemInfo:platform() == Idstring("PS4") or SystemInfo:platform() == Idstring("XB1")
-	local width = 900
-	local height = 580
-
-	if not is_win_32 then
-		width = 900
-		height = is_nextgen and 570 or 525
-	end
+	local font_size = tweak_data.menu.pd2_small_font_size
+	local font = tweak_data.menu.pd2_small_font
+	local risk_color = tweak_data.screen_colors.risk
+	local padding = tweak_data.gui.crime_net.contract_gui.padding
+	local width = tweak_data.gui.crime_net.contract_gui.width
+	local height = tweak_data.gui.crime_net.contract_gui.height
+	local text_w = tweak_data.gui.crime_net.contract_gui.text_width
+	local text_h = math.round(height * 0.4)
 
 	self._fullscreen_panel:rect({
 		alpha = 0.75,
@@ -121,6 +119,14 @@ function CrimeSpreeContractMenuComponent:_setup()
 
 	self._contract_panel:set_center_y(self._panel:h() * 0.5)
 	self._contact_text_header:set_bottom(self._contract_panel:top())
+
+	if self._contact_text_header:y() < 0 then
+		local y_offset = -self._contact_text_header:y()
+
+		self._contact_text_header:move(0, y_offset)
+		self._contract_panel:move(0, y_offset)
+	end
+
 	BoxGuiObject:new(self._contract_panel, {
 		sides = {
 			1,
@@ -130,12 +136,6 @@ function CrimeSpreeContractMenuComponent:_setup()
 		}
 	})
 
-	local w = is_win_32 and 389 or 356
-	local text_w = width - w
-	local text_h = self._contract_panel:h() * 0.4
-	local font_size = tweak_data.menu.pd2_small_font_size
-	local font = tweak_data.menu.pd2_small_font
-	local risk_color = tweak_data.screen_colors.risk
 	self._desc_text = self._contract_panel:text({
 		vertical = "top",
 		wrap = true,
@@ -150,7 +150,14 @@ function CrimeSpreeContractMenuComponent:_setup()
 		x = padding,
 		y = padding
 	})
+	local _, _, _, h = self._desc_text:text_rect()
+	local scale = 1
 
+	if text_h < h then
+		scale = text_h / (h - font_size)
+	end
+
+	self._desc_text:set_font_size(font_size * scale)
 	CrimeNetGui.make_color_text(self, self._desc_text, tweak_data.screen_colors.important_1)
 
 	if managers.crime_spree:in_progress() then
@@ -161,6 +168,7 @@ function CrimeSpreeContractMenuComponent:_setup()
 end
 
 function CrimeSpreeContractMenuComponent:_setup_new_crime_spree(text_w, text_h)
+	local padding = tweak_data.gui.crime_net.contract_gui.padding
 	self._coins_panel = self._contract_panel:panel({
 		x = padding,
 		y = padding,
@@ -342,6 +350,7 @@ function CrimeSpreeContractMenuComponent:_setup_continue_crime_spree(text_w, tex
 end
 
 function CrimeSpreeContractMenuComponent:_setup_continue_host(text_w, text_h)
+	local padding = tweak_data.gui.crime_net.contract_gui.padding
 	local modifiers = managers.crime_spree:active_modifiers()
 	local next_modifiers_h = tweak_data.menu.pd2_small_font_size * 2
 	local line_h = tweak_data.menu.pd2_small_font_size * 1.5
@@ -350,7 +359,7 @@ function CrimeSpreeContractMenuComponent:_setup_continue_host(text_w, text_h)
 		x = padding,
 		y = self._desc_text:bottom() + padding + tweak_data.menu.pd2_medium_font_size,
 		w = text_w,
-		h = self._contract_panel:h() - text_h - padding * 2 - tweak_data.menu.pd2_medium_font_size
+		h = self._contract_panel:h() - text_h - padding * 3 - tweak_data.menu.pd2_medium_font_size
 	})
 
 	CrimeSpreeModifierDetailsPage.add_modifiers_panel(self, self._modifiers_panel, managers.crime_spree:active_modifiers(), false)
@@ -398,6 +407,7 @@ function CrimeSpreeContractMenuComponent:_setup_continue_host(text_w, text_h)
 end
 
 function CrimeSpreeContractMenuComponent:_setup_continue_client(text_w, text_h)
+	local padding = tweak_data.gui.crime_net.contract_gui.padding
 	self._info_panel = self._contract_panel:panel({
 		x = padding,
 		y = self._desc_text:bottom() + padding + tweak_data.menu.pd2_medium_font_size,
@@ -592,6 +602,7 @@ CrimeSpreeStartingLevelItem.size = {
 }
 
 function CrimeSpreeStartingLevelItem:init(parent, data)
+	local padding = tweak_data.gui.crime_net.contract_gui.padding
 	self._parent = parent
 	self._level = data.level or 0
 	self._start_cost = managers.crime_spree:get_start_cost(self._level)
@@ -734,7 +745,7 @@ function CrimeSpreeStartingLevelItem:refresh()
 end
 
 function CrimeSpreeStartingLevelItem:can_activate()
-	return self._start_cost < managers.custom_safehouse:coins()
+	return self._start_cost <= managers.custom_safehouse:coins()
 end
 
 function CrimeSpreeStartingLevelItem:inside(x, y)

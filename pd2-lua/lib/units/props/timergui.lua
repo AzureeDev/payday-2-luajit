@@ -78,6 +78,23 @@ TimerGui.themes.vit_control_display.jammed = {
 TimerGui.themes.vit_control_display.upgrade_color_0 = Color(0, 0, 0)
 TimerGui.themes.vit_control_display.upgrade_color_1 = Color(0.2, 0.3, 0.4)
 TimerGui.themes.vit_control_display.upgrade_color_2 = TimerGui.themes.vit_control_display.timer_color
+TimerGui.themes.mex_hack_display = {
+	hide_background = true,
+	timer_color = Color(0.9, 0.9, 0.9)
+}
+TimerGui.themes.mex_hack_display.working_text_color = TimerGui.themes.mex_hack_display.timer_color
+TimerGui.themes.mex_hack_display.time_header_text_color = TimerGui.themes.mex_hack_display.timer_color
+TimerGui.themes.mex_hack_display.time_header_text_font_size = 0
+TimerGui.themes.mex_hack_display.time_text_color = TimerGui.themes.mex_hack_display.timer_color
+TimerGui.themes.mex_hack_display.time_text_font_size = 100
+TimerGui.themes.mex_hack_display.jammed = {
+	bg_rect = Color(0.1, 0, 0)
+}
+TimerGui.themes.mex_hack_display.upgrade_color_0 = Color(0, 0, 0)
+TimerGui.themes.mex_hack_display.upgrade_color_1 = Color(0.2, 0.3, 0.4)
+TimerGui.themes.mex_hack_display.upgrade_color_2 = TimerGui.themes.mex_hack_display.timer_color
+TimerGui.themes.mex_hack_display.working_text_font_size = 0
+TimerGui.themes.mex_hack_display.timer_lenght = 0
 TimerGui.themes.lxy_control_display = {
 	hide_background = true,
 	jammed = {}
@@ -113,6 +130,7 @@ function TimerGui:init(unit)
 	self._jam_times = 3
 	self._jammed = false
 	self._can_jam = false
+	self._show_seconds = true
 	self._gui_start = self._gui_start or "prop_timer_gui_start"
 	self._gui_working = "prop_timer_gui_working"
 	self._gui_malfunction = "prop_timer_gui_malfunction"
@@ -177,6 +195,12 @@ function TimerGui:_set_theme(theme_name)
 	end
 
 	self._gui_script.drill_screen_background:set_visible(not theme.hide_background)
+
+	if theme.timer_lenght then
+		self._timer_lenght = theme.timer_lenght
+
+		self._gui_script.timer_background:set_w(theme.timer_lenght)
+	end
 
 	if theme.timer_color then
 		self._gui_script.timer:set_color(theme.timer_color)
@@ -305,6 +329,18 @@ function TimerGui:reset()
 	end
 end
 
+function TimerGui:stop_and_reset()
+	self._started = false
+
+	self:_set_done()
+	self:post_event(self._done_event)
+
+	if self._unit:interaction() and self._start_tweak_data then
+		self._unit:interaction():set_tweak_data(self._start_tweak_data)
+		self._unit:interaction():set_active(false)
+	end
+end
+
 function TimerGui:_start(timer, current_timer)
 	self._started = true
 	self._done = false
@@ -321,7 +357,13 @@ function TimerGui:_start(timer, current_timer)
 	self:post_event(self._start_event)
 	self._gui_script.time_header_text:set_visible(true)
 	self._gui_script.time_text:set_visible(true)
-	self._gui_script.time_text:set_text(math.floor(self._time_left or self._current_timer) .. " " .. managers.localization:text("prop_timer_gui_seconds"))
+
+	if self._show_seconds then
+		self._gui_script.time_text:set_text(math.floor(self._time_left or self._current_timer) .. " " .. managers.localization:text("prop_timer_gui_seconds"))
+	else
+		self._gui_script.time_text:set_text(math.floor(self._time_left or self._current_timer))
+	end
+
 	self._unit:base():start()
 
 	if Network:is_client() then
@@ -392,24 +434,20 @@ end
 function TimerGui:start(timer)
 	timer = self._override_timer or timer
 
-	if self._jammed then
-		self:_set_jammed(false)
-
-		return
-	end
-
-	if not self._powered then
-		self:_set_powered(true)
-
-		return
-	end
-
 	if not self._started then
 		self:_start(timer)
 
 		if managers.network:session() then
 			managers.network:session():send_to_peers_synched("start_timer_gui", self._unit, timer)
 		end
+	end
+
+	if not self._powered then
+		self:set_powered(true)
+	end
+
+	if self._jammed then
+		self:set_jammed(false)
 	end
 end
 
@@ -446,7 +484,12 @@ function TimerGui:update(unit, t, dt)
 	self._current_timer = self._current_timer - dt / dt_mod
 	self._time_left = self._current_timer * dt_mod
 
-	self._gui_script.time_text:set_text(math.floor(self._time_left or self._current_timer) .. " " .. managers.localization:text("prop_timer_gui_seconds"))
+	if self._show_seconds then
+		self._gui_script.time_text:set_text(math.floor(self._time_left or self._current_timer) .. " " .. managers.localization:text("prop_timer_gui_seconds"))
+	else
+		self._gui_script.time_text:set_text(math.floor(self._time_left or self._current_timer))
+	end
+
 	self._gui_script.timer:set_w(self._timer_lenght * (1 - self._current_timer / self._timer))
 
 	if self._current_timer <= 0 then
@@ -649,6 +692,28 @@ function TimerGui:done()
 	end
 end
 
+function TimerGui:is_playing_done_event()
+	return self._is_playing_done_event
+end
+
+function TimerGui:add_listener_to_done_event(clbk)
+	self._done_event_listeners = self._done_event_listeners or {}
+
+	table.insert(self._done_event_listeners, clbk)
+end
+
+function TimerGui:on_done_event_ended()
+	self._is_playing_done_event = false
+
+	if self._done_event_listeners then
+		for _, clbk in ipairs(self._done_event_listeners) do
+			clbk(self._unit)
+		end
+
+		self._done_event_listeners = nil
+	end
+end
+
 function TimerGui:_set_done()
 	self._done = true
 
@@ -666,6 +731,14 @@ function TimerGui:update_sound_event()
 	end
 
 	self:post_event(self._resume_event)
+end
+
+function TimerGui:hide()
+	self._ws:hide()
+end
+
+function TimerGui:show()
+	self._ws:show()
 end
 
 function TimerGui:lock_gui()
@@ -730,35 +803,27 @@ function TimerGui:post_event(event)
 		return
 	end
 
+	local sound_event = event
+
 	if event == self._start_event or event == self._resume_event or event == self._done_event then
 		if self._skill == 3 then
-			self._unit:sound_source():post_event(event .. "_aced")
+			sound_event = sound_event .. "_aced"
 		elseif self._skill == 2 then
-			self._unit:sound_source():post_event(event .. "_basic")
-		else
-			self._unit:sound_source():post_event(event)
+			sound_event = sound_event .. "_basic"
 		end
-	else
-		self._unit:sound_source():post_event(event)
 	end
+
+	local clbk, cookie = nil
+	local flags = {}
+
+	if event == self._done_event then
+		self._is_playing_done_event = true
+		clbk = callback(self, self, "on_done_event_ended")
+
+		table.insert(flags, "end_of_event")
+	end
+
+	self._unit:sound_source():post_event(sound_event, clbk, cookie, unpack(flags))
 end
 
 DrillTimerGui = DrillTimerGui or class(TimerGui)
-
-function DrillTimerGui:post_event(event)
-	if not event then
-		return
-	end
-
-	if event == self._start_event or event == self._resume_event or event == self._done_event then
-		if self._skill == 3 then
-			self._unit:sound_source():post_event(event .. "_aced")
-		elseif self._skill == 2 then
-			self._unit:sound_source():post_event(event .. "_basic")
-		else
-			self._unit:sound_source():post_event(event)
-		end
-	else
-		self._unit:sound_source():post_event(event)
-	end
-end

@@ -7,6 +7,7 @@ require("lib/tweak_data/blackmarket/MasksTweakData")
 require("lib/tweak_data/blackmarket/ProjectilesTweakData")
 require("lib/tweak_data/blackmarket/MeleeWeaponsTweakData")
 require("lib/tweak_data/blackmarket/WeaponSkinsTweakData")
+require("lib/tweak_data/blackmarket/PlayerStyleTweakData")
 
 local is_nextgen_console = SystemInfo:platform() == Idstring("PS4") or SystemInfo:platform() == Idstring("XB1")
 
@@ -24,6 +25,7 @@ function BlackMarketTweakData:init(tweak_data)
 	self:_init_projectiles(tweak_data)
 	self:_init_melee_weapons(tweak_data)
 	self:_init_weapon_skins()
+	self:_init_player_styles(tweak_data)
 	self:_init_weapon_mods(tweak_data)
 end
 
@@ -86,23 +88,43 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 	self.characters.locked.name_id = "bm_character_locked"
 	self.characters.locked.dallas = {
 		sequence = "var_mtr_dallas",
-		installed = true
+		installed = true,
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_dallas",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_dallas"
+		}
 	}
 	self.characters.locked.wolf = {
 		sequence = "var_mtr_wolf",
-		installed = true
+		installed = true,
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_wolf",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_wolf"
+		}
 	}
 	self.characters.locked.hoxton = {
 		sequence = "var_mtr_hoxton",
-		installed = true
+		installed = true,
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_hoxton",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_hoxton"
+		}
 	}
 	self.characters.locked.chains = {
 		sequence = "var_mtr_chains",
-		installed = true
+		installed = true,
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_chains",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_chains"
+		}
 	}
 	self.characters.locked.jowi = {
 		sequence = "var_mtr_john_wick",
-		dlc = "pd2_clan"
+		dlc = "pd2_clan",
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_john_wick",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_john_wick"
+		}
 	}
 	self.characters.locked.old_hoxton = {
 		sequence = "var_mtr_old_hoxton",
@@ -110,44 +132,76 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		locks = {
 			dlc = "pd2_clan",
 			achievement = "bulldog_1"
+		},
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_old_hoxton",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_old_hoxton"
 		}
 	}
 	self.characters.locked.dragan = {
 		dlc = "character_pack_dragan",
 		texture_bundle_folder = "character_pack_dragan",
-		sequence = "var_mtr_dragan"
+		sequence = "var_mtr_dragan",
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_dragan",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_dragan"
+		}
 	}
 	self.characters.locked.jacket = {
 		dlc = "hlm2_deluxe",
 		texture_bundle_folder = "hlm2",
-		sequence = "var_mtr_jacket"
+		sequence = "var_mtr_jacket",
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_jacket",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_jacket"
+		}
 	}
 	self.characters.locked.sokol = {
 		texture_bundle_folder = "character_pack_sokol",
 		dlc = "character_pack_sokol",
 		mask_on_sequence = "mask_on_sokol",
 		mask_off_sequence = "mask_off_sokol",
-		sequence = "var_mtr_sokol"
+		sequence = "var_mtr_sokol",
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_sokol",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_sokol"
+		}
 	}
 	self.characters.locked.dragon = {
 		dlc = "dragon",
 		texture_bundle_folder = "dragon",
-		sequence = "var_mtr_jiro"
+		sequence = "var_mtr_jiro",
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_jiro",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_jiro"
+		}
 	}
 	self.characters.locked.bodhi = {
+		texture_bundle_folder = "rip",
 		sequence = "var_mtr_bodhi",
-		texture_bundle_folder = "rip"
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_bodhi",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_bodhi"
+		}
 	}
 	self.characters.locked.jimmy = {
 		texture_bundle_folder = "coco",
+		mask_on_sequence = "mask_on_jimmy",
 		mask_off_sequence = "mask_off_jimmy",
 		sequence = "var_mtr_jimmy",
-		mask_on_sequence = "mask_on_jimmy"
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_jimmy",
+			npc = "units/payday2/characters/npc_criminals_suit_1/mtr_jimmy"
+		}
 	}
 	self.characters.female_1 = {
 		fps_unit = "units/payday2/characters/fps_mover/fps_female_1_mover",
 		npc_unit = "units/payday2/characters/npc_criminal_female_1/npc_criminal_female_1",
 		menu_unit = "units/payday2/characters/npc_criminal_female_1/npc_criminal_female_1_menu",
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_fem1",
+			npc = "units/payday2/characters/npc_criminal_female_1/mtr_fem1"
+		},
 		texture_bundle_folder = "character_pack_clover",
 		sequence = "var_mtr_fem1",
 		mask_on_sequence = "mask_on",
@@ -158,6 +212,10 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		fps_unit = "units/pd2_dlc_bonnie/characters/npc_criminal_bonnie/fps_bonnie_mover",
 		npc_unit = "units/pd2_dlc_bonnie/characters/npc_criminal_bonnie/npc_criminal_bonnie",
 		menu_unit = "units/pd2_dlc_bonnie/characters/npc_criminal_bonnie/npc_criminal_bonnie_menu",
+		material_config = {
+			fps = "units/payday2/characters/fps_criminals_suit_1/mtr_bonnie",
+			npc = "units/pd2_dlc_bonnie/characters/npc_criminal_bonnie/mtr_bonnie"
+		},
 		texture_bundle_folder = "character_pack_bonnie",
 		sequence = "var_mtr_bonnie",
 		mask_on_sequence = "bonnie_mask_on",
@@ -230,6 +288,10 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		fps_unit = "units/pd2_dlc_opera/characters/npc_criminals_fem_3/fps_sydney_mover",
 		npc_unit = "units/pd2_dlc_opera/characters/npc_criminals_fem_3/npc_criminal_sydney",
 		menu_unit = "units/pd2_dlc_opera/characters/npc_criminals_fem_3/npc_criminal_sydney_menu",
+		material_config = {
+			fps = "units/pd2_dlc_opera/characters/fps_criminals_fem_3/mtr_sydney",
+			npc = "units/pd2_dlc_opera/characters/npc_criminals_fem_3/mtr_criminal_sydney"
+		},
 		texture_bundle_folder = "opera",
 		sequence = "var_mtr_sydney",
 		mask_on_sequence = "mask_on",
@@ -246,6 +308,10 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		fps_unit = "units/pd2_dlc_wild/characters/npc_criminals_wild_1/fps_wild_mover",
 		npc_unit = "units/pd2_dlc_wild/characters/npc_criminals_wild_1/npc_criminal_wild_1",
 		menu_unit = "units/pd2_dlc_wild/characters/npc_criminals_wild_1/npc_criminal_wild_1_menu",
+		material_config = {
+			fps = "units/pd2_dlc_wild/characters/fps_criminals_wild_1/mtr_wild",
+			npc = "units/pd2_dlc_wild/characters/npc_criminals_wild_1/mtr_criminal_wild_1"
+		},
 		texture_bundle_folder = "wild",
 		sequence = "var_mtr_wild",
 		dlc = "wild"
@@ -258,6 +324,10 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		fps_unit = "units/pd2_dlc_chico/characters/npc_criminals_terry/fps_terry_mover",
 		npc_unit = "units/pd2_dlc_chico/characters/npc_criminals_terry/npc_criminal_terry",
 		menu_unit = "units/pd2_dlc_chico/characters/npc_criminals_terry/npc_criminal_terry_menu",
+		material_config = {
+			fps = "units/pd2_dlc_chico/characters/fps_criminals_terry/mtr_terry",
+			npc = "units/pd2_dlc_chico/characters/npc_criminals_terry/mtr_criminal_terry"
+		},
 		texture_bundle_folder = "chico",
 		sequence = "var_mtr_terry",
 		dlc = "chico"
@@ -272,19 +342,52 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		menu_unit = "units/pd2_dlc_max/characters/npc_criminals_max/npc_criminal_max_menu",
 		texture_bundle_folder = "max",
 		sequence = "var_mtr_max",
-		special_materials = {
-			"units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_01",
-			"units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_02",
-			"units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_03",
-			"units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_04",
-			"units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_05",
-			"units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_06",
-			"units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max"
+		material_config = {
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_01"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_02"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_03"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_04"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_05"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_shirt_06"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				chance = 200,
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_taco"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				chance = 50,
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_snakeskin"
+			},
+			{
+				fps = "units/pd2_dlc_max/characters/fps_criminals_max/mtr_max",
+				chance = 50,
+				npc = "units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_pink"
+			}
 		}
 	}
-	self.characters.max.special_materials["units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_taco"] = 200
-	self.characters.max.special_materials["units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_snakeskin"] = 50
-	self.characters.max.special_materials["units/pd2_dlc_max/characters/npc_criminals_max/mtr_criminal_max_pink"] = 50
 	self.characters.ai_max = {
 		npc_unit = "units/pd2_dlc_max/characters/npc_criminals_max/max/npc_criminal_max",
 		sequence = "var_mtr_max"
@@ -293,6 +396,10 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		fps_unit = "units/pd2_dlc_joy/characters/npc_criminals_joy_1/fps_joy_mover",
 		npc_unit = "units/pd2_dlc_joy/characters/npc_criminals_joy_1/npc_criminal_joy_1",
 		menu_unit = "units/pd2_dlc_joy/characters/npc_criminals_joy_1/npc_criminal_joy_1_menu",
+		material_config = {
+			fps = "units/pd2_dlc_joy/characters/fps_criminals_joy_1/mtr_joy",
+			npc = "units/pd2_dlc_joy/characters/npc_criminals_joy_1/mtr_criminal_joy_1"
+		},
 		texture_bundle_folder = "joy",
 		sequence = "var_mtr_joy",
 		mask_on_sequence = "mask_on_joy",
@@ -308,21 +415,25 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		fps_unit = "units/pd2_dlc_myh/characters/npc_criminals_myh/fps_myh_mover",
 		npc_unit = "units/pd2_dlc_myh/characters/npc_criminals_myh/npc_criminal_myh",
 		menu_unit = "units/pd2_dlc_myh/characters/npc_criminals_myh/npc_criminal_myh_menu",
+		material_config = {
+			fps = "units/pd2_dlc_myh/characters/fps_criminals_myh/mtr_myh",
+			npc = "units/pd2_dlc_myh/characters/npc_criminals_myh/mtr_criminal_myh"
+		},
 		texture_bundle_folder = "myh",
-		sequence = "var_mtr_myh",
-		mask_on_sequence = "mask_on_myh",
-		mask_off_sequence = "mask_off_myh"
+		sequence = "var_mtr_myh"
 	}
 	self.characters.ai_myh = {
 		npc_unit = "units/pd2_dlc_myh/characters/npc_criminals_myh/myh/npc_criminal_myh",
-		sequence = "var_mtr_myh",
-		mask_on_sequence = "mask_on_myh",
-		mask_off_sequence = "mask_off_myh"
+		sequence = "var_mtr_myh"
 	}
 	self.characters.ecp_female = {
 		fps_unit = "units/pd2_dlc_ecp/characters/npc_criminals_ecp_female/fps_ecp_female_mover",
 		npc_unit = "units/pd2_dlc_ecp/characters/npc_criminals_ecp_female/npc_criminal_ecp_female",
 		menu_unit = "units/pd2_dlc_ecp/characters/npc_criminals_ecp_female/npc_criminal_ecp_female_menu",
+		material_config = {
+			fps = "units/pd2_dlc_ecp/characters/fps_criminals_ecp_female/mtr_ecp_female",
+			npc = "units/pd2_dlc_ecp/characters/npc_criminals_ecp_female/mtr_criminal_ecp_female"
+		},
 		texture_bundle_folder = "ecp",
 		sequence = "var_mtr_ecp_female",
 		mask_on_sequence = "mask_on_ecp_female",
@@ -333,6 +444,10 @@ function BlackMarketTweakData:_init_characters(tweak_data)
 		fps_unit = "units/pd2_dlc_ecp/characters/npc_criminals_ecp_male/fps_ecp_male_mover",
 		npc_unit = "units/pd2_dlc_ecp/characters/npc_criminals_ecp_male/npc_criminal_ecp_male",
 		menu_unit = "units/pd2_dlc_ecp/characters/npc_criminals_ecp_male/npc_criminal_ecp_male_menu",
+		material_config = {
+			fps = "units/pd2_dlc_ecp/characters/fps_criminals_ecp_male/mtr_ecp_male",
+			npc = "units/pd2_dlc_ecp/characters/npc_criminals_ecp_male/mtr_criminal_ecp_male"
+		},
 		texture_bundle_folder = "ecp",
 		sequence = "var_mtr_ecp_male",
 		mask_on_sequence = "mask_on_ecp_male",
@@ -656,7 +771,12 @@ function BlackMarketTweakData:_init_deployables(tweak_data)
 	self:_add_desc_from_name_macro(self.deployables)
 end
 
-function BlackMarketTweakData:get_mask_icon(mask_id)
+function BlackMarketTweakData:get_mask_icon(mask_id, character)
+	if character and mask_id == "character_locked" then
+		local character_name = CriminalsManager.convert_old_to_new_character_workname(character)
+		mask_id = tweak_data.blackmarket.masks.character_locked[character_name] or mask_id
+	end
+
 	local guis_catalog = "guis/"
 	local bundle_folder = tweak_data.blackmarket.masks[mask_id] and tweak_data.blackmarket.masks[mask_id].texture_bundle_folder
 

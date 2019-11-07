@@ -272,10 +272,12 @@ function ScrollableList:scroll_to_show(top_or_item, bottom)
 
 	local cur = -self._canvas:y()
 
-	if top < cur then
-		self._scroll:scroll_to(top)
-	elseif bottom > cur + self._scroll:scroll_panel():h() then
-		self._scroll:scroll_to(bottom - self._scroll:scroll_panel():h())
+	if top then
+		if top < cur then
+			self._scroll:scroll_to(top)
+		elseif bottom > cur + self._scroll:scroll_panel():h() then
+			self._scroll:scroll_to(bottom - self._scroll:scroll_panel():h())
+		end
 	end
 end
 

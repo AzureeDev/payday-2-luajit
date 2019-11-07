@@ -54,8 +54,12 @@ function CrimeSpreeModifiersMenuComponent:_setup()
 	end
 
 	blur:animate(func)
+
+	local modifier_h = CrimeSpreeModifierButton.size.h
+	local btn_size = tweak_data.menu.pd2_large_font_size
+
 	self._panel:set_w((CrimeSpreeModifierButton.size.w + padding) * tweak_data.crime_spree.max_modifiers_displayed + padding)
-	self._panel:set_h(CrimeSpreeModifierButton.size.h + padding * 3 + tweak_data.menu.pd2_large_font_size)
+	self._panel:set_h(modifier_h + btn_size + padding * 3)
 	self._panel:set_center_x(parent:center_x())
 	self._panel:set_center_y(parent:center_y())
 	self._panel:rect({
@@ -97,59 +101,97 @@ function CrimeSpreeModifiersMenuComponent:_setup()
 	self._number_header:set_bottom(self._panel:top())
 
 	self._modifiers_panel = self._panel:panel({
-		w = self._panel:w(),
-		h = self._panel:h() - tweak_data.menu.pd2_large_font_size - padding * 2
+		x = padding,
+		y = padding,
+		w = self._panel:w() - padding * 2,
+		h = modifier_h
 	})
 	self._button_panel = self._panel:panel({
+		x = padding,
 		y = self._modifiers_panel:bottom() + padding,
-		w = self._panel:w(),
-		h = tweak_data.menu.pd2_large_font_size
+		w = self._panel:w() - padding * 2,
+		h = btn_size
 	})
 
 	for i = 1, tweak_data.crime_spree.max_modifiers_displayed, 1 do
 		local modifier = modifiers[i]
 		local btn = CrimeSpreeModifierButton:new(self._modifiers_panel, modifier)
 
-		btn:set_x(padding + (CrimeSpreeModifierButton.size.w + padding) * (i - 1))
-		btn:set_y(padding)
+		btn:set_x((CrimeSpreeModifierButton.size.w + padding) * (i - 1))
+		btn:set_y(0)
 		btn:set_callback(callback(self, self, "_on_select_modifier", btn))
 		table.insert(self._buttons, btn)
 	end
 
-	local finalize_btn = CrimeSpreeButton:new(self._button_panel)
+	if managers.menu:is_pc_controller() then
+		local finalize_btn = CrimeSpreeButton:new(self._button_panel)
 
-	finalize_btn:set_text(managers.localization:to_upper_text("menu_cs_select_modifier"))
-	finalize_btn:set_callback(callback(self, self, "_on_finalize_modifier"))
-	finalize_btn:shrink_wrap_button(0, 0)
-	table.insert(self._buttons, finalize_btn)
+		finalize_btn:set_text(managers.localization:to_upper_text("menu_cs_select_modifier"))
+		finalize_btn:set_callback(callback(self, self, "_on_finalize_modifier"))
+		finalize_btn:shrink_wrap_button(0, 0)
+		table.insert(self._buttons, finalize_btn)
 
-	local back_btn = CrimeSpreeButton:new(self._button_panel)
+		local back_btn = CrimeSpreeButton:new(self._button_panel)
 
-	back_btn:set_text(managers.localization:to_upper_text("menu_back"))
-	back_btn:set_callback(callback(self, self, "_on_back"))
-	back_btn:shrink_wrap_button(0, 0)
-	table.insert(self._buttons, back_btn)
-	back_btn:panel():set_right(self._button_panel:w() - padding * 2)
-	finalize_btn:panel():set_right(back_btn:panel():left() - padding * 3)
+		back_btn:set_text(managers.localization:to_upper_text("menu_back"))
+		back_btn:set_callback(callback(self, self, "_on_back"))
+		back_btn:shrink_wrap_button(0, 0)
+		table.insert(self._buttons, back_btn)
+		back_btn:panel():set_right(self._button_panel:w() - padding * 2)
+		finalize_btn:panel():set_right(back_btn:panel():left() - padding * 3)
 
-	for i, modifier in ipairs(modifiers) do
-		local btn = self._buttons[i]
+		for i, modifier in ipairs(modifiers) do
+			local btn = self._buttons[i]
 
-		if i > 1 then
-			btn:set_link("left", self._buttons[i - 1])
+			if i > 1 then
+				btn:set_link("left", self._buttons[i - 1])
+			end
+
+			if i < #modifiers then
+				btn:set_link("right", self._buttons[i + 1])
+			end
+
+			btn:set_link("down", finalize_btn)
 		end
 
-		if i < #modifiers then
-			btn:set_link("right", self._buttons[i + 1])
+		finalize_btn:set_link("up", self._buttons[1])
+		finalize_btn:set_link("right", back_btn)
+		back_btn:set_link("up", self._buttons[1])
+		back_btn:set_link("left", finalize_btn)
+	else
+		self._legend_text = self._button_panel:text({
+			halign = "right",
+			vertical = "bottom",
+			layer = 1,
+			blend_mode = "add",
+			align = "right",
+			text = "",
+			y = 0,
+			x = 0,
+			valign = "bottom",
+			color = tweak_data.screen_colors.text,
+			font = tweak_data.menu.pd2_medium_font,
+			font_size = tweak_data.menu.pd2_medium_font_size
+		})
+		local legend_string = managers.localization:get_default_macro("BTN_ACCEPT") .. " " .. managers.localization:to_upper_text("menu_cs_select_modifier") .. "  |  " .. managers.localization:to_upper_text("menu_legend_back")
+
+		self._legend_text:set_text(legend_string)
+
+		for i, modifier in ipairs(modifiers) do
+			local btn = self._buttons[i]
+
+			if i > 1 then
+				btn:set_link("left", self._buttons[i - 1])
+			end
+
+			if i < #modifiers then
+				btn:set_link("right", self._buttons[i + 1])
+			end
 		end
 
-		btn:set_link("down", finalize_btn)
+		self:_move_selection("up")
 	end
 
-	finalize_btn:set_link("up", self._buttons[1])
-	finalize_btn:set_link("right", back_btn)
-	back_btn:set_link("up", self._buttons[1])
-	back_btn:set_link("left", finalize_btn)
 	BoxGuiObject:new(self._panel, {
 		sides = {
 			1,
@@ -158,10 +200,6 @@ function CrimeSpreeModifiersMenuComponent:_setup()
 			1
 		}
 	})
-
-	if not managers.menu:is_pc_controller() then
-		self:_move_selection("up")
-	end
 end
 
 function CrimeSpreeModifiersMenuComponent:modifiers_to_select()
@@ -195,7 +233,12 @@ function CrimeSpreeModifiersMenuComponent:_on_select_modifier(item)
 
 	if self._selected_modifier then
 		self._selected_modifier:set_active(true)
-		managers.menu_component:post_event("menu_enter")
+
+		if managers.menu:is_pc_controller() then
+			managers.menu_component:post_event("menu_enter")
+		else
+			self:_on_finalize_modifier()
+		end
 	end
 end
 
@@ -226,8 +269,8 @@ function CrimeSpreeModifiersMenuComponent:_on_finalize_modifier()
 
 		self:_on_select_modifier(nil)
 
-		if not managers.menu:is_pc_controller() then
-			self:_move_selection("up")
+		if self._selected_item and not self._selected_item._panel:visible() then
+			self:_move_selection("left")
 		end
 	else
 		managers.menu:back(false)
@@ -294,11 +337,19 @@ function CrimeSpreeModifiersMenuComponent:_move_selection(dir)
 	else
 		local new_item = self._selected_item:get_link(dir)
 
-		if new_item then
+		if new_item and new_item._panel:visible() then
 			self._selected_item:set_selected(false)
 			new_item:set_selected(true)
 
 			self._selected_item = new_item
+		end
+
+		if self._selected_item and not self._selected_item._panel:visible() then
+			self._selected_item:set_selected(false)
+
+			self._selected_item = self._buttons[1]
+
+			self._selected_item:set_selected(true)
 		end
 	end
 end

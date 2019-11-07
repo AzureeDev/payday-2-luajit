@@ -84,7 +84,7 @@ function EnemyManager:_update_gfx_lod()
 			local world_in_view_with_options = World.in_view_with_options
 
 			for i, state in ipairs(states) do
-				if not state and (occ_skip_units[units[i]:key()] or (not pl_tracker or chk_vis_func(pl_tracker, trackers[i])) and not unit_occluded(units[i])) and world_in_view_with_options(World, com[i], 0, 110, 18000) then
+				if not state and alive(units[i]) and (occ_skip_units[units[i]:key()] or (not pl_tracker or chk_vis_func(pl_tracker, trackers[i])) and not unit_occluded(units[i])) and world_in_view_with_options(World, com[i], 0, 110, 18000) then
 					states[i] = 1
 
 					units[i]:base():set_visibility_state(1)
@@ -419,6 +419,20 @@ function EnemyManager:queue_task(id, task_clbk, data, execute_t, verification_cl
 
 	if not execute_t and #self._queued_tasks <= 1 and not self._queued_task_executed then
 		self:_execute_queued_task(1)
+	end
+end
+
+function EnemyManager:update_queue_task(id, task_clbk, data, execute_t, verification_clbk, asap)
+	local task_data, _ = table.find_value(self._queued_tasks, function (td)
+		return td.id == id
+	end)
+
+	if task_data then
+		task_data.clbk = task_clbk or task_data.clbk
+		task_data.data = data or task_data.data
+		task_data.t = execute_t or task_data.t
+		task_data.v_cb = verification_clbk or task_data.v_cb
+		task_data.asap = asap or task_data.asap
 	end
 end
 
