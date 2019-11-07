@@ -2333,7 +2333,7 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 			self:_check_special_death_conditions("bullet", body, attacker_unit, data.weapon_unit)
 			managers.statistics:killed_by_anyone(data)
 
-			if data.weapon_unit:base():weapon_tweak_data().is_shotgun and distance and distance < managers.game_play_central:get_shotgun_push_range() then
+			if data.weapon_unit:base():weapon_tweak_data().is_shotgun then
 				shotgun_push = true
 			end
 		end
@@ -3561,7 +3561,7 @@ function CopDamage:_apply_min_health_limit(damage, damage_percent)
 
 		if lower_health_percentage_limit > new_health_ratio then
 			real_damage_percent = self._health_ratio - lower_health_percentage_limit
-			damage_percent = math.ceil(real_damage_percent * self._HEALTH_GRANULARITY)
+			damage_percent = math.floor(real_damage_percent * self._HEALTH_GRANULARITY)
 			damage = damage_percent * self._HEALTH_INIT_PRECENT
 		end
 	end

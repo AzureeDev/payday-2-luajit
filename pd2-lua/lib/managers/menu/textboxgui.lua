@@ -377,7 +377,7 @@ function TextBoxGui:_create_text_box(ws, title, text, content_data, config)
 		main:set_h(info_area:h())
 
 		if content_data.clamp_to_screen then
-			main:set_h(main:parent():h() * 0.9)
+			main:set_h(math.min(info_area:h(), main:parent():h() * 0.9))
 			main:set_center_y(main:parent():h() / 2)
 		end
 

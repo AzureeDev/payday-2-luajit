@@ -26,8 +26,9 @@ function MousePointerManager:_setup_mouse_pointer(ws)
 	self._mouse_pointers = self._mouse_pointers or {}
 
 	if not self._mouse_pointers[ws:key()] then
-		local x = 640
-		local y = 360
+		local src_width, src_height = self._ws:panel():size()
+		local x = src_width / 2
+		local y = src_height / 2
 		local mouse = self._ws:panel():panel({
 			name = "mouse",
 			h = 23,
@@ -120,9 +121,10 @@ function MousePointerManager:_set_size()
 	local y = res.y / 2 - res.x / w * h / 2
 	local n = w / math.clamp(res.x, 0, w)
 	local m = res.x / res.y
+	local gui_width, gui_height = managers.gui_data:get_base_res()
 
 	print("safe_rect.x, y+safe_rect.y", safe_rect.x, y + safe_rect.y)
-	self._ws:set_screen(w, h, 0, 0, 1279)
+	self._ws:set_screen(w, h, 0, 0, gui_width - 1)
 end
 
 function MousePointerManager:get_id()

@@ -1,7 +1,7 @@
 StatisticsGenerator = StatisticsGenerator or class()
 
 function StatisticsGenerator.generate()
-	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list = tweak_data.statistics:statistics_table()
+	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list = tweak_data.statistics:statistics_table()
 	local xml_path = StatisticsGenerator._root_path() .. "aux_assets\\config\\win32\\statistics.xml"
 	local xml = SystemFS:open(xml_path, "w")
 
@@ -12,6 +12,7 @@ function StatisticsGenerator.generate()
 	StatisticsGenerator._generate_group("armor", armor_list, xml)
 	StatisticsGenerator._generate_group("character", character_list, xml)
 	StatisticsGenerator._generate_group("deployable", deployable_list, xml)
+	StatisticsGenerator._generate_group("suit", suit_list, xml)
 	SystemFS:close(xml)
 end
 

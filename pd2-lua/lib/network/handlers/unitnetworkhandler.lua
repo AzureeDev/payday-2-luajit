@@ -1,8 +1,8 @@
 local tmp_rot1 = Rotation()
 UnitNetworkHandler = UnitNetworkHandler or class(BaseNetworkHandler)
 
-function UnitNetworkHandler:set_unit(unit, character_name, outfit_string, outfit_version, peer_id, team_id)
-	print("[UnitNetworkHandler:set_unit]", unit, character_name, peer_id)
+function UnitNetworkHandler:set_unit(unit, character_name, outfit_string, outfit_version, peer_id, team_id, visual_seed)
+	print("[UnitNetworkHandler:set_unit]", unit, character_name, peer_id, team_id, visual_seed)
 	Application:stack_dump()
 
 	if not alive(unit) then
@@ -17,16 +17,7 @@ function UnitNetworkHandler:set_unit(unit, character_name, outfit_string, outfit
 		local loadout = managers.blackmarket:unpack_henchman_loadout_string(outfit_string)
 
 		managers.blackmarket:verfify_recived_crew_loadout(loadout, true)
-
-		local crim_data = managers.criminals:character_data_by_name(character_name)
-
-		if not crim_data or not crim_data.ai then
-			managers.criminals:add_character(character_name, unit, peer_id, true, loadout)
-		else
-			managers.criminals:set_unit(character_name, unit, loadout)
-		end
-
-		unit:movement():set_character_anim_variables()
+		managers.groupai:state():set_unit_teamAI(unit, character_name, team_id, visual_seed, loadout)
 
 		return
 	end
@@ -41,7 +32,7 @@ function UnitNetworkHandler:set_unit(unit, character_name, outfit_string, outfit
 		peer:set_outfit_string(outfit_string, outfit_version)
 	end
 
-	peer:set_unit(unit, character_name)
+	peer:set_unit(unit, character_name, team_id, visual_seed)
 	self:_chk_flush_unit_too_early_packets(unit)
 end
 

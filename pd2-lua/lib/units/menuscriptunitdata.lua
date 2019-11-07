@@ -9,6 +9,9 @@ function UnitBase:init(unit, update_enabled)
 	end
 end
 
+function UnitBase:destroy(unit)
+end
+
 function UnitBase:pre_destroy(unit)
 	self._destroying = true
 end

@@ -260,10 +260,12 @@ function MenuNodeBaseGui:request_texture(texture_path, panel, keep_aspect_ratio,
 		blend_mode = blend_mode
 	}))
 
-	table.insert(self._requested_textures, {
-		texture_count = texture_count,
-		texture = texture_path
-	})
+	if texture_count ~= false then
+		table.insert(self._requested_textures, {
+			texture_count = texture_count,
+			texture = texture_path
+		})
+	end
 end
 
 function MenuNodeBaseGui:unretrieve_textures()

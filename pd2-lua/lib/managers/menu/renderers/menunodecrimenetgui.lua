@@ -1,6 +1,20 @@
 require("lib/managers/menu/renderers/MenuNodeBaseGui")
 require("lib/utils/InventoryDescription")
 
+local function round_gui_object(object)
+	if alive(object) then
+		local x, y = object:world_position()
+
+		object:set_world_position(math.round(x), math.round(y))
+
+		if object.children then
+			for i, d in ipairs(object:children()) do
+				round_gui_object(d)
+			end
+		end
+	end
+end
+
 local function make_fine_text(text)
 	local x, y, w, h = text:text_rect()
 
@@ -26,17 +40,70 @@ end
 function MenuNodeCrimenetGui:_setup_item_panel(safe_rect, res)
 	MenuNodeCrimenetGui.super._setup_item_panel(self, safe_rect, res)
 
-	local width = 900
-	local height = 580
-	local is_nextgen = SystemInfo:platform() == Idstring("PS4") or SystemInfo:platform() == Idstring("XB1")
+	local padding = tweak_data.gui.crime_net.contract_gui.padding
+	local width = tweak_data.gui.crime_net.contract_gui.width
+	local height = tweak_data.gui.crime_net.contract_gui.height
+	local contact_width = tweak_data.gui.crime_net.contract_gui.contact_width
+	local y_offset = 0
+	local safe_rect_size = managers.gui_data:scaled_size()
+	local header_font_size = tweak_data.menu.pd2_large_font_size
+	local header_outside_offset = header_font_size + height / 2 - safe_rect_size.height / 2
 
-	if SystemInfo:platform() ~= Idstring("WIN32") then
-		width = 900
-		height = is_nextgen and 570 or 525
+	if header_outside_offset > 0 then
+		y_offset = header_outside_offset
 	end
 
-	self.item_panel:set_rightbottom(self.item_panel:parent():w() * 0.5 + width / 2 - 10, self.item_panel:parent():h() * 0.5 + height / 2 - 10)
+	for _, child in ipairs(self.item_panel:children()) do
+		child:set_halign("right")
+	end
+
+	local right = (self.item_panel:parent():w() + width) * 0.5 - padding
+	local bottom = (self.item_panel:parent():h() + height) * 0.5 - padding + y_offset
+
+	self.item_panel:set_rightbottom(right, bottom)
 	self:_set_topic_position()
+	round_gui_object(self.item_panel)
+end
+
+function MenuNodeCrimenetGui:_setup_item_panel_parent(safe_rect, shape)
+	shape = shape or {}
+	shape.x = shape.x or safe_rect.x
+	shape.y = shape.y or safe_rect.y
+	shape.w = shape.w or safe_rect.width
+	shape.h = shape.h or safe_rect.height
+
+	MenuNodeCrimenetGui.super._setup_item_panel_parent(self, safe_rect, shape)
+end
+
+function MenuNodeCrimenetGui:_mid_align()
+	local safe_rect = self:_scaled_size()
+
+	return safe_rect.width - tweak_data.gui.crime_net.contract_gui.contact_width
+end
+
+function MenuNodeCrimenetGui:_right_align(align_line_proportions)
+	return self:_mid_align() + self._align_line_padding
+end
+
+function MenuNodeCrimenetGui:_left_align(align_line_proportions)
+	return self:_mid_align() - self._align_line_padding
+end
+
+function MenuNodeCrimenetGui:_world_right_align()
+	local safe_rect = self:_scaled_size()
+
+	return safe_rect.x + self:_mid_align() + self._align_line_padding
+end
+
+function MenuNodeCrimenetGui:_world_left_align()
+	local safe_rect = self:_scaled_size()
+
+	return safe_rect.x + self:_mid_align() - self._align_line_padding
+end
+
+function MenuNodeCrimenetGui:_align_marker(row_item)
+	MenuNodeCrimenetGui.super._align_marker(self, row_item)
+	self._marker_data.marker:set_world_right(self.item_panel:world_right())
 end
 
 MenuNodeCrimenetFiltersGui = MenuNodeCrimenetFiltersGui or class(MenuNodeGui)
@@ -92,7 +159,7 @@ function MenuNodeCrimenetFiltersGui:_setup_item_panel(safe_rect, res)
 	end
 
 	self.item_panel:set_position(math.round(self.item_panel:x()), math.round(self.item_panel:y()))
-	self:_rec_round_object(self.item_panel)
+	round_gui_object(self.item_panel)
 
 	if alive(self.box_panel) then
 		self.item_panel:parent():remove(self.box_panel)
@@ -155,18 +222,6 @@ function MenuNodeCrimenetFiltersGui:_setup_item_panel_parent(safe_rect, shape)
 	shape.h = shape.h or safe_rect.height - 0
 
 	MenuNodeCrimenetFiltersGui.super._setup_item_panel_parent(self, safe_rect, shape)
-end
-
-function MenuNodeCrimenetFiltersGui:_rec_round_object(object)
-	if object.children then
-		for i, d in ipairs(object:children()) do
-			self:_rec_round_object(d)
-		end
-	end
-
-	local x, y = object:position()
-
-	object:set_position(math.round(x), math.round(y))
 end
 
 function MenuNodeCrimenetFiltersGui:_setup_item_rows(node)
@@ -1048,6 +1103,8 @@ function MenuNodeCrimenetContactInfoGui:set_contact_info(id, name, files, overri
 	self:set_file(override_file)
 
 	self._current_contact_info = id
+
+	round_gui_object(self._panel)
 end
 
 function MenuNodeCrimenetContactInfoGui:set_empty()
@@ -1846,6 +1903,7 @@ function MenuNodeCrimenetContactShortGui:_setup_menu()
 	self._list_arrows.down:set_world_left(self._align_data.panel:world_left())
 	self._list_arrows.down:set_world_bottom(self._align_data.panel:world_bottom() + 1)
 	self._list_arrows.down:set_width(self._item_panel_parent:w())
+	round_gui_object(self.item_panel)
 end
 
 function MenuNodeCrimenetContactShortGui:_fade_row_item(row_item)
@@ -2122,6 +2180,7 @@ function MenuNodeCrimenetContactShortGui:_setup_layout()
 	self._init_finish = true
 
 	self:_setup_menu()
+	round_gui_object(panel)
 end
 
 function MenuNodeCrimenetContactShortGui:gui_node_custom(row_item)
@@ -2677,6 +2736,7 @@ function MenuNodeCrimenetContactChillGui:_setup_layout()
 	self._init_finish = true
 
 	self:_setup_menu()
+	round_gui_object(panel)
 end
 
 function MenuNodeCrimenetContactChillGui:remove_blur()
@@ -2982,6 +3042,8 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 	make_fine_text(contact_title_text)
 
 	self._current_contact_info = id
+
+	round_gui_object(self._info_panel)
 end
 
 function MenuNodeCrimenetGageAssignmentGui:create_insigna(panel, assignment)
@@ -3283,6 +3345,7 @@ function MenuNodeCrimenetGageAssignmentGui:_setup_layout()
 	self._init_finish = true
 
 	self:_setup_menu()
+	round_gui_object(panel)
 end
 
 function MenuNodeCrimenetGageAssignmentGui:_setup_blur()
@@ -4250,7 +4313,7 @@ function MenuNodeChooseWeaponRewardGui:_setup_item_panel(safe_rect, res)
 	end
 
 	self.item_panel:set_position(math.round(self.item_panel:x()), math.round(self.item_panel:y()))
-	self:_rec_round_object(self.item_panel)
+	round_gui_object(self.item_panel)
 
 	if alive(self.box_panel) then
 		self.item_panel:parent():remove(self.box_panel)
@@ -4398,7 +4461,7 @@ function MenuNodeChooseWeaponCosmeticGui:_setup_item_panel(safe_rect, res)
 	end
 
 	self.item_panel:set_position(math.round(self.item_panel:x()), math.round(self.item_panel:y()))
-	self:_rec_round_object(self.item_panel)
+	round_gui_object(self.item_panel)
 
 	if alive(self.box_panel) then
 		self.item_panel:parent():remove(self.box_panel)
@@ -4807,7 +4870,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 			local texture_path, rarity_path = nil
 
 			if is_weapon_skin then
-				texture_path, rarity_path = managers.blackmarket:get_weapon_icon_path(c_td.weapon_id, {
+				texture_path, rarity_path = managers.blackmarket:get_weapon_icon_path(c_td.weapon_ids and c_td.weapon_ids[1] or c_td.weapon_id, {
 					id = content.entry
 				})
 
@@ -4884,7 +4947,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 					default_color = Color(0, 0, 0, 0),
 					params = {
 						quality = "mint",
-						weapon_id = c_td.weapon_id,
+						weapon_id = c_td.weapon_ids and c_td.weapon_ids[1] or c_td.weapon_id,
 						cosmetic_id = content.entry
 					}
 				})

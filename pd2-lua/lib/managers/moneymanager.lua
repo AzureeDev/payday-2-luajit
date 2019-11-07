@@ -938,11 +938,12 @@ function MoneyManager:get_mask_crafting_price(mask_id, global_value, blueprint, 
 	}
 	default_blueprint = default_blueprint or managers.blackmarket:get_mask_default_blueprint(mask_id) or {}
 	local pc_value = tweak_data.blackmarket.masks and tweak_data.blackmarket.masks[mask_id] and tweak_data.blackmarket.masks[mask_id].value or 1
+	local mask_gv = global_value or "normal"
 	local base_value = nil
 
 	if pc_value > 0 then
 		local star_value = pc_value and math.ceil(pc_value) or 1
-		local gv_tweak_data = tweak_data.lootdrop.global_values[global_value or "normal"]
+		local gv_tweak_data = tweak_data.lootdrop.global_values[mask_gv]
 		local global_value_multiplier = gv_tweak_data and gv_tweak_data.value_multiplier or 1
 		base_value = self:get_tweak_value("money_manager", "masks", "mask_value", star_value) * global_value_multiplier
 	else
@@ -955,7 +956,7 @@ function MoneyManager:get_mask_crafting_price(mask_id, global_value, blueprint, 
 		color = "colors",
 		material = "materials"
 	}
-	bonus_global_values[global_value] = (bonus_global_values[global_value] or 0) + 1
+	bonus_global_values[mask_gv] = (bonus_global_values[mask_gv] or 0) + 1
 	blueprint = blueprint or default_blueprint
 
 	for id, data in pairs(blueprint) do
@@ -979,6 +980,11 @@ end
 
 function MoneyManager:get_mask_sell_value(mask_id, global_value, blueprint)
 	local sell_value, bonuses = self:get_mask_crafting_price(mask_id, global_value, blueprint)
+
+	if sell_value == 0 then
+		return sell_value
+	end
+
 	local bonus_multiplier = nil
 
 	for gv, amount in pairs(bonuses) do
@@ -1535,10 +1541,10 @@ end
 
 function MoneyManager:load(data)
 	local state = data.MoneyManager
-	self._global.total = state.total and Application:digest_value(math.max(0, Application:digest_value(state.total, false)), true)
-	self._global.total_collected = state.total_collected and Application:digest_value(math.max(0, Application:digest_value(state.total_collected, false)), true) or Application:digest_value(0, true)
-	self._global.offshore = state.offshore and Application:digest_value(math.max(0, Application:digest_value(state.offshore, false)), true) or Application:digest_value(0, true)
-	self._global.total_spent = state.total_spent and Application:digest_value(math.max(0, Application:digest_value(state.total_spent, false)), true) or Application:digest_value(0, true)
+	self._global.total = state.total and Application:digest_value(math.max(0, Application:digest_value(state.total, false)), true) or self._global.total
+	self._global.total_collected = state.total_collected and Application:digest_value(math.max(0, Application:digest_value(state.total_collected, false)), true) or self._global.total_collected
+	self._global.offshore = state.offshore and Application:digest_value(math.max(0, Application:digest_value(state.offshore, false)), true) or self._global.offshore
+	self._global.total_spent = state.total_spent and Application:digest_value(math.max(0, Application:digest_value(state.total_spent, false)), true) or self._global.total_spent
 
 	if SystemInfo:platform() == Idstring("XB1") then
 		XboxLive:write_hero_stat("cash", self._global.total)

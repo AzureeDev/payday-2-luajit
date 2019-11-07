@@ -346,6 +346,10 @@ function SentryGunBase:get_owner()
 	return self._owner or self._owner_id and managers.network:session() and managers.network:session():peer(self._owner_id) and managers.network:session():peer(self._owner_id):unit()
 end
 
+function SentryGunBase:get_owner_peer()
+	return self._owner_id and managers.network:session() and managers.network:session():peer(self._owner_id)
+end
+
 function SentryGunBase:get_owner_id()
 	return self._owner_id
 end
@@ -368,28 +372,26 @@ function SentryGunBase:on_interaction()
 end
 
 function SentryGunBase.on_picked_up(sentry_type, ammo_ratio, sentry_uid)
-	local pm = managers.player
+	managers.player:add_sentry_gun(1, sentry_type)
 
-	pm:add_sentry_gun(1, sentry_type)
+	local player_unit = managers.player:player_unit()
 
-	local player_unit = pm:player_unit()
-	local ammo = 1 + SentryGunBase.DEPLOYEMENT_COST[pm:upgrade_value("sentry_gun", "cost_reduction", 1)] * ammo_ratio
-	local hud = managers.hud
+	if not alive(player_unit) then
+		return
+	end
 
-	if player_unit then
-		local deployement_cost = player_unit:equipment() and player_unit:equipment():get_sentry_deployement_cost(sentry_uid)
-		local inventory = player_unit:inventory()
+	local deployement_cost = player_unit:equipment() and player_unit:equipment():get_sentry_deployement_cost(sentry_uid)
+	local inventory = player_unit:inventory()
 
-		if inventory and deployement_cost then
-			for index, weapon in pairs(inventory:available_selections()) do
-				local refund = math.ceil(deployement_cost[index] * ammo_ratio)
+	if inventory and deployement_cost then
+		for index, weapon in pairs(inventory:available_selections()) do
+			local refund = math.ceil(deployement_cost[index] * ammo_ratio)
 
-				weapon.unit:base():add_ammo_in_bullets(refund)
-				hud:set_ammo_amount(index, weapon.unit:base():ammo_info())
-			end
-
-			player_unit:equipment():remove_sentry_deployement_cost(sentry_uid)
+			weapon.unit:base():add_ammo_in_bullets(refund)
+			managers.hud:set_ammo_amount(index, weapon.unit:base():ammo_info())
 		end
+
+		player_unit:equipment():remove_sentry_deployement_cost(sentry_uid)
 	end
 end
 
@@ -437,6 +439,10 @@ function SentryGunBase:remove()
 	self._removed = true
 
 	self._unit:set_slot(0)
+end
+
+function SentryGunBase:is_removed()
+	return self._removed
 end
 
 function SentryGunBase._attach(pos, rot, sentrygun_unit)

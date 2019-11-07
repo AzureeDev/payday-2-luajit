@@ -1137,17 +1137,27 @@ function PlayerManager:unaquire_grenade(upgrade, id)
 end
 
 function PlayerManager:_verify_equipment_kit(loading)
-	if not self._global.kit.equipment_slots[1] then
+	local max_n = table.maxn(self._global.kit.equipment_slots)
+	local equipment_slots = {}
+
+	for i = 1, max_n, 1 do
+		if self._global.kit.equipment_slots[i] then
+			table.insert(equipment_slots, self._global.kit.equipment_slots[i])
+		end
+	end
+
+	if #equipment_slots ~= #self._global.kit.equipment_slots then
+		Application:error("[PlayerManager:_verify_equipment_kit] Gaps in player equipment slots detected, re-adjusting")
+		Application:error(inspect(self._global.kit.equipment_slots))
+		Application:error(inspect(equipment_slots))
+
+		self._global.kit.equipment_slots = equipment_slots
+
 		if managers.blackmarket then
-			local data = managers.player:availible_equipment(1)
-
-			if not data.target_slot then
-				data.target_slot = 1
-			end
-
-			managers.blackmarket:equip_deployable(data, loading)
-		else
-			self:set_equipment_in_slot(managers.player:availible_equipment(1)[1])
+			managers.blackmarket:equip_deployable({
+				target_slot = 1,
+				name = self._global.kit.equipment_slots[1]
+			}, loading)
 		end
 	end
 end
@@ -4914,13 +4924,13 @@ function PlayerManager:get_content_update_viewed(content_update)
 end
 
 function PlayerManager:_verify_loaded_data()
-	local id = self:equipment_in_slot()
-
-	if id and not self._global.equipment[id] then
-		print("PlayerManager:_verify_loaded_data()", inspect(self._global.equipment))
-		self:set_equipment_in_slot(nil)
-		self:_verify_equipment_kit(true)
+	for slot, equipment_id in ipairs(self._global.kit.equipment_slots) do
+		if not tweak_data.equipments[equipment_id] then
+			self._global.kit.equipment_slots[slot] = nil
+		end
 	end
+
+	self:_verify_equipment_kit(true)
 
 	if managers.menu_scene then
 		managers.menu_scene:set_character_deployable(managers.blackmarket:equipped_deployable(), false, 0)

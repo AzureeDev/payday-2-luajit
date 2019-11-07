@@ -1,4 +1,5 @@
 core:import("CoreMenuRenderer")
+require("lib/utils/gui/Blackborders")
 require("lib/managers/menu/MenuNodeGui")
 require("lib/managers/menu/renderers/MenuNodeBaseGui")
 require("lib/managers/menu/renderers/MenuNodeTableGui")
@@ -154,52 +155,9 @@ function MenuRenderer:_create_blackborders()
 		self._blackborder_workspace = nil
 	end
 
-	Application:debug("MenuRenderer: Creating blackborders")
-
 	self._blackborder_workspace = managers.gui_data:create_fullscreen_workspace()
 
-	self._blackborder_workspace:panel():rect({
-		name = "top_border",
-		layer = 1000,
-		color = Color.black
-	})
-	self._blackborder_workspace:panel():rect({
-		name = "bottom_border",
-		layer = 1000,
-		color = Color.black
-	})
-	self._blackborder_workspace:panel():rect({
-		name = "left_border",
-		layer = 1000,
-		color = Color.black
-	})
-	self._blackborder_workspace:panel():rect({
-		name = "right_border",
-		layer = 1000,
-		color = Color.black
-	})
-
-	local top_border = self._blackborder_workspace:panel():child("top_border")
-	local bottom_border = self._blackborder_workspace:panel():child("bottom_border")
-	local left_border = self._blackborder_workspace:panel():child("left_border")
-	local right_border = self._blackborder_workspace:panel():child("right_border")
-	local width = self._blackborder_workspace:panel():w()
-	local height = self._blackborder_workspace:panel():h()
-	local border_w = (width - 1280) / 2
-	local border_h = (height - 720) / 2
-
-	top_border:set_position(-1, -1)
-	top_border:set_size(width + 2, border_h + 2)
-	top_border:set_visible(border_h > 0)
-	bottom_border:set_position(border_w - 1, math.ceil(border_h) + 720 - 1)
-	bottom_border:set_size(width + 2, border_h + 2)
-	bottom_border:set_visible(border_h > 0)
-	left_border:set_position(-1, -1)
-	left_border:set_size(border_w + 2, height + 2)
-	left_border:set_visible(border_w > 0)
-	right_border:set_position(math.floor(border_w) + 1280 - 1, -1)
-	right_border:set_size(border_w + 2, height + 2)
-	right_border:set_visible(border_w > 0)
+	BlackBorders:new(self._blackborder_workspace:panel())
 end
 
 function MenuRenderer:update(t, dt)

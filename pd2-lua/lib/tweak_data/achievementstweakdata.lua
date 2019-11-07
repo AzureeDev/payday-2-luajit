@@ -4728,6 +4728,88 @@ function AchievementsTweakData:init(tweak_data)
 			},
 			difficulty = overkill_and_above
 		},
+		mex_1 = {
+			award = "mex_1",
+			job = "mex",
+			difficulty = normal_and_above
+		},
+		mex_2 = {
+			award = "mex_2",
+			job = "mex",
+			difficulty = hard_and_above
+		},
+		mex_3 = {
+			award = "mex_3",
+			job = "mex",
+			difficulty = veryhard_and_above
+		},
+		mex_4 = {
+			award = "mex_4",
+			job = "mex",
+			difficulty = overkill_and_above
+		},
+		mex_5 = {
+			award = "mex_5",
+			job = "mex",
+			difficulty = easywish_and_above
+		},
+		mex_6 = {
+			award = "mex_6",
+			job = "mex",
+			difficulty = deathwish_and_above
+		},
+		mex_7 = {
+			award = "mex_7",
+			job = "mex",
+			difficulty = sm_wish_and_above
+		},
+		mex_8 = {
+			award = "mex_8",
+			one_down = true,
+			job = "mex",
+			difficulty = sm_wish_and_above
+		},
+		mex2_1 = {
+			award = "mex2_1",
+			job = "mex_cooking",
+			difficulty = normal_and_above
+		},
+		mex2_2 = {
+			award = "mex2_2",
+			job = "mex_cooking",
+			difficulty = hard_and_above
+		},
+		mex2_3 = {
+			award = "mex2_3",
+			job = "mex_cooking",
+			difficulty = veryhard_and_above
+		},
+		mex2_4 = {
+			award = "mex2_4",
+			job = "mex_cooking",
+			difficulty = overkill_and_above
+		},
+		mex2_5 = {
+			award = "mex2_5",
+			job = "mex_cooking",
+			difficulty = easywish_and_above
+		},
+		mex2_6 = {
+			award = "mex2_6",
+			job = "mex_cooking",
+			difficulty = deathwish_and_above
+		},
+		mex2_7 = {
+			award = "mex2_7",
+			job = "mex_cooking",
+			difficulty = sm_wish_and_above
+		},
+		mex2_8 = {
+			award = "mex2_8",
+			one_down = true,
+			job = "mex_cooking",
+			difficulty = sm_wish_and_above
+		},
 		uno_1 = {
 			award = "uno_1",
 			bag_loot_value = 400000,
@@ -5979,7 +6061,9 @@ function AchievementsTweakData:init(tweak_data)
 			"des",
 			"sah",
 			"bph",
-			"vit"
+			"vit",
+			"mex",
+			"mex_cooking"
 		},
 		jimmy = {
 			"mad",
@@ -7761,6 +7845,9 @@ function AchievementsTweakData:_init_visual(tweak_data)
 			"players_4"
 		}
 	}
+
+	table.insert(self.tags.unlock, "outfit")
+
 	local contacts = {}
 
 	for _, job_id in ipairs(tweak_data.narrative:get_jobs_index()) do
@@ -7830,6 +7917,7 @@ function AchievementsTweakData:_init_visual(tweak_data)
 					"characters",
 					"weapon_mods",
 					"masks",
+					"player_styles",
 					"melee_weapons",
 					"materials",
 					"textures"

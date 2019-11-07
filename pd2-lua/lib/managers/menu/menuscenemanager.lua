@@ -548,7 +548,7 @@ function MenuSceneManager:_set_up_templates()
 		lobby_characters_visible = false,
 		hide_menu_logo = true,
 		camera_pos = ref:position(),
-		target_pos = target_pos - self._camera_start_rot:x() * 40 - self._camera_start_rot:z() * 5,
+		target_pos = target_pos - self._camera_start_rot:x() * 40 - self._camera_start_rot:z() * 5 + self._camera_start_rot:y() * 20,
 		character_pos = c_ref:position(),
 		remove_infamy_card = true
 	}
@@ -630,6 +630,13 @@ function MenuSceneManager:_set_up_templates()
 	self._scene_templates.blackmarket_character.character_pos = c_ref:position() + Vector3(-10, 100, 20)
 	self._scene_templates.blackmarket_customize_armour = deep_clone(self._scene_templates.inventory)
 	self._scene_templates.blackmarket_customize_armour.environment = "crafting"
+	self._scene_templates.blackmarket_customize_armour.hide_weapons = true
+	self._scene_templates.blackmarket_customize_armour.hide_mask = true
+	self._scene_templates.blackmarket_customize_armour.character_customization = true
+	self._scene_templates.blackmarket_customize_armour.scene_poses = {
+		"cvc_var1",
+		"cvc_var2"
+	}
 	self._scene_templates.blackmarket_customize_armour.camera_pos = ref:position() - Vector3(0, 200, 0)
 	self._scene_templates.blackmarket_customize_armour.lights = {
 		self:_create_light({
@@ -656,6 +663,13 @@ function MenuSceneManager:_set_up_templates()
 		use_character_pan = false,
 		character_visible = true,
 		recreate_character = true,
+		hide_weapons = true,
+		hide_mask = true,
+		character_customization = true,
+		scene_poses = {
+			"cvc_var1",
+			"cvc_var2"
+		},
 		lobby_characters_visible = false,
 		hide_menu_logo = true,
 		camera_pos = Vector3(1420, -2200, 0)
@@ -683,6 +697,12 @@ function MenuSceneManager:_set_up_templates()
 		use_character_pan = true,
 		character_visible = true,
 		recreate_character = true,
+		hide_weapons = true,
+		hide_mask = true,
+		scene_poses = {
+			"cvc_var1",
+			"cvc_var2"
+		},
 		lobby_characters_visible = false,
 		hide_menu_logo = true,
 		camera_pos = Vector3(1460, -2200, 0)
@@ -713,6 +733,12 @@ function MenuSceneManager:_set_up_templates()
 	self._scene_templates.blackmarket_armor_screenshot.can_change_fov = true
 	self._scene_templates.blackmarket_armor_screenshot.use_character_grab2 = true
 	self._scene_templates.blackmarket_armor_screenshot.use_character_pan = true
+	self._scene_templates.blackmarket_armor_screenshot.hide_weapons = true
+	self._scene_templates.blackmarket_armor_screenshot.hide_mask = true
+	self._scene_templates.blackmarket_armor_screenshot.scene_poses = {
+		"cvc_var1",
+		"cvc_var2"
+	}
 	local camera_look = (self._scene_templates.blackmarket_armor_screenshot.target_pos - self._scene_templates.blackmarket_armor_screenshot.camera_pos):normalized()
 
 	mvector3.rotate_with(camera_look, Rotation(6, 2.75, 0))
@@ -736,6 +762,12 @@ function MenuSceneManager:_set_up_templates()
 		use_item_grab = true,
 		disable_rotate = true,
 		disable_item_updates = true,
+		hide_weapons = true,
+		hide_mask = true,
+		scene_poses = {
+			"cvc_var1",
+			"cvc_var2"
+		},
 		camera_pos = offset:rotate_with(Rotation(45)) + Vector3(0, 0, 200),
 		target_pos = target_pos + Vector3(0, 50, 200)
 	}
@@ -1084,11 +1116,11 @@ end
 function MenuSceneManager:_set_player_character_unit(unit_name)
 	self._character_unit = self:_set_character_unit(unit_name, self._character_unit, self._character_values and self._character_values.pos_target)
 
+	self._character_unit:base():set_character_name(CriminalsManager.convert_new_to_old_character_workname(self._player_character_name))
 	self:_setup_character_dynamic_bodies(self._character_unit)
+	self:_set_character_equipment()
 
 	self._character_visibilities[self._character_unit:key()] = true
-
-	self:_set_character_equipment()
 end
 
 function MenuSceneManager:_setup_character_dynamic_bodies(unit)
@@ -1116,6 +1148,8 @@ function MenuSceneManager:_set_character_unit(unit_name, unit, pos_override)
 	local pos, rot = nil
 
 	if alive(unit) then
+		self:_set_character_and_outfit_visibility(unit, false)
+
 		pos = unit:position()
 		rot = unit:rotation()
 
@@ -1152,13 +1186,89 @@ function MenuSceneManager:_character_unit_pose_updated()
 	self:_chk_character_visibility(self._character_unit)
 end
 
-function MenuSceneManager:_select_character_pose(unit)
+function MenuSceneManager:_select_character_pose(unit, secondary, primary)
 	unit = unit or self._character_unit
+	secondary = secondary or unit == self._character_unit and managers.blackmarket:equipped_secondary()
+	primary = primary or unit == self._character_unit and managers.blackmarket:equipped_primary()
+	local current_scene_template = self._scene_templates and self._scene_templates[self._current_scene_template] or {}
 
-	if self._scene_templates and self._scene_templates[self._current_scene_template] and self._scene_templates[self._current_scene_template].poses then
-		local poses = self._scene_templates[self._current_scene_template].poses
+	if current_scene_template.character_customization then
+		local player_style = unit:base():player_style()
+
+		if player_style ~= "none" then
+			local pose = tweak_data:get_scene_pose("player_style", player_style)
+
+			return self:_set_character_unit_pose(pose, unit)
+		end
+
+		local armor_id = unit:base():armor_id()
+		local pose = tweak_data:get_scene_pose("armor", armor_id)
+
+		return self:_set_character_unit_pose(pose, unit)
+	end
+
+	if self._card_units and self._card_units[unit:key()] then
+		local pose = self._global_poses.infamous[math.random(#self._global_poses.infamous)]
+
+		self:_set_character_unit_pose(pose, unit)
+
+		return
+	end
+
+	local poses = {}
+	local template_pose, template_required_poses = tweak_data:get_scene_pose("template", self._current_scene_template)
+	poses.template = {
+		pose = template_pose,
+		required_poses = template_required_poses
+	}
+
+	if primary then
+		local categories = tweak_data.weapon[primary.weapon_id].categories
+		local primary_pose, primary_required_poses = tweak_data:get_scene_pose("weapon", "primary", primary.weapon_id, unpack(categories))
+		poses.primary = {
+			pose = primary_pose,
+			required_poses = primary_required_poses
+		}
+	end
+
+	if secondary then
+		local categories = tweak_data.weapon[secondary.weapon_id].categories
+		local secondary_pose, secondary_required_poses = tweak_data:get_scene_pose("weapon", "secondary", secondary.weapon_id, unpack(categories))
+		poses.secondary = {
+			pose = secondary_pose,
+			required_poses = secondary_required_poses
+		}
+	end
+
+	local wanted_pose, items = nil
+	local allowed_poses = table.filter(poses, function (data, key)
+		wanted_pose = data.pose
+		items = tweak_data:get_scene_pose_items(wanted_pose)
+
+		for _, cat in pairs(items) do
+			if cat ~= key and poses[cat] and poses[cat].required_poses and not table.contains(poses[cat].required_poses, wanted_pose) then
+				return false
+			end
+		end
+
+		return true
+	end)
+
+	if next(allowed_poses) then
+		local pose = allowed_poses[table.random_key(allowed_poses)].pose
+		local items = tweak_data:get_scene_pose_items(pose)
+
+		if pose then
+			self:_set_character_unit_pose(pose, unit)
+
+			return
+		end
+	end
+
+	local poses = current_scene_template and current_scene_template.poses
+
+	if poses then
 		local pose = nil
-		local primary = managers.blackmarket:equipped_primary()
 
 		if primary then
 			local weapon_id_poses = poses[primary.weapon_id]
@@ -1179,8 +1289,6 @@ function MenuSceneManager:_select_character_pose(unit)
 				return
 			end
 		end
-
-		local secondary = managers.blackmarket:equipped_secondary()
 
 		if secondary then
 			local weapon_id_poses = poses[secondary.weapon_id]
@@ -1203,16 +1311,7 @@ function MenuSceneManager:_select_character_pose(unit)
 		end
 	end
 
-	if managers.experience:current_rank() > 0 and self._card_units and self._card_units[unit:key()] then
-		local pose = self._global_poses.infamous[math.random(#self._global_poses.infamous)]
-
-		self:_set_character_unit_pose(pose, unit)
-
-		return
-	end
-
 	local pose = nil
-	local secondary = managers.blackmarket:equipped_secondary()
 
 	if secondary and (math.rand(1) < 0.12 or table.contains(self._forced_secondaries, secondary.weapon_id)) then
 		local primary_category = tweak_data.weapon[secondary.weapon_id].categories[1]
@@ -1238,8 +1337,6 @@ function MenuSceneManager:_select_character_pose(unit)
 
 		return
 	end
-
-	local primary = managers.blackmarket:equipped_primary()
 
 	if primary then
 		local weapon_id_poses = self._global_poses[primary.weapon_id]
@@ -1310,6 +1407,12 @@ function MenuSceneManager:_select_henchmen_pose(unit, weapon_id, index)
 end
 
 function MenuSceneManager:_set_character_equipment()
+	local unit = self._character_unit
+
+	if not alive(unit) then
+		return
+	end
+
 	local equipped_mask = managers.blackmarket:equipped_mask()
 
 	if equipped_mask.mask_id then
@@ -1324,7 +1427,8 @@ function MenuSceneManager:_set_character_equipment()
 		end
 	end
 
-	self:set_character_armor_skin(managers.blackmarket:equipped_armor_skin())
+	self:set_character_armor_skin(managers.blackmarket:equipped_armor_skin(), self._character_unit)
+	self:set_character_player_style(managers.blackmarket:equipped_player_style(), managers.blackmarket:get_suit_variation(), self._character_unit)
 
 	local rank = managers.experience:current_rank()
 	local ignore_infamy_card = self._scene_templates and self._scene_templates[self._current_scene_template] and self._scene_templates[self._current_scene_template].remove_infamy_card and true or false
@@ -1338,7 +1442,7 @@ function MenuSceneManager:_set_character_equipment()
 		if secondary and not ignore_weapons then
 			self:set_character_equipped_weapon(nil, secondary.factory_id, secondary.blueprint, "secondary", secondary.cosmetics)
 		else
-			self:_delete_character_weapon(self._character_unit, "secondary")
+			self:_delete_character_weapon(unit, "secondary")
 		end
 	end
 
@@ -1347,7 +1451,7 @@ function MenuSceneManager:_set_character_equipment()
 	if primary and not ignore_weapons then
 		self:set_character_equipped_weapon(nil, primary.factory_id, primary.blueprint, "primary", primary.cosmetics)
 	else
-		self:_delete_character_weapon(self._character_unit, "primary")
+		self:_delete_character_weapon(unit, "primary")
 	end
 
 	self:set_character_deployable(managers.blackmarket:equipped_deployable(), false, 0)
@@ -1431,6 +1535,10 @@ function MenuSceneManager:set_henchmen_visible(visible, i)
 			self:set_henchmen_visible(visible, i)
 		end
 	end
+end
+
+function MenuSceneManager:get_henchmen_character(index)
+	return self._picked_character_position and self._picked_character_position[index]
 end
 
 function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
@@ -1596,7 +1704,7 @@ function MenuSceneManager:_init_character(unit, peer_id)
 	unit:anim_state_machine():set_parameter(state, "husk" .. peer_id, 1)
 end
 
-function MenuSceneManager:change_lobby_character(peer_id, character_id)
+function MenuSceneManager:change_lobby_character(peer_id, character_id, preferred_character)
 	local unit = self._lobby_characters[peer_id]
 	local unit_name = tweak_data.blackmarket.characters[character_id].menu_unit
 
@@ -1616,63 +1724,12 @@ function MenuSceneManager:change_lobby_character(peer_id, character_id)
 		self._lobby_characters[peer_id] = unit
 	end
 
-	unit:base():set_character_name(managers.network:session():peer(peer_id):character())
+	unit:base():set_character_name(preferred_character or managers.network:session():peer(peer_id):character())
 
 	local mask_data = self._mask_units[unit:key()]
 
 	if mask_data then
 		self:update_mask_offset(mask_data)
-	end
-end
-
-function MenuSceneManager:test_show_all_lobby_characters(enable_card)
-	local mvec = Vector3()
-	local math_up = math.UP
-	local pos = Vector3()
-	local rot = Rotation()
-	self._ti = (self._ti or 0) + 1
-	self._ti = (self._ti - 1) % 4 + 1
-
-	for i = 1, 4, 1 do
-		local is_me = i == self._ti
-		local unit = self._lobby_characters[i]
-
-		if unit and alive(unit) then
-			if enable_card then
-				self:set_character_card(i, math.random(25), unit)
-			else
-				local state = unit:play_redirect(Idstring("idle_menu"))
-
-				unit:anim_state_machine():set_parameter(state, "lobby_generic_idle" .. i, 1)
-			end
-
-			mrotation.set_yaw_pitch_roll(rot, self._characters_rotation[(is_me and 4 or 0) + i], 0, 0)
-			mvector3.set(pos, self._characters_offset)
-
-			if is_me then
-				mvector3.set_y(pos, mvector3.y(pos) + 100)
-			end
-
-			mvector3.rotate_with(pos, rot)
-			mvector3.set(mvec, pos)
-			mvector3.negate(mvec)
-			mvector3.set_z(mvec, 0)
-			mrotation.set_look_at(rot, mvec, math_up)
-			unit:set_position(pos)
-			unit:set_rotation(rot)
-
-			local character = managers.blackmarket:equipped_character()
-			local mask_blueprint = managers.blackmarket:equipped_mask().blueprint
-
-			self:change_lobby_character(i, character)
-
-			unit = self._lobby_characters[i]
-
-			self:set_character_mask_by_id(managers.blackmarket:equipped_mask().mask_id, mask_blueprint, unit, i)
-			self:set_character_armor(managers.blackmarket:equipped_armor(), unit)
-			self:set_character_armor_skin(managers.blackmarket:equipped_armor_skin(), unit)
-			self:set_lobby_character_visible(i, true)
-		end
 	end
 end
 
@@ -1732,6 +1789,7 @@ function MenuSceneManager:set_lobby_character_out_fit(i, outfit_string, rank)
 	self:set_character_armor(outfit.armor, unit)
 	self:set_character_deployable(outfit.deployable, unit, i)
 	self:set_character_armor_skin(outfit.armor_skin or managers.blackmarket:equipped_armor_skin(), unit)
+	self:set_character_player_style(outfit.player_style or managers.blackmarket:equipped_player_style(), outfit.suit_variation or managers.blackmarket:get_suit_variation(), unit)
 	self:_delete_character_weapon(unit, "all")
 
 	local prio_item = self:_get_lobby_character_prio_item(rank, outfit)
@@ -1823,9 +1881,14 @@ function MenuSceneManager:set_character_deployable(deployable_id, unit, peer_id)
 
 	if deployable_id and deployable_id ~= "nil" then
 		local tweak_data = tweak_data.equipments[deployable_id]
-		local object_name = tweak_data.visual_object
 
-		unit:get_object(Idstring(object_name)):set_visibility(self._characters_deployable_visible)
+		if tweak_data then
+			local object_name = tweak_data.visual_object
+
+			unit:get_object(Idstring(object_name)):set_visibility(self._characters_deployable_visible)
+		else
+			deployable_id = "nil"
+		end
 	end
 
 	self._deployable_equipped[peer_id] = deployable_id
@@ -1835,18 +1898,52 @@ function MenuSceneManager:set_character_mask_by_id(mask_id, blueprint, unit, pee
 	mask_id = managers.blackmarket:get_real_mask_id(mask_id, peer_id, character_name)
 	local unit_name = managers.blackmarket:mask_unit_name_by_mask_id(mask_id, peer_id, character_name)
 
-	self:set_character_mask(unit_name, unit, peer_id, mask_id, callback(self, self, "clbk_mask_loaded", blueprint))
+	self:set_character_mask(unit_name, unit, peer_id or character_name, mask_id, callback(self, self, "clbk_mask_loaded", {
+		blueprint = blueprint,
+		character_unit = unit
+	}))
 
 	local owner_unit = unit or self._character_unit
 
 	owner_unit:base():request_cosmetics_update()
 end
 
-function MenuSceneManager:clbk_mask_loaded(blueprint, mask_unit)
+function MenuSceneManager:clbk_mask_loaded(data, mask_unit)
 	if mask_unit then
-		mask_unit:base():apply_blueprint(blueprint, function ()
-		end)
+		mask_unit:set_enabled(false)
+		mask_unit:set_visible(false)
+
+		for _, linked_unit in ipairs(mask_unit:children()) do
+			linked_unit:set_visible(false)
+		end
+
+		mask_unit:base():apply_blueprint(data.blueprint, callback(self, self, "clbk_character_mask_unit_assembled", {
+			mask_unit = mask_unit,
+			character_unit = data.character_unit
+		}))
 	end
+end
+
+function MenuSceneManager:clbk_character_mask_unit_assembled(data)
+	if not alive(data.mask_unit) then
+		return
+	end
+
+	data.mask_unit:set_enabled(true)
+	data.mask_unit:set_moving()
+	self:add_one_frame_delayed_clbk(function ()
+		if not alive(data.mask_unit) then
+			return
+		end
+
+		data.mask_unit:set_visible(true)
+
+		for _, linked_unit in ipairs(data.mask_unit:children()) do
+			linked_unit:set_visible(true)
+		end
+
+		self:_chk_character_visibility(data.character_unit or self._character_unit)
+	end)
 end
 
 function MenuSceneManager:set_character_mask(mask_name_str, unit, peer_id_or_char, mask_id, ready_clbk)
@@ -1884,6 +1981,7 @@ function MenuSceneManager:set_character_mask(mask_name_str, unit, peer_id_or_cha
 	}
 	self._mask_units[unit:key()] = mask_data
 
+	unit:base():set_mask_id(mask_data.mask_id)
 	managers.dyn_resource:load(ids_unit, mask_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, callback(self, self, "clbk_mask_unit_loaded", mask_data))
 	self:_chk_character_visibility(unit)
 end
@@ -1915,7 +2013,6 @@ function MenuSceneManager:clbk_mask_unit_loaded(mask_data_param, status, asset_t
 
 	mask_data.unit:link(mask_align:name(), mask_unit)
 	self:update_mask_offset(mask_data)
-	mask_data.unit:base():set_mask_id(mask_data.mask_id)
 	self:_chk_character_visibility(mask_data.unit)
 
 	if mask_data.ready_clbk then
@@ -1955,11 +2052,14 @@ end
 
 function MenuSceneManager:set_character_armor(armor_id, unit)
 	unit = unit or self._character_unit
-	local sequence = tweak_data.blackmarket.armors[armor_id].sequence
+	local same_armor_id = unit:base():armor_id() == armor_id
 
-	unit:damage():run_sequence_simple(sequence)
 	unit:base():set_armor_id(armor_id)
 	self:set_character_armor_skin(managers.blackmarket:equipped_armor_skin())
+
+	if not same_armor_id and unit == self._character_unit then
+		self:_select_character_pose()
+	end
 end
 
 function MenuSceneManager:set_character_armor_skin(skin_id, unit)
@@ -1970,6 +2070,28 @@ function MenuSceneManager:set_character_armor_skin(skin_id, unit)
 	end
 
 	unit:base():set_cosmetics_data(skin_id, true)
+end
+
+function MenuSceneManager:set_character_player_style(player_style, material_variation, unit)
+	unit = unit or self._character_unit
+
+	if not unit or not unit:base() then
+		return
+	end
+
+	local same_player_style = unit:base():player_style() == player_style
+
+	unit:base():set_player_style(player_style, material_variation)
+
+	if not same_player_style and unit == self._character_unit then
+		unit:base():add_clbk_listener("done", function ()
+			local current_scene_template = self._scene_templates and self._scene_templates[self._current_scene_template] or {}
+
+			if current_scene_template.character_customization then
+				self:_select_character_pose()
+			end
+		end)
+	end
 end
 
 function MenuSceneManager:set_character_card(peer_id, rank, unit)
@@ -1992,6 +2114,11 @@ end
 
 function MenuSceneManager:set_character_equipped_weapon(unit, factory_id, blueprint, type, cosmetics)
 	unit = unit or self._character_unit
+	local current_scene_template = self._scene_templates and self._scene_templates[self._current_scene_template] or {}
+
+	if current_scene_template.hide_weapons and unit == self._character_unit then
+		return
+	end
 
 	self:_delete_character_weapon(unit, type)
 
@@ -2040,9 +2167,7 @@ function MenuSceneManager:_chk_character_visibility(char_unit)
 	if char_weapons then
 		for w_type, w_data in pairs(char_weapons) do
 			if not w_data.assembly_complete then
-				self:_set_character_and_outfit_visibility(char_unit, false)
-
-				return
+				-- Nothing
 			end
 		end
 	end
@@ -2050,6 +2175,10 @@ function MenuSceneManager:_chk_character_visibility(char_unit)
 	local char_mask = self._mask_units[char_key]
 
 	if char_mask and not char_mask.mask_unit then
+		-- Nothing
+	end
+
+	if not char_unit:base():is_cosmetics_applied() then
 		self:_set_character_and_outfit_visibility(char_unit, false)
 
 		return
@@ -2089,6 +2218,7 @@ function MenuSceneManager:_chk_character_visibility(char_unit)
 end
 
 function MenuSceneManager:_set_character_and_outfit_visibility(char_unit, state)
+	char_unit:set_extension_update_enabled(Idstring("base"), state)
 	self:_set_unit_enabled_tree(char_unit, state)
 end
 
@@ -2220,6 +2350,10 @@ function MenuSceneManager:_delete_character_mask(owner)
 		World:delete_unit(old_mask.mask_unit)
 	end
 
+	if owner:base() and owner:base().set_mask_id then
+		owner:base():set_mask_id(nil)
+	end
+
 	self._mask_units[owner_key] = nil
 	local unload = true
 
@@ -2231,9 +2365,7 @@ function MenuSceneManager:_delete_character_mask(owner)
 		end
 	end
 
-	if unload then
-		managers.dyn_resource:unload(ids_unit, old_mask.mask_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
-	end
+	managers.dyn_resource:unload(ids_unit, old_mask.mask_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
 end
 
 function MenuSceneManager:_delete_character_weapon(owner, type)
@@ -2293,6 +2425,7 @@ function MenuSceneManager:on_set_preferred_character()
 	end
 
 	self:set_character_armor_skin(managers.blackmarket:equipped_armor_skin(), self._character_unit)
+	self:set_character_player_style(managers.blackmarket:equipped_player_style(), managers.blackmarket:get_suit_variation(), self._character_unit)
 
 	local mask_data = self._mask_units[self._character_unit:key()]
 
@@ -2308,10 +2441,9 @@ function MenuSceneManager:set_character(character_name, force_recreate)
 
 	if force_recreate or not alive(self._character_unit) or Idstring(unit_name) ~= self._character_unit:name() then
 		self:_set_player_character_unit(unit_name, self._character_unit)
+	else
+		self._character_unit:base():set_character_name(CriminalsManager.convert_new_to_old_character_workname(self._player_character_name))
 	end
-
-	self._character_unit:base():set_character_name(character_name)
-	self:set_character_armor_skin(managers.blackmarket:equipped_armor_skin(), self._character_unit)
 end
 
 function MenuSceneManager:_create_light(params)
@@ -2403,28 +2535,32 @@ function MenuSceneManager:_set_dimensions()
 	local h = 1
 
 	if SystemInfo:platform() == Idstring("WIN32") then
+		local screen_res = Application:screen_resolution()
+
 		if aspect_ratio == 0 then
-			local screen_res = Application:screen_resolution()
 			aspect_ratio = screen_res.x / screen_res.y
 		end
 
-		if screen_aspect < aspect_ratio then
-			width_mul = aspect_ratio
-		elseif aspect_ratio < screen_aspect then
-			local screen_res = Application:screen_resolution()
-			local new_height = screen_res.x / width_mul
+		local screen_height = screen_res.y
+		local wanted_height = math.round(screen_res.x / screen_aspect)
 
-			if new_height % 2 > 0 then
-				local new_width = new_height * width_mul
-				width_mul = new_width / (new_height - 1)
+		if screen_height < wanted_height then
+			width_mul = aspect_ratio
+		elseif wanted_height < screen_height then
+			wanted_height = wanted_height + wanted_height % 2
+
+			if wanted_height > 0 then
+				width_mul = screen_res.x / wanted_height
 			end
 
-			y = (1 - aspect_ratio / width_mul) / 2
-			h = aspect_ratio / width_mul
+			local screen_ratio = wanted_height / screen_height
+			y = (1 - screen_ratio) / 2
+			h = screen_ratio
 		end
 	else
-		y = (1 - aspect_ratio / width_mul) / 2
-		h = aspect_ratio / width_mul
+		local width_ratio = aspect_ratio / width_mul
+		y = (1 - width_ratio) / 2
+		h = width_ratio
 	end
 
 	self._vp._vp:set_dimensions(x, y, w, h)
@@ -2571,6 +2707,14 @@ function MenuSceneManager:set_scene_template(template, data, custom_name, skip_t
 			if secondary then
 				self:set_character_equipped_weapon(nil, secondary.factory_id, secondary.blueprint, "secondary", secondary.cosmetics)
 			end
+		end
+
+		if template_data.hide_weapons then
+			self:_delete_character_weapon(self._character_unit, "all")
+		end
+
+		if template_data.hide_mask then
+			self:_delete_character_mask(self._character_unit)
 		end
 
 		if not _G.IS_VR then
@@ -3357,7 +3501,9 @@ end
 function MenuSceneManager:controller_zoom(x, y)
 	self:change_fov("out", y * 20)
 
-	if (self._use_character_grab or self._use_character_grab2) and alive(self._character_unit) then
+	local uses_character_grab = self._use_character_grab or self._use_character_grab2
+
+	if uses_character_grab and alive(self._character_unit) then
 		self._character_yaw = (self._character_yaw + x * 95) % 360
 
 		self._character_unit:set_rotation(Rotation(self._character_yaw, self._character_pitch))
@@ -4127,7 +4273,32 @@ function MenuSceneManager:preview_character_skin(skin_id, unit, clbks)
 	unit = unit or self._character_unit
 
 	self:set_character_armor_skin(skin_id, unit)
-	unit:base():_apply_cosmetics(clbks)
+end
+
+function MenuSceneManager:get_character_armor_skin(unit)
+	return (unit or self._character_unit):base():armor_skin_id()
+end
+
+function MenuSceneManager:preview_player_style(player_style, material_variation, unit, clbks)
+	unit = unit or self._character_unit
+
+	self:set_character_player_style(player_style, material_variation or managers.blackmarket:get_suit_variation(player_style), unit)
+end
+
+function MenuSceneManager:get_player_style(unit)
+	return (unit or self._character_unit):base():player_style()
+end
+
+function MenuSceneManager:get_suit_variation(unit)
+	return (unit or self._character_unit):base():suit_variation()
+end
+
+function MenuSceneManager:get_character_name(unit)
+	return (unit or self._character_unit):base():character_name()
+end
+
+function MenuSceneManager:get_character_armor(unit)
+	return (unit or self._character_unit):base():armor_id()
 end
 
 function MenuSceneManager:destroy()

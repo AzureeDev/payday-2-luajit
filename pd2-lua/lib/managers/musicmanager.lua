@@ -12,6 +12,7 @@ function MusicManager:init_globals(...)
 	Global.music_manager.custom_playlist = {}
 	Global.music_manager.custom_menu_playlist = {}
 	Global.music_manager.unlocked_tracks = {}
+	Global.music_manager.loadout_selection = "heist"
 
 	self:_set_default_values()
 end
@@ -353,7 +354,7 @@ function MusicManager:jukebox_default_tracks()
 		heist_dah = "track_55",
 		heist_framing_frame2 = "track_08",
 		heist_roberts = "track_10",
-		heist_welcome_to_the_jungle1 = "track_04",
+		heist_mex = "track_65",
 		heist_man = "all",
 		heist_cane = "track_39",
 		heist_mus = "all",
@@ -365,7 +366,7 @@ function MusicManager:jukebox_default_tracks()
 		heist_rat = "track_08",
 		heist_family = "track_04",
 		heist_arm_und = "all",
-		heist_spa = "all",
+		heist_mex_cooking = "track_65",
 		heist_glace = "track_53",
 		heist_wwh = "track_54",
 		heist_jewelry_store = "track_01",
@@ -382,8 +383,10 @@ function MusicManager:jukebox_default_tracks()
 		heist_bph = "track_62_lcv",
 		heist_nmh = "track_63",
 		heist_vit = "track_64_lcv",
+		heist_welcome_to_the_jungle1 = "track_04",
 		heist_sah = "track_61",
 		heist_firestarter3 = "track_02",
+		heist_spa = "all",
 		heist_alex1 = "track_08",
 		heist_kenaz_full = "all",
 		heist_framing_frame3 = "track_03",

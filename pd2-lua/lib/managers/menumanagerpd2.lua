@@ -147,8 +147,9 @@ function MenuCallbackHandler:start_job(job_data)
 		local level_id_index = tweak_data.levels:get_index_from_level_id(Global.game_settings.level_id)
 		local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
 		local one_down = Global.game_settings.one_down
+		local weekly_skirmish = Global.game_settings.weekly_skirmish
 
-		managers.network:session():send_to_peers("sync_game_settings", job_id_index, level_id_index, difficulty_index, one_down)
+		managers.network:session():send_to_peers("sync_game_settings", job_id_index, level_id_index, difficulty_index, one_down, weekly_skirmish)
 		managers.network.matchmake:set_server_attributes(matchmake_attributes)
 		managers.mutators:update_lobby_info()
 		managers.menu_component:on_job_updated()

@@ -121,13 +121,23 @@ function CoreEditor:_create_dome_occlusion(params)
 	self._dome_occlusion_params.file_name = "dome_occlusion"
 	self._dome_occlusion_params.output_path = path
 	self._dome_occlusion_params.step = 0
+	self._dome_occlusion_params.wait_frames = 5
 
 	self:_make_dir(path)
-	self:generate_dome_occlusion(path .. "\\")
 end
 
 function CoreEditor:_tick_generate_dome_occlusion(t, dt)
 	if self._dome_occlusion_params then
+		if self._dome_occlusion_params.step == 0 then
+			self._dome_occlusion_params.wait_frames = self._dome_occlusion_params.wait_frames - 1
+
+			if self._dome_occlusion_params.wait_frames > 0 then
+				return
+			end
+
+			self:generate_dome_occlusion(self._dome_occlusion_params.output_path .. "\\")
+		end
+
 		self._dome_occlusion_params.step = self._dome_occlusion_params.step + 1
 
 		if self._dome_occlusion_params.step == 2 then

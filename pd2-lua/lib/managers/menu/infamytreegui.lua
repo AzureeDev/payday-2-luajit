@@ -595,7 +595,7 @@ function InfamyTreeGui:_setup()
 	blur:animate(func)
 	self:_select_item(start_item)
 
-	if managers.experience:current_rank() == 0 then
+	if MenuCallbackHandler:can_become_infamous() or managers.experience:current_rank() == 0 then
 		managers.menu:show_infamous_message(MenuCallbackHandler:can_become_infamous() and Application:digest_value(tweak_data.infamy.ranks[managers.experience:current_rank() + 1], false) <= managers.money:offshore())
 	end
 

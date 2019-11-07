@@ -21,7 +21,7 @@ function RaycastWeaponBase:init(unit)
 	UnitBase.init(self, unit, false)
 
 	self._unit = unit
-	self._name_id = self.name_id or "test_raycast_weapon"
+	self._name_id = self.name_id or "amcar"
 	self.name_id = nil
 
 	self:_create_use_setups()
@@ -127,7 +127,7 @@ function RaycastWeaponBase:_weapon_tweak_data_id()
 end
 
 function RaycastWeaponBase:weapon_tweak_data()
-	return tweak_data.weapon[self:_weapon_tweak_data_id()]
+	return tweak_data.weapon[self:_weapon_tweak_data_id()] or tweak_data.weapon.amcar
 end
 
 function RaycastWeaponBase:selection_index()

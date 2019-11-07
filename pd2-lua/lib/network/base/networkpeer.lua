@@ -230,10 +230,10 @@ function NetworkPeer:verify_character()
 end
 
 function NetworkPeer:verify_outfit()
-	local failed = self:_verify_outfit_data()
+	local reason = self:_verify_outfit_data()
 
-	if failed then
-		self:mark_cheater(failed == 1 and VoteManager.REASON.invalid_mask or VoteManager.REASON.invalid_weapon, Network:is_server())
+	if reason then
+		self:mark_cheater(reason, Network:is_server())
 	end
 end
 
@@ -252,7 +252,7 @@ function NetworkPeer:_verify_outfit_data()
 	for item_type, item in pairs(outfit) do
 		if item_type == "mask" then
 			if not self:_verify_content("masks", item.mask_id) then
-				return self:_verify_cheated_outfit("masks", item.mask_id, 1)
+				return self:_verify_cheated_outfit("masks", item.mask_id, VoteManager.REASON.invalid_mask)
 			end
 
 			for mask_type, mask_item in pairs(item.blueprint) do
@@ -265,12 +265,12 @@ function NetworkPeer:_verify_outfit_data()
 				end
 
 				if not skip_default and not self:_verify_content(mask_type_lookup, mask_item.id) then
-					return self:_verify_cheated_outfit(mask_type_lookup, mask_item.id, 1)
+					return self:_verify_cheated_outfit(mask_type_lookup, mask_item.id, VoteManager.REASON.invalid_mask)
 				end
 			end
 		elseif item_type == "primary" or item_type == "secondary" then
 			if not self:_verify_content("weapon", managers.weapon_factory:get_weapon_id_by_factory_id(item.factory_id)) then
-				return self:_verify_cheated_outfit("weapon", item.factory_id, 2)
+				return self:_verify_cheated_outfit("weapon", item.factory_id, VoteManager.REASON.invalid_weapon)
 			end
 
 			local blueprint = managers.weapon_factory:get_default_blueprint_by_factory_id(item.factory_id)
@@ -278,11 +278,15 @@ function NetworkPeer:_verify_outfit_data()
 
 			for _, mod_item in pairs(item.blueprint) do
 				if not table.contains(blueprint, mod_item) and not table.contains(skin_blueprint, mod_item) and not self:_verify_content("weapon_mods", mod_item) then
-					return self:_verify_cheated_outfit("weapon_mods", mod_item, 2)
+					return self:_verify_cheated_outfit("weapon_mods", mod_item, VoteManager.REASON.invalid_weapon)
 				end
 			end
-		elseif item_type == "melee_weapon" and not self:_verify_content("melee_weapons", item) then
-			return self:_verify_cheated_outfit("melee_weapons", item, 2)
+		elseif item_type == "melee_weapon" then
+			if not self:_verify_content("melee_weapons", item) then
+				return self:_verify_cheated_outfit("melee_weapons", item, VoteManager.REASON.invalid_weapon)
+			end
+		elseif item_type == "player_style" and not self:_verify_content("player_styles", item) then
+			return self:_verify_cheated_outfit("player_styles", item, VoteManager.REASON.invalid_player_style)
 		end
 	end
 
@@ -309,44 +313,44 @@ function NetworkPeer:_verify_content(item_type, item_id)
 		return true
 	end
 
-	local dlc_item, dlc_list, item_data = nil
+	local item_data = nil
 
 	if item_type == "weapon" then
 		item_data = tweak_data.weapon[item_id]
-		dlc_item = item_data and item_data.global_value
 	else
 		local item = tweak_data.blackmarket[item_type]
 		item_data = item and item[item_id]
-
-		if item_data.unatainable then
-			return false
-		end
-
-		if item_type == "masks" and item_data.name_id == "bm_msk_cheat_error" then
-			return false
-		end
-
-		dlc_item = item_data and item_data.dlc
-		dlc_list = item_data and item_data.dlc_list
 	end
 
 	if not item_data then
 		return false
 	end
 
-	if dlc_list then
-		for _, dlc in pairs(dlc_list) do
-			local dlc_data = Global.dlc_manager.all_dlc_data[dlc]
+	if item_data.unatainable or item_data.unattainable then
+		return false
+	end
 
-			if dlc_data and dlc_data.app_id and not dlc_data.external and not Steam:is_user_product_owned(self._user_id, dlc_data.app_id) then
-				return false
-			end
-		end
-	else
-		local dlc_data = Global.dlc_manager.all_dlc_data[dlc_item]
+	if item_type == "masks" and item_data.name_id == "bm_msk_cheat_error" then
+		return false
+	end
 
-		if dlc_data and dlc_data.app_id and not dlc_data.external and SystemInfo:distribution() == Idstring("STEAM") then
-			return Steam:is_user_product_owned(self._user_id, dlc_data.app_id)
+	if item_data.unlocked or item_data.is_a_unlockable or item_data.is_an_unlockable then
+		return true
+	end
+
+	local dlc_list = {}
+
+	table.insert(dlc_list, item_data.dlc or managers.dlc and managers.dlc:global_value_to_dlc(item_data.global_value))
+	table.list_append(dlc_list, item_data.dlc_list)
+
+	dlc_list = table.list_union(dlc_list, item_data.dlc_list)
+	local dlc_data = nil
+
+	for _, dlc in pairs(dlc_list) do
+		local dlc_data = dlc and Global.dlc_manager.all_dlc_data[dlc]
+
+		if dlc_data and dlc_data.app_id and not dlc_data.external and not Steam:is_user_product_owned(self._user_id, dlc_data.app_id) then
+			return false
 		end
 	end
 
@@ -505,7 +509,7 @@ function NetworkPeer:on_verify_tradable_outfit(outfit_version, error, list)
 end
 
 function NetworkPeer:tradable_verification_failed(group, outfit)
-	Application:error("[NetworkPeer:tradable_verification_failed] Failed to verify peer " .. tostring(self._id) .. "'s tradable item.")
+	Application:error("[NetworkPeer:tradable_verification_failed] Failed to verify peer " .. tostring(self._id) .. "'s tradable item.", group)
 
 	if not group or group == "primary_skin" then
 		outfit.primary.cosmetics = nil
@@ -1284,11 +1288,11 @@ function NetworkPeer:set_outfit_string(outfit_string, outfit_version, outfit_sig
 		self:verify_outfit()
 	end
 
+	self:_update_equipped_armor()
+
 	if old_outfit_string ~= outfit_string then
 		self:_reload_outfit()
 	end
-
-	self:_update_equipped_armor()
 
 	if self == managers.network:session():local_peer() then
 		self:_increment_outfit_version()
@@ -1362,6 +1366,24 @@ function NetworkPeer:skills()
 	local data = string.split(outfit_string, " ")
 
 	return data[managers.blackmarket:outfit_string_index("skills")]
+end
+
+function NetworkPeer:armor_skin_id()
+	local outfit_string = self:profile("outfit_string")
+
+	return managers.blackmarket:unpack_outfit_from_string(outfit_string).armor_skin
+end
+
+function NetworkPeer:player_style()
+	local outfit_string = self:profile("outfit_string")
+
+	return managers.blackmarket:unpack_outfit_from_string(outfit_string).player_style
+end
+
+function NetworkPeer:suit_variation()
+	local outfit_string = self:profile("outfit_string")
+
+	return managers.blackmarket:unpack_outfit_from_string(outfit_string).suit_variation
 end
 
 function NetworkPeer:has_blackmarket_outfit()
@@ -1615,6 +1637,14 @@ function NetworkPeer:_reload_outfit()
 		end
 	end
 
+	local player_style_u_name = tweak_data.blackmarket:get_player_style_value(complete_outfit.player_style, self._character, is_local_peer and "unit" or "third_unit")
+
+	if player_style_u_name then
+		new_outfit_assets.unit.player_style_w = {
+			name = Idstring(player_style_u_name)
+		}
+	end
+
 	self._outfit_assets = new_outfit_assets
 
 	for asset_id, asset_data in pairs(new_outfit_assets.unit) do
@@ -1637,6 +1667,17 @@ function NetworkPeer:_reload_outfit()
 	self._outfit_assets = new_outfit_assets
 
 	self:_chk_outfit_loading_complete()
+
+	if self._all_outfit_load_requests_sent and alive(self._unit) and managers.criminals then
+		local character = managers.criminals:character_by_name(self._character)
+
+		if character and character.visual_state and character.visual_state.player_style ~= complete_outfit.player_style then
+			self:update_character_visual_state({
+				player_style = "none",
+				suit_variation = "none"
+			})
+		end
+	end
 end
 
 function NetworkPeer:clbk_outfit_asset_loaded(outfit_assets, status, asset_type, asset_name)
@@ -1687,6 +1728,7 @@ function NetworkPeer:_chk_outfit_loading_complete()
 	self._all_outfit_load_requests_sent = nil
 	self._loading_outfit_assets = nil
 
+	self:update_character_visual_state()
 	managers.network:session():on_peer_outfit_loaded(self)
 
 	if self._outfit_loaded_clbks then
@@ -1867,9 +1909,9 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
 	end
 
 	spawn_in_custody = (member_downed or member_dead) and (trade_entry or ai_is_downed or not trade_entry and not has_old_unit)
-	local lvl_tweak_data = Global.level_data and Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
-	local unit_name_suffix = lvl_tweak_data and lvl_tweak_data.unit_suit or "suit"
 	local is_local_peer = self._id == managers.network:session():local_peer():id()
+	local team_id = tweak_data.levels:get_default_team_ID("player")
+	local visual_seed = CriminalsManager.get_new_visual_seed()
 	local unit_name = Idstring(tweak_data.blackmarket.characters[self:character_id()].fps_unit)
 	local unit = nil
 
@@ -1879,10 +1921,8 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
 		unit = Network:spawn_unit_on_client(self:rpc(), unit_name, pos_rot[1], pos_rot[2])
 	end
 
-	local team_id = tweak_data.levels:get_default_team_ID("player")
-
-	self:set_unit(unit, character_name, team_id)
-	managers.network:session():send_to_peers_synched("set_unit", unit, character_name, self:profile().outfit_string, self:outfit_version(), self._id, team_id)
+	self:set_unit(unit, character_name, team_id, visual_seed)
+	managers.network:session():send_to_peers_synched("set_unit", unit, character_name, self:profile().outfit_string, self:outfit_version(), self._id, team_id, visual_seed)
 
 	if is_local_peer then
 		unit:base():sync_unit_upgrades()
@@ -1898,43 +1938,6 @@ function NetworkPeer:spawn_unit(spawn_point_id, is_drop_in, spawn_as)
 		else
 			self:send_queued_sync("spawn_dropin_penalty", spawn_in_custody, spawn_in_custody, health, used_deployable, used_cable_ties, used_body_bags)
 		end
-	end
-
-	if unit:armor_skin() then
-		local outfit = managers.blackmarket:unpack_outfit_from_string(self:profile().outfit_string)
-
-		if outfit.armor_skin then
-			unit:armor_skin():set_cosmetics_data(outfit.armor_skin, true)
-		end
-	end
-
-	local char_tweak = tweak_data.blackmarket.characters.locked[character_name] or tweak_data.blackmarket.characters[character_name]
-
-	if is_local_peer and char_tweak and char_tweak.special_materials then
-		local special_material = nil
-		local special_materials = char_tweak.special_materials
-
-		for material, chance in pairs(special_materials) do
-			if type(chance) == "number" then
-				local rand = math.rand(chance)
-
-				if rand <= 1 then
-					special_material = material
-
-					break
-				end
-			end
-		end
-
-		special_material = special_material or table.random(special_materials)
-
-		if managers.blackmarket:equipped_armor_skin() ~= "none" then
-			special_material = special_material .. "_cc"
-		end
-
-		self._special_material = special_material
-
-		managers.network:session():send_to_peers_synched("sync_special_character_material", unit, special_material)
 	end
 
 	local vehicle = managers.vehicle:find_active_vehicle_with_player()
@@ -1979,13 +1982,16 @@ function NetworkPeer:spawn_unit_called()
 	return self._spawn_unit_called
 end
 
-function NetworkPeer:set_unit(unit, character_name, team_id)
+function NetworkPeer:set_unit(unit, character_name, team_id, visual_seed)
 	local is_new_unit = unit and (not self._unit or self._unit:key() ~= unit:key())
 	self._unit = unit
+	self._visual_seed = visual_seed
 
 	managers.player:need_send_player_status()
 
-	if is_new_unit and self._id == managers.network:session():local_peer():id() then
+	local is_local_peer = self._id == managers.network:session():local_peer():id()
+
+	if is_new_unit and is_local_peer then
 		managers.player:spawned_player(1, unit)
 	end
 
@@ -2011,43 +2017,26 @@ function NetworkPeer:set_unit(unit, character_name, team_id)
 		self._equipped_armor_id = nil
 
 		self:_update_equipped_armor()
-
-		if unit:damage() then
-			local sequence = managers.blackmarket:character_sequence_by_character_id(self:character_id(), self:id())
-
-			unit:damage():run_sequence_simple(sequence)
-		end
-
 		unit:movement():set_character_anim_variables()
+		self:update_character_visual_state()
+	end
+end
 
-		local char_td = tweak_data.blackmarket.characters[character_name]
+function NetworkPeer:update_character_visual_state(visual_state)
+	if managers.criminals and alive(self._unit) then
+		local is_local_peer = self._id == managers.network:session():local_peer():id()
+		local complete_outfit = self:blackmarket_outfit()
+		local outfit_loaded = self:is_outfit_loaded()
+		visual_state = visual_state or {}
+		visual_state.is_local_peer = is_local_peer
+		visual_state.visual_seed = visual_state.visual_seed or self._visual_seed
+		visual_state.player_style = visual_state.player_style or outfit_loaded and complete_outfit.player_style
+		visual_state.suit_variation = visual_state.suit_variation or outfit_loaded and complete_outfit.suit_variation
+		visual_state.mask_id = visual_state.mask_id or complete_outfit.mask.mask_id
+		visual_state.armor_id = visual_state.armor_id or self._equipped_armor_id
+		visual_state.armor_skin = visual_state.armor_skin or complete_outfit.armor_skin
 
-		if self._id == managers.network:session():local_peer():id() and char_td and char_td.special_materials then
-			local special_material = nil
-			local special_materials = char_td.special_materials
-
-			for material, chance in pairs(special_materials) do
-				if type(chance) == "number" then
-					local rand = math.rand(chance)
-
-					if rand <= 1 then
-						special_material = material
-
-						break
-					end
-				end
-			end
-
-			special_material = special_material or table.random(special_materials)
-
-			if managers.blackmarket:equipped_armor_skin() ~= "none" then
-				special_material = special_material .. "_cc"
-			end
-
-			self._special_material = special_material
-
-			managers.network:session():send_to_peers_synched("sync_special_character_material", unit, special_material)
-		end
+		managers.criminals:update_character_visual_state(self:character(), visual_state)
 	end
 end
 
@@ -2083,24 +2072,6 @@ function NetworkPeer:_update_equipped_armor()
 
 	if self._equipped_armor_id ~= new_armor_id then
 		self._equipped_armor_id = new_armor_id
-		local armor_sequence = tweak_data.blackmarket.armors[new_armor_id].sequence
-
-		if managers.job and managers.job:current_level_id() == "glace" or managers.job:current_level_id() == "dah" or managers.job:current_level_id() == "wwh" or managers.job:current_level_id() == "sah" then
-			armor_sequence = nil
-		end
-
-		if armor_sequence and self._unit:damage() and self._unit:damage():has_sequence(armor_sequence) then
-			self._unit:damage():run_sequence_simple(armor_sequence)
-		end
-
-		if self._unit:base() and self._unit:base().set_armor_id then
-			self._unit:base():set_armor_id(new_armor_id)
-		end
-
-		if self._unit:armor_skin() and self._unit:armor_skin().set_armor_id then
-			self._unit:armor_skin():set_armor_id(new_armor_id)
-		end
-
 		local con_mul, index = managers.blackmarket:get_concealment_of_peer(self)
 
 		self._unit:base():set_suspicion_multiplier("equipment", 1 / con_mul)

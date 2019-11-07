@@ -7,7 +7,7 @@ if Global.load_level then
 elseif Global.load_start_menu then
 	selected_setup = require("lib/setups/MenuSetup")
 elseif Application:editor() then
-	selected_setup = require("lib/setups/NetworkGameSetup")
+	selected_setup = require("lib/setups/EditorSetup")
 else
 	selected_setup = require("lib/setups/MenuSetup")
 end

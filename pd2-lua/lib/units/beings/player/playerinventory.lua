@@ -4,6 +4,7 @@ PlayerInventory._all_event_types = {
 	"equip",
 	"unequip"
 }
+local ids_unit = Idstring("unit")
 PlayerInventory._NET_EVENTS = {
 	feedback_start = 3,
 	jammer_start = 1,
@@ -137,6 +138,8 @@ end
 function PlayerInventory:clbk_weapon_unit_destroyed(weap_unit)
 	local weapon_key = weap_unit:key()
 
+	managers.dyn_resource:unload(ids_unit, weap_unit:name(), managers.dyn_resource.DYN_RESOURCES_PACKAGE)
+
 	for i_sel, sel_data in pairs(self._available_selections) do
 		if sel_data.unit:key() == weapon_key then
 			if i_sel == self._equipped_selection then
@@ -169,6 +172,8 @@ function PlayerInventory:add_unit_by_name(new_unit_name, equip, instant)
 		end
 	end
 
+	managers.dyn_resource:load(ids_unit, new_unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE, nil)
+
 	local new_unit = World:spawn_unit(new_unit_name, Vector3(), Rotation())
 	local setup_data = {
 		user_unit = self._unit,
@@ -190,9 +195,7 @@ function PlayerInventory:add_unit_by_factory_name(factory_name, equip, instant, 
 	local factory_weapon = tweak_data.weapon.factory[factory_name]
 	local ids_unit_name = Idstring(factory_weapon.unit)
 
-	if not managers.dyn_resource:is_resource_ready(Idstring("unit"), ids_unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE) then
-		managers.dyn_resource:load(Idstring("unit"), ids_unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE, nil)
-	end
+	managers.dyn_resource:load(ids_unit, ids_unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE, nil)
 
 	local new_unit = World:spawn_unit(ids_unit_name, Vector3(), Rotation())
 
@@ -895,7 +898,9 @@ function PlayerInventory:sync_net_event(event_id, peer)
 end
 
 function PlayerInventory:get_jammer_time()
-	return self._unit:base():upgrade_value("player", "pocket_ecm_jammer_base").duration
+	local upgrade_value = self._unit:base():upgrade_value("player", "pocket_ecm_jammer_base")
+
+	return upgrade_value and upgrade_value.duration or 0
 end
 
 function PlayerInventory:_send_net_event(event_id)
@@ -1085,7 +1090,7 @@ function PlayerInventory:_do_feedback()
 	ECMJammerBase._detect_and_give_dmg(self._unit:position(), nil, self._unit, 2500)
 
 	if self._jammer_data.t - 0.1 < t + self._jammer_data.interval then
-		managers.enemy:add_delayed_clbk(self._jammer_data.feedback_callback_key, t + self._feedback_interval)
+		managers.enemy:add_delayed_clbk(self._jammer_data.feedback_callback_key, t + self._jammer_data.interval)
 	else
 		managers.enemy:add_delayed_clbk(self._jammer_data.feedback_callback_key, callback(self, self, "stop_feedback_effect"), self._jammer_data.t)
 	end

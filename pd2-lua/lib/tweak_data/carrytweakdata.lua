@@ -978,6 +978,8 @@ function CarryTweakData:init(tweak_data)
 			SO_category = "enemies"
 		}
 	}
+	self.roman_armor = deep_clone(self.samurai_suit)
+	self.roman_armor.name_id = "hud_carry_roman_armor"
 end
 
 function CarryTweakData:get_carry_ids()

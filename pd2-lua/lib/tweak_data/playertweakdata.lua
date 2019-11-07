@@ -339,7 +339,7 @@ function PlayerTweakData:init()
 	self.movement_state.stamina.MIN_STAMINA_THRESHOLD = 4
 	self.movement_state.stamina.JUMP_STAMINA_DRAIN = 2
 	self.camera = {
-		MIN_SENSITIVITY = 0.3,
+		MIN_SENSITIVITY = 0.1,
 		MAX_SENSITIVITY = 1.7
 	}
 	self.omniscience = {

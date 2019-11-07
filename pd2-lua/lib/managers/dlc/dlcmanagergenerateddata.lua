@@ -10,8 +10,16 @@ function GenericDLCManager:has_maw()
 	return self:is_dlc_unlocked("maw")
 end
 
+function GenericDLCManager:has_mex()
+	return self:is_dlc_unlocked("mex")
+end
+
 function GenericDLCManager:has_mmh()
 	return self:is_dlc_unlocked("mmh")
+end
+
+function GenericDLCManager:has_mwm()
+	return self:is_dlc_unlocked("mwm")
 end
 
 function GenericDLCManager:has_scm()
@@ -54,6 +62,10 @@ function GenericDLCManager:has_toon()
 	return self:is_dlc_unlocked("toon")
 end
 
+function GenericDLCManager:has_trd()
+	return self:is_dlc_unlocked("trd")
+end
+
 function WINDLCManager:init_generated()
 	Global.dlc_manager.all_dlc_data.flm = {
 		app_id = "218620",
@@ -67,9 +79,19 @@ function WINDLCManager:init_generated()
 		app_id = "218620",
 		no_install = true
 	}
+	Global.dlc_manager.all_dlc_data.mex = {
+		app_id = "1184411",
+		no_install = true,
+		webpage = "https://ovk.af/ingame2BorderCrossing"
+	}
 	Global.dlc_manager.all_dlc_data.mmh = {
 		app_id = "218620",
 		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.mwm = {
+		app_id = "1184412",
+		no_install = true,
+		webpage = "https://ovk.af/ingame2CartelOptics"
 	}
 	Global.dlc_manager.all_dlc_data.scm = {
 		app_id = "218620",
@@ -110,5 +132,10 @@ function WINDLCManager:init_generated()
 	Global.dlc_manager.all_dlc_data.toon = {
 		app_id = "218620",
 		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.trd = {
+		app_id = "1184410",
+		no_install = true,
+		webpage = "https://ovk.af/ingame2TailorPack"
 	}
 end

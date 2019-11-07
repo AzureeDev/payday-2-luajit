@@ -1884,7 +1884,7 @@ function InteractionTweakData:init(tweak_data)
 		sound_event = "ammo_bag_drop"
 	}
 	self.open_slash_close = {
-		text_id = "hud_int_open_slash_close",
+		text_id = "hud_int_press_interaction_open",
 		start_active = false,
 		axis = "y",
 		interact_distance = 200
@@ -1895,6 +1895,8 @@ function InteractionTweakData:init(tweak_data)
 		timer = 1,
 		start_active = true
 	}
+	self.just_close = deep_clone(self.open_slash_close)
+	self.just_close.text_id = "hud_int_press_interaction_close"
 	self.raise_balloon = {
 		text_id = "hud_int_hold_raise_balloon",
 		action_text_id = "hud_action_raise_balloon",
@@ -2865,6 +2867,7 @@ function InteractionTweakData:init(tweak_data)
 		text_id = "hud_generator_start",
 		action_text_id = "hud_action_generator_start",
 		start_active = false,
+		timer = 4,
 		interact_distance = 300
 	}
 	self.hold_open_bomb_case = {
@@ -5808,5 +5811,107 @@ function InteractionTweakData:init(tweak_data)
 		start_active = false,
 		sound_start = "bar_restaurant_kitchen_loop",
 		sound_interupt = "bar_restaurant_kitchen_cancel"
+	}
+	self.hold_remove_tarp = {
+		text_id = "hud_int_remove_tarp",
+		action_text_id = "hud_action_removing_tarp",
+		timer = 3,
+		interact_distance = 200,
+		start_active = false,
+		sound_start = "bar_cut_tarp",
+		sound_interupt = "bar_cut_tarp_cancel",
+		sound_done = "bar_cut_tarp_finish"
+	}
+	self.unlock_gate = {
+		text_id = "hud_int_unlock_gate",
+		action_text_id = "hud_action_unlock_gate",
+		axis = "y",
+		timer = 1,
+		interact_distance = 250,
+		start_active = false,
+		sound_start = "bar_keyboard",
+		sound_interupt = "bar_keyboard_cancel"
+	}
+	self.mex_pickup_meth_bag = {
+		text_id = "hud_int_hold_grab_the_bag",
+		action_text_id = "hud_action_grabbing_bag",
+		start_active = true,
+		timer = 3
+	}
+	self.hold_generator_start_directional = {
+		text_id = "hud_generator_start",
+		action_text_id = "hud_action_generator_start",
+		start_active = false,
+		timer = 4,
+		interact_distance = 300,
+		sound_start = "bar_water_pump",
+		sound_cancel = "bar_water_pump_cancel",
+		sound_done = "bar_water_pump_finish",
+		axis = "y"
+	}
+	self.mex_red_room_key = {
+		icon = "equipment_bank_manager_key",
+		text_id = "hud_int_pickup_asset",
+		equipment_text_id = "hud_int_pickup_asset",
+		special_equipment = "keychain",
+		sound_done = "pickup_key",
+		equipment_consume = true,
+		interact_distance = 150
+	}
+	self.mex_red_door = {
+		icon = "equipment_bank_manager_key",
+		text_id = "hud_cas_open_door",
+		equipment_text_id = "hud_action_try_keys_no_key",
+		special_equipment = "keychain",
+		sound_start = "bar_unlock_grate_door",
+		sound_interupt = "bar_unlock_grate_door_cancel",
+		sound_done = "bar_unlock_grate_door_finished",
+		equipment_consume = true,
+		interact_distance = 150
+	}
+	self.money_wrap_updating_directional = deep_clone(self.money_wrap_updating)
+	self.money_wrap_updating_directional.axis = "y"
+	self.gen_pku_cocaine_directional = deep_clone(self.gen_pku_cocaine)
+	self.gen_pku_cocaine_directional.axis = "y"
+	self.connect_hose_directional = deep_clone(self.connect_hose)
+	self.connect_hose_directional.axis = "y"
+	self.mex_pickup_murky_uniforms = {
+		text_id = "hud_int_mex_pickup_murky_uniforms",
+		action_text_id = "hud_action_mex_pickup_murky_uniforms",
+		start_active = true,
+		timer = 1,
+		interact_distance = 250,
+		start_active = false,
+		sound_start = "play_bag_generic_pickup"
+	}
+	self.roman_armor = deep_clone(self.samurai_armor)
+	self.roman_armor.text_id = "hud_int_hold_bag_ro_armor"
+	self.roman_armor.action_text_id = "hud_action_bagging_ro_armor"
+	self.hold_take_vault_blueprint = deep_clone(self.hold_take_blueprints)
+	self.hold_take_vault_blueprint.icon = "equipment_blueprint"
+	self.connect_hose_wwh_short_distance = deep_clone(self.connect_hose_wwh)
+	self.connect_hose_wwh_short_distance.interact_distance = 100
+	self.detach_hose_wwh_short_distance = deep_clone(self.detach_hose_wwh)
+	self.detach_hose_wwh_short_distance.interact_distance = 100
+	self.mex_gasoline = {
+		icon = "equipment_thermite",
+		text_id = "debug_interact_gas",
+		equipment_text_id = "debug_interact_equipment_gas",
+		special_equipment = "gas",
+		equipment_consume = true,
+		interact_distance = 300,
+		axis = "y"
+	}
+	self.connect_hose_mex = {
+		icon = "develop",
+		text_id = "hud_int_hold_connect_hose",
+		action_text_id = "hud_action_connect_hose",
+		start_active = false,
+		timer = 4,
+		interact_distance = 200,
+		sound_start = "bar_hose_drag_out",
+		sound_interupt = "bar_hose_drag_out_cancel",
+		sound_done = "bar_hose_drag_out_finish",
+		axis = "y"
 	}
 end

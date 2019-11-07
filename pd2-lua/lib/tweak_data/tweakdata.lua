@@ -728,7 +728,7 @@ function TweakData:init()
 	self.timespeed = TimeSpeedEffectTweakData:new()
 	self.sound = SoundTweakData:new()
 	self.lootdrop = LootDropTweakData:new(self)
-	self.gui = GuiTweakData:new()
+	self.gui = GuiTweakData:new(self)
 	self.assets = AssetsTweakData:new(self)
 
 	self._init_wip_assets(self.assets, self)
@@ -757,6 +757,9 @@ function TweakData:init()
 	self.story = StoryMissionsTweakData:new(self)
 	self.promo_unlocks = PromoUnlocksTweakData:new(self)
 	self.raid_jobs = RaidJobsTweakData:new(self)
+
+	self.blackmarket:build_player_style_list(self)
+
 	self.ai_carry = {
 		throw_distance = 500,
 		throw_force = 100,
@@ -1201,6 +1204,21 @@ Play the full version soon to get your full PAYDAY!]],
 		color = Color(1, 0, 0, 0),
 		timer = TimerManager:main(),
 		text_color = Color(255, 255, 204, 0) / 255
+	}
+	self.overlay_effects.fade_out_mex = {
+		text_to_upper = true,
+		sustain = 4,
+		localize = true,
+		fade_in = 1,
+		text_blend_mode = "add",
+		fade_out = 1,
+		font = "fonts/font_large_mf",
+		text = "heist_mex_transition",
+		font_size = 44,
+		blend_mode = "normal",
+		color = Color(1, 0, 0, 0),
+		timer = TimerManager:main(),
+		text_color = Color(255, 255, 153, 0) / 255
 	}
 	self.overlay_effects.fade_out_e3_video = {
 		blend_mode = "normal",
@@ -1755,6 +1773,9 @@ Play the full version soon to get your full PAYDAY!]],
 		},
 		{
 			track = "track_34_lcv"
+		},
+		{
+			track = "track_65"
 		},
 		{
 			track = "track_pth_01",

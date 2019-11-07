@@ -131,6 +131,10 @@ local base_res = {
 	y = 720
 }
 
+function GuiDataManager:get_base_res()
+	return base_res.x, base_res.y
+end
+
 function GuiDataManager:_setup_workspace_data()
 	print("[GuiDataManager:_setup_workspace_data]")
 

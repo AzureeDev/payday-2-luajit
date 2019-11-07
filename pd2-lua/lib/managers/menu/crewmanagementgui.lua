@@ -457,7 +457,7 @@ end
 
 function CrewManagementGui:create_mask_button(panel, index)
 	local loadout = managers.blackmarket:henchman_loadout(index)
-	local texture = managers.blackmarket:get_mask_icon(loadout.mask)
+	local texture = managers.blackmarket:get_mask_icon(loadout.mask, managers.menu_scene:get_henchmen_character(index) or managers.blackamrket:preferred_henchmen(index))
 	local text = managers.blackmarket:get_mask_name_by_category_slot("masks", loadout.mask_slot)
 	local cat_text = managers.localization:to_upper_text("bm_menu_masks")
 
@@ -1034,6 +1034,7 @@ function CrewManagementGui:open_mask_category_menu(henchman_index)
 	new_node_data.selected_tab = selected_tab
 	new_node_data.scroll_tab_anywhere = true
 	new_node_data.hide_detection_panel = true
+	new_node_data.character_id = managers.menu_scene:get_henchmen_character(henchman_index) or managers.blackamrket:preferred_henchmen(henchman_index)
 	new_node_data.custom_callback = {
 		m_equip = callback(self, self, "select_mask", henchman_index)
 	}
@@ -1073,6 +1074,21 @@ function CrewManagementGui:populate_primaries(henchman_index, data, gui)
 
 		v.comparision_data = nil
 		v.mini_icons = nil
+	end
+end
+
+function CrewManagementGui:populate_buy_weapon(gui, data)
+	gui:populate_buy_weapon(data)
+
+	for _, data in ipairs(data) do
+		local weapon_data = tweak_data.weapon[data.name]
+
+		if data.name ~= "" and weapon_data and not managers.blackmarket:is_weapon_category_allowed_for_crew(weapon_data.categories[1]) then
+			data.buttons = {}
+			data.unlocked = false
+			data.lock_texture = "guis/textures/pd2/lock_incompatible"
+			data.lock_text = managers.localization:text("menu_data_crew_not_allowed")
+		end
 	end
 end
 
@@ -1225,11 +1241,9 @@ function CrewManagementGui:select_weapon(index, data, gui)
 end
 
 function CrewManagementGui:buy_new_weapon(data, gui)
-	local function item_allowed(weapon_data)
-		return managers.blackmarket:is_weapon_category_allowed_for_crew(weapon_data.categories[1])
-	end
+	data.on_create_func = callback(self, self, "populate_buy_weapon", gui)
 
-	gui:open_weapon_buy_menu(data, item_allowed)
+	gui:open_weapon_buy_menu(data)
 end
 
 function CrewManagementGui:select_mask(index, data, gui)

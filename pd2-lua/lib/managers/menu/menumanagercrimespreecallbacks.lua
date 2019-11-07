@@ -415,6 +415,7 @@ function MenuCallbackHandler:crime_spree_continue()
 end
 
 function MenuCallbackHandler:_dialog_crime_spree_continue_yes()
+	print("[MenuCallbackHandler:_dialog_crime_spree_continue_yes]")
 	managers.crime_spree:continue_crime_spree()
 	managers.menu:active_menu().logic:refresh_node("main")
 

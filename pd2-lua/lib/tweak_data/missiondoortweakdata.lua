@@ -677,6 +677,23 @@ function MissionDoorTweakData:init()
 			unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge_single")
 		}
 	}
+	self.cage_door_deluxe_non_jamming = {
+		devices = {}
+	}
+	self.cage_door_deluxe_non_jamming.devices.drill = {
+		{
+			align = "a_drill",
+			timer = 60,
+			can_jam = false,
+			unit = Idstring("units/payday2/equipment/item_door_drill_small/item_door_drill_small")
+		}
+	}
+	self.cage_door_deluxe_non_jamming.devices.c4 = {
+		{
+			align = "a_shp_charge",
+			unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge_single")
+		}
+	}
 	self.c4_door = {
 		devices = {}
 	}
@@ -810,6 +827,23 @@ function MissionDoorTweakData:init()
 		{
 			align = "a_ecm_hack",
 			unit = Idstring("units/payday2/equipment/gen_interactable_door_keycard/gen_interactable_door_keycard_jammer")
+		}
+	}
+	self.truck_jam_once = {
+		devices = {}
+	}
+	self.truck_jam_once.devices.drill = {
+		{
+			align = "a_drill",
+			timer = 120,
+			can_jam = true,
+			unit = Idstring("units/payday2/equipment/item_door_drill_small/item_door_drill_small_jam_once")
+		}
+	}
+	self.truck_jam_once.devices.c4 = {
+		{
+			align = "a_shp_charge",
+			unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
 		}
 	}
 end

@@ -152,6 +152,21 @@ function LocalizationManager:_setup_macros()
 		d_right = btn_dpad_r
 	}
 	self._input_translations.xb1 = table.map_copy(self._input_translations.xbox360)
+	self._input_translations.ps3 = table.map_copy(self._input_translations.xbox360)
+
+	table.map_append(self._input_translations.ps3, {
+		cross = btn_a,
+		circle = btn_b,
+		square = btn_x,
+		triangle = btn_y,
+		r1_trigger = btn_top_r,
+		l1_trigger = btn_top_l,
+		l2_trigger = btn_bottom_l,
+		r2_trigger = btn_bottom_r,
+		select = btn_back
+	})
+
+	self._input_translations.ps4 = table.map_copy(self._input_translations.ps3)
 end
 
 local is_PS3 = SystemInfo:platform() == Idstring("PS3")

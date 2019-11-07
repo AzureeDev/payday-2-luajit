@@ -584,13 +584,15 @@ function GroupAIStateBesiege:_upd_assault_task()
 				task_data.phase = nil
 				task_data.said_retreat = nil
 				task_data.force_end = nil
+				local force_regroup = task_data.force_regroup
+				task_data.force_regroup = nil
 
 				if self._draw_drama then
 					self._draw_drama.assault_hist[#self._draw_drama.assault_hist][2] = t
 				end
 
 				managers.mission:call_global_event("end_assault")
-				self:_begin_regroup_task()
+				self:_begin_regroup_task(force_regroup)
 
 				return
 			end
@@ -740,9 +742,9 @@ function GroupAIStateBesiege:_begin_recon_task(recon_area)
 	self._task_data.recon.next_dispatch_t = nil
 end
 
-function GroupAIStateBesiege:_begin_regroup_task()
+function GroupAIStateBesiege:_begin_regroup_task(force_regroup)
 	self._task_data.regroup.start_t = self._t
-	self._task_data.regroup.end_t = self._t + self:_get_difficulty_dependent_value(self._tweak_data.regroup.duration)
+	self._task_data.regroup.end_t = self._t + (force_regroup and 0.1 or self:_get_difficulty_dependent_value(self._tweak_data.regroup.duration))
 	self._task_data.regroup.active = true
 
 	if self._draw_drama then
@@ -4217,7 +4219,7 @@ function GroupAIStateBesiege:phalanx_spawn_group()
 	return self._phalanx_spawn_group
 end
 
-function GroupAIStateBesiege:force_end_assault_phase()
+function GroupAIStateBesiege:force_end_assault_phase(force_regroup)
 	local task_data = self._task_data.assault
 
 	if task_data.active then
@@ -4225,6 +4227,12 @@ function GroupAIStateBesiege:force_end_assault_phase()
 
 		task_data.phase = "fade"
 		task_data.force_end = true
+
+		if force_regroup then
+			task_data.force_regroup = true
+
+			managers.enemy:update_queue_task("GroupAIStateBesiege._upd_police_activity", nil, nil, self._t + 0.1, nil, nil)
+		end
 	end
 
 	self:set_assault_endless(false)

@@ -43,7 +43,16 @@ function MenuMainState:at_enter(old_state)
 				fade_out = 0.5,
 				color = Color.black
 			})
-			managers.menu:open_node("crimenet")
+
+			if Global.game_settings.single_player then
+				MenuCallbackHandler:play_single_player()
+				MenuCallbackHandler:chk_dlc_content_updated()
+				managers.menu:open_node("crimenet_single_player")
+			else
+				MenuCallbackHandler:play_online_game()
+				MenuCallbackHandler:chk_dlc_content_updated()
+				managers.menu:open_node("crimenet")
+			end
 
 			Global.load_crime_net = false
 		elseif Global.load_start_menu then

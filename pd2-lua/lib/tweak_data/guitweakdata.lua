@@ -1,6 +1,8 @@
 GuiTweakData = GuiTweakData or class()
 
-function GuiTweakData:init()
+function GuiTweakData:init(tweak_data)
+	local is_win_32 = SystemInfo:platform() == Idstring("WIN32")
+	local is_nextgen = SystemInfo:platform() == Idstring("PS4") or SystemInfo:platform() == Idstring("XB1")
 	local soundtrack = {
 		store = 254260,
 		name_id = "menu_content_soundtrack",
@@ -2308,6 +2310,18 @@ function GuiTweakData:init()
 			name_id = "menu_playable_characters",
 			id = "playable_characters"
 		}
+	}
+	local padding = 10
+	local panel_width = 900
+	local panel_height = 580
+	local text_width = 500
+	local contact_width = panel_width - text_width - 3 * padding
+	self.crime_net.contract_gui = {
+		width = panel_width,
+		height = panel_height,
+		padding = padding,
+		text_width = text_width,
+		contact_width = contact_width
 	}
 	self.crime_net.locations = {}
 
@@ -5059,18 +5073,43 @@ function GuiTweakData:init()
 		"bonus"
 	}
 	self.new_heists = {
-		limit = 5
+		limit = 6
 	}
 
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_legacy",
+		texture_path = "guis/textures/pd2/new_heists/legacy",
+		url = "https://ovk.af/ingameLegacy"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_mex",
+		texture_path = "guis/textures/pd2/new_heists/mex",
+		url = "https://ovk.af/ingameBorderCrossing"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_trd",
+		texture_path = "guis/textures/pd2/new_heists/trd",
+		url = "https://ovk.af/ingameTailorPack"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_mwm",
+		texture_path = "guis/textures/pd2/new_heists/mwm",
+		url = "https://ovk.af/ingameCartelOptics"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_combo",
+		texture_path = "guis/textures/pd2/new_heists/combo",
+		url = "https://ovk.af/ingameBCBundle"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_theme",
+		texture_path = "guis/textures/pd2/new_heists/theme",
+		url = "https://ovk.af/themedbundle"
+	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_crimefest_2018",
 		texture_path = "guis/textures/pd2/new_heists/crimefest_2018",
 		url = "https://www.overkillsoftware.com/games/breakingnews/"
-	})
-	table.insert(self.new_heists, {
-		name_id = "menu_nh_crimefest_2018_sale",
-		texture_path = "guis/textures/pd2/new_heists/crimefest_2018_sale",
-		url = "https://store.steampowered.com/bundle/3756/PAYDAY_2_Ultimate_Edition/ "
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_icebreaker",
@@ -5186,11 +5225,6 @@ function GuiTweakData:init()
 		name_id = "menu_nh_golden_chains",
 		texture_path = "guis/textures/pd2/new_heists/golden_chains",
 		url = "http://steamcommunity.com/games/218620/announcements/detail/1444947199697735668"
-	})
-	table.insert(self.new_heists, {
-		name_id = "menu_nh_ultimate_edition",
-		texture_path = "guis/textures/pd2/new_heists/ultimate_edition",
-		url = "http://store.steampowered.com/app/218620"
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_community_safe_4",

@@ -97,10 +97,16 @@ function LobbyCharacterData:set_alpha(new_alpha)
 end
 
 function LobbyCharacterData:update_peer_id(new_peer_id)
-	local peer = managers.network:session():peer(new_peer_id)
-	self._peer = peer
+	if not self:_can_update() then
+		return
+	end
 
-	self:set_alpha(peer and 1 or 0)
+	if new_peer_id then
+		local peer = managers.network:session():peer(new_peer_id)
+		self._peer = peer
+
+		self:set_alpha(peer and 1 or 0)
+	end
 end
 
 function LobbyCharacterData:update_character()

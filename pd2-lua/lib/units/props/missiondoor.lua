@@ -291,7 +291,17 @@ function MissionDoor:_destroy_devices()
 	for _, device in pairs(self._devices) do
 		for _, unit_data in ipairs(device.units) do
 			if alive(unit_data.unit) then
-				unit_data.unit:set_slot(0)
+				if unit_data.unit:timer_gui() and unit_data.unit:timer_gui():is_playing_done_event() then
+					unit_data.unit:set_visible(false)
+					unit_data.unit:timer_gui():hide()
+					unit_data.unit:timer_gui():add_listener_to_done_event(function (unit)
+						if alive(unit) then
+							unit:set_slot(0)
+						end
+					end)
+				else
+					unit_data.unit:set_slot(0)
+				end
 			end
 		end
 	end

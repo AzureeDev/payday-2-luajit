@@ -145,13 +145,15 @@ function CivilianDamage:stun_hit(attack_data)
 end
 
 function CivilianDamage:_lie_down_clbk(attacker_unit)
-	local params = {
-		force_lie_down = true
-	}
+	if alive(attacker_unit) and alive(self._unit) then
+		local params = {
+			force_lie_down = true
+		}
 
-	self._unit:brain():set_logic("surrender", params)
+		self._unit:brain():set_logic("surrender", params)
 
-	self._lie_down_clbk_id = nil
+		self._lie_down_clbk_id = nil
+	end
 end
 
 function CivilianDamage:damage_melee(attack_data)

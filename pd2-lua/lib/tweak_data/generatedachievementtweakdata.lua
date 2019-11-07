@@ -1343,6 +1343,7 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		bob_10 = {
+			additional_id = true,
 			sort_name = "Other_H_Any_GhostRiders",
 			icon_id = "Other_H_Any_GhostRiders",
 			tags = {
@@ -2510,6 +2511,7 @@ function init_auto_generated_achievement_data(tags)
 			need_unlock_icons = true,
 			icon_id = "C_Vlad_H_XMas_Riders",
 			sort_name = "C_Vlad_H_XMas_Riders",
+			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.heisting,
@@ -5421,6 +5423,7 @@ function init_auto_generated_achievement_data(tags)
 			need_unlock_icons = true,
 			icon_id = "C_Event_H_PrisonNightmare_ALongNight",
 			sort_name = "C_Event_H_PrisonNightmare_ALongNight",
+			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.heisting,
@@ -6627,7 +6630,7 @@ function init_auto_generated_achievement_data(tags)
 			icon_id = "C_Classics_H_HeatStreet_ItsNice",
 			tags = {
 				tags.progress.heisting,
-				tags.difficulty.normal,
+				tags.difficulty.hard,
 				tags.tactics.loud,
 				tags.contracts.classic
 			}
@@ -7254,375 +7257,441 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.escape
 			}
 		},
-		ggez_1 = {
+		bph_1 = {
+			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D0",
+			ladder = "H_HellsIsland",
+			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_10 = {
+			sort_name = "C_Locke_H_HellsIsland_Another",
+			icon_id = "C_Locke_H_HellsIsland_Another",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_11 = {
+			sort_name = "C_Locke_H_HellsIsland_Beacon",
+			icon_id = "C_Locke_H_HellsIsland_Beacon",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_2 = {
+			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D1",
+			ladder = "H_HellsIsland",
+			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_3 = {
+			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D2",
+			ladder = "H_HellsIsland",
+			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_4 = {
+			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D3",
+			ladder = "H_HellsIsland",
+			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_5 = {
+			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D4",
+			ladder = "H_HellsIsland",
+			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_6 = {
+			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D5",
+			ladder = "H_HellsIsland",
+			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_7 = {
+			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D6",
+			ladder = "H_HellsIsland",
+			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_8 = {
+			icon_id = "C_Locke_H_HellsIsland_AllDiffs_OD_D6",
+			ladder = "H_HellsIsland",
+			sort_name = "C_Locke_H_HellsIsland_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		bph_9 = {
+			sort_name = "C_Locke_H_HellsIsland_PrisonRules",
+			icon_id = "C_Locke_H_HellsIsland_PrisonRules",
+			progress = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.inventory.weapon,
+				tags.contracts.locke
+			}
+		},
+		brb_1 = {
+			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D0",
+			ladder = "H_BrooklynBank",
+			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		brb_10 = {
+			additional_id = true,
+			sort_name = "C_Locke_H_BrooklynBank_AnimalKingdom",
+			icon_id = "C_Locke_H_BrooklynBank_AnimalKingdom",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.inventory.mask,
+				tags.teamwork.players_4,
+				tags.contracts.locke
+			}
+		},
+		brb_2 = {
+			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D1",
+			ladder = "H_BrooklynBank",
+			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		brb_3 = {
+			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D2",
+			ladder = "H_BrooklynBank",
+			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		brb_4 = {
+			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D3",
+			ladder = "H_BrooklynBank",
+			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		brb_5 = {
+			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D4",
+			ladder = "H_BrooklynBank",
+			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		brb_6 = {
+			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D5",
+			ladder = "H_BrooklynBank",
+			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		brb_7 = {
+			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_OD_D6",
+			ladder = "H_BrooklynBank",
+			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		brb_8 = {
 			need_unlock_icons = true,
-			icon_id = "C_All_H_All_AllJobs_OD_D6",
-			ladder = "C_All",
-			sort_name = "C_All_H_All_AllJobs_OD_D6",
+			icon_id = "C_Locke_H_BrooklynBank_AlltheGold",
+			sort_name = "C_Locke_H_BrooklynBank_AlltheGold",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.very_hard,
+				tags.unlock.mask,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		brb_9 = {
+			need_unlock_icons = true,
+			icon_id = "C_Locke_H_BrooklynBank_Obsessive",
+			sort_name = "C_Locke_H_BrooklynBank_Obsessive",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.unlock.mask,
+				tags.tactics.loud,
+				tags.inventory.weapon,
+				tags.inventory.equipment,
+				tags.contracts.locke
+			}
+		},
+		ckr_1 = {
+			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D0",
+			ladder = "H_CursedKill",
+			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.stealth,
+				tags.contracts.events
+			}
+		},
+		ckr_2 = {
+			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D1",
+			ladder = "H_CursedKill",
+			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		ckr_3 = {
+			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D2",
+			ladder = "H_CursedKill",
+			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.stealth,
+				tags.contracts.events
+			}
+		},
+		ckr_4 = {
+			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D3",
+			ladder = "H_CursedKill",
+			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		ckr_5 = {
+			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D4",
+			ladder = "H_CursedKill",
+			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.stealth,
+				tags.contracts.events
+			}
+		},
+		ckr_6 = {
+			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D5",
+			ladder = "H_CursedKill",
+			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		ckr_7 = {
+			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_OD_D6",
+			ladder = "H_CursedKill",
+			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.stealth,
+				tags.contracts.events
+			}
+		},
+		dah_1 = {
+			need_unlock_icons = true,
+			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D0",
+			ladder = "H_DiamondHeist",
+			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D0",
 			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.unlock.mask,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.all
-			}
-		},
-		ggez_10 = {
-			icon_id = "C_Continental_H_All_AllDiffs_D6",
-			ladder = "C_Continental",
-			sort_name = "C_Continental_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_continental
-			}
-		},
-		ggez_11 = {
-			icon_id = "C_Elephant_H_All_AllDiffs_D6",
-			ladder = "C_Elephant",
-			sort_name = "C_Elephant_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_elephant
-			}
-		},
-		ggez_12 = {
-			icon_id = "C_Vlad_H_All_AllDiffs_D6",
-			ladder = "C_Vlad",
-			sort_name = "C_Vlad_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.vlad
-			}
-		},
-		ggez_13 = {
-			icon_id = "C_Continental_H_YachtHeist_AllDiffs_D6",
-			ladder = "H_YachtHeist",
-			sort_name = "C_Continental_H_YachtHeist_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.stealth,
-				tags.contracts.the_continental
-			}
-		},
-		ggez_14 = {
-			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D6",
-			ladder = "H_SafeHouseNightmare",
-			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		ggez_15 = {
-			icon_id = "C_Vlad_H_Ashock_AllDiffs_D6",
-			ladder = "H_After",
-			sort_name = "C_Vlad_H_Ashock_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.vlad
-			}
-		},
-		ggez_16 = {
-			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D6",
-			ladder = "H_Alaskan",
-			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		ggez_17 = {
-			icon_id = "C_Bain_H_Arena_AllDiffs_D6",
-			ladder = "H_Arena",
-			sort_name = "C_Bain_H_Arena_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_18 = {
-			icon_id = "C_Bain_H_ArtGallery_AllDiffs_D6",
-			ladder = "H_ArtGallery",
-			sort_name = "C_Bain_H_ArtGallery_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_19 = {
-			icon_id = "C_Bain_H_BankC_AllDiffs_D6",
-			ladder = "H_BankC",
-			sort_name = "C_Bain_H_BankC_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_2 = {
-			icon_id = "C_Bain_H_All_AllDiffs_D6",
-			ladder = "C_Bain",
-			sort_name = "C_Bain_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_20 = {
-			icon_id = "C_Bain_H_BankD_AllDiffs_D6",
-			ladder = "H_BankD",
-			sort_name = "C_Bain_H_BankD_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_21 = {
-			icon_id = "C_Bain_H_BankG_AllDiffs_D6",
-			ladder = "H_BankG",
-			sort_name = "C_Bain_H_BankG_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_22 = {
-			icon_id = "C_Bain_H_BankR_AllDiffs_D6",
-			ladder = "H_BankR",
-			sort_name = "C_Bain_H_BankR_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_23 = {
-			icon_id = "C_Locke_H_Beneath_AllDiffs_D6",
-			ladder = "H_Beneath",
-			sort_name = "C_Locke_H_Beneath_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		ggez_24 = {
-			icon_id = "C_Dentist_H_BigBank_AllDiffs_D6",
-			ladder = "H_BigBank",
-			sort_name = "C_Dentist_H_BigBank_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_dentist
-			}
-		},
-		ggez_25 = {
-			icon_id = "C_Elephant_H_BigOil_AllDiffs_D6",
-			ladder = "H_BigOil",
-			sort_name = "C_Elephant_H_BigOil_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_elephant
-			}
-		},
-		ggez_26 = {
-			icon_id = "C_Elephant_H_Biker_AllDiffs_D6",
-			ladder = "H_Biker",
-			sort_name = "C_Elephant_H_Biker_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.the_elephant
-			}
-		},
-		ggez_27 = {
-			icon_id = "C_Locke_H_BirthOfSky_AllDiffs_D6",
-			ladder = "H_Birth",
-			sort_name = "C_Locke_H_BirthOfSky_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		ggez_28 = {
-			icon_id = "C_Jimmy_H_Boiling_AllDiffs_D6",
-			ladder = "H_Boiling",
-			sort_name = "C_Jimmy_H_Boiling_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.jimmy
-			}
-		},
-		ggez_29 = {
-			icon_id = "C_Butcher_H_BombDock_AllDiffs_D6",
-			ladder = "H_BombDock",
-			sort_name = "C_Butcher_H_BombDock_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_butcher
-			}
-		},
-		ggez_3 = {
-			icon_id = "C_Classics_H_All_AllDiffs_D6",
-			ladder = "C_Classic",
-			sort_name = "C_Classics_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
+				tags.difficulty.normal,
+				tags.unlock.outfit,
 				tags.tactics.loud,
 				tags.tactics.stealth,
 				tags.contracts.classic
 			}
 		},
-		ggez_30 = {
-			icon_id = "C_Butcher_H_BombForest_AllDiffs_D6",
-			ladder = "H_BombForest",
-			sort_name = "C_Butcher_H_BombForest_AllDiffs_D6",
+		dah_10 = {
 			additional_id = true,
+			sort_name = "C_Classics_H_DiamondHesit_DeadChange",
+			icon_id = "C_Classics_H_DiamondHesit_DeadChange",
 			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.the_butcher
-			}
-		},
-		ggez_31 = {
-			icon_id = "C_Continental_H_Brooklyn_AllDiffs_D6",
-			ladder = "H_Brooklyn",
-			sort_name = "C_Continental_H_Brooklyn_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.the_continental
-			}
-		},
-		ggez_32 = {
-			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D6",
-			ladder = "H_BrooklynBank",
-			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		ggez_33 = {
-			icon_id = "C_Bain_H_Car_AllDiffs_D6",
-			ladder = "H_Car",
-			sort_name = "C_Bain_H_Car_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_34 = {
-			icon_id = "C_Bain_H_CookOff_AllDiffs_D6",
-			ladder = "H_Cook",
-			sort_name = "C_Bain_H_CookOff_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_35 = {
-			icon_id = "C_Classics_H_Counterfeit_AllDiffs_D6",
-			ladder = "H_Counter",
-			sort_name = "C_Classics_H_Counterfeit_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
+				tags.progress.heisting,
+				tags.difficulty.normal,
 				tags.tactics.loud,
 				tags.contracts.classic
 			}
 		},
-		ggez_36 = {
-			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D6",
+		dah_2 = {
+			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D1",
 			ladder = "H_DiamondHeist",
-			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D6",
+			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
+			}
+		},
+		dah_3 = {
+			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D2",
+			ladder = "H_DiamondHeist",
+			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
+			}
+		},
+		dah_4 = {
+			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D3",
+			ladder = "H_DiamondHeist",
+			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
+			}
+		},
+		dah_5 = {
+			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D4",
+			ladder = "H_DiamondHeist",
+			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
+			}
+		},
+		dah_6 = {
+			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D5",
+			ladder = "H_DiamondHeist",
+			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
+			}
+		},
+		dah_7 = {
+			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_OD_D6",
+			ladder = "H_DiamondHeist",
+			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_OD_D6",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
@@ -7632,611 +7701,27 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.classic
 			}
 		},
-		ggez_37 = {
-			icon_id = "C_Dentist_H_Diamond_AllDiffs_D6",
-			ladder = "H_Diamond",
-			sort_name = "C_Dentist_H_Diamond_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_dentist
-			}
-		},
-		ggez_38 = {
-			icon_id = "C_Bain_H_DiamondStore_AllDiffs_D6",
-			ladder = "H_DiamondStore",
-			sort_name = "C_Bain_H_DiamondStore_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_39 = {
-			icon_id = "C_Elephant_H_ElectionDay_AllDiffs_D6",
-			ladder = "H_ElectionDay",
-			sort_name = "C_Elephant_H_ElectionDay_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_elephant
-			}
-		},
-		ggez_4 = {
-			icon_id = "C_Event_H_All_AllDiffs_D6",
-			ladder = "C_Event",
-			sort_name = "C_Event_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		ggez_40 = {
-			icon_id = "C_Hector_H_Firestarter_AllDiffs_D6",
-			ladder = "H_Firestarter",
-			sort_name = "C_Hector_H_Firestarter_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.hector
-			}
-		},
-		ggez_41 = {
-			icon_id = "C_Classics_H_FirstWorldBank_AllDiffs_D6",
-			ladder = "H_FirstWorld",
-			sort_name = "C_Classics_H_FirstWorldBank_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		ggez_42 = {
-			icon_id = "C_Vlad_H_FourStores_AllDiffs_D6",
-			ladder = "H_FourStores",
-			sort_name = "C_Vlad_H_FourStores_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.vlad
-			}
-		},
-		ggez_43 = {
-			icon_id = "C_Elephant_H_FramingFrame_AllDiffs_D6",
-			ladder = "H_FramingFrame",
-			sort_name = "C_Elephant_H_FramingFrame_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_elephant
-			}
-		},
-		ggez_44 = {
-			icon_id = "C_Bain_H_GOBank_AllDiffs_D6",
-			ladder = "H_GOBank",
-			sort_name = "C_Bain_H_GOBank_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_45 = {
-			icon_id = "C_Vlad_H_GoatSim_AllDiffs_D6",
-			ladder = "H_GoatSim",
-			sort_name = "C_Vlad_H_GoatSim_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.vlad
-			}
-		},
-		ggez_46 = {
-			icon_id = "C_Dentist_H_GoldenGrinCasino_AllDiffs_D6",
-			ladder = "H_GoldenGrin",
-			sort_name = "C_Dentist_H_GoldenGrinCasino_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_dentist
-			}
-		},
-		ggez_47 = {
-			icon_id = "C_Classics_H_GreenBridge_AllDiffs_D6",
-			ladder = "H_GreenBridge",
-			sort_name = "C_Classics_H_GreenBridge_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		ggez_48 = {
-			icon_id = "C_Classics_H_HeatStreet_AllDiffs_D6",
-			ladder = "H_HeatStreet",
-			sort_name = "C_Classics_H_HeatStreet_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		ggez_49 = {
-			icon_id = "C_Dentist_H_HotlineMiami_AllDiffs_D6",
-			ladder = "H_HotlineMiami",
-			sort_name = "C_Dentist_H_HotlineMiami_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.the_dentist
-			}
-		},
-		ggez_5 = {
-			icon_id = "C_Dentist_H_All_AllDiffs_D6",
-			ladder = "C_Dentist",
-			sort_name = "C_Dentist_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_dentist
-			}
-		},
-		ggez_50 = {
-			icon_id = "C_Dentist_H_HoxtonBreakout_AllDiffs_D6",
-			ladder = "H_HoxBreakout",
-			sort_name = "C_Dentist_H_HoxtonBreakout_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.the_dentist
-			}
-		},
-		ggez_51 = {
-			icon_id = "C_Dentist_H_HoxtonRevenge_AllDiffs_D6",
-			ladder = "H_HoxRevenge",
-			sort_name = "C_Dentist_H_HoxtonRevenge_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_dentist
-			}
-		},
-		ggez_52 = {
-			icon_id = "C_Bain_H_JewelryStore_AllDiffs_D6",
-			ladder = "H_JewelryStore",
-			sort_name = "C_Bain_H_JewelryStore_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_53 = {
-			icon_id = "C_Event_H_LabRats_AllDiffs_D6",
-			ladder = "H_LabRats",
-			sort_name = "C_Event_H_LabRats_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		ggez_54 = {
-			icon_id = "C_Vlad_H_Mallcrasher_AllDiffs_D6",
-			ladder = "H_Mallcrasher",
-			sort_name = "C_Vlad_H_Mallcrasher_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.vlad
-			}
-		},
-		ggez_55 = {
-			icon_id = "C_Vlad_H_Meltdown_AllDiffs_D6",
-			ladder = "H_Meltdown",
-			sort_name = "C_Vlad_H_Meltdown_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.vlad
-			}
-		},
-		ggez_56 = {
-			icon_id = "C_Jimmy_H_MurkyStation_AllDiffs_D6",
-			ladder = "H_MurkyStation",
-			sort_name = "C_Jimmy_H_MurkyStation_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.stealth,
-				tags.contracts.jimmy
-			}
-		},
-		ggez_57 = {
-			icon_id = "C_Vlad_H_Nightclub_AllDiffs_D6",
-			ladder = "H_Nightclub",
-			sort_name = "C_Vlad_H_Nightclub_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.vlad
-			}
-		},
-		ggez_58 = {
-			icon_id = "C_Classics_H_PanicRoom_AllDiffs_D6",
-			ladder = "H_PanicRoom",
-			sort_name = "C_Classics_H_PanicRoom_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		ggez_59 = {
-			icon_id = "C_Event_H_PrisonNightmare_AllDiffs_D6",
-			ladder = "H_PrisonNightmare",
-			sort_name = "C_Event_H_PrisonNightmare_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		ggez_6 = {
-			icon_id = "C_Hector_H_All_AllDiffs_D6",
-			ladder = "C_Hector",
-			sort_name = "C_Hector_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.hector
-			}
-		},
-		ggez_60 = {
-			icon_id = "C_Hector_H_Rats_AllDiffs_D6",
-			ladder = "H_Rats",
-			sort_name = "C_Hector_H_Rats_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.hector
-			}
-		},
-		ggez_61 = {
-			icon_id = "C_Bain_H_ReservoirDogs_AllDiffs_D6",
-			ladder = "H_Reservoir",
-			sort_name = "C_Bain_H_ReservoirDogs_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_62 = {
-			icon_id = "C_Hoxton_H_SafeHouse_AllDiffs_D6",
-			ladder = "H_SafehouseRaid",
-			sort_name = "C_Hoxton_H_SafeHouse_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.hoxton
-			}
-		},
-		ggez_63 = {
-			icon_id = "C_Vlad_H_Santa_AllDiffs_D6",
-			ladder = "H_Santa",
-			sort_name = "C_Vlad_H_Santa_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.vlad
-			}
-		},
-		ggez_64 = {
-			icon_id = "C_Butcher_H_Scarface_AllDiffs_D6",
-			ladder = "H_Scarface",
-			sort_name = "C_Butcher_H_Scarface_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_butcher
-			}
-		},
-		ggez_65 = {
-			icon_id = "C_Bain_H_ShadowRaid_AllDiffs_D6",
-			ladder = "H_ShadowRaid",
-			sort_name = "C_Bain_H_ShadowRaid_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		ggez_66 = {
-			icon_id = "C_Classics_H_Slaughterhouse_AllDiffs_D6",
-			ladder = "H_Slaughterhouse",
-			sort_name = "C_Classics_H_Slaughterhouse_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		ggez_67 = {
-			icon_id = "C_Vlad_H_StealingXmas_AllDiffs_D6",
-			ladder = "H_StealingXmas",
-			sort_name = "C_Vlad_H_StealingXmas_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.vlad
-			}
-		},
-		ggez_68 = {
-			icon_id = "C_Bain_H_TransportCrossroads_AllDiffs_D6",
-			ladder = "H_TransportCrossroads",
-			sort_name = "C_Bain_H_TransportCrossroads_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_69 = {
-			icon_id = "C_Bain_H_TransportDowntown_AllDiffs_D6",
-			ladder = "H_TransportDowntown",
-			sort_name = "C_Bain_H_TransportDowntown_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_7 = {
-			icon_id = "C_Jimmy_H_All_AllDiffs_D6",
-			ladder = "C_Jimmy",
-			sort_name = "C_Jimmy_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.jimmy
-			}
-		},
-		ggez_70 = {
-			icon_id = "C_Bain_H_TransportHarbor_AllDiffs_D6",
-			ladder = "H_TransportHarbor",
-			sort_name = "C_Bain_H_TransportHarbor_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_71 = {
-			icon_id = "C_Bain_H_TransportPark_AllDiffs_D6",
-			ladder = "H_TransportPark",
-			sort_name = "C_Bain_H_TransportPark_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_72 = {
-			icon_id = "C_Bain_H_TrainHeist_AllDiffs_D6",
-			ladder = "H_TransportTrainHeist",
-			sort_name = "C_Bain_H_TrainHeist_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_73 = {
-			icon_id = "C_Bain_H_TransportUnderpass_AllDiffs_D6",
-			ladder = "H_TransportUnderpass",
-			sort_name = "C_Bain_H_TransportUnderpass_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.bain
-			}
-		},
-		ggez_74 = {
-			icon_id = "C_Vlad_H_Ukrainian_AllDiffs_D6",
-			ladder = "H_Ukrainian",
-			sort_name = "C_Vlad_H_Ukrainian_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.vlad
-			}
-		},
-		ggez_75 = {
-			icon_id = "C_Classics_H_Undercover_AllDiffs_D6",
-			ladder = "H_Undercover",
-			sort_name = "C_Classics_H_Undercover_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		ggez_76 = {
-			icon_id = "C_Hector_H_Watchdogs_AllDiffs_D6",
-			ladder = "H_Watchdogs",
-			sort_name = "C_Hector_H_Watchdogs_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.hector
-			}
-		},
-		ggez_77 = {
-			icon_id = "C_Vlad_H_XMas_AllDiffs_D6",
-			ladder = "H_XMas",
-			sort_name = "C_Vlad_H_XMas_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.vlad
-			}
-		},
-		ggez_78 = {
-			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D6",
-			ladder = "H_CursedKill",
-			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		ggez_8 = {
-			icon_id = "C_Locke_H_All_AllDiffs_D6",
-			ladder = "C_Locke",
-			sort_name = "C_Locke_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		ggez_9 = {
-			icon_id = "C_Butcher_H_All_AllDiffs_D6",
-			ladder = "C_Butcher",
-			sort_name = "C_Butcher_H_All_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.the_butcher
-			}
-		},
-		fin_1 = {
-			additional_id = true,
-			sort_name = "Other_The_End_Offshore_PAYDAY",
-			icon_id = "Other_The_End_Offshore_PAYDAY",
+		dah_8 = {
+			sort_name = "C_Classics_H_DiamondHesit_TheHuntfor",
+			icon_id = "C_Classics_H_DiamondHesit_TheHuntfor",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.overkill,
 				tags.tactics.loud,
 				tags.tactics.stealth,
-				tags.teamwork.players_1_to_4,
-				tags.contracts.locke
+				tags.contracts.classic
+			}
+		},
+		dah_9 = {
+			additional_id = true,
+			sort_name = "C_Classics_H_DiamondHesit_BloodDia",
+			icon_id = "C_Classics_H_DiamondHesit_BloodDia",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
 			}
 		},
 		des_1 = {
@@ -8369,496 +7854,438 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		nbm_1 = {
-			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D0",
-			ladder = "H_SafeHouseNightmare",
-			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D0",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		nbm_2 = {
-			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D1",
-			ladder = "H_SafeHouseNightmare",
-			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D1",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		nbm_3 = {
-			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D2",
-			ladder = "H_SafeHouseNightmare",
-			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D2",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		nbm_4 = {
-			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D3",
-			ladder = "H_SafeHouseNightmare",
-			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D3",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		tag_1 = {
-			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D0",
-			ladder = "H_BreakinFeds",
-			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D0",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.normal,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		tag_10 = {
-			sort_name = "C_Locke_H_BreakinFeds_Salker",
-			icon_id = "C_Locke_H_BreakinFeds_Salker",
+		eng_1 = {
+			need_unlock_icons = true,
+			icon_id = "Other_H_Any_TheOnlyOne",
+			progress = true,
+			sort_name = "Other_H_Any_TheOnlyOne",
+			unlock_id = true,
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.normal,
+				tags.unlock.mask,
+				tags.tactics.loud,
+				tags.tactics.stealth
+			}
+		},
+		eng_2 = {
+			need_unlock_icons = true,
+			icon_id = "Other_H_Any_TheOneThatHad",
+			progress = true,
+			sort_name = "Other_H_Any_TheOneThatHad",
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.unlock.mask,
+				tags.tactics.loud,
+				tags.tactics.stealth
+			}
+		},
+		eng_3 = {
+			need_unlock_icons = true,
+			icon_id = "Other_H_Any_TheOneThatSur",
+			progress = true,
+			sort_name = "Other_H_Any_TheOneThatSur",
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.unlock.mask,
+				tags.tactics.loud,
+				tags.tactics.stealth
+			}
+		},
+		eng_4 = {
+			need_unlock_icons = true,
+			icon_id = "Other_H_Any_TheOneWho",
+			progress = true,
+			sort_name = "Other_H_Any_TheOneWho",
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.unlock.mask,
+				tags.tactics.loud,
+				tags.tactics.stealth
+			}
+		},
+		fin_1 = {
+			additional_id = true,
+			sort_name = "Other_The_End_Offshore_PAYDAY",
+			icon_id = "Other_The_End_Offshore_PAYDAY",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
 				tags.tactics.stealth,
 				tags.teamwork.players_1_to_4,
 				tags.contracts.locke
 			}
 		},
-		tag_11 = {
-			sort_name = "C_Locke_H_BreakinFeds_Staple",
-			icon_id = "C_Locke_H_BreakinFeds_Staple",
+		mex2_1 = {
+			icon_id = "C_Locke_H_BorderCrystals_AllDiffs_D0",
+			ladder = "H_BorderCrystals",
+			sort_name = "C_Locke_H_BorderCrystals_AllDiffs_D0",
+			additional_id = true,
 			tags = {
-				tags.progress.heisting,
+				tags.progress.completion,
 				tags.difficulty.normal,
-				tags.tactics.stealth,
+				tags.tactics.loud,
 				tags.contracts.locke
 			}
 		},
-		tag_2 = {
-			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D1",
-			ladder = "H_BreakinFeds",
-			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D1",
+		mex2_2 = {
+			icon_id = "C_Locke_H_BorderCrystals_AllDiffs_D1",
+			ladder = "H_BorderCrystals",
+			sort_name = "C_Locke_H_BorderCrystals_AllDiffs_D1",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.hard,
-				tags.tactics.stealth,
+				tags.tactics.loud,
 				tags.contracts.locke
 			}
 		},
-		tag_3 = {
-			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D2",
-			ladder = "H_BreakinFeds",
-			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D2",
+		mex2_3 = {
+			icon_id = "C_Locke_H_BorderCrystals_AllDiffs_D2",
+			ladder = "H_BorderCrystals",
+			sort_name = "C_Locke_H_BorderCrystals_AllDiffs_D2",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.very_hard,
-				tags.tactics.stealth,
+				tags.tactics.loud,
 				tags.contracts.locke
 			}
 		},
-		tag_4 = {
-			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D3",
-			ladder = "H_BreakinFeds",
-			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D3",
+		mex2_4 = {
+			icon_id = "C_Locke_H_BorderCrystals_AllDiffs_D3",
+			ladder = "H_BorderCrystals",
+			sort_name = "C_Locke_H_BorderCrystals_AllDiffs_D3",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.overkill,
-				tags.tactics.stealth,
+				tags.tactics.loud,
 				tags.contracts.locke
 			}
 		},
-		tag_5 = {
-			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D4",
-			ladder = "H_BreakinFeds",
-			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D4",
+		mex2_5 = {
+			icon_id = "C_Locke_H_BorderCrystals_AllDiffs_D4",
+			ladder = "H_BorderCrystals",
+			sort_name = "C_Locke_H_BorderCrystals_AllDiffs_D4",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.mayhem,
-				tags.tactics.stealth,
+				tags.tactics.loud,
 				tags.contracts.locke
 			}
 		},
-		tag_6 = {
-			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D5",
-			ladder = "H_BreakinFeds",
-			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D5",
+		mex2_6 = {
+			icon_id = "C_Locke_H_BorderCrystals_AllDiffs_D5",
+			ladder = "H_BorderCrystals",
+			sort_name = "C_Locke_H_BorderCrystals_AllDiffs_D5",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_wish,
-				tags.tactics.stealth,
+				tags.tactics.loud,
 				tags.contracts.locke
 			}
 		},
-		tag_7 = {
-			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D6",
-			ladder = "H_BreakinFeds",
-			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D6",
+		mex2_7 = {
+			icon_id = "C_Locke_H_BorderCrystals_AllDiffs_D6",
+			ladder = "H_BorderCrystals",
+			sort_name = "C_Locke_H_BorderCrystals_AllDiffs_D6",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_sentence,
-				tags.tactics.stealth,
+				tags.tactics.loud,
 				tags.contracts.locke
 			}
 		},
-		tag_8 = {
-			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_OD_D6",
-			ladder = "H_BreakinFeds",
-			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_OD_D6",
+		mex2_8 = {
+			icon_id = "C_Locke_H_BorderCrystals_AllDiffs_OD_D6",
+			ladder = "H_BorderCrystals",
+			sort_name = "C_Locke_H_BorderCrystals_AllDiffs_OD_D6",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_sentence,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		tag_9 = {
-			sort_name = "C_Locke_H_BreakinFeds_AMoment",
-			icon_id = "C_Locke_H_BreakinFeds_AMoment",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		uno_1 = {
-			sort_name = "C_Bain_H_BankVarious_AGoodHaul",
-			icon_id = "C_Bain_H_BankVarious_AGoodHaul",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
 				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.bain
+				tags.contracts.locke
 			}
 		},
-		uno_2 = {
-			additional_id = true,
-			sort_name = "C_Bain_H_DiamondStore_Hostage",
-			icon_id = "C_Bain_H_DiamondStore_Hostage",
+		mex2_9 = {
+			sort_name = "C_Locke_H_BorderCrystals_HeisterCocinero",
+			icon_id = "C_Locke_H_BorderCrystals_HeisterCocinero",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.overkill,
 				tags.tactics.loud,
-				tags.contracts.bain
+				tags.contracts.locke
 			}
 		},
-		uno_3 = {
+		mex_1 = {
+			icon_id = "C_Locke_H_BorderCrossing_AllDiffs_D0",
+			ladder = "H_BorderCrossing",
+			sort_name = "C_Locke_H_BorderCrossing_AllDiffs_D0",
 			additional_id = true,
-			sort_name = "C_Vlad_H_Mallcrasher_SelfCheck",
-			icon_id = "C_Vlad_H_Mallcrasher_SelfCheck",
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		mex_10 = {
+			need_unlock_icons = true,
+			icon_id = "C_Locke_H_BorderCrossing_TwoStep",
+			sort_name = "C_Locke_H_BorderCrossing_TwoStep",
+			unlock_id = true,
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.vlad
+				tags.unlock.mask,
+				tags.tactics.stealth,
+				tags.contracts.locke
 			}
 		},
-		uno_4 = {
-			sort_name = "C_Classics_H_GreenBridge_Attacked",
-			icon_id = "C_Classics_H_GreenBridge_Attacked",
+		mex_2 = {
+			icon_id = "C_Locke_H_BorderCrossing_AllDiffs_D1",
+			ladder = "H_BorderCrossing",
+			sort_name = "C_Locke_H_BorderCrossing_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		mex_3 = {
+			icon_id = "C_Locke_H_BorderCrossing_AllDiffs_D2",
+			ladder = "H_BorderCrossing",
+			sort_name = "C_Locke_H_BorderCrossing_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		mex_4 = {
+			icon_id = "C_Locke_H_BorderCrossing_AllDiffs_D3",
+			ladder = "H_BorderCrossing",
+			sort_name = "C_Locke_H_BorderCrossing_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		mex_5 = {
+			icon_id = "C_Locke_H_BorderCrossing_AllDiffs_D4",
+			ladder = "H_BorderCrossing",
+			sort_name = "C_Locke_H_BorderCrossing_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		mex_6 = {
+			icon_id = "C_Locke_H_BorderCrossing_AllDiffs_D5",
+			ladder = "H_BorderCrossing",
+			sort_name = "C_Locke_H_BorderCrossing_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		mex_7 = {
+			icon_id = "C_Locke_H_BorderCrossing_AllDiffs_D6",
+			ladder = "H_BorderCrossing",
+			sort_name = "C_Locke_H_BorderCrossing_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		mex_8 = {
+			icon_id = "C_Locke_H_BorderCrossing_AllDiffs_OD_D6",
+			ladder = "H_BorderCrossing",
+			sort_name = "C_Locke_H_BorderCrossing_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		mex_9 = {
+			need_unlock_icons = true,
+			icon_id = "C_Locke_H_BorderCrossing_Identity",
+			sort_name = "C_Locke_H_BorderCrossing_Identity",
+			unlock_id = true,
 			tags = {
 				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.unlock.outfit,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		nmh_1 = {
+			need_unlock_icons = true,
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D0",
+			ladder = "H_NoMercy",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D0",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.unlock.outfit,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		nmh_10 = {
+			sort_name = "C_Classics_H_NoMercy_KeepingTheCool",
+			icon_id = "C_Classics_H_NoMercy_KeepingTheCool",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		nmh_11 = {
+			sort_name = "C_Classics_H_NoMercy_Nyctophobia",
+			icon_id = "C_Classics_H_NoMercy_Nyctophobia",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		nmh_2 = {
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D1",
+			ladder = "H_NoMercy",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		nmh_3 = {
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D2",
+			ladder = "H_NoMercy",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		nmh_4 = {
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D3",
+			ladder = "H_NoMercy",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
 				tags.difficulty.overkill,
 				tags.tactics.loud,
 				tags.contracts.classic
 			}
 		},
-		uno_5 = {
-			sort_name = "C_Locke_H_HenrysRock_Hack",
-			icon_id = "C_Locke_H_HenrysRock_Hack",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		uno_6 = {
-			sort_name = "C_Vlad_H_Nightclub_LetThem",
-			icon_id = "C_Vlad_H_Nightclub_LetThem",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.stealth,
-				tags.contracts.vlad
-			}
-		},
-		uno_7 = {
-			additional_id = true,
-			sort_name = "C_Butcher_H_Scarface_Setting",
-			icon_id = "C_Butcher_H_Scarface_Setting",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.the_butcher
-			}
-		},
-		uno_8 = {
-			sort_name = "C_Hector_H_Watchdogs_OutOf",
-			icon_id = "C_Hector_H_Watchdogs_OutOf",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.hector
-			}
-		},
-		uno_9 = {
-			sort_name = "C_Vlad_H_XMas_Whats",
-			icon_id = "C_Vlad_H_XMas_Whats",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.vlad
-			}
-		},
-		vit_1 = {
-			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D0",
-			ladder = "H_WhiteHouse",
-			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D0",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		vit_10 = {
-			sort_name = "C_Locke_H_WhiteHouse_BigBrother",
-			icon_id = "C_Locke_H_WhiteHouse_BigBrother",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		vit_11 = {
-			additional_id = true,
-			sort_name = "C_Locke_H_WhiteHouse_President",
-			icon_id = "C_Locke_H_WhiteHouse_President",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.inventory.mask,
-				tags.contracts.locke
-			}
-		},
-		vit_2 = {
-			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D1",
-			ladder = "H_WhiteHouse",
-			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D1",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		vit_3 = {
-			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D2",
-			ladder = "H_WhiteHouse",
-			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D2",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		vit_4 = {
-			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D3",
-			ladder = "H_WhiteHouse",
-			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D3",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		vit_5 = {
-			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D4",
-			ladder = "H_WhiteHouse",
-			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D4",
+		nmh_5 = {
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D4",
+			ladder = "H_NoMercy",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D4",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.mayhem,
 				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
+				tags.contracts.classic
 			}
 		},
-		vit_6 = {
-			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D5",
-			ladder = "H_WhiteHouse",
-			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D5",
+		nmh_6 = {
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D5",
+			ladder = "H_NoMercy",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D5",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_wish,
 				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
+				tags.contracts.classic
 			}
 		},
-		vit_7 = {
-			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D6",
-			ladder = "H_WhiteHouse",
-			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D6",
+		nmh_7 = {
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_D6",
+			ladder = "H_NoMercy",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_D6",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_sentence,
 				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
+				tags.contracts.classic
 			}
 		},
-		vit_8 = {
-			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_OD_D6",
-			ladder = "H_WhiteHouse",
-			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_OD_D6",
+		nmh_8 = {
+			icon_id = "C_Classics_H_NoMercy_AllDiffs_OD_D6",
+			ladder = "H_NoMercy",
+			sort_name = "C_Classics_H_NoMercy_AllDiffs_OD_D6",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_sentence,
 				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
+				tags.contracts.classic
 			}
 		},
-		vit_9 = {
-			sort_name = "C_Locke_H_WhiteHouse_HeistToRemember",
-			icon_id = "C_Locke_H_WhiteHouse_HeistToRemember",
+		nmh_9 = {
+			sort_name = "C_Classics_H_NoMercy_OrWasIt",
+			icon_id = "C_Classics_H_NoMercy_OrWasIt",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.normal,
 				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.locke
-			}
-		},
-		ckr_1 = {
-			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D0",
-			ladder = "H_CursedKill",
-			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D0",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.normal,
-				tags.tactics.stealth,
-				tags.contracts.events
-			}
-		},
-		ckr_2 = {
-			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D1",
-			ladder = "H_CursedKill",
-			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D1",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		ckr_3 = {
-			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D2",
-			ladder = "H_CursedKill",
-			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D2",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.very_hard,
-				tags.tactics.stealth,
-				tags.contracts.events
-			}
-		},
-		ckr_4 = {
-			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D3",
-			ladder = "H_CursedKill",
-			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D3",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		ckr_5 = {
-			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D4",
-			ladder = "H_CursedKill",
-			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D4",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.mayhem,
-				tags.tactics.stealth,
-				tags.contracts.events
-			}
-		},
-		ckr_6 = {
-			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D5",
-			ladder = "H_CursedKill",
-			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D5",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_wish,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		ckr_7 = {
-			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_OD_D6",
-			ladder = "H_CursedKill",
-			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_OD_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.stealth,
-				tags.contracts.events
+				tags.contracts.classic
 			}
 		},
 		rvd_1 = {
@@ -9003,975 +8430,17 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.bain
 			}
 		},
-		cac_1 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_CompactConf",
-			icon_id = "Other_H_Any_CompactConf",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.killer,
-				tags.inventory.mask
-			}
-		},
-		cac_10 = {
-			additional_id = true,
-			sort_name = "C_Classics_H_FirstWorldBank_Federal",
-			icon_id = "C_Classics_H_FirstWorldBank_Federal",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.timed,
-				tags.tactics.killer,
-				tags.contracts.classic
-			}
-		},
-		cac_11 = {
-			additional_id = true,
-			sort_name = "C_Bain_H_ReservoirDogs_Silver",
-			icon_id = "C_Bain_H_ReservoirDogs_Silver",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.inventory.skill,
-				tags.contracts.bain
-			}
-		},
-		cac_12 = {
-			additional_id = true,
-			sort_name = "C_Vlad_H_Ukrainian_ImSure",
-			icon_id = "C_Vlad_H_Ukrainian_ImSure",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.stealth,
-				tags.tactics.timed,
-				tags.contracts.vlad
-			}
-		},
-		cac_13 = {
-			additional_id = true,
-			sort_name = "C_Jimmy_H_Boiling_Remember",
-			icon_id = "C_Jimmy_H_Boiling_Remember",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.jimmy
-			}
-		},
-		cac_14 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_TheSafeWords",
-			icon_id = "Other_H_Any_TheSafeWords",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.tactics.killer
-			}
-		},
-		cac_15 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_C40",
-			icon_id = "Other_H_Any_C40",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.inventory.skill,
-				tags.teamwork.players_1_to_4
-			}
-		},
-		cac_16 = {
-			additional_id = true,
-			sort_name = "C_Elephant_H_BigOil_DamItBile",
-			icon_id = "C_Elephant_H_BigOil_DamItBile",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.the_elephant
-			}
-		},
-		cac_17 = {
-			additional_id = true,
-			sort_name = "C_Bain_H_ArtGallery_VanGogh",
-			icon_id = "C_Bain_H_ArtGallery_VanGogh",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.contracts.bain,
-				tags.contracts.the_elephant
-			}
-		},
-		cac_18 = {
-			additional_id = true,
-			sort_name = "C_Hoxton_H_SafeHouse_Draganborn",
-			icon_id = "C_Hoxton_H_SafeHouse_Draganborn",
-			tags = {
-				tags.progress.heisting,
-				tags.contracts.hoxton
-			}
-		},
-		cac_19 = {
-			additional_id = true,
-			sort_name = "C_Bain_H_ArtGallery_Masterpiece",
-			icon_id = "C_Bain_H_ArtGallery_Masterpiece",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.stealth,
-				tags.contracts.bain,
-				tags.contracts.the_elephant
-			}
-		},
-		cac_2 = {
-			icon_id = "Other_H_Any_HumanSentry",
-			progress = true,
-			sort_name = "Other_H_Any_HumanSentry",
-			additional_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.killer,
-				tags.inventory.weapon
-			}
-		},
-		cac_20 = {
-			icon_id = "C_Event_H_CursedKillRoom_SayHello",
-			progress = true,
-			sort_name = "C_Event_H_CursedKillRoom_SayHello",
-			additional_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.events
-			}
-		},
-		cac_21 = {
-			additional_id = true,
-			sort_name = "C_Event_H_CursedKillRoom_FasterFaster",
-			icon_id = "C_Event_H_CursedKillRoom_FasterFaster",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.tactics.timed,
-				tags.contracts.events
-			}
-		},
-		cac_22 = {
-			additional_id = true,
-			sort_name = "C_Dentist_H_BigBank_Matrix",
-			icon_id = "C_Dentist_H_BigBank_Matrix",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.death_wish,
-				tags.contracts.the_dentist
-			}
-		},
-		cac_23 = {
-			additional_id = true,
-			sort_name = "C_Classics_H_Undercover_IFeelLike",
-			icon_id = "C_Classics_H_Undercover_IFeelLike",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.inventory.weapon,
-				tags.teamwork.players_1_to_4,
-				tags.contracts.classic
-			}
-		},
-		cac_24 = {
-			additional_id = true,
-			sort_name = "C_Elephant_H_BigOil_Junkyard",
-			icon_id = "C_Elephant_H_BigOil_Junkyard",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.killer,
-				tags.contracts.the_elephant
-			}
-		},
-		cac_25 = {
-			additional_id = true,
-			sort_name = "C_Classics_H_FirstWorldBank_DownPayment",
-			icon_id = "C_Classics_H_FirstWorldBank_DownPayment",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.inventory.weapon,
-				tags.contracts.classic
-			}
-		},
-		cac_26 = {
-			additional_id = true,
-			sort_name = "C_Dentist_H_HoxtonBreakout_WatchThePower",
-			icon_id = "C_Dentist_H_HoxtonBreakout_WatchThePower",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.the_dentist
-			}
-		},
-		cac_27 = {
-			additional_id = true,
-			sort_name = "C_Locke_H_AlsDeal_GlobalWarming",
-			icon_id = "C_Locke_H_AlsDeal_GlobalWarming",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.inventory.weapon,
-				tags.teamwork.players_1_to_4,
-				tags.contracts.locke
-			}
-		},
-		cac_28 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_Virus",
-			icon_id = "Other_H_Any_Virus",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.teamwork.players_1_to_4
-			}
-		},
-		cac_29 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_SnipeThis",
-			icon_id = "Other_H_Any_SnipeThis",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.inventory.weapon
-			}
-		},
-		cac_3 = {
-			icon_id = "Other_H_Any_Denied",
-			progress = true,
-			sort_name = "Other_H_Any_Denied",
-			additional_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud
-			}
-		},
-		cac_30 = {
-			additional_id = true,
-			sort_name = "C_Hoxton_H_SafeHouse_TheRaid",
-			icon_id = "C_Hoxton_H_SafeHouse_TheRaid",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.death_wish,
-				tags.tactics.loud,
-				tags.contracts.hoxton
-			}
-		},
-		cac_31 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_OneMan",
-			icon_id = "Other_H_Any_OneMan",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud
-			}
-		},
-		cac_32 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_WULULU",
-			icon_id = "Other_H_Any_WULULU",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.tactics.killer,
-				tags.inventory.weapon
-			}
-		},
-		cac_33 = {
-			additional_id = true,
-			sort_name = "C_Locke_H_BirthOfSky_Expert",
-			icon_id = "C_Locke_H_BirthOfSky_Expert",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.death_wish,
-				tags.tactics.loud,
-				tags.teamwork.players_4,
-				tags.contracts.locke
-			}
-		},
-		cac_34 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_Lieutenant",
-			icon_id = "Other_H_Any_Lieutenant",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.inventory.skill
-			}
-		},
-		cac_35 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_DriveBy",
-			icon_id = "Other_H_Any_DriveBy",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.killer
-			}
-		},
-		cac_36 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_ATazed",
-			icon_id = "Other_H_Any_ATazed",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.tactics.killer,
-				tags.inventory.weapon
-			}
-		},
-		cac_4 = {
-			additional_id = true,
-			sort_name = "Other_H_Any_Hipster",
-			icon_id = "Other_H_Any_Hipster",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud
-			}
-		},
-		cac_5 = {
-			additional_id = true,
-			sort_name = "C_Bain_H_ShadowRaid_IWillSucceed",
-			icon_id = "C_Bain_H_ShadowRaid_IWillSucceed",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.stealth,
-				tags.contracts.bain
-			}
-		},
-		cac_6 = {
-			additional_id = true,
-			sort_name = "C_Bain_H_ReservoirDogs_JustShutUP",
-			icon_id = "C_Bain_H_ReservoirDogs_JustShutUP",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.inventory.weapon,
-				tags.contracts.bain
-			}
-		},
-		cac_7 = {
-			additional_id = true,
-			sort_name = "Other_H_NONE_GoldenGrin",
-			icon_id = "Other_H_NONE_GoldenGrin",
-			tags = {
-				tags.progress.heisting
-			}
-		},
-		cac_8 = {
-			additional_id = true,
-			sort_name = "C_Classics_H_Counterfeit_Why",
-			icon_id = "C_Classics_H_Counterfeit_Why",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		cac_9 = {
-			additional_id = true,
-			sort_name = "C_Classics_H_PanicRoom_QuickDraw",
-			icon_id = "C_Classics_H_PanicRoom_QuickDraw",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.tactics.timed,
-				tags.tactics.killer,
-				tags.contracts.classic
-			}
-		},
-		brb_1 = {
-			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D0",
-			ladder = "H_BrooklynBank",
-			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D0",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		brb_10 = {
-			additional_id = true,
-			sort_name = "C_Locke_H_BrooklynBank_AnimalKingdom",
-			icon_id = "C_Locke_H_BrooklynBank_AnimalKingdom",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.inventory.mask,
-				tags.teamwork.players_4,
-				tags.contracts.locke
-			}
-		},
-		brb_2 = {
-			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D1",
-			ladder = "H_BrooklynBank",
-			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D1",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		brb_3 = {
-			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D2",
-			ladder = "H_BrooklynBank",
-			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D2",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		brb_4 = {
-			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D3",
-			ladder = "H_BrooklynBank",
-			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D3",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		brb_5 = {
-			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D4",
-			ladder = "H_BrooklynBank",
-			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D4",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.mayhem,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		brb_6 = {
-			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D5",
-			ladder = "H_BrooklynBank",
-			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D5",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_wish,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		brb_7 = {
-			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_OD_D6",
-			ladder = "H_BrooklynBank",
-			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_OD_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		brb_8 = {
-			need_unlock_icons = true,
-			icon_id = "C_Locke_H_BrooklynBank_AlltheGold",
-			sort_name = "C_Locke_H_BrooklynBank_AlltheGold",
-			additional_id = true,
-			unlock_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.very_hard,
-				tags.unlock.mask,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		brb_9 = {
-			need_unlock_icons = true,
-			icon_id = "C_Locke_H_BrooklynBank_Obsessive",
-			sort_name = "C_Locke_H_BrooklynBank_Obsessive",
-			additional_id = true,
-			unlock_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.unlock.mask,
-				tags.tactics.loud,
-				tags.inventory.weapon,
-				tags.inventory.equipment,
-				tags.contracts.locke
-			}
-		},
-		nmh_1 = {
-			icon_id = "C_Classics_H_NoMercy_AllDiffs_D0",
-			ladder = "H_NoMercy",
-			sort_name = "C_Classics_H_NoMercy_AllDiffs_D0",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_10 = {
-			sort_name = "C_Classics_H_NoMercy_KeepingTheCool",
-			icon_id = "C_Classics_H_NoMercy_KeepingTheCool",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_11 = {
-			sort_name = "C_Classics_H_NoMercy_Nyctophobia",
-			icon_id = "C_Classics_H_NoMercy_Nyctophobia",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_2 = {
-			icon_id = "C_Classics_H_NoMercy_AllDiffs_D1",
-			ladder = "H_NoMercy",
-			sort_name = "C_Classics_H_NoMercy_AllDiffs_D1",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_3 = {
-			icon_id = "C_Classics_H_NoMercy_AllDiffs_D2",
-			ladder = "H_NoMercy",
-			sort_name = "C_Classics_H_NoMercy_AllDiffs_D2",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_4 = {
-			icon_id = "C_Classics_H_NoMercy_AllDiffs_D3",
-			ladder = "H_NoMercy",
-			sort_name = "C_Classics_H_NoMercy_AllDiffs_D3",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_5 = {
-			icon_id = "C_Classics_H_NoMercy_AllDiffs_D4",
-			ladder = "H_NoMercy",
-			sort_name = "C_Classics_H_NoMercy_AllDiffs_D4",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.mayhem,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_6 = {
-			icon_id = "C_Classics_H_NoMercy_AllDiffs_D5",
-			ladder = "H_NoMercy",
-			sort_name = "C_Classics_H_NoMercy_AllDiffs_D5",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_wish,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_7 = {
-			icon_id = "C_Classics_H_NoMercy_AllDiffs_D6",
-			ladder = "H_NoMercy",
-			sort_name = "C_Classics_H_NoMercy_AllDiffs_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_8 = {
-			icon_id = "C_Classics_H_NoMercy_AllDiffs_OD_D6",
-			ladder = "H_NoMercy",
-			sort_name = "C_Classics_H_NoMercy_AllDiffs_OD_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		nmh_9 = {
-			sort_name = "C_Classics_H_NoMercy_OrWasIt",
-			icon_id = "C_Classics_H_NoMercy_OrWasIt",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		dah_1 = {
-			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D0",
-			ladder = "H_DiamondHeist",
-			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D0",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		dah_10 = {
-			additional_id = true,
-			sort_name = "C_Classics_H_DiamondHesit_DeadChange",
-			icon_id = "C_Classics_H_DiamondHesit_DeadChange",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.classic
-			}
-		},
-		dah_2 = {
-			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D1",
-			ladder = "H_DiamondHeist",
-			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D1",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		dah_3 = {
-			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D2",
-			ladder = "H_DiamondHeist",
-			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D2",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		dah_4 = {
-			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D3",
-			ladder = "H_DiamondHeist",
-			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D3",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		dah_5 = {
-			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D4",
-			ladder = "H_DiamondHeist",
-			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D4",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.mayhem,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		dah_6 = {
-			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D5",
-			ladder = "H_DiamondHeist",
-			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D5",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_wish,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		dah_7 = {
-			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_OD_D6",
-			ladder = "H_DiamondHeist",
-			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_OD_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		dah_8 = {
-			sort_name = "C_Classics_H_DiamondHesit_TheHuntfor",
-			icon_id = "C_Classics_H_DiamondHesit_TheHuntfor",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		dah_9 = {
-			additional_id = true,
-			sort_name = "C_Classics_H_DiamondHesit_BloodDia",
-			icon_id = "C_Classics_H_DiamondHesit_BloodDia",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.tactics.stealth,
-				tags.contracts.classic
-			}
-		},
-		wwh_1 = {
-			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D0",
-			ladder = "H_Alaskan",
-			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D0",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		wwh_10 = {
-			sort_name = "C_Locke_H_AlsDeal_HeadlessSnow",
-			icon_id = "C_Locke_H_AlsDeal_HeadlessSnow",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.tactics.killer,
-				tags.contracts.locke
-			}
-		},
-		wwh_2 = {
-			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D1",
-			ladder = "H_Alaskan",
-			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D1",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.hard,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		wwh_3 = {
-			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D2",
-			ladder = "H_Alaskan",
-			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D2",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.very_hard,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		wwh_4 = {
-			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D3",
-			ladder = "H_Alaskan",
-			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D3",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		wwh_5 = {
-			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D4",
-			ladder = "H_Alaskan",
-			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D4",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.mayhem,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		wwh_6 = {
-			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D5",
-			ladder = "H_Alaskan",
-			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D5",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_wish,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		wwh_7 = {
-			icon_id = "C_Locke_H_AlsDeal_AllDiffs_OD_D6",
-			ladder = "H_Alaskan",
-			sort_name = "C_Locke_H_AlsDeal_AllDiffs_OD_D6",
-			additional_id = true,
-			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		wwh_8 = {
-			sort_name = "C_Locke_H_AlsDeal_ThereWasRoom",
-			icon_id = "C_Locke_H_AlsDeal_ThereWasRoom",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		wwh_9 = {
-			sort_name = "C_Locke_H_AlsDeal_TheFuelMust",
-			icon_id = "C_Locke_H_AlsDeal_TheFuelMust",
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.overkill,
-				tags.tactics.loud,
-				tags.contracts.locke
-			}
-		},
-		eng_1 = {
-			need_unlock_icons = true,
-			icon_id = "Other_H_Any_TheOnlyOne",
-			progress = true,
-			sort_name = "Other_H_Any_TheOnlyOne",
-			unlock_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.unlock.mask,
-				tags.tactics.loud,
-				tags.tactics.stealth
-			}
-		},
-		eng_2 = {
-			need_unlock_icons = true,
-			icon_id = "Other_H_Any_TheOneThatHad",
-			progress = true,
-			sort_name = "Other_H_Any_TheOneThatHad",
-			unlock_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.unlock.mask,
-				tags.tactics.loud,
-				tags.tactics.stealth
-			}
-		},
-		eng_3 = {
-			need_unlock_icons = true,
-			icon_id = "Other_H_Any_TheOneThatSur",
-			progress = true,
-			sort_name = "Other_H_Any_TheOneThatSur",
-			unlock_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.unlock.mask,
-				tags.tactics.loud,
-				tags.tactics.stealth
-			}
-		},
-		eng_4 = {
-			need_unlock_icons = true,
-			icon_id = "Other_H_Any_TheOneWho",
-			progress = true,
-			sort_name = "Other_H_Any_TheOneWho",
-			unlock_id = true,
-			tags = {
-				tags.progress.heisting,
-				tags.difficulty.normal,
-				tags.unlock.mask,
-				tags.tactics.loud,
-				tags.tactics.stealth
-			}
-		},
 		sah_1 = {
+			need_unlock_icons = true,
 			icon_id = "C_Locke_H_Shacklethorne_AllDiffs_D0",
 			ladder = "H_Shacklethorne",
 			sort_name = "C_Locke_H_Shacklethorne_AllDiffs_D0",
 			additional_id = true,
+			unlock_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.normal,
+				tags.unlock.outfit,
 				tags.tactics.loud,
 				tags.tactics.stealth,
 				tags.contracts.locke
@@ -10105,14 +8574,144 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		glace_1 = {
-			icon_id = "C_Classics_H_GreenBridge_AllDiffs_D0",
-			ladder = "H_GreenBridge",
-			sort_name = "C_Classics_H_GreenBridge_AllDiffs_D0",
+		tag_1 = {
+			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D0",
+			ladder = "H_BreakinFeds",
+			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D0",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.normal,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_10 = {
+			sort_name = "C_Locke_H_BreakinFeds_Salker",
+			icon_id = "C_Locke_H_BreakinFeds_Salker",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.stealth,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.locke
+			}
+		},
+		tag_11 = {
+			sort_name = "C_Locke_H_BreakinFeds_Staple",
+			icon_id = "C_Locke_H_BreakinFeds_Staple",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_2 = {
+			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D1",
+			ladder = "H_BreakinFeds",
+			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_3 = {
+			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D2",
+			ladder = "H_BreakinFeds",
+			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_4 = {
+			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D3",
+			ladder = "H_BreakinFeds",
+			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_5 = {
+			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D4",
+			ladder = "H_BreakinFeds",
+			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_6 = {
+			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D5",
+			ladder = "H_BreakinFeds",
+			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_7 = {
+			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_D6",
+			ladder = "H_BreakinFeds",
+			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_8 = {
+			icon_id = "C_Locke_H_BreakinFeds_AllDiffs_OD_D6",
+			ladder = "H_BreakinFeds",
+			sort_name = "C_Locke_H_BreakinFeds_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		tag_9 = {
+			sort_name = "C_Locke_H_BreakinFeds_AMoment",
+			icon_id = "C_Locke_H_BreakinFeds_AMoment",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		glace_1 = {
+			need_unlock_icons = true,
+			icon_id = "C_Classics_H_GreenBridge_AllDiffs_D0",
+			ladder = "H_GreenBridge",
+			sort_name = "C_Classics_H_GreenBridge_AllDiffs_D0",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.unlock.outfit,
 				tags.tactics.loud,
 				tags.contracts.classic
 			}
@@ -13914,21 +12513,52 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.the_continental
 			}
 		},
-		bph_1 = {
-			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D0",
-			ladder = "H_HellsIsland",
-			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D0",
-			additional_id = true,
+		uno_1 = {
+			sort_name = "C_Bain_H_BankVarious_AGoodHaul",
+			icon_id = "C_Bain_H_BankVarious_AGoodHaul",
 			tags = {
-				tags.progress.completion,
+				tags.progress.heisting,
 				tags.difficulty.normal,
 				tags.tactics.loud,
-				tags.contracts.locke
+				tags.tactics.stealth,
+				tags.contracts.bain
 			}
 		},
-		bph_10 = {
-			sort_name = "C_Locke_H_HellsIsland_Another",
-			icon_id = "C_Locke_H_HellsIsland_Another",
+		uno_2 = {
+			additional_id = true,
+			sort_name = "C_Bain_H_DiamondStore_Hostage",
+			icon_id = "C_Bain_H_DiamondStore_Hostage",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		uno_3 = {
+			additional_id = true,
+			sort_name = "C_Vlad_H_Mallcrasher_SelfCheck",
+			icon_id = "C_Vlad_H_Mallcrasher_SelfCheck",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		uno_4 = {
+			sort_name = "C_Classics_H_GreenBridge_Attacked",
+			icon_id = "C_Classics_H_GreenBridge_Attacked",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		uno_5 = {
+			sort_name = "C_Locke_H_HenrysRock_Hack",
+			icon_id = "C_Locke_H_HenrysRock_Hack",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.overkill,
@@ -13936,20 +12566,216 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		bph_11 = {
-			sort_name = "C_Locke_H_HellsIsland_Beacon",
-			icon_id = "C_Locke_H_HellsIsland_Beacon",
+		uno_6 = {
+			sort_name = "C_Vlad_H_Nightclub_LetThem",
+			icon_id = "C_Vlad_H_Nightclub_LetThem",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		uno_7 = {
+			additional_id = true,
+			sort_name = "C_Butcher_H_Scarface_Setting",
+			icon_id = "C_Butcher_H_Scarface_Setting",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.the_butcher
+			}
+		},
+		uno_8 = {
+			sort_name = "C_Hector_H_Watchdogs_OutOf",
+			icon_id = "C_Hector_H_Watchdogs_OutOf",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.hector
+			}
+		},
+		uno_9 = {
+			sort_name = "C_Vlad_H_XMas_Whats",
+			icon_id = "C_Vlad_H_XMas_Whats",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		vit_1 = {
+			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D0",
+			ladder = "H_WhiteHouse",
+			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_10 = {
+			sort_name = "C_Locke_H_WhiteHouse_BigBrother",
+			icon_id = "C_Locke_H_WhiteHouse_BigBrother",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_11 = {
+			additional_id = true,
+			sort_name = "C_Locke_H_WhiteHouse_President",
+			icon_id = "C_Locke_H_WhiteHouse_President",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.inventory.mask,
+				tags.contracts.locke
+			}
+		},
+		vit_2 = {
+			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D1",
+			ladder = "H_WhiteHouse",
+			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_3 = {
+			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D2",
+			ladder = "H_WhiteHouse",
+			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_4 = {
+			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D3",
+			ladder = "H_WhiteHouse",
+			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_5 = {
+			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D4",
+			ladder = "H_WhiteHouse",
+			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_6 = {
+			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D5",
+			ladder = "H_WhiteHouse",
+			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_7 = {
+			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_D6",
+			ladder = "H_WhiteHouse",
+			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_8 = {
+			icon_id = "C_Locke_H_WhiteHouse_AllDiffs_OD_D6",
+			ladder = "H_WhiteHouse",
+			sort_name = "C_Locke_H_WhiteHouse_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		vit_9 = {
+			sort_name = "C_Locke_H_WhiteHouse_HeistToRemember",
+			icon_id = "C_Locke_H_WhiteHouse_HeistToRemember",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.normal,
 				tags.tactics.loud,
+				tags.tactics.stealth,
 				tags.contracts.locke
 			}
 		},
-		bph_2 = {
-			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D1",
-			ladder = "H_HellsIsland",
-			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D1",
+		wwh_1 = {
+			need_unlock_icons = true,
+			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D0",
+			ladder = "H_Alaskan",
+			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D0",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.unlock.outfit,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		wwh_10 = {
+			sort_name = "C_Locke_H_AlsDeal_HeadlessSnow",
+			icon_id = "C_Locke_H_AlsDeal_HeadlessSnow",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.contracts.locke
+			}
+		},
+		wwh_2 = {
+			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D1",
+			ladder = "H_Alaskan",
+			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D1",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
@@ -13958,10 +12784,10 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		bph_3 = {
-			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D2",
-			ladder = "H_HellsIsland",
-			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D2",
+		wwh_3 = {
+			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D2",
+			ladder = "H_Alaskan",
+			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D2",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
@@ -13970,10 +12796,10 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		bph_4 = {
-			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D3",
-			ladder = "H_HellsIsland",
-			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D3",
+		wwh_4 = {
+			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D3",
+			ladder = "H_Alaskan",
+			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D3",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
@@ -13982,10 +12808,10 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		bph_5 = {
-			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D4",
-			ladder = "H_HellsIsland",
-			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D4",
+		wwh_5 = {
+			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D4",
+			ladder = "H_Alaskan",
+			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D4",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
@@ -13994,10 +12820,10 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		bph_6 = {
-			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D5",
-			ladder = "H_HellsIsland",
-			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D5",
+		wwh_6 = {
+			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D5",
+			ladder = "H_Alaskan",
+			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D5",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
@@ -14006,10 +12832,10 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		bph_7 = {
-			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D6",
-			ladder = "H_HellsIsland",
-			sort_name = "C_Locke_H_HellsIsland_AllDiffs_D6",
+		wwh_7 = {
+			icon_id = "C_Locke_H_AlsDeal_AllDiffs_OD_D6",
+			ladder = "H_Alaskan",
+			sort_name = "C_Locke_H_AlsDeal_AllDiffs_OD_D6",
 			additional_id = true,
 			tags = {
 				tags.progress.completion,
@@ -14018,28 +12844,1456 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
-		bph_8 = {
-			icon_id = "C_Locke_H_HellsIsland_AllDiffs_OD_D6",
-			ladder = "H_HellsIsland",
-			sort_name = "C_Locke_H_HellsIsland_AllDiffs_OD_D6",
-			additional_id = true,
+		wwh_8 = {
+			sort_name = "C_Locke_H_AlsDeal_ThereWasRoom",
+			icon_id = "C_Locke_H_AlsDeal_ThereWasRoom",
 			tags = {
-				tags.progress.completion,
-				tags.difficulty.death_sentence,
+				tags.progress.heisting,
+				tags.difficulty.normal,
 				tags.tactics.loud,
 				tags.contracts.locke
 			}
 		},
-		bph_9 = {
-			sort_name = "C_Locke_H_HellsIsland_PrisonRules",
-			icon_id = "C_Locke_H_HellsIsland_PrisonRules",
+		wwh_9 = {
+			sort_name = "C_Locke_H_AlsDeal_TheFuelMust",
+			icon_id = "C_Locke_H_AlsDeal_TheFuelMust",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		cac_1 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_CompactConf",
+			icon_id = "Other_H_Any_CompactConf",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.inventory.mask
+			}
+		},
+		cac_10 = {
+			additional_id = true,
+			sort_name = "C_Classics_H_FirstWorldBank_Federal",
+			icon_id = "C_Classics_H_FirstWorldBank_Federal",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.timed,
+				tags.tactics.killer,
+				tags.contracts.classic
+			}
+		},
+		cac_11 = {
+			additional_id = true,
+			sort_name = "C_Bain_H_ReservoirDogs_Silver",
+			icon_id = "C_Bain_H_ReservoirDogs_Silver",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.inventory.skill,
+				tags.contracts.bain
+			}
+		},
+		cac_12 = {
+			additional_id = true,
+			sort_name = "C_Vlad_H_Ukrainian_ImSure",
+			icon_id = "C_Vlad_H_Ukrainian_ImSure",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.stealth,
+				tags.tactics.timed,
+				tags.contracts.vlad
+			}
+		},
+		cac_13 = {
+			additional_id = true,
+			sort_name = "C_Jimmy_H_Boiling_Remember",
+			icon_id = "C_Jimmy_H_Boiling_Remember",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.jimmy
+			}
+		},
+		cac_14 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_TheSafeWords",
+			icon_id = "Other_H_Any_TheSafeWords",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.killer
+			}
+		},
+		cac_15 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_C40",
+			icon_id = "Other_H_Any_C40",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.inventory.skill,
+				tags.teamwork.players_1_to_4
+			}
+		},
+		cac_16 = {
+			additional_id = true,
+			sort_name = "C_Elephant_H_BigOil_DamItBile",
+			icon_id = "C_Elephant_H_BigOil_DamItBile",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.contracts.the_elephant
+			}
+		},
+		cac_17 = {
+			additional_id = true,
+			sort_name = "C_Bain_H_ArtGallery_VanGogh",
+			icon_id = "C_Bain_H_ArtGallery_VanGogh",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.contracts.bain,
+				tags.contracts.the_elephant
+			}
+		},
+		cac_18 = {
+			additional_id = true,
+			sort_name = "C_Hoxton_H_SafeHouse_Draganborn",
+			icon_id = "C_Hoxton_H_SafeHouse_Draganborn",
+			tags = {
+				tags.progress.heisting,
+				tags.contracts.hoxton
+			}
+		},
+		cac_19 = {
+			additional_id = true,
+			sort_name = "C_Bain_H_ArtGallery_Masterpiece",
+			icon_id = "C_Bain_H_ArtGallery_Masterpiece",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.stealth,
+				tags.contracts.bain,
+				tags.contracts.the_elephant
+			}
+		},
+		cac_2 = {
+			icon_id = "Other_H_Any_HumanSentry",
 			progress = true,
+			sort_name = "Other_H_Any_HumanSentry",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.inventory.weapon
+			}
+		},
+		cac_20 = {
+			icon_id = "C_Event_H_CursedKillRoom_SayHello",
+			progress = true,
+			sort_name = "C_Event_H_CursedKillRoom_SayHello",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		cac_21 = {
+			additional_id = true,
+			sort_name = "C_Event_H_CursedKillRoom_FasterFaster",
+			icon_id = "C_Event_H_CursedKillRoom_FasterFaster",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.timed,
+				tags.contracts.events
+			}
+		},
+		cac_22 = {
+			additional_id = true,
+			sort_name = "C_Dentist_H_BigBank_Matrix",
+			icon_id = "C_Dentist_H_BigBank_Matrix",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.death_wish,
+				tags.contracts.the_dentist
+			}
+		},
+		cac_23 = {
+			additional_id = true,
+			sort_name = "C_Classics_H_Undercover_IFeelLike",
+			icon_id = "C_Classics_H_Undercover_IFeelLike",
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.overkill,
 				tags.tactics.loud,
 				tags.inventory.weapon,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		cac_24 = {
+			additional_id = true,
+			sort_name = "C_Elephant_H_BigOil_Junkyard",
+			icon_id = "C_Elephant_H_BigOil_Junkyard",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.contracts.the_elephant
+			}
+		},
+		cac_25 = {
+			additional_id = true,
+			sort_name = "C_Classics_H_FirstWorldBank_DownPayment",
+			icon_id = "C_Classics_H_FirstWorldBank_DownPayment",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.inventory.weapon,
+				tags.contracts.classic
+			}
+		},
+		cac_26 = {
+			additional_id = true,
+			sort_name = "C_Dentist_H_HoxtonBreakout_WatchThePower",
+			icon_id = "C_Dentist_H_HoxtonBreakout_WatchThePower",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.the_dentist
+			}
+		},
+		cac_27 = {
+			additional_id = true,
+			sort_name = "C_Locke_H_AlsDeal_GlobalWarming",
+			icon_id = "C_Locke_H_AlsDeal_GlobalWarming",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.inventory.weapon,
+				tags.teamwork.players_1_to_4,
 				tags.contracts.locke
+			}
+		},
+		cac_28 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_Virus",
+			icon_id = "Other_H_Any_Virus",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.teamwork.players_1_to_4
+			}
+		},
+		cac_29 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_SnipeThis",
+			icon_id = "Other_H_Any_SnipeThis",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.inventory.weapon
+			}
+		},
+		cac_3 = {
+			icon_id = "Other_H_Any_Denied",
+			progress = true,
+			sort_name = "Other_H_Any_Denied",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud
+			}
+		},
+		cac_30 = {
+			additional_id = true,
+			sort_name = "C_Hoxton_H_SafeHouse_TheRaid",
+			icon_id = "C_Hoxton_H_SafeHouse_TheRaid",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.contracts.hoxton
+			}
+		},
+		cac_31 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_OneMan",
+			icon_id = "Other_H_Any_OneMan",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud
+			}
+		},
+		cac_32 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_WULULU",
+			icon_id = "Other_H_Any_WULULU",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.inventory.weapon
+			}
+		},
+		cac_33 = {
+			additional_id = true,
+			sort_name = "C_Locke_H_BirthOfSky_Expert",
+			icon_id = "C_Locke_H_BirthOfSky_Expert",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.teamwork.players_4,
+				tags.contracts.locke
+			}
+		},
+		cac_34 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_Lieutenant",
+			icon_id = "Other_H_Any_Lieutenant",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.inventory.skill
+			}
+		},
+		cac_35 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_DriveBy",
+			icon_id = "Other_H_Any_DriveBy",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.killer
+			}
+		},
+		cac_36 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_ATazed",
+			icon_id = "Other_H_Any_ATazed",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.inventory.weapon
+			}
+		},
+		cac_4 = {
+			additional_id = true,
+			sort_name = "Other_H_Any_Hipster",
+			icon_id = "Other_H_Any_Hipster",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud
+			}
+		},
+		cac_5 = {
+			additional_id = true,
+			sort_name = "C_Bain_H_ShadowRaid_IWillSucceed",
+			icon_id = "C_Bain_H_ShadowRaid_IWillSucceed",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		cac_6 = {
+			additional_id = true,
+			sort_name = "C_Bain_H_ReservoirDogs_JustShutUP",
+			icon_id = "C_Bain_H_ReservoirDogs_JustShutUP",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.inventory.weapon,
+				tags.contracts.bain
+			}
+		},
+		cac_7 = {
+			additional_id = true,
+			sort_name = "Other_H_NONE_GoldenGrin",
+			icon_id = "Other_H_NONE_GoldenGrin",
+			tags = {
+				tags.progress.heisting
+			}
+		},
+		cac_8 = {
+			additional_id = true,
+			sort_name = "C_Classics_H_Counterfeit_Why",
+			icon_id = "C_Classics_H_Counterfeit_Why",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		cac_9 = {
+			additional_id = true,
+			sort_name = "C_Classics_H_PanicRoom_QuickDraw",
+			icon_id = "C_Classics_H_PanicRoom_QuickDraw",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.timed,
+				tags.tactics.killer,
+				tags.contracts.classic
+			}
+		},
+		ggez_1 = {
+			need_unlock_icons = true,
+			icon_id = "C_All_H_All_AllJobs_OD_D6",
+			ladder = "C_All",
+			sort_name = "C_All_H_All_AllJobs_OD_D6",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.unlock.mask,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.all
+			}
+		},
+		ggez_10 = {
+			icon_id = "C_Continental_H_All_AllDiffs_D6",
+			ladder = "C_Continental",
+			sort_name = "C_Continental_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_continental
+			}
+		},
+		ggez_11 = {
+			icon_id = "C_Elephant_H_All_AllDiffs_D6",
+			ladder = "C_Elephant",
+			sort_name = "C_Elephant_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_elephant
+			}
+		},
+		ggez_12 = {
+			icon_id = "C_Vlad_H_All_AllDiffs_D6",
+			ladder = "C_Vlad",
+			sort_name = "C_Vlad_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		ggez_13 = {
+			icon_id = "C_Continental_H_YachtHeist_AllDiffs_D6",
+			ladder = "H_YachtHeist",
+			sort_name = "C_Continental_H_YachtHeist_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.stealth,
+				tags.contracts.the_continental
+			}
+		},
+		ggez_14 = {
+			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D6",
+			ladder = "H_SafeHouseNightmare",
+			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		ggez_15 = {
+			icon_id = "C_Vlad_H_Ashock_AllDiffs_D6",
+			ladder = "H_After",
+			sort_name = "C_Vlad_H_Ashock_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		ggez_16 = {
+			icon_id = "C_Locke_H_AlsDeal_AllDiffs_D6",
+			ladder = "H_Alaskan",
+			sort_name = "C_Locke_H_AlsDeal_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		ggez_17 = {
+			icon_id = "C_Bain_H_Arena_AllDiffs_D6",
+			ladder = "H_Arena",
+			sort_name = "C_Bain_H_Arena_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_18 = {
+			icon_id = "C_Bain_H_ArtGallery_AllDiffs_D6",
+			ladder = "H_ArtGallery",
+			sort_name = "C_Bain_H_ArtGallery_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_19 = {
+			icon_id = "C_Bain_H_BankC_AllDiffs_D6",
+			ladder = "H_BankC",
+			sort_name = "C_Bain_H_BankC_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_2 = {
+			icon_id = "C_Bain_H_All_AllDiffs_D6",
+			ladder = "C_Bain",
+			sort_name = "C_Bain_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_20 = {
+			icon_id = "C_Bain_H_BankD_AllDiffs_D6",
+			ladder = "H_BankD",
+			sort_name = "C_Bain_H_BankD_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_21 = {
+			icon_id = "C_Bain_H_BankG_AllDiffs_D6",
+			ladder = "H_BankG",
+			sort_name = "C_Bain_H_BankG_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_22 = {
+			icon_id = "C_Bain_H_BankR_AllDiffs_D6",
+			ladder = "H_BankR",
+			sort_name = "C_Bain_H_BankR_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_23 = {
+			icon_id = "C_Locke_H_Beneath_AllDiffs_D6",
+			ladder = "H_Beneath",
+			sort_name = "C_Locke_H_Beneath_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		ggez_24 = {
+			icon_id = "C_Dentist_H_BigBank_AllDiffs_D6",
+			ladder = "H_BigBank",
+			sort_name = "C_Dentist_H_BigBank_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_dentist
+			}
+		},
+		ggez_25 = {
+			icon_id = "C_Elephant_H_BigOil_AllDiffs_D6",
+			ladder = "H_BigOil",
+			sort_name = "C_Elephant_H_BigOil_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_elephant
+			}
+		},
+		ggez_26 = {
+			icon_id = "C_Elephant_H_Biker_AllDiffs_D6",
+			ladder = "H_Biker",
+			sort_name = "C_Elephant_H_Biker_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.the_elephant
+			}
+		},
+		ggez_27 = {
+			icon_id = "C_Locke_H_BirthOfSky_AllDiffs_D6",
+			ladder = "H_Birth",
+			sort_name = "C_Locke_H_BirthOfSky_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		ggez_28 = {
+			icon_id = "C_Jimmy_H_Boiling_AllDiffs_D6",
+			ladder = "H_Boiling",
+			sort_name = "C_Jimmy_H_Boiling_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.jimmy
+			}
+		},
+		ggez_29 = {
+			icon_id = "C_Butcher_H_BombDock_AllDiffs_D6",
+			ladder = "H_BombDock",
+			sort_name = "C_Butcher_H_BombDock_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_butcher
+			}
+		},
+		ggez_3 = {
+			icon_id = "C_Classics_H_All_AllDiffs_D6",
+			ladder = "C_Classic",
+			sort_name = "C_Classics_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
+			}
+		},
+		ggez_30 = {
+			icon_id = "C_Butcher_H_BombForest_AllDiffs_D6",
+			ladder = "H_BombForest",
+			sort_name = "C_Butcher_H_BombForest_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.the_butcher
+			}
+		},
+		ggez_31 = {
+			icon_id = "C_Continental_H_Brooklyn_AllDiffs_D6",
+			ladder = "H_Brooklyn",
+			sort_name = "C_Continental_H_Brooklyn_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.the_continental
+			}
+		},
+		ggez_32 = {
+			icon_id = "C_Locke_H_BrooklynBank_AllDiffs_D6",
+			ladder = "H_BrooklynBank",
+			sort_name = "C_Locke_H_BrooklynBank_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		ggez_33 = {
+			icon_id = "C_Bain_H_Car_AllDiffs_D6",
+			ladder = "H_Car",
+			sort_name = "C_Bain_H_Car_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_34 = {
+			icon_id = "C_Bain_H_CookOff_AllDiffs_D6",
+			ladder = "H_Cook",
+			sort_name = "C_Bain_H_CookOff_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_35 = {
+			icon_id = "C_Classics_H_Counterfeit_AllDiffs_D6",
+			ladder = "H_Counter",
+			sort_name = "C_Classics_H_Counterfeit_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		ggez_36 = {
+			icon_id = "C_Classics_H_DiamondHesit_AllDiffs_D6",
+			ladder = "H_DiamondHeist",
+			sort_name = "C_Classics_H_DiamondHesit_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
+			}
+		},
+		ggez_37 = {
+			icon_id = "C_Dentist_H_Diamond_AllDiffs_D6",
+			ladder = "H_Diamond",
+			sort_name = "C_Dentist_H_Diamond_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_dentist
+			}
+		},
+		ggez_38 = {
+			icon_id = "C_Bain_H_DiamondStore_AllDiffs_D6",
+			ladder = "H_DiamondStore",
+			sort_name = "C_Bain_H_DiamondStore_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_39 = {
+			icon_id = "C_Elephant_H_ElectionDay_AllDiffs_D6",
+			ladder = "H_ElectionDay",
+			sort_name = "C_Elephant_H_ElectionDay_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_elephant
+			}
+		},
+		ggez_4 = {
+			icon_id = "C_Event_H_All_AllDiffs_D6",
+			ladder = "C_Event",
+			sort_name = "C_Event_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		ggez_40 = {
+			icon_id = "C_Hector_H_Firestarter_AllDiffs_D6",
+			ladder = "H_Firestarter",
+			sort_name = "C_Hector_H_Firestarter_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.hector
+			}
+		},
+		ggez_41 = {
+			icon_id = "C_Classics_H_FirstWorldBank_AllDiffs_D6",
+			ladder = "H_FirstWorld",
+			sort_name = "C_Classics_H_FirstWorldBank_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.classic
+			}
+		},
+		ggez_42 = {
+			icon_id = "C_Vlad_H_FourStores_AllDiffs_D6",
+			ladder = "H_FourStores",
+			sort_name = "C_Vlad_H_FourStores_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		ggez_43 = {
+			icon_id = "C_Elephant_H_FramingFrame_AllDiffs_D6",
+			ladder = "H_FramingFrame",
+			sort_name = "C_Elephant_H_FramingFrame_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_elephant
+			}
+		},
+		ggez_44 = {
+			icon_id = "C_Bain_H_GOBank_AllDiffs_D6",
+			ladder = "H_GOBank",
+			sort_name = "C_Bain_H_GOBank_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_45 = {
+			icon_id = "C_Vlad_H_GoatSim_AllDiffs_D6",
+			ladder = "H_GoatSim",
+			sort_name = "C_Vlad_H_GoatSim_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		ggez_46 = {
+			icon_id = "C_Dentist_H_GoldenGrinCasino_AllDiffs_D6",
+			ladder = "H_GoldenGrin",
+			sort_name = "C_Dentist_H_GoldenGrinCasino_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_dentist
+			}
+		},
+		ggez_47 = {
+			icon_id = "C_Classics_H_GreenBridge_AllDiffs_D6",
+			ladder = "H_GreenBridge",
+			sort_name = "C_Classics_H_GreenBridge_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		ggez_48 = {
+			icon_id = "C_Classics_H_HeatStreet_AllDiffs_D6",
+			ladder = "H_HeatStreet",
+			sort_name = "C_Classics_H_HeatStreet_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		ggez_49 = {
+			icon_id = "C_Dentist_H_HotlineMiami_AllDiffs_D6",
+			ladder = "H_HotlineMiami",
+			sort_name = "C_Dentist_H_HotlineMiami_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.the_dentist
+			}
+		},
+		ggez_5 = {
+			icon_id = "C_Dentist_H_All_AllDiffs_D6",
+			ladder = "C_Dentist",
+			sort_name = "C_Dentist_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_dentist
+			}
+		},
+		ggez_50 = {
+			icon_id = "C_Dentist_H_HoxtonBreakout_AllDiffs_D6",
+			ladder = "H_HoxBreakout",
+			sort_name = "C_Dentist_H_HoxtonBreakout_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.the_dentist
+			}
+		},
+		ggez_51 = {
+			icon_id = "C_Dentist_H_HoxtonRevenge_AllDiffs_D6",
+			ladder = "H_HoxRevenge",
+			sort_name = "C_Dentist_H_HoxtonRevenge_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_dentist
+			}
+		},
+		ggez_52 = {
+			icon_id = "C_Bain_H_JewelryStore_AllDiffs_D6",
+			ladder = "H_JewelryStore",
+			sort_name = "C_Bain_H_JewelryStore_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_53 = {
+			icon_id = "C_Event_H_LabRats_AllDiffs_D6",
+			ladder = "H_LabRats",
+			sort_name = "C_Event_H_LabRats_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		ggez_54 = {
+			icon_id = "C_Vlad_H_Mallcrasher_AllDiffs_D6",
+			ladder = "H_Mallcrasher",
+			sort_name = "C_Vlad_H_Mallcrasher_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		ggez_55 = {
+			icon_id = "C_Vlad_H_Meltdown_AllDiffs_D6",
+			ladder = "H_Meltdown",
+			sort_name = "C_Vlad_H_Meltdown_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		ggez_56 = {
+			icon_id = "C_Jimmy_H_MurkyStation_AllDiffs_D6",
+			ladder = "H_MurkyStation",
+			sort_name = "C_Jimmy_H_MurkyStation_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.stealth,
+				tags.contracts.jimmy
+			}
+		},
+		ggez_57 = {
+			icon_id = "C_Vlad_H_Nightclub_AllDiffs_D6",
+			ladder = "H_Nightclub",
+			sort_name = "C_Vlad_H_Nightclub_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		ggez_58 = {
+			icon_id = "C_Classics_H_PanicRoom_AllDiffs_D6",
+			ladder = "H_PanicRoom",
+			sort_name = "C_Classics_H_PanicRoom_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		ggez_59 = {
+			icon_id = "C_Event_H_PrisonNightmare_AllDiffs_D6",
+			ladder = "H_PrisonNightmare",
+			sort_name = "C_Event_H_PrisonNightmare_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		ggez_6 = {
+			icon_id = "C_Hector_H_All_AllDiffs_D6",
+			ladder = "C_Hector",
+			sort_name = "C_Hector_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.hector
+			}
+		},
+		ggez_60 = {
+			icon_id = "C_Hector_H_Rats_AllDiffs_D6",
+			ladder = "H_Rats",
+			sort_name = "C_Hector_H_Rats_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.hector
+			}
+		},
+		ggez_61 = {
+			icon_id = "C_Bain_H_ReservoirDogs_AllDiffs_D6",
+			ladder = "H_Reservoir",
+			sort_name = "C_Bain_H_ReservoirDogs_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_62 = {
+			icon_id = "C_Hoxton_H_SafeHouse_AllDiffs_D6",
+			ladder = "H_SafehouseRaid",
+			sort_name = "C_Hoxton_H_SafeHouse_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.hoxton
+			}
+		},
+		ggez_63 = {
+			icon_id = "C_Vlad_H_Santa_AllDiffs_D6",
+			ladder = "H_Santa",
+			sort_name = "C_Vlad_H_Santa_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		ggez_64 = {
+			icon_id = "C_Butcher_H_Scarface_AllDiffs_D6",
+			ladder = "H_Scarface",
+			sort_name = "C_Butcher_H_Scarface_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_butcher
+			}
+		},
+		ggez_65 = {
+			icon_id = "C_Bain_H_ShadowRaid_AllDiffs_D6",
+			ladder = "H_ShadowRaid",
+			sort_name = "C_Bain_H_ShadowRaid_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.stealth,
+				tags.contracts.bain
+			}
+		},
+		ggez_66 = {
+			icon_id = "C_Classics_H_Slaughterhouse_AllDiffs_D6",
+			ladder = "H_Slaughterhouse",
+			sort_name = "C_Classics_H_Slaughterhouse_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		ggez_67 = {
+			icon_id = "C_Vlad_H_StealingXmas_AllDiffs_D6",
+			ladder = "H_StealingXmas",
+			sort_name = "C_Vlad_H_StealingXmas_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		ggez_68 = {
+			icon_id = "C_Bain_H_TransportCrossroads_AllDiffs_D6",
+			ladder = "H_TransportCrossroads",
+			sort_name = "C_Bain_H_TransportCrossroads_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_69 = {
+			icon_id = "C_Bain_H_TransportDowntown_AllDiffs_D6",
+			ladder = "H_TransportDowntown",
+			sort_name = "C_Bain_H_TransportDowntown_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_7 = {
+			icon_id = "C_Jimmy_H_All_AllDiffs_D6",
+			ladder = "C_Jimmy",
+			sort_name = "C_Jimmy_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jimmy
+			}
+		},
+		ggez_70 = {
+			icon_id = "C_Bain_H_TransportHarbor_AllDiffs_D6",
+			ladder = "H_TransportHarbor",
+			sort_name = "C_Bain_H_TransportHarbor_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_71 = {
+			icon_id = "C_Bain_H_TransportPark_AllDiffs_D6",
+			ladder = "H_TransportPark",
+			sort_name = "C_Bain_H_TransportPark_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_72 = {
+			icon_id = "C_Bain_H_TrainHeist_AllDiffs_D6",
+			ladder = "H_TransportTrainHeist",
+			sort_name = "C_Bain_H_TrainHeist_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_73 = {
+			icon_id = "C_Bain_H_TransportUnderpass_AllDiffs_D6",
+			ladder = "H_TransportUnderpass",
+			sort_name = "C_Bain_H_TransportUnderpass_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.bain
+			}
+		},
+		ggez_74 = {
+			icon_id = "C_Vlad_H_Ukrainian_AllDiffs_D6",
+			ladder = "H_Ukrainian",
+			sort_name = "C_Vlad_H_Ukrainian_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		ggez_75 = {
+			icon_id = "C_Classics_H_Undercover_AllDiffs_D6",
+			ladder = "H_Undercover",
+			sort_name = "C_Classics_H_Undercover_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.classic
+			}
+		},
+		ggez_76 = {
+			icon_id = "C_Hector_H_Watchdogs_AllDiffs_D6",
+			ladder = "H_Watchdogs",
+			sort_name = "C_Hector_H_Watchdogs_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.hector
+			}
+		},
+		ggez_77 = {
+			icon_id = "C_Vlad_H_XMas_AllDiffs_D6",
+			ladder = "H_XMas",
+			sort_name = "C_Vlad_H_XMas_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		ggez_78 = {
+			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D6",
+			ladder = "H_CursedKill",
+			sort_name = "C_Event_H_CursedKillRoom_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		ggez_8 = {
+			icon_id = "C_Locke_H_All_AllDiffs_D6",
+			ladder = "C_Locke",
+			sort_name = "C_Locke_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.contracts.locke
+			}
+		},
+		ggez_9 = {
+			icon_id = "C_Butcher_H_All_AllDiffs_D6",
+			ladder = "C_Butcher",
+			sort_name = "C_Butcher_H_All_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.the_butcher
+			}
+		},
+		nbm_1 = {
+			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D0",
+			ladder = "H_SafeHouseNightmare",
+			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		nbm_2 = {
+			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D1",
+			ladder = "H_SafeHouseNightmare",
+			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		nbm_3 = {
+			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D2",
+			ladder = "H_SafeHouseNightmare",
+			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.contracts.events
+			}
+		},
+		nbm_4 = {
+			icon_id = "C_Event_H_SafeHouseNightmare_AllDiffs_D3",
+			ladder = "H_SafeHouseNightmare",
+			sort_name = "C_Event_H_SafeHouseNightmare_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.events
 			}
 		}
 	}

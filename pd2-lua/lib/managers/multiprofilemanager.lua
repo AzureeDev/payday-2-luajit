@@ -26,6 +26,8 @@ function MultiProfileManager:save_current()
 	profile.deployable_secondary = blm:equipped_deployable(2)
 	profile.armor = blm:equipped_armor()
 	profile.armor_skin = blm:equipped_armor_skin()
+	profile.player_style = blm:equipped_player_style()
+	profile.suit_variations = blm:get_suit_variations()
 	profile.skillset = skt.selected_skill_switch
 	profile.perk_deck = Application:digest_value(skt.specializations.current_specialization, false)
 	profile.mask = blm:equipped_mask_slot()
@@ -56,6 +58,8 @@ function MultiProfileManager:load_current()
 	})
 	blm:equip_armor(profile.armor)
 	blm:set_equipped_armor_skin(profile.armor_skin)
+	blm:set_equipped_player_style(profile.player_style or blm:get_default_player_style())
+	blm:set_suit_variations(profile.suit_variations or {})
 	blm:equip_mask(profile.mask)
 
 	local mcm = managers.menu_component
@@ -153,6 +157,13 @@ function MultiProfileManager:open_quick_select()
 		})
 	end
 
+	local divider = {
+		no_text = true,
+		no_selection = true
+	}
+
+	table.insert(dialog_data.button_list, divider)
+
 	local no_button = {
 		text = managers.localization:text("dialog_cancel"),
 		focus_callback_func = function ()
@@ -194,6 +205,22 @@ function MultiProfileManager:load(data)
 	end
 
 	self:_check_amount()
+end
+
+function MultiProfileManager:reset()
+	local name = nil
+	local current_profile = self._global._current_profile
+
+	for idx, profile in pairs(self._global._profiles) do
+		name = profile.name
+		self._global._current_profile = idx
+
+		self:save_current()
+
+		self:current_profile().name = name
+	end
+
+	self._global._current_profile = current_profile
 end
 
 function MultiProfileManager:_check_amount()

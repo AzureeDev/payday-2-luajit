@@ -1,6 +1,10 @@
 SniperGrazeDamage = SniperGrazeDamage or {}
 
 function SniperGrazeDamage:on_weapon_fired(weapon_unit, result)
+	if not alive(weapon_unit) then
+		return
+	end
+
 	if not weapon_unit:base():is_category("snp") then
 		return
 	end
@@ -13,6 +17,10 @@ function SniperGrazeDamage:on_weapon_fired(weapon_unit, result)
 		return
 	end
 
+	if not result.rays then
+		return
+	end
+
 	local furthest_hit = result.rays[#result.rays]
 	local upgrade_value = managers.player:upgrade_value("snp", "graze_damage")
 	local enemies_hit = {}
@@ -20,10 +28,10 @@ function SniperGrazeDamage:on_weapon_fired(weapon_unit, result)
 	local sentry_mask = managers.slot:get_mask("sentry_gun")
 	local ally_mask = managers.slot:get_mask("all_criminals")
 
-	for _, hit in ipairs(result.rays) do
+	for i, hit in ipairs(result.rays) do
 		local is_turret = hit.unit:in_slot(sentry_mask)
 		local is_ally = hit.unit:in_slot(ally_mask)
-		local is_valid_hit = hit.damage_result and hit.damage_result.attack_data
+		local is_valid_hit = hit.damage_result and hit.damage_result.attack_data and true or false
 
 		if not is_turret and not is_ally and is_valid_hit then
 			local result = hit.damage_result

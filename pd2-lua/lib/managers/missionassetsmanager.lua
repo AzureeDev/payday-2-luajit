@@ -516,8 +516,7 @@ function MissionAssetsManager:get_asset_unlock_text_by_id(id)
 		elseif asset_tweak_data.saved_job_lock then
 			text = "sjval_" .. asset_tweak_data.saved_job_lock
 		elseif asset_tweak_data.dlc_lock then
-			prefix = ""
-			text = "bm_global_value_ue_unlock"
+			text = "dlc_" .. asset_tweak_data.dlc_lock
 		end
 	end
 

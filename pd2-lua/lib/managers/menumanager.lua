@@ -37,6 +37,8 @@ MenuManager.ONLINE_AGE = (SystemInfo:platform() == Idstring("PS3") or SystemInfo
 require("lib/managers/MenuManagerDialogs")
 require("lib/managers/MenuManagerDebug")
 
+local temp_vec1 = Vector3()
+
 function MenuManager:init(is_start_menu)
 	MenuManager.super.init(self)
 
@@ -607,23 +609,22 @@ function MenuManager:set_mouse_sensitivity(zoomed)
 		end
 	end
 
-	local multiplier = Vector3()
+	local multiplier = temp_vec1
 
-	mvector3.set_x(multiplier, sense_x * self._look_multiplier.x)
-	mvector3.set_y(multiplier, sense_y * self._look_multiplier.y)
+	mvector3.set_static(multiplier, sense_x * self._look_multiplier.x, sense_y * self._look_multiplier.y, 0)
 	self._controller:get_setup():get_connection("look"):set_multiplier(multiplier)
-	managers.controller:rebind_connections()
+	managers.controller:request_rebind_connections()
 end
 
 function MenuManager:camera_sensitivity_x_changed(name, old_value, new_value)
 	local setup = self._controller:get_setup()
 	local look_connection = setup:get_connection("look")
-	local look_multiplier = Vector3()
+	local look_multiplier = temp_vec1
 
 	mvector3.set(look_multiplier, look_connection:get_multiplier())
 	mvector3.set_x(look_multiplier, self._look_multiplier.x * new_value)
 	look_connection:set_multiplier(look_multiplier)
-	managers.controller:rebind_connections()
+	managers.controller:request_rebind_connections()
 
 	if alive(managers.player:player_unit()) then
 		local plr_state = managers.player:player_unit():movement():current_state()
@@ -639,12 +640,12 @@ end
 function MenuManager:camera_sensitivity_y_changed(name, old_value, new_value)
 	local setup = self._controller:get_setup()
 	local look_connection = setup:get_connection("look")
-	local look_multiplier = Vector3()
+	local look_multiplier = temp_vec1
 
 	mvector3.set(look_multiplier, look_connection:get_multiplier())
 	mvector3.set_y(look_multiplier, self._look_multiplier.y * new_value)
 	look_connection:set_multiplier(look_multiplier)
-	managers.controller:rebind_connections()
+	managers.controller:request_rebind_connections()
 
 	if alive(managers.player:player_unit()) then
 		local plr_state = managers.player:player_unit():movement():current_state()
@@ -664,7 +665,7 @@ function MenuManager:camera_sensitivity_changed(name, old_value, new_value)
 		local look_mutliplier = new_value * self._look_multiplier
 
 		look_connection:set_multiplier(look_mutliplier)
-		managers.controller:rebind_connections()
+		managers.controller:request_rebind_connections()
 
 		return
 	end
@@ -696,7 +697,7 @@ function MenuManager:invert_camera_x_changed(name, old_value, new_value)
 	end
 
 	look_connection:set_inversion(look_inversion)
-	managers.controller:rebind_connections()
+	managers.controller:request_rebind_connections()
 end
 
 function MenuManager:invert_camera_y_changed(name, old_value, new_value)
@@ -711,7 +712,7 @@ function MenuManager:invert_camera_y_changed(name, old_value, new_value)
 	end
 
 	look_connection:set_inversion(look_inversion)
-	managers.controller:rebind_connections()
+	managers.controller:request_rebind_connections()
 end
 
 function MenuManager:southpaw_changed(name, old_value, new_value)
@@ -741,7 +742,7 @@ function MenuManager:southpaw_changed(name, old_value, new_value)
 		})
 	end
 
-	managers.controller:rebind_connections()
+	managers.controller:request_rebind_connections()
 end
 
 function MenuManager:dof_setting_changed(name, old_value, new_value)
@@ -1473,225 +1474,6 @@ function MenuCallbackHandler:trial_buy()
 	managers.dlc:buy_full_game()
 end
 
-function MenuCallbackHandler:dlc_buy_pc()
-	print("[MenuCallbackHandler:dlc_buy_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_gage_pack_pc()
-	print("[MenuCallbackHandler:dlc_buy_gage_pack_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_big_bank_pc()
-	print("[MenuCallbackHandler:dlc_buy_big_bank_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_gage_pack_historical_pc()
-	print("[MenuCallbackHandler:dlc_buy_gage_pack_historical_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_hl_miami_pc()
-	print("[MenuCallbackHandler:dlc_buy_hl_miami_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_gage_pack_assault_pc()
-	print("[MenuCallbackHandler:dlc_buy_gage_pack_assault_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_gage_pack_shotgun_pc()
-	print("[MenuCallbackHandler:dlc_buy_gage_pack_shotgun_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_gage_pack_snp_pc()
-	print("[MenuCallbackHandler:dlc_buy_gage_pack_snp_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_gage_pack_jobs_pc()
-	print("[MenuCallbackHandler:dlc_buy_gage_pack_jobs_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_gage_pack_lmg_pc()
-	print("[MenuCallbackHandler:dlc_buy_gage_pack_lmg_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_armadillo_pc()
-	print("[MenuCallbackHandler:dlc_buy_armadillo_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_character_pack_clover_pc()
-	print("[MenuCallbackHandler:dlc_buy_character_pack_clover_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_character_pack_dragan_pc()
-	print("[MenuCallbackHandler:dlc_buy_character_pack_dragan_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_hope_diamond_pc()
-	print("[MenuCallbackHandler:dlc_buy_hope_diamond_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_the_bomb_pc()
-	print("[MenuCallbackHandler:dlc_buy_the_bomb_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_akm4_pack_pc()
-	print("[MenuCallbackHandler:dlc_buy_akm4_pack_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_overkill_pack_pc()
-	print("[MenuCallbackHandler:dlc_buy_overkill_pack_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_complete_overkill_pack_pc()
-	print("[MenuCallbackHandler:dlc_buy_complete_overkill_pack_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_bbq_pc()
-	print("[MenuCallbackHandler:dlc_buy_bbq_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_west_pc()
-	print("[MenuCallbackHandler:dlc_buy_west_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_arena_pc()
-	print("[MenuCallbackHandler:dlc_buy_arena_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_character_pack_sokol_pc()
-	print("[MenuCallbackHandler:dlc_buy_character_pack_sokol_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_kenaz_pc()
-	print("[MenuCallbackHandler:dlc_buy_kenaz_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_turtles_pc()
-	print("[MenuCallbackHandler:dlc_buy_turtles_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_dragon_pc()
-	print("[MenuCallbackHandler:dlc_buy_dragon_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_steel_pc()
-	print("[MenuCallbackHandler:dlc_buy_steel_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_berry_pc()
-	print("[MenuCallbackHandler:dlc_buy_berry_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_peta_pc()
-	print("[MenuCallbackHandler:dlc_buy_peta_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_pal_pc()
-	print("[MenuCallbackHandler:dlc_buy_pal_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_coco_pc()
-	print("[MenuCallbackHandler:dlc_buy_coco_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_opera_pc()
-	print("[MenuCallbackHandler:dlc_buy_opera_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_wild_pc()
-	print("[MenuCallbackHandler:dlc_buy_wild_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_born_pc()
-	print("[MenuCallbackHandler:dlc_buy_born_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_pim_pc()
-	print("[MenuCallbackHandler:dlc_buy_pim_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_tango_pc()
-	print("[MenuCallbackHandler:dlc_buy_tango_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_friend_pc()
-	print("[MenuCallbackHandler:dlc_buy_friend_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_chico_pc()
-	print("[MenuCallbackHandler:dlc_buy_chico_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_rvd_pc()
-	print("[MenuCallbackHandler:dlc_buy_rvd_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_spa_pc()
-	print("[MenuCallbackHandler:dlc_buy_spa_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_grv_pc()
-	print("[MenuCallbackHandler:dlc_buy_grv_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_amp_pc()
-	print("[MenuCallbackHandler:dlc_buy_amp_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_mp2_pc()
-	print("[MenuCallbackHandler:dlc_buy_mp2_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_max_pc()
-	print("[MenuCallbackHandler:dlc_buy_max_pc]")
-	Steam:overlay_activate("url", tweak_data.gui.store_page)
-end
-
-function MenuCallbackHandler:dlc_buy_ecp_pc()
-	Steam:overlay_activate("store", 758420)
-end
-
 function MenuCallbackHandler:dlc_buy_ps3()
 	print("[MenuCallbackHandler:dlc_buy_ps3]")
 	managers.dlc:buy_product("dlc1")
@@ -1773,352 +1555,64 @@ function MenuCallbackHandler:choice_job_plan_filter(item)
 	managers.user:set_setting("crimenet_filter_tactic", job_plan_filter)
 end
 
-function MenuCallbackHandler:is_dlc_latest_locked(check_dlc)
-	local dlcs = {
-		"ecp",
-		"max",
-		"mp2",
-		"amp",
-		"grv",
-		"rvd",
-		"spa",
-		"friend",
-		"chico",
-		"tango",
-		"pim",
-		"born",
-		"wild",
-		"opera",
-		"pal",
-		"peta",
-		"berry",
-		"steel",
-		"dragon",
-		"turtles",
-		"character_pack_sokol",
-		"kenaz",
-		"arena",
-		"west",
-		"bbq",
-		"overkill_pack",
-		"akm4_pack",
-		"character_pack_dragan",
-		"the_bomb",
-		"character_pack_clover",
-		"hope_diamond",
-		"gage_pack_historical",
-		"hl_miami",
-		"gage_pack_assault",
-		"gage_pack_shotgun",
-		"big_bank",
-		"gage_pack_snp",
-		"gage_pack_jobs",
-		"gage_pack_lmg",
-		"gage_pack",
-		"armored_transport"
-	}
+function MenuCallbackHandler:get_latest_dlc_locked()
+	local dlcs = managers.dlc:get_promoted_dlc_list()
 	local has_dlc = nil
 
 	for _, dlc in ipairs(dlcs) do
 		has_dlc = managers.dlc:is_dlc_unlocked(dlc)
 
 		if not has_dlc then
-			return dlc == check_dlc
+			return dlc
 		end
 	end
-
-	return false
 end
 
-function MenuCallbackHandler:visible_callback_armored_transport(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("armored_transport")
+function MenuCallbackHandler:is_dlc_latest_locked(check_dlc)
+	return MenuCallbackHandler:get_latest_dlc_locked() == check_dlc
 end
 
-function MenuCallbackHandler:visible_callback_gage_pack(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
+function MenuCallbackHandler:visible_callback_dlc_buy_win32(item)
+	if not MenuCallbackHandler:is_win32(item) then
+		return false
+	end
 
-	return self:is_dlc_latest_locked("gage_pack")
+	if not MenuCallbackHandler:has_full_game(item) then
+		return false
+	end
+
+	if not MenuCallbackHandler:is_overlay_enabled(item) then
+		return false
+	end
+
+	local locked_dlc = MenuCallbackHandler:get_latest_dlc_locked()
+
+	if not locked_dlc then
+		return false
+	end
+
+	item:set_parameter("text_id", "menu_dlc_buy_" .. locked_dlc)
+	item:set_parameter("help_id", "menu_dlc_buy_" .. locked_dlc .. "_help")
+
+	local dlc_data = Global.dlc_manager.all_dlc_data[locked_dlc]
+
+	item:set_parameter("store_id", dlc_data and dlc_data.app_id)
+	item:set_parameter("webpage", dlc_data and dlc_data.webpage)
+
+	return true
 end
 
-function MenuCallbackHandler:visible_callback_gage_pack_lmg(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("gage_pack_lmg")
-end
-
-function MenuCallbackHandler:visible_callback_gage_pack_jobs(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("gage_pack_jobs")
-end
-
-function MenuCallbackHandler:visible_callback_gage_pack_snp(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("gage_pack_snp")
-end
-
-function MenuCallbackHandler:visible_callback_gage_pack_shotgun(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("gage_pack_shotgun")
-end
-
-function MenuCallbackHandler:visible_callback_gage_pack_assault(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("gage_pack_assault")
-end
-
-function MenuCallbackHandler:visible_callback_hl_miami(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("hl_miami")
-end
-
-function MenuCallbackHandler:visible_callback_big_bank(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("big_bank")
-end
-
-function MenuCallbackHandler:visible_callback_gage_pack_historical(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("gage_pack_historical")
-end
-
-function MenuCallbackHandler:visible_callback_character_pack_clover(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("character_pack_clover")
-end
-
-function MenuCallbackHandler:visible_callback_character_pack_dragan(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("character_pack_dragan")
-end
-
-function MenuCallbackHandler:visible_callback_hope_diamond(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("hope_diamond")
-end
-
-function MenuCallbackHandler:visible_callback_the_bomb(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("the_bomb")
-end
-
-function MenuCallbackHandler:visible_callback_akm4_pack(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("akm4_pack")
-end
-
-function MenuCallbackHandler:visible_callback_overkill_pack(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("overkill_pack")
-end
-
-function MenuCallbackHandler:visible_callback_complete_overkill_pack(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("complete_overkill_pack")
-end
-
-function MenuCallbackHandler:visible_callback_bbq(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("bbq")
-end
-
-function MenuCallbackHandler:visible_callback_west(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("west")
-end
-
-function MenuCallbackHandler:visible_callback_arena(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("arena")
-end
-
-function MenuCallbackHandler:visible_callback_character_pack_sokol(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("character_pack_sokol")
-end
-
-function MenuCallbackHandler:visible_callback_kenaz(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("kenaz")
-end
-
-function MenuCallbackHandler:visible_callback_turtles(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("turtles")
-end
-
-function MenuCallbackHandler:visible_callback_dragon(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("dragon")
-end
-
-function MenuCallbackHandler:visible_callback_steel(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("steel")
-end
-
-function MenuCallbackHandler:visible_callback_berry(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("berry")
-end
-
-function MenuCallbackHandler:visible_callback_peta(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("peta")
-end
-
-function MenuCallbackHandler:visible_callback_pal(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("pal")
-end
-
-function MenuCallbackHandler:visible_callback_opera(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("opera")
-end
-
-function MenuCallbackHandler:visible_callback_born(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("born")
-end
-
-function MenuCallbackHandler:visible_callback_wild(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("wild")
-end
-
-function MenuCallbackHandler:visible_callback_pim(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("pim")
-end
-
-function MenuCallbackHandler:visible_callback_tango(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("tango")
-end
-
-function MenuCallbackHandler:visible_callback_friend(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("friend")
-end
-
-function MenuCallbackHandler:visible_callback_chico(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("chico")
-end
-
-function MenuCallbackHandler:visible_callback_rvd(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("rvd")
-end
-
-function MenuCallbackHandler:visible_callback_spa(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("spa")
-end
-
-function MenuCallbackHandler:visible_callback_grv(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("grv")
-end
-
-function MenuCallbackHandler:visible_callback_amp(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("amp")
-end
-
-function MenuCallbackHandler:visible_callback_mp2(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("mp2")
-end
-
-function MenuCallbackHandler:visible_callback_max(item)
-	item:set_parameter("text_id", "menu_dlc_buy_ue")
-	item:set_parameter("help_id", "menu_dlc_buy_ue_help")
-
-	return self:is_dlc_latest_locked("max")
-end
-
-function MenuCallbackHandler:visible_callback_ecp(item)
-	return self:is_dlc_latest_locked("ecp")
+function MenuCallbackHandler:dlc_buy_win32(item)
+	local webpage = item:parameter("webpage")
+	local store_id = item:parameter("store_id")
+
+	if webpage then
+		Steam:overlay_activate("url", webpage)
+	elseif store_id then
+		Steam:overlay_activate("store", store_id)
+	else
+		Steam:overlay_activate("url", tweak_data.gui.store_page)
+	end
 end
 
 function MenuCallbackHandler:not_has_all_dlcs()
@@ -2836,6 +2330,8 @@ function MenuCallbackHandler:choice_difficulty_filter_xb1(item)
 	local diff_filter = item:value()
 
 	managers.network.matchmake:set_difficulty_filter(diff_filter)
+	managers.user:set_setting("crimenet_filter_difficulty", diff_filter)
+	managers.crimenet:update_difficulty_filter()
 end
 
 function MenuCallbackHandler:choice_job_id_filter(item)
@@ -4509,6 +4005,18 @@ function MenuCallbackHandler:set_default_network_options()
 	managers.menu:show_default_option_dialog(params)
 end
 
+function MenuCallbackHandler:set_default_user_interface_options()
+	local params = {
+		text = managers.localization:text("dialog_default_user_interface_options_message"),
+		callback = function ()
+			managers.user:reset_user_interface_setting_map()
+			self:refresh_node()
+		end
+	}
+
+	managers.menu:show_default_option_dialog(params)
+end
+
 function MenuCallbackHandler:resume_game()
 	managers.menu:close_menu("menu_pause")
 end
@@ -5742,6 +5250,12 @@ function MenuSoundCreator:modify_node(node)
 		end
 
 		st_item:set_value(option_value)
+	end
+
+	local mute_heist_vo = node:item("toggle_mute_heist_vo")
+
+	if mute_heist_vo then
+		mute_heist_vo:set_value(managers.user:get_setting("mute_heist_vo") and "on" or "off")
 	end
 
 	return node
@@ -7883,7 +7397,7 @@ end
 
 function MenuCallbackHandler:pressed_preplanning_custom_point(item)
 	if item:parameters().post_event then
-		managers.menu_component:preplanning_post_event(item:parameters().post_event, item:name())
+		managers.menu_component:preplanning_post_event(item:parameters().post_event, item:name(), true)
 		managers.menu_component:preplanning_start_custom_talk(item:name())
 	end
 end
@@ -9719,12 +9233,12 @@ function MenuOptionInitiator:modify_node(node)
 		return self:modify_options(node)
 	elseif node_name == "network_options" then
 		return self:modify_network_options(node)
-	elseif node_name == "gameplay_options" then
-		return self:modify_gameplay_options(node)
 	elseif node_name == "user_interface_options" then
 		return self:modify_user_interface_options(node)
 	elseif node_name == "vr_options" then
 		return self:modify_vr_options(node)
+	elseif node_name == "adv_options" then
+		return self:modify_adv_options(node)
 	end
 end
 
@@ -9737,6 +9251,14 @@ function MenuOptionInitiator:modify_resolution(node)
 		local res_name = string.format("%d x %d", RenderSettings.resolution.x, RenderSettings.resolution.y)
 
 		node:set_default_item_name(res_name)
+	end
+
+	return node
+end
+
+function MenuOptionInitiator:modify_adv_options(node)
+	if node:item("toggle_workshop") then
+		node:item("toggle_workshop"):set_value(managers.user:get_setting("workshop") and "on" or "off")
 	end
 
 	return node
@@ -10127,7 +9649,21 @@ function MenuOptionInitiator:modify_controls(node)
 	return node
 end
 
-function MenuOptionInitiator:modify_gameplay_options(node)
+function MenuOptionInitiator:modify_user_interface_options(node)
+	local controller_hint_box = node:item("toggle_controller_hint")
+	local controller_hint_setting = managers.user:get_setting("loading_screen_show_controller")
+
+	if controller_hint_box then
+		controller_hint_box:set_value(controller_hint_setting and "on" or "off")
+	end
+
+	local loading_hints_box = node:item("toggle_loading_hints")
+	local loading_hints_setting = managers.user:get_setting("loading_screen_show_hints")
+
+	if loading_hints_box then
+		loading_hints_box:set_value(loading_hints_setting and "on" or "off")
+	end
+
 	local option_value = "off"
 	local throwable_contour = node:item("toggle_throwable_contour")
 
@@ -10150,30 +9686,6 @@ function MenuOptionInitiator:modify_gameplay_options(node)
 		ammo_contour:set_value(option_value)
 	end
 
-	local mute_heist_vo = node:item("toggle_mute_heist_vo")
-
-	if mute_heist_vo then
-		mute_heist_vo:set_value(managers.user:get_setting("mute_heist_vo") and "on" or "off")
-	end
-
-	return node
-end
-
-function MenuOptionInitiator:modify_user_interface_options(node)
-	local controller_hint_box = node:item("toggle_controller_hint")
-	local controller_hint_setting = managers.user:get_setting("loading_screen_show_controller")
-
-	if controller_hint_box then
-		controller_hint_box:set_value(controller_hint_setting and "on" or "off")
-	end
-
-	local loading_hints_box = node:item("toggle_loading_hints")
-	local loading_hints_setting = managers.user:get_setting("loading_screen_show_hints")
-
-	if loading_hints_box then
-		loading_hints_box:set_value(loading_hints_setting and "on" or "off")
-	end
-
 	local vr_descs_box = node:item("toggle_vr_descs")
 	local vr_descs_setting = managers.user:get_setting("show_vr_descs")
 
@@ -10193,10 +9705,6 @@ function MenuOptionInitiator:modify_options(node)
 		node:set_default_item_name("video")
 	else
 		node:set_default_item_name("controls")
-	end
-
-	if node:item("toggle_workshop") then
-		node:item("toggle_workshop"):set_value(managers.user:get_setting("workshop") and "on" or "off")
 	end
 
 	return node

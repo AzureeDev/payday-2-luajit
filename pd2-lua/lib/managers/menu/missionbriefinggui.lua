@@ -69,7 +69,7 @@ function MissionBriefingTabItem:reduce_to_small_font(iteration)
 	self._tab_select_rect:set_shape(self._tab_text:shape())
 	self._panel:set_top(self._tab_text:bottom() - 3)
 	self._panel:set_h(self._main_panel:h())
-	self._panel:grow(0, -(self._panel:top() + 70 + font_size * 4 + 25))
+	self._panel:grow(0, -(self._panel:top() + 70 + tweak_data.menu.pd2_small_font_size * 4 + 25))
 end
 
 function MissionBriefingTabItem:update_tab_position()
@@ -1617,7 +1617,7 @@ function LoadoutItem:populate_category(category, data)
 	local index = 0
 	local max_items = data.override_slots and data.override_slots[1] * data.override_slots[2] or 9
 	local max_rows = tweak_data.gui.MAX_WEAPON_ROWS or 3
-	max_items = max_rows * (data.override_slots and data.override_slots[2] or 3)
+	max_items = max_rows * (data.override_slots and data.override_slots[1] or 3)
 
 	for i = 1, max_items, 1 do
 		data[i] = nil
@@ -2096,10 +2096,37 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 			rotation = math.random(2) - 1.5
 		})
 		aspect = primary_bitmap:texture_width() / math.max(1, primary_bitmap:texture_height())
+		local akimbo_gui_data = tweak_data.weapon[primary_id] and tweak_data.weapon[primary_id].akimbo_gui_data
 
-		primary_bitmap:set_w(primary_bitmap:h() * aspect)
-		primary_bitmap:set_center_x(x)
-		primary_bitmap:set_center_y(y * 3)
+		if akimbo_gui_data then
+			local akibmo_bitmap = player_slot.panel:bitmap({
+				alpha = 0.8,
+				layer = 1,
+				texture = texture,
+				w = w,
+				h = h,
+				rotation = math.random(2) - 1.5
+			})
+			local scale = akimbo_gui_data.scale or 0.75
+			local offset = akimbo_gui_data.offset or 0.1
+			local rotation = akimbo_gui_data.rotation or 45
+			local panel_width = player_slot.panel:w()
+
+			primary_bitmap:set_w(h * aspect * scale)
+			akibmo_bitmap:set_w(h * aspect * scale)
+			primary_bitmap:set_h(h * scale)
+			akibmo_bitmap:set_h(h * scale)
+			primary_bitmap:set_center_x(panel_width * (0.5 - offset))
+			akibmo_bitmap:set_center_x(panel_width * (0.5 + offset))
+			primary_bitmap:set_center_y(y * 3)
+			akibmo_bitmap:set_center_y(y * 3)
+			primary_bitmap:set_rotation(rotation)
+			akibmo_bitmap:set_rotation(rotation)
+		else
+			primary_bitmap:set_w(primary_bitmap:h() * aspect)
+			primary_bitmap:set_center_x(x)
+			primary_bitmap:set_center_y(y * 3)
+		end
 
 		if rarity then
 			local rarity_bitmap = player_slot.panel:bitmap({
@@ -2109,8 +2136,8 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 			})
 			local texture_width = rarity_bitmap:texture_width()
 			local texture_height = rarity_bitmap:texture_height()
-			local panel_width = primary_bitmap:w()
-			local panel_height = primary_bitmap:h()
+			local panel_width = h * aspect
+			local panel_height = h
 			local tw = texture_width
 			local th = texture_height
 			local pw = panel_width
@@ -2127,7 +2154,7 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 			local sh = math.min(ph, pw / (tw / th))
 
 			rarity_bitmap:set_size(math.round(sw), math.round(sh))
-			rarity_bitmap:set_center(primary_bitmap:center())
+			rarity_bitmap:set_center(x, y * 3)
 		end
 
 		primary_texture = texture
@@ -2576,12 +2603,34 @@ function NewLoadoutItem:init(panel, columns, rows, x, y, params)
 			local aspect = texture_width / texture_height
 			local sw = math.min(self._item_panel:w(), self._item_panel:h() * aspect)
 			local sh = math.min(self._item_panel:h(), self._item_panel:w() / aspect)
+			local akimbo_bitmap = nil
 
-			self._item_image:set_size(sw, sh)
-			self._item_image:set_center(self._item_panel:w() / 2, self._item_panel:h() / 2)
+			if params.akimbo_gui_data then
+				akimbo_bitmap = panel:bitmap({
+					layer = 1,
+					texture = params.item_texture
+				})
+				local scale = params.akimbo_gui_data.scale or 0.75
+				local offset = params.akimbo_gui_data.offset or 0.1
+				local rotation = params.akimbo_gui_data.rotation or 45
+
+				self._item_image:set_size(sw * scale, sh * scale)
+				akimbo_bitmap:set_size(sw * scale, sh * scale)
+				self._item_image:set_center(self._item_panel:w() * (0.5 - offset), self._item_panel:h() * 0.5)
+				akimbo_bitmap:set_center(self._item_panel:w() * (0.5 + offset), self._item_panel:h() * 0.5)
+				self._item_image:set_rotation(rotation)
+				akimbo_bitmap:set_rotation(rotation)
+			else
+				self._item_image:set_size(sw, sh)
+				self._item_image:set_center(self._item_panel:w() * 0.5, self._item_panel:h() * 0.5)
+			end
 
 			if managers.job:is_forced() then
 				self._item_image:set_color(Color.black)
+
+				if akimbo_bitmap then
+					akimbo_bitmap:set_color(Color.black)
+				end
 			end
 		elseif params.dual_texture_1 and params.dual_texture_2 then
 			if DB:has(Idstring("texture"), params.dual_texture_1) then
@@ -2633,8 +2682,8 @@ function NewLoadoutItem:init(panel, columns, rows, x, y, params)
 			if self._item_image then
 				local texture_width = item_bg_image:texture_width()
 				local texture_height = item_bg_image:texture_height()
-				local panel_width = self._item_image:w()
-				local panel_height = self._item_image:h()
+				local panel_width = self._item_panel:w()
+				local panel_height = self._item_panel:h()
 				local tw = texture_width
 				local th = texture_height
 				local pw = panel_width
@@ -2651,7 +2700,7 @@ function NewLoadoutItem:init(panel, columns, rows, x, y, params)
 				local sh = math.min(ph, pw / (tw / th))
 
 				item_bg_image:set_size(math.round(sw), math.round(sh))
-				item_bg_image:set_world_center(self._item_image:world_center())
+				item_bg_image:set_center(self._item_panel:w() * 0.5, self._item_panel:h() * 0.5)
 			else
 				item_bg_image:set_size(self._item_panel:w(), self._item_panel:h())
 			end
@@ -2910,16 +2959,17 @@ function NewLoadoutTab:populate_category(data)
 	local new_data = {}
 	local index = 0
 	local max_rows = tweak_data.gui.WEAPON_ROWS_PER_PAGE or 3
-	local max_items = max_rows * (data.override_slots and data.override_slots[2] or 3)
+	local max_items = max_rows * (data.override_slots and data.override_slots[1] or 3)
 
 	for i = 1, max_items, 1 do
 		data[i] = nil
 	end
 
+	local texture_name, bg_texture = nil
 	local weapon_data = Global.blackmarket_manager.weapons
 	local guis_catalog = "guis/"
 	local start_i = data.start_i
-	local crafted = nil
+	local crafted, unlocked, part_dlc_lock = nil
 
 	for i, index in pairs(data.on_create_data) do
 		crafted = crafted_category[index]
@@ -2930,9 +2980,10 @@ function NewLoadoutTab:populate_category(data)
 				name_localized = managers.blackmarket:get_weapon_name_by_category_slot(category, index),
 				category = category,
 				custom_name_text = managers.blackmarket:get_crafted_custom_name(category, index, true),
-				slot = index,
-				unlocked = managers.blackmarket:weapon_unlocked(crafted.weapon_id)
+				slot = index
 			}
+			unlocked, part_dlc_lock = managers.blackmarket:weapon_unlocked_by_crafted(category, index)
+			new_data.unlocked = unlocked
 			new_data.lock_texture = not new_data.unlocked and "guis/textures/pd2/lock_level"
 			new_data.equipped = crafted.equipped
 			new_data.can_afford = true
@@ -2940,12 +2991,13 @@ function NewLoadoutTab:populate_category(data)
 			new_data.skill_name = new_data.skill_based and "bm_menu_skill_locked_" .. new_data.name
 			new_data.func_based = weapon_data[crafted.weapon_id].func_based
 			new_data.level = managers.blackmarket:weapon_level(crafted.weapon_id)
-			local texture_name, bg_texture = managers.blackmarket:get_weapon_icon_path(crafted.weapon_id, crafted.cosmetics)
+			texture_name, bg_texture = managers.blackmarket:get_weapon_icon_path(crafted.weapon_id, crafted.cosmetics)
 			new_data.bitmap_texture = texture_name
 			new_data.bg_texture = bg_texture
+			new_data.akimbo_gui_data = tweak_data.weapon[crafted.weapon_id] and tweak_data.weapon[crafted.weapon_id].akimbo_gui_data
 			new_data.comparision_data = new_data.unlocked and managers.blackmarket:get_weapon_stats(category, index)
 			new_data.stream = false
-			new_data.global_value = tweak_data.weapon[new_data.name] and tweak_data.weapon[new_data.name].global_value or "normal"
+			new_data.global_value = part_dlc_lock or tweak_data.weapon[new_data.name] and tweak_data.weapon[new_data.name].global_value or "normal"
 			new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or nil
 			new_data.lock_texture = BlackMarketGui.get_lock_icon(self, new_data)
 			new_data.name_color = crafted.locked_name and crafted.cosmetics and tweak_data.economy.rarities[tweak_data.blackmarket.weapon_skins[crafted.cosmetics.id].rarity or "common"].color
@@ -3196,7 +3248,7 @@ function NewLoadoutTab:create_deployable_loadout()
 end
 
 function NewLoadoutTab:create_melee_weapon_loadout()
-	local sorted_categories, item_categories = managers.blackmarket:get_sorted_melee_weapons()
+	local sorted_categories, item_categories, override_slots = managers.blackmarket:get_sorted_melee_weapons()
 	local new_node_data = {}
 	local item_data, selected_tab = nil
 
@@ -3224,10 +3276,7 @@ function NewLoadoutTab:create_melee_weapon_loadout()
 			name = category,
 			name_localized = name_id,
 			on_create_data = item_data,
-			override_slots = {
-				4,
-				4
-			},
+			override_slots = override_slots,
 			identifier = BlackMarketGui.identifiers.melee_weapon
 		})
 	end
@@ -3252,7 +3301,7 @@ function NewLoadoutTab:create_grenade_loadout()
 		category = "grenades",
 		override_slots = {
 			4,
-			4
+			5
 		},
 		identifier = Idstring("grenade")
 	})
@@ -3267,16 +3316,17 @@ function NewLoadoutTab:create_grenade_loadout()
 end
 
 function NewLoadoutTab:create_armor_loadout()
+	local override_slots = {
+		3,
+		3
+	}
 	local data = {}
 
 	table.insert(data, {
 		name = "bm_menu_armors",
 		on_create_func_name = "populate_armors",
 		category = "armors",
-		override_slots = {
-			4,
-			2
-		},
+		override_slots = override_slots,
 		identifier = Idstring("armor")
 	})
 

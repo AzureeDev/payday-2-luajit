@@ -1208,7 +1208,8 @@ function PlayerMovement:trigger_teleport(data)
 	local sustain = self._teleport_data.sustain
 	local fade_out = self._teleport_data.fade_out
 	self._teleport_t = t + fade_in
-	self._teleport_done_t = self._teleport_t + sustain + fade_out
+	self._teleport_wait_t = self._teleport_t + sustain
+	self._teleport_done_t = self._teleport_wait_t + fade_out
 	local effect = clone(managers.overlay_effect:presets().fade_out_in)
 	effect.fade_in = fade_in
 	effect.sustain = sustain
@@ -1260,9 +1261,11 @@ function PlayerMovement:update_teleport(t, dt)
 			})
 		end
 
-		if managers.player:is_carrying() then
+		if managers.player:is_carrying() and not self._teleport_data.keep_carry then
 			managers.player:drop_carry()
 		end
+	elseif self._teleport_wait_t and self._teleport_wait_t < t then
+		self._teleport_wait_t = nil
 
 		self._unit:base():controller():set_enabled(true)
 	elseif self._teleport_done_t and self._teleport_done_t < t then

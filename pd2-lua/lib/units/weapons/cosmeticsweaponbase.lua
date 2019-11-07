@@ -145,6 +145,18 @@ local material_variables = {
 	wear_and_tear = (managers.blackmarket and managers.blackmarket:skin_editor() and managers.blackmarket:skin_editor():active() or Application:production_build()) and "wear_tear_value" or nil
 }
 
+function NewRaycastWeaponBase:get_cosmetic_value(...)
+	local cosmetic_value = self:get_cosmetics_data()
+
+	for _, key in ipairs({
+		...
+	}) do
+		cosmetic_value = cosmetic_value and cosmetic_value[key]
+	end
+
+	return cosmetic_value
+end
+
 function NewRaycastWeaponBase:_apply_cosmetics(async_clbk)
 	material_variables.wear_and_tear = (managers.blackmarket and managers.blackmarket:skin_editor() and managers.blackmarket:skin_editor():active() or Application:production_build()) and "wear_tear_value" or nil
 
@@ -162,7 +174,7 @@ function NewRaycastWeaponBase:_apply_cosmetics(async_clbk)
 
 	local texture_load_result_clbk = async_clbk and callback(self, self, "clbk_texture_loaded", async_clbk)
 	local textures = {}
-	local base_variable, base_texture, mat_variable, mat_texture, type_variable, type_texture, p_type, custom_variable, texture_key = nil
+	local texture_key, p_type, value = nil
 	local wear_tear_value = self._cosmetics_quality and tweak_data.economy.qualities[self._cosmetics_quality] and tweak_data.economy.qualities[self._cosmetics_quality].wear_tear_value or 1
 
 	for part_id, materials in pairs(self._materials) do
@@ -172,31 +184,27 @@ function NewRaycastWeaponBase:_apply_cosmetics(async_clbk)
 			p_type = managers.weapon_factory:get_type_from_part_id(part_id)
 
 			for key, variable in pairs(material_variables) do
-				mat_variable = cosmetics_data.parts and cosmetics_data.parts[part_id] and cosmetics_data.parts[part_id][material:name():key()] and cosmetics_data.parts[part_id][material:name():key()][key]
-				type_variable = cosmetics_data.types and cosmetics_data.types[p_type] and cosmetics_data.types[p_type][key]
-				base_variable = cosmetics_data[key]
+				value = self:get_cosmetic_value("weapons", self._name_id, "parts", part_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", part_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
 
-				if mat_variable or type_variable or base_variable then
-					material:set_variable(Idstring(variable), mat_variable or type_variable or base_variable)
+				if value then
+					material:set_variable(Idstring(variable), value)
 				end
 			end
 
 			for key, material_texture in pairs(material_textures) do
-				mat_texture = cosmetics_data.parts and cosmetics_data.parts[part_id] and cosmetics_data.parts[part_id][material:name():key()] and cosmetics_data.parts[part_id][material:name():key()][key]
-				type_texture = cosmetics_data.types and cosmetics_data.types[p_type] and cosmetics_data.types[p_type][key]
-				base_texture = cosmetics_data[key]
+				value = self:get_cosmetic_value("weapons", self._name_id, "parts", part_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", part_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
 
-				if mat_texture or type_texture or base_texture then
-					texture_key = mat_texture and mat_texture:key() or type_texture and type_texture:key() or base_texture and base_texture:key()
+				if value then
+					if type_name(value) ~= "Idstring" then
+						value = Idstring(value)
+					end
+
+					texture_key = value:key()
 					textures[texture_key] = textures[texture_key] or {
 						applied = false,
 						ready = false,
-						name = mat_texture or type_texture or base_texture
+						name = value
 					}
-
-					if type(textures[texture_key].name) == "string" then
-						textures[texture_key].name = Idstring(textures[texture_key].name)
-					end
 				end
 			end
 		end
@@ -269,24 +277,21 @@ function NewRaycastWeaponBase:_set_material_textures()
 		return
 	end
 
-	local p_type, base_texture, mat_texture, type_texture, new_texture = nil
+	local p_type, value = nil
 
 	for part_id, materials in pairs(self._materials) do
 		p_type = managers.weapon_factory:get_type_from_part_id(part_id)
 
 		for _, material in pairs(materials) do
 			for key, material_texture in pairs(material_textures) do
-				mat_texture = cosmetics_data.parts and cosmetics_data.parts[part_id] and cosmetics_data.parts[part_id][material:name():key()] and cosmetics_data.parts[part_id][material:name():key()][key]
-				type_texture = cosmetics_data.types and cosmetics_data.types[p_type] and cosmetics_data.types[p_type][key]
-				base_texture = cosmetics_data[key]
-				new_texture = mat_texture or type_texture or base_texture or material_defaults[material_texture]
+				value = self:get_cosmetic_value("weapons", self._name_id, "parts", part_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", part_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
 
-				if type(new_texture) == "string" then
-					new_texture = Idstring(new_texture)
-				end
+				if value then
+					if type_name(value) ~= "Idstring" then
+						value = Idstring(value)
+					end
 
-				if new_texture then
-					Application:set_material_texture(material, Idstring(material_texture), new_texture, Idstring("normal"))
+					Application:set_material_texture(material, Idstring(material_texture), value, Idstring("normal"))
 				end
 			end
 		end
@@ -356,8 +361,7 @@ function NewRaycastWeaponBase:spawn_magazine_unit(pos, rot, hide_bullets)
 	end
 
 	local textures = {}
-	local base_variable, base_texture, mat_variable, mat_texture, type_variable, type_texture, p_type, custom_variable, texture_key = nil
-	local cosmetics_data = self:get_cosmetics_data() or {}
+	local texture_key, p_type, value = nil
 	local cosmetics_quality = self._cosmetics_quality
 	local wear_tear_value = cosmetics_quality and tweak_data.economy.qualities[cosmetics_quality] and tweak_data.economy.qualities[cosmetics_quality].wear_tear_value or 1
 
@@ -367,27 +371,22 @@ function NewRaycastWeaponBase:spawn_magazine_unit(pos, rot, hide_bullets)
 		p_type = managers.weapon_factory:get_type_from_part_id(mag_id)
 
 		for key, variable in pairs(material_variables) do
-			mat_variable = cosmetics_data.parts and cosmetics_data.parts[mag_id] and cosmetics_data.parts[mag_id][material:name():key()] and cosmetics_data.parts[mag_id][material:name():key()][key]
-			type_variable = cosmetics_data.types and cosmetics_data.types[p_type] and cosmetics_data.types[p_type][key]
-			base_variable = cosmetics_data[key]
+			value = self:get_cosmetic_value("weapons", self._name_id, "parts", mag_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", mag_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
 
-			if mat_variable or type_variable or base_variable then
-				material:set_variable(Idstring(variable), mat_variable or type_variable or base_variable)
+			if value then
+				material:set_variable(Idstring(variable), value)
 			end
 		end
 
 		for key, material_texture in pairs(material_textures) do
-			mat_texture = cosmetics_data.parts and cosmetics_data.parts[mag_id] and cosmetics_data.parts[mag_id][material:name():key()] and cosmetics_data.parts[mag_id][material:name():key()][key]
-			type_texture = cosmetics_data.types and cosmetics_data.types[p_type] and cosmetics_data.types[p_type][key]
-			base_texture = cosmetics_data[key]
-			local texture_name = mat_texture or type_texture or base_texture
+			value = self:get_cosmetic_value("weapons", self._name_id, "parts", mag_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", mag_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
 
-			if texture_name then
-				if type_name(texture_name) ~= "Idstring" then
-					texture_name = Idstring(texture_name)
+			if value then
+				if type_name(value) ~= "Idstring" then
+					value = Idstring(value)
 				end
 
-				Application:set_material_texture(material, Idstring(material_texture), texture_name, Idstring("normal"))
+				Application:set_material_texture(material, Idstring(material_texture), value, Idstring("normal"))
 			end
 		end
 	end

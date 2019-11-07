@@ -12,6 +12,8 @@ function ItemSlider:init(data_node, parameters)
 	self._max = 1
 	self._step = 0.1
 	self._show_value = false
+	self._show_scale = 1
+	self._is_scaled = false
 	self._is_percentage = false
 	self._decimal_count = 5
 
@@ -19,7 +21,9 @@ function ItemSlider:init(data_node, parameters)
 		self._min = data_node.min or self._min
 		self._max = data_node.max or self._max
 		self._step = data_node.step or self._step
+		self._show_scale = data_node.show_scale or self._show_scale
 		self._show_value = data_node.show_value
+		self._is_scaled = data_node.is_scaled
 		self._is_percentage = data_node.is_percentage
 		self._show_slider_text = self._show_value or data_node.show_slider_text
 		self._decimal_count = data_node.decimal_count or self._decimal_count
@@ -29,6 +33,7 @@ function ItemSlider:init(data_node, parameters)
 	self._max = tonumber(self._max)
 	self._step = tonumber(self._step)
 	self._decimal_count = tonumber(self._decimal_count)
+	self._show_scale = tonumber(self._show_scale)
 	self._slider_color = _G.tweak_data.screen_colors.button_stage_3
 	self._slider_color_highlight = _G.tweak_data.screen_colors.button_stage_2
 	self._value = self._min
@@ -77,9 +82,13 @@ function ItemSlider:decrease()
 end
 
 function ItemSlider:percentage()
-	local value = tonumber(self:raw_value_string())
+	local value = self:value()
 
 	return (value - self._min) / (self._max - self._min) * 100
+end
+
+function ItemSlider:scaled_value_string()
+	return string.format("%." .. self._decimal_count .. "f", self:value() * self._show_scale)
 end
 
 function ItemSlider:raw_value_string()
@@ -87,7 +96,7 @@ function ItemSlider:raw_value_string()
 end
 
 function ItemSlider:value_string()
-	local str = self:raw_value_string()
+	local str = self._is_scaled and self:scaled_value_string() or self:raw_value_string()
 
 	if self._is_percentage then
 		str = str .. "%"

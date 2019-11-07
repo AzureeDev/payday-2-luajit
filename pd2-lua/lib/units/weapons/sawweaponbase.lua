@@ -189,7 +189,7 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 
 			if not ray_table_contains(hits, hit.unit) then
 				table.insert(hits, hit)
-			elseif hit.unit:character_damage() and hit.unit:character_damage().is_head and hit.unit:character_damage().is_head(hit.body) then
+			elseif hit.unit:character_damage() and hit.unit:character_damage().is_head and hit.unit:character_damage():is_head(hit.body) then
 				ray_copy(hits, hit)
 			end
 		end

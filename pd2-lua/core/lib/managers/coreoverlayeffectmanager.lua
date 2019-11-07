@@ -182,23 +182,28 @@ function OverlayEffectManager:play_effect(data)
 			rectangle:hide()
 		end
 
+		local text_string = data.text and (data.localize and managers.localization and managers.localization:text(data.text) or data.text) or ""
+
+		if data.text_to_upper then
+			text_string = utf8.to_upper(text_string)
+		end
+
+		if _G.IS_VR then
+			text_string = nil
+		end
+
 		local text = self._ws:panel():text({
 			vertical = "center",
 			valign = "center",
 			align = "center",
 			halign = "center",
-			text = data.text or "",
+			text = text_string,
 			font = data.font or "core/fonts/system_font",
 			font_size = data.font_size or 21,
 			blend_mode = data.text_blend_mode or data.blend_mode or "normal",
 			color = (data.text_color or Color.white):with_alpha(spawn_alpha * (data.text_color and data.text_color.alpha or 1)),
 			layer = self._default_layer + 1
 		})
-
-		if data.text_to_upper then
-			text:set_text(utf8.to_upper(text:text()))
-		end
-
 		local effect = {
 			rectangle = rectangle,
 			text = text,

@@ -1132,7 +1132,7 @@ function ReviveInteractionExt:set_active(active, sync, down_time)
 
 	local panel_id = nil
 
-	if managers.criminals:character_data_by_unit(self._unit) then
+	if managers.criminals:has_character_by_unit(self._unit) then
 		panel_id = managers.criminals:character_data_by_unit(self._unit).panel_id
 	end
 

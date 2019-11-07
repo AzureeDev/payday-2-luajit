@@ -8,8 +8,8 @@ local medium_font_size = tweak_data.menu.pd2_medium_font_size
 local small_font_size = tweak_data.menu.pd2_small_font_size
 local IS_WIN_32 = SystemInfo:platform() == Idstring("WIN32")
 local NOT_WIN_32 = not IS_WIN_32
-local TOP_ADJUSTMENT = NOT_WIN_32 and 50 or 55
-local BOT_ADJUSTMENT = NOT_WIN_32 and 50 or 60
+local TOP_ADJUSTMENT = NOT_WIN_32 and 55 or 55
+local BOT_ADJUSTMENT = NOT_WIN_32 and 60 or 60
 local PAGE_TAB_H = medium_font_size + 10
 local WIDTH_MULTIPLIER = NOT_WIN_32 and 0.68 or 0.71
 local BOX_GAP = 13.5

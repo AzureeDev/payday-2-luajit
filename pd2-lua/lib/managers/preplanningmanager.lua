@@ -20,6 +20,8 @@ PrePlanningManager.server_master_planner = server_master_planner
 function PrePlanningManager:init()
 	self._mission_elements_by_type = {}
 	self._reserved_mission_elements = {}
+	self._delayed_mission_elements = {}
+	self._active_location_groups = {}
 	self._players_votes = {}
 	self._finished_preplan = nil
 	self._disabled_types = {}
@@ -57,6 +59,31 @@ function PrePlanningManager:_change_disabled_type(type, change)
 	if self._disabled_types[type] <= 0 then
 		self._disabled_types[type] = nil
 	end
+end
+
+function PrePlanningManager:activate_location_groups(location_groups)
+	for _, location_group in ipairs(location_groups) do
+		self._active_location_groups[location_group] = true
+	end
+
+	local element, type = nil
+
+	table.remove_condition(self._delayed_mission_elements, function (data)
+		type = data.type
+		element = data.element
+
+		if element and self._active_location_groups[element:value("location_group")] then
+			self:execute(type, element)
+
+			return true
+		end
+
+		return false
+	end)
+end
+
+function PrePlanningManager:is_location_group_active(location_group)
+	return not next(self._active_location_groups) or self._active_location_groups[location_group]
 end
 
 function PrePlanningManager:can_vote_on_plan(type, peer_id)
@@ -540,6 +567,15 @@ end
 
 function PrePlanningManager:execute_reserved_mission_elements()
 	if Network:is_server() and not self._executed_reserved_mission_elements then
+		self._active_location_groups = {}
+		local location_data = self:_current_location_data()
+
+		if location_data.active_location_groups then
+			for _, location_group in ipairs(location_data.active_location_groups) do
+				self._active_location_groups[location_group] = true
+			end
+		end
+
 		local type, index = nil
 		local current_budget, total_budget = self:get_current_budget()
 		current_budget = 0
@@ -551,22 +587,32 @@ function PrePlanningManager:execute_reserved_mission_elements()
 				current_budget = current_budget + self:get_type_budget_cost(type)
 
 				if current_budget <= total_budget then
-					self:execute(type, index)
+					element = self._mission_elements_by_type[type] and self._mission_elements_by_type[type][index]
 
-					if finished_table then
-						element = self._mission_elements_by_type[type] and self._mission_elements_by_type[type][index]
+					if element then
+						location_group = element:value("location_group")
 
-						if element then
-							location_index = location_group_converter[element:value("location_group")]
+						if self:is_location_group_active(location_group) then
+							self:execute(type, element)
+						else
+							table.insert(self._delayed_mission_elements, {
+								type = type,
+								index = index,
+								element = element
+							})
+						end
+
+						if finished_table then
+							location_index = location_group_converter[location_group]
 							finished_table[location_index] = finished_table[location_index] or {}
 							finished_table[location_index][element:id()] = type
 						end
 					end
 				else
-					Application:error("[PrePlanningManager:on_execute_preplanning] out of budget!", "type", type, "current_budget", current_budget, "total_budget", total_budget)
+					Application:error("[PrePlanningManager:execute_reserved_mission_elements] out of budget!", "type", type, "current_budget", current_budget, "total_budget", total_budget)
 				end
 			else
-				Application:error("[PrePlanningManager:on_execute_preplanning] type is disabled", type)
+				Application:error("[PrePlanningManager:execute_reserved_mission_elements] type is disabled", type)
 			end
 		end
 
@@ -748,18 +794,11 @@ function PrePlanningManager:get_vote_council()
 	return self._saved_vote_council or self:_update_vote_council()
 end
 
-function PrePlanningManager:execute(type, index)
-	if self._mission_elements_by_type[type] and self._mission_elements_by_type[type][index] then
-		local element = self._mission_elements_by_type[type][index]
-
-		self:_check_spawn_deployable(type, element)
-		self:_check_spawn_unit(type, element)
-		element:on_executed(nil, "any")
-		element:on_executed(nil, type)
-		print("[PrePlanningManager:execute]", type, index)
-	else
-		Application:error("[PrePlanningManager:execute] Mission element not found!", "type", type, "index", index)
-	end
+function PrePlanningManager:execute(type, element)
+	self:_check_spawn_deployable(type, element)
+	self:_check_spawn_unit(type, element)
+	element:on_executed(nil, "any")
+	element:on_executed(nil, type)
 end
 
 function PrePlanningManager:_check_spawn_deployable(type, element)
@@ -828,6 +867,8 @@ end
 function PrePlanningManager:on_simulation_ended()
 	self._mission_elements_by_type = {}
 	self._reserved_mission_elements = {}
+	self._delayed_mission_elements = {}
+	self._active_location_groups = {}
 	self._players_votes = {}
 	self._finished_preplan = nil
 	self._saved_majority_votes = nil

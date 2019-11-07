@@ -242,6 +242,7 @@ action_variants.bolivian_indoors = security_variant
 action_variants.drug_lord_boss = security_variant
 action_variants.drug_lord_boss_stealth = security_variant
 action_variants.spa_vip = security_variant
+action_variants.bolivian_indoors_mex = security_variant
 action_variants.cop_scared = security_variant
 action_variants.security_undominatable = security_variant
 action_variants.mute_security_undominatable = security_variant

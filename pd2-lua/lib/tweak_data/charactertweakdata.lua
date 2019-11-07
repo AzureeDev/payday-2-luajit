@@ -1382,6 +1382,12 @@ function CharacterTweakData:_init_bolivians(presets)
 	self.bolivian_indoors.has_alarm_pager = true
 
 	table.insert(self._enemy_list, "bolivian_indoors")
+
+	self.bolivian_indoors_mex = deep_clone(self.bolivian)
+	self.bolivian_indoors_mex.has_alarm_pager = true
+	self.bolivian_indoors_mex.access = "gangster"
+
+	table.insert(self._enemy_list, "bolivian_indoors_mex")
 end
 
 function CharacterTweakData:_init_drug_lord_boss(presets)
@@ -16024,6 +16030,7 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self.medic.HEALTH_INIT = self.medic.HEALTH_INIT * hp_mul
 	self.bolivian.HEALTH_INIT = self.bolivian.HEALTH_INIT * hp_mul
 	self.bolivian_indoors.HEALTH_INIT = self.bolivian_indoors.HEALTH_INIT * hp_mul
+	self.bolivian_indoors_mex.HEALTH_INIT = self.bolivian_indoors_mex.HEALTH_INIT * hp_mul
 	self.drug_lord_boss.HEALTH_INIT = self.drug_lord_boss.HEALTH_INIT * hp_mul
 	self.drug_lord_boss_stealth.HEALTH_INIT = self.drug_lord_boss_stealth.HEALTH_INIT * hp_mul
 
@@ -16123,6 +16130,10 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 		self.bolivian_indoors.headshot_dmg_mul = self.bolivian_indoors.headshot_dmg_mul * hs_mul
 	end
 
+	if self.bolivian_indoors_mex.headshot_dmg_mul then
+		self.bolivian_indoors_mex.headshot_dmg_mul = self.bolivian_indoors_mex.headshot_dmg_mul * hs_mul
+	end
+
 	if self.tank_medic.headshot_dmg_mul then
 		self.tank_medic.headshot_dmg_mul = self.tank_medic.headshot_dmg_mul * hs_mul
 	end
@@ -16152,6 +16163,7 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 
 	table.insert(all_units, "bolivian")
 	table.insert(all_units, "bolivian_indoors")
+	table.insert(all_units, "bolivian_indoors_mex")
 
 	for _, name in ipairs(all_units) do
 		local speed_table = self[name].SPEED_WALK
@@ -16795,6 +16807,18 @@ function CharacterTweakData:character_map()
 			list = {
 				"ene_shadow_cloaker_1",
 				"ene_shadow_cloaker_2"
+			}
+		},
+		mex = {
+			path = "units/pd2_dlc_mex/characters/",
+			list = {
+				"ene_mex_security_guard",
+				"ene_mex_security_guard_2",
+				"ene_mex_security_guard_3",
+				"ene_mex_thug_outdoor_01",
+				"ene_mex_thug_outdoor_02",
+				"ene_mex_thug_outdoor_03",
+				"civ_male_italian"
 			}
 		}
 	}

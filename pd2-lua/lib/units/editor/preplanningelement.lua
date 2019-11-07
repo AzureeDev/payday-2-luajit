@@ -64,3 +64,35 @@ function PrePlanningUnitElement:_build_panel(panel, panel_sizer)
 
 	CoreEws.list_selector(disables_params)
 end
+
+PrePlanningExecuteGroupUnitElement = PrePlanningExecuteGroupUnitElement or class(MissionElement)
+
+function PrePlanningExecuteGroupUnitElement:init(unit)
+	PrePlanningExecuteGroupUnitElement.super.init(self, unit)
+
+	self._hed.location_groups = {}
+
+	table.insert(self._save_values, "location_groups")
+end
+
+function PrePlanningExecuteGroupUnitElement:_data_updated(value_type, value)
+	self._hed[value_type] = value
+end
+
+function PrePlanningExecuteGroupUnitElement:_build_panel(panel, panel_sizer)
+	self:_create_panel()
+
+	panel = panel or self._panel
+	panel_sizer = panel_sizer or self._panel_sizer
+	local location_group_params = {
+		name = "Location Groups To Activate (Spawn):",
+		tooltip = "Select location groups to activate (spawn) on element execute",
+		panel = panel,
+		sizer = panel_sizer,
+		options = tweak_data.preplanning.location_groups,
+		value = self._hed.location_groups,
+		updated_callback = callback(self, self, "_data_updated", "location_groups")
+	}
+
+	CoreEws.list_selector(location_group_params)
+end

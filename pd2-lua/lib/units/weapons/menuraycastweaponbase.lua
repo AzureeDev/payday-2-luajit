@@ -5,7 +5,7 @@ require("lib/units/weapons/ScopeBase")
 
 function NewRaycastWeaponBase:init(unit)
 	self._unit = unit
-	self._name_id = self.name_id or "test_raycast_weapon"
+	self._name_id = self.name_id or "amcar"
 	self.name_id = nil
 	self._textures = {}
 	self._cosmetics_data = nil
@@ -71,6 +71,9 @@ end
 
 function NewRaycastWeaponBase:assemble(factory_id, skip_queue)
 	local third_person = self:_third_person()
+
+	self._unit:set_visible(false)
+
 	self._parts, self._blueprint = managers.weapon_factory:assemble_default(factory_id, self._unit, third_person, self:is_npc(), callback(self, self, "_assemble_completed", function ()
 	end), skip_queue)
 
@@ -88,6 +91,9 @@ end
 
 function NewRaycastWeaponBase:assemble_from_blueprint(factory_id, blueprint, skip_queue, clbk)
 	local third_person = self:_third_person()
+
+	self._unit:set_visible(false)
+
 	self._parts, self._blueprint = managers.weapon_factory:assemble_from_blueprint(factory_id, self._unit, blueprint, third_person, self:is_npc(), callback(self, self, "_assemble_completed", clbk or function ()
 	end), skip_queue)
 
@@ -107,14 +113,27 @@ function NewRaycastWeaponBase:_assemble_completed(clbk, parts, blueprint)
 	self._parts = parts
 	self._blueprint = blueprint
 
-	self:_apply_cosmetics(clbk or function ()
-	end)
+	self:_apply_cosmetics(callback(self, self, "_cosmetics_applied", clbk))
 	self:apply_texture_switches()
 	self:apply_material_parameters()
 	self:configure_scope()
 	self:_update_fire_object()
 	self:_update_stats_values()
 	self:set_scope_enabled(true)
+end
+
+function NewRaycastWeaponBase:_cosmetics_applied(clbk)
+	if not alive(self._unit) then
+		return
+	end
+
+	self._unit:set_visible(true)
+
+	for pard_id, data in pairs(self._parts) do
+		if data.unit then
+			data.unit:set_visible(true)
+		end
+	end
 
 	if clbk then
 		clbk()

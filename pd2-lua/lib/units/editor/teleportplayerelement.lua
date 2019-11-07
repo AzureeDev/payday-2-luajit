@@ -5,6 +5,7 @@ function TeleportPlayerUnitElement:init(unit)
 
 	self._hed.state = managers.player:default_player_state()
 	self._hed.refill = false
+	self._hed.keep_carry = false
 	self._hed.equip_selection = "none"
 	self._hed.fade_in = 0
 	self._hed.sustain = 0
@@ -12,6 +13,7 @@ function TeleportPlayerUnitElement:init(unit)
 
 	table.insert(self._save_values, "state")
 	table.insert(self._save_values, "refill")
+	table.insert(self._save_values, "keep_carry")
 	table.insert(self._save_values, "equip_selection")
 	table.insert(self._save_values, "fade_in")
 	table.insert(self._save_values, "sustain")
@@ -43,4 +45,5 @@ function TeleportPlayerUnitElement:_build_panel(panel, panel_sizer)
 		min = 0
 	})
 	self:_build_value_checkbox(panel, panel_sizer, "refill", "Refills the player's ammo and health after teleport")
+	self:_build_value_checkbox(panel, panel_sizer, "keep_carry", "Should the player keep what they are carrying while teleporting")
 end

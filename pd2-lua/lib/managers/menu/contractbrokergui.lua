@@ -768,7 +768,9 @@ function ContractBrokerGui.perform_standard_sort(x, y)
 	end
 
 	if x.is_new and y.is_new then
-		return x.date_value < y.date_value
+		if x.date_value ~= y.date_value then
+			return x.date_value < y.date_value
+		end
 	elseif x.is_new and not y.is_new then
 		return true
 	elseif not x.is_new and y.is_new then

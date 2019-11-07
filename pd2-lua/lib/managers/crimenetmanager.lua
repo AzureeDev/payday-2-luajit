@@ -65,9 +65,7 @@ function CrimeNetManager:get_last_played_job(job_id)
 
 		return self._global.broker.stats[job_id].last_played_date
 	else
-		Application:error("Can not get job last played without a job id!")
-
-		return 0
+		return DateTime:new("today")
 	end
 end
 
@@ -77,8 +75,6 @@ function CrimeNetManager:get_job_times_played(job_id)
 
 		return self._global.broker.stats[job_id].plays or 0
 	else
-		Application:error("Can not get job played without a job id!")
-
 		return 0
 	end
 end
@@ -88,8 +84,6 @@ function CrimeNetManager:set_job_played_today(job_id)
 		self._global.broker.stats[job_id] = self._global.broker.stats[job_id] or {}
 		self._global.broker.stats[job_id].last_played_date = DateTime:new("today")
 		self._global.broker.stats[job_id].plays = (self._global.broker.stats[job_id].plays or 0) + 1
-	else
-		Application:error("Can not set job played without a job id!")
 	end
 end
 
@@ -627,8 +621,6 @@ function CrimeNetManager:_find_online_games_xb1(friends_only)
 		return
 	end
 
-	print("GN: useless?")
-
 	local function f(info)
 		managers.network.matchmake:search_lobby_done()
 
@@ -641,13 +633,8 @@ function CrimeNetManager:_find_online_games_xb1(friends_only)
 		end
 
 		for i, room in ipairs(room_list) do
-			print("GN: useless? 2")
-
 			local name_str = tostring(room.owner_name)
 			local attributes_numbers = attribute_list[i].numbers
-
-			print("GN: useless? 3")
-
 			local host_name = name_str
 			local level_id = tweak_data.levels:get_level_name_from_index(attributes_numbers[1] % 1000)
 			local name_id = level_id and tweak_data.levels[level_id] and tweak_data.levels[level_id].name_id
@@ -673,9 +660,6 @@ function CrimeNetManager:_find_online_games_xb1(friends_only)
 			if not is_crime_spree then
 				crime_spree_mission = nil
 			end
-
-			print("GN: crime_spree = ", crime_spree)
-			print("GN: crime_spree_mission = ", crime_spree_mission)
 
 			local is_friend = XboxLive:is_friend(room.xuid)
 			local is_ok = (not friends_only or is_friend) and managers.network.matchmake:is_server_ok(friends_only, room.owner_id, attributes_numbers)
@@ -2036,13 +2020,14 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 
 	self._map_size_w = 2048
 	self._map_size_h = 1024
-	local aspect = 1.7777777777777777
+	local gui_width, gui_height = managers.gui_data:get_base_res()
+	local aspect = gui_width / gui_height
 	local sw = math.min(self._map_size_w, self._map_size_h * aspect)
 	local sh = math.min(self._map_size_h, self._map_size_w / aspect)
 	local dw = self._map_size_w / sw
 	local dh = self._map_size_h / sh
-	self._map_size_w = dw * 1280
-	self._map_size_h = dh * 720
+	self._map_size_w = dw * gui_width
+	self._map_size_h = dh * gui_height
 	local pw = self._map_size_w
 	local ph = self._map_size_h
 	self._pan_panel_border = 2.7777777777777777
@@ -2628,14 +2613,17 @@ function CrimeNetGui:set_getting_hacked(hacked)
 		font_size = tweak_data.menu.pd2_small_font_size,
 		color = tweak_data.screen_colors.important_1
 	})
+
+	local gui_width, gui_height = managers.gui_data:get_base_res()
+
 	self._getting_hacked_panel:video({
 		blend_mode = "mul",
-		height = 720,
 		video = "movies/crimenet_hacked",
 		name = "video",
 		alpha = 1,
 		loop = true,
-		width = 1280,
+		width = gui_width,
+		height = gui_height,
 		color = tweak_data.screen_colors.button_Stage_3
 	})
 	self._getting_hacked_panel:animate(function (o)
@@ -4183,6 +4171,10 @@ function CrimeNetGui:confirm_pressed()
 		return
 	end
 
+	if not self:input_focus() then
+		return
+	end
+
 	return self:check_job_pressed(managers.mouse_pointer:modified_mouse_pos())
 end
 
@@ -4320,7 +4312,7 @@ function CrimeNetGui:check_job_pressed(x, y)
 				local app_id = dlc_data and dlc_data.app_id
 
 				if app_id and SystemInfo:distribution() == Idstring("STEAM") then
-					Steam:overlay_activate("store", 218620)
+					Steam:overlay_activate("store", app_id)
 				end
 			end
 
@@ -4858,6 +4850,8 @@ function CrimeNetGui:mouse_moved(o, x, y)
 	end
 
 	if self._getting_hacked then
+		self:update_all_job_guis(nil, false)
+
 		return
 	end
 
@@ -4886,6 +4880,8 @@ function CrimeNetGui:mouse_moved(o, x, y)
 	end
 
 	if not self:input_focus() then
+		self:update_all_job_guis(nil, false)
+
 		return
 	end
 
@@ -5012,11 +5008,7 @@ function CrimeNetGui:mouse_moved(o, x, y)
 		end
 	end
 
-	for id, job in pairs(self._jobs) do
-		local inside = job == closest_job and 1 or inside_any_job and 2 or 3
-
-		self:update_job_gui(job, inside)
-	end
+	self:update_all_job_guis(closest_job, inside_any_job)
 
 	if not used and inside_any_job then
 		pointer = "link"
@@ -5029,6 +5021,14 @@ function CrimeNetGui:mouse_moved(o, x, y)
 	end
 
 	return used, pointer
+end
+
+function CrimeNetGui:update_all_job_guis(closest_job, inside_any_job)
+	for id, job in pairs(self._jobs) do
+		local inside = job == closest_job and 1 or inside_any_job and 2 or 3
+
+		self:update_job_gui(job, inside)
+	end
 end
 
 function CrimeNetGui:ps3_invites_callback()

@@ -83,6 +83,28 @@ function PlayerProfileGuiObject:init(ws)
 	total_money_text:set_top(math.round(money_text:bottom()))
 
 	max_left_len = math.max(max_left_len, total_money_text:w())
+	local skillpoint_top = math.round(total_money_text:bottom())
+	local unlocked = false
+	local coins = 0
+	unlocked = managers.custom_safehouse:unlocked()
+	coins = managers.custom_safehouse:coins()
+
+	if unlocked then
+		local coin_text = panel:text({
+			text = self:get_text("menu_es_coins_progress") .. ": " .. managers.experience:cash_string(math.floor(coins), ""),
+			font_size = font_size,
+			font = font,
+			color = tweak_data.screen_colors.text
+		})
+
+		self:_make_fine_text(coin_text)
+		coin_text:set_left(math.round(exp_ring:right()))
+		coin_text:set_top(skillpoint_top)
+
+		max_left_len = math.max(max_left_len, coin_text:w())
+		skillpoint_top = math.round(coin_text:bottom())
+	end
+
 	local skillpoints = managers.skilltree:points()
 	local skill_text, skill_glow = nil
 
@@ -99,7 +121,7 @@ function PlayerProfileGuiObject:init(ws)
 
 		self:_make_fine_text(skill_text)
 		skill_text:set_left(math.round(exp_ring:right()))
-		skill_text:set_top(math.round(total_money_text:bottom()))
+		skill_text:set_top(skillpoint_top)
 
 		max_left_len = math.max(max_left_len, skill_text:w())
 		local skill_icon = panel:bitmap({

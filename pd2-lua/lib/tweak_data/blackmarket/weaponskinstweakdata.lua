@@ -33462,4 +33462,1766 @@ function BlackMarketTweakData:_init_weapon_skins()
 			}
 		}
 	}
+	self.weapon_skins.sub2000_ait = {
+		name_id = "bm_wskn_sub2000_ait",
+		desc_id = "bm_wskn_sub2000_ait_desc",
+		weapon_id = "sub2000",
+		rarity = "common",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_003_df"
+	}
+	self.weapon_skins.elastic_ait = {
+		name_id = "bm_wskn_elastic_ait",
+		desc_id = "bm_wskn_elastic_ait_desc",
+		weapon_id = "elastic",
+		rarity = "common",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_004_a_df",
+		pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_004_df",
+		pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_004_df",
+		pattern_tweak = Vector3(4.59337, 0, 0),
+		pattern_pos = Vector3(0.216075, 0.177916, 0),
+		parts = {
+			wpn_fps_bow_elastic_sight = {
+				[Idstring("mtr_whisker"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_004_df"
+				},
+				[Idstring("mtr_rail"):key()] = {}
+			}
+		}
+	}
+	self.weapon_skins.slap_ait = {
+		name_id = "bm_wskn_slap_ait",
+		desc_id = "bm_wskn_slap_ait_desc",
+		weapon_id = "slap",
+		rarity = "uncommon",
+		bonus = "concealment_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_005_df",
+		parts = {
+			wpn_fps_gre_slap_b_standard = {
+				[Idstring("mat_gre_b_standard"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_005_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_005_df",
+					uv_scale = Vector3(1.29722, 1.29722, 1),
+					uv_offset_rot = Vector3(-0.413546, 1.23682, 1.57791)
+				}
+			}
+		}
+	}
+	self.weapon_skins.system_ait = {
+		name_id = "bm_wskn_system_ait",
+		desc_id = "bm_wskn_system_ait_desc",
+		weapon_id = "system",
+		rarity = "common",
+		bonus = "damage_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_008_df",
+		pattern_gradient = Idstring("units/payday2_cash/safes/wwt/pattern_gradient/gradient_wwt_004_df"),
+		pattern = Idstring("units/payday2_cash/safes/wwt/pattern/wwt_pattern_001_df"),
+		pattern_tweak = Vector3(2.06535, 0, 1),
+		pattern_pos = Vector3(-0.365848, 0, 0),
+		types = {
+			upper_reciever = {
+				sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_008_a_df",
+				uv_offset_rot = Vector3(0.208535, 1.00187, 0),
+				uv_scale = Vector3(5.15887, 6.82748, 0)
+			},
+			barrel = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_008_a_df"
+			},
+			magazine = {
+				sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_008_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_008_b_df",
+				uv_offset_rot = Vector3(0.104598, 1.04511, 0),
+				uv_scale = Vector3(5.58794, 4.82514, 0)
+			}
+		}
+	}
+	self.weapon_skins.rota_ait = {
+		name_id = "bm_wskn_rota_ait",
+		desc_id = "bm_wskn_rota_ait_desc",
+		weapon_id = "rota",
+		rarity = "rare",
+		bonus = "spread_n1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_a_df",
+		default_blueprint = {
+			"wpn_fps_sho_rota_b_long",
+			"wpn_fps_sho_rota_body_lower",
+			"wpn_fps_sho_rota_body_upper",
+			"wpn_fps_sho_rota_fg_standard",
+			"wpn_fps_sho_rota_g_standard",
+			"wpn_fps_sho_rota_m_standard",
+			"wpn_fps_sho_rota_mag_realese",
+			"wpn_fps_sho_rota_o_standard",
+			"wpn_fps_smg_hajk_vg_moe",
+			"wpn_fps_upg_a_custom_free",
+			"wpn_fps_upg_fl_ass_utg",
+			"wpn_fps_upg_ns_duck",
+			"wpn_fps_upg_bonus_recoil_p1"
+		},
+		parts = {
+			wpn_fps_upg_ns_shot_shark = {
+				[Idstring("shark"):key()] = {
+					pattern_tweak = Vector3(0, 0, 1)
+				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_surefire = {
+				[Idstring("surefire"):key()] = {
+					base_gradient = Idstring("units/payday2_cash/safes/dss/base_gradient/dss_basegradient_012_df")
+				}
+			},
+			wpn_fps_sho_rota_body_lower = {
+				[Idstring("mat_lower"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_013_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_013_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_b_df",
+					pattern_pos = Vector3(1.50394, 0, 0),
+					pattern_tweak = Vector3(0.825187, 0, 1)
+				}
+			},
+			wpn_fps_upg_ns_shot_thick = {
+				[Idstring("thick"):key()] = {
+					pattern_tweak = Vector3(0, 0, 1)
+				}
+			},
+			wpn_fps_upg_fl_ass_laser = {
+				[Idstring("mtr_laser"):key()] = {
+					base_gradient = Idstring("units/payday2_cash/safes/dss/base_gradient/dss_basegradient_013_df")
+				}
+			},
+			wpn_fps_upg_shot_ns_king = {
+				[Idstring("mtr_king"):key()] = {
+					pattern_tweak = Vector3(0, 0, 1)
+				}
+			},
+			wpn_fps_upg_ns_sho_salvo_large = {
+				[Idstring("mtr_salvo_large"):key()] = {
+					pattern_tweak = Vector3(0, 0, 1)
+				}
+			},
+			wpn_fps_upg_ns_duck = {
+				[Idstring("mtr_duck"):key()] = {
+					pattern_tweak = Vector3(0.491297, 0, 1)
+				}
+			}
+		},
+		types = {
+			vertical_grip = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_df"
+			},
+			foregrip = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_013_a_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_c_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_013_a_df",
+				pattern_pos = Vector3(0.0157409, 0, 0),
+				pattern_tweak = Vector3(0.538996, 1.65284, 1)
+			},
+			barrel_ext = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_013_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_013_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_b_df",
+				pattern_tweak = Vector3(0.491297, 0, 1)
+			},
+			sight = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_013_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_013_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_b_df",
+				pattern_tweak = Vector3(2.11305, 0, 1)
+			},
+			grip = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_013_a_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_013_a_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_c_df",
+				pattern_tweak = Vector3(0.538996, 1.65284, 1)
+			},
+			gadget = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_df"
+			},
+			magazine = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_013_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_b_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_013_df",
+				pattern_pos = Vector3(0.454567, 0, 0),
+				pattern_tweak = Vector3(0.72979, 0, 1)
+			},
+			upper_reciever = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_013_a_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_013_c_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_013_a_df",
+				pattern_pos = Vector3(0.349631, 0, 0),
+				pattern_tweak = Vector3(0.634393, 1.57791, 1)
+			}
+		}
+	}
+	self.weapon_skins.komodo_ait = {
+		name_id = "bm_wskn_komodo_ait",
+		desc_id = "bm_wskn_komodo_ait_desc",
+		weapon_id = "komodo",
+		rarity = "epic",
+		bonus = "recoil_p2",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_014_df",
+		default_blueprint = {
+			"wpn_fps_ass_komodo_b_standard",
+			"wpn_fps_ass_komodo_body",
+			"wpn_fps_ass_komodo_grip_standard",
+			"wpn_fps_ass_komodo_dh",
+			"wpn_fps_upg_ns_ass_smg_small",
+			"wpn_fps_upg_fl_ass_peq15",
+			"wpn_fps_ass_l85a2_m_emag",
+			"wpn_fps_upg_o_rx30"
+		},
+		parts = {
+			wpn_fps_ass_komodo_o_flipups_down = {
+				[Idstring("mat_body"):key()] = {}
+			},
+			wpn_fps_upg_m4_m_straight = {
+				[Idstring("straight"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_014_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_014_df",
+					pattern_pos = Vector3(1.22728, 1.47532, 0),
+					pattern_tweak = Vector3(0.682091, 1.56293, 1)
+				}
+			},
+			wpn_fps_ass_komodo_body = {
+				[Idstring("mat_body"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_014_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_014_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_014_df",
+					pattern_tweak = Vector3(1.15908, 0, 1),
+					uv_offset_rot = Vector3(0.0538997, 1.27498, 3.27121),
+					pattern_pos = Vector3(-0.0605768, -0.93823, 0),
+					uv_scale = Vector3(0.53442, 2.25071, 1)
+				}
+			},
+			wpn_fps_addon_ris = {
+				[Idstring("addon"):key()] = {}
+			},
+			wpn_fps_upg_ns_ass_smg_small = {
+				[Idstring("small"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_014_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_014_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_014_df",
+					uv_scale = Vector3(0.725119, 0.582095, 1),
+					uv_offset_rot = Vector3(-0.528022, 0.397329, 5.6688)
+				}
+			},
+			wpn_fps_upg_o_cs = {
+				[Idstring("mtr_cs"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_014_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_014_df",
+					pattern_pos = Vector3(0.645362, 1.02695, 0)
+				}
+			},
+			wpn_fps_ass_komodo_dh = {
+				[Idstring("mat_body"):key()] = {}
+			}
+		}
+	}
+	self.weapon_skins.deagle_ait = {
+		name_id = "bm_wskn_deagle_ait",
+		desc_id = "bm_wskn_deagle_ait_desc",
+		weapon_id = "deagle",
+		rarity = "rare",
+		bonus = "recoil_p2",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_016_df",
+		default_blueprint = {
+			"wpn_fps_pis_deagle_body_standard",
+			"wpn_fps_pis_deagle_b_standard",
+			"wpn_fps_pis_deagle_m_standard",
+			"wpn_fps_upg_ns_pis_medium_gem",
+			"wpn_fps_upg_bonus_concealment_p1",
+			"wpn_fps_upg_fl_pis_crimson",
+			"wpn_fps_pis_deagle_g_bling",
+			"wpn_fps_upg_o_rmr"
+		},
+		parts = {
+			wpn_fps_pis_deagle_b_modern = {
+				[Idstring("mtr_barrel_custom"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df"
+				}
+			},
+			wpn_fps_pis_deagle_g_bling = {
+				[Idstring("bling"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df"
+				}
+			},
+			wpn_fps_pis_deagle_co_long = {
+				[Idstring("comp1"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df",
+					pattern_pos = Vector3(0.235154, 0.257535, 0),
+					pattern_tweak = Vector3(2.06535, 0, 1)
+				}
+			},
+			wpn_fps_pis_deagle_body_standard = {
+				[Idstring("base"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df",
+					pattern_pos = Vector3(0, 0, 0)
+				}
+			},
+			wpn_fps_pis_deagle_g_ergo = {
+				[Idstring("grip"):key()] = {
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df"
+				},
+				[Idstring("ergo"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df",
+					pattern_pos = Vector3(-0.00333852, -0.184593, 0),
+					pattern_tweak = Vector3(1, 4.55992, 1)
+				}
+			},
+			wpn_fps_pis_deagle_co_short = {
+				[Idstring("comp2"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df",
+					pattern_pos = Vector3(0.0538997, 0.263773, 0),
+					pattern_tweak = Vector3(2.11305, 0, 1)
+				}
+			},
+			wpn_fps_pis_deagle_m_standard = {
+				[Idstring("mag"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df"
+				}
+			},
+			wpn_fps_pis_deagle_b_long = {
+				[Idstring("longbarrel"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df"
+				}
+			},
+			wpn_fps_pis_deagle_g_standard = {
+				[Idstring("grip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df"
+				}
+			},
+			wpn_fps_pis_deagle_b_standard = {
+				[Idstring("barrel"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_016_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_016_df",
+					pattern_pos = Vector3(0.001, -0.001, 0)
+				}
+			}
+		}
+	}
+	self.weapon_skins.polymer_ait = {
+		name_id = "bm_wskn_polymer_ait",
+		desc_id = "bm_wskn_polymer_ait_desc",
+		weapon_id = "polymer",
+		rarity = "common",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_017_df",
+		types = {
+			lower_reciever = {
+				sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_017_df",
+				uv_offset_rot = Vector3(0.117836, 0.995712, 6.28019),
+				uv_scale = Vector3(1.57494, 1.57494, 0)
+			}
+		}
+	}
+	self.weapon_skins.mac10_ait = {
+		name_id = "bm_wskn_mac10_ait",
+		desc_id = "bm_wskn_mac10_ait_desc",
+		weapon_id = "mac10",
+		rarity = "common",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_018_df",
+		parts = {
+			wpn_fps_smg_mac10_body_mac10 = {
+				[Idstring("mac10"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_018_a_df",
+					uv_offset_rot = Vector3(0.0678997, 0.860235, 0),
+					uv_scale = Vector3(1.38489, 1.38489, 0.0388744)
+				}
+			},
+			wpn_fps_smg_mac10_body_modern = {
+				[Idstring("mtr_body_modern"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_018_df",
+					uv_offset_rot = Vector3(-0.0391959, 1.08373, 0),
+					uv_scale = Vector3(1.33989, 1.33989, 0.0412594)
+				}
+			}
+		}
+	}
+	self.weapon_skins.uzi_ait = {
+		name_id = "bm_wskn_uzi_ait",
+		desc_id = "bm_wskn_uzi_ait_desc",
+		weapon_id = "uzi",
+		rarity = "uncommon",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+		parts = {
+			wpn_fps_upg_vg_ass_smg_verticalgrip = {
+				[Idstring("mtr_vertical_grip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+					pattern_tweak = Vector3(0.682091, 0, 1)
+				}
+			},
+			wpn_fps_upg_o_docter = {
+				[Idstring("docter"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0),
+					uv_scale = Vector3(1.29722, 1.29722, 1)
+				}
+			},
+			wpn_fps_upg_o_rx01 = {
+				[Idstring("rx01"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.120677, 0.988791, 0),
+					uv_scale = Vector3(1.63094, 1.63094, 1)
+				}
+			},
+			wpn_fps_upg_o_eotech = {
+				[Idstring("mtr_eotech"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0, 0.989331, 0),
+					uv_scale = Vector3(1.63094, 1.63094, 1)
+				}
+			},
+			wpn_fps_upg_o_cmore = {
+				[Idstring("cmore"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.425948, 0.826616, 0),
+					uv_scale = Vector3(1.10652, 1.10652, 1)
+				}
+			},
+			wpn_fps_upg_o_reflex = {
+				[Idstring("reflex"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df"
+				}
+			},
+			wpn_fps_smg_uzi_s_solid = {
+				[Idstring("mat_stock_2"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(-0.222752, 0.995791, 0),
+					uv_scale = Vector3(1.34489, 1.34489, 0.0507991)
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_small = {
+				[Idstring("small"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.321011, 0.98787, 0),
+					uv_scale = Vector3(1.34489, 1.34489, 0.396613)
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_large = {
+				[Idstring("silencer_large"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.0348201, 0.912473, 0),
+					uv_scale = Vector3(0.629772, 0.629772, 0.284522),
+					pattern_tweak = Vector3(6.69211, 0, 1)
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_medium = {
+				[Idstring("medium"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.158836, 0.950632, 0),
+					uv_scale = Vector3(0.820469, 0.820469, 1),
+					pattern_tweak = Vector3(5.30885, 0, 1)
+				}
+			},
+			wpn_fps_upg_o_specter = {
+				[Idstring("mtr_specter"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0, 0.99287, 0),
+					uv_scale = Vector3(1.86931, 1.86931, 1)
+				}
+			},
+			wpn_fps_upg_o_cs = {
+				[Idstring("mtr_cs"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.072979, 1.01379, 0),
+					uv_scale = Vector3(2.25071, 2.25071, 1)
+				}
+			},
+			wpn_fps_upg_o_aimpoint_2 = {
+				[Idstring("aimpoint"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.37825, 1.37992, 0),
+					uv_scale = Vector3(5.15887, 5.15887, 1)
+				}
+			},
+			wpn_fps_upg_o_t1micro = {
+				[Idstring("mtr_t1micro"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.111138, 0.988791, 0),
+					uv_scale = Vector3(1.39257, 1.39257, 1)
+				}
+			},
+			wpn_fps_upg_o_acog = {
+				[Idstring("mtr_acog"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.196995, 1.03649, 0),
+					uv_scale = Vector3(1.59757, 1.59757, 1)
+				}
+			},
+			wpn_fps_upg_o_rx30 = {
+				[Idstring("rx30"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					uv_offset_rot = Vector3(0.36871, 0.998331, 0),
+					uv_scale = Vector3(1.24954, 1.24954, 1)
+				}
+			},
+			wpn_fps_smg_uzi_b_suppressed = {
+				[Idstring("mat_barrel"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_b_df",
+					uv_scale = Vector3(0.0100002, 0.0100002, 1)
+				},
+				[Idstring("mat_barrel_ext"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_a_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+					uv_offset_rot = Vector3(0.349631, 1.00787, 0),
+					uv_scale = Vector3(2.34606, 2.34606, 0.3513),
+					pattern_pos = Vector3(-0.0128784, 0, 0),
+					pattern_tweak = Vector3(11.2712, 0, 1)
+				}
+			},
+			wpn_fps_smg_uzi_s_standard = {
+				[Idstring("mat_stock_1a"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df"
+				}
+			},
+			wpn_fps_smg_uzi_s_leather = {
+				[Idstring("mat_stock_3"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.149297, 0.731219, 3.01647),
+					uv_scale = Vector3(3.44258, 3.44258, 0.165276)
+				}
+			},
+			wpn_fps_smg_uzi_fg_rail = {
+				[Idstring("mat_foregrip_2"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(-0.022418, 0.979251, 0),
+					uv_scale = Vector3(1.29722, 1.29722, 0),
+					pattern_tweak = Vector3(6.64441, 0, 1)
+				}
+			},
+			wpn_fps_upg_o_eotech_xps = {
+				[Idstring("eotech"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(-0.089196, 0.997552, 0),
+					uv_scale = Vector3(2.20304, 2.20304, 1)
+				}
+			},
+			wpn_fps_smg_uzi_fg_standard = {
+				[Idstring("mat_foregrip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+					pattern_pos = Vector3(0.120677, 0, 0)
+				}
+			},
+			wpn_fps_upg_o_aimpoint = {
+				[Idstring("aimpoint"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+					uv_offset_rot = Vector3(0.177916, 0.99387, 0),
+					uv_scale = Vector3(1.77396, 1.77396, 1)
+				}
+			}
+		},
+		types = {
+			slide = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df"
+			},
+			barrel_ext = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_a_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+				pattern_tweak = Vector3(5.35655, 0, 1)
+			},
+			magazine = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+				sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_a_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+				uv_scale = Vector3(1.48792, 1.48792, 0),
+				uv_offset_rot = Vector3(-0.184593, 0.882934, 0)
+			},
+			stock = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+				pattern_tweak = Vector3(1, 0, 0.265442)
+			},
+			grip = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_a_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+				sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+				uv_scale = Vector3(1.58327, 1.58327, 0.153351),
+				uv_offset_rot = Vector3(0.149297, 0.998331, 1.57791),
+				pattern_tweak = Vector3(10.0787, 0, 1)
+			},
+			upper_reciever = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df"
+			},
+			foregrip = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df"
+			},
+			lower_reciever = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_b_df",
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df",
+				sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_019_a_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+				pattern_tweak = Vector3(1.39757, 0, 0.794896),
+				uv_offset_rot = Vector3(0.0252805, 0.979251, 0),
+				pattern_pos = Vector3(0.797997, 0.454567, 0),
+				cubemap_pattern_control = Vector3(0, 1, 0),
+				uv_scale = Vector3(1.53559, 2.05901, 0)
+			},
+			barrel = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_019_a_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_019_df",
+				pattern_tweak = Vector3(6.7875, 0, 1)
+			},
+			gadget = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df"
+			},
+			sight = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df"
+			},
+			vertical_grip = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_019_df"
+			}
+		}
+	}
+	self.weapon_skins.b92fs_ait = {
+		name_id = "bm_wskn_b92fs_ait",
+		desc_id = "bm_wskn_b92fs_ait_desc",
+		weapon_id = "b92fs",
+		rarity = "uncommon",
+		bonus = "recoil_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_df",
+		parts = {
+			wpn_fps_upg_ns_pis_ipsccomp = {
+				[Idstring("mtr_comp"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_df",
+					pattern_tweak = Vector3(1, 0, 0)
+				}
+			},
+			wpn_fps_upg_ns_ass_filter = {
+				[Idstring("mtr_filter"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_meatgrinder = {
+				[Idstring("mtr_strikeface"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_df",
+					pattern_tweak = Vector3(0.586694, 0, 0),
+					pattern_pos = Vector3(0, 0.072979, 0)
+				}
+			},
+			wpn_fps_pis_beretta_sl_brigadier = {
+				[Idstring("brig"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_a_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_df",
+					pattern_tweak = Vector3(1, 0, 0),
+					uv_offset_rot = Vector3(0.120677, 0.855235, 0),
+					uv_scale = Vector3(1.67861, 3.967, 0),
+					pattern_pos = Vector3(0, 0.0634394, 0)
+				}
+			},
+			wpn_fps_upg_o_rmr = {
+				[Idstring("mtr_rmr"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_a_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_medium_slim = {
+				[Idstring("silencer"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_a_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_b_df",
+					pattern_tweak = Vector3(1, 0, 0),
+					uv_offset_rot = Vector3(0, 0.931553, 0),
+					pattern_pos = Vector3(0.00620103, 0, 0),
+					uv_scale = Vector3(1.72629, 1.72629, 0)
+				}
+			},
+			wpn_fps_upg_ns_pis_medium = {
+				[Idstring("medium"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_a_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_b_df",
+					pattern_tweak = Vector3(1, 0, 0.19151),
+					uv_offset_rot = Vector3(0.0348201, 0.931553, 0),
+					pattern_pos = Vector3(0.0348201, 0, 0),
+					uv_scale = Vector3(1.82164, 1.82164, 0)
+				}
+			},
+			wpn_fps_pis_beretta_sl_std = {
+				[Idstring("std_slide"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_df",
+					pattern_tweak = Vector3(1, 0, 0),
+					uv_offset_rot = Vector3(0.120677, 0.874315, 0),
+					pattern_pos = Vector3(0, -0.260911, 0),
+					uv_scale = Vector3(1.67861, 3.967, 0)
+				}
+			},
+			wpn_fps_pis_beretta_body_modern = {
+				[Idstring("mtr_body_modern"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_b_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_large_kac = {
+				[Idstring("silencer"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_a_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_b_df",
+					pattern_tweak = Vector3(1, 0, 0.0460292),
+					uv_offset_rot = Vector3(-0.0128784, 0.912473, 0),
+					uv_scale = Vector3(1.58327, 1.58327, 0)
+				}
+			},
+			wpn_fps_pis_beretta_g_ergo = {
+				[Idstring("ergo"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_a_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_jungle = {
+				[Idstring("mtr_jungle"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_a_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_b_df",
+					pattern_tweak = Vector3(1, 0, 0.212974),
+					uv_offset_rot = Vector3(-0.127355, 0.998331, 0),
+					uv_scale = Vector3(1.82164, 1.82164, 0)
+				}
+			},
+			wpn_fps_pis_beretta_co_co2 = {
+				[Idstring("comp_2"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_df",
+					pattern_tweak = Vector3(1, 0, 0)
+				}
+			},
+			wpn_fps_upg_ns_pis_small = {
+				[Idstring("small"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_a_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_b_df",
+					pattern_tweak = Vector3(1, 0, 0.0579538),
+					uv_offset_rot = Vector3(-0.0796564, 0.922013, 0),
+					pattern_pos = Vector3(0.0538995, -0.0701165, 0),
+					uv_scale = Vector3(1.77396, 1.77396, 0)
+				}
+			},
+			wpn_fps_upg_ns_pis_large = {
+				[Idstring("large"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_df",
+					pattern_tweak = Vector3(1, 0, 0.0484141)
+				}
+			},
+			wpn_fps_upg_ns_pis_medium_gem = {
+				[Idstring("silencer"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_a_df",
+					uv_offset_rot = Vector3(-0.117815, 0.902934, 0),
+					pattern_pos = Vector3(0.0157406, 0, 0),
+					uv_scale = Vector3(1.82164, 1.82164, 0)
+				}
+			},
+			wpn_fps_pis_beretta_co_co1 = {
+				[Idstring("comp_1"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_020_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_020_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_df",
+					pattern_tweak = Vector3(1, 0, 0)
+				}
+			},
+			wpn_fps_upg_pis_ns_flash = {
+				[Idstring("mtr_flash"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_df"
+				}
+			}
+		},
+		types = {
+			barrel_ext = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_020_a_df"
+			},
+			grip = {
+				sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_020_a_df",
+				uv_offset_rot = Vector3(0.00620103, 0.998331, 0),
+				uv_scale = Vector3(1.01117, 1.01117, 0)
+			}
+		}
+	}
+	self.weapon_skins.spas12_ait = {
+		name_id = "bm_wskn_spas12_ait",
+		desc_id = "bm_wskn_spas12_ait_desc",
+		weapon_id = "spas12",
+		rarity = "common",
+		bonus = "spread_n1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_021_a_df",
+		parts = {
+			wpn_fps_sho_s_spas12_nostock = {
+				[Idstring("mtr_grip"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_021_a_df",
+					uv_offset_rot = Vector3(0.072979, 1.37038, 0.274225)
+				}
+			},
+			wpn_fps_sho_s_spas12_solid = {
+				[Idstring("mtr_solid"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_021_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_021_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_021_a_df",
+					pattern_tweak = Vector3(0.586694, 0, 1),
+					uv_offset_rot = Vector3(-0.0701165, 0.874315, 0),
+					pattern_pos = Vector3(0.101598, 0.750298, 0),
+					uv_scale = Vector3(2.15536, 2.15536, 1)
+				},
+				[Idstring("mtr_grip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_021_df",
+					pattern_pos = Vector3(-1.12902, 0.149297, 0),
+					pattern_tweak = Vector3(0.538996, 0, 1)
+				}
+			},
+			wpn_fps_sho_b_spas12_long = {
+				[Idstring("mtr_barrel"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_021_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_021_df",
+					pattern_pos = Vector3(-0.022418, 0.254233, 0)
+				}
+			},
+			wpn_fps_upg_fl_ass_peq15 = {
+				[Idstring("mtr_peq15"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_021_df"
+				}
+			},
+			wpn_fps_sho_s_spas12_folded = {
+				[Idstring("mtr_stock"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_021_a_df",
+					uv_offset_rot = Vector3(0.244694, 0.922013, 0.573924),
+					uv_scale = Vector3(3.2042, 3.2042, 1)
+				},
+				[Idstring("mtr_grip"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_021_a_df",
+					uv_offset_rot = Vector3(0.340091, 1.24636, 5.03944),
+					uv_scale = Vector3(2.15536, 2.15536, 0.787741)
+				}
+			},
+			wpn_fps_sho_s_spas12_unfolded = {
+				[Idstring("mtr_stock"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_021_a_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_021_a_df",
+					pattern_tweak = Vector3(1.30217, 5.98349, 1),
+					uv_scale = Vector3(4.11002, 4.11002, 1),
+					pattern_pos = Vector3(-0.327689, -0.241831, 0),
+					uv_offset_rot = Vector3(0.0538995, 0.712139, 6.28319)
+				}
+			}
+		},
+		types = {
+			stock = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_021_df"
+			},
+			foregrip = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_021_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_021_a_df",
+				pattern_pos = Vector3(-0.0510372, -0.890532, 0)
+			},
+			lower_reciever = {
+				pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_021_df",
+				pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_021_df",
+				sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_021_df",
+				pattern_tweak = Vector3(1.01598, 0, 1),
+				uv_offset_rot = Vector3(-0.308609, 0.922013, 0),
+				pattern_pos = Vector3(-0.394467, -0.0414975, 0),
+				uv_scale = Vector3(5.25422, 5.25422, 1)
+			}
+		}
+	}
+	self.weapon_skins.tecci_ait = {
+		name_id = "bm_wskn_tecci_ait",
+		desc_id = "bm_wskn_tecci_ait_desc",
+		weapon_id = "tecci",
+		rarity = "uncommon",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_022_df",
+		parts = {
+			wpn_fps_upg_ns_ass_smg_large = {
+				[Idstring("silencer_large"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_022_a_df"
+				}
+			},
+			wpn_fps_upg_o_eotech = {
+				[Idstring("mtr_eotech"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_022_a_df"
+				}
+			}
+		},
+		types = {
+			barrel_ext = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_022_a_df"
+			}
+		}
+	}
+	self.weapon_skins.lemming_ait = {
+		name_id = "bm_wskn_lemming_ait",
+		desc_id = "bm_wskn_lemming_ait_desc",
+		weapon_id = "lemming",
+		rarity = "rare",
+		bonus = "spread_p1",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_023_df",
+		default_blueprint = {
+			"wpn_fps_pis_lemming_body",
+			"wpn_fps_pis_lemming_mag_release",
+			"wpn_fps_pis_lemming_sl_standard",
+			"wpn_fps_pis_lemming_b_nitride",
+			"wpn_fps_upg_ns_pis_ipsccomp",
+			"wpn_fps_upg_fl_pis_crimson",
+			"wpn_fps_pis_lemming_m_ext",
+			"wpn_fps_upg_o_rmr"
+		},
+		parts = {
+			wpn_fps_upg_ns_pis_large_kac = {
+				[Idstring("silencer"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_ipsccomp = {
+				[Idstring("mtr_comp"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df",
+					pattern_pos = Vector3(0.0534395, 0, 0)
+				}
+			},
+			wpn_fps_upg_ns_pis_jungle = {
+				[Idstring("mtr_jungle"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df"
+				}
+			},
+			wpn_fps_upg_ns_ass_filter = {
+				[Idstring("mtr_filter"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_meatgrinder = {
+				[Idstring("mtr_strikeface"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df"
+				}
+			},
+			wpn_fps_pis_lemming_mag_release = {
+				[Idstring("mtr_body"):key()] = {}
+			},
+			wpn_fps_pis_lemming_sl_standard = {
+				[Idstring("mtr_slider"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_023_df"
+				}
+			},
+			wpn_fps_upg_o_rmr = {
+				[Idstring("mtr_rmr"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df",
+					pattern_pos = Vector3(0.588123, -0.241831, 0),
+					pattern_tweak = Vector3(0.651092, 0, 1)
+				}
+			},
+			wpn_fps_pis_lemming_m_ext = {
+				[Idstring("mtr_mag"):key()] = {}
+			},
+			wpn_fps_upg_ns_pis_large = {
+				[Idstring("large"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_medium = {
+				[Idstring("medium"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df",
+					pattern_pos = Vector3(0, -0.016, 0)
+				}
+			},
+			wpn_fps_upg_ns_pis_medium_gem = {
+				[Idstring("silencer"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df",
+					pattern_pos = Vector3(0.006, -0.006, 0)
+				}
+			},
+			wpn_fps_pis_lemming_body = {
+				[Idstring("mtr_body"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_023_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_small = {
+				[Idstring("small"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df"
+				}
+			},
+			wpn_fps_upg_ns_pis_medium_slim = {
+				[Idstring("silencer"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_023_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_023_a_df"
+				}
+			}
+		}
+	}
+	self.weapon_skins.m16_ait = {
+		name_id = "bm_wskn_m16_ait",
+		desc_id = "bm_wskn_m16_ait_desc",
+		weapon_id = "m16",
+		rarity = "epic",
+		bonus = "recoil_p2",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_df",
+		default_blueprint = {
+			"wpn_fps_m4_uupg_draghandle",
+			"wpn_fps_amcar_bolt_standard",
+			"wpn_fps_upg_fl_ass_smg_sho_peqbox",
+			"wpn_fps_upg_ass_m4_lower_reciever_core",
+			"wpn_fps_upg_ass_m4_upper_reciever_core",
+			"wpn_fps_m4_uupg_m_std",
+			"wpn_fps_snp_tti_s_vltor",
+			"wpn_fps_upg_m4_g_mgrip",
+			"wpn_fps_m16_fg_standard",
+			"wpn_fps_m4_uupg_b_medium_vanilla",
+			"wpn_fps_upg_ass_ns_battle",
+			"wpn_fps_upg_o_cmore"
+		},
+		parts = {
+			wpn_fps_upg_o_rx01 = {
+				[Idstring("rx01"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_o_eotech = {
+				[Idstring("mtr_eotech"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df",
+					pattern_tweak = Vector3(1, 1.8926, 1)
+				}
+			},
+			wpn_fps_upg_o_45rds_v2 = {
+				[Idstring("mtr_45rds"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_b_df"
+				}
+			},
+			wpn_fps_upg_fl_ass_laser = {
+				[Idstring("mtr_laser"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_surefire = {
+				[Idstring("surefire"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df",
+					pattern_tweak = Vector3(1, 2.04245, 0)
+				}
+			},
+			wpn_fps_upg_o_t1micro = {
+				[Idstring("mtr_t1micro"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_o_acog = {
+				[Idstring("mtr_acog"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df",
+					pattern_tweak = Vector3(1, 1.69779, 1)
+				}
+			},
+			wpn_fps_upg_o_rx30 = {
+				[Idstring("rx30"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_ass_m4_lower_reciever_core = {
+				[Idstring("mtr_lower"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_k_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_g_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df"
+				}
+			},
+			wpn_fps_snp_tti_s_vltor = {
+				[Idstring("tti_stock"):key()] = {}
+			},
+			wpn_fps_m16_fg_railed = {
+				[Idstring("railed"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_i_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df"
+				}
+			},
+			wpn_fps_upg_o_eotech_xps = {
+				[Idstring("eotech"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_m16_fg_standard = {
+				[Idstring("standard"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_n_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_b_df"
+				}
+			},
+			wpn_fps_amcar_bolt_standard = {
+				[Idstring("m4_upper_reciever_edge"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_i_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df",
+					pattern_pos = Vector3(0.597663, 0.00620119, 0),
+					pattern_tweak = Vector3(1, 0.001, 1)
+				},
+				[Idstring("mtr_balios"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_i_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df",
+					pattern_pos = Vector3(0, 0, 0)
+				},
+				[Idstring("mtr_upper"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_i_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df"
+				},
+				[Idstring("round"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_i_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df",
+					pattern_pos = Vector3(0.247234, 0.216075, 0)
+				}
+			},
+			wpn_fps_upg_o_cmore = {
+				[Idstring("cmore"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_m4_g_ergo = {
+				[Idstring("ergo_grip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_peqbox = {
+				[Idstring("mtr_peqbox"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df",
+					pattern_tweak = Vector3(1, 1.17332, 1),
+					pattern_pos = Vector3(0, 0.721679, 0)
+				}
+			},
+			wpn_fps_upg_m4_g_standard_vanilla = {
+				[Idstring("standard_grip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_e_df"
+				}
+			},
+			wpn_fps_m4_uupg_draghandle = {
+				[Idstring("mtr_x2"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				},
+				[Idstring("m4_draghandle"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_m4_upg_m_quick = {
+				[Idstring("m4_mag_std"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_g_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_b_df"
+				},
+				[Idstring("mtr_magpul"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_df",
+					pattern_tweak = Vector3(0.348202, 3.27121, 1)
+				}
+			},
+			wpn_fps_upg_o_spot = {
+				[Idstring("mtr_spot"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_o_reflex = {
+				[Idstring("reflex"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_m4_m_pmag = {
+				[Idstring("pmag"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_j_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_f_df"
+				}
+			},
+			wpn_fps_snp_tti_g_grippy = {
+				[Idstring("tti_grip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_m4_upper_reciever_round = {
+				[Idstring("round"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_m_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_e_df"
+				}
+			},
+			wpn_fps_upg_o_xpsg33_magnifier = {
+				[Idstring("eotech"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df"
+				}
+			},
+			wpn_fps_m4_uupg_m_std = {
+				[Idstring("m4_mag_std"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_g_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_b_df"
+				}
+			},
+			wpn_fps_upg_m4_m_l5 = {
+				[Idstring("mtr_l5"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_d_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_m4_s_adapter = {
+				[Idstring("stock_adapter"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_ass_m4_upper_reciever_ballos = {
+				[Idstring("mtr_balios"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_e_df"
+				}
+			},
+			wpn_fps_upg_m4_m_straight_vanilla = {
+				[Idstring("straight"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_h_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_c_df"
+				}
+			},
+			wpn_fps_upg_o_specter = {
+				[Idstring("mtr_specter"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_ass_m16_o_handle_sight = {
+				[Idstring("handle"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_o_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_e_df"
+				}
+			},
+			wpn_fps_upg_o_cs = {
+				[Idstring("mtr_cs"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_fl_ass_utg = {
+				[Idstring("mtr_led"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df"
+				}
+			},
+			wpn_fps_upg_o_aimpoint = {
+				[Idstring("aimpoint"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df"
+				}
+			},
+			wpn_fps_m4_upper_reciever_edge = {
+				[Idstring("m4_upper_reciever_edge"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_e_df"
+				}
+			},
+			wpn_fps_m4_lower_reciever = {
+				[Idstring("m4_lower_reciever"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_e_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_e_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_m4_g_sniper = {
+				[Idstring("sniper_grip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_ass_m4_upper_reciever_core = {
+				[Idstring("mtr_upper"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_l_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_b_df"
+				}
+			},
+			wpn_fps_ass_l85a2_m_emag = {
+				[Idstring("mtr_emag"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_b_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_c_df"
+				}
+			},
+			wpn_fps_upg_o_docter = {
+				[Idstring("docter"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_fl_ass_peq15 = {
+				[Idstring("mtr_peq15"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_d_df"
+				}
+			},
+			wpn_fps_upg_m4_g_hgrip = {
+				[Idstring("mtr_hogue"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df"
+				}
+			},
+			wpn_fps_upg_o_45rds = {
+				[Idstring("mtr_45iron"):key()] = {},
+				[Idstring("mtr_45rds"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_b_df"
+				}
+			},
+			wpn_fps_upg_m4_g_mgrip = {
+				[Idstring("mtr_moek"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_024_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_024_a_df",
+					pattern_tweak = Vector3(1, 2.89659, 1)
+				}
+			}
+		}
+	}
+	self.weapon_skins.scar_ait = {
+		name_id = "bm_wskn_scar_ait",
+		desc_id = "bm_wskn_scar_ait_desc",
+		weapon_id = "scar",
+		rarity = "legendary",
+		bonus = "recoil_p2",
+		reserve_quality = true,
+		texture_bundle_folder = "cash/safes/ait",
+		unique_name_id = "bm_wskn_scar_ait",
+		locked = false,
+		base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+		default_blueprint = {
+			"wpn_fps_ass_scar_m_standard",
+			"wpn_fps_ass_scar_body_standard",
+			"wpn_fps_upg_vg_ass_smg_afg",
+			"wpn_fps_ass_scar_b_short",
+			"wpn_fps_ass_scar_fg_railext",
+			"wpn_fps_upg_fl_ass_peq15",
+			"wpn_fps_upg_m4_g_ergo",
+			"wpn_fps_ass_scar_s_sniper",
+			"wpn_fps_upg_o_cs",
+			"wpn_fps_upg_ns_ass_smg_medium"
+		},
+		parts = {
+			wpn_fps_upg_o_rx01 = {
+				[Idstring("rx01"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_e_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_d_df",
+					pattern_tweak = Vector3(2.87622, 0, 1),
+					uv_offset_rot = Vector3(0.101598, 0.797997, 0),
+					pattern_pos = Vector3(0.483187, 0.273313, 0),
+					uv_scale = Vector3(6.20771, 6.20771, 1)
+				}
+			},
+			wpn_fps_upg_o_eotech = {
+				[Idstring("mtr_eotech"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_e_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_e_df",
+					pattern_tweak = Vector3(2.78083, 0, 1),
+					uv_offset_rot = Vector3(0.101598, 0.778918, 0),
+					pattern_pos = Vector3(-0.718817, 0.492726, 0),
+					uv_scale = Vector3(8.01935, 8.01935, 1)
+				}
+			},
+			wpn_fps_upg_ass_ns_jprifles = {
+				[Idstring("mtr_jprifles"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_upg_vg_ass_smg_afg = {
+				[Idstring("afg"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_upg_o_t1micro = {
+				[Idstring("mtr_t1micro"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_scale = Vector3(5.87399, 5.87399, 1),
+					uv_offset_rot = Vector3(-0.0891959, 0.578584, 0)
+				}
+			},
+			wpn_fps_upg_o_acog = {
+				[Idstring("mtr_acog"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_e_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_a_df",
+					pattern_tweak = Vector3(2.87622, 0, 1),
+					uv_offset_rot = Vector3(0.196995, 0.883854, 0),
+					pattern_pos = Vector3(0.244694, 0.902934, 0),
+					uv_scale = Vector3(8.16237, 8.16237, 1)
+				}
+			},
+			wpn_fps_upg_o_rx30 = {
+				[Idstring("rx30"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_e_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					uv_offset_rot = Vector3(0.130217, 0.769378, 0),
+					uv_scale = Vector3(7.78097, 7.78097, 1)
+				}
+			},
+			wpn_fps_upg_o_eotech_xps = {
+				[Idstring("eotech"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_e_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_e_df",
+					pattern_tweak = Vector3(2.49464, 0, 1),
+					uv_offset_rot = Vector3(-0.108275, 0.874315, 0),
+					pattern_pos = Vector3(0.0157409, 0.0348203, 0),
+					uv_scale = Vector3(8.44842, 8.44842, 1)
+				}
+			},
+			wpn_fps_ass_scar_b_medium = {
+				[Idstring("mtr_assembly"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_upg_m4_g_ergo = {
+				[Idstring("ergo_grip"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_a_df"
+				}
+			},
+			wpn_fps_snp_tti_g_grippy = {
+				[Idstring("tti_grip"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_a_df"
+				}
+			},
+			wpn_fps_upg_ass_ns_battle = {
+				[Idstring("mtr_battle"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_stubby = {
+				[Idstring("stubby"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_upg_o_cmore = {
+				[Idstring("cmore"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_c_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_upg_o_spot = {
+				[Idstring("mtr_spot"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_h_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_upg_o_reflex = {
+				[Idstring("reflex"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_c_df"
+				}
+			},
+			wpn_fps_ass_scar_b_short = {
+				[Idstring("mtr_assembly"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_upg_o_cs = {
+				[Idstring("mtr_cs"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_e_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_a_df",
+					pattern_tweak = Vector3(2.68543, 0, 1),
+					uv_offset_rot = Vector3(0.0252806, 1.09373, 3.12136),
+					pattern_pos = Vector3(0.244694, -0.194133, 0),
+					uv_scale = Vector3(7.78097, 7.78097, 1)
+				}
+			},
+			wpn_fps_ass_scar_m_standard = {
+				[Idstring("mtr_mag"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_d_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_c_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_b_df"
+				}
+			},
+			wpn_fps_ass_scar_fg_railext = {
+				[Idstring("mtr_rail_ext"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_c_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_upg_m4_g_mgrip = {
+				[Idstring("mtr_moek"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_a_df"
+				}
+			},
+			wpn_fps_ass_scar_s_sniper = {
+				[Idstring("mtr_sniper"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_f_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_j_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_large = {
+				[Idstring("silencer_large"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_h_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_df",
+					uv_offset_rot = Vector3(-0.365847, 1.08419, 3.12136),
+					uv_scale = Vector3(4.92049, 4.92049, 1)
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_medium = {
+				[Idstring("medium"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_i_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_e_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_ass_scar_ns_standard = {
+				[Idstring("mtr_flash"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_upg_o_specter = {
+				[Idstring("mtr_specter"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_scale = Vector3(7.25655, 7.25655, 1),
+					uv_offset_rot = Vector3(-0.136894, 1.14143, 3.10638)
+				}
+			},
+			wpn_fps_upg_ass_ns_surefire = {
+				[Idstring("mtr_surefire"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_upg_o_aimpoint = {
+				[Idstring("aimpoint"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_e_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_b_df",
+					pattern_tweak = Vector3(3.40091, 0, 1),
+					pattern_pos = Vector3(0.139757, 0.187456, 0)
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_firepig = {
+				[Idstring("firepig"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_ass_scar_s_standard = {
+				[Idstring("mtr_stock"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_g_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_k_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_ass_scar_b_long = {
+				[Idstring("mtr_assembly"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_tank = {
+				[Idstring("tank"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_upg_m4_g_sniper = {
+				[Idstring("sniper_grip"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_a_df"
+				}
+			},
+			wpn_fps_upg_o_xpsg33_magnifier = {
+				[Idstring("eotech"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_c_df"
+				}
+			},
+			wpn_fps_ass_scar_o_flipups_down = {
+				[Idstring("mtr_rear"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				},
+				[Idstring("mtr_front"):key()] = {
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_d_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_upg_ass_ns_linear = {
+				[Idstring("mtr_linear"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			},
+			wpn_fps_ass_scar_body_standard = {
+				[Idstring("mtr_lower"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_b_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_i_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				},
+				[Idstring("mtr_railcover"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				},
+				[Idstring("mtr_upper"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_b_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_g_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_b_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					uv_offset_rot = Vector3(0, 0.998331, 0)
+				}
+			},
+			wpn_fps_upg_ns_ass_smg_small = {
+				[Idstring("small"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_e_df",
+					sticker = "units/payday2_cash/safes/ait/sticker/ait_sticker_025_f_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df",
+					pattern_tweak = Vector3(1.92225, 0, 1),
+					uv_offset_rot = Vector3(-0.0701165, 0.845696, 0),
+					pattern_pos = Vector3(-0.0701165, -0.461245, 0),
+					uv_scale = Vector3(4.87282, 4.87282, 1)
+				}
+			},
+			wpn_fps_upg_o_45rds = {
+				[Idstring("mtr_45iron"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				},
+				[Idstring("mtr_45rds"):key()] = {
+					pattern = "units/payday2_cash/safes/ait/pattern/ait_pattern_025_a_df",
+					pattern_gradient = "units/payday2_cash/safes/ait/pattern_gradient/gradient_ait_025_a_df",
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_b_df"
+				}
+			},
+			wpn_fps_upg_o_docter = {
+				[Idstring("docter"):key()] = {
+					base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+				}
+			}
+		},
+		types = {
+			gadget = {
+				base_gradient = "units/payday2_cash/safes/ait/base_gradient/base_ait_025_df"
+			}
+		}
+	}
 end

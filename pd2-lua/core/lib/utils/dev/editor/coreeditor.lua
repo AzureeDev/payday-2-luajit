@@ -312,9 +312,9 @@ function CoreEditor:_init_configuration_values()
 	self._save_edit_setting_values = false
 	self._save_dialog_states = false
 	self._use_edit_light_dialog = false
-	self._use_beta_undo = false
+	self._use_beta_undo = true
 	self._undo_history = 100
-	self._undo_debug = false
+	self._undo_debug = true
 end
 
 function CoreEditor:_init_slot_masks()
@@ -1152,7 +1152,7 @@ function CoreEditor:build_editor_controls()
 	self._notebook = EWS:Notebook(sp, "_notebook", "NB_TOP,NB_MULTILINE")
 
 	self._ews_editor_frame:connect("_notebook", "EVT_COMMAND_NOTEBOOK_PAGE_CHANGED", callback(self, self, "change_layer"), self._notebook)
-	sp:split_horizontally(self._continents_panel:panel(), self._notebook, 174)
+	sp:split_horizontally(self._continents_panel:panel(), self._notebook, 256)
 	sp:set_minimum_pane_size(75)
 	editor_sizer:add(sp, 1, 0, "EXPAND")
 

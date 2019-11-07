@@ -19053,19 +19053,18 @@ function WeaponTweakData:_init_x_basset(weapon_data)
 	self.x_basset.use_data = {
 		selection_index = SELECTION.PRIMARY
 	}
-	self.x_basset.DAMAGE = 4
-	self.x_basset.damage_near = 2000
-	self.x_basset.damage_far = 3000
-	self.x_basset.rays = 12
 	self.x_basset.use_shotgun_reload = false
 	self.x_basset.CLIP_AMMO_MAX = 16
 	self.x_basset.NR_CLIPS_MAX = 6
 	self.x_basset.AMMO_MAX = self.x_basset.CLIP_AMMO_MAX * self.x_basset.NR_CLIPS_MAX
 	self.x_basset.AMMO_PICKUP = self:_pickup_chance(self.x_basset.AMMO_MAX, 4)
 	self.x_basset.FIRE_MODE = "auto"
-	self.x_basset.fire_mode_data = {
-		fire_rate = 0.18
-	}
+	self.x_basset.fire_mode_data = {}
+	self.x_basset.DAMAGE = 4
+	self.x_basset.damage_near = 2000
+	self.x_basset.damage_far = 3000
+	self.x_basset.rays = 12
+	self.x_basset.fire_mode_data.fire_rate = 0.18
 	self.x_basset.single = {
 		fire_rate = 0.18
 	}
@@ -22874,8 +22873,8 @@ function WeaponTweakData:_init_komodo(weapon_data)
 	self.komodo.DAMAGE = 1
 	self.komodo.CLIP_AMMO_MAX = 30
 	self.komodo.NR_CLIPS_MAX = 5
-	self.komodo.AMMO_MAX = self.corgi.CLIP_AMMO_MAX * self.corgi.NR_CLIPS_MAX
-	self.komodo.AMMO_PICKUP = self:_pickup_chance(self.corgi.AMMO_MAX, 3)
+	self.komodo.AMMO_MAX = self.komodo.CLIP_AMMO_MAX * self.komodo.NR_CLIPS_MAX
+	self.komodo.AMMO_PICKUP = self:_pickup_chance(self.komodo.AMMO_MAX, 3)
 	self.komodo.FIRE_MODE = "auto"
 	self.komodo.fire_mode_data = {
 		fire_rate = 0.075
@@ -22893,10 +22892,10 @@ function WeaponTweakData:_init_komodo(weapon_data)
 		moving_steelsight = self.new_m4.spread.moving_steelsight
 	}
 	self.komodo.kick = {
-		standing = self.new_m4.kick.standing,
-		crouching = self.corgi.kick.standing,
-		steelsight = self.corgi.kick.standing
+		standing = self.new_m4.kick.standing
 	}
+	self.komodo.kick.crouching = self.komodo.kick.standing
+	self.komodo.kick.steelsight = self.komodo.kick.standing
 	self.komodo.crosshair = {
 		standing = {},
 		crouching = {},

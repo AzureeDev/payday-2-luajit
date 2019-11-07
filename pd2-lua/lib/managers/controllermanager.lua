@@ -8,6 +8,7 @@ function ControllerManager:init(path, default_settings_path)
 	default_settings_path = "settings/controller_settings"
 	path = default_settings_path
 	self._menu_mode_enabled = 0
+	self._rebind_connections_requested = false
 
 	ControllerManager.super.init(self, path, default_settings_path)
 end
@@ -15,6 +16,26 @@ end
 function ControllerManager:update(t, dt)
 	ControllerManager.super.update(self, t, dt)
 	self:_poll_reconnected_controller()
+end
+
+function ControllerManager:request_rebind_connections()
+	if _G.setup.__firstupdate then
+		self:rebind_connections()
+
+		return
+	end
+
+	if not self._rebind_connections_requested then
+		self._rebind_connections_requested = true
+
+		_G.setup:add_end_frame_clbk(callback(self, self, "rebind_connections"))
+	end
+end
+
+function ControllerManager:rebind_connections()
+	self._rebind_connections_requested = false
+
+	ControllerManager.super.rebind_connections(self)
 end
 
 function ControllerManager:_poll_reconnected_controller()

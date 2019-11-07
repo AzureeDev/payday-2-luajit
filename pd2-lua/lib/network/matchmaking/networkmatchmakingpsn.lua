@@ -230,20 +230,11 @@ function NetworkMatchMakingPSN:cancel_find()
 end
 
 function NetworkMatchMakingPSN:remove_ping_watch()
-	if self:_is_client() then
-		if self._server_rpc then
-			-- Nothing
-		end
-	else
-		for k, v in pairs(self._players) do
-			if v.rpc then
-				-- Nothing
-			end
-		end
-	end
 end
 
 function NetworkMatchMakingPSN:leave_game()
+	print("[NetworkMatchMakingPSN:leave_game]")
+
 	local sent = false
 
 	self:remove_ping_watch()
@@ -698,12 +689,24 @@ end
 
 function NetworkMatchMakingPSN:_payday2psn(numbers)
 	local psn_attributes = {
-		numbers[1],
-		numbers[2] + 10 * numbers[4] + 100 * numbers[6],
-		numbers[3],
-		numbers[9] or -1,
-		numbers[5]
+		numbers[1]
 	}
+
+	if numbers[4] then
+		psn_attributes[2] = 10 * numbers[4]
+	end
+
+	if numbers[6] then
+		psn_attributes[2] = psn_attributes[2] + 100 * numbers[6]
+	end
+
+	if numbers[2] then
+		psn_attributes[2] = psn_attributes[2] + numbers[2]
+	end
+
+	psn_attributes[3] = numbers[3]
+	psn_attributes[4] = numbers[9] or -1
+	psn_attributes[5] = numbers[5]
 	local crime_spree_mission_index = nil
 	crime_spree_mission_index = tweak_data.crime_spree:get_index_from_id(numbers[10])
 	psn_attributes[6] = crime_spree_mission_index or 0
@@ -871,10 +874,10 @@ function NetworkMatchMakingPSN:get_lobby_data()
 
 	if self._attributes_numbers then
 		local numbers = self._attributes_numbers
-		lobby_data.crime_spree = numbers[9] or -1
+		lobby_data.crime_spree = numbers[4] or -1
 
 		if lobby_data.crime_spree ~= -1 then
-			lobby_data.crime_spree_mission = numbers[10] or 0
+			lobby_data.crime_spree_mission = tweak_data.crime_spree:get_id_from_index(numbers[6])
 		end
 	end
 
@@ -1209,10 +1212,6 @@ function NetworkMatchMakingPSN:_custom_message_cb(message)
 				self:_recived_join_invite(message)
 			end
 		end
-
-		if self._join_enable then
-			-- Nothing
-		end
 	end
 end
 
@@ -1353,6 +1352,8 @@ function NetworkMatchMakingPSN:join_boot_invite()
 end
 
 function NetworkMatchMakingPSN:is_server_ok(friends_only, owner_id, attributes_numbers, skip_permission_check)
+	print("[NetworkMatchMakingPSN:is_server_ok]")
+
 	local permission = attributes_numbers and tweak_data:index_to_permission(attributes_numbers[3]) or "public"
 
 	if (not NetworkManager.DROPIN_ENABLED or attributes_numbers[6] == 0) and attributes_numbers[4] ~= 1 then
@@ -1365,6 +1366,14 @@ function NetworkMatchMakingPSN:is_server_ok(friends_only, owner_id, attributes_n
 		print("[NetworkMatchMakingPSN:is_server_ok] Discard server due to reputation level limit")
 
 		return false, 3
+	end
+
+	print(inspect(attributes_numbers))
+
+	if attributes_numbers[9] ~= nil and attributes_numbers[9] ~= -1 and not managers.crime_spree:unlocked() then
+		print("[NetworkMatchMakingPSN:is_server_ok] Discard CS server due to CS being locked")
+
+		return false, 5
 	end
 
 	if skip_permission_check or permission == "public" then
@@ -1394,6 +1403,8 @@ function NetworkMatchMakingPSN:check_server_attributes_done()
 end
 
 function NetworkMatchMakingPSN:join_server_with_check(room_id, skip_permission_check)
+	print("NetworkMatchMakingPSN:join_server_with_check")
+
 	self._joining_lobby = true
 
 	if not managers.system_menu:is_active_by_id("join_server") then
@@ -1417,6 +1428,9 @@ function NetworkMatchMakingPSN:join_server_with_check(room_id, skip_permission_c
 		local room_info = results.rooms[1]
 		local attributes = room_info.attributes
 		local owner_id = room_info.owner
+
+		print(inspect(attributes))
+
 		local server_ok, ok_error = self:is_server_ok(nil, owner_id, attributes.numbers, skip_permission_check)
 
 		if server_ok then
@@ -1435,6 +1449,8 @@ function NetworkMatchMakingPSN:join_server_with_check(room_id, skip_permission_c
 				managers.menu:show_too_low_level()
 			elseif ok_error == 4 then
 				managers.menu:show_does_not_own_heist()
+			elseif ok_error == 5 then
+				managers.menu:show_crime_spree_locked_dialog()
 			end
 
 			managers.network.matchmake:start_search_lobbys(self._friends_only)
@@ -1651,6 +1667,32 @@ function NetworkMatchMakingPSN:cb_connection_established(info)
 		local function f(res, level_index, difficulty_index, state_index)
 			managers.system_menu:close("waiting_for_server_response")
 
+			local lobby_data = managers.network.matchmake:get_lobby_data()
+			local cs_mission = lobby_data.crime_spree_mission
+			local crime_spree = lobby_data.crime_spree
+
+			if crime_spree > -1 then
+				if managers.crime_spree:unlocked() then
+					managers.crime_spree:enable_crime_spree_gamemode()
+
+					if cs_mission then
+						managers.crime_spree:set_temporary_mission(cs_mission)
+					end
+				else
+					managers.network.matchmake:leave_game()
+					managers.network.voice_chat:destroy_voice()
+					managers.network:queue_stop_network()
+					managers.menu:show_crime_spree_locked_dialog()
+				end
+			else
+				MenuCallbackHandler:crimenet_focus_changed(nil, false)
+				managers.menu:on_enter_lobby()
+			end
+
+			if res ~= "JOINED_LOBBY" and res ~= "JOINED_GAME" then
+				managers.crime_spree:disable_crime_spree_gamemode()
+			end
+
 			if res == "JOINED_LOBBY" then
 				MenuCallbackHandler:crimenet_focus_changed(nil, false)
 				managers.menu:on_enter_lobby()
@@ -1749,7 +1791,7 @@ end
 
 function NetworkMatchMakingPSN:_error_cb(info)
 	if info then
-		print(" _error_cb")
+		print(" [NetworkMatchMakingPSN:_error_cb]")
 		print(inspect(info))
 		managers.system_menu:close("join_server")
 		self:_error_message_solver(info)
@@ -1845,6 +1887,8 @@ function NetworkMatchMakingPSN:_error_message_solver(info)
 end
 
 function NetworkMatchMakingPSN:send_join_invite(friend)
+	print("NetworkMatchMakingPSN:send_join_invite")
+
 	if not self._room_id then
 		return
 	end
@@ -1871,6 +1915,8 @@ function NetworkMatchMakingPSN:send_join_invite(friend)
 end
 
 function NetworkMatchMakingPSN:_recived_join_invite(message)
+	print("NetworkMatchMakingPSN:_recived_join_invite")
+
 	self._has_pending_invite = true
 
 	print("_recived_join_invite")

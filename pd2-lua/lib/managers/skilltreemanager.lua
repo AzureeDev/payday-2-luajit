@@ -1489,7 +1489,9 @@ function SkillTreeManager:_verify_loaded_data(points_aquired_during_load)
 		end
 
 		for tree_id, data in pairs(clone(switch_data.trees)) do
-			points = points - Application:digest_value(data.points_spent, false)
+			local points_spent = math.max(Application:digest_value(data.points_spent, false), 0)
+			data.points_spent = Application:digest_value(points_spent, true)
+			points = points - points_spent
 		end
 
 		local unlocked = self:trees_unlocked(switch_data.trees)

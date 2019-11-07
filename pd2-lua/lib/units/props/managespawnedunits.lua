@@ -204,6 +204,7 @@ function ManageSpawnedUnits:remove_unit(unit_id)
 
 	if (Network:is_server() or self.allow_client_spawn) and entry and alive(entry.unit) then
 		entry.unit:set_slot(0)
+		entry.unit:set_visible(false)
 	end
 
 	self._spawned_units[unit_id] = nil
@@ -282,19 +283,27 @@ function ManageSpawnedUnits:_spawn_run_sequence(unit_id, sequence_name)
 	end
 end
 
+local empty_vec = Vector3()
+local empty_rot = Rotation()
+
 function ManageSpawnedUnits:_link_joints(unit_id, joint_table)
+	local ids, parent_object, child_object = nil
+	local parent_unit = self._unit
+	local child_unit = self._spawned_units[unit_id].unit
+
 	for index, value in ipairs(self[joint_table]) do
 		if index > 1 then
-			local parent_object = self._unit:get_object(Idstring(value))
-			local child_object = self._spawned_units[unit_id].unit:get_object(Idstring(value))
+			ids = Idstring(value)
+			parent_object = parent_unit:get_object(ids)
+			child_object = child_unit:get_object(ids)
 
+			child_object:set_local_position(empty_vec)
+			child_object:set_local_rotation(empty_rot)
 			child_object:link(parent_object)
-			child_object:set_position(parent_object:position())
-			child_object:set_rotation(parent_object:rotation())
 		end
 	end
 
-	self._unit:set_moving()
+	parent_unit:set_moving()
 end
 
 function ManageSpawnedUnits:get_unit(unit_id)

@@ -2824,7 +2824,8 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.shock.name_id = "bm_melee_shock"
 	self.melee_weapons.shock.dlc = nil
 	self.melee_weapons.shock.locks = {
-		func = "has_unlocked_shock"
+		achievement_lock_id = "bm_menu_locked_shock",
+		achievement = "sah_11"
 	}
 	self.melee_weapons.shock.texture_bundle_folder = "apa"
 	self.melee_weapons.shock.anim_global_param = "melee_axe"

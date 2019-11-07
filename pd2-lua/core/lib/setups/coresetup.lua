@@ -199,8 +199,18 @@ function CoreSetup:__pre_init()
 	end
 end
 
+local lang_mods = {
+	[Idstring("japanese"):key()] = "japanese"
+}
+
 function CoreSetup:__init()
 	self:init_category_print()
+
+	local language = lang_mods[SystemInfo:language():key()]
+
+	if language and not PackageManager:loaded("core/packages/language_" .. language) then
+		PackageManager:load("core/packages/language_" .. language)
+	end
 
 	if not PackageManager:loaded("core/packages/base") then
 		PackageManager:load("core/packages/base")

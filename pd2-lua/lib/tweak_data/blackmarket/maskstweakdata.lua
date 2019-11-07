@@ -4884,7 +4884,7 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		pcs = {},
 		value = 0,
 		texture_bundle_folder = "dgm",
-		sort_number = 50,
+		sort_number = 65,
 		global_value = "pd2_clan"
 	}
 	self.masks.eng_01 = {
@@ -5073,7 +5073,7 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		pcs = {},
 		value = 0,
 		texture_bundle_folder = "gcm",
-		sort_number = 53,
+		sort_number = 65,
 		global_value = "pd2_clan"
 	}
 	self.masks.jfr_01 = {
@@ -6587,34 +6587,34 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		name_id = "bm_msk_skm_03",
 		value = 0,
 		pcs = {},
-		type = "glasses"
-	}
-	self.masks.skm_rust_03.skip_mask_on_sequence = true
-	self.masks.skm_03.texture_bundle_folder = "skm"
-	self.masks.skm_03.sort_number = 71
-	self.masks.skm_03.characters = {
-		dragan = "skm_common_03",
-		dragon = "skm_jiro_03",
-		myh = "skm_duke_03",
-		chico = "skm_common_03",
-		sokol = "skm_common_03",
-		ecp_male = "skm_ethan_03",
-		ecp_female = "skm_common_03",
-		jowi = "skm_common_03",
-		old_hoxton = "skm_common_03",
-		bonnie = "skm_common_03",
-		max = "skm_common_03",
-		joy = "skm_common_03",
-		dallas = "skm_common_03",
-		jacket = "skm_common_03",
-		jimmy = "skm_common_03",
-		bodhi = "skm_common_03",
-		wolf = "skm_common_03",
-		wild = "skm_rust_03",
-		hoxton = "skm_common_03",
-		female_1 = "skm_common_03",
-		chains = "skm_common_03",
-		sydney = "skm_common_03"
+		type = "glasses",
+		skip_mask_on_sequence = true,
+		texture_bundle_folder = "skm",
+		sort_number = 71,
+		characters = {
+			dragan = "skm_common_03",
+			dragon = "skm_jiro_03",
+			myh = "skm_duke_03",
+			chico = "skm_common_03",
+			sokol = "skm_common_03",
+			ecp_male = "skm_ethan_03",
+			ecp_female = "skm_common_03",
+			jowi = "skm_common_03",
+			old_hoxton = "skm_common_03",
+			bonnie = "skm_common_03",
+			max = "skm_common_03",
+			joy = "skm_common_03",
+			dallas = "skm_common_03",
+			jacket = "skm_common_03",
+			jimmy = "skm_common_03",
+			bodhi = "skm_common_03",
+			wolf = "skm_common_03",
+			wild = "skm_rust_03",
+			hoxton = "skm_common_03",
+			female_1 = "skm_common_03",
+			chains = "skm_common_03",
+			sydney = "skm_common_03"
+		}
 	}
 	self.masks.skm_04_common = {
 		unit = "units/pd2_dlc_skm/masks/skm_04/msk_skm_04",
@@ -7256,6 +7256,16 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "infamous",
 		texture_bundle_folder = "scm",
 		sort_number = 75
+	}
+	self.masks.roman = {
+		unit = "units/pd2_dlc_mex/masks/roman/msk_roman",
+		name_id = "bm_msk_roman",
+		pcs = {},
+		value = 0,
+		sort_number = 13,
+		dlc = "mex",
+		global_value = "mex",
+		texture_bundle_folder = "mex"
 	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
