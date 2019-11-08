@@ -4393,6 +4393,10 @@ end
 
 function PlayerInventoryGui:open_melee_menu()
 	local sorted_categories, item_categories, override_slots = managers.blackmarket:get_sorted_melee_weapons()
+	override_slots = override_slots or {
+		4,
+		4
+	}
 	local new_node_data = {}
 	local item_data, selected_tab = nil
 

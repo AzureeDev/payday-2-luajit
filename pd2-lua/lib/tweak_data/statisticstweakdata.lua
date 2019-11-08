@@ -208,7 +208,8 @@ function StatisticsTweakData:statistics_table()
 		"bolivian_indoors",
 		"drug_lord_boss",
 		"drug_lord_boss_stealth",
-		"bolivian_indoors_mex"
+		"bolivian_indoors_mex",
+		"swat_turret"
 	}
 	local armor_list = {
 		"level_1",

@@ -2834,8 +2834,8 @@ function GroupAIStateBase:spawn_one_teamAI(is_drop_in, char_name, pos, rotation,
 		local character_name = char_name or managers.criminals:get_free_character_name()
 		local ai_character_id = managers.criminals:character_static_data_by_name(character_name).ai_character_id
 		local unit_name = Idstring(tweak_data.blackmarket.characters[ai_character_id].npc_unit)
-		local unit = World:spawn_unit(unit_name, spawn_pos, spawn_rot)
 		local loadout = managers.criminals:_reserve_loadout_for(character_name)
+		local unit = World:spawn_unit(unit_name, spawn_pos, spawn_rot)
 
 		self:set_unit_teamAI(unit, character_name, team_id, visual_seed, loadout)
 		managers.network:session():send_to_peers_synched("set_unit", unit, character_name, managers.blackmarket:henchman_loadout_string_from_loadout(loadout), 0, 0, tweak_data.levels:get_default_team_ID("player"), visual_seed)
@@ -2919,9 +2919,13 @@ function GroupAIStateBase:remove_one_teamAI(name_to_remove, replace_with_player)
 end
 
 function GroupAIStateBase:set_unit_teamAI(unit, character_name, team_id, visual_seed, loadout)
-	local crim_data = managers.criminals:character_data_by_name(character_name)
+	local character = managers.criminals:character_by_name(character_name)
 
-	if not crim_data or not crim_data.ai then
+	if not character then
+		return
+	end
+
+	if not character.taken or not character.ai then
 		managers.criminals:add_character(character_name, unit, nil, true, loadout)
 	else
 		managers.criminals:set_unit(character_name, unit, loadout)
@@ -2929,14 +2933,13 @@ function GroupAIStateBase:set_unit_teamAI(unit, character_name, team_id, visual_
 
 	unit:movement():set_character_anim_variables()
 
-	local mask_id = managers.blackmarket:get_real_mask_id(loadout and loadout.mask or crim_data.static_data.ai_mask_id, nil, character_name)
 	local visual_state = {
 		player_style = "none",
 		armor_skin = "none",
 		suit_variation = "default",
 		armor_id = "level_1",
 		visual_seed = visual_seed,
-		mask_id = mask_id
+		mask_id = character.data.mask_id
 	}
 
 	managers.criminals:update_character_visual_state(character_name, visual_state)

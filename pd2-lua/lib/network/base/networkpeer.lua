@@ -281,12 +281,8 @@ function NetworkPeer:_verify_outfit_data()
 					return self:_verify_cheated_outfit("weapon_mods", mod_item, VoteManager.REASON.invalid_weapon)
 				end
 			end
-		elseif item_type == "melee_weapon" then
-			if not self:_verify_content("melee_weapons", item) then
-				return self:_verify_cheated_outfit("melee_weapons", item, VoteManager.REASON.invalid_weapon)
-			end
-		elseif item_type == "player_style" and not self:_verify_content("player_styles", item) then
-			return self:_verify_cheated_outfit("player_styles", item, VoteManager.REASON.invalid_player_style)
+		elseif item_type == "melee_weapon" and not self:_verify_content("melee_weapons", item) then
+			return self:_verify_cheated_outfit("melee_weapons", item, VoteManager.REASON.invalid_weapon)
 		end
 	end
 

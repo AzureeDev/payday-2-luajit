@@ -29,274 +29,9 @@ function StatisticsManager:init()
 end
 
 function StatisticsManager:_setup(reset)
+	local _, _, _, _, _, _, enemy_list = tweak_data.statistics:statistics_table()
 	self._defaults = {
 		killed = {
-			civilian = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			civilian_female = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			cop = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			cop_female = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			fbi = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			medic = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			fbi_swat = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			fbi_heavy_swat = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			swat = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			heavy_swat = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			city_swat = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			security = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			gensec = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			gangster = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			biker_escape = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			mobster = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			mobster_boss = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			hector_boss = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			hector_boss_no_armor = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			bolivian = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			drug_lord_boss = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			drug_lord_boss_stealth = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			sniper = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			shield = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			spooc = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			taser = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			tank = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			tank_hw = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			tank_green = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			tank_black = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			tank_skull = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			swat_turret = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			hostage_rescue = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			murkywater = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			phalanx_minion = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			phalanx_vip = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			biker_boss = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
-			chavez_boss = {
-				melee = 0,
-				count = 0,
-				head_shots = 0,
-				explosion = 0,
-				tied = 0
-			},
 			other = {
 				melee = 0,
 				count = 0,
@@ -311,24 +46,35 @@ function StatisticsManager:_setup(reset)
 				explosion = 0,
 				tied = 0
 			}
-		},
-		killed_by_melee = {},
-		killed_by_weapon = {},
-		killed_by_grenade = {},
-		killed_by_anyone = {
-			killed_by_melee = {},
-			killed_by_weapon = {},
-			killed_by_grenade = {}
-		},
-		shots_by_weapon = {},
-		used_weapons = {},
-		melee_hit = false,
-		sessions = {
-			count = 0,
-			time = 0
 		}
 	}
-	self._defaults.sessions.levels = {}
+
+	for _, id in ipairs(enemy_list) do
+		self._defaults.killed[id] = {
+			melee = 0,
+			count = 0,
+			head_shots = 0,
+			explosion = 0,
+			tied = 0
+		}
+	end
+
+	self._defaults.killed_by_melee = {}
+	self._defaults.killed_by_weapon = {}
+	self._defaults.killed_by_grenade = {}
+	self._defaults.killed_by_anyone = {
+		killed_by_melee = {},
+		killed_by_weapon = {},
+		killed_by_grenade = {}
+	}
+	self._defaults.shots_by_weapon = {}
+	self._defaults.used_weapons = {}
+	self._defaults.melee_hit = false
+	self._defaults.sessions = {
+		count = 0,
+		time = 0,
+		levels = {}
+	}
 
 	for _, lvl in ipairs(tweak_data.levels._level_index) do
 		self._defaults.sessions.levels[lvl] = {
@@ -2538,7 +2284,9 @@ function StatisticsManager:session_total_specials_kills()
 	local count = 0
 
 	for _, id in ipairs(self.special_unit_ids) do
-		count = count + self._global.session.killed[id].count
+		if self._global.session.killed[id] then
+			count = count + self._global.session.killed[id].count
+		end
 	end
 
 	return count
