@@ -1225,21 +1225,26 @@ function PlayerMovement:update_teleport(t, dt)
 	end
 
 	if self._teleport_t and self._teleport_t < t then
+		local teleport_player_state = self._teleport_data.state
+		local current_player_state = managers.player:current_state()
+		local want_keep_carry = (teleport_player_state == "standard" or teleport_player_state == "carry") and self._teleport_data.keep_carry
+
 		self:warp_to(self._teleport_data.position, self._teleport_data.rotation)
 		self._unit:network():send("action_teleport", self._teleport_data.position)
+
+		self._teleport_t = nil
 
 		if _G.IS_VR then
 			self:set_ghost_position(self._teleport_data.position)
 		end
 
-		self._teleport_t = nil
 		local new_selection = nil
 
 		if self._teleport_data.equip_selection and self._teleport_data.equip_selection ~= "none" then
 			local selection = self._teleport_data.equip_selection == "primary" and 2 or 1
 
-			if self._teleport_data.state ~= "mask_off" and self._teleport_data.state ~= "civilian" and self._teleport_data.state ~= "lobby_empty" then
-				if managers.player:current_state() == "mask_off" or managers.player:current_state() == "civilian" or managers.player:current_state() == "lobby_empty" then
+			if teleport_player_state ~= "mask_off" and teleport_player_state ~= "civilian" and teleport_player_state ~= "lobby_empty" then
+				if current_player_state == "mask_off" or current_player_state == "civilian" or current_player_state == "lobby_empty" then
 					new_selection = selection
 				else
 					self:current_state():_start_action_unequip_weapon(t, {
@@ -1251,8 +1256,12 @@ function PlayerMovement:update_teleport(t, dt)
 			end
 		end
 
-		if self._teleport_data.state then
-			managers.player:set_player_state(self._teleport_data.state)
+		if teleport_player_state then
+			if teleport_player_state ~= "bleed_out" and teleport_player_state ~= "fatal" and teleport_player_state ~= "arrested" and teleport_player_state ~= "incapacitated" and self._unit:character_damage():need_revive() then
+				self._unit:character_damage():revive(true)
+			end
+
+			managers.player:set_player_state(teleport_player_state)
 		end
 
 		if new_selection then
@@ -1261,7 +1270,7 @@ function PlayerMovement:update_teleport(t, dt)
 			})
 		end
 
-		if managers.player:is_carrying() and not self._teleport_data.keep_carry then
+		if managers.player:is_carrying() and not want_keep_carry then
 			managers.player:drop_carry()
 		end
 	elseif self._teleport_wait_t and self._teleport_wait_t < t then

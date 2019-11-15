@@ -3560,8 +3560,8 @@ function CopDamage:_apply_min_health_limit(damage, damage_percent)
 		local new_health_ratio = self._health_ratio - real_damage_percent
 
 		if lower_health_percentage_limit > new_health_ratio then
-			real_damage_percent = self._health_ratio - lower_health_percentage_limit
-			damage_percent = math.floor(real_damage_percent * self._HEALTH_GRANULARITY)
+			real_damage_percent = math.clamp(self._health_ratio - lower_health_percentage_limit, 0, 1)
+			damage_percent = math.ceil(real_damage_percent * self._HEALTH_GRANULARITY)
 			damage = damage_percent * self._HEALTH_INIT_PRECENT
 		end
 	end

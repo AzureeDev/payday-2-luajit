@@ -302,9 +302,10 @@ function ContractBoxGui:create_contract_box()
 
 		if Global.game_settings.one_down then
 			local one_down_string = managers.localization:to_upper_text("menu_one_down")
+			local text_string = difficulty_string .. " " .. one_down_string
 
-			difficulty_text:set_text(difficulty_string .. " " .. one_down_string)
-			difficulty_text:set_range_color(#difficulty_string + 1, math.huge, tweak_data.screen_colors.one_down)
+			difficulty_text:set_text(text_string)
+			difficulty_text:set_range_color(utf8.len(difficulty_string) + 1, utf8.len(text_string), tweak_data.screen_colors.one_down)
 		end
 
 		local _, _, tw, th = difficulty_text:text_rect()

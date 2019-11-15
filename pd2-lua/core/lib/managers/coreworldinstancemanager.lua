@@ -189,6 +189,11 @@ end
 
 function CoreWorldInstanceManager:custom_create_instance(instance_name, custom_data)
 	local instance = self:get_instance_data_by_name(instance_name)
+
+	if not instance then
+		return
+	end
+
 	local continent_data = managers.worlddefinition._continents[instance.continent]
 	local package_data = managers.world_instance:packages_by_instance(instance)
 	instance.position = custom_data.position or Vector3()
@@ -315,7 +320,9 @@ end
 function CoreWorldInstanceManager:prepare_mission_data_by_name(name)
 	local instance_data = self:get_instance_data_by_name(name)
 
-	return self:prepare_mission_data(instance_data)
+	if instance_data then
+		return self:prepare_mission_data(instance_data)
+	end
 end
 
 function CoreWorldInstanceManager:_get_instance_mission_data(path)
@@ -401,7 +408,9 @@ end
 function CoreWorldInstanceManager:get_mission_inputs_by_name(name)
 	local instance_data = self:get_instance_data_by_name(name)
 
-	return self:get_mission_inputs(instance_data)
+	if instance_data then
+		return self:get_mission_inputs(instance_data)
+	end
 end
 
 function CoreWorldInstanceManager:get_mission_inputs(instance)
@@ -429,7 +438,9 @@ end
 function CoreWorldInstanceManager:get_mission_outputs_by_name(name)
 	local instance_data = self:get_instance_data_by_name(name)
 
-	return self:get_mission_outputs(instance_data)
+	if instance_data then
+		return self:get_mission_outputs(instance_data)
+	end
 end
 
 function CoreWorldInstanceManager:get_mission_outputs(instance)
@@ -457,7 +468,9 @@ end
 function CoreWorldInstanceManager:get_instance_params_by_name(name)
 	local instance_data = self:get_instance_data_by_name(name)
 
-	return self:get_instance_params(instance_data)
+	if instance_data then
+		return self:get_instance_params(instance_data)
+	end
 end
 
 function CoreWorldInstanceManager:get_instance_params(instance)

@@ -58,10 +58,14 @@ function RandomInstanceElement:_draw_instance_link(t, dt, instance_name, color_m
 
 	managers.editor:layer("Instances"):external_draw_instance(t, dt, instance_name, r, g, b)
 
-	if self._type == "input" then
-		Application:draw_arrow(self._unit:position(), managers.world_instance:get_instance_data_by_name(instance_name).position, r, g, b, 0.2)
-	else
-		Application:draw_arrow(managers.world_instance:get_instance_data_by_name(instance_name).position, self._unit:position(), r, g, b, 0.2)
+	local instance_data = managers.world_instance:get_instance_data_by_name(instance_name)
+
+	if instance_data then
+		if self._type == "input" then
+			Application:draw_arrow(self._unit:position(), instance_data.position, r, g, b, 0.2)
+		else
+			Application:draw_arrow(instance_data.position, self._unit:position(), r, g, b, 0.2)
+		end
 	end
 end
 
@@ -84,7 +88,7 @@ function RandomInstanceElement:_instance_name_raycast()
 
 	local instance_data = managers.world_instance:get_instance_data_by_name(instance_name)
 
-	return instance_data.script == self._unit:mission_element_data().script and instance_name or nil
+	return instance_data and instance_data.script == self._unit:mission_element_data().script and instance_name or nil
 end
 
 function RandomInstanceElement:has_element(instance_name)

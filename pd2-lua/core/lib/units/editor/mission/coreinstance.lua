@@ -109,10 +109,14 @@ function InstanceEventUnitElement:_draw_instance_link(t, dt, instance_name)
 
 	managers.editor:layer("Instances"):external_draw_instance(t, dt, instance_name, r, g, b)
 
-	if self._type == "input" then
-		Application:draw_arrow(self._unit:position(), managers.world_instance:get_instance_data_by_name(instance_name).position, r, g, b, 0.2)
-	else
-		Application:draw_arrow(managers.world_instance:get_instance_data_by_name(instance_name).position, self._unit:position(), r, g, b, 0.2)
+	local instance_data = managers.world_instance:get_instance_data_by_name(instance_name)
+
+	if instance_data then
+		if self._type == "input" then
+			Application:draw_arrow(self._unit:position(), instance_data.position, r, g, b, 0.2)
+		else
+			Application:draw_arrow(instance_data.position, self._unit:position(), r, g, b, 0.2)
+		end
 	end
 end
 
@@ -135,7 +139,7 @@ function InstanceEventUnitElement:_instance_name_raycast()
 
 	local instance_data = managers.world_instance:get_instance_data_by_name(instance_name)
 
-	return instance_data.script == self._unit:mission_element_data().script and instance_name or nil
+	return instance_data and instance_data.script == self._unit:mission_element_data().script and instance_name or nil
 end
 
 function InstanceEventUnitElement:on_instance_changed_name(old_name, new_name)
@@ -404,15 +408,18 @@ function InstancePointUnitElement:_instance_name_raycast()
 
 	local instance_data = managers.world_instance:get_instance_data_by_name(instance_name)
 
-	return instance_data.mission_placed and instance_data.script == self._unit:mission_element_data().script and instance_name or nil
+	return instance_data and instance_data.mission_placed and instance_data.script == self._unit:mission_element_data().script and instance_name or nil
 end
 
 function InstancePointUnitElement:_get_options()
 	local _names = managers.world_instance:instance_names_by_script(self._unit:mission_element_data().script)
 	local names = {}
+	local instance_data = nil
 
 	for _, name in ipairs(_names) do
-		if managers.world_instance:get_instance_data_by_name(name).mission_placed then
+		instance_data = managers.world_instance:get_instance_data_by_name(name)
+
+		if instance_data and instance_data.mission_placed then
 			table.insert(names, name)
 		end
 	end
@@ -751,7 +758,7 @@ function InstanceSetParamsUnitElement:_instance_name_raycast()
 
 	local instance_data = managers.world_instance:get_instance_data_by_name(instance_name)
 
-	return instance_data.script == self._unit:mission_element_data().script and instance_name or nil
+	return instance_data and instance_data.script == self._unit:mission_element_data().script and instance_name or nil
 end
 
 function InstanceSetParamsUnitElement:_set_instance_by_raycast()
@@ -788,8 +795,15 @@ function InstanceSetParamsUnitElement:_check_change_instance(new_instance)
 		return
 	end
 
-	local new_folder = managers.world_instance:get_instance_data_by_name(new_instance).folder
-	local folder = managers.world_instance:get_instance_data_by_name(self._hed.instance).folder
+	local new_instance_data = managers.world_instance:get_instance_data_by_name(new_instance)
+	local instance_data = managers.world_instance:get_instance_data_by_name(self._hed.instance)
+
+	if not new_instance_data or not instance_data then
+		return
+	end
+
+	local new_folder = new_instance_data.folder
+	local folder = instance_data.folder
 
 	if new_folder == folder then
 		self._hed.instance = new_instance

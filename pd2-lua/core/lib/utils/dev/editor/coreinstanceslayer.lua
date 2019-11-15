@@ -660,8 +660,10 @@ function InstancesLayer:_draw_instance(t, dt, instance_name, r, g, b)
 	if #instance_units == 0 then
 		local instance_data = managers.world_instance:get_instance_data_by_name(instance_name)
 
-		unit_brush:sphere(instance_data.position, 50, 2)
-		Application:draw_sphere(instance_data.position, 50, r, g, b)
+		if instance_data then
+			unit_brush:sphere(instance_data.position, 50, 2)
+			Application:draw_sphere(instance_data.position, 50, r, g, b)
+		end
 	end
 
 	local name_brush = Draw:brush(Color(r, g, b))
@@ -669,28 +671,32 @@ function InstancesLayer:_draw_instance(t, dt, instance_name, r, g, b)
 	name_brush:set_font(Idstring("fonts/font_medium"), 8)
 	name_brush:set_render_template(Idstring("OverlayVertexColorTextured"))
 
-	for _, element in pairs(managers.world_instance:prepare_mission_data_by_name(instance_name).default.elements) do
-		unit_brush:set_color(Color(1, r, g, b))
+	local prepare_mission_data = managers.world_instance:prepare_mission_data_by_name(instance_name)
 
-		if element.values.position then
-			unit_brush:sphere(element.values.position, 2, 2)
+	if prepare_mission_data then
+		for _, element in pairs(prepare_mission_data.default.elements) do
+			unit_brush:set_color(Color(1, r, g, b))
 
-			if managers.viewport:get_current_camera() then
-				local cam_up = managers.viewport:get_current_camera():rotation():z()
-				local cam_right = managers.viewport:get_current_camera():rotation():x()
+			if element.values.position then
+				unit_brush:sphere(element.values.position, 2, 2)
 
-				name_brush:center_text(element.values.position + Vector3(0, 0, 25), utf8.from_latin1(element.editor_name), cam_right, -cam_up)
-			end
+				if managers.viewport:get_current_camera() then
+					local cam_up = managers.viewport:get_current_camera():rotation():z()
+					local cam_right = managers.viewport:get_current_camera():rotation():x()
 
-			if element.values.rotation then
-				local rotation = CoreClass.type_name(element.values.rotation) == "Rotation" and element.values.rotation or Rotation(element.values.rotation, 0, 0)
+					name_brush:center_text(element.values.position + Vector3(0, 0, 25), utf8.from_latin1(element.editor_name), cam_right, -cam_up)
+				end
 
-				unit_brush:set_color(Color(0.15, 1, 0, 0))
-				unit_brush:cylinder(element.values.position, element.values.position + rotation:x() * 20, 1)
-				unit_brush:set_color(Color(0.15, 0, 1, 0))
-				unit_brush:cylinder(element.values.position, element.values.position + rotation:y() * 20, 1)
-				unit_brush:set_color(Color(0.15, 0, 0, 1))
-				unit_brush:cylinder(element.values.position, element.values.position + rotation:z() * 20, 1)
+				if element.values.rotation then
+					local rotation = CoreClass.type_name(element.values.rotation) == "Rotation" and element.values.rotation or Rotation(element.values.rotation, 0, 0)
+
+					unit_brush:set_color(Color(0.15, 1, 0, 0))
+					unit_brush:cylinder(element.values.position, element.values.position + rotation:x() * 20, 1)
+					unit_brush:set_color(Color(0.15, 0, 1, 0))
+					unit_brush:cylinder(element.values.position, element.values.position + rotation:y() * 20, 1)
+					unit_brush:set_color(Color(0.15, 0, 0, 1))
+					unit_brush:cylinder(element.values.position, element.values.position + rotation:z() * 20, 1)
+				end
 			end
 		end
 	end
@@ -996,7 +1002,9 @@ function InstancesLayer:_on_gui_open_selected_instance_path()
 	if name then
 		local instance_data = managers.world_instance:get_instance_data_by_name(name)
 
-		self:_open_instance_path(instance_data.folder)
+		if instance_data then
+			self:_open_instance_path(instance_data.folder)
+		end
 	end
 end
 
@@ -1057,7 +1065,11 @@ function InstancesLayer:_on_gui_mission_placed()
 	local name = self:_get_selection_instances_listbox()
 
 	if name then
-		managers.world_instance:get_instance_data_by_name(name).mission_placed = self._mission_placed_ctrlr:get_value() and true or nil
+		local instance_data = managers.world_instance:get_instance_data_by_name(name)
+
+		if instance_data then
+			instance_data.mission_placed = self._mission_placed_ctrlr:get_value() and true or nil
+		end
 	end
 end
 

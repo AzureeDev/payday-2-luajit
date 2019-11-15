@@ -414,10 +414,12 @@ function MissionScript:init(data)
 			local instance_data = managers.world_instance:get_instance_data_by_name(instance_name)
 			local prepare_mission_data = managers.world_instance:prepare_mission_data_by_name(instance_name)
 
-			if not instance_data.mission_placed then
-				self:create_instance_elements(prepare_mission_data)
-			else
-				self:_preload_instance_class_elements(prepare_mission_data)
+			if instance_data and prepare_mission_data then
+				if not instance_data.mission_placed then
+					self:create_instance_elements(prepare_mission_data)
+				else
+					self:_preload_instance_class_elements(prepare_mission_data)
+				end
 			end
 		end
 	end

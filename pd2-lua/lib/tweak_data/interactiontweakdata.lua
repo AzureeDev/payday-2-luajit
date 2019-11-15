@@ -2858,7 +2858,7 @@ function InteractionTweakData:init(tweak_data)
 		start_active = false,
 		sound_event = "ammo_bag_drop",
 		timer = 4,
-		interact_distance = 200,
+		interact_distance = 300,
 		sound_start = "bar_hose_ground_connect",
 		sound_interupt = "bar_hose_ground_connect_cancel",
 		sound_done = "bar_hose_ground_connect_finished"
@@ -5846,6 +5846,7 @@ function InteractionTweakData:init(tweak_data)
 		interact_distance = 300,
 		sound_start = "bar_water_pump",
 		sound_cancel = "bar_water_pump_cancel",
+		sound_interupt = "bar_water_pump_cancel",
 		sound_done = "bar_water_pump_finish",
 		axis = "y"
 	}
@@ -5874,7 +5875,6 @@ function InteractionTweakData:init(tweak_data)
 	self.gen_pku_cocaine_directional = deep_clone(self.gen_pku_cocaine)
 	self.gen_pku_cocaine_directional.axis = "y"
 	self.connect_hose_directional = deep_clone(self.connect_hose)
-	self.connect_hose_directional.axis = "y"
 	self.mex_pickup_murky_uniforms = {
 		text_id = "hud_int_mex_pickup_murky_uniforms",
 		action_text_id = "hud_action_mex_pickup_murky_uniforms",

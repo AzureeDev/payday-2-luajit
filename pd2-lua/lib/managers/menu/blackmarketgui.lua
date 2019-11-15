@@ -11627,31 +11627,38 @@ function BlackMarketGui:populate_melee_weapons_new(data)
 			new_data.vr_locked = melee_weapon_data[2].vr_locked
 		end
 
-		if m_tweak_data and m_tweak_data.locks then
-			local dlc = m_tweak_data.locks.dlc
-			local achievement = m_tweak_data.locks.achievement
-			local saved_job_value = m_tweak_data.locks.saved_job_value
-			local level = m_tweak_data.locks.level
-			local func = m_tweak_data.locks.func
-			new_data.dlc_based = true
-			new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_community")
+		if not new_data.unlocked then
+			local gv_dlc = managers.dlc:global_value_to_dlc(new_data.global_value)
 
-			if func and not BlackMarketGui.get_func_based(func) then
-				local _, name, icon = BlackMarketGui.get_func_based(func)
-				new_data.lock_texture = icon or "guis/textures/pd2/lock_community"
-				new_data.dlc_locked = name
-				new_data.unlocked = false
-			elseif achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
-				local achievement_lock_id = m_tweak_data.locks.achievement_lock_id
-				new_data.dlc_locked = achievement_lock_id or "menu_bm_achievement_locked_" .. tostring(achievement)
-			elseif dlc and not managers.dlc:is_dlc_unlocked(dlc) then
-				new_data.dlc_locked = tweak_data.lootdrop.global_values[dlc] and tweak_data.lootdrop.global_values[dlc].unlock_id or "bm_menu_dlc_locked"
-			else
+			if gv_dlc and not managers.dlc:is_dlc_unlocked(gv_dlc) then
+				new_data.dlc_based = true
 				new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
+				new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_community")
+			elseif new_data.level > 0 then
+				new_data.lock_texture = "guis/textures/pd2/lock_level"
 			end
-		else
-			new_data.lock_texture = self:get_lock_icon(new_data)
-			new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
+
+			if m_tweak_data and m_tweak_data.locks then
+				local func = m_tweak_data.locks.func
+				local achievement = m_tweak_data.locks.achievement
+				local dlc = m_tweak_data.locks.dlc
+				new_data.dlc_based = true
+
+				if func and not BlackMarketGui.get_func_based(func) then
+					local _, name, icon = BlackMarketGui.get_func_based(func)
+					new_data.dlc_locked = name
+					new_data.lock_texture = icon or "guis/textures/pd2/skilltree/padlock"
+				elseif achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
+					local achievement_lock_id = m_tweak_data.locks.achievement_lock_id
+					new_data.dlc_locked = achievement_lock_id or "menu_bm_achievement_locked_" .. tostring(achievement)
+					new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
+				elseif dlc and not managers.dlc:is_dlc_unlocked(dlc) then
+					new_data.dlc_locked = tweak_data.lootdrop.global_values[dlc] and tweak_data.lootdrop.global_values[dlc].unlock_id or "bm_menu_dlc_locked"
+					new_data.lock_texture = "guis/textures/pd2/lock_dlc"
+				else
+					new_data.dlc_based = false
+				end
+			end
 		end
 
 		new_data.bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/melee_weapons/" .. tostring(new_data.name)

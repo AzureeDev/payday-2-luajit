@@ -48,6 +48,7 @@ end
 
 function SelectByName:_on_select_unit()
 	managers.editor:change_layer_based_on_unit(self:_selected_item_unit())
+	managers.editor:change_continent_based_on_unit(self:_selected_item_unit())
 	managers.editor:freeze_gui_lists()
 
 	self._blocked = true

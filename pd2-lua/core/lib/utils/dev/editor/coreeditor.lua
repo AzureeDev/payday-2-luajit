@@ -4369,6 +4369,26 @@ function CoreEditor:change_continent_by_unit()
 	end
 end
 
+function CoreEditor:change_continent_based_on_unit(unit)
+	local continent_name = unit and unit:unit_data() and unit:unit_data().continent and unit:unit_data().continent:name()
+
+	if continent_name then
+		self:set_continent(continent_name)
+	end
+end
+
+function CoreEditor:change_continent_by_unit()
+	local ray = self:unit_by_raycast({
+		sample = true,
+		ray_type = "body editor",
+		mask = managers.slot:get_mask("all")
+	})
+
+	if ray and ray.unit and ray.unit:unit_data().continent then
+		self:set_continent(ray.unit:unit_data().continent:name())
+	end
+end
+
 function CoreEditor:simulation_world_setting_path()
 	return self._simulation_world_setting_path
 end

@@ -577,6 +577,7 @@ function PlayerStandard:_create_on_controller_disabled_input()
 		btn_steelsight_release = true,
 		is_customized = true,
 		btn_use_item_release = true,
+		btn_projectile_release = true,
 		btn_interact_release = release_interact
 	}
 

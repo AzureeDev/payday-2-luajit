@@ -111,6 +111,8 @@ function DLCTweakData:init(tweak_data)
 		}
 	end
 
+	self:init_generated()
+
 	self.starvr_free = {
 		free = true,
 		content = {}
@@ -7905,6 +7907,4 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
-
-	self:init_generated()
 end
