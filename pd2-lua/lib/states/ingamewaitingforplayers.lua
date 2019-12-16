@@ -69,10 +69,10 @@ function IngameWaitingForPlayersState:_start()
 	local variant = managers.groupai:state():blackscreen_variant() or 0
 
 	self:sync_start(variant)
-	managers.network:session():send_to_peers_synched("sync_waiting_for_player_start", variant, Global.music_manager.current_track)
+	managers.network:session():send_to_peers_synched("sync_waiting_for_player_start", variant, Global.music_manager.current_track, Global.music_manager.current_music_ext or "")
 end
 
-function IngameWaitingForPlayersState:sync_start(variant, soundtrack)
+function IngameWaitingForPlayersState:sync_start(variant, soundtrack, music_ext)
 	managers.menu_component:disable_mission_briefing_gui()
 	self._kit_menu.renderer:set_all_items_enabled(false)
 
@@ -85,12 +85,9 @@ function IngameWaitingForPlayersState:sync_start(variant, soundtrack)
 	managers.music:check_music_switch()
 	managers.music:post_event(tweak_data.levels:get_music_event("intro"))
 
-	local music, start_switch = tweak_data.levels:get_music_event_ext()
+	Global.music_manager.synced_music_ext = music_ext ~= "" and music_ext or nil
 
-	if music then
-		managers.music:post_event(music)
-		managers.music:post_event(start_switch)
-	end
+	managers.music:check_music_ext_ghost()
 
 	if not _G.IS_VR then
 		self._fade_out_id = managers.overlay_effect:play_effect(tweak_data.overlay_effects.fade_out_permanent)
@@ -528,15 +525,7 @@ function IngameWaitingForPlayersState:at_exit(next_state)
 		managers.music:post_event(tweak_data.levels:get_music_event("intro"))
 	else
 		managers.music:check_music_switch()
-
-		local music = tweak_data.levels:get_music_event_ext()
-
-		if music then
-			local music_ext = Global.music_manager.current_event
-
-			managers.music:post_event(music)
-			managers.music:post_event(music_ext)
-		end
+		managers.music:check_music_ext_ghost()
 	end
 
 	local is_safe_house = managers.job:current_job_data() and managers.job:current_job_id() == "safehouse"

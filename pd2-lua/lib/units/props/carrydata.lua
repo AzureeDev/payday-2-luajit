@@ -80,64 +80,64 @@ end
 
 function CarryData:_update_throw_link(unit, t, dt)
 	if not self._linked_to then
+		if self._unit:interaction() and not self._unit:interaction()._has_modified_timer and (not self._unit:interaction()._air_start_time or t >= self._unit:interaction()._air_start_time + 1) then
+			return
+		end
+
 		local bag_object = self._unit:get_object(ids_g_bag) or self._unit:get_object(ids_g_canvasbag) or self._unit:get_object(ids_g_g) or self._unit:get_object(ids_g_goat) or self._unit:get_object(ids_g_bodybag)
 
 		if bag_object and bag_object:visibility() then
-			local unit = nil
+			local unit, body, body_oobb, skip = nil
+			local bag_center = bag_object:oobb():center()
 
 			for key, data in pairs(managers.groupai:state():all_AI_criminals()) do
 				if alive(data.unit) then
-					local body = self:_get_carry_body(data.unit)
+					skip = false
 
-					if body then
-						local bag_center = bag_object:oobb():center()
-						local body_oobb = body:oobb()
+					if self._linked_ai[data.unit:key()] then
+						skip = t < self._linked_ai[data.unit:key()] + 1
+					end
 
-						if _G.IS_VR then
-							body_oobb:grow(50)
+					if data.unit:movement()._cool or data.unit:movement():downed() or data.unit:movement().vehicle_unit then
+						skip = true
+					end
+
+					if not skip and data.unit:children() then
+						for _, linked_unit in ipairs(data.unit:children()) do
+							if linked_unit:carry_data() then
+								skip = true
+
+								break
+							end
 						end
+					end
 
-						if body_oobb:point_inside(bag_center) then
-							unit = data.unit
+					if not skip then
+						body = self:_get_carry_body(data.unit)
 
-							break
+						if body then
+							body_oobb = body:oobb()
+
+							if _G.IS_VR then
+								body_oobb:grow(50)
+							end
+
+							if body_oobb:point_inside(bag_center) then
+								unit = data.unit
+
+								break
+							end
 						end
 					end
 				end
 			end
 
 			if unit then
-				local skip = false
+				self:link_to(unit, false)
 
-				if self._linked_ai[unit:key()] then
-					skip = t < self._linked_ai[unit:key()] + 1
-				end
-
-				if unit:movement()._cool or unit:movement():downed() or unit:movement().vehicle_unit then
-					skip = true
-				end
-
-				if not skip and unit:children() then
-					for _, linked_unit in ipairs(unit:children()) do
-						if linked_unit:carry_data() then
-							skip = true
-
-							break
-						end
-					end
-				end
-
-				if not skip and self._unit:interaction() and not self._unit:interaction()._has_modified_timer then
-					skip = true
-				end
-
-				if not skip then
-					self:link_to(unit, false)
-
-					if unit:movement().set_carrying_bag then
-						unit:movement():set_carrying_bag(self._unit)
-						unit:sound():say("r03x_sin", true)
-					end
+				if unit:movement().set_carrying_bag then
+					unit:movement():set_carrying_bag(self._unit)
+					unit:sound():say("r03x_sin", true)
 				end
 			end
 		end
@@ -770,23 +770,29 @@ function CarryData:link_to(parent_unit, keep_collisions)
 		self._linked_to:movement():set_carrying_bag(nil)
 	end
 
-	local body = self._unit:body("hinge_body_1") or self._unit:body(0)
+	call_on_next_update(function ()
+		if not alive(self._unit) or not alive(parent_unit) then
+			return
+		end
 
-	body:set_keyframed()
+		local body = self._unit:body("hinge_body_1") or self._unit:body(0)
 
-	local parent_obj_name = Idstring("Neck")
+		body:set_keyframed()
 
-	parent_unit:link(parent_obj_name, self._unit)
+		local parent_obj_name = Idstring("Neck")
 
-	local parent_obj = parent_unit:get_object(parent_obj_name)
-	local parent_obj_rot = parent_obj:rotation()
-	local world_pos = parent_obj:position() - parent_obj_rot:z() * 30 - parent_obj_rot:y() * 10
+		parent_unit:link(parent_obj_name, self._unit)
 
-	self._unit:set_position(world_pos)
+		local parent_obj = parent_unit:get_object(parent_obj_name)
+		local parent_obj_rot = parent_obj:rotation()
+		local world_pos = parent_obj:position() - parent_obj_rot:z() * 30 - parent_obj_rot:y() * 10
 
-	local world_rot = Rotation(parent_obj_rot:x(), -parent_obj_rot:z())
+		self._unit:set_position(world_pos)
 
-	self._unit:set_rotation(world_rot)
+		local world_rot = Rotation(parent_obj_rot:x(), -parent_obj_rot:z())
+
+		self._unit:set_rotation(world_rot)
+	end)
 
 	self._disabled_collisions = {}
 	local nr_bodies = self._unit:num_bodies()

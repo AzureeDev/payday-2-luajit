@@ -1005,7 +1005,7 @@ function HuskPlayerMovement:sync_melee_start(hand)
 
 	if self:arm_animation_enabled() then
 		if self._ext_anim.reload and alive(self._machine) then
-			self._machine:stop_segment("upper_body")
+			self._machine:stop_segment(Idstring("upper_body"))
 		end
 
 		if self:arm_animation_blocked() then

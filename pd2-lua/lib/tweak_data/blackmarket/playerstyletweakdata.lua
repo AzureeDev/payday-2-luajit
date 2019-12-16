@@ -919,6 +919,412 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 	set_characters_data("winter_suit", characters_female_big, {
 		third_unit = "units/pd2_dlc_wwh/characters/wwh_acc_stealth_suit_female_big/wwh_acc_stealth_suit_female_big"
 	})
+
+	self.player_styles.poolrepair = {
+		name_id = "bm_suit_poolrepair",
+		desc_id = "bm_suit_poolrepair_desc",
+		locks = {
+			achievement = "trk_cou_0"
+		},
+		texture_bundle_folder = "xmn",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_fps_poolrepair/xmn_acc_fps_poolrepair",
+		characters = {}
+	}
+
+	set_characters_data("poolrepair", characters_male, {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_male_average/xmn_acc_poolrepair_male_average"
+	})
+	set_characters_data("poolrepair", characters_male_big, {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_male_big/xmn_acc_poolrepair_male_big"
+	})
+	set_characters_data("poolrepair", characters_female, {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_female_average/xmn_acc_poolrepair_female_average"
+	})
+	set_characters_data("poolrepair", characters_female_big, {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_female_big/xmn_acc_poolrepair_female_big"
+	})
+
+	self.player_styles.poolrepair.characters.ecp_male = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_male_ethan/xmn_acc_poolrepair_male_ethan"
+	}
+	self.player_styles.xmas_tuxedo = {
+		name_id = "bm_suit_xmas_tuxedo",
+		desc_id = "bm_suit_xmas_tuxedo_desc",
+		texture_bundle_folder = "xmn",
+		global_value = "xmn",
+		body_replacement = body_replacement_standard
+	}
+	self.player_styles.xmas_tuxedo.third_body_replacement = self.player_styles.xmas_tuxedo.body_replacement
+	self.player_styles.xmas_tuxedo.unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/fps_criminals_xmas_tuxedo/fps_criminals_xmas_tuxedo"
+	self.player_styles.xmas_tuxedo.material_variations = {
+		default = {
+			name_id = "bm_suit_var_xmas_tuxedo_default",
+			global_value = "xmn",
+			desc_id = "bm_suit_var_xmas_tuxedo_default_desc"
+		},
+		black = {
+			desc_id = "bm_suit_var_xmas_tuxedo_black_desc",
+			global_value = "xmn",
+			auto_aquire = true,
+			name_id = "bm_suit_var_xmas_tuxedo_black",
+			material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/fps_criminals_xmas_tuxedo/fps_criminals_xmas_tuxedo_black"
+		},
+		blue = {
+			desc_id = "bm_suit_var_xmas_tuxedo_blue_desc",
+			global_value = "xmn",
+			auto_aquire = true,
+			name_id = "bm_suit_var_xmas_tuxedo_blue",
+			material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/fps_criminals_xmas_tuxedo/fps_criminals_xmas_tuxedo_blue"
+		},
+		green = {
+			desc_id = "bm_suit_var_xmas_tuxedo_green_desc",
+			global_value = "xmn",
+			auto_aquire = true,
+			name_id = "bm_suit_var_xmas_tuxedo_green",
+			material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/fps_criminals_xmas_tuxedo/fps_criminals_xmas_tuxedo_green"
+		}
+	}
+	self.player_styles.xmas_tuxedo.characters = {}
+	local xmas_tuxedo_wolf = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit",
+		sequence = "set_wolf",
+		material_variations = {}
+	}
+	xmas_tuxedo_wolf.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_black"
+	}
+	xmas_tuxedo_wolf.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_blue"
+	}
+	xmas_tuxedo_wolf.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.wolf = xmas_tuxedo_wolf
+	local xmas_tuxedo_hoxton = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit",
+		sequence = "set_houston",
+		material_variations = {}
+	}
+	xmas_tuxedo_hoxton.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_black"
+	}
+	xmas_tuxedo_hoxton.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_blue"
+	}
+	xmas_tuxedo_hoxton.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.hoxton = xmas_tuxedo_hoxton
+	local xmas_tuxedo_old_hoxton = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit",
+		sequence = "set_hoxton",
+		material_variations = {}
+	}
+	xmas_tuxedo_old_hoxton.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_black"
+	}
+	xmas_tuxedo_old_hoxton.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_blue"
+	}
+	xmas_tuxedo_old_hoxton.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.old_hoxton = xmas_tuxedo_old_hoxton
+	local xmas_tuxedo_chains = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_chains/npc_acc_xmas_tuxedo_chains",
+		sequence = "set_chains",
+		material_variations = {}
+	}
+	xmas_tuxedo_chains.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_chains/npc_acc_xmas_tuxedo_chains_black"
+	}
+	xmas_tuxedo_chains.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_chains/npc_acc_xmas_tuxedo_chains_blue"
+	}
+	xmas_tuxedo_chains.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_chains/npc_acc_xmas_tuxedo_chains_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.chains = xmas_tuxedo_chains
+	local xmas_tuxedo_jowi = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_john_wick/npc_acc_xmas_tuxedo_john_wick",
+		sequence = "set_john_wick",
+		material_variations = {}
+	}
+	xmas_tuxedo_jowi.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_john_wick/npc_acc_xmas_tuxedo_john_wick_black"
+	}
+	xmas_tuxedo_jowi.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_john_wick/npc_acc_xmas_tuxedo_john_wick_blue"
+	}
+	xmas_tuxedo_jowi.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_john_wick/npc_acc_xmas_tuxedo_john_wick_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.jowi = xmas_tuxedo_jowi
+	local xmas_tuxedo_female_1 = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_clover/npc_acc_xmas_tuxedo_clover",
+		sequence = "set_clover",
+		material_variations = {}
+	}
+	xmas_tuxedo_female_1.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_clover/npc_acc_xmas_tuxedo_clover_black"
+	}
+	xmas_tuxedo_female_1.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_clover/npc_acc_xmas_tuxedo_clover_blue"
+	}
+	xmas_tuxedo_female_1.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_clover/npc_acc_xmas_tuxedo_clover_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.female_1 = xmas_tuxedo_female_1
+	local xmas_tuxedo_sydney = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_sydney/npc_acc_xmas_tuxedo_sydney",
+		sequence = "set_sydney",
+		material_variations = {}
+	}
+	xmas_tuxedo_sydney.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_sydney/npc_acc_xmas_tuxedo_sydney_black"
+	}
+	xmas_tuxedo_sydney.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_sydney/npc_acc_xmas_tuxedo_sydney_blue"
+	}
+	xmas_tuxedo_sydney.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_sydney/npc_acc_xmas_tuxedo_sydney_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.sydney = xmas_tuxedo_sydney
+	local xmas_tuxedo_bodhi = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_bodhi/npc_acc_xmas_tuxedo_bodhi",
+		sequence = "set_bodhi",
+		material_variations = {}
+	}
+	xmas_tuxedo_bodhi.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_bodhi/npc_acc_xmas_tuxedo_bodhi_black"
+	}
+	xmas_tuxedo_bodhi.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_bodhi/npc_acc_xmas_tuxedo_bodhi_blue"
+	}
+	xmas_tuxedo_bodhi.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_bodhi/npc_acc_xmas_tuxedo_bodhi_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.bodhi = xmas_tuxedo_bodhi
+	local xmas_tuxedo_max = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_max/npc_acc_xmas_tuxedo_max",
+		sequence = "set_sangres",
+		material_variations = {}
+	}
+	xmas_tuxedo_max.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_max/npc_acc_xmas_tuxedo_max_black"
+	}
+	xmas_tuxedo_max.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_max/npc_acc_xmas_tuxedo_max_blue"
+	}
+	xmas_tuxedo_max.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_max/npc_acc_xmas_tuxedo_max_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.max = xmas_tuxedo_max
+	local xmas_tuxedo_bonnie = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_bonnie/npc_acc_xmas_tuxedo_bonnie",
+		sequence = "set_bonnie",
+		material_variations = {}
+	}
+	xmas_tuxedo_bonnie.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_bonnie/npc_acc_xmas_tuxedo_bonnie_black"
+	}
+	xmas_tuxedo_bonnie.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_bonnie/npc_acc_xmas_tuxedo_bonnie_blue"
+	}
+	xmas_tuxedo_bonnie.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_bonnie/npc_acc_xmas_tuxedo_bonnie_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.bonnie = xmas_tuxedo_bonnie
+	local xmas_tuxedo_dragan = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_dragan/npc_acc_xmas_tuxedo_dragan",
+		sequence = "set_dragan",
+		material_variations = {}
+	}
+	xmas_tuxedo_dragan.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_dragan/npc_acc_xmas_tuxedo_dragan_black"
+	}
+	xmas_tuxedo_dragan.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_dragan/npc_acc_xmas_tuxedo_dragan_blue"
+	}
+	xmas_tuxedo_dragan.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_dragan/npc_acc_xmas_tuxedo_dragan_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.dragan = xmas_tuxedo_dragan
+	local xmas_tuxedo_sokol = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_sokol/npc_acc_xmas_tuxedo_sokol",
+		sequence = "set_sokol",
+		material_variations = {}
+	}
+	xmas_tuxedo_sokol.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_sokol/npc_acc_xmas_tuxedo_sokol_black"
+	}
+	xmas_tuxedo_sokol.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_sokol/npc_acc_xmas_tuxedo_sokol_blue"
+	}
+	xmas_tuxedo_sokol.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_sokol/npc_acc_xmas_tuxedo_sokol_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.sokol = xmas_tuxedo_sokol
+	local xmas_tuxedo_dragon = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_dragon/npc_acc_xmas_tuxedo_dragon",
+		sequence = "set_jiro",
+		material_variations = {}
+	}
+	xmas_tuxedo_dragon.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_dragon/npc_acc_xmas_tuxedo_dragon_black"
+	}
+	xmas_tuxedo_dragon.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_dragon/npc_acc_xmas_tuxedo_dragon_blue"
+	}
+	xmas_tuxedo_dragon.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_dragon/npc_acc_xmas_tuxedo_dragon_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.dragon = xmas_tuxedo_dragon
+	local xmas_tuxedo_myh = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_myh/npc_acc_xmas_tuxedo_myh",
+		sequence = "set_duke",
+		material_variations = {}
+	}
+	xmas_tuxedo_myh.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_myh/npc_acc_xmas_tuxedo_myh_black"
+	}
+	xmas_tuxedo_myh.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_myh/npc_acc_xmas_tuxedo_myh_blue"
+	}
+	xmas_tuxedo_myh.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_myh/npc_acc_xmas_tuxedo_myh_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.myh = xmas_tuxedo_myh
+	local xmas_tuxedo_jacket = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_jacket/npc_acc_xmas_tuxedo_jacket",
+		sequence = "set_jacket",
+		material_variations = {}
+	}
+	xmas_tuxedo_jacket.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_jacket/npc_acc_xmas_tuxedo_jacket_black"
+	}
+	xmas_tuxedo_jacket.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_jacket/npc_acc_xmas_tuxedo_jacket_blue"
+	}
+	xmas_tuxedo_jacket.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_jacket/npc_acc_xmas_tuxedo_jacket_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.jacket = xmas_tuxedo_jacket
+	local xmas_tuxedo_jimmy = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_jimmy/npc_acc_xmas_tuxedo_jimmy",
+		sequence = "set_jimmy",
+		material_variations = {}
+	}
+	xmas_tuxedo_jimmy.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_jimmy/npc_acc_xmas_tuxedo_jimmy_black"
+	}
+	xmas_tuxedo_jimmy.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_jimmy/npc_acc_xmas_tuxedo_jimmy_blue"
+	}
+	xmas_tuxedo_jimmy.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_jimmy/npc_acc_xmas_tuxedo_jimmy_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.jimmy = xmas_tuxedo_jimmy
+	local xmas_tuxedo_wild_third_body_replacement = {
+		head = false,
+		armor = true,
+		body = true,
+		hands = false,
+		vest = true
+	}
+	local xmas_tuxedo_wild = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_rust/npc_acc_xmas_tuxedo_rust",
+		sequence = "set_rust",
+		third_body_replacement = xmas_tuxedo_wild_third_body_replacement,
+		material_variations = {}
+	}
+	xmas_tuxedo_wild.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_rust/npc_acc_xmas_tuxedo_rust_black"
+	}
+	xmas_tuxedo_wild.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_rust/npc_acc_xmas_tuxedo_rust_blue"
+	}
+	xmas_tuxedo_wild.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_rust/npc_acc_xmas_tuxedo_rust_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.wild = xmas_tuxedo_wild
+	local xmas_tuxedo_chico = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_scarface/npc_acc_xmas_tuxedo_scarface",
+		sequence = "set_scarface",
+		material_variations = {}
+	}
+	xmas_tuxedo_chico.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_scarface/npc_acc_xmas_tuxedo_scarface_black"
+	}
+	xmas_tuxedo_chico.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_scarface/npc_acc_xmas_tuxedo_scarface_blue"
+	}
+	xmas_tuxedo_chico.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_scarface/npc_acc_xmas_tuxedo_scarface_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.chico = xmas_tuxedo_chico
+	local xmas_tuxedo_joy = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_joy/npc_acc_xmas_tuxedo_joy",
+		sequence = "set_joy",
+		material_variations = {}
+	}
+	xmas_tuxedo_joy.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_joy/npc_acc_xmas_tuxedo_joy_black"
+	}
+	xmas_tuxedo_joy.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_joy/npc_acc_xmas_tuxedo_joy_blue"
+	}
+	xmas_tuxedo_joy.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_joy/npc_acc_xmas_tuxedo_joy_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.joy = xmas_tuxedo_joy
+	local xmas_tuxedo_ecp_male = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_ethan/npc_acc_xmas_tuxedo_ethan",
+		sequence = "set_ethan",
+		material_variations = {}
+	}
+	xmas_tuxedo_ecp_male.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_ethan/npc_acc_xmas_tuxedo_ethan_black"
+	}
+	xmas_tuxedo_ecp_male.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_ethan/npc_acc_xmas_tuxedo_ethan_blue"
+	}
+	xmas_tuxedo_ecp_male.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_ethan/npc_acc_xmas_tuxedo_ethan_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.ecp_male = xmas_tuxedo_ecp_male
+	local xmas_tuxedo_ecp_female = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_hila/npc_acc_xmas_tuxedo_hila",
+		sequence = "set_hila",
+		material_variations = {}
+	}
+	xmas_tuxedo_ecp_female.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_hila/npc_acc_xmas_tuxedo_hila_black"
+	}
+	xmas_tuxedo_ecp_female.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_hila/npc_acc_xmas_tuxedo_hila_blue"
+	}
+	xmas_tuxedo_ecp_female.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_hila/npc_acc_xmas_tuxedo_hila_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.ecp_female = xmas_tuxedo_ecp_female
+	local xmas_tuxedo_dallas = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit",
+		sequence = "set_dallas",
+		material_variations = {}
+	}
+	xmas_tuxedo_dallas.material_variations.black = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_black"
+	}
+	xmas_tuxedo_dallas.material_variations.blue = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_blue"
+	}
+	xmas_tuxedo_dallas.material_variations.green = {
+		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_green"
+	}
+	self.player_styles.xmas_tuxedo.characters.dallas = xmas_tuxedo_dallas
 end
 
 function BlackMarketTweakData:get_player_style_value(player_style, character_name, key)

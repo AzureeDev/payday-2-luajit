@@ -2230,12 +2230,12 @@ function UnitNetworkHandler:sync_show_action_message(unit, id, sender)
 	managers.action_messaging:sync_show_message(id, unit)
 end
 
-function UnitNetworkHandler:sync_waiting_for_player_start(variant, soundtrack)
+function UnitNetworkHandler:sync_waiting_for_player_start(variant, soundtrack, music_ext)
 	if not self._verify_gamestate(self._gamestate_filter.waiting_for_players) then
 		return
 	end
 
-	game_state_machine:current_state():sync_start(variant, soundtrack)
+	game_state_machine:current_state():sync_start(variant, soundtrack, music_ext)
 end
 
 function UnitNetworkHandler:sync_waiting_for_player_skip()

@@ -11,8 +11,10 @@ function MusicManager:init_globals(...)
 	Global.music_manager.track_attachment = {}
 	Global.music_manager.custom_playlist = {}
 	Global.music_manager.custom_menu_playlist = {}
+	Global.music_manager.custom_ghost_playlist = {}
 	Global.music_manager.unlocked_tracks = {}
 	Global.music_manager.loadout_selection = "heist"
+	Global.music_manager.loadout_selection_ghost = "heist"
 
 	self:_set_default_values()
 end
@@ -27,6 +29,12 @@ function MusicManager:on_steam_overlay_close()
 	if SystemInfo:platform() ~= Idstring("X360") then
 		self:clbk_game_has_music_control(true)
 	end
+end
+
+function MusicManager:stop()
+	MusicManager.super.stop(self)
+
+	Global.music_manager.current_music_ext = nil
 end
 
 function MusicManager:on_mission_end()
@@ -142,10 +150,123 @@ function MusicManager:track_unlocked(name)
 	return Global.music_manager.unlocked_tracks[name]
 end
 
+function MusicManager:playlist_ghost()
+	return Global.music_manager.custom_ghost_playlist
+end
+
+function MusicManager:playlist_ghost_add(track)
+	table.insert(Global.music_manager.custom_ghost_playlist, track)
+end
+
+function MusicManager:playlist_ghost_remove(track)
+	for index, track_name in pairs(Global.music_manager.custom_ghost_playlist) do
+		if track == track_name then
+			table.remove(Global.music_manager.custom_ghost_playlist, index)
+
+			break
+		end
+	end
+end
+
+function MusicManager:playlist_ghost_clear()
+	Global.music_manager.custom_ghost_playlist = {}
+end
+
+function MusicManager:playlist_ghost_contains(track)
+	return table.contains(Global.music_manager.custom_ghost_playlist, track)
+end
+
+function MusicManager:check_music_ext_ghost()
+	local music, start_switch = tweak_data.levels:get_music_event_ext_ghost()
+	Global.music_manager.current_music_ext = music
+
+	if music then
+		self:post_event(music)
+		self:post_event(start_switch)
+	end
+end
+
+function MusicManager:music_ext_listen_start(music_ext)
+	if self._current_music_ext == music_ext then
+		return
+	end
+
+	self._skip_play = true
+
+	Global.music_manager.source:stop()
+	Global.music_manager.source:post_event(music_ext)
+	Global.music_manager.source:post_event("suspense_4")
+
+	self._current_music_ext = music_ext
+end
+
+function MusicManager:music_ext_listen_stop()
+	if self._current_music_ext then
+		Global.music_manager.source:post_event("stop_all_music")
+	end
+
+	self._current_music_ext = nil
+	self._skip_play = nil
+end
+
+function MusicManager:stop_listen_all()
+	if self._current_music_ext or self._current_event then
+		Global.music_manager.source:post_event("stop_all_music")
+	end
+
+	if self._current_music_ext and Global.music_manager.current_music_ext then
+		Global.music_manager.source:post_event(Global.music_manager.current_music_ext)
+	end
+
+	if self._current_event and Global.music_manager.current_event then
+		Global.music_manager.source:post_event(Global.music_manager.current_event)
+	end
+
+	if self._current_track and Global.music_manager.current_track then
+		Global.music_manager.source:set_switch("music_randomizer", Global.music_manager.current_track)
+	end
+
+	self._current_music_ext = nil
+	self._current_event = nil
+	self._current_track = nil
+	self._skip_play = nil
+end
+
+function MusicManager:jukebox_ghost_specific()
+	if managers.job:interupt_stage() then
+		return "heist"
+	end
+
+	local job_data = Global.job_manager.current_job
+
+	if job_data then
+		local job_tweak = tweak_data.narrative:job_data(job_data.job_id)
+
+		if job_tweak then
+			local track_data = job_tweak.name_id .. (job_data.stages > 1 and job_data.current_stage or "")
+
+			return self:track_attachment(track_data) or "heist"
+		end
+	end
+
+	if managers.crime_spree:is_active() then
+		local narrative_data, day, variant = managers.crime_spree:get_narrative_tweak_data_for_mission_level(managers.crime_spree:current_mission())
+
+		if narrative_data then
+			local track_data = narrative_data.name_id .. ((narrative_data.stages or 1) > 1 and tostring(day) or "")
+
+			return self:track_attachment(track_data) or "heist"
+		end
+	end
+
+	return "heist"
+end
+
 function MusicManager:save_settings(data)
 	local state = {
 		custom_playlist = Global.music_manager.custom_playlist,
 		custom_menu_playlist = Global.music_manager.custom_menu_playlist,
+		custom_ghost_playlist = Global.music_manager.custom_ghost_playlist,
 		track_attachment = Global.music_manager.track_attachment,
 		unlocked_tracks = Global.music_manager.unlocked_tracks
 	}
@@ -158,6 +279,7 @@ function MusicManager:load_settings(data)
 	if state then
 		Global.music_manager.custom_playlist = state.custom_playlist or {}
 		Global.music_manager.custom_menu_playlist = state.custom_menu_playlist or {}
+		Global.music_manager.custom_ghost_playlist = state.custom_ghost_playlist or {}
 		Global.music_manager.track_attachment = state.track_attachment or {}
 		Global.music_manager.unlocked_tracks = state.unlocked_tracks or {}
 
@@ -178,7 +300,8 @@ end
 
 function MusicManager:save_profile(data)
 	local state = {
-		loadout_selection = Global.music_manager.loadout_selection
+		loadout_selection = Global.music_manager.loadout_selection,
+		loadout_selection_ghost = Global.music_manager.loadout_selection_ghost
 	}
 	data.MusicManager = state
 end
@@ -188,7 +311,30 @@ function MusicManager:load_profile(data)
 
 	if state then
 		Global.music_manager.loadout_selection = state.loadout_selection
+		Global.music_manager.loadout_selection_ghost = state.loadout_selection_ghost
 	end
+end
+
+function MusicManager:save(data)
+	MusicManager.super.save(self, data)
+
+	local state = data.CoreMusicManager or {}
+
+	if game_state_machine:current_state_name() ~= "ingame_waiting_for_players" then
+		state.music_ext = Global.music_manager.current_music_ext
+	end
+
+	data.CoreMusicManager = state
+end
+
+function MusicManager:load(data)
+	local state = data.CoreMusicManager
+
+	if state.music_ext then
+		self:post_event(state.music_ext)
+	end
+
+	MusicManager.super.load(self, data)
 end
 
 function MusicManager:current_track_string()
@@ -227,6 +373,19 @@ function MusicManager:jukebox_random_all_menu()
 	return switches
 end
 
+function MusicManager:jukebox_random_all_ghost()
+	local switches = {}
+	local track_list, track_locked = self:jukebox_ghost_tracks()
+
+	for _, track_name in ipairs(track_list) do
+		if not track_locked[track_name] then
+			table.insert(switches, track_name)
+		end
+	end
+
+	return switches
+end
+
 function MusicManager:jukebox_set_defaults()
 	self:playlist_clear()
 
@@ -245,6 +404,16 @@ function MusicManager:jukebox_set_defaults()
 	for _, track_name in pairs(tracks_list) do
 		if not tracks_locked[track_name] then
 			self:playlist_menu_add(track_name)
+		end
+	end
+
+	self:playlist_ghost_clear()
+
+	local tracks_list, tracks_locked = self:jukebox_ghost_tracks()
+
+	for _, track_name in pairs(tracks_list) do
+		if not tracks_locked[track_name] then
+			self:playlist_ghost_add(track_name)
 		end
 	end
 
@@ -308,6 +477,16 @@ function MusicManager:_set_default_values()
 		end
 	end
 
+	if #Global.music_manager.custom_ghost_playlist == 0 then
+		local tracks_list, tracks_locked = self:jukebox_ghost_tracks()
+
+		for _, track_name in pairs(tracks_list) do
+			if not tracks_locked[track_name] then
+				table.insert(Global.music_manager.custom_ghost_playlist, track_name)
+			end
+		end
+	end
+
 	local default_tracks = self:jukebox_default_tracks()
 
 	for name, track in pairs(default_tracks) do
@@ -326,6 +505,22 @@ function MusicManager:jukebox_menu_track(name)
 		return track_list[math.random(#track_list)]
 	elseif track == "playlist" then
 		local track_list = managers.music:playlist_menu()
+
+		return track_list[math.random(#track_list)]
+	else
+		return track
+	end
+end
+
+function MusicManager:jukebox_ghost_track(name)
+	local track = self:track_attachment(name)
+
+	if track == "all" then
+		local track_list = self:jukebox_random_all_ghost()
+
+		return track_list[math.random(#track_list)]
+	elseif track == "playlist" then
+		local track_list = managers.music:playlist_ghost()
 
 		return track_list[math.random(#track_list)]
 	else
@@ -384,10 +579,12 @@ function MusicManager:jukebox_default_tracks()
 		heist_nmh = "track_63",
 		heist_vit = "track_64_lcv",
 		heist_welcome_to_the_jungle1 = "track_04",
-		heist_sah = "track_61",
+		heist_sah = "music_tag",
 		heist_firestarter3 = "track_02",
 		heist_spa = "all",
+		heist_dark = "music_dark",
 		heist_alex1 = "track_08",
+		heist_tag = "music_tag",
 		heist_kenaz_full = "all",
 		heist_framing_frame3 = "track_03",
 		heist_alex3 = "track_02",
@@ -399,6 +596,7 @@ function MusicManager:jukebox_default_tracks()
 		heist_alex2 = "track_07",
 		heist_haunted = "track_22",
 		heist_mad = "track_44",
+		heist_fish = "music_fish",
 		heist_branchbank = "track_03",
 		heist_hvh = "track_56",
 		heist_red2 = "track_31",
@@ -423,6 +621,7 @@ function MusicManager:jukebox_default_tracks()
 		heist_firestarter1 = "track_08",
 		heist_branchbank_gold = "track_04",
 		heist_firestarter2 = "track_06",
+		heist_kosugi = "kosugi_music",
 		heist_pal = "all"
 	}
 
@@ -549,6 +748,23 @@ function MusicManager:jukebox_menu_tracks()
 
 		if data.lock and not lock_data[data.lock] then
 			tracks_locked[data.track] = data.lock
+		end
+	end
+
+	return tracks, tracks_locked
+end
+
+function MusicManager:jukebox_ghost_tracks()
+	local tracks = {}
+	local tracks_locked = {}
+
+	if managers.dlc then
+		for _, data in ipairs(tweak_data.music.track_ghost_list) do
+			table.insert(tracks, data.track)
+
+			if data.lock and not managers.dlc:has_dlc_or_soundtrack_or_cce(data.lock) then
+				tracks_locked[data.track] = data.lock
+			end
 		end
 	end
 

@@ -1533,13 +1533,14 @@ function PlayerInventoryGui:_update_legends(name)
 
 		if managers.menu:is_pc_controller() then
 			local x = self._legends_panel:w()
+			local padding = 10
 
 			if alive(self._legends.hide_all) then
 				self._legends.hide_all:set_visible(show_hide_all)
 				self._legends.hide_all:set_right(x)
 
 				if show_hide_all then
-					x = self._legends.hide_all:left() - 5 or x
+					x = self._legends.hide_all:left() - padding or x
 				end
 			end
 
@@ -1548,7 +1549,7 @@ function PlayerInventoryGui:_update_legends(name)
 				self._legends.switch:set_right(x)
 
 				if show_switch then
-					x = self._legends.switch:left() - 5 or x
+					x = self._legends.switch:left() - padding or x
 				end
 			end
 
@@ -1557,7 +1558,7 @@ function PlayerInventoryGui:_update_legends(name)
 				self._legends.preview:set_right(x)
 
 				if show_preview then
-					x = self._legends.preview:left() - 5 or x
+					x = self._legends.preview:left() - padding or x
 				end
 			end
 
@@ -1566,7 +1567,7 @@ function PlayerInventoryGui:_update_legends(name)
 				self._legends.select:set_right(x)
 
 				if show_select then
-					x = self._legends.select:left() - 5 or x
+					x = self._legends.select:left() - padding or x
 				end
 			end
 		else

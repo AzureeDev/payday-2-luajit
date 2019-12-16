@@ -153,6 +153,7 @@ function PlayerHand:post_init()
 
 	managers.vr:add_setting_changed_callback("default_weapon_hand", self._default_weapon_hand_changed_clbk)
 
+	self._weapon_hand_id = default_weapon_hand
 	self._arm_peer_filter = self._arm_peer_filter or {}
 	self._arm_simulator = ArmSimulator:new("gamedata/arms", self._vr_controller)
 	self._sync_listener_key = {}

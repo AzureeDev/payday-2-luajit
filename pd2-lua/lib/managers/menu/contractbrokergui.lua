@@ -497,35 +497,34 @@ function ContractBrokerGui:_setup_filters()
 	end
 
 	if managers.menu:is_pc_controller() and not self._search then
-		local search_panel = self._panels.filters:panel({
+		local search_panel = self._panel:panel({
 			alpha = 1,
 			layer = 2,
-			h = tweak_data.menu.pd2_small_font_size
+			h = tweak_data.menu.pd2_medium_font_size
 		})
 
-		search_panel:set_w(self._panels.filters:w())
-		search_panel:set_h(tweak_data.menu.pd2_small_font_size)
-		search_panel:set_bottom(self._panels.filters:h())
-		search_panel:set_right(self._panels.filters:w() - 4)
+		search_panel:set_w(256)
+		search_panel:set_top(self._panels.main:bottom() + 4)
+		search_panel:set_left(self._panels.main:left())
 
 		local search_placeholder = search_panel:text({
 			vertical = "top",
-			align = "right",
+			align = "center",
 			alpha = 0.6,
 			layer = 2,
 			text = managers.localization:to_upper_text("menu_filter_search"),
-			font = tweak_data.menu.pd2_small_font,
-			font_size = tweak_data.menu.pd2_small_font_size,
+			font = tweak_data.menu.pd2_medium_font,
+			font_size = tweak_data.menu.pd2_medium_font_size,
 			color = tweak_data.screen_colors.text
 		})
 		local search_text = search_panel:text({
 			vertical = "top",
 			alpha = 1,
-			align = "right",
+			align = "center",
 			text = "",
 			layer = 2,
-			font = tweak_data.menu.pd2_small_font,
-			font_size = tweak_data.menu.pd2_small_font_size,
+			font = tweak_data.menu.pd2_medium_font,
+			font_size = tweak_data.menu.pd2_medium_font_size,
 			color = tweak_data.screen_colors.text,
 			w = search_panel:w() - 3
 		})
@@ -540,6 +539,18 @@ function ContractBrokerGui:_setup_filters()
 		})
 
 		caret:set_right(search_panel:w() * 0.5)
+		search_panel:rect({
+			layer = -1,
+			color = Color.black:with_alpha(0.25)
+		})
+		BoxGuiObject:new(search_panel, {
+			sides = {
+				1,
+				1,
+				1,
+				1
+			}
+		})
 
 		self._search = {
 			panel = search_panel,
@@ -1425,6 +1436,8 @@ end
 function ContractBrokerGui:search_key_release(o, k)
 	if self._key_pressed == k then
 		self._key_pressed = false
+
+		self:_setup_change_search()
 	end
 end
 
@@ -1562,8 +1575,9 @@ function ContractBrokerGui:update_caret()
 	local caret = self._search.caret
 	local s, e = text:selection()
 	local x, y, w, h = text:selection_rect()
+	local text_s = text:text()
 
-	if s == 0 and e == 0 then
+	if #text_s == 0 then
 		if text:align() == "center" then
 			x = text:world_x() + text:w() / 2
 		else
@@ -1586,8 +1600,5 @@ function ContractBrokerGui:update_caret()
 
 	caret:set_world_shape(x, y + 2, w, h - 4)
 	self:set_blinking(s == e and self._focus)
-
-	local text_s = text:text()
-
 	self._search.placeholder:set_visible(#text_s == 0)
 end

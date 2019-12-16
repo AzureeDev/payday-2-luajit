@@ -7894,6 +7894,17 @@ function DLCTweakData:init(tweak_data)
 			item_entry = "jail_pd2_clan"
 		}
 	}
+	self.ach_trk_cou_0 = {
+		dlc = "has_achievement",
+		achievement_id = "trk_cou_0",
+		content = {}
+	}
+	self.ach_trk_cou_0.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "poolrepair"
+		}
+	}
 	self.ach_trd_mex_10 = {
 		dlc = "has_achievement",
 		achievement_id = "mex_10",

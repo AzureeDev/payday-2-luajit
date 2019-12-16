@@ -1625,39 +1625,45 @@ function HUDStageEndScreen:stage_money_counter_init(t, dt)
 		return true
 	end
 
+	local function round_and_fix_precision(x)
+		x = math.round(x)
+
+		return math.step(x, x, 0)
+	end
+
 	self._money = {
 		income = {
 			{
 				"menu_es_cash_stage",
-				math.round(stage_payout or 0)
+				round_and_fix_precision(stage_payout or 0)
 			},
 			{
 				"menu_es_cash_job",
-				math.round(job_payout or 0)
+				round_and_fix_precision(job_payout or 0)
 			},
 			{
 				"menu_cash_bonus_bags",
-				math.round(bag_payout or 0)
+				round_and_fix_precision(bag_payout or 0)
 			},
 			{
 				"menu_cash_vehicles",
-				math.round(vehicle_payout or 0)
+				round_and_fix_precision(vehicle_payout or 0)
 			},
 			{
 				"menu_cash_crew",
-				math.round(crew_payout or 0)
+				round_and_fix_precision(crew_payout or 0)
 			},
 			{
 				"hud_instant_cash",
-				math.round(small_loot_payout or 0)
+				round_and_fix_precision(small_loot_payout or 0)
 			},
 			{
 				"menu_es_skirmish_cash",
-				math.round(skirmish_payout or 0)
+				round_and_fix_precision(skirmish_payout or 0)
 			},
 			{
 				"menu_mutators_reduction_cash",
-				math.round(mutators_reduction or 0)
+				round_and_fix_precision(mutators_reduction or 0)
 			},
 			name_id = managers.localization:to_upper_text("menu_cash_income", {
 				money = ""
@@ -1683,11 +1689,11 @@ function HUDStageEndScreen:stage_money_counter_init(t, dt)
 	self._money.balance = {
 		{
 			"hud_offshore_account",
-			math.round(managers.money:heist_offshore())
+			round_and_fix_precision(managers.money:heist_offshore())
 		},
 		{
 			"menu_cash_spending",
-			math.round(spending_earned),
+			round_and_fix_precision(spending_earned),
 			spending_earned > 0 and tweak_data.screen_colors.friend_color or tweak_data.screen_colors.pro_color
 		},
 		name_id = managers.localization:to_upper_text("menu_cash_balance", {

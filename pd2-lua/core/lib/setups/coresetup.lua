@@ -55,6 +55,7 @@ if Application:ews_enabled() then
 	require("core/lib/utils/dev/tools/material_editor/CoreMaterialEditor")
 	require("core/lib/utils/dev/tools/particle_editor/CoreParticleEditor")
 	require("core/lib/utils/dev/tools/cutscene_editor/CoreCutsceneEditor")
+	require("core/lib/utils/dev/tools/texture_report_editor/CoreTextureReport")
 end
 
 CoreSetup = CoreSetup or class()
@@ -294,6 +295,7 @@ function CoreSetup:__init()
 		managers.toolhub:add("Particle Editor", CoreParticleEditor)
 		managers.toolhub:add(CorePuppeteer.EDITOR_TITLE, CorePuppeteer)
 		managers.toolhub:add(CoreCutsceneEditor.EDITOR_TITLE, CoreCutsceneEditor)
+		managers.toolhub:add(CoreTextureReport.EDITOR_TITLE, CoreTextureReport)
 
 		if not Application:editor() then
 			managers.toolhub:add("Unit Reloader", CoreUnitReloader)

@@ -3610,6 +3610,12 @@ function MissionBriefingGui:init(saferect_ws, fullrect_ws, node)
 		table.insert(self._items, self._jukebox_item)
 
 		index = index + 1
+	elseif tweak_data.levels[Global.level_data.level_id].music_ext_start then
+		self._jukebox_item = JukeboxGhostItem:new(self._panel, utf8.to_upper(managers.localization:text("menu_jukebox")), index)
+
+		table.insert(self._items, self._jukebox_item)
+
+		index = index + 1
 	end
 
 	local max_x = self._panel:w()
@@ -4561,7 +4567,7 @@ end
 
 function MissionBriefingGui:close()
 	WalletGuiObject.close_wallet(self._safe_workspace:panel())
-	managers.music:track_listen_stop()
+	managers.music:stop_listen_all()
 	self:close_asset()
 
 	local requested_asset_textures = self._assets_item and self._assets_item:get_requested_textures()
@@ -4667,6 +4673,62 @@ function JukeboxItem:deselect()
 end
 
 function JukeboxItem:set_enabled(state)
+	if not self.displayed then
+		return
+	end
+
+	if managers.menu:active_menu() and managers.menu:active_menu().logic:selected_node() then
+		local item_list = managers.menu:active_menu().logic:selected_node():items()
+
+		for _, item_data in ipairs(item_list) do
+			item_data:set_enabled(state)
+		end
+	end
+end
+
+JukeboxGhostItem = JukeboxGhostItem or class(MissionBriefingTabItem)
+
+function JukeboxGhostItem:init(panel, text, i, assets_names, max_assets, menu_component_data)
+	JukeboxGhostItem.super.init(self, panel, text, i)
+	self._panel:set_w(self._main_panel:w())
+	self._panel:set_right(self._main_panel:w())
+
+	self._my_menu_component_data = menu_component_data
+end
+
+function JukeboxGhostItem:post_init()
+end
+
+function JukeboxGhostItem:select(no_sound)
+	JukeboxGhostItem.super.select(self, no_sound)
+
+	if not self.displayed then
+		if managers.menu:active_menu() then
+			managers.menu:open_node("jukebox_ghost")
+		end
+
+		self.displayed = true
+
+		managers.music:track_listen_start("stop_all_music")
+	end
+end
+
+function JukeboxGhostItem:deselect()
+	self.closing = true
+
+	if managers.menu:active_menu() and managers.menu:active_menu().logic:selected_node() then
+		managers.menu:active_menu().logic:selected_node():parameters().block_back = false
+
+		managers.menu:back(true)
+	end
+
+	self.displayed = nil
+
+	managers.music:stop_listen_all()
+	JukeboxGhostItem.super.deselect(self)
+end
+
+function JukeboxGhostItem:set_enabled(state)
 	if not self.displayed then
 		return
 	end

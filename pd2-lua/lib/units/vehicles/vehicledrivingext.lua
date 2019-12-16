@@ -1089,7 +1089,7 @@ function VehicleDrivingExt:_detect_npc_collisions()
 			damage_ext:damage_mission(attack_data)
 
 			if unit:movement()._active_actions[1] and unit:movement()._active_actions[1]:type() == "hurt" then
-				unit:movement()._active_actions[1]:force_ragdoll()
+				unit:movement()._active_actions[1]:force_ragdoll(true)
 			end
 
 			local nr_u_bodies = unit:num_bodies()

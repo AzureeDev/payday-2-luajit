@@ -46,7 +46,7 @@ function MissionDoor:activate()
 			local a_obj = self._unit:get_object(Idstring(unit_data.align))
 			local position = a_obj:position()
 			local rotation = a_obj:rotation()
-			local unit = World:spawn_unit(unit_data.unit, position, rotation)
+			local unit = safe_spawn_unit(unit_data.unit, position, rotation)
 
 			unit:mission_door_device():set_parent_data(self._unit, type)
 

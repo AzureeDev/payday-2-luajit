@@ -140,7 +140,7 @@ function BlackMarketManager:_setup_player_styles()
 
 		for var_id, var_data in pairs(data.material_variations or {}) do
 			player_styles[player_style].material_variations[var_id] = stored_material_variations[var_id] or {}
-			player_styles[player_style].material_variations[var_id].unlocked = player_styles[player_style].material_variations[var_id].unlocked or var_data.unlocked or false
+			player_styles[player_style].material_variations[var_id].unlocked = player_styles[player_style].material_variations[var_id].unlocked or var_data.unlocked or var_data.auto_aquire and player_styles[player_style].unlocked or false
 		end
 
 		player_styles[player_style].material_variations.default = {
@@ -2057,7 +2057,9 @@ function BlackMarketManager:update(t, dt)
 						self._preload_ws:panel():script().set_progress(self._preloading_index)
 					end
 
-					next_in_line.done_cb()
+					call_on_next_update(function ()
+						next_in_line.done_cb()
+					end)
 				else
 					if self._preload_ws then
 						self._preload_ws:panel():script().set_progress(self._preloading_index)

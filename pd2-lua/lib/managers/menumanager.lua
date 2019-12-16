@@ -5262,7 +5262,7 @@ function MenuSoundCreator:modify_node(node)
 end
 
 function MenuSoundCreator:refresh_node(node)
-	self:modify_node(node)
+	return self:modify_node(node)
 end
 
 function MenuManager.refresh_level_select(node, verify_dlc_owned)
@@ -6603,7 +6603,7 @@ function MenuJukeboxHeistTracks:_have_music(job_id)
 		end
 	else
 		for _, level_data in ipairs(job_tweak.chain) do
-			if tweak_data.levels[level_data.level_id].music ~= "no_music" then
+			if level_data.level_id and tweak_data.levels[level_data.level_id].music ~= "no_music" then
 				return true
 			end
 		end
@@ -6738,6 +6738,407 @@ function MenuJukeboxMenuTracks:modify_node(node, data)
 	managers.menu:add_back_button(node)
 
 	return node
+end
+
+MenuKitJukeboxGhostInitiator = MenuKitJukeboxGhostInitiator or class()
+
+function MenuKitJukeboxGhostInitiator:modify_node(node, data)
+	if not node:item("choose_jukebox_your_choice") then
+		local track_list, track_locked = managers.music:jukebox_ghost_tracks()
+		local option_data = {
+			type = "MenuItemMultiChoiceWithIcon"
+		}
+
+		for _, track_name in ipairs(track_list) do
+			if not track_locked[track_name] then
+				table.insert(option_data, {
+					_meta = "option",
+					text_id = "menu_jukebox_screen_" .. track_name,
+					value = track_name
+				})
+			end
+		end
+
+		local params = {
+			callback = "jukebox_ghost_track_selection",
+			name = "choose_jukebox_your_choice",
+			text_id = "",
+			icon = tweak_data.hud_icons:get_icon_data("jukebox_playing_icon")
+		}
+		local item = node:create_item(option_data, params)
+
+		item:set_enabled(false)
+		node:add_item(item)
+	end
+
+	local track_name = managers.localization:text("menu_jukebox_playlist_ghost")
+	local job_data = Global.job_manager.current_job
+
+	if job_data then
+		local track = managers.music:jukebox_ghost_specific()
+
+		if track == "all" then
+			track_name = track_name .. " (" .. managers.localization:text("menu_jukebox_playlist_all") .. ")"
+		elseif track == "playlist" then
+			track_name = track_name .. " (" .. managers.localization:text("menu_jukebox_random_ghost_playlist") .. ")"
+		else
+			track_name = track_name .. " (" .. managers.localization:text("menu_jukebox_screen_" .. track) .. ")"
+		end
+	end
+
+	node:item("toggle_jukebox_playlist_heist"):set_parameter("localize", "false")
+	node:item("toggle_jukebox_playlist_heist"):set_parameter("text_id", track_name)
+
+	if Network:is_server() then
+		if Global.music_manager.loadout_selection_ghost == "server" then
+			Global.music_manager.loadout_selection_ghost = nil
+		end
+
+		node:item("toggle_jukebox_server_choice"):set_enabled(false)
+	end
+
+	if not Global.music_manager.loadout_selection_ghost or Global.music_manager.loadout_selection_ghost == "heist" then
+		node:item("toggle_jukebox_playlist_heist"):set_value("on")
+	elseif Global.music_manager.loadout_selection_ghost == "global" then
+		node:item("toggle_jukebox_playlist_global"):set_value("on")
+	elseif Global.music_manager.loadout_selection_ghost == "all" then
+		node:item("toggle_jukebox_playlist_all"):set_value("on")
+	elseif Global.music_manager.loadout_selection_ghost == "server" then
+		node:item("toggle_jukebox_server_choice"):set_value("on")
+	else
+		node:item("toggle_jukebox_your_choice"):set_value("on")
+
+		local selection = node:item("choose_jukebox_your_choice")
+
+		selection:set_enabled(true)
+		selection:set_value(Global.music_manager.loadout_selection_ghost)
+	end
+
+	return node
+end
+
+MenuJukeboxGhostPlaylist = MenuJukeboxGhostPlaylist or class()
+
+function MenuJukeboxGhostPlaylist:modify_node(node, data)
+	managers.menu_component:show_contract_character(false)
+	node:clean_items()
+
+	local data = {
+		{
+			w = 24,
+			y = 0,
+			h = 24,
+			s_y = 24,
+			value = "on",
+			s_w = 24,
+			s_h = 24,
+			s_x = 24,
+			_meta = "option",
+			icon = "guis/textures/menu_tickbox",
+			x = 24,
+			s_icon = "guis/textures/menu_tickbox"
+		},
+		{
+			w = 24,
+			y = 0,
+			h = 24,
+			s_y = 24,
+			value = "off",
+			s_w = 24,
+			s_h = 24,
+			s_x = 0,
+			_meta = "option",
+			icon = "guis/textures/menu_tickbox",
+			x = 0,
+			s_icon = "guis/textures/menu_tickbox"
+		},
+		type = "MenuItemToggleWithIcon"
+	}
+	local item = nil
+	local track_list, track_locked = managers.music:jukebox_ghost_tracks()
+
+	for _, track_name in pairs(track_list) do
+		local locked = track_locked[track_name]
+		local params = {
+			callback = "jukebox_option_ghost_playlist",
+			name = track_name,
+			text_id = "menu_jukebox_screen_" .. track_name,
+			help_id = locked and "menu_jukebox_locked_" .. locked,
+			disabled_color = tweak_data.screen_colors.important_1,
+			icon = tweak_data.hud_icons:get_icon_data("jukebox_playing_icon")
+		}
+		item = node:create_item(data, params)
+
+		if locked then
+			item:set_value("off")
+			item:set_enabled(false)
+		else
+			item:set_value(managers.music:playlist_ghost_contains(track_name) and "on" or "off")
+		end
+
+		node:add_item(item)
+	end
+
+	managers.menu:add_back_button(node)
+
+	return node
+end
+
+MenuJukeboxGhostTracks = MenuJukeboxGhostTracks or class()
+
+function MenuJukeboxGhostTracks:modify_node(node, data)
+	managers.menu_component:show_contract_character(false)
+	node:clean_items()
+
+	local track_list, track_locked = managers.music:jukebox_ghost_tracks()
+	local option_data = {
+		type = "MenuItemMultiChoiceWithIcon"
+	}
+
+	table.insert(option_data, {
+		value = "all",
+		text_id = "menu_jukebox_playlist_all",
+		_meta = "option"
+	})
+	table.insert(option_data, {
+		value = "playlist",
+		text_id = "menu_jukebox_random_ghost_playlist",
+		_meta = "option"
+	})
+
+	for _, track_name in pairs(track_list) do
+		if not track_locked[track_name] then
+			table.insert(option_data, {
+				_meta = "option",
+				text_id = "menu_jukebox_screen_" .. track_name,
+				value = track_name
+			})
+		end
+	end
+
+	local track_list = {}
+	local unique_jobs = {}
+
+	for _, job_id in ipairs(tweak_data.narrative:get_jobs_index()) do
+		local job_tweak = tweak_data.narrative:job_data(job_id)
+
+		if self:_have_music_ext(job_id) and not table.contains(unique_jobs, job_tweak.name_id) then
+			local text_id, color_ranges = tweak_data.narrative:create_job_name(job_id, true)
+			local days = #tweak_data.narrative:job_chain(job_id)
+
+			table.insert(unique_jobs, job_tweak.name_id)
+
+			if days > 1 then
+				for i = 1, days, 1 do
+					table.insert(track_list, {
+						job_id = job_id,
+						name_id = job_tweak.name_id,
+						day = i,
+						sort_id = text_id,
+						text_id = text_id .. " - " .. managers.localization:text("menu_jukebox_heist_day", {
+							day = i
+						}),
+						color_ranges = color_ranges
+					})
+				end
+			else
+				table.insert(track_list, {
+					job_id = job_id,
+					name_id = job_tweak.name_id,
+					sort_id = text_id,
+					text_id = text_id,
+					color_ranges = color_ranges
+				})
+			end
+		end
+	end
+
+	table.sort(track_list, function (x, y)
+		return x.sort_id == y.sort_id and x.text_id < y.text_id or x.sort_id < y.sort_id
+	end)
+
+	for _, track_data in pairs(track_list) do
+		local heist_name = track_data.name_id .. (track_data.day and track_data.day or "")
+		local params = {
+			localize = "false",
+			align = "left",
+			callback = "jukebox_option_ghost_tracks",
+			text_offset = 100,
+			name = heist_name,
+			text_id = track_data.text_id,
+			color_ranges = track_data.color_ranges,
+			heist_job = track_data.job_id,
+			heist_days = track_data.day,
+			icon = tweak_data.hud_icons:get_icon_data("jukebox_playing_icon")
+		}
+		local item = node:create_item(option_data, params)
+
+		item:set_value(managers.music:track_attachment(heist_name) or "all")
+		node:add_item(item)
+	end
+
+	managers.menu:add_back_button(node)
+
+	return node
+end
+
+function MenuJukeboxGhostTracks:_have_music_ext(job_id)
+	local job_tweak = tweak_data.narrative.jobs[job_id]
+
+	if not job_tweak or job_tweak.contact == "tests" or job_tweak.wrapped_to_job then
+		return false
+	end
+
+	if job_tweak.job_wrapper then
+		for _, wrapped_job in ipairs(job_tweak.job_wrapper) do
+			for _, level_data in ipairs(tweak_data.narrative.jobs[wrapped_job].chain) do
+				if tweak_data.levels[level_data.level_id].music_ext_start then
+					return true
+				end
+			end
+		end
+	else
+		for _, level_data in ipairs(job_tweak.chain) do
+			if level_data.level_id and tweak_data.levels[level_data.level_id].music_ext_start then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function MenuCallbackHandler:jukebox_ghost_playlist_all(item)
+	if item:enabled() then
+		self:_jukebox_disable_items(item)
+
+		Global.music_manager.loadout_selection_ghost = "all"
+
+		managers.music:music_ext_listen_stop()
+		managers.menu:active_menu().logic:selected_node():item("choose_jukebox_your_choice"):set_icon_visible(false)
+	end
+end
+
+function MenuCallbackHandler:jukebox_ghost_playlist_global(item)
+	if item:enabled() then
+		self:_jukebox_disable_items(item)
+
+		Global.music_manager.loadout_selection_ghost = "global"
+
+		managers.music:music_ext_listen_stop()
+		managers.menu:active_menu().logic:selected_node():item("choose_jukebox_your_choice"):set_icon_visible(false)
+	end
+end
+
+function MenuCallbackHandler:jukebox_ghost_playlist_heist(item)
+	if item:enabled() then
+		self:_jukebox_disable_items(item)
+
+		Global.music_manager.loadout_selection_ghost = "heist"
+
+		managers.music:music_ext_listen_stop()
+		managers.menu:active_menu().logic:selected_node():item("choose_jukebox_your_choice"):set_icon_visible(false)
+	end
+end
+
+function MenuCallbackHandler:jukebox_ghost_server_choice(item)
+	if item:enabled() then
+		self:_jukebox_disable_items(item)
+
+		Global.music_manager.loadout_selection_ghost = "server"
+
+		managers.music:music_ext_listen_stop()
+		managers.menu:active_menu().logic:selected_node():item("choose_jukebox_your_choice"):set_icon_visible(false)
+	end
+end
+
+function MenuCallbackHandler:jukebox_ghost_your_choice(item)
+	if item:enabled() then
+		self:_jukebox_disable_items(item)
+
+		Global.music_manager.loadout_selection_ghost = managers.menu:active_menu().logic:selected_node():item("choose_jukebox_your_choice"):value()
+	end
+end
+
+function MenuCallbackHandler:jukebox_ghost_track_selection(item)
+	local track = item:value()
+	Global.music_manager.loadout_selection_ghost = track
+
+	if track ~= "all" and track ~= "playlist" then
+		managers.music:music_ext_listen_start(track)
+		managers.menu_component:on_ready_pressed_mission_briefing_gui(false)
+		item:set_icon_visible(true)
+	else
+		managers.music:music_ext_listen_stop()
+		item:set_icon_visible(false)
+	end
+end
+
+function MenuCallbackHandler:jukebox_option_ghost_playlist(item)
+	local tracks_list = managers.music:jukebox_ghost_tracks()
+	local empty_list = true
+
+	for _, track_name in pairs(tracks_list) do
+		if managers.menu:active_menu().logic:selected_node():item(track_name):value() == "on" then
+			empty_list = false
+
+			break
+		end
+	end
+
+	local item_list = managers.menu:active_menu().logic:selected_node():items()
+
+	for _, item_data in ipairs(item_list) do
+		if item_data.set_icon_visible then
+			item_data:set_icon_visible(false)
+		end
+	end
+
+	if empty_list then
+		item:set_value("on")
+	else
+		if item:value() == "on" then
+			managers.music:playlist_ghost_add(item:name())
+			managers.music:music_ext_listen_start(item:name())
+			item:set_icon_visible(true)
+		else
+			managers.music:playlist_ghost_remove(item:name())
+			managers.music:music_ext_listen_stop()
+		end
+
+		managers.savefile:setting_changed()
+	end
+end
+
+function MenuCallbackHandler:jukebox_option_ghost_tracks(item)
+	local track = item:value()
+	local job = item:parameters().heist_job
+	local job_tweak = tweak_data.narrative.jobs[job]
+
+	if not job_tweak then
+		return
+	end
+
+	local day = item:parameters().heist_days and item:parameters().heist_days or ""
+
+	managers.music:track_attachment_add(job_tweak.name_id .. day, track)
+
+	local item_list = managers.menu:active_menu().logic:selected_node():items()
+
+	for _, item_data in ipairs(item_list) do
+		if item_data.set_icon_visible then
+			item_data:set_icon_visible(false)
+		end
+	end
+
+	if track ~= "all" and track ~= "playlist" then
+		managers.music:music_ext_listen_start(track)
+		item:set_icon_visible(true)
+	else
+		managers.music:music_ext_listen_stop()
+	end
+
+	managers.savefile:setting_changed()
 end
 
 MenuPrePlanningInitiator = MenuPrePlanningInitiator or class(MenuCrimeNetContactInfoInitiator)
@@ -7791,7 +8192,7 @@ function MenuCallbackHandler:jukebox_options_enter(item)
 end
 
 function MenuCallbackHandler:jukebox_option_back(item)
-	managers.music:track_listen_stop()
+	managers.music:stop_listen_all()
 	managers.music:post_event(managers.music:jukebox_menu_track("mainmenu"))
 	managers.menu_component:show_contract_character(true)
 end
@@ -8258,6 +8659,8 @@ function MenuReticleSwitchInitiator:refresh_node(node, data)
 
 		confirm:set_enabled(enabled)
 	end
+
+	return node
 end
 
 function MenuReticleSwitchInitiator:create_multichoice()
@@ -8814,8 +9217,12 @@ function MenuCallbackHandler:choice_gamemode_filter(item)
 	Global.game_settings.gamemode_filter = item:value()
 
 	managers.user:set_setting("crimenet_gamemode_filter", item:value())
-	managers.menu:back()
-	managers.menu:open_node("crimenet_filters", {})
+
+	local logic = managers.menu:active_menu().logic
+
+	if logic then
+		logic:refresh_node_stack()
+	end
 end
 
 function MenuCrimeNetFiltersInitiator:is_standard()
@@ -8833,6 +9240,8 @@ end
 function MenuCrimeNetFiltersInitiator:refresh_node(node)
 	self:modify_node(node, {})
 	self:update_node(node)
+
+	return node
 end
 
 function MenuCrimeNetFiltersInitiator:add_filters(node)
@@ -9015,6 +9424,7 @@ function MenuMutatorOptionsInitiator:setup_node(node, mutator)
 end
 
 function MenuMutatorOptionsInitiator:refresh_node(node, data)
+	return node
 end
 
 function MenuCallbackHandler:reset_mutator(item)
@@ -9069,6 +9479,7 @@ function MenuLobbyCountdownInitiator:setup_node(node, mutator)
 end
 
 function MenuLobbyCountdownInitiator:refresh_node(node, data)
+	return node
 end
 
 MenuCrimeNetSmartmatchmakeInitiator = MenuCrimeNetSmartmatchmakeInitiator or class()
@@ -9243,7 +9654,7 @@ function MenuOptionInitiator:modify_node(node)
 end
 
 function MenuOptionInitiator:refresh_node(node)
-	self:modify_node(node)
+	return self:modify_node(node)
 end
 
 function MenuOptionInitiator:modify_resolution(node)
@@ -10944,6 +11355,8 @@ function MenuCustomizeGadgetInitiator:refresh_node(node, data)
 
 		confirm:set_enabled(enabled)
 	end
+
+	return node
 end
 
 function MenuCustomizeGadgetInitiator:create_slider(node, params)

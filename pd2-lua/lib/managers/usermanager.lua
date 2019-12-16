@@ -256,8 +256,7 @@ function GenericUserManager:reset_network_setting_map()
 	local settings = {
 		"net_packet_throttling",
 		"net_forwarding",
-		"net_use_compression",
-		"disable_reconnect_popup"
+		"net_use_compression"
 	}
 
 	for _, name in pairs(settings) do

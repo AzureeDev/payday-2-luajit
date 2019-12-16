@@ -1014,6 +1014,10 @@ function TweakData:_setup_scene_poses()
 		jail = {
 			"standard_suit",
 			"standard_suit"
+		},
+		poolrepair = {
+			"pool",
+			"pool"
 		}
 	}
 end

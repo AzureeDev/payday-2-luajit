@@ -5914,4 +5914,11 @@ function InteractionTweakData:init(tweak_data)
 		sound_done = "bar_hose_drag_out_finish",
 		axis = "y"
 	}
+	self.bex_take_cup = {
+		text_id = "hud_int_take_cup",
+		action_text_id = "hud_action_taking_cup",
+		interact_distance = 200,
+		start_active = false,
+		timer = 1
+	}
 end

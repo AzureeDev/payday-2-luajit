@@ -2102,8 +2102,9 @@ function AchievementListGui:update_caret()
 	local caret = self._search.caret
 	local s, e = text:selection()
 	local x, y, w, h = text:selection_rect()
+	local text_s = text:text()
 
-	if s == 0 and e == 0 then
+	if #text_s == 0 then
 		x = text:world_center_x()
 		y = text:world_y()
 	end
@@ -2121,8 +2122,5 @@ function AchievementListGui:update_caret()
 
 	caret:set_world_shape(x, y + 2, w, h - 4)
 	self:set_blinking(s == e and self._focus)
-
-	local text_s = text:text()
-
 	self._search.placeholder:set_visible(not self._focus and #text_s == 0)
 end

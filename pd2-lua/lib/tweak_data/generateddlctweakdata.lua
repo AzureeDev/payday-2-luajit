@@ -239,4 +239,16 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.xmn_bundle = {
+		free = true,
+		content = {}
+	}
+	self.xmn_bundle.content.loot_global_value = "xmn"
+	self.xmn_bundle.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "xmas_tuxedo",
+			amount = 1
+		}
+	}
 end

@@ -853,10 +853,10 @@ function TweakData:init()
 		BRIGHTNESS_CHANGE = 0.05,
 		MIN_BRIGHTNESS = 0.5,
 		MAX_BRIGHTNESS = 1.5,
-		MUSIC_CHANGE = 10,
+		MUSIC_CHANGE = 5,
 		MIN_MUSIC_VOLUME = 0,
 		MAX_MUSIC_VOLUME = 100,
-		SFX_CHANGE = 10,
+		SFX_CHANGE = 5,
 		MIN_SFX_VOLUME = 0,
 		MAX_SFX_VOLUME = 100,
 		VOICE_CHANGE = 0.05,
@@ -1778,6 +1778,12 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_65"
 		},
 		{
+			track = "track_66"
+		},
+		{
+			track = "track_67"
+		},
+		{
 			track = "track_pth_01",
 			lock = "payday"
 		},
@@ -1812,6 +1818,23 @@ Play the full version soon to get your full PAYDAY!]],
 		{
 			track = "track_pth_09",
 			lock = "payday"
+		}
+	}
+	self.music.track_ghost_list = {
+		{
+			track = "kosugi_music"
+		},
+		{
+			track = "music_dark"
+		},
+		{
+			track = "music_fish"
+		},
+		{
+			track = "music_tag"
+		},
+		{
+			track = "music_xmn"
 		}
 	}
 	self.music.track_menu_list = {

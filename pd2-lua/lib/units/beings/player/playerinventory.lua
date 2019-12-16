@@ -766,6 +766,8 @@ function PlayerInventory:set_mask_visibility(state)
 			self._unit:damage():run_sequence_simple(mask_on_sequence)
 		end
 	end
+
+	managers.criminals:update_character_visual_state(character_name, {})
 end
 
 function PlayerInventory:update_mask_offset(mask_data)

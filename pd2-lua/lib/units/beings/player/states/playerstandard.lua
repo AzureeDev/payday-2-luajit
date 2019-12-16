@@ -471,13 +471,6 @@ function PlayerStandard:_calculate_standard_variables(t, dt)
 	mvector3.normalize(self._cam_fwd_flat)
 
 	local last_vel_xy = self._last_velocity_xy
-
-	if self._in_air_velocity and not self._state_data.on_ladder then
-		self._unit:set_velocity(self._in_air_velocity)
-
-		self._in_air_velocity = nil
-	end
-
 	local sampled_vel_dir = self._unit:sampled_velocity()
 
 	if not self._state_data.on_ladder then
@@ -739,10 +732,8 @@ function PlayerStandard:_determine_move_direction()
 	end
 end
 
-function PlayerStandard:update_check_actions_paused(t, dt)
+function PlayerStandard:update_check_actions_paused()
 	self:_update_check_actions(Application:time(), 0.1, true)
-
-	self._in_air_velocity = self._unit:sampled_velocity()
 end
 
 function PlayerStandard:_update_check_actions(t, dt, paused)

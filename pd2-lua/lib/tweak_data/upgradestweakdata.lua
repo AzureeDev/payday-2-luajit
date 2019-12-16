@@ -3701,7 +3701,7 @@ function UpgradesTweakData:_init_pd2_values()
 	local editable_skill_btns = {
 		jack_of_all_trades = {
 			BTN_CHANGE_EQ = function ()
-				return managers.localization:btn_macro("change_equipment")
+				return managers.localization:btn_macro("change_equipment") or managers.localization:get_default_macro("BTN_CHANGE_EQ")
 			end
 		}
 	}

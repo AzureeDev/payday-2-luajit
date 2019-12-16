@@ -322,6 +322,10 @@ function CriminalsManager.set_character_visual_state(unit, character_name, is_lo
 		return
 	end
 
+	if unit:inventory() and unit:inventory().mask_visibility and not unit:inventory():mask_visibility() then
+		mask_id = nil
+	end
+
 	local function run_sequence_safe(sequence, sequence_unit)
 		if not sequence then
 			return

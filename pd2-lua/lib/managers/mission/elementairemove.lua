@@ -27,7 +27,7 @@ function ElementAIRemove:on_executed(instigator)
 				end
 
 				if instigator:movement()._active_actions and instigator:movement()._active_actions[1] and instigator:movement()._active_actions[1]:type() == "hurt" then
-					instigator:movement()._active_actions[1]:force_ragdoll()
+					instigator:movement()._active_actions[1]:force_ragdoll(true)
 				end
 			elseif self._values.true_death then
 				if instigator:character_damage().damage_mission then

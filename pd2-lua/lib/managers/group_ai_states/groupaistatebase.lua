@@ -2925,7 +2925,7 @@ function GroupAIStateBase:set_unit_teamAI(unit, character_name, team_id, visual_
 		return
 	end
 
-	if not character.taken or not character.ai then
+	if not character.taken or not character.data.ai then
 		managers.criminals:add_character(character_name, unit, nil, true, loadout)
 	else
 		managers.criminals:set_unit(character_name, unit, loadout)

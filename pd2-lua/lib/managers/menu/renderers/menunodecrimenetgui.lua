@@ -1320,6 +1320,14 @@ function MenuNodeCrimenetContactInfoGui:mouse_pressed(button, x, y)
 	end
 
 	self._file_pressed = false
+
+	if self._item_panel_parent:inside(x, y) then
+		if button == Idstring("mouse wheel down") then
+			return self:wheel_scroll_start(-1)
+		elseif button == Idstring("mouse wheel up") then
+			return self:wheel_scroll_start(1)
+		end
+	end
 end
 
 function MenuNodeCrimenetContactInfoGui:mouse_released(button, x, y)
@@ -2781,8 +2789,9 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 
 	local ids = Idstring(id)
 	local num_assignments = 5
+	local is_assignment = tweak_data.gage_assignment:exists(id)
 
-	if tweak_data.gage_assignment:exists(id) then
+	if is_assignment then
 		local right_width = (self._info_panel:w() - self.PADDING * (num_assignments - 1)) / num_assignments
 		local left_width = self._info_panel:w() - self.PADDING - right_width
 		local left_panel = self._info_panel:panel({
@@ -3038,7 +3047,12 @@ function MenuNodeCrimenetGageAssignmentGui:set_contact_info(id, name, files, ove
 
 	local contact_title_text = self._panel:child("contact_title_text")
 
-	contact_title_text:set_text(utf8.to_upper(name))
+	if is_assignment then
+		contact_title_text:set_text(managers.localization:to_upper_text(tweak_data.gage_assignment:get_value(id, "reward_id")))
+	else
+		contact_title_text:set_text(utf8.to_upper(name))
+	end
+
 	make_fine_text(contact_title_text)
 
 	self._current_contact_info = id

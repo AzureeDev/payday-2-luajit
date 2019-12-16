@@ -2333,8 +2333,8 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 			self:_check_special_death_conditions("bullet", body, attacker_unit, data.weapon_unit)
 			managers.statistics:killed_by_anyone(data)
 
-			if data.weapon_unit:base():weapon_tweak_data().is_shotgun then
-				shotgun_push = true
+			if managers.enemy:is_corpse_disposal_enabled() and not data.weapon_unit:base().thrower_unit and data.weapon_unit:base().is_category and data.weapon_unit:base():is_category("shotgun") and distance then
+				shotgun_push = distance <= managers.game_play_central:get_shotgun_push_range()
 			end
 		end
 	else
@@ -2368,7 +2368,7 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 	self:_on_damage_received(attack_data)
 
 	if shotgun_push then
-		managers.game_play_central:do_shotgun_push(self._unit, hit_pos, attack_dir, distance)
+		managers.game_play_central:_do_shotgun_push(self._unit, hit_pos, attack_dir, distance)
 	end
 end
 

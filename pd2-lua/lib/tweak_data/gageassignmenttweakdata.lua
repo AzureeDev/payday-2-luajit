@@ -18,6 +18,7 @@ function GageAssignmentTweakData:init(tweak_data)
 	self.assignments.green_mantis.unit = Idstring("units/pd2_dlc_gage_jobs/pickups/gen_pku_gage_green/gen_pku_gage_green")
 	self.assignments.green_mantis.name_id = "menu_gage_green_mantis"
 	self.assignments.green_mantis.desc_id = "menu_gage_green_mantis_desc"
+	self.assignments.green_mantis.reward_id = "menu_gage_green_mantis_reward"
 	self.assignments.green_mantis.progress_id = "hint_hud_gage_green_mantis_progress"
 	self.assignments.green_mantis.present_id = "hud_gage_green_mantis_title"
 	self.assignments.green_mantis.complete_id = "hud_gage_green_mantis_complete"
@@ -55,6 +56,7 @@ function GageAssignmentTweakData:init(tweak_data)
 		unit = Idstring("units/pd2_dlc_gage_jobs/pickups/gen_pku_gage_yellow/gen_pku_gage_yellow"),
 		name_id = "menu_gage_yellow_bull",
 		desc_id = "menu_gage_yellow_bull_desc",
+		reward_id = "menu_gage_yellow_bull_reward",
 		progress_id = "hint_hud_gage_yellow_bull_progress",
 		present_id = "hud_gage_yellow_bull_title",
 		complete_id = "hud_gage_yellow_bull_complete",
@@ -93,6 +95,7 @@ function GageAssignmentTweakData:init(tweak_data)
 		unit = Idstring("units/pd2_dlc_gage_jobs/pickups/gen_pku_gage_red/gen_pku_gage_red"),
 		name_id = "menu_gage_red_spider",
 		desc_id = "menu_gage_red_spider_desc",
+		reward_id = "menu_gage_red_spider_reward",
 		progress_id = "hint_hud_gage_red_spider_progress",
 		present_id = "hud_gage_red_spider_title",
 		complete_id = "hud_gage_red_spider_complete",
@@ -136,6 +139,7 @@ function GageAssignmentTweakData:init(tweak_data)
 		unit = Idstring("units/pd2_dlc_gage_jobs/pickups/gen_pku_gage_blue/gen_pku_gage_blue"),
 		name_id = "menu_gage_blue_eagle",
 		desc_id = "menu_gage_blue_eagle_desc",
+		reward_id = "menu_gage_blue_eagle_reward",
 		progress_id = "hint_hud_gage_blue_eagle_progress",
 		present_id = "hud_gage_blue_eagle_title",
 		complete_id = "hud_gage_blue_eagle_complete",
@@ -179,6 +183,7 @@ function GageAssignmentTweakData:init(tweak_data)
 		unit = Idstring("units/pd2_dlc_gage_jobs/pickups/gen_pku_gage_purple/gen_pku_gage_purple"),
 		name_id = "menu_gage_purple_snake",
 		desc_id = "menu_gage_purple_snake_desc",
+		reward_id = "menu_gage_purple_snake_reward",
 		progress_id = "hint_hud_gage_purple_snake_progress",
 		present_id = "hud_gage_purple_snake_title",
 		complete_id = "hud_gage_purple_snake_complete",

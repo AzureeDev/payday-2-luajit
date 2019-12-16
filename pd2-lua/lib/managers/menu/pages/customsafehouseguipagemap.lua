@@ -301,6 +301,10 @@ function CustomSafehouseGuiPageMap:_setup_map()
 			local new_button = CustomSafehouseGuiRaidButton:new(raid_panel, raid_layer + 10, text:bottom() + PANEL_PADDING * 2, callback(self, self, "defend_safehouse"))
 
 			table.insert(self._buttons, new_button)
+
+			new_button = CustomSafehouseGuiRaidButton:new(raid_panel, raid_layer + 10, new_button._panel:bottom(), callback(self, self, "ignore_defend"), "menu_cn_chill_combat_ignore_defend")
+
+			table.insert(self._buttons, new_button)
 		end
 	end
 
@@ -710,6 +714,11 @@ end
 
 function CustomSafehouseGuiPage:defend_safehouse()
 	managers.menu:open_node("crimenet_contract_chill")
+end
+
+function CustomSafehouseGuiPage:ignore_defend()
+	managers.custom_safehouse:ignore_raid()
+	managers.menu:back()
 end
 
 function CustomSafehouseGuiPageMap:_setup_help_text()
@@ -1988,7 +1997,7 @@ end
 
 CustomSafehouseGuiRaidButton = CustomSafehouseGuiRaidButton or class(CustomSafehouseGuiItem)
 
-function CustomSafehouseGuiRaidButton:init(panel, layer, y, callback)
+function CustomSafehouseGuiRaidButton:init(panel, layer, y, callback, text_id)
 	CustomSafehouseGuiRaidButton.super.init(self)
 
 	self._color = tweak_data.screen_colors.button_stage_3
@@ -2008,7 +2017,7 @@ function CustomSafehouseGuiRaidButton:init(panel, layer, y, callback)
 		align = "center",
 		y = 4,
 		layer = 10,
-		text = managers.localization:to_upper_text("menu_cn_chill_combat_defend"),
+		text = managers.localization:to_upper_text(text_id or "menu_cn_chill_combat_defend"),
 		w = panel:w(),
 		h = medium_font_size,
 		font = medium_font,

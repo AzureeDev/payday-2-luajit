@@ -61,7 +61,7 @@ function LocalizationManager:_setup_macros()
 	local btn_secondary = btn_top_l
 	local btn_reload = btn_x
 	local btn_jump = btn_a
-	local btn_change_equipment = btn_top_l
+	local btn_change_equipment = btn_bottom_l
 	local btn_change_profile_right = btn_top_r
 	local btn_change_profile_left = btn_top_l
 	local swap_accept = false

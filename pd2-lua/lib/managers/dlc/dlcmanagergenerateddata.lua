@@ -66,6 +66,10 @@ function GenericDLCManager:has_trd()
 	return self:is_dlc_unlocked("trd")
 end
 
+function GenericDLCManager:has_xmn()
+	return self:is_dlc_unlocked("xmn")
+end
+
 function WINDLCManager:init_generated()
 	Global.dlc_manager.all_dlc_data.flm = {
 		app_id = "218620",
@@ -137,5 +141,9 @@ function WINDLCManager:init_generated()
 		app_id = "1184410",
 		no_install = true,
 		webpage = "https://ovk.af/ingame2TailorPack"
+	}
+	Global.dlc_manager.all_dlc_data.xmn = {
+		app_id = "218620",
+		no_install = true
 	}
 end

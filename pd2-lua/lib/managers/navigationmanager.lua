@@ -696,6 +696,10 @@ function NavigationManager:set_debug_draw_state(options)
 		self._draw_data.start_t = TimerManager:game():time()
 	end
 
+	if options and options.blockers and (not self._draw_enabled or not self._draw_enabled.blockers) then
+		self:_verify_blockers()
+	end
+
 	if self._use_fast_drawing then
 		if options then
 			options.selected_segment = self._selected_segment
@@ -709,6 +713,42 @@ function NavigationManager:set_debug_draw_state(options)
 	end
 
 	self._draw_enabled = options
+end
+
+function NavigationManager:_verify_blockers()
+	if self._builder._helper_blockers then
+		local blocker_units_missing_obj = {}
+		local mvec3_set = mvector3.set
+		local mvec3_rot = mvector3.rotate_with
+		local mvec3_add = mvector3.add
+		local obj_name = Idstring("help_blocker")
+		local nav_segments = self._builder._nav_segments
+		local registered_blockers = self._builder._helper_blockers
+		local all_blockers = World:find_units_quick("all", 15)
+		local unit_name_string, id = nil
+
+		for _, blocker_unit in ipairs(all_blockers) do
+			id = blocker_unit:unit_data().unit_id
+
+			if registered_blockers[id] and not blocker_unit:get_object(obj_name) then
+				unit_name_string = blocker_unit:name():s()
+
+				if not blocker_units_missing_obj[unit_name_string] then
+					blocker_units_missing_obj[unit_name_string] = true
+				end
+			end
+		end
+
+		local list = table.map_keys(blocker_units_missing_obj)
+
+		if #list > 0 then
+			Application:error("Blocker units missing 'help_blocker' object (used to debug draw blocker position)")
+
+			for _, s in ipairs(list) do
+				print("", s)
+			end
+		end
+	end
 end
 
 function NavigationManager:set_selected_segment(unit)
@@ -859,17 +899,30 @@ function NavigationManager:_draw_nav_blockers()
 		local nav_segments = self._builder._nav_segments
 		local registered_blockers = self._builder._helper_blockers
 		local all_blockers = World:find_units_quick("all", 15)
+		local help_blocker_object = nil
 
 		for _, blocker_unit in ipairs(all_blockers) do
 			local id = blocker_unit:unit_data().unit_id
 
 			if registered_blockers[id] then
-				local draw_pos = blocker_unit:get_object(obj_name):position()
-				local nav_segment = registered_blockers[id]
+				help_blocker_object = blocker_unit:get_object(obj_name)
 
-				if nav_segments and nav_segments[nav_segment] and self._selected_segment == nav_segment then
-					Application:draw_sphere(draw_pos, 30, 0, 0, 1)
-					Application:draw_cylinder(draw_pos, nav_segments[nav_segment].pos, 2, 0, 0.3, 0.6)
+				if help_blocker_object then
+					local draw_pos = help_blocker_object:position()
+					local nav_segment = registered_blockers[id]
+
+					if nav_segments and nav_segments[nav_segment] and self._selected_segment == nav_segment then
+						Application:draw_sphere(draw_pos, 30, 0, 0, 1)
+						Application:draw_cylinder(draw_pos, nav_segments[nav_segment].pos, 2, 0, 0.3, 0.6)
+					end
+				else
+					local draw_pos = blocker_unit:position()
+					local nav_segment = registered_blockers[id]
+
+					if nav_segments and nav_segments[nav_segment] and self._selected_segment == nav_segment then
+						Application:draw_sphere(draw_pos, 30, 1, 0, 0)
+						Application:draw_cylinder(draw_pos, nav_segments[nav_segment].pos, 2, 0.8, 0.1, 0)
+					end
 				end
 			end
 		end

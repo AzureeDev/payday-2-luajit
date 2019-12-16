@@ -769,6 +769,13 @@ function HUDMissionBriefing:set_slot_ready(peer, peer_id)
 	slot:child("status"):set_color(slot:child("status"):color():with_alpha(1))
 	slot:child("status"):set_text(managers.localization:text("menu_waiting_is_ready"))
 	slot:child("status"):set_font_size(tweak_data.menu.pd2_small_font_size)
+
+	local is_local = managers.network:session():local_peer():id() == peer_id
+
+	if is_local then
+		managers.music:stop_listen_all()
+	end
+
 	managers.menu_component:flash_ready_mission_briefing_gui()
 end
 

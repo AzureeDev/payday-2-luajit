@@ -12157,7 +12157,7 @@ function BlackMarketGui:populate_mods(data)
 				table.insert(new_data, "w_skin")
 			end
 
-			if new_data.unlocked then
+			if new_data.unlocked and not new_data.dlc_locked then
 				local weapon_mod_tweak = tweak_data.weapon.factory.parts[mod_name]
 
 				if weapon_mod_tweak and weapon_mod_tweak.type ~= "bonus" and weapon_mod_tweak.is_a_unlockable ~= true and can_apply and managers.custom_safehouse:unlocked() then

@@ -629,7 +629,7 @@ function LevelsTweakData:init()
 			"packages/dlcs/the_bomb/crojob_stage_2"
 		},
 		cube = "cube_apply_heist_bank",
-		ghost_bonus = 0.2,
+		ghost_bonus = 0.15,
 		max_bags = 21,
 		ai_group_type = america
 	}
@@ -943,7 +943,6 @@ function LevelsTweakData:init()
 			"Play_pln_ko1_end_01"
 		},
 		music = "no_music",
-		music_ext = "kosugi_music",
 		music_ext_start = "suspense_1",
 		package = "packages/kosugi",
 		cube = "cube_apply_heist_bank",
@@ -976,7 +975,12 @@ function LevelsTweakData:init()
 		block_AIs = {
 			old_hoxton = true
 		},
-		ai_group_type = america
+		ai_group_type = america,
+		world_name = "narratives/dentist/hox/stage_1_xmn",
+		load_screen = "guis/dlcs/xmn/textures/loading/job_hox_1_xmn_df",
+		music_overrides = {
+			track_20 = "track_66"
+		}
 	}
 	self.hox_2 = {
 		name_id = "heist_hox_2_hl",
@@ -994,7 +998,12 @@ function LevelsTweakData:init()
 			old_hoxton = true
 		},
 		ai_group_type = america,
-		load_screen = "guis/dlcs/pic/textures/loading/job_breakout_02"
+		load_screen = "guis/dlcs/pic/textures/loading/job_breakout_02",
+		world_name = "narratives/dentist/hox/stage_2_xmn",
+		load_screen = "guis/dlcs/xmn/textures/loading/job_hox_2_xmn_df",
+		music_overrides = {
+			track_21 = "track_67"
+		}
 	}
 	self.pines = {
 		name_id = "heist_pines_hl",
@@ -1037,7 +1046,7 @@ function LevelsTweakData:init()
 		package = "packages/narr_cage",
 		cube = "cube_apply_heist_bank",
 		max_bags = 6,
-		ghost_bonus = 0,
+		ghost_bonus = 0.1,
 		ghost_required_visual = true,
 		ai_group_type = america
 	}
@@ -1281,7 +1290,8 @@ function LevelsTweakData:init()
 			"packages/narr_pal"
 		},
 		cube = "cube_apply_heist_bank",
-		max_bags = 1200
+		max_bags = 1200,
+		player_style = "poolrepair"
 	}
 	self.man = {
 		name_id = "heist_man_hl",
@@ -1306,7 +1316,6 @@ function LevelsTweakData:init()
 			"Play_rb14_drk_outro_02"
 		},
 		music = "no_music",
-		music_ext = "music_dark",
 		music_ext_start = "suspense_1",
 		package = "packages/job_dark",
 		cube = "cube_apply_heist_bank",
@@ -1590,7 +1599,6 @@ function LevelsTweakData:init()
 		outro_event = "Play_pln_fish_end",
 		failure_music = "Play_fish_jazz_game_over",
 		music = "no_music",
-		music_ext = "music_fish",
 		music_ext_start = "suspense_1",
 		package = "packages/lvl_fish",
 		cube = "cube_apply_heist_bank",
@@ -1751,14 +1759,18 @@ function LevelsTweakData:init()
 		outro_event = "Play_loc_tag_end",
 		music = "no_music",
 		cube = "cube_apply_heist_bank",
-		music_ext = "music_tag",
 		music_ext_start = "suspense_1",
 		max_bags = 20,
 		ghost_bonus = 0.1,
 		ai_group_type = america,
 		narrator = "locke",
 		ghost_required = true,
-		load_screen = "guis/dlcs/tag/textures/loading/job_tag_df"
+		load_screen = "guis/dlcs/tag/textures/loading/job_tag_df",
+		world_name = "narratives/locke/tag_xmn",
+		music_overrides = {
+			music_tag = "music_xmn"
+		},
+		load_screen = "guis/dlcs/xmn/textures/loading/job_tag_xmn_df"
 	}
 	self.des = {
 		name_id = "heist_des_hl",
@@ -1803,7 +1815,6 @@ function LevelsTweakData:init()
 			"Play_loc_sah_end_loud"
 		},
 		cube = "cube_apply_heist_bank",
-		music_ext = "music_tag",
 		music_ext_start = "suspense_1",
 		max_bags = 40,
 		ghost_bonus = 0.1,
@@ -1915,6 +1926,7 @@ function LevelsTweakData:init()
 		music = "heist",
 		cube = "cube_apply_heist_bank",
 		max_bags = 20,
+		ghost_bonus = 0.1,
 		ai_group_type = murkywater,
 		narrator = "locke",
 		player_style = "murky_suit",
@@ -1934,6 +1946,7 @@ function LevelsTweakData:init()
 		music = "heist",
 		cube = "cube_apply_heist_bank",
 		max_bags = 100,
+		ghost_bonus = 0.15,
 		ai_group_type = murkywater,
 		narrator = "locke",
 		load_screen = "guis/dlcs/mex/textures/loading/job_mex_df"
@@ -2235,6 +2248,65 @@ function LevelsTweakData:get_music_event_ext()
 	local music_start = level_data and level_data.music_ext_start
 
 	return music, music_start
+end
+
+function LevelsTweakData:get_music_event_ext_ghost()
+	if not Global.level_data then
+		return nil, nil
+	end
+
+	local level_data = Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
+
+	if not level_data or not level_data.music_ext_start then
+		return nil, nil
+	end
+
+	local ghost_music_exts = {}
+
+	if not Global.music_manager.loadout_selection_ghost or Global.music_manager.loadout_selection_ghost == "heist" then
+		local track = managers.music:jukebox_ghost_specific()
+
+		if track == "all" then
+			ghost_music_exts = managers.music:jukebox_random_all_ghost()
+		elseif track == "playlist" then
+			ghost_music_exts = deep_clone(managers.music:playlist_ghost())
+		else
+			table.insert(ghost_music_exts, track)
+		end
+	elseif Global.music_manager.loadout_selection_ghost == "global" then
+		ghost_music_exts = deep_clone(managers.music:playlist_ghost())
+	elseif Global.music_manager.loadout_selection_ghost == "all" then
+		ghost_music_exts = managers.music:jukebox_random_all_ghost()
+	elseif Global.music_manager.loadout_selection_ghost == "server" then
+		if Network:is_server() then
+			ghost_music_exts = managers.music:jukebox_random_all_ghost()
+		else
+			table.insert(ghost_music_exts, Global.music_manager.synced_music_ext)
+		end
+	else
+		table.insert(ghost_music_exts, Global.music_manager.loadout_selection_ghost)
+	end
+
+	if #ghost_music_exts == 0 then
+		Application:error("[LevelsTweakData:get_music_ext_ghost] Failed to find a track. JOB_ID = " .. (Global.job_manager.current_job and Global.job_manager.current_job.job_id or "[Missing]") .. ", SELECTION = " .. Global.music_manager.loadout_selection_ghost)
+		table.insert(ghost_music_exts, level_data.music_ext)
+	end
+
+	local overrides = level_data and level_data.music_overrides
+
+	if overrides then
+		for i, track in ipairs(ghost_music_exts) do
+			local override = overrides[ghost_music_exts[i]]
+
+			if override then
+				print("[LevelsTweakData:get_music_event_ext_ghost] override music ", ghost_music_exts[i], "->", override)
+
+				ghost_music_exts[i] = override
+			end
+		end
+	end
+
+	return table.random(ghost_music_exts), level_data.music_ext_start
 end
 
 function LevelsTweakData:get_default_team_ID(type)

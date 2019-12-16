@@ -486,7 +486,7 @@ function IngameWaitingForRespawnState:at_exit()
 	end
 
 	if self.music_on_death then
-		managers.music:track_listen_stop()
+		managers.music:stop_listen_all()
 
 		self.music_on_death = nil
 	end

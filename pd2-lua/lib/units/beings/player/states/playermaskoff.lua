@@ -54,7 +54,6 @@ function PlayerMaskOff:_enter(enter_data)
 		}, callback(self, self, "clbk_enemy_weapons_hot"))
 	end
 
-	MenuCallbackHandler:_update_outfit_information()
 	self._ext_network:send("set_stance", 1, false, false)
 
 	self._show_casing_t = Application:time() + 4

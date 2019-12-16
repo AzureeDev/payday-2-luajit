@@ -5073,9 +5073,14 @@ function GuiTweakData:init(tweak_data)
 		"bonus"
 	}
 	self.new_heists = {
-		limit = 6
+		limit = 7
 	}
 
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_xmn_2019",
+		texture_path = "guis/textures/pd2/new_heists/xmn_2019",
+		url = "http://store.steampowered.com/app/218620/PAYDAY_2/"
+	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_legacy",
 		texture_path = "guis/textures/pd2/new_heists/legacy",

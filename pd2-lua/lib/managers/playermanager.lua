@@ -988,6 +988,7 @@ end
 function PlayerManager:spawned_player(id, unit)
 	self._players[id] = unit
 
+	MenuCallbackHandler:_update_outfit_information()
 	self:setup_viewports()
 	self:_internal_load()
 	self:_change_player_state()
