@@ -2008,7 +2008,6 @@ function WINDLCManager:_init_promoted_dlc_list()
 		"mex",
 		"mwm",
 		"trd",
-		"xmn",
 		"ecp",
 		"grv",
 		"spa",
