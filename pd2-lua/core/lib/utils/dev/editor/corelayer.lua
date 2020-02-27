@@ -1392,7 +1392,124 @@ function Layer:create_unit(name, pos, rot, to_continent_name, prefered_id)
 	return unit
 end
 
+function Layer:check_unit_dependencies(unit_name)
+	local function remove_whitespace(str)
+		return string.gsub(str, "^%s*(.-)%s*$", "%1")
+	end
+
+	local object_file = CoreEngineAccess._editor_unit_data(unit_name:id()):model()
+	local object_xml = nil
+
+	if DB:has("object", object_file) then
+		object_xml = DB:load_node("object", object_file)
+	else
+		object_xml = SystemFS:parse_xml("data/objects" .. object_file:s())
+	end
+
+	local depended_effects = {}
+	local unit_dependencies = {}
+
+	if object_xml then
+		local recursive_check_object = nil
+
+		function recursive_check_object(node)
+			for i = 0, node:num_children() - 1, 1 do
+				local child = node:child(i)
+
+				if child:name() == "effect_spawner" and child:has_parameter("effect") then
+					local object_effect = remove_whitespace(child:parameter("effect"))
+					depended_effects[object_effect] = false
+				end
+
+				if child:num_children() > 0 then
+					recursive_check_object(child)
+				end
+			end
+		end
+
+		recursive_check_object(object_xml)
+	end
+
+	local unit_file_path = Application:base_path() .. "../../assets/" .. unit_name:s() .. ".unit"
+	local unit_xml = SystemFS:parse_xml(unit_file_path)
+	local recursive_check_unit = nil
+
+	function recursive_check_unit(node)
+		for i = 0, node:num_children() - 1, 1 do
+			local child = node:child(i)
+
+			if child:name() == "depends_on" and child:has_parameter("effect") then
+				local depended_effect = remove_whitespace(child:parameter("effect"))
+				unit_dependencies[depended_effect] = false
+			end
+
+			if child:num_children() > 0 then
+				recursive_check_unit(child)
+			end
+		end
+	end
+
+	recursive_check_unit(unit_xml)
+
+	local sequence_file = nil
+
+	for child in object_xml:children() do
+		if child:name() == "sequence_manager" then
+			sequence_file = Idstring(child:parameter("file"))
+		end
+	end
+
+	if sequence_file then
+		local sequence_file_extension = Idstring("sequence_manager")
+		local manager_node = PackageManager:editor_load_script_data(sequence_file_extension:id(), sequence_file)
+		local found_effect = false
+		local recursive_check_sequence = nil
+
+		function recursive_check_sequence(node)
+			for key, value in pairs(node) do
+				if key == "_meta" then
+					if value == "effect" then
+						found_effect = true
+					else
+						found_effect = false
+					end
+				end
+
+				if key == "name" and found_effect then
+					local sequence_effect = remove_whitespace(string.gsub(value, "'", ""))
+					depended_effects[sequence_effect] = false
+					found_effect = false
+				end
+
+				if type(value) == "table" then
+					recursive_check_sequence(value)
+				end
+			end
+		end
+
+		recursive_check_sequence(manager_node)
+	end
+
+	for seq_key, seq_value in pairs(depended_effects) do
+		for unit_key, unit_value in pairs(unit_dependencies) do
+			if seq_key == unit_key then
+				depended_effects[seq_key] = true
+			end
+		end
+	end
+
+	for key, value in pairs(depended_effects) do
+		if value == false then
+			error("Missing effect dependency " .. key .. " on unit " .. unit_name:s() .. ".unit")
+		end
+	end
+end
+
 function Layer:do_spawn_unit(name, pos, rot, to_continent_name, prevent_undo, prefered_id)
+	if Application:editor() and name:s() ~= "" then
+		self:check_unit_dependencies(name)
+	end
+
 	local continent = to_continent_name and managers.editor:continent(to_continent_name) or managers.editor:current_continent()
 
 	if continent:value("locked") and not self._continent_locked_picked then

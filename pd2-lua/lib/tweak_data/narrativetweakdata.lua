@@ -5954,6 +5954,81 @@ function NarrativeTweakData:init(tweak_data)
 		11,
 		7
 	}
+	self.stages.bex = {
+		type = "d",
+		type_id = "heist_type_assault",
+		level_id = "bex",
+		mission_filter = {
+			1
+		}
+	}
+	self.jobs.bex = {
+		name_id = "heist_bex",
+		briefing_id = "heist_bex_crimenet",
+		contact = "vlad",
+		region = "street",
+		jc = 30,
+		dlc = "bex",
+		chain = {
+			self.stages.bex
+		},
+		briefing_event = "Play_vld_bex_cbf_01",
+		debrief_event = nil,
+		crimenet_callouts = {
+			"Play_vld_bex_cnc_01"
+		},
+		crimenet_videos = {
+			"cn_ukr1",
+			"cn_ukr2",
+			"cn_ukr3"
+		},
+		payout = {
+			50000,
+			125000,
+			250000,
+			550000,
+			700000,
+			700000,
+			700000
+		},
+		contract_cost = {
+			24000,
+			48000,
+			120000,
+			240000,
+			300000,
+			300000,
+			300000
+		},
+		contract_visuals = {}
+	}
+	self.jobs.bex.contract_visuals.min_mission_xp = {
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200
+	}
+	self.jobs.bex.contract_visuals.max_mission_xp = {
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200
+	}
+	self.jobs.bex.contract_visuals.preview_image = {
+		id = "bex",
+		folder = "bex"
+	}
+	self.jobs.bex.date_added = {
+		2020,
+		2,
+		27
+	}
 	self.stages.lbe_lobby_end = {
 		type = "d",
 		type_id = "heist_type_assault",
@@ -6513,7 +6588,8 @@ function NarrativeTweakData:init(tweak_data)
 		"vit",
 		"bph",
 		"mex",
-		"mex_cooking"
+		"mex_cooking",
+		"bex"
 	}
 	self.forced_jobs = {
 		firestarter = true,

@@ -181,6 +181,21 @@ CopMovement._gadgets = {
 	},
 	knife = {
 		Idstring("units/payday2/characters/ene_acc_knife_1/ene_acc_knife_1")
+	},
+	instrument_bow = {
+		Idstring("units/pd2_dlc_bex/props/bex_prop_instruments/bex_prop_instrument_bow")
+	},
+	instrument_guitarr = {
+		Idstring("units/pd2_dlc_bex/props/bex_prop_instruments/bex_prop_instrument_guitarr")
+	},
+	instrument_guitarron = {
+		Idstring("units/pd2_dlc_bex/props/bex_prop_instruments/bex_prop_instrument_guitarron")
+	},
+	instrument_trumpet = {
+		Idstring("units/pd2_dlc_bex/props/bex_prop_instruments/bex_prop_instrument_trumpet")
+	},
+	instrument_violin = {
+		Idstring("units/pd2_dlc_bex/props/bex_prop_instruments/bex_prop_instrument_violin")
 	}
 }
 local action_variants = {
@@ -243,6 +258,7 @@ action_variants.drug_lord_boss = security_variant
 action_variants.drug_lord_boss_stealth = security_variant
 action_variants.spa_vip = security_variant
 action_variants.bolivian_indoors_mex = security_variant
+action_variants.security_mex = security_variant
 action_variants.cop_scared = security_variant
 action_variants.security_undominatable = security_variant
 action_variants.mute_security_undominatable = security_variant
@@ -267,6 +283,7 @@ action_variants.drunk_pilot = action_variants.civilian
 action_variants.spa_vip_hurt = action_variants.civilian
 action_variants.escort_chinese_prisoner = clone(action_variants.civilian)
 action_variants.escort_chinese_prisoner.walk = EscortWithSuitcaseActionWalk
+action_variants.civilian_mariachi = action_variants.civilian
 action_variants.boris = action_variants.civilian
 action_variants.escort = action_variants.civilian
 action_variants.escort_suitcase = clone(action_variants.civilian)

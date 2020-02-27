@@ -139,6 +139,14 @@ function GenericDLCManager:is_mask_achievement_milestone_locked(mask_id)
 	return self._achievement_milestone_locked_content.masks and self._achievement_milestone_locked_content.masks[mask_id]
 end
 
+function GenericDLCManager:dlc_locked_content()
+	return self._dlc_locked_content
+end
+
+function GenericDLCManager:weapon_color_achievement_locked_content(weapon_color)
+	return self._achievement_locked_content.weapon_skins and self._achievement_locked_content.weapon_skins[weapon_color]
+end
+
 function GenericDLCManager:on_tweak_data_reloaded()
 	self:setup()
 end
@@ -250,6 +258,14 @@ function GenericDLCManager:give_missing_package()
 				if check_loot_drop and loot_drop.type_items == "player_styles" then
 					if not managers.blackmarket:player_style_unlocked(loot_drop.item_entry) then
 						managers.blackmarket:on_aquired_player_style(loot_drop.item_entry)
+					end
+
+					check_loot_drop = false
+				end
+
+				if check_loot_drop and loot_drop.type_items == "suit_variations" then
+					if not managers.blackmarket:suit_variation_unlocked(loot_drop.item_entry[1], loot_drop.item_entry[2]) then
+						managers.blackmarket:on_aquired_suit_variation(loot_drop.item_entry[1], loot_drop.item_entry[2])
 					end
 
 					check_loot_drop = false
@@ -371,10 +387,22 @@ function GenericDLCManager:global_value_to_dlc(global_value)
 	return gv_tweak and gv_tweak.dlc and global_value or nil
 end
 
+function GenericDLCManager:dlc_to_global_value(dlc)
+	local gv_tweak = tweak_data.lootdrop.global_values[dlc]
+
+	if gv_tweak and gv_tweak.dlc then
+		return dlc
+	end
+
+	local dlc_data = Global.dlc_manager.all_dlc_data[dlc]
+
+	return dlc_data and dlc_data.content and dlc_data.content.loot_global_value or nil
+end
+
 function GenericDLCManager:is_global_value_unlocked(global_value)
 	local dlc = self:global_value_to_dlc(global_value)
 
-	return dlc and self:is_dlcs_unlocked(dlc) or true
+	return not dlc or self:is_dlc_unlocked(dlc)
 end
 
 function GenericDLCManager:is_dlcs_unlocked(list_of_dlcs)
@@ -2005,6 +2033,10 @@ end
 
 function WINDLCManager:_init_promoted_dlc_list()
 	self._promoted_dlc_list = {
+		"bex",
+		"afp",
+		"wcs",
+		"mbs",
 		"mex",
 		"mwm",
 		"trd",

@@ -102,9 +102,12 @@ function TeamAIBase:remove_upgrades()
 end
 
 function TeamAIBase:save(data)
+	local character = managers.criminals:character_by_unit(self._unit)
+	local visual_seed = character and character.visual_state and character.visual_state.visual_seed
 	data.base = {
 		tweak_table = self._tweak_table,
-		loadout = managers.blackmarket:henchman_loadout_string_from_loadout(self._loadout)
+		loadout = managers.blackmarket:henchman_loadout_string_from_loadout(self._loadout),
+		visual_seed = visual_seed
 	}
 end
 

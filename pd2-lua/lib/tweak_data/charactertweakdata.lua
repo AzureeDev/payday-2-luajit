@@ -106,6 +106,7 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_spa_vip(presets)
 	self:_init_spa_vip_hurt(presets)
 	self:_init_captain(presets)
+	self:_init_civilian_mariachi(presets)
 
 	self._prefix_data = nil
 	self._prefix_data_p1 = nil
@@ -138,6 +139,7 @@ function CharacterTweakData:_init_region_russia()
 		bulldozer = "rbdz",
 		medic = "rmdc"
 	}
+	self._speech_prefix_p2 = "n"
 end
 
 function CharacterTweakData:_init_region_zombie()
@@ -156,6 +158,20 @@ end
 
 function CharacterTweakData:_init_region_murkywater()
 	self:_init_region_america()
+end
+
+function CharacterTweakData:_init_region_federales()
+	self._default_chatter = "mex_dispatch_generic_message"
+	self._unit_prefixes = {
+		cop = "m",
+		swat = "m",
+		heavy_swat = "m",
+		taser = "mtsr",
+		cloaker = "mclk",
+		bulldozer = "mbdz",
+		medic = "mmdc"
+	}
+	self._speech_prefix_p2 = "n"
 end
 
 function CharacterTweakData:_init_security(presets)
@@ -219,6 +235,12 @@ function CharacterTweakData:_init_security(presets)
 	self.mute_security_undominatable.speech_prefix_count = 1
 
 	table.insert(self._enemy_list, "mute_security_undominatable")
+
+	self.security_mex = deep_clone(self.security)
+	self.security_mex.speech_prefix_p1 = "m"
+	self.security_mex.radio_prefix = "mex_"
+
+	table.insert(self._enemy_list, "security_mex")
 end
 
 function CharacterTweakData:_init_gensec(presets)
@@ -402,7 +424,6 @@ function CharacterTweakData:_init_medic(presets)
 	self.medic.steal_loot = false
 	self.medic.priority_shout = "f47"
 	self.medic.priority_shout_max_dis = 700
-	self.medic.die_sound_event = "mdc_x02a_any_3p"
 
 	table.insert(self._enemy_list, "medic")
 end
@@ -2928,7 +2949,6 @@ function CharacterTweakData:_init_taser(presets)
 	}
 	self.taser.announce_incomming = "incomming_taser"
 	self.taser.steal_loot = nil
-	self.taser.die_sound_event = "tsr_x02a_any_3p"
 	self.taser.special_deaths = {
 		bullet = {
 			[("head"):id():key()] = {
@@ -3036,6 +3056,10 @@ function CharacterTweakData:_init_civilian(presets)
 	self.robbers_safehouse.ignores_aggression = true
 	self.robbers_safehouse.ignores_contours = true
 	self.robbers_safehouse.use_ik = true
+
+	function CharacterTweakData:_init_civilian_mariachi(presets)
+		self.civilian_mariachi = deep_clone(self.civilian)
+	end
 end
 
 function CharacterTweakData:_init_melee_box(presets)
@@ -16038,6 +16062,10 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 		self.security.headshot_dmg_mul = self.security.headshot_dmg_mul * hs_mul
 	end
 
+	if self.security_mex.headshot_dmg_mul then
+		self.security_mex.headshot_dmg_mul = self.security_mex.headshot_dmg_mul * hs_mul
+	end
+
 	if self.cop.headshot_dmg_mul then
 		self.cop.headshot_dmg_mul = self.cop.headshot_dmg_mul * hs_mul
 	end
@@ -16164,6 +16192,7 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	table.insert(all_units, "bolivian")
 	table.insert(all_units, "bolivian_indoors")
 	table.insert(all_units, "bolivian_indoors_mex")
+	table.insert(all_units, "security_mex")
 
 	for _, name in ipairs(all_units) do
 		local speed_table = self[name].SPEED_WALK
@@ -16172,6 +16201,7 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	end
 
 	self.security.SPEED_RUN = self.security.SPEED_RUN * run_mul
+	self.security_mex.SPEED_RUN = self.security_mex.SPEED_RUN * run_mul
 	self.cop.SPEED_RUN = self.cop.SPEED_RUN * run_mul
 	self.fbi.SPEED_RUN = self.fbi.SPEED_RUN * run_mul
 	self.swat.SPEED_RUN = self.swat.SPEED_RUN * run_mul
@@ -16200,6 +16230,8 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"gangster",
 		"swat"
 	}
+
+	table.insert(all_units, "security_mex")
 
 	for _, name in ipairs(all_units) do
 		self[name].weapon = self.presets.weapon[preset]
@@ -16819,6 +16851,50 @@ function CharacterTweakData:character_map()
 				"ene_mex_thug_outdoor_02",
 				"ene_mex_thug_outdoor_03",
 				"civ_male_italian"
+			}
+		},
+		bex = {
+			path = "units/pd2_dlc_bex/characters/",
+			list = {
+				"ene_swat_policia_federale",
+				"ene_swat_policia_federale_r870",
+				"ene_swat_policia_federale_city",
+				"ene_swat_policia_federale_city_r870",
+				"ene_swat_policia_federale_city_fbi",
+				"ene_swat_policia_federale_city_fbi_r870",
+				"ene_swat_medic_policia_federale",
+				"ene_swat_medic_policia_federale_r870",
+				"ene_swat_cloaker_policia_federale",
+				"ene_swat_policia_sniper",
+				"ene_swat_shield_policia_federale_mp9",
+				"ene_swat_shield_policia_federale_c45",
+				"ene_swat_tazer_policia_federale",
+				"ene_swat_heavy_policia_federale",
+				"ene_swat_heavy_policia_federale_r870",
+				"ene_swat_heavy_policia_federale_g36",
+				"ene_swat_heavy_policia_federale_fbi",
+				"ene_swat_heavy_policia_federale_fbi_r870",
+				"ene_swat_heavy_policia_federale_fbi_g36",
+				"ene_swat_dozer_medic_policia_federale",
+				"ene_swat_dozer_policia_federale_r870",
+				"ene_swat_dozer_policia_federale_saiga",
+				"ene_swat_dozer_policia_federale_m249",
+				"ene_swat_dozer_policia_federale_minigun",
+				"ene_policia_01",
+				"ene_policia_02",
+				"ene_bex_security_01",
+				"ene_bex_security_02",
+				"ene_bex_security_03",
+				"ene_bex_security_suit_01",
+				"ene_bex_security_suit_02",
+				"ene_bex_security_suit_03",
+				"civ_male_it_guy",
+				"civ_male_bex_bank_manager",
+				"civ_male_bex_business",
+				"civ_male_mariachi_01",
+				"civ_male_mariachi_02",
+				"civ_male_mariachi_03",
+				"civ_male_mariachi_04"
 			}
 		}
 	}

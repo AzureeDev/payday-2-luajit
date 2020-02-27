@@ -221,7 +221,9 @@ function ManageSpawnedUnits:destroy(unit)
 end
 
 function ManageSpawnedUnits:save(data)
-	if not alive(self._unit) or self._unit:id() == -1 then
+	if not alive(self._unit) or self._unit:id() == -1 or self.local_only then
+		data.managed_spawned_units = nil
+
 		return
 	end
 

@@ -139,6 +139,11 @@ function HuskPlayerInventory:add_unit_by_factory_name(factory_name, equip, insta
 			quality = quality,
 			bonus = bonus
 		}
+		local color_index = tonumber(bonus_id_s) - 1
+
+		if color_index > 0 then
+			cosmetics.color_index = color_index
+		end
 	end
 
 	self:add_unit_by_factory_blueprint(factory_name, equip, instant, blueprint, cosmetics)

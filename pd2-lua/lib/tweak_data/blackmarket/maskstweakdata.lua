@@ -7267,6 +7267,17 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "mex",
 		texture_bundle_folder = "mex"
 	}
+	self.masks.sombrero = {
+		unit = "units/pd2_dlc_bex/masks/msk_sombrero/msk_sombrero",
+		name_id = "bm_msk_sombrero",
+		pcs = {},
+		value = 0,
+		type = "helmet",
+		sort_number = 13,
+		dlc = "bex",
+		global_value = "bex",
+		texture_bundle_folder = "bex"
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.masks) do

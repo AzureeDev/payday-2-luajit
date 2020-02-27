@@ -21,6 +21,7 @@ require("lib/managers/menu/renderers/MenuNodeMutatorOptionsGui")
 require("lib/managers/menu/renderers/MenuNodeLobbyCountdownGui")
 require("lib/managers/menu/renderers/MenuNodeCustomizeGadgetGui")
 require("lib/managers/menu/renderers/MenuNodeAchievementFilterGui")
+require("lib/managers/menu/renderers/MenuNodeCustomizeWeaponColorGui")
 
 MenuRenderer = MenuRenderer or class(CoreMenuRenderer.Renderer)
 
@@ -219,6 +220,8 @@ function MenuRenderer:trigger_item(item)
 			if percentage > 0 and percentage < 100 then
 				-- Nothing
 			end
+		elseif item_type == "grid" then
+			-- Nothing
 		elseif item_type == "multi_choice" then
 			-- Nothing
 		end

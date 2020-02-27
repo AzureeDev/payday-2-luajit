@@ -778,7 +778,7 @@ function GamePlayCentralManager:do_shotgun_push(unit, hit_pos, dir, distance, at
 	end
 
 	if unit:id() > 0 then
-		managers.network:session():send_to_peers("sync_shotgun_push", unit, hit_pos, dir, distance, attacker)
+		managers.network:session():send_to_peers_synched("sync_shotgun_push", unit, hit_pos, dir, distance, attacker)
 	end
 
 	self:_do_shotgun_push(unit, hit_pos, dir, distance, attacker)

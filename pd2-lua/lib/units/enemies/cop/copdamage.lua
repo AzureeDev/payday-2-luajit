@@ -820,7 +820,7 @@ function CopDamage:_check_damage_achievements(attack_data, head)
 end
 
 function CopDamage.is_civilian(type)
-	return type == "civilian" or type == "civilian_female" or type == "bank_manager" or type == "robbers_safehouse"
+	return type == "civilian" or type == "civilian_female" or type == "bank_manager" or type == "robbers_safehouse" or type == "civilian_mariachi"
 end
 
 function CopDamage.is_gangster(type)

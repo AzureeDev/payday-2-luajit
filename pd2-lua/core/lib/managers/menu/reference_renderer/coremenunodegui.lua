@@ -329,6 +329,8 @@ function NodeGui:_reposition_items(highlighted_row_item)
 		end
 
 		local prev_item, first_item = nil
+		local top_dividers_padding = 0
+		local bottom_dividers_padding = 0
 		local num_dividers_top = 0
 
 		for i = 1, #self.row_items, 1 do
@@ -337,6 +339,7 @@ function NodeGui:_reposition_items(highlighted_row_item)
 			if first_item.type ~= "divider" and not first_item.item:parameters().back and not first_item.item:parameters().pd2_corner then
 				break
 			elseif first_item.type == "divider" then
+				top_dividers_padding = top_dividers_padding + (first_item.item:get_h(first_item, self) or first_item.gui_panel:h())
 				num_dividers_top = num_dividers_top + 1
 			end
 		end
@@ -351,6 +354,7 @@ function NodeGui:_reposition_items(highlighted_row_item)
 			if last_item.type ~= "divider" and not last_item.item:parameters().back and not last_item.item:parameters().pd2_corner then
 				break
 			elseif last_item.type == "divider" then
+				bottom_dividers_padding = bottom_dividers_padding + (last_item.item:get_h(last_item, self) or last_item.gui_panel:h())
 				num_dividers_bottom = num_dividers_bottom + 1
 			end
 		end
@@ -388,29 +392,38 @@ function NodeGui:_reposition_items(highlighted_row_item)
 			end
 		end
 
-		local h = highlighted_row_item.item:get_h(highlighted_row_item, self) or highlighted_row_item.gui_panel:h()
-		local offset = first and h * num_dividers_top or last and h * num_dividers_bottom or h
-		offset = offset + self.height_padding
+		local panel_height = self._item_panel_parent:h()
+		local panel_top = self._item_panel_parent:world_y()
+		local panel_bottom = panel_top + panel_height
+		local highlighted_height = highlighted_row_item.item:get_h(highlighted_row_item, self) or highlighted_row_item.gui_panel:h()
+		local highlighted_top = highlighted_row_item.gui_panel:world_y()
+		local highlighted_bottom = highlighted_top + highlighted_height
+		local offset_prev = (first and top_dividers_padding or 0) + self.height_padding
 
-		if self._item_panel_parent:world_y() > highlighted_row_item.gui_panel:world_y() - (offset + (prev_item and math.abs(prev_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h or 0)) then
-			if prev_item then
-				offset = offset + math.abs(prev_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h
-			end
+		if prev_item then
+			local prev_top = prev_item.gui_panel:world_y()
+			offset_prev = offset_prev + math.abs(prev_top - highlighted_top)
+		end
 
-			dy = -(highlighted_row_item.gui_panel:world_y() - self._item_panel_parent:world_y() - offset)
-		elseif self._item_panel_parent:world_y() + self._item_panel_parent:h() < highlighted_row_item.gui_panel:world_y() + highlighted_row_item.gui_panel:h() + offset + (next_item and math.abs(next_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h or 0) then
-			if next_item then
-				offset = offset + math.abs(next_item.gui_panel:y() - highlighted_row_item.gui_panel:y()) - h
-			end
+		local offset_next = (last and bottom_dividers_padding or 0) + self.height_padding
 
-			dy = -(highlighted_row_item.gui_panel:world_y() + highlighted_row_item.gui_panel:h() - (self._item_panel_parent:world_y() + self._item_panel_parent:h()) + offset)
+		if next_item then
+			local next_height = next_item.item:get_h(next_item, self) or next_item.gui_panel:h()
+			local next_top = next_item.gui_panel:world_y()
+			offset_next = offset_next + math.abs(next_top + next_height - highlighted_bottom)
+		end
+
+		if panel_top > highlighted_top - offset_prev then
+			dy = -(highlighted_top - panel_top - offset_prev)
+		elseif panel_bottom < highlighted_bottom + offset_next then
+			dy = -(highlighted_bottom - panel_bottom + offset_next)
 		end
 
 		local old_dy = self._scroll_data.dy_left
 		local is_same_dir = math.abs(old_dy) > 0 and (math.sign(dy) == math.sign(old_dy) or dy == 0)
 
 		if is_same_dir then
-			local within_view = math.within(highlighted_row_item.gui_panel:world_y(), self._item_panel_parent:world_y(), self._item_panel_parent:world_y() + self._item_panel_parent:h())
+			local within_view = math.within(highlighted_top, panel_top, panel_bottom)
 
 			if within_view then
 				dy = math.max(math.abs(old_dy), math.abs(dy)) * math.sign(old_dy)

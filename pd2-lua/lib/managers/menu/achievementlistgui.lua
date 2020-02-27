@@ -324,10 +324,10 @@ function AchievementListItem:init(parent, data, owner)
 		local str = self._desc:text()
 
 		if remove_line_only then
-			str = str:sub(1, line_breaks[max_breaks] - 1) .. "..."
+			str = utf8.sub(str, 1, line_breaks[max_breaks] - 1) .. "..."
 			remove_line_only = false
 		else
-			str = str:sub(1, line_breaks[max_breaks] - 4) .. "..."
+			str = utf8.sub(str, 1, line_breaks[max_breaks] - 4) .. "..."
 		end
 
 		self._desc:set_text(str)

@@ -3620,6 +3620,12 @@ function MenuComponentManager:get_texture_from_mod_type(type, sub_type, gadget, 
 		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
 	elseif type == "vertical_grip" then
 		texture = "guis/textures/pd2/blackmarket/inv_mod_vertical_grip"
+	elseif type == "weapon_cosmetics" then
+		if sub_type == "color_skin" then
+			texture = "guis/dlcs/wcs/textures/pd2/blackmarket/inv_mod_weaponcolor"
+		else
+			texture = "guis/textures/pd2/blackmarket/inv_mod_weapon_cosmetics"
+		end
 	else
 		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. type
 	end
@@ -3697,7 +3703,7 @@ function MenuComponentManager:create_weapon_mod_icon_list(weapon, category, fact
 			end
 		end
 
-		for _, name in pairs(mods_sorted) do
+		for _, name in ipairs(mods_sorted) do
 			local gadget, silencer, equipped, sub_type = nil
 			local is_auto = tweak_data.weapon[weapon] and tweak_data.weapon[weapon].FIRE_MODE == "auto"
 			local weapon_skin_bonus = false
@@ -3706,7 +3712,9 @@ function MenuComponentManager:create_weapon_mod_icon_list(weapon, category, fact
 				equipped = not managers.job:is_current_job_competitive() and not managers.weapon_factory:has_perk("bonus", crafted.factory_id, crafted.blueprint)
 				weapon_skin_bonus = true
 			elseif name == "weapon_cosmetics" then
-				equipped = not not managers.blackmarket:get_weapon_cosmetics(category, slot)
+				local cosmetics = managers.blackmarket:get_weapon_cosmetics(category, slot)
+				equipped = not not cosmetics
+				sub_type = equipped and tweak_data.blackmarket.weapon_skins[cosmetics.id] and tweak_data.blackmarket.weapon_skins[cosmetics.id].is_a_color_skin and "color_skin" or nil
 			else
 				for _, name_equip in pairs(mods_equip) do
 					if name == weapon_factory_tweak_data[name_equip].type then

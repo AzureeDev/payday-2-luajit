@@ -460,13 +460,13 @@ function CoreEditor:build_menubar()
 
 	local help_menu = EWS:Menu("")
 
-	help_menu:append_item("HELP", "Problem solver", "Open help")
 	help_menu:append_item("USING THE EDITOR", "Using the editor", "Open using the editor")
+	help_menu:append_item("VIDEO TUTORIALS", "Video Tutorials", "Open video tutorials folder in explorer")
 	help_menu:append_separator()
 	help_menu:append_item("ABOUT", "About...", "Hello and whatnot")
 	menu_bar:append(help_menu, "Help")
-	Global.frame:connect("HELP", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_help"), "")
 	Global.frame:connect("USING THE EDITOR", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_using_the_editor"), "")
+	Global.frame:connect("VIDEO TUTORIALS", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_video_tutorials"), "")
 	Global.frame:connect("ABOUT", "EVT_COMMAND_MENU_SELECTED", callback(self, self, "on_about"), "")
 end
 
@@ -1046,11 +1046,11 @@ function CoreEditor:toggle_show_markers(data)
 end
 
 function CoreEditor:on_using_the_editor()
-	EWS:launch_url("https://intranet.starbreeze.com/wiki/index.php?title=Category:Level_Design")
+	EWS:launch_url("https://confluence.starbreeze.com/display/PD2/Diesel+-+Tutorials+and+fundamentals")
 end
 
-function CoreEditor:on_help()
-	EWS:launch_url("http://mondomonkey.com/MondoMonkeyWhiteB.jpg")
+function CoreEditor:on_video_tutorials()
+	os.execute("explorer " .. "\\\\dallas\\Shared\\Starbreeze_Video_Tutorials" .. "\"")
 end
 
 function CoreEditor:on_about()

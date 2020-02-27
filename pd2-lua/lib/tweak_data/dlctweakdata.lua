@@ -7918,4 +7918,144 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
+	self.wcs_starter_pack = {
+		free = true,
+		content = {}
+	}
+	self.wcs_starter_pack.content.loot_global_value = "normal"
+	self.wcs_starter_pack.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_gray_black",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_tan_khaki",
+			amount = 1
+		}
+	}
+	self.wcs_pd2_clan = {
+		dlc = "has_pd2_clan",
+		content = {}
+	}
+	self.wcs_pd2_clan.content.loot_global_value = "pd2_clan"
+	self.wcs_pd2_clan.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_blue_payday",
+			amount = 1
+		}
+	}
+	self.ach_trd_bex_1 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_1",
+		content = {}
+	}
+	self.ach_trd_bex_1.content.loot_global_value = "bex"
+	self.ach_trd_bex_1.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "mariachi"
+		}
+	}
+	self.ach_trd_bex_2 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_2",
+		content = {}
+	}
+	self.ach_trd_bex_2.content.loot_global_value = "bex"
+	self.ach_trd_bex_2.content.loot_drops = {
+		{
+			type_items = "suit_variations",
+			item_entry = {
+				"mariachi",
+				"brown"
+			}
+		}
+	}
+	self.ach_trd_bex_3 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_4",
+		content = {}
+	}
+	self.ach_trd_bex_3.content.loot_global_value = "bex"
+	self.ach_trd_bex_3.content.loot_drops = {
+		{
+			type_items = "suit_variations",
+			item_entry = {
+				"mariachi",
+				"white"
+			}
+		}
+	}
+	self.ach_trd_bex_4 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_6",
+		content = {}
+	}
+	self.ach_trd_bex_4.content.loot_global_value = "bex"
+	self.ach_trd_bex_4.content.loot_drops = {
+		{
+			type_items = "suit_variations",
+			item_entry = {
+				"mariachi",
+				"red"
+			}
+		}
+	}
+	self.ach_trd_bex_5 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_7",
+		content = {}
+	}
+	self.ach_trd_bex_5.content.loot_global_value = "bex"
+	self.ach_trd_bex_5.content.loot_drops = {
+		{
+			type_items = "suit_variations",
+			item_entry = {
+				"mariachi",
+				"black"
+			}
+		}
+	}
+	self.ach_mask_bex_9 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_9",
+		content = {}
+	}
+	self.ach_mask_bex_9.content.loot_global_value = "bex"
+	self.ach_mask_bex_9.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "sombrero",
+			amount = 1
+		}
+	}
+	self.ach_wcs_bex_10 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_10",
+		content = {}
+	}
+	self.ach_wcs_bex_10.content.loot_global_value = "normal"
+	self.ach_wcs_bex_10.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_white",
+			amount = 1
+		}
+	}
+	self.ach_wcs_bex_11 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_11",
+		content = {}
+	}
+	self.ach_wcs_bex_11.content.loot_global_value = "normal"
+	self.ach_wcs_bex_11.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_green_money",
+			amount = 1
+		}
+	}
 end

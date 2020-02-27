@@ -1684,14 +1684,14 @@ function NetworkMatchMakingPSN:cb_connection_established(info)
 					managers.network:queue_stop_network()
 					managers.menu:show_crime_spree_locked_dialog()
 				end
-			else
-				MenuCallbackHandler:crimenet_focus_changed(nil, false)
-				managers.menu:on_enter_lobby()
 			end
 
 			if res ~= "JOINED_LOBBY" and res ~= "JOINED_GAME" then
 				managers.crime_spree:disable_crime_spree_gamemode()
+				print("GN: CS mode disabled!")
 			end
+
+			print("cb_connection_established : res = ", res)
 
 			if res == "JOINED_LOBBY" then
 				MenuCallbackHandler:crimenet_focus_changed(nil, false)

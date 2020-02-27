@@ -45,6 +45,16 @@ function MenuInput:set_axis_y_timer(time)
 end
 
 function MenuInput:_input_hijacked()
+	local item = self._logic:selected_item()
+
+	if item and item.input_focus then
+		local input_focus = item:input_focus()
+
+		if input_focus then
+			return input_focus
+		end
+	end
+
 	local active_menu = managers.menu:active_menu()
 
 	return active_menu and active_menu.renderer:input_focus()
@@ -138,6 +148,12 @@ function MenuInput:update(t, dt)
 	end
 
 	if self:_input_hijacked() then
+		local item = self._logic:selected_item()
+
+		if item and item.INPUT_ON_HIJACK then
+			self._item_input_action_map[item.TYPE](item, self._controller)
+		end
+
 		return false
 	end
 

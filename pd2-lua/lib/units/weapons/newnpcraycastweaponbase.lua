@@ -308,7 +308,11 @@ function NewNPCRaycastWeaponBase:auto_fire_blank(direction, impact, sub_ids, ove
 	end
 
 	if user_unit:movement() then
-		user_unit:movement():play_redirect("recoil_single")
+		local anim_data = user_unit:anim_data()
+
+		if not anim_data or not anim_data.reload then
+			user_unit:movement():play_redirect("recoil_single")
+		end
 	end
 
 	return true

@@ -55,7 +55,7 @@ function HuskTeamAIBase:load(data)
 		local loadout = managers.blackmarket:unpack_henchman_loadout_string(data.base.loadout)
 
 		managers.blackmarket:verfify_recived_crew_loadout(loadout, true)
-		managers.criminals:add_character(character_name, self._unit, nil, true, loadout)
+		managers.groupai:state():set_unit_teamAI(self._unit, character_name, tweak_data.levels:get_default_team_ID("player"), data.base.visual_seed, loadout)
 	end
 end
 

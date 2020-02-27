@@ -1419,7 +1419,8 @@ function JobManager:current_spawn_limit(special_type)
 		return math.huge
 	end
 
-	local is_skirmish = self:current_level_data().group_ai_state == "skirmish"
+	local level_data = self:current_level_data()
+	local is_skirmish = level_data and level_data.group_ai_state == "skirmish"
 
 	if is_skirmish then
 		local limits_table = tweak_data.skirmish.special_unit_spawn_limits

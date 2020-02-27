@@ -451,11 +451,15 @@ function NetworkAccountSTEAM:_save_globals()
 end
 
 function NetworkAccountSTEAM:is_ready_to_close()
-	return not self._inventory_is_loading and not self._inventory_outfit_refresh_requested and not self._inventory_outfit_refresh_in_progress
+	return not self._inventory_is_loading and not self._inventory_outfit_refresh_requested and not self._inventory_outfit_refresh_in_progress and not self._inventory_is_converting_drills
 end
 
 function NetworkAccountSTEAM:inventory_load()
 	if self._inventory_is_loading then
+		return
+	end
+
+	if self._inventory_is_converting_drills then
 		return
 	end
 
@@ -602,6 +606,12 @@ function NetworkAccountSTEAM:_clbk_inventory_load(error, list)
 		Application:error("[NetworkAccountSTEAM:_clbk_inventory_load] Failed to update tradable inventory (" .. tostring(error) .. ")")
 	end
 
+	if self.do_convert_drills then
+		self:convert_drills_to_safes(list)
+
+		self.do_convert_drills = false
+	end
+
 	self:inventory_repair_list(list)
 	managers.blackmarket:tradable_update(list, not error)
 	managers.menu_component:set_blackmarket_tradable_loaded(error)
@@ -628,6 +638,66 @@ function NetworkAccountSTEAM:_clbk_tradable_outfit_data(error, outfit_signature)
 
 	if managers.network:session() then
 		managers.network:session():check_send_outfit()
+	end
+end
+
+function NetworkAccountSTEAM:_on_drill_converted(data, error, items_new, items_removed)
+	local drills_to_convert, instance_id = unpack(data)
+	drills_to_convert[instance_id] = nil
+
+	if not error then
+		managers.blackmarket:tradable_exchange(items_new, items_removed)
+	end
+
+	self._converting_drill_error = self._converting_drill_error or error
+
+	if table.size(drills_to_convert) == 0 then
+		self._inventory_is_converting_drills = nil
+
+		managers.menu_component:set_blackmarket_tradable_loaded(self._converting_drill_error)
+
+		self._converting_drill_error = nil
+
+		if managers.menu_scene then
+			managers.menu_scene:set_blackmarket_tradable_loaded()
+		end
+	end
+end
+
+function NetworkAccountSTEAM:convert_drills_to_safes(list)
+	if not list then
+		return
+	end
+
+	self._inventory_is_converting_drills = true
+	local drills_to_convert = {}
+	local drills_counter = {}
+	local drill_tweak, safe_tweak = nil
+
+	table.remove_condition(list, function (data)
+		drill_tweak = data.category == "drills" and tweak_data.economy.drills[data.entry]
+		safe_tweak = drill_tweak and tweak_data.economy.safes[drill_tweak.safe]
+
+		if safe_tweak and safe_tweak.convert_drill then
+			drills_to_convert[data.instance_id] = data.entry
+			drills_counter[data.entry] = (drills_counter[data.entry] or 0) + 1
+
+			Steam:inventory_reward_open(data.instance_id, safe_tweak.def_id, callback(self, self, "_on_drill_converted", {
+				drills_to_convert,
+				data.instance_id
+			}))
+
+			return true
+		end
+
+		return false
+	end)
+
+	if table.size(drills_to_convert) > 0 then
+		managers.system_menu:force_close_all()
+		managers.menu:show_accept_drills_to_safes(drills_to_convert, drills_counter)
+	else
+		self._inventory_is_converting_drills = false
 	end
 end
 

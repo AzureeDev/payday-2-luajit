@@ -4618,7 +4618,7 @@ function HuskPlayerMovement:_post_load(unit, t, dt)
 		end
 
 		peer:set_outfit_string(my_data.outfit, my_data.outfit_version)
-		UnitNetworkHandler.set_unit(UnitNetworkHandler, unit, my_data.character_name, my_data.outfit, my_data.outfit_version, my_data.peer_id)
+		UnitNetworkHandler.set_unit(UnitNetworkHandler, unit, my_data.character_name, my_data.outfit, my_data.outfit_version, my_data.peer_id, nil, data.visual_state and data.visual_state.visual_seed)
 
 		if managers.network:session():peer_by_unit(unit) == nil then
 			Application:error("[HuskPlayerBase:_post_load] A player husk who appears to not have an owning member was detached.")
@@ -4648,13 +4648,15 @@ end
 
 function HuskPlayerMovement:save(data)
 	local peer_id = managers.network:session():peer_by_unit(self._unit):id()
+	local character = managers.criminals:character_by_unit(self._unit)
 	data.movement = {
 		state_name = self._state,
 		look_fwd = self:detect_look_dir(),
 		pose = self._pose_code,
 		stance = self._stance.code,
 		peer_id = peer_id,
-		character_name = managers.criminals:character_name_by_unit(self._unit),
+		visual_seed = character and character.visual_state and character.visual_state.visual_seed,
+		character_name = character and character.name,
 		outfit = managers.network:session():peer(peer_id):profile("outfit_string")
 	}
 	data.zip_line_unit_id = self:zipline_unit() and self:zipline_unit():editor_id()

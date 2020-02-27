@@ -3,7 +3,8 @@ LevelsTweakData.LevelType = {
 	America = "america",
 	Russia = "russia",
 	Zombie = "zombie",
-	Murkywater = "murkywater"
+	Murkywater = "murkywater",
+	Federales = "federales"
 }
 
 function LevelsTweakData:init()
@@ -11,12 +12,14 @@ function LevelsTweakData:init()
 	local russia = LevelsTweakData.LevelType.Russia
 	local zombie = LevelsTweakData.LevelType.Zombie
 	local murkywater = LevelsTweakData.LevelType.Murkywater
+	local federales = LevelsTweakData.LevelType.Federales
 	self.ai_groups = {
 		default = america,
 		america = america,
 		russia = russia,
 		zombie = zombie,
-		murkywater = murkywater
+		murkywater = murkywater,
+		federales = federales
 	}
 	self.framing_frame_1 = {
 		name_id = "heist_framing_frame_1_hl",
@@ -1956,6 +1959,25 @@ function LevelsTweakData:init()
 		narrator = "locke",
 		load_screen = "guis/dlcs/mex/textures/loading/job_mex_cooking_df"
 	}
+	self.bex = {
+		name_id = "heist_bex_hl",
+		briefing_id = "heist_bex_briefing",
+		briefing_dialog = "Play_loc_bex_brf",
+		world_name = "narratives/vlad/bex",
+		intro_event = "Play_loc_bex_intro",
+		outro_event = {
+			"Play_loc_bex_end"
+		},
+		music = "heist",
+		package = "packages/job_bex",
+		cube = "cube_apply_heist_bank",
+		block_AIs = {
+			old_hoxton = true
+		},
+		ai_group_type = federales,
+		narrator = "locke",
+		load_screen = "guis/dlcs/bex/textures/loading/job_bex_01_df"
+	}
 	self._level_index = {
 		"welcome_to_the_jungle_1",
 		"welcome_to_the_jungle_1_night",
@@ -2068,7 +2090,8 @@ function LevelsTweakData:init()
 		"vit",
 		"bph",
 		"mex",
-		"mex_cooking"
+		"mex_cooking",
+		"bex"
 	}
 
 	if SystemInfo:distribution() == Idstring("STEAM") then

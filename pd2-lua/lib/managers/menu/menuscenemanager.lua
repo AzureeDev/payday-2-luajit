@@ -573,6 +573,8 @@ function MenuSceneManager:_set_up_templates()
 		-- Nothing
 	end
 
+	self._scene_templates.blackmarket_weapon_color = deep_clone(self._scene_templates.blackmarket_crafting)
+	self._scene_templates.blackmarket_weapon_color.target_pos = self._scene_templates.blackmarket_weapon_color.item_pos - Vector3(15, 0, 20)
 	self._scene_templates.safe = {
 		camera_pos = Vector3(1500, -2000, 0)
 	}
@@ -1413,48 +1415,68 @@ function MenuSceneManager:_set_character_equipment()
 		return
 	end
 
-	local equipped_mask = managers.blackmarket:equipped_mask()
+	local mask_id, mask_blueprint = nil
+	local armor_id = "level_1"
+	local armor_skin_id, player_style, suit_variation = nil
+	local rank = 0
+	local secondary, primary, deployable = nil
 
-	if equipped_mask.mask_id then
-		self:set_character_mask_by_id(equipped_mask.mask_id, equipped_mask.blueprint)
-	end
+	if self._henchmen_player_override then
+		local loadout = managers.blackmarket:henchman_loadout(self._henchmen_player_override)
+		local crafted_mask = managers.blackmarket:get_crafted_category_slot("masks", loadout.mask_slot)
 
-	for armor_id, data in pairs(tweak_data.blackmarket.armors) do
-		if Global.blackmarket_manager.armors[armor_id].equipped then
-			self:set_character_armor(armor_id)
-
-			break
+		if crafted_mask then
+			mask_id = crafted_mask.mask_id
+			mask_blueprint = crafted_mask.blueprint
 		end
+
+		player_style = loadout.player_style
+		suit_variation = loadout.suit_variation
+		local crafted_primary = managers.blackmarket:get_crafted_category_slot("primaries", loadout.primary_slot)
+
+		if crafted_primary then
+			primary = crafted_primary
+		end
+	else
+		local equipped_mask = managers.blackmarket:equipped_mask()
+		mask_id = equipped_mask and equipped_mask.mask_id
+		mask_blueprint = equipped_mask and equipped_mask.blueprint
+		armor_id = managers.blackmarket:equipped_armor()
+		armor_skin_id = managers.blackmarket:equipped_armor_skin()
+		player_style = managers.blackmarket:equipped_player_style()
+		suit_variation = managers.blackmarket:get_suit_variation()
+		rank = managers.experience:current_rank()
+		secondary = managers.blackmarket:equipped_secondary()
+		primary = managers.blackmarket:equipped_primary()
+		deployable = managers.blackmarket:equipped_deployable()
 	end
 
-	self:set_character_armor_skin(managers.blackmarket:equipped_armor_skin(), self._character_unit)
-	self:set_character_player_style(managers.blackmarket:equipped_player_style(), managers.blackmarket:get_suit_variation(), self._character_unit)
+	if mask_id then
+		self:set_character_mask_by_id(mask_id, mask_blueprint, unit)
+	end
 
-	local rank = managers.experience:current_rank()
+	self:set_character_armor(armor_id, unit)
+	self:set_character_armor_skin(armor_skin_id, unit)
+	self:set_character_player_style(player_style, suit_variation, unit)
+
 	local ignore_infamy_card = self._scene_templates and self._scene_templates[self._current_scene_template] and self._scene_templates[self._current_scene_template].remove_infamy_card and true or false
 	local ignore_weapons = self._scene_templates and self._scene_templates[self._current_scene_template] and self._scene_templates[self._current_scene_template].remove_weapons and true or false
 
 	if rank > 0 and not ignore_infamy_card then
-		self:set_character_equipped_card(nil, rank - 1)
+		self:set_character_equipped_card(unit, rank - 1)
+	elseif secondary and not ignore_weapons then
+		self:set_character_equipped_weapon(unit, secondary.factory_id, secondary.blueprint, "secondary", secondary.cosmetics)
 	else
-		local secondary = managers.blackmarket:equipped_secondary()
-
-		if secondary and not ignore_weapons then
-			self:set_character_equipped_weapon(nil, secondary.factory_id, secondary.blueprint, "secondary", secondary.cosmetics)
-		else
-			self:_delete_character_weapon(unit, "secondary")
-		end
+		self:_delete_character_weapon(unit, "secondary")
 	end
 
-	local primary = managers.blackmarket:equipped_primary()
-
 	if primary and not ignore_weapons then
-		self:set_character_equipped_weapon(nil, primary.factory_id, primary.blueprint, "primary", primary.cosmetics)
+		self:set_character_equipped_weapon(unit, primary.factory_id, primary.blueprint, "primary", primary.cosmetics)
 	else
 		self:_delete_character_weapon(unit, "primary")
 	end
 
-	self:set_character_deployable(managers.blackmarket:equipped_deployable(), false, 0)
+	self:set_character_deployable(deployable, unit, 0)
 end
 
 function MenuSceneManager:get_current_scene_template()
@@ -1539,6 +1561,14 @@ end
 
 function MenuSceneManager:get_henchmen_character(index)
 	return self._picked_character_position and self._picked_character_position[index]
+end
+
+function MenuSceneManager:set_henchmen_player_override(index)
+	self._henchmen_player_override = index
+end
+
+function MenuSceneManager:henchmen_player_override()
+	return self._henchmen_player_override
 end
 
 function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
@@ -1639,6 +1669,7 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 		weapon_id = managers.weapon_factory:get_weapon_id_by_factory_id(primary)
 	end
 
+	self:set_character_player_style(loadout.player_style, loadout.suit_variation, unit)
 	self:_select_henchmen_pose(unit, weapon_id, index)
 
 	local pos, rot = self:get_henchmen_positioning(index)
@@ -2437,6 +2468,10 @@ function MenuSceneManager:on_set_preferred_character()
 end
 
 function MenuSceneManager:set_character(character_name, force_recreate)
+	if self._henchmen_player_override then
+		character_name = managers.menu_scene:get_henchmen_character(self._henchmen_player_override) or managers.blackmarket:preferred_henchmen(self._henchmen_player_override) or character_name
+	end
+
 	local character_id = managers.blackmarket:get_character_id_by_character_name(character_name)
 	local unit_name = tweak_data.blackmarket.characters[character_id].menu_unit
 	self._player_character_name = character_name
@@ -2776,8 +2811,6 @@ function MenuSceneManager:set_scene_template(template, data, custom_name, skip_t
 			self:delete_workbench_room()
 		end
 	end
-
-	managers.network.account:inventory_load()
 end
 
 function MenuSceneManager:dispatch_transition_done()
@@ -3200,6 +3233,14 @@ function MenuSceneManager:_set_item_unit(unit, oobb_object, max_mod, type, secon
 
 	mrotation.set_yaw_pitch_roll(self._item_rot, self._item_yaw, self._item_pitch, self._item_roll)
 	mrotation.multiply(self._item_rot, self._item_rot_mod)
+end
+
+function MenuSceneManager:get_item_unit_data()
+	return self._item_unit
+end
+
+function MenuSceneManager:get_item_unit()
+	return self._item_unit and self._item_unit.unit
 end
 
 function MenuSceneManager:_spawn_item(unit_name, oobb_object, max_mod, type, mask_id)
@@ -3752,10 +3793,10 @@ function MenuSceneManager:delete_workbench_room()
 	end
 end
 
-function MenuSceneManager:spawn_workbench_room()
+function MenuSceneManager:spawn_workbench_room(workbench_name)
 	self:delete_workbench_room()
 
-	local ids_unit_workbench_room_name = self:workbench_room_name()
+	local ids_unit_workbench_room_name = workbench_name and Idstring(workbench_name) or self:workbench_room_name()
 
 	if not managers.dyn_resource:is_resource_ready(Idstring("unit"), ids_unit_workbench_room_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE) then
 		print("[MenuSceneManager:spawn_workbench_room]", "workbench room unit is not loaded, force loading it.")

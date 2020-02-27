@@ -21,7 +21,8 @@ local free_dlcs = {
 	"ecp",
 	"mex",
 	"mwm",
-	"trd"
+	"trd",
+	"bex"
 }
 
 function PS4DLCManager:init_console()

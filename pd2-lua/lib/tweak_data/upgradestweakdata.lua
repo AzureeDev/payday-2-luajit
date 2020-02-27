@@ -4733,7 +4733,8 @@ function UpgradesTweakData:init(tweak_data)
 				"baton",
 				"slot_lever",
 				"frankish",
-				"ecp"
+				"ecp",
+				"chac"
 			}
 		},
 		[18] = {
@@ -4879,7 +4880,13 @@ function UpgradesTweakData:init(tweak_data)
 				"glock_18c",
 				"asval",
 				"long",
-				"x_g18c"
+				"x_g18c",
+				"x_beer",
+				"beer",
+				"x_czech",
+				"czech",
+				"x_stech",
+				"stech"
 			}
 		},
 		[30] = {
@@ -5478,6 +5485,12 @@ function UpgradesTweakData:init(tweak_data)
 	self:_legacy_weapon_definitions()
 	self:_x_legacy_weapon_definitions()
 	self:_coach_weapon_definitions()
+	self:_beer_weapon_definitions()
+	self:_x_beer_weapon_definitions()
+	self:_czech_weapon_definitions()
+	self:_x_czech_weapon_definitions()
+	self:_stech_weapon_definitions()
+	self:_x_stech_weapon_definitions()
 	self:_melee_weapon_definitions()
 	self:_grenades_definitions()
 	self:_carry_definitions()
@@ -11699,6 +11712,10 @@ function UpgradesTweakData:_melee_weapon_definitions()
 	self.definitions.fear = {
 		category = "melee_weapon"
 	}
+	self.definitions.chac = {
+		dlc = "bex",
+		category = "melee_weapon"
+	}
 end
 
 function UpgradesTweakData:_grenades_definitions()
@@ -15435,6 +15452,60 @@ function UpgradesTweakData:_coach_weapon_definitions()
 	self.definitions.coach = {
 		factory_id = "wpn_fps_sho_coach",
 		weapon_id = "coach",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_beer_weapon_definitions()
+	self.definitions.beer = {
+		dlc = "afp",
+		factory_id = "wpn_fps_pis_beer",
+		weapon_id = "beer",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_beer_weapon_definitions()
+	self.definitions.x_beer = {
+		dlc = "afp",
+		factory_id = "wpn_fps_pis_x_beer",
+		weapon_id = "x_beer",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_czech_weapon_definitions()
+	self.definitions.czech = {
+		dlc = "afp",
+		factory_id = "wpn_fps_pis_czech",
+		weapon_id = "czech",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_czech_weapon_definitions()
+	self.definitions.x_czech = {
+		dlc = "afp",
+		factory_id = "wpn_fps_pis_x_czech",
+		weapon_id = "x_czech",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_stech_weapon_definitions()
+	self.definitions.stech = {
+		dlc = "afp",
+		factory_id = "wpn_fps_pis_stech",
+		weapon_id = "stech",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_stech_weapon_definitions()
+	self.definitions.x_stech = {
+		dlc = "afp",
+		factory_id = "wpn_fps_pis_x_stech",
+		weapon_id = "x_stech",
 		category = "weapon"
 	}
 end

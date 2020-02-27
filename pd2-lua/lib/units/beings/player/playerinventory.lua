@@ -363,6 +363,12 @@ function PlayerInventory:_send_equipped_weapon()
 		local entry = tostring(cosmetics_id)
 		local quality = tostring(tweak_data.economy:get_index_from_entry("qualities", cosmetics_quality) or 1)
 		local bonus = cosmetics_bonus and "1" or "0"
+		local cosmetics_color_index = self:equipped_unit():base().get_cosmetics_color_index and self:equipped_unit():base():get_cosmetics_color_index() or nil
+
+		if cosmetics_color_index then
+			bonus = tostring(cosmetics_color_index + 1)
+		end
+
 		cosmetics_string = entry .. "-" .. quality .. "-" .. bonus
 	else
 		cosmetics_string = "nil-1-0"
@@ -572,6 +578,12 @@ function PlayerInventory:save(data)
 			local entry = tostring(cosmetics_id)
 			local quality = tostring(tweak_data.economy:get_index_from_entry("qualities", cosmetics_quality) or 1)
 			local bonus = cosmetics_bonus and "1" or "0"
+			local cosmetics_color_index = self:equipped_unit():base().get_cosmetics_color_index and self:equipped_unit():base():get_cosmetics_color_index() or nil
+
+			if cosmetics_color_index then
+				bonus = tostring(cosmetics_color_index + 1)
+			end
+
 			cosmetics_string = entry .. "-" .. quality .. "-" .. bonus
 		else
 			cosmetics_string = "nil-1-0"
@@ -618,8 +630,13 @@ function PlayerInventory:cosmetics_string_from_peer(peer, weapon_name)
 
 		if cosmetics then
 			local quality = tostring(tweak_data.economy:get_index_from_entry("qualities", cosmetics.quality) or 1)
+			local bonus = cosmetics.bonus and "1" or "0"
 
-			return cosmetics.id .. "-" .. quality .. "-" .. (cosmetics.bonus and "1" or "0")
+			if cosmetics.color_index then
+				bonus = tostring(cosmetics.color_index + 1)
+			end
+
+			return cosmetics.id .. "-" .. quality .. "-" .. bonus
 		else
 			return "nil-1-0"
 		end

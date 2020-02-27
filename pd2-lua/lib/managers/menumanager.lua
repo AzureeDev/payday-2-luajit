@@ -12,6 +12,7 @@ require("lib/managers/menu/items/MenuItemChallenge")
 require("lib/managers/menu/items/MenuItemKitSlot")
 require("lib/managers/menu/items/MenuItemUpgrade")
 require("lib/managers/menu/items/MenuItemMultiChoice")
+require("lib/managers/menu/items/MenuItemGrid")
 require("lib/managers/menu/items/MenuItemToggle")
 require("lib/managers/menu/items/MenuItemChat")
 require("lib/managers/menu/items/MenuItemGenerics")
@@ -9813,39 +9814,6 @@ function MenuOptionInitiator:modify_video(node)
 		fs_item:set_value(option_value)
 	end
 
-	option_value = "off"
-	local st_item = node:item("toggle_subtitle")
-
-	if st_item then
-		if managers.user:get_setting("subtitle") then
-			option_value = "on"
-		end
-
-		st_item:set_value(option_value)
-	end
-
-	option_value = "off"
-	local hit_indicator_item = node:item("toggle_hit_indicator")
-
-	if hit_indicator_item then
-		if managers.user:get_setting("hit_indicator") then
-			option_value = "on"
-		end
-
-		hit_indicator_item:set_value(option_value)
-	end
-
-	option_value = "off"
-	local objective_reminder_item = node:item("toggle_objective_reminder")
-
-	if objective_reminder_item then
-		if managers.user:get_setting("objective_reminder") then
-			option_value = "on"
-		end
-
-		objective_reminder_item:set_value(option_value)
-	end
-
 	local br_item = node:item("brightness")
 
 	if br_item then
@@ -9868,12 +9836,6 @@ function MenuOptionInitiator:modify_video(node)
 		option_value = managers.user:get_setting("effect_quality")
 
 		effect_quality_item:set_value(option_value)
-	end
-
-	local toggle_hide_huds = node:item("toggle_hide_huds") or node:item("toggle_hide_huds_xb1") or node:item("toggle_hide_huds_ps4")
-
-	if toggle_hide_huds then
-		toggle_hide_huds:set_value(Global.hud_disabled and "on" or "off")
 	end
 
 	local toggle_window_zoom = node:item("toggle_window_zoom")
@@ -10102,6 +10064,45 @@ function MenuOptionInitiator:modify_user_interface_options(node)
 
 	if vr_descs_box then
 		vr_descs_box:set_value(vr_descs_setting and "on" or "off")
+	end
+
+	option_value = "off"
+	local st_item = node:item("toggle_subtitle")
+
+	if st_item then
+		if managers.user:get_setting("subtitle") then
+			option_value = "on"
+		end
+
+		st_item:set_value(option_value)
+	end
+
+	option_value = "off"
+	local hit_indicator_item = node:item("toggle_hit_indicator")
+
+	if hit_indicator_item then
+		if managers.user:get_setting("hit_indicator") then
+			option_value = "on"
+		end
+
+		hit_indicator_item:set_value(option_value)
+	end
+
+	option_value = "off"
+	local objective_reminder_item = node:item("toggle_objective_reminder")
+
+	if objective_reminder_item then
+		if managers.user:get_setting("objective_reminder") then
+			option_value = "on"
+		end
+
+		objective_reminder_item:set_value(option_value)
+	end
+
+	local toggle_hide_huds = node:item("toggle_hide_huds") or node:item("toggle_hide_huds_xb1") or node:item("toggle_hide_huds_ps4")
+
+	if toggle_hide_huds then
+		toggle_hide_huds:set_value(Global.hud_disabled and "on" or "off")
 	end
 
 	return node

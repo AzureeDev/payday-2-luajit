@@ -48,10 +48,10 @@ function LocalizationManager:exists(string_id)
 end
 
 function LocalizationManager:text(string_id, macros)
-	local return_string = "ERROR: " .. string_id
+	local return_string = "ERROR: " .. tostring(string_id)
 	local str_id = nil
 
-	if not string_id or string_id == "" then
+	if not string_id or string_id == "" or type(string_id) ~= "string" then
 		return_string = ""
 	elseif self:exists(string_id .. "_" .. self._platform) then
 		str_id = string_id .. "_" .. self._platform

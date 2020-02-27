@@ -980,6 +980,24 @@ function CarryTweakData:init(tweak_data)
 	}
 	self.roman_armor = deep_clone(self.samurai_suit)
 	self.roman_armor.name_id = "hud_carry_roman_armor"
+	self.faberge_egg = {
+		type = "light",
+		name_id = "hud_carry_faberge_egg",
+		bag_value = "faberge_egg",
+		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
+		AI_carry = {
+			SO_category = "enemies"
+		}
+	}
+	self.treasure = {
+		type = "heavy",
+		name_id = "hud_carry_treasure",
+		bag_value = "treasure",
+		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
+		AI_carry = {
+			SO_category = "enemies"
+		}
+	}
 end
 
 function CarryTweakData:get_carry_ids()

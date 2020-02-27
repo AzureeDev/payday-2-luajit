@@ -213,7 +213,7 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 	local box_width = combined_width / 3
 	local box_height = combined_height / 4
 	local player_loadout_data = managers.blackmarket:player_loadout_data()
-	local primary_box = self:create_box({
+	local primary_box_data = {
 		name = "primary",
 		bg_blend_mode = "normal",
 		w = box_width,
@@ -234,8 +234,8 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 			up = callback(self, self, "previous_primary"),
 			down = callback(self, self, "next_primary")
 		}
-	})
-	local secondary_box = self:create_box({
+	}
+	local secondary_box_data = {
 		name = "secondary",
 		bg_blend_mode = "normal",
 		w = box_width,
@@ -256,8 +256,8 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 			up = callback(self, self, "previous_secondary"),
 			down = callback(self, self, "next_secondary")
 		}
-	})
-	local melee_box = self:create_box({
+	}
+	local melee_box_data = {
 		name = "melee",
 		bg_blend_mode = "normal",
 		w = box_width,
@@ -278,8 +278,8 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 			up = callback(self, self, "previous_melee"),
 			down = callback(self, self, "next_melee")
 		}
-	})
-	local throwable_box = self:create_box({
+	}
+	local throwable_box_data = {
 		name = "throwable",
 		bg_blend_mode = "normal",
 		w = box_width,
@@ -296,8 +296,8 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 			up = callback(self, self, "previous_throwable"),
 			down = callback(self, self, "next_throwable")
 		}
-	})
-	local armor_box = self:create_box({
+	}
+	local armor_box_data = {
 		name = "armor",
 		redirect_box = "outfit_armor",
 		can_select = false,
@@ -308,12 +308,12 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 		select_anim = select_anim,
 		unselect_anim = unselect_anim,
 		bg_color = Color.black:with_alpha(0.05),
+		data = player_loadout_data.outfit,
 		clbks = {
 			create = callback(self, self, "create_outfit_box")
-		},
-		data = player_loadout_data.outfit
-	})
-	local deployable_box = self:create_box({
+		}
+	}
+	local deployable_box_data = {
 		name = "deployable",
 		redirect_box = "deployable_primary",
 		can_select = false,
@@ -324,12 +324,12 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 		select_anim = select_anim,
 		unselect_anim = unselect_anim,
 		bg_color = Color.black:with_alpha(0.05),
+		data = player_loadout_data.deployable,
 		clbks = {
 			create = callback(self, self, "create_deployable_box")
-		},
-		data = player_loadout_data.deployable
-	})
-	local mask_box = self:create_box({
+		}
+	}
+	local mask_box_data = {
 		name = "mask",
 		bg_blend_mode = "normal",
 		w = box_width,
@@ -346,8 +346,9 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 			up = callback(self, self, "previous_mask"),
 			down = callback(self, self, "next_mask")
 		}
-	})
-	local character_box = self:create_box({
+	}
+	local character_box_data = {
+		alpha = 1,
 		name = "character",
 		bg_blend_mode = "normal",
 		w = box_width,
@@ -355,40 +356,35 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 		unselected_text = managers.localization:to_upper_text("menu_preferred_character"),
 		text = player_loadout_data.character.info_text,
 		image = player_loadout_data.character.item_texture,
-		alpha = managers.network:session() and 0.2 or 1,
 		select_anim = select_anim,
 		unselect_anim = unselect_anim,
 		bg_color = Color.black:with_alpha(0.05),
-		clbks = managers.network:session() and {
-			right = false
-		} or {
+		clbks = {
 			right = false,
 			left = callback(self, self, "open_character_menu"),
 			up = callback(self, self, "previous_character"),
 			down = callback(self, self, "next_character")
 		}
-	})
-	local infamy_box = self:create_box({
+	}
+	local infamy_box_data = {
 		name = "infamy",
+		alpha = 1,
 		bg_blend_mode = "normal",
 		w = box_width,
 		h = box_height,
 		unselected_text = managers.localization:to_upper_text("menu_infamytree"),
 		text = managers.localization:to_upper_text("menu_infamytree"),
-		alpha = managers.network:session() and 0.2 or 1,
 		select_anim = select_anim,
 		unselect_anim = unselect_anim,
 		bg_color = Color.black:with_alpha(0.05),
-		clbks = managers.network:session() and {
-			right = false
-		} or {
+		clbks = {
 			down = false,
 			up = false,
 			right = false,
 			left = callback(self, self, "open_infamy_menu")
 		}
-	})
-	local crew_box = self:create_box({
+	}
+	local crew_box_data = {
 		image = "guis/dlcs/mom/textures/pd2/crewmanagement_icon",
 		name = "crew",
 		bg_blend_mode = "normal",
@@ -405,8 +401,8 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 			right = false,
 			left = callback(self, self, "open_crew_menu")
 		}
-	})
-	local skill_box = self:create_box({
+	}
+	local skill_box_data = {
 		image = false,
 		name = "skilltree",
 		bg_blend_mode = "normal",
@@ -425,7 +421,7 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 			up = callback(self, self, "previous_skilltree"),
 			down = callback(self, self, "next_skilltree")
 		}
-	})
+	}
 	local texture_rect_x = 0
 	local texture_rect_y = 0
 	local current_specialization = managers.skilltree:get_specialization_value("current_specialization")
@@ -451,7 +447,7 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 	end
 
 	local icon_atlas_texture = guis_catalog .. "textures/pd2/specialization/icons_atlas"
-	local specialization_box = self:create_box({
+	local specialization_box_data = {
 		name = "specialization",
 		bg_blend_mode = "normal",
 		image_size_mul = 0.8,
@@ -475,7 +471,38 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 			up = callback(self, self, "previous_specialization"),
 			down = callback(self, self, "next_specialization")
 		}
-	})
+	}
+
+	if managers.network:session() then
+		character_box_data.alpha = 0.2
+		character_box_data.clbks = {
+			right = false
+		}
+		infamy_box_data.alpha = 0.2
+		infamy_box_data.clbks = {
+			right = false
+		}
+
+		if not Network:is_server() then
+			crew_box_data.alpha = 0.2
+			crew_box_data.clbks = {
+				right = false
+			}
+		end
+	end
+
+	local primary_box = self:create_box(primary_box_data)
+	local secondary_box = self:create_box(secondary_box_data)
+	local melee_box = self:create_box(melee_box_data)
+	local throwable_box = self:create_box(throwable_box_data)
+	local armor_box = self:create_box(armor_box_data)
+	local deployable_box = self:create_box(deployable_box_data)
+	local mask_box = self:create_box(mask_box_data)
+	local character_box = self:create_box(character_box_data)
+	local infamy_box = self:create_box(infamy_box_data)
+	local crew_box = self:create_box(crew_box_data)
+	local skill_box = self:create_box(skill_box_data)
+	local specialization_box = self:create_box(specialization_box_data)
 	local box_matrix = {
 		{
 			"character",
@@ -2786,7 +2813,18 @@ end
 
 function PlayerInventoryGui:_update_info_crew(name)
 	local color_ranges = {}
-	local text_string = managers.localization:text("menu_crew_management_help")
+	local text_string = managers.localization:text("menu_crew_management_help") .. "\n"
+
+	if managers.network:session() and not Network:is_server() then
+		local color_range = {
+			start = utf8.len(text_string),
+			color = tweak_data.screen_colors.important_1
+		}
+		text_string = text_string .. managers.localization:to_upper_text("menu_preferred_character_lobby_error") .. "\n"
+		color_range.stop = utf8.len(text_string)
+
+		table.insert(color_ranges, color_range)
+	end
 
 	self:set_info_text(text_string, color_ranges)
 end
@@ -3843,8 +3881,8 @@ function PlayerInventoryGui:create_box(params)
 				local panel_height = image_object.gui:h()
 				local tw = texture_width
 				local th = texture_height
-				local pw = panel_width
-				local ph = panel_height
+				local pw = panel_width * 1.1764705882352942
+				local ph = panel_height * 1.1764705882352942
 
 				if tw == 0 or th == 0 then
 					Application:error("[BlackMarketGuiSlotItem] BG Texture size error!:", "width", tw, "height", th)

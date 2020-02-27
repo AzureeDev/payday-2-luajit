@@ -84,6 +84,8 @@ function MoneyTweakData:init(tweak_data)
 		unknown = 5000,
 		safe = 4600,
 		prototype = 10000,
+		faberge_egg = 3000,
+		treasure = 3200,
 		counterfeit_money = 1100,
 		box_unknown = 10000,
 		black_tablet = 10000,

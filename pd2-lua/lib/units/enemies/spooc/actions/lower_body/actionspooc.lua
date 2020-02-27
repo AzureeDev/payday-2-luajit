@@ -153,6 +153,7 @@ function ActionSpooc:init(action_desc, common_data)
 	self._unit:damage():run_sequence_simple("turn_on_spook_lights")
 
 	local r = LevelsTweakData.LevelType.Russia
+	local f = LevelsTweakData.LevelType.Federales
 	local ai_type = tweak_data.levels:get_ai_group_type()
 	self._taunt_during_assault = "cloaker_taunt_during_assault"
 	self._taunt_after_assault = "cloaker_taunt_after_assault"
@@ -160,6 +161,9 @@ function ActionSpooc:init(action_desc, common_data)
 	if ai_type == r then
 		self._taunt_during_assault = "rcloaker_taunt_during_assault"
 		self._taunt_after_assault = "rcloaker_taunt_after_assault"
+	elseif ai_type == f then
+		self._taunt_during_assault = "mcloaker_taunt_during_assault"
+		self._taunt_after_assault = "mcloaker_taunt_after_assault"
 	end
 
 	local spooc_sound_events = self._common_data.char_tweak.spooc_sound_events or {}

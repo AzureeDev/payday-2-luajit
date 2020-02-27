@@ -363,7 +363,7 @@ function InventoryIconCreator:_get_weapon_skins()
 	}
 
 	for name, item_data in pairs(tweak_data.blackmarket.weapon_skins) do
-		local match_weapon_id = item_data.weapon_id or item_data.weapons[1]
+		local match_weapon_id = not item_data.is_a_color_skin and (item_data.weapon_id or item_data.weapons[1])
 
 		if match_weapon_id == weapon_id then
 			table.insert(t, name)

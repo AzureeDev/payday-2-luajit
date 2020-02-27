@@ -115,7 +115,9 @@ function Logic:_refresh_node_stack(...)
 
 		local selected_item = node:selected_item()
 
-		node:select_item(selected_item and selected_item:name())
+		if selected_item then
+			node:select_item(selected_item and selected_item:name())
+		end
 	end
 
 	self:_call_callback("renderer_refresh_node_stack")

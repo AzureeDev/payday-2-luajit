@@ -7257,6 +7257,160 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.escape
 			}
 		},
+		bex_1 = {
+			need_unlock_icons = true,
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D0",
+			ladder = "H_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D0",
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.unlock.outfit,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_10 = {
+			need_unlock_icons = true,
+			icon_id = "C_Vlad_H_SanMartinBank_Gunpowder",
+			sort_name = "C_Vlad_H_SanMartinBank_Gunpowder",
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.unlock.weapon_color,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
+		bex_11 = {
+			need_unlock_icons = true,
+			icon_id = "C_Vlad_H_SanMartinBank_Silencioso",
+			sort_name = "C_Vlad_H_SanMartinBank_Silencioso",
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.unlock.weapon_color,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_2 = {
+			need_unlock_icons = true,
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D1",
+			ladder = "H_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D1",
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.unlock.outfit,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_3 = {
+			ladder = "H_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D2",
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D2",
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_4 = {
+			need_unlock_icons = true,
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D3",
+			ladder = "H_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D3",
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.unlock.outfit,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_5 = {
+			ladder = "H_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D4",
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D4",
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_6 = {
+			need_unlock_icons = true,
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D5",
+			ladder = "H_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D5",
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.unlock.outfit,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_7 = {
+			need_unlock_icons = true,
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D6",
+			ladder = "H_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D6",
+			unlock_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.unlock.outfit,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_8 = {
+			ladder = "H_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_OD_D6",
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_OD_D6",
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		bex_9 = {
+			need_unlock_icons = true,
+			icon_id = "C_Vlad_H_SanMartinBank_HitMe",
+			sort_name = "C_Vlad_H_SanMartinBank_HitMe",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.unlock.mask,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.inventory.weapon,
+				tags.contracts.vlad
+			}
+		},
 		bph_1 = {
 			icon_id = "C_Locke_H_HellsIsland_AllDiffs_D0",
 			ladder = "H_HellsIsland",
@@ -9988,10 +10142,12 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		trk_cou_0 = {
+			need_unlock_icons = true,
 			icon_id = "C_Classics_H_Counterfeit_AllDiffs_D0",
 			ladder = "H_Counter",
 			sort_name = "C_Classics_H_Counterfeit_AllDiffs_D0",
 			additional_id = true,
+			unlock_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.normal,

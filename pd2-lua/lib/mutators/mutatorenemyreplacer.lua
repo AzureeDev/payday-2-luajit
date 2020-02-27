@@ -155,6 +155,14 @@ function MutatorEnemyReplacer:_get_unit_group_tank(difficulty_index)
 					russia = {
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_saiga/ene_akan_fbi_tank_saiga"),
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_r870/ene_akan_fbi_tank_r870")
+					},
+					murkywater = {
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_1/ene_murkywater_bulldozer_1"),
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2")
+					},
+					federales = {
+						Idstring("units/pd2_dlc_mad/characters/ene_swat_dozer_policia_federale_saiga/ene_swat_dozer_policia_federale_saiga"),
+						Idstring("units/pd2_dlc_mad/characters/ene_swat_dozer_policia_federale_r870/ene_swat_dozer_policia_federale_r870")
 					}
 				},
 				access = access_type_all
@@ -170,6 +178,14 @@ function MutatorEnemyReplacer:_get_unit_group_tank(difficulty_index)
 					russia = {
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_r870/ene_akan_fbi_tank_r870"),
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_rpk_lmg/ene_akan_fbi_tank_rpk_lmg")
+					},
+					murkywater = {
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2"),
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3")
+					},
+					federales = {
+						Idstring("units/pd2_dlc_mad/characters/ene_swat_dozer_policia_federale_saiga/ene_swat_dozer_policia_federale_saiga"),
+						Idstring("units/pd2_dlc_mad/characters/ene_swat_dozer_policia_federale_m249/ene_swat_dozer_policia_federale_m249")
 					}
 				},
 				access = access_type_all
@@ -187,6 +203,16 @@ function MutatorEnemyReplacer:_get_unit_group_tank(difficulty_index)
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_r870/ene_akan_fbi_tank_r870"),
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_saiga/ene_akan_fbi_tank_saiga"),
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_tank_rpk_lmg/ene_akan_fbi_tank_rpk_lmg")
+					},
+					murkywater = {
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_1/ene_murkywater_bulldozer_1"),
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2"),
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3")
+					},
+					federales = {
+						Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_saiga/ene_swat_dozer_policia_federale_saiga"),
+						Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_m249/ene_swat_dozer_policia_federale_m249"),
+						Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_r870/ene_swat_dozer_policia_federale_r870")
 					}
 				},
 				access = access_type_all
@@ -210,6 +236,14 @@ function MutatorEnemyReplacer:_get_unit_group_shield(difficulty_index)
 					russia = {
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_sr2_smg/ene_akan_fbi_shield_sr2_smg"),
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_shield_c45/ene_akan_cs_shield_c45")
+					},
+					murkywater = {
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield"),
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+					},
+					federales = {
+						Idstring("units/payday2/characters/ene_shield_1/ene_shield_1"),
+						Idstring("units/payday2/characters/ene_shield_2/ene_shield_2")
 					}
 				},
 				access = access_type_all
@@ -223,6 +257,12 @@ function MutatorEnemyReplacer:_get_unit_group_shield(difficulty_index)
 					},
 					russia = {
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_dw_sr2_smg/ene_akan_fbi_shield_dw_sr2_smg")
+					},
+					murkywater = {
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+					},
+					federales = {
+						Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield")
 					}
 				},
 				access = access_type_all
@@ -243,6 +283,12 @@ function MutatorEnemyReplacer:_get_unit_group_taser(difficulty_index)
 				},
 				russia = {
 					Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_tazer/ene_murkywater_tazer")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -263,6 +309,12 @@ function MutatorEnemyReplacer:_get_unit_group_spooc(difficulty_index)
 					},
 					russia = {
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")
+					},
+					murkywater = {
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_cloaker/ene_murkywater_cloaker")
+					},
+					federales = {
+						Idstring("units/pd2_dlc_bex/characters/ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale")
 					}
 				},
 				access = access_type_all
@@ -276,6 +328,12 @@ function MutatorEnemyReplacer:_get_unit_group_spooc(difficulty_index)
 					},
 					russia = {
 						Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_spooc_asval_smg/ene_akan_fbi_spooc_asval_smg")
+					},
+					murkywater = {
+						Idstring("units/pd2_dlc_bph/characters/ene_murkywater_cloaker/ene_murkywater_cloaker")
+					},
+					federales = {
+						Idstring("units/pd2_dlc_bex/characters/ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale")
 					}
 				},
 				access = access_type_all
@@ -298,6 +356,14 @@ function MutatorEnemyReplacer:_get_unit_group_medic(difficulty_index)
 				russia = {
 					Idstring("units/payday2/characters/ene_medic_r870/ene_medic_r870"),
 					Idstring("units/payday2/characters/ene_medic_m4/ene_medic_m4")
+				},
+				murkywater = {
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic/ene_murkywater_medic"),
+					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic_r870/ene_murkywater_medic_r870")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale/ene_swat_medic_policia_federale"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale_r870/ene_swat_medic_policia_federale_r870")
 				}
 			},
 			access = access_type_all
@@ -353,6 +419,14 @@ function MutatorMediDozer:modify_unit_categories(group_ai_tweak, difficulty_inde
 			russia = {
 				Idstring("units/payday2/characters/ene_medic_m4/ene_medic_m4"),
 				Idstring("units/payday2/characters/ene_medic_m4/ene_medic_m4")
+			},
+			murkywater = {
+				Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic/ene_murkywater_medic"),
+				Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic/ene_murkywater_medic")
+			},
+			federales = {
+				Idstring("units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale/ene_swat_medic_policia_federale"),
+				Idstring("units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale/ene_swat_medic_policia_federale")
 			}
 		},
 		access = access_type_all
@@ -367,6 +441,14 @@ function MutatorMediDozer:modify_unit_categories(group_ai_tweak, difficulty_inde
 			russia = {
 				Idstring("units/payday2/characters/ene_medic_r870/ene_medic_r870"),
 				Idstring("units/payday2/characters/ene_medic_r870/ene_medic_r870")
+			},
+			murkywater = {
+				Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic_r870/ene_murkywater_medic_r870"),
+				Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic_r870/ene_murkywater_medic_r870")
+			},
+			federales = {
+				Idstring("units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale_r870/ene_swat_medic_policia_federale_r870"),
+				Idstring("units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale_r870/ene_swat_medic_policia_federale_r870")
 			}
 		},
 		access = access_type_all
@@ -436,6 +518,12 @@ function MutatorTitandozers:_get_unit_group_titandozer(difficulty_index)
 					Idstring("units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4")
 				},
 				russia = {
+					Idstring("units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4")
+				},
+				murkywater = {
+					Idstring("units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4")
+				},
+				federales = {
 					Idstring("units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4")
 				}
 			},

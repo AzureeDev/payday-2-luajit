@@ -904,6 +904,9 @@ function MissionEndState:chk_complete_heist_achievements()
 						"civilian_female",
 						"bank_manager"
 					}
+
+					table.insert(civilians, "civilian_mariachi")
+
 					local count = nil
 
 					for i, name in ipairs(civilians) do

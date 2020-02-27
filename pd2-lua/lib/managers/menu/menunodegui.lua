@@ -42,34 +42,36 @@ function MenuNodeGui:align_line_padding()
 	return self._align_line_padding
 end
 
-function MenuNodeGui:_mid_align()
+function MenuNodeGui:_mid_align(align_line_proportions)
 	local safe_rect = self:_scaled_size()
 
-	return safe_rect.width * self._align_line_proportions
+	return safe_rect.width * (align_line_proportions or self._align_line_proportions)
 end
 
 function MenuNodeGui:_right_align(align_line_proportions)
-	local safe_rect = self:_scaled_size()
+	local align = self:_mid_align(align_line_proportions)
 
-	return safe_rect.width * (align_line_proportions or self._align_line_proportions) + self._align_line_padding
+	return align + self._align_line_padding
 end
 
 function MenuNodeGui:_left_align(align_line_proportions)
-	local safe_rect = self:_scaled_size()
+	local align = self:_mid_align(align_line_proportions)
 
-	return safe_rect.width * (align_line_proportions or self._align_line_proportions) - self._align_line_padding
+	return align - self._align_line_padding
 end
 
-function MenuNodeGui:_world_right_align()
+function MenuNodeGui:_world_right_align(align_line_proportions)
 	local safe_rect = self:_scaled_size()
+	local align = self:_right_align(align_line_proportions)
 
-	return safe_rect.x + safe_rect.width * self._align_line_proportions + self._align_line_padding
+	return safe_rect.x + align
 end
 
-function MenuNodeGui:_world_left_align()
+function MenuNodeGui:_world_left_align(align_line_proportions)
 	local safe_rect = self:_scaled_size()
+	local align = self:_left_align(align_line_proportions)
 
-	return safe_rect.x + safe_rect.width * self._align_line_proportions - self._align_line_padding
+	return safe_rect.x + align
 end
 
 local mvector_tl = Vector3()
@@ -1337,6 +1339,10 @@ function MenuNodeGui:_clear_gui()
 		if alive(row_item.gui_pd2_panel) then
 			row_item.gui_pd2_panel:parent():remove(row_item.gui_pd2_panel)
 		end
+
+		if row_item.item.clear_gui then
+			row_item.item:clear_gui(row_item)
+		end
 	end
 
 	MenuNodeGui.super._clear_gui(self)
@@ -1551,6 +1557,10 @@ function MenuNodeGui:_align_marker(row_item)
 
 	if row_item.type == "chat" then
 		self._marker_data.gradient:set_visible(false)
+	end
+
+	if row_item.item.align_marker then
+		row_item.item:align_marker(row_item, self._marker_data, self)
 	end
 end
 

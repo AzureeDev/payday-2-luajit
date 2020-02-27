@@ -3,7 +3,7 @@ MissionAccessCamera = MissionAccessCamera or class()
 function MissionAccessCamera:init(unit)
 	self._unit = unit
 	self._camera = World:create_camera()
-	self._default_fov = 57
+	self._default_fov = 75
 	self._fov = self._default_fov
 
 	self._camera:set_fov(self._default_fov)

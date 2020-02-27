@@ -481,7 +481,7 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 		return
 	end
 
-	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list = tweak_data.statistics:statistics_table()
+	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list = tweak_data.statistics:statistics_table()
 	local stats = self:check_version()
 	self._global.play_time.minutes = math.ceil(self._global.play_time.minutes + session_time_minutes)
 	local current_time = math.floor(self._global.play_time.minutes / 60)
@@ -755,6 +755,24 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 			}
 		end
 
+		local primary = managers.blackmarket:equipped_primary()
+
+		if primary and primary.cosmetics and table.contains(weapon_color_list, primary.cosmetics.id) then
+			stats["weapon_color_used_" .. primary.cosmetics.id] = {
+				value = 1,
+				type = "int"
+			}
+		end
+
+		local secondary = managers.blackmarket:equipped_secondary()
+
+		if secondary and secondary.cosmetics and table.contains(weapon_color_list, secondary.cosmetics.id) then
+			stats["weapon_color_used_" .. secondary.cosmetics.id] = {
+				value = 1,
+				type = "int"
+			}
+		end
+
 		stats["difficulty_" .. Global.game_settings.difficulty] = {
 			value = 1,
 			type = "int"
@@ -1017,7 +1035,7 @@ function StatisticsManager:publish_equipped_to_steam()
 	end
 
 	local stats = {}
-	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list = tweak_data.statistics:statistics_table()
+	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, _ = tweak_data.statistics:statistics_table()
 	local mask_name = managers.blackmarket:equipped_mask().mask_id
 	local mask_index = self:_table_contains(mask_list, mask_name)
 

@@ -71,6 +71,10 @@ function ConcussionGrenade:_can_stun_unit(unit)
 		unit_name = unit:base()._tweak_table
 	end
 
+	if alive(unit) and unit:brain() and unit:brain().is_hostage and unit:brain():is_hostage() then
+		return false
+	end
+
 	if unit_name then
 		return not (tweak_data.character[unit_name] or {}).immune_to_concussion
 	else

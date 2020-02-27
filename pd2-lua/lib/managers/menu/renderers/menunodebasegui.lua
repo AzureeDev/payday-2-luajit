@@ -100,25 +100,6 @@ function MenuNodeBaseGui:create_text_button(params)
 		button_panel:set_bottom(bottom)
 	end
 
-	local left, right, top, bottom = nil
-
-	for _, button in ipairs(self._text_buttons) do
-		if alive(button.text) then
-			left = button_panel:left() < button.panel:right()
-			right = button.panel:left() < button_panel:right()
-			top = button_panel:top() < button.panel:bottom()
-			bottom = button.panel:top() < button_panel:bottom()
-
-			if left and right and top and bottom then
-				if button.panel:visible() and button_panel:visible() then
-					Application:error("[MenuNodeBaseGui:create_text_button] Text button intersects with another text button", text, button.text:text())
-				else
-					Application:debug("[MenuNodeBaseGui:create_text_button] Text button intersects with another text button", text, button_panel:visible(), button.text:text(), button.panel:visible())
-				end
-			end
-		end
-	end
-
 	table.insert(self._text_buttons, {
 		highlighted = false,
 		panel = button_panel,

@@ -1725,7 +1725,10 @@ function NetworkPeer:_chk_outfit_loading_complete()
 	self._loading_outfit_assets = nil
 
 	self:update_character_visual_state()
-	managers.network:session():on_peer_outfit_loaded(self)
+
+	if managers.network:session() then
+		managers.network:session():on_peer_outfit_loaded(self)
+	end
 
 	if self._outfit_loaded_clbks then
 		for _, clbk in ipairs(self._outfit_loaded_clbks) do

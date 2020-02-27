@@ -1223,6 +1223,49 @@ function EconomyTweakData:init()
 			weapon_skins = table.list_add(self.contents.ait_01.contains.weapon_skins, self.contents.ait_01_legendary.contains.weapon_skins)
 		}
 	}
+	self.contents.nin_01 = {
+		def_id = 10058,
+		contains = {
+			weapon_skins = {
+				"amcar_nin",
+				"glock_18c_nin",
+				"shepheard_nin",
+				"x_chinchilla_nin",
+				"deagle_nin",
+				"corgi_nin",
+				"scorpion_nin",
+				"tec9_nin",
+				"ray_nin",
+				"ak74_nin",
+				"winchester1874_nin",
+				"akm_nin",
+				"par_nin",
+				"rota_nin",
+				"legacy_nin"
+			},
+			contents = {
+				"nin_01_legendary"
+			}
+		}
+	}
+	self.contents.nin_01_legendary = {
+		def_id = 10059,
+		contains = {
+			weapon_skins = {
+				"saw_nin"
+			}
+		},
+		rarity = "legendary"
+	}
+	self.bundles.nin_01 = {
+		def_id = 30009,
+		dlc_id = "892410",
+		quality = "mint",
+		bonus = false,
+		contains = {
+			weapon_skins = table.list_add(self.contents.nin_01.contains.weapon_skins, self.contents.nin_01_legendary.contains.weapon_skins)
+		}
+	}
 	self.safes.overkill_01 = {
 		def_id = 50000,
 		promo = true,
@@ -1234,104 +1277,118 @@ function EconomyTweakData:init()
 		dlc = "complete_overkill_pack"
 	}
 	self.safes.event_01 = {
+		free = true,
+		def_id = 50001,
+		convert_drill = true,
 		drill = "event_01",
 		content = "event_01",
 		unit_name = "units/payday2_cash/safes/eco_safe_event_01/eco_safe_event_01",
 		name_id = "bm_menu_safe_event_01",
-		texture_bundle_folder = "cash/safes/cf15",
-		market_link = "https://steamcommunity.com/market/listings/218620/Crimefest%202%20Safe"
+		texture_bundle_folder = "cash/safes/cf15"
 	}
 	self.safes.weapon_01 = {
+		free = true,
+		def_id = 50002,
+		convert_drill = true,
 		drill = "weapon_01",
 		content = "weapon_01",
 		unit_name = "units/payday2_cash/safes/eco_safe_weapon_01/eco_safe_weapon_01",
 		name_id = "bm_menu_safe_weapon_01",
-		texture_bundle_folder = "cash/safes/sputnik",
-		market_link = "https://steamcommunity.com/market/listings/218620/Sputnik%20Safe"
+		texture_bundle_folder = "cash/safes/sputnik"
 	}
 	self.safes.event_red = {
 		def_id = 50003,
 		free = true,
+		convert_drill = true,
 		drill = "event_red",
 		content = "event_red",
 		unit_name = "units/payday2_cash/safes/red/safe/eco_safe_event_red",
 		name_id = "bm_menu_safe_event_red",
 		texture_bundle_folder = "cash/safes/red",
-		achievement = "green_7",
-		market_link = "http://steamcommunity.com/market/listings/218620/First%20World%20Safe"
+		achievement = "green_7"
 	}
 	self.safes.event_dinner = {
 		def_id = 50004,
 		free = true,
+		convert_drill = true,
 		drill = "event_dinner",
 		content = "event_dinner",
 		unit_name = "units/payday2_cash/safes/dinner/safe/eco_safe_event_dinner",
 		name_id = "bm_menu_safe_event_dinner",
 		texture_bundle_folder = "cash/safes/dinner",
-		achievement = "farm_6",
-		market_link = "http://steamcommunity.com/market/listings/218620/Slaughter%20Safe"
+		achievement = "farm_6"
 	}
 	self.safes.dallas_01 = {
+		free = true,
+		def_id = 50005,
+		convert_drill = true,
 		drill = "dallas_01",
 		content = "dallas_01",
 		name_id = "bm_menu_safe_dallas_01",
 		unit_name = "units/payday2_cash/safes/dallas/safe/eco_safe_dallas",
-		texture_bundle_folder = "cash/safes/dallas",
-		market_link = "https://steamcommunity.com/market/listings/218620/Dallas%20Safe"
+		texture_bundle_folder = "cash/safes/dallas"
 	}
 	self.safes.surf_01 = {
 		drill = "surf_01",
 		content = "surf_01",
+		def_id = 50006,
+		free = true,
+		convert_drill = true,
 		name_id = "bm_menu_safe_surf_01",
 		unit_name = "units/payday2_cash/safes/surf/safe/eco_safe_surf",
-		texture_bundle_folder = "cash/safes/surf",
-		market_link = "https://steamcommunity.com/market/listings/218620/Bodhi%20Safe"
+		texture_bundle_folder = "cash/safes/surf"
 	}
 	self.safes.event_flake = {
 		def_id = 50007,
 		free = true,
+		convert_drill = true,
 		drill = "event_flake",
 		content = "event_flake",
 		name_id = "bm_menu_safe_event_flake",
 		unit_name = "units/payday2_cash/safes/flake/safe/eco_safe_event_flake",
 		texture_bundle_folder = "cash/safes/flake",
-		achievement = "flake_1",
-		market_link = "http://steamcommunity.com/market/listings/218620/Christmas%20Safe"
+		achievement = "flake_1"
 	}
 	self.safes.event_bah = {
 		def_id = 50008,
 		free = true,
+		convert_drill = true,
 		drill = "event_bah",
 		content = "event_bah",
 		unit_name = "units/payday2_cash/safes/bah/safe/eco_safe_bah",
 		name_id = "bm_menu_safe_event_bah",
 		texture_bundle_folder = "cash/safes/bah",
-		achievement = "bah_1",
-		market_link = "http://steamcommunity.com/market/listings/218620/Goat%20Safe"
+		achievement = "bah_1"
 	}
 	self.safes.pack_01 = {
+		free = true,
+		def_id = 50009,
+		convert_drill = true,
 		drill = "pack_01",
 		content = "pack_01",
 		name_id = "bm_menu_safe_pack_01",
 		unit_name = "units/payday2_cash/safes/pack/safe/eco_safe_pack",
-		texture_bundle_folder = "cash/safes/pack",
-		market_link = "https://steamcommunity.com/market/listings/218620/Wolf%20Safe"
+		texture_bundle_folder = "cash/safes/pack"
 	}
 	self.safes.cola_01 = {
+		free = true,
+		convert_drill = true,
+		def_id = 50010,
 		drill = "cola_01",
 		content = "cola_01",
 		name_id = "bm_menu_safe_cola_01",
 		unit_name = "units/payday2_cash/safes/cola/safe/eco_safe_cola",
-		texture_bundle_folder = "cash/safes/cola",
-		market_link = "https://steamcommunity.com/market/listings/218620/Jimmy%20Safe"
+		texture_bundle_folder = "cash/safes/cola"
 	}
 	self.safes.burn_01 = {
+		free = true,
+		convert_drill = true,
+		def_id = 50011,
 		drill = "burn_01",
 		content = "burn_01",
 		name_id = "bm_menu_safe_burn_01",
 		unit_name = "units/payday2_cash/safes/burn/safe/eco_safe_burn",
-		texture_bundle_folder = "cash/safes/burn",
-		market_link = "https://steamcommunity.com/market/listings/218620/Sydney%20Safe"
+		texture_bundle_folder = "cash/safes/burn"
 	}
 	self.safes.buck_01 = {
 		free = true,
@@ -1339,18 +1396,17 @@ function EconomyTweakData:init()
 		content = "buck_01",
 		name_id = "bm_menu_safe_buck_01",
 		unit_name = "units/payday2_cash/safes/buck/safe/eco_safe_buck",
-		texture_bundle_folder = "cash/safes/buck",
-		market_link = "https://steamcommunity.com/market/listings/218620/Biker%20Safe"
+		texture_bundle_folder = "cash/safes/buck"
 	}
 	self.safes.same_01 = {
 		free = true,
+		prio = 10,
 		drill = "same_01",
 		content = "same_01",
 		bundle = "same_01",
 		name_id = "bm_menu_safe_same_01",
 		unit_name = "units/payday2_cash/safes/same/safe/eco_safe_same",
-		texture_bundle_folder = "cash/safes/same",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe"
+		texture_bundle_folder = "cash/safes/same"
 	}
 	self.safes.grunt_01 = {
 		free = true,
@@ -1358,8 +1414,7 @@ function EconomyTweakData:init()
 		content = "grunt_01",
 		name_id = "bm_menu_safe_grunt_01",
 		unit_name = "units/payday2_cash/safes/grunt/safe/eco_safe_grunt",
-		texture_bundle_folder = "cash/safes/grunt",
-		market_link = "https://steamcommunity.com/market/listings/218620/Chains%20Safe"
+		texture_bundle_folder = "cash/safes/grunt"
 	}
 	self.safes.lones_01 = {
 		free = true,
@@ -1367,18 +1422,17 @@ function EconomyTweakData:init()
 		content = "lones_01",
 		name_id = "bm_menu_safe_lones_01",
 		unit_name = "units/payday2_cash/safes/lones/safe/eco_safe_lones",
-		texture_bundle_folder = "cash/safes/lones",
-		market_link = "https://steamcommunity.com/market/listings/218620/Hoxton%20Safe"
+		texture_bundle_folder = "cash/safes/lones"
 	}
 	self.safes.smosh_01 = {
 		free = true,
+		prio = 10,
 		drill = "smosh_01",
 		content = "smosh_01",
 		bundle = "smosh_01",
 		name_id = "bm_menu_safe_smosh_01",
 		unit_name = "units/payday2_cash/safes/smosh/safe/eco_safe_smosh",
-		texture_bundle_folder = "cash/safes/smosh",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%202"
+		texture_bundle_folder = "cash/safes/smosh"
 	}
 	self.safes.sfs_01 = {
 		free = true,
@@ -1386,8 +1440,7 @@ function EconomyTweakData:init()
 		content = "sfs_01",
 		name_id = "bm_menu_safe_sfs_01",
 		unit_name = "units/payday2_cash/safes/sfs/safe/eco_safe_sfs",
-		texture_bundle_folder = "cash/safes/sfs",
-		market_link = "https://steamcommunity.com/market/listings/218620/Scarface%20Safe"
+		texture_bundle_folder = "cash/safes/sfs"
 	}
 	self.safes.wac_01 = {
 		free = true,
@@ -1395,27 +1448,26 @@ function EconomyTweakData:init()
 		content = "wac_01",
 		name_id = "bm_menu_safe_wac_01",
 		unit_name = "units/payday2_cash/safes/wac/safe/eco_safe_wac",
-		texture_bundle_folder = "cash/safes/wac",
-		market_link = "https://steamcommunity.com/market/listings/218620/John%20Wick%20Safe"
+		texture_bundle_folder = "cash/safes/wac"
 	}
 	self.safes.cs3_01 = {
 		free = true,
+		prio = 10,
 		drill = "cs3_01",
 		content = "cs3_01",
 		bundle = "cs3_01",
 		name_id = "bm_menu_safe_cs3_01",
 		unit_name = "units/payday2_cash/safes/cs3/safe/eco_safe_cs3",
-		texture_bundle_folder = "cash/safes/cs3",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%203"
+		texture_bundle_folder = "cash/safes/cs3"
 	}
 	self.safes.cvc_01 = {
 		free = true,
+		prio = 1,
 		drill = "cvc_01",
 		content = "cvc_01",
 		name_id = "bm_menu_safe_cvc_01",
 		unit_name = "units/payday2_cash/safes/cvc/safe/eco_safe_cvc",
-		texture_bundle_folder = "cash/safes/cvc",
-		market_link = "https://steamcommunity.com/market/listings/218620/Armor%20Safe"
+		texture_bundle_folder = "cash/safes/cvc"
 	}
 	self.safes.mxs_01 = {
 		free = true,
@@ -1423,27 +1475,26 @@ function EconomyTweakData:init()
 		content = "mxs_01",
 		name_id = "bm_menu_safe_mxs_01",
 		unit_name = "units/payday2_cash/safes/mxs/safe/eco_safe_mxs",
-		texture_bundle_folder = "cash/safes/mxs",
-		market_link = "https://steamcommunity.com/market/listings/218620/Sangres%20Safe"
+		texture_bundle_folder = "cash/safes/mxs"
 	}
 	self.safes.cs4_01 = {
 		free = true,
+		prio = 10,
 		drill = "cs4_01",
 		content = "cs4_01",
 		bundle = "cs4_01",
 		name_id = "bm_menu_safe_cs4_01",
 		unit_name = "units/payday2_cash/safes/cs4/safe/eco_safe_cs4",
-		texture_bundle_folder = "cash/safes/cs4",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%204"
+		texture_bundle_folder = "cash/safes/cs4"
 	}
 	self.safes.ast_01 = {
 		free = true,
+		prio = 1,
 		drill = "ast_01",
 		content = "ast_01",
 		name_id = "bm_menu_safe_ast_01",
 		unit_name = "units/payday2_cash/safes/ast/safe/eco_safe_ast",
-		texture_bundle_folder = "cash/safes/ast",
-		market_link = "https://steamcommunity.com/market/listings/218620/Armor%20Safe%202%3A%20WW2"
+		texture_bundle_folder = "cash/safes/ast"
 	}
 	self.safes.wwt_01 = {
 		free = true,
@@ -1451,38 +1502,37 @@ function EconomyTweakData:init()
 		content = "wwt_01",
 		name_id = "bm_menu_safe_wwt_01",
 		unit_name = "units/payday2_cash/safes/wwt/safe/eco_safe_wwt",
-		texture_bundle_folder = "cash/safes/wwt",
-		market_link = "https://steamcommunity.com/market/listings/218620/Aldstone%27s%20Heritage%20Safe"
+		texture_bundle_folder = "cash/safes/wwt"
 	}
 	self.safes.skf_01 = {
 		free = true,
+		prio = 10,
 		drill = "skf_01",
 		content = "skf_01",
 		bundle = "skf_01",
 		name_id = "bm_menu_safe_skf_01",
 		unit_name = "units/payday2_cash/safes/skf/safe/eco_safe_skf",
-		texture_bundle_folder = "cash/safes/skf",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%205"
+		texture_bundle_folder = "cash/safes/skf"
 	}
 	self.safes.cas_01 = {
 		free = true,
+		prio = 11,
 		drill = "cas_01",
 		content = "cas_01",
 		bundle = "cas_01",
 		name_id = "bm_menu_safe_cas_01",
 		unit_name = "units/payday2_cash/safes/cas/safe/eco_safe_cas",
-		texture_bundle_folder = "cash/safes/cas",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Armor%20Safe%201"
+		texture_bundle_folder = "cash/safes/cas"
 	}
 	self.safes.css_01 = {
 		free = true,
+		prio = 10,
 		drill = "css_01",
 		content = "css_01",
 		bundle = "css_01",
 		name_id = "bm_menu_safe_css_01",
 		unit_name = "units/payday2_cash/safes/css/safe/eco_safe_css",
-		texture_bundle_folder = "cash/safes/css",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%206"
+		texture_bundle_folder = "cash/safes/css"
 	}
 	self.safes.dss_01 = {
 		free = true,
@@ -1490,28 +1540,37 @@ function EconomyTweakData:init()
 		content = "dss_01",
 		name_id = "bm_menu_safe_dss_01",
 		unit_name = "units/payday2_cash/safes/dss/safe/eco_safe_dss",
-		texture_bundle_folder = "cash/safes/dss",
-		market_link = "https://steamcommunity.com/market/listings/218620/Duke%20Safe"
+		texture_bundle_folder = "cash/safes/dss"
 	}
 	self.safes.cat_01 = {
 		free = true,
+		prio = 10,
 		drill = "cat_01",
 		content = "cat_01",
 		bundle = "cat_01",
 		name_id = "bm_menu_safe_cat_01",
 		unit_name = "units/payday2_cash/safes/cat/safe/eco_safe_cat",
-		texture_bundle_folder = "cash/safes/cat",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%207"
+		texture_bundle_folder = "cash/safes/cat"
 	}
 	self.safes.ait_01 = {
 		free = true,
+		prio = 10,
 		drill = "ait_01",
 		content = "ait_01",
 		bundle = "ait_01",
 		name_id = "bm_menu_safe_ait_01",
 		unit_name = "units/payday2_cash/safes/ait/safe/eco_safe_ait",
-		texture_bundle_folder = "cash/safes/ait",
-		market_link = "https://steamcommunity.com/market/listings/218620/Community%20Safe%208"
+		texture_bundle_folder = "cash/safes/ait"
+	}
+	self.safes.nin_01 = {
+		free = true,
+		prio = 10,
+		drill = "nin_01",
+		content = "nin_01",
+		bundle = "nin_01",
+		name_id = "bm_menu_safe_nin_01",
+		unit_name = "units/payday2_cash/safes/nin/safe/eco_safe_nin",
+		texture_bundle_folder = "cash/safes/nin"
 	}
 	self.drills.overkill_01 = {
 		safe = "overkill_01",
@@ -1526,7 +1585,7 @@ function EconomyTweakData:init()
 	self.drills.event_01 = {
 		safe = "event_01",
 		def_id = 70001,
-		price = "2.49",
+		force_include = true,
 		unit_name = "units/payday2_cash/drills/eco_drill_event_01/eco_drill_event_01",
 		name_id = "bm_menu_drill_event_01",
 		desc_id = "bm_menu_drill_event_01_desc",
@@ -1535,7 +1594,7 @@ function EconomyTweakData:init()
 	self.drills.weapon_01 = {
 		safe = "weapon_01",
 		def_id = 70002,
-		price = "2.49",
+		force_include = true,
 		unit_name = "units/payday2_cash/drills/eco_drill_weapon_01/eco_drill_weapon_01",
 		name_id = "bm_menu_drill_weapon_01",
 		desc_id = "bm_menu_drill_weapon_01_desc",
@@ -1564,7 +1623,7 @@ function EconomyTweakData:init()
 	self.drills.dallas_01 = {
 		safe = "dallas_01",
 		def_id = 70005,
-		price = "2.49",
+		force_include = true,
 		name_id = "bm_menu_drill_dallas_01",
 		desc_id = "bm_menu_drill_dallas_01_desc",
 		unit_name = "units/payday2_cash/safes/dallas/drill/eco_drill_dallas",
@@ -1573,7 +1632,7 @@ function EconomyTweakData:init()
 	self.drills.surf_01 = {
 		def_id = 70006,
 		safe = "surf_01",
-		price = "2.49",
+		force_include = true,
 		unit_name = "units/payday2_cash/safes/surf/drill/eco_drill_surf",
 		name_id = "bm_menu_drill_surf",
 		desc_id = "bm_menu_drill_surf_desc",
@@ -1602,7 +1661,7 @@ function EconomyTweakData:init()
 	self.drills.pack_01 = {
 		safe = "pack_01",
 		def_id = 70009,
-		price = "2.49",
+		force_include = true,
 		name_id = "bm_menu_drill_pack_01",
 		desc_id = "bm_menu_drill_pack_01_desc",
 		unit_name = "units/payday2_cash/safes/pack/drill/eco_drill_pack",
@@ -1611,7 +1670,7 @@ function EconomyTweakData:init()
 	self.drills.cola_01 = {
 		safe = "cola_01",
 		def_id = 70010,
-		price = "2.49",
+		force_include = true,
 		name_id = "bm_menu_drill_cola_01",
 		desc_id = "bm_menu_drill_cola_01_desc",
 		unit_name = "units/payday2_cash/safes/cola/drill/eco_drill_cola",
@@ -1620,7 +1679,7 @@ function EconomyTweakData:init()
 	self.drills.burn_01 = {
 		safe = "burn_01",
 		def_id = 70011,
-		price = "2.49",
+		force_include = true,
 		name_id = "bm_menu_drill_burn_01",
 		desc_id = "bm_menu_drill_burn_01_desc",
 		unit_name = "units/payday2_cash/safes/burn/drill/eco_drill_burn",
@@ -1701,6 +1760,10 @@ function EconomyTweakData:init()
 	self.drills.ait_01 = {
 		safe = "ait_01",
 		unit_name = "units/payday2_cash/safes/ait/drill/eco_drill_ait"
+	}
+	self.drills.nin_01 = {
+		safe = "nin_01",
+		unit_name = "units/payday2_cash/safes/nin/drill/eco_drill_nin"
 	}
 	self.bonuses = {
 		concealment_p1 = {}

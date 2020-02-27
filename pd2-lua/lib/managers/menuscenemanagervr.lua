@@ -120,6 +120,7 @@ function MenuSceneManagerVR:_set_up_templates()
 		"lobby4",
 		"inventory",
 		"blackmarket_crafting",
+		"blackmarket_weapon_color",
 		"safe",
 		"blackmarket_customize",
 		"blackmarket_character",
@@ -148,7 +149,8 @@ function MenuSceneManagerVR:_set_up_templates()
 	local item_templates = {
 		"blackmarket_item",
 		"blackmarket_mask",
-		"blackmarket_crafting"
+		"blackmarket_crafting",
+		"blackmarket_weapon_color"
 	}
 
 	for _, template in ipairs(item_templates) do

@@ -1493,6 +1493,48 @@ function MenuManager:show_failed_tradable_item_dialog()
 	managers.system_menu:show(dialog_data)
 end
 
+function MenuManager:show_accept_drills_to_safes(drills_to_convert, drills_counter)
+	local string_list = ""
+	local drill_tweak = nil
+	local converted_list = {}
+	local drill_strings = {}
+
+	for drill, data in pairs(drills_counter) do
+		drill_tweak = tweak_data.economy.drills[drill]
+		drill_strings[drill] = managers.localization:text(drill_tweak.name_id)
+
+		table.insert(converted_list, drill)
+	end
+
+	table.sort(converted_list, function (x, y)
+		return drill_strings[x] < drill_strings[y]
+	end)
+
+	for index, drill in ipairs(converted_list) do
+		drill_tweak = tweak_data.economy.drills[drill]
+		string_list = string_list .. "   " .. managers.localization:text("dialog_tradable_drill_amount", {
+			amount = tostring(drills_counter[drill]),
+			item = drill_strings[drill]
+		}) .. "\n"
+	end
+
+	local dialog_data = {
+		drills_to_convert = drills_to_convert,
+		title = managers.localization:text("dialog_tradable_item_store_title"),
+		text = managers.localization:text("dialog_tradable_drills_converted", {
+			list = string_list
+		})
+	}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
+
+	managers.system_menu:show_drillconvert(dialog_data)
+end
+
 function MenuManager:show_confirm_blackmarket_sell_no_slot(params)
 	local dialog_data = {
 		title = managers.localization:text("dialog_bm_mask_sell_title"),

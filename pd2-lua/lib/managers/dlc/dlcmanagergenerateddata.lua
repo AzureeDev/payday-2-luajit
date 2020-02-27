@@ -1,3 +1,11 @@
+function GenericDLCManager:has_afp()
+	return self:is_dlc_unlocked("afp")
+end
+
+function GenericDLCManager:has_bex()
+	return self:is_dlc_unlocked("bex")
+end
+
 function GenericDLCManager:has_flm()
 	return self:is_dlc_unlocked("flm")
 end
@@ -8,6 +16,10 @@ end
 
 function GenericDLCManager:has_maw()
 	return self:is_dlc_unlocked("maw")
+end
+
+function GenericDLCManager:has_mbs()
+	return self:is_dlc_unlocked("mbs")
 end
 
 function GenericDLCManager:has_mex()
@@ -46,6 +58,10 @@ function GenericDLCManager:has_sms()
 	return self:is_dlc_unlocked("sms")
 end
 
+function GenericDLCManager:has_svc()
+	return self:is_dlc_unlocked("svc")
+end
+
 function GenericDLCManager:has_tam()
 	return self:is_dlc_unlocked("tam")
 end
@@ -66,11 +82,25 @@ function GenericDLCManager:has_trd()
 	return self:is_dlc_unlocked("trd")
 end
 
+function GenericDLCManager:has_wcs()
+	return self:is_dlc_unlocked("wcs")
+end
+
 function GenericDLCManager:has_xmn()
 	return self:is_dlc_unlocked("xmn")
 end
 
 function WINDLCManager:init_generated()
+	Global.dlc_manager.all_dlc_data.afp = {
+		app_id = "1255151",
+		no_install = true,
+		webpage = "ovk.af/bexwpyb"
+	}
+	Global.dlc_manager.all_dlc_data.bex = {
+		app_id = "1252200",
+		no_install = true,
+		webpage = "ovk.af/bexheistyb"
+	}
 	Global.dlc_manager.all_dlc_data.flm = {
 		app_id = "218620",
 		no_install = true
@@ -82,6 +112,11 @@ function WINDLCManager:init_generated()
 	Global.dlc_manager.all_dlc_data.maw = {
 		app_id = "218620",
 		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.mbs = {
+		app_id = "1255150",
+		no_install = true,
+		webpage = "ovk.af/bextp2yb"
 	}
 	Global.dlc_manager.all_dlc_data.mex = {
 		app_id = "1184411",
@@ -121,6 +156,10 @@ function WINDLCManager:init_generated()
 		app_id = "218620",
 		no_install = true
 	}
+	Global.dlc_manager.all_dlc_data.svc = {
+		app_id = "1257320",
+		no_install = true
+	}
 	Global.dlc_manager.all_dlc_data.tam = {
 		app_id = "218620",
 		no_install = true
@@ -141,6 +180,11 @@ function WINDLCManager:init_generated()
 		app_id = "1184410",
 		no_install = true,
 		webpage = "https://ovk.af/ingame2TailorPack"
+	}
+	Global.dlc_manager.all_dlc_data.wcs = {
+		app_id = "1255152",
+		no_install = true,
+		webpage = "ovk.af/bexwcp1yb"
 	}
 	Global.dlc_manager.all_dlc_data.xmn = {
 		app_id = "218620",

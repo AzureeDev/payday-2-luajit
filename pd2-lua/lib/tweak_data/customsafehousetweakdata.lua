@@ -1510,6 +1510,17 @@ function CustomSafehouseTweakData:_init_trophies(tweak_data)
 			self:_achievement("nmh_1")
 		}
 	})
+	table.insert(self.trophies, {
+		name_id = "trophy_bex",
+		image_id = "safehouse_trophies_preview_bex",
+		objective_id = "trophy_bex_objective",
+		id = "trophy_bex",
+		gives_reward = false,
+		desc_id = "trophy_bex_desc",
+		objectives = {
+			self:_progress("trophy_bex", 1)
+		}
+	})
 end
 
 function CustomSafehouseTweakData:get_trophy_data(id)

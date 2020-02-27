@@ -7,7 +7,7 @@ MenuItemMultiChoice.TYPE = "multi_choice"
 function MenuItemMultiChoice:init(data_node, parameters)
 	CoreMenuItem.Item.init(self, data_node, parameters)
 
-	self._type = MenuItemMultiChoice.TYPE
+	self._type = self.TYPE
 	self._options = {}
 	self._current_index = 1
 	self._all_options = {}

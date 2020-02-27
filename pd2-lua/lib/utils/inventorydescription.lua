@@ -221,6 +221,7 @@ function InventoryDescription.create_description_item(item, tweak, colors, ingam
 			formatted_text = string.gsub(formatted_text, "\"", "'")
 		end
 
+		formatted_text = string.gsub(formatted_text, "\n", "\\n")
 		local desc_string = func_color_text(formatted_text, color_default, ingame_format)
 		desc = desc .. func_add_lb(ingame_format) .. func_add_lb(ingame_format) .. desc_string
 	end
@@ -254,7 +255,7 @@ function InventoryDescription.create_description_item(item, tweak, colors, ingam
 	if tweak.weapon_id then
 		local dlc = tweak_data.weapon[tweak.weapon_id].global_value
 
-		if dlc and dlc ~= "pd2_clan" and (not ingame_format or not managers.dlc:is_dlc_unlocked(dlc)) then
+		if dlc and dlc ~= "pd2_clan" and dlc ~= "normal" and (not ingame_format or not managers.dlc:is_dlc_unlocked(dlc)) then
 			local dlc_string = func_color_text(managers.localization:text("steam_inventory_dlc_required", {
 				dlc = managers.localization:text("bm_global_value_" .. dlc)
 			}), color_dlc, ingame_format)

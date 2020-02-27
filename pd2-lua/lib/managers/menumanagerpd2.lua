@@ -1458,10 +1458,15 @@ function MenuCallbackHandler:steam_open_container(item)
 	managers.menu_component:set_blackmarket_enabled(false)
 	managers.menu_scene:create_economy_safe_scene(safe_entry, ready_clbk)
 
+	local safe_id = data.safe_id
+	local drill_id = data.drill_id
+	data.safe_id = nil
+	data.drill_id = nil
+
 	if safe_tweak and safe_tweak.free then
-		managers.network.account:inventory_reward_open(safe_entry, data.safe_id, callback(MenuCallbackHandler, MenuCallbackHandler, "_safe_result_recieved"))
+		managers.network.account:inventory_reward_open(safe_entry, safe_id, callback(MenuCallbackHandler, MenuCallbackHandler, "_safe_result_recieved"))
 	else
-		managers.network.account:inventory_reward_unlock(safe_entry, data.safe_id, data.drill_id, callback(MenuCallbackHandler, MenuCallbackHandler, "_safe_result_recieved"))
+		managers.network.account:inventory_reward_unlock(safe_entry, safe_id, drill_id, callback(MenuCallbackHandler, MenuCallbackHandler, "_safe_result_recieved"))
 	end
 end
 
@@ -3126,6 +3131,257 @@ function MenuCallbackHandler:more_than_one_movie()
 	return false
 end
 
+local function get_weapon_color_data(node)
+	node = node or managers.menu:active_menu().logic:selected_node()
+
+	return node and node.weapon_color_data
+end
+
+function MenuCallbackHandler:refresh_weapon_color(node)
+	local weapon_color_data = get_weapon_color_data(node)
+	local crafted = managers.blackmarket:get_crafted_category_slot(weapon_color_data.category, weapon_color_data.slot)
+
+	if not crafted then
+		return node
+	end
+
+	local cosmetic_data = crafted.cosmetics
+	local weapon_unit_data = managers.menu_scene and managers.menu_scene:get_item_unit_data()
+	local weapon_unit = weapon_unit_data and weapon_unit_data.unit
+
+	if alive(weapon_unit) then
+		weapon_unit:base():change_cosmetics(cosmetic_data)
+	end
+
+	local second_unit = weapon_unit_data and weapon_unit_data.second_unit
+
+	if alive(second_unit) then
+		second_unit:base():change_cosmetics(cosmetic_data)
+	end
+end
+
+function MenuCallbackHandler:on_exit_weapon_color_customize(node)
+	local weapon_color_data = get_weapon_color_data(node)
+
+	if weapon_color_data and weapon_color_data.any_changes then
+		local dialog_data = {
+			title = managers.localization:text("dialog_warning_title"),
+			text = managers.localization:text("dialog_abort_weapon_color_customize")
+		}
+		local yes_button = {
+			text = managers.localization:text("dialog_yes"),
+			callback_func = function ()
+				weapon_color_data.any_changes = false
+
+				managers.menu:back(true)
+			end
+		}
+		local cancel_button = {
+			text = managers.localization:text("dialog_cancel"),
+			cancel_button = true
+		}
+		dialog_data.button_list = {
+			yes_button,
+			cancel_button
+		}
+
+		managers.system_menu:show(dialog_data)
+
+		return true
+	end
+
+	MenuCallbackHandler:refresh_weapon_color(node)
+end
+
+function MenuCallbackHandler:can_apply_weapon_color(node)
+	local weapon_color_data = get_weapon_color_data(node)
+
+	if not weapon_color_data then
+		return false
+	end
+
+	local cosmetic_data = weapon_color_data.cosmetic_data
+	local crafted = managers.blackmarket:get_crafted_category_slot(weapon_color_data.category, weapon_color_data.slot)
+
+	if crafted then
+		local crafted_cosmetics = crafted.cosmetics
+		weapon_color_data.any_changes = crafted_cosmetics.id ~= cosmetic_data.id or crafted_cosmetics.quality ~= cosmetic_data.quality or crafted_cosmetics.color_index ~= cosmetic_data.color_index
+	end
+
+	local cosmetic_color_item = node:item("cosmetic_color")
+	local color_item_option = cosmetic_color_item:get_option(cosmetic_data.id)
+
+	if not self:is_weapon_color_option_unlocked(color_item_option) then
+		return false
+	end
+
+	return weapon_color_data.any_changes
+end
+
+function MenuCallbackHandler:apply_weapon_color(item)
+	local weapon_color_data = get_weapon_color_data()
+
+	if not weapon_color_data then
+		return
+	end
+
+	local cosmetic_data = weapon_color_data.cosmetic_data
+	weapon_color_data.any_changes = false
+
+	managers.blackmarket:on_equip_weapon_color(weapon_color_data.category, weapon_color_data.slot, cosmetic_data.id, cosmetic_data.color_index, cosmetic_data.quality, false)
+	managers.menu:back()
+end
+
+function MenuCallbackHandler:should_show_weapon_color_apply(item)
+	return not MenuCallbackHandler:should_show_weapon_color_buy(item)
+end
+
+function MenuCallbackHandler:should_show_weapon_color_buy(item)
+	local weapon_color_data = get_weapon_color_data()
+
+	if not weapon_color_data then
+		return
+	end
+
+	local cosmetic_data = weapon_color_data.cosmetic_data
+	local color_tweak = tweak_data.blackmarket.weapon_skins[cosmetic_data.id]
+	local dlc = color_tweak.dlc or managers.dlc:global_value_to_dlc(color_tweak.global_value)
+	local is_unlocked = not dlc or managers.dlc:is_dlc_unlocked(dlc)
+
+	if not is_unlocked then
+		local dlc_data = Global.dlc_manager.all_dlc_data[dlc]
+
+		return dlc_data and not dlc_data.external and (dlc_data.app_id and tostring(dlc_data.app_id) ~= "218620" or dlc_data.source_id)
+	end
+
+	return false
+end
+
+function MenuCallbackHandler:buy_weapon_color_dlc(item)
+	if not MenuCallbackHandler:is_overlay_enabled() then
+		managers.menu:show_enable_steam_overlay()
+
+		return
+	end
+
+	local weapon_color_data = get_weapon_color_data()
+
+	if not weapon_color_data then
+		return
+	end
+
+	local cosmetic_data = weapon_color_data.cosmetic_data
+	local color_tweak = tweak_data.blackmarket.weapon_skins[cosmetic_data.id]
+	local dlc = color_tweak.dlc or managers.dlc:global_value_to_dlc(color_tweak.global_value)
+	local dlc_data = Global.dlc_manager.all_dlc_data[dlc]
+
+	if dlc_data then
+		if dlc_data.webpage then
+			Steam:overlay_activate("url", dlc_data.webpage)
+		elseif dlc_data.app_id then
+			Steam:overlay_activate("store", dlc_data.app_id)
+		elseif dlc_data.source_id then
+			Steam:overlay_activate("game", "OfficialGameGroup")
+		else
+			Steam:overlay_activate("url", tweak_data.gui.store_page)
+		end
+	end
+end
+
+function MenuCallbackHandler:is_weapon_color_option_visible(item_option)
+	local id = item_option:value()
+	local color_tweak = tweak_data.blackmarket.weapon_skins[id]
+	local global_value = color_tweak.global_value or managers.dlc:dlc_to_global_value(color_tweak.dlc)
+	local gvalue_tweak = tweak_data.lootdrop.global_values[global_value]
+
+	if gvalue_tweak and gvalue_tweak.hide_unavailable and not self:is_weapon_color_option_unlocked(item_option) then
+		return false
+	end
+
+	local group_id = color_tweak.group_id
+	local node = managers.menu:active_menu().logic:selected_node()
+	local color_group_data = node.color_group_data
+	local value = color_group_data and color_group_data.options[color_group_data.selected].value or nil
+
+	return value == "all" or value == group_id
+end
+
+function MenuCallbackHandler:is_weapon_color_option_unlocked(item_option)
+	local unlocked = item_option:get_parameter("unlocked")
+	local have_color = item_option:get_parameter("have_color")
+
+	return unlocked and have_color
+end
+
+function MenuCallbackHandler:get_weapon_color_disabled_icon(item_option)
+	local id = item_option:value()
+	local color_tweak = tweak_data.blackmarket.weapon_skins[id]
+	local dlc = color_tweak.dlc or managers.dlc:global_value_to_dlc(color_tweak.global_value)
+	local unlocked = item_option:get_parameter("unlocked")
+	local have_color = item_option:get_parameter("have_color")
+
+	if not unlocked then
+		local dlc_data = Global.dlc_manager.all_dlc_data[dlc]
+
+		if dlc_data then
+			if dlc_data.source_id then
+				return "guis/textures/pd2/lock_community"
+			end
+
+			return "guis/textures/pd2/lock_dlc"
+		end
+	end
+
+	if not have_color then
+		local achievement_locked_content = managers.dlc:weapon_color_achievement_locked_content(id)
+		local dlc_tweak = tweak_data.dlc[achievement_locked_content]
+		local achievement_info = managers.achievment:get_info(dlc_tweak and dlc_tweak.achievement_id)
+
+		if achievement_info and not achievement_info.awarded then
+			return "guis/textures/pd2/lock_achievement"
+		end
+	end
+
+	return "guis/textures/pd2/skilltree/padlock"
+end
+
+function MenuCallbackHandler:sort_weapon_colors(x_option, y_option)
+	if x_option.enabled ~= y_option.enabled then
+		return x_option.enabled
+	end
+
+	local x_id = x_option:value()
+	local y_id = y_option:value()
+	local x_td = tweak_data.blackmarket.weapon_skins[x_id]
+	local y_td = tweak_data.blackmarket.weapon_skins[y_id]
+	local x_sn = 0
+	local y_sn = 0
+	local x_cat = x_td.group_id
+	local y_cat = y_td.group_id
+
+	if x_cat ~= y_cat then
+		local x_gv = tweak_data.lootdrop.global_value_category[x_cat] or tweak_data.lootdrop.global_values[x_cat]
+		local y_gv = tweak_data.lootdrop.global_value_category[y_cat] or tweak_data.lootdrop.global_values[y_cat]
+		x_sn = x_gv and x_gv.sort_number or 0
+		y_sn = y_gv and y_gv.sort_number or 0
+
+		if x_sn ~= y_sn then
+			return x_sn < y_sn
+		end
+	end
+
+	local x_gv = x_td.global_value or managers.dlc:dlc_to_global_value(x_td.dlc)
+	local y_gv = y_td.global_value or managers.dlc:dlc_to_global_value(y_td.dlc)
+	x_sn = (x_gv and tweak_data.lootdrop.global_values[x_gv].sort_number or 0) + (x_td.sort_number or 0)
+	y_sn = (x_gv and tweak_data.lootdrop.global_values[y_gv].sort_number or 0) + (y_td.sort_number or 0)
+
+	if x_sn ~= y_sn then
+		return x_sn < y_sn
+	end
+
+	return y_id < x_id
+end
+
 MenuArmorSkinEditorInitiator = MenuArmorSkinEditorInitiator or class(MenuInitiatorBase)
 
 function MenuArmorSkinEditorInitiator:modify_node(node, data)
@@ -4066,14 +4322,16 @@ function MenuCallbackHandler:armor_skin_changed(item)
 end
 
 function MenuCallbackHandler:editor_get_armor_level()
-	local armor_level = 1
+	local armor_id = nil
 
 	if managers.menu_scene._character_unit and managers.menu_scene._character_unit:base() then
-		armor_level = managers.menu_scene._character_unit:base():armor_level()
+		armor_id = managers.menu_scene._character_unit:base():armor_id()
 	else
-		local armor = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor()]
-		armor_level = armor and armor.upgrade_level or 1
+		armor_id = managers.blackmarket:equipped_armor()
 	end
+
+	local armor = armor_id and tweak_data.blackmarket.armors[armor_id] or nil
+	local armor_level = armor and armor.upgrade_level or 1
 
 	return armor_level
 end

@@ -5077,14 +5077,44 @@ function GuiTweakData:init(tweak_data)
 	}
 
 	table.insert(self.new_heists, {
-		name_id = "menu_nh_xmn_2019",
-		texture_path = "guis/textures/pd2/new_heists/xmn_2019",
-		url = "http://store.steampowered.com/app/218620/PAYDAY_2/"
+		name_id = "menu_nh_bex",
+		texture_path = "guis/textures/pd2/new_heists/bex",
+		url = "ovk.af/bexheistslider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_tailor_pack_2",
+		texture_path = "guis/textures/pd2/new_heists/tailor_pack_2",
+		url = "ovk.af/bextp2slider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_weapon_pack",
+		texture_path = "guis/textures/pd2/new_heists/weapon_pack",
+		url = "ovk.af/bexwpslider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_weapon_color_pack",
+		texture_path = "guis/textures/pd2/new_heists/weapon_color_pack",
+		url = "ovk.af/bexwcp1slider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_bex_dlc_bundle",
+		texture_path = "guis/textures/pd2/new_heists/bex_dlc_bundle",
+		url = "ovk.af/bexbundleslider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_combo",
+		texture_path = "guis/textures/pd2/new_heists/combo",
+		url = "https://ovk.af/ingameBCBundle"
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_legacy",
 		texture_path = "guis/textures/pd2/new_heists/legacy",
 		url = "https://ovk.af/ingameLegacy"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_xmn_2019",
+		texture_path = "guis/textures/pd2/new_heists/xmn_2019",
+		url = "http://store.steampowered.com/app/218620/PAYDAY_2/"
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_mex",
@@ -5100,11 +5130,6 @@ function GuiTweakData:init(tweak_data)
 		name_id = "menu_nh_mwm",
 		texture_path = "guis/textures/pd2/new_heists/mwm",
 		url = "https://ovk.af/ingameCartelOptics"
-	})
-	table.insert(self.new_heists, {
-		name_id = "menu_nh_combo",
-		texture_path = "guis/textures/pd2/new_heists/combo",
-		url = "https://ovk.af/ingameBCBundle"
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_theme",

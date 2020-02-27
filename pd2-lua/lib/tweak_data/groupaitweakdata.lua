@@ -281,6 +281,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_cloaker/ene_murkywater_cloaker")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -300,6 +303,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_cloaker/ene_murkywater_cloaker")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -325,6 +331,11 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/payday2/characters/ene_cop_1/ene_cop_1"),
 				Idstring("units/payday2/characters/ene_cop_3/ene_cop_3"),
 				Idstring("units/payday2/characters/ene_cop_4/ene_cop_4")
+			},
+			federales = {
+				Idstring("units/payday2/characters/ene_cop_1/ene_cop_1"),
+				Idstring("units/payday2/characters/ene_cop_3/ene_cop_3"),
+				Idstring("units/payday2/characters/ene_cop_4/ene_cop_4")
 			}
 		},
 		access = access_type_walk_only
@@ -341,6 +352,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_2/ene_cop_hvh_2")
 			},
 			murkywater = {
+				Idstring("units/payday2/characters/ene_cop_2/ene_cop_2")
+			},
+			federales = {
 				Idstring("units/payday2/characters/ene_cop_2/ene_cop_2")
 			}
 		},
@@ -361,6 +375,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -378,6 +395,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -396,6 +416,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -413,6 +436,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_r870/ene_swat_policia_federale_r870")
 				}
 			},
 			access = access_type_all
@@ -433,6 +459,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -450,6 +479,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870")
 				}
 			},
 			access = access_type_all
@@ -467,6 +499,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale")
 				}
 			},
 			access = access_type_walk_only
@@ -485,6 +520,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -502,6 +540,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870")
 				}
 			},
 			access = access_type_all
@@ -519,6 +560,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale")
 				}
 			},
 			access = access_type_walk_only
@@ -540,6 +584,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_tazer/ene_murkywater_tazer")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -559,6 +606,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_tazer/ene_murkywater_tazer")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -580,6 +630,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9")
 				}
 			},
 			access = access_type_walk_only
@@ -599,6 +652,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45")
 				}
 			},
 			access = access_type_walk_only
@@ -622,6 +678,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			murkywater = {
 				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_1"),
 				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_2")
+			},
+			federales = {
+				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_1"),
+				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_2")
 			}
 		},
 		access = access_type_all
@@ -643,6 +703,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			murkywater = {
 				Idstring("units/payday2/characters/ene_fbi_2/ene_fbi_2"),
 				Idstring("units/payday2/characters/ene_fbi_2/ene_fbi_3")
+			},
+			federales = {
+				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_2"),
+				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_3")
 			}
 		},
 		access = access_type_all
@@ -659,6 +723,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_dlc_hvh/characters/ene_fbi_hvh_3/ene_fbi_hvh_3")
 			},
 			murkywater = {
+				Idstring("units/payday2/characters/ene_fbi_3/ene_fbi_3")
+			},
+			federales = {
 				Idstring("units/payday2/characters/ene_fbi_3/ene_fbi_3")
 			}
 		},
@@ -679,6 +746,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi")
 				}
 			},
 			access = access_type_all
@@ -697,6 +767,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_city/ene_murkywater_light_city")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_city/ene_swat_policia_federale_city")
 				}
 			},
 			access = access_type_all
@@ -715,6 +788,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -735,6 +811,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_r870/ene_swat_policia_federale_r870")
 				}
 			},
 			access = access_type_all
@@ -753,6 +832,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_city_r870/ene_murkywater_light_city_r870")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_city_r870/ene_swat_policia_federale_city_r870")
 				}
 			},
 			access = access_type_all
@@ -771,6 +853,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -791,6 +876,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_g36/ene_murkywater_heavy_g36")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_g36/ene_swat_heavy_policia_federale_fbi_g36")
 				}
 			},
 			access = access_type_all
@@ -809,6 +897,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_g36/ene_murkywater_heavy_g36")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_g36/ene_swat_heavy_policia_federale_fbi_g36")
 				}
 			},
 			access = access_type_all
@@ -827,6 +918,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_g36/ene_swat_heavy_policia_federale_fbi_g36")
 				}
 			},
 			access = access_type_all
@@ -847,6 +941,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_r870/ene_swat_heavy_policia_federale_fbi_r870")
 				}
 			},
 			access = access_type_all
@@ -865,6 +962,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/payday2/characters/ene_city_heavy_r870/ene_city_heavy_r870")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_r870/ene_swat_heavy_policia_federale_fbi_r870")
 				}
 			},
 			access = access_type_all
@@ -883,6 +983,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_r870/ene_swat_heavy_policia_federale_fbi_r870")
 				}
 			},
 			access = access_type_all
@@ -903,6 +1006,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_g36/ene_swat_heavy_policia_federale_fbi_g36")
 				}
 			},
 			access = access_type_walk_only
@@ -921,6 +1027,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_g36/ene_swat_heavy_policia_federale_fbi_g36")
 				}
 			},
 			access = access_type_walk_only
@@ -942,6 +1051,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9")
 				}
 			},
 			access = access_type_walk_only
@@ -961,6 +1073,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9")
 				}
 			},
 			access = access_type_walk_only
@@ -980,6 +1095,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9")
 				}
 			},
 			access = access_type_walk_only
@@ -1001,6 +1119,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				},
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_saiga/ene_swat_dozer_policia_federale_saiga")
 				}
 			},
 			access = access_type_all
@@ -1024,6 +1145,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				murkywater = {
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2"),
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_saiga/ene_swat_dozer_policia_federale_saiga"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_r870/ene_swat_dozer_policia_federale_r870")
 				}
 			},
 			access = access_type_all
@@ -1055,6 +1180,12 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2"),
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3"),
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_4/ene_murkywater_bulldozer_4")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_r870/ene_swat_dozer_policia_federale_r870"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_saiga/ene_swat_dozer_policia_federale_saiga"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_m249/ene_swat_dozer_policia_federale_m249"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_minigun/ene_swat_dozer_policia_federale_minigun")
 				}
 			},
 			access = access_type_all
@@ -1090,6 +1221,13 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3"),
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_4/ene_murkywater_bulldozer_4"),
 					Idstring("units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_medic/ene_murkywater_bulldozer_medic")
+				},
+				federales = {
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_r870/ene_swat_dozer_policia_federale_r870"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_saiga/ene_swat_dozer_policia_federale_saiga"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_m249/ene_swat_dozer_policia_federale_m249"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_minigun/ene_swat_dozer_policia_federale_minigun"),
+					Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_medic_policia_federale/ene_swat_dozer_medic_policia_federale")
 				}
 			},
 			access = access_type_all
@@ -1110,6 +1248,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},
 			murkywater = {
 				Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic/ene_murkywater_medic")
+			},
+			federales = {
+				Idstring("units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale/ene_swat_medic_policia_federale")
 			}
 		},
 		access = access_type_all
@@ -1128,6 +1269,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},
 			murkywater = {
 				Idstring("units/pd2_dlc_bph/characters/ene_murkywater_medic_r870/ene_murkywater_medic_r870")
+			},
+			federales = {
+				Idstring("units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale_r870/ene_swat_medic_policia_federale_r870")
 			}
 		},
 		access = access_type_all
@@ -1147,6 +1291,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},
 			murkywater = {
 				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
+			},
+			federales = {
+				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
 			}
 		},
 		access = access_type_walk_only
@@ -1165,6 +1312,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1")
 			},
 			murkywater = {
+				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
+			},
+			federales = {
 				Idstring("units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1")
 			}
 		},

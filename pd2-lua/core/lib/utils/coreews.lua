@@ -3,7 +3,7 @@ core:import("CoreClass")
 core:import("CoreApp")
 
 function verify_number(ctrlr, event)
-	if EWS:name_to_key_code("K_BACK") == event:key_code() or EWS:name_to_key_code("K_RIGHT") == event:key_code() or EWS:name_to_key_code("K_LEFT") == event:key_code() or event:key_code() >= 48 and event:key_code() <= 57 or event:key_code() == 45 or event:key_code() == 46 or EWS:name_to_key_code("K_RETURN") == event:key_code() or EWS:name_to_key_code("K_TAB") == event:key_code() or EWS:name_to_key_code("K_DELETE") == event:key_code() then
+	if EWS:name_to_key_code("K_BACK") == event:key_code() or EWS:name_to_key_code("K_RIGHT") == event:key_code() or EWS:name_to_key_code("K_LEFT") == event:key_code() or event:key_code() >= 48 and event:key_code() <= 57 or event:key_code() == 45 or event:key_code() == 46 or EWS:name_to_key_code("K_RETURN") == event:key_code() or EWS:name_to_key_code("K_TAB") == event:key_code() or EWS:name_to_key_code("K_DELETE") == event:key_code() or (event:key_code() == 22 or event:key_code() == 1 or event:key_code() == 3) and event:control_down() then
 		if event:key_code() == 46 then
 			local s = ctrlr:get_value() .. "."
 

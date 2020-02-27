@@ -14,6 +14,7 @@ function MenuInput:init(logic, ...)
 	self._item_input_action_map[MenuItemChallenge.TYPE] = callback(self, self, "input_item")
 	self._item_input_action_map[MenuItemKitSlot.TYPE] = callback(self, self, "input_kitslot")
 	self._item_input_action_map[MenuItemUpgrade.TYPE] = callback(self, self, "input_item")
+	self._item_input_action_map[MenuItemGrid.TYPE] = callback(self, self, "input_grid")
 	self._item_input_action_map[MenuItemMultiChoice.TYPE] = callback(self, self, "input_multi_choice")
 	self._item_input_action_map[MenuItemChat.TYPE] = callback(self, self, "input_chat")
 	self._item_input_action_map[MenuItemFriend.TYPE] = callback(self, self, "input_item")
@@ -208,6 +209,11 @@ function MenuInput:mouse_moved(o, x, y, mouse_ws)
 					select_item = row_item.name
 					select_row_item = row_item
 				end
+			elseif row_item.type == "grid" then
+				if row_item.gui_panel:inside(x, y) then
+					select_item = row_item.name
+					select_row_item = row_item
+				end
 			elseif inside_item_panel_parent and row_item.gui_panel:inside(x, y) then
 				local item = self._logic:get_item(row_item.name)
 
@@ -228,6 +234,10 @@ function MenuInput:mouse_moved(o, x, y, mouse_ws)
 			managers.menu:active_menu().logic:mouse_over_select_item(select_item, false)
 		elseif selected_item.TYPE == "slider" then
 			managers.mouse_pointer:set_pointer_image("hand")
+		elseif selected_item.TYPE == "grid" then
+			local pointer = selected_item:mouse_moved(x, y, select_row_item, self._logic)
+
+			managers.mouse_pointer:set_pointer_image(pointer)
 		elseif selected_item.TYPE == "multi_choice" then
 			if select_row_item.arrow_right:visible() and select_row_item.arrow_right:inside(x, y) or select_row_item.arrow_left:visible() and select_row_item.arrow_left:inside(x, y) or select_row_item.arrow_right:visible() and select_row_item.arrow_left:visible() and select_row_item.gui_text:inside(x, y) then
 				managers.mouse_pointer:set_pointer_image("link")
@@ -289,6 +299,92 @@ function MenuInput:input_kitslot(item, controller, mouse_click)
 			self:post_event("selection_next")
 		end
 
+		self._logic:trigger_item(true, item)
+	end
+end
+
+function MenuInput:input_grid(item, controller, mouse_click)
+	if item.TYPE ~= "grid" then
+		return
+	end
+
+	local delay_down = 0.1
+	local delay_pressed = 0.2
+	local node_gui = managers.menu:active_menu().renderer:active_node_gui()
+
+	if node_gui and node_gui._listening_to_input then
+		return
+	end
+
+	local row_item = node_gui:row_item(item)
+	local axis_timer = self:axis_timer()
+
+	if axis_timer.x <= 0 then
+		if self:menu_right_input_bool() then
+			if item:move_x(1) then
+				self:post_event("selection_next")
+				item:update_selection_position(row_item)
+			end
+
+			self:set_axis_x_timer(delay_down)
+
+			if self:menu_right_pressed() then
+				self:set_axis_x_timer(delay_pressed)
+			end
+		elseif self:menu_left_input_bool() then
+			if item:move_x(-1) then
+				self:post_event("selection_previous")
+				item:update_selection_position(row_item)
+			end
+
+			self:set_axis_x_timer(delay_down)
+
+			if self:menu_left_pressed() then
+				self:set_axis_x_timer(delay_pressed)
+			end
+		end
+	end
+
+	if axis_timer.y <= 0 then
+		if self:menu_up_input_bool() then
+			if item:move_y(-1) then
+				self:post_event("selection_previous")
+				item:update_selection_position(row_item)
+				self:set_axis_y_timer(delay_down)
+
+				if self:menu_up_pressed() then
+					self:set_axis_y_timer(delay_pressed)
+				end
+			else
+				self:prev_item()
+				self:set_axis_y_timer(0.12)
+
+				if self:menu_up_pressed() then
+					self:set_axis_y_timer(0.3)
+				end
+			end
+		elseif self:menu_down_input_bool() then
+			if item:move_y(1) then
+				self:post_event("selection_next")
+				item:update_selection_position(row_item)
+				self:set_axis_y_timer(delay_down)
+
+				if self:menu_down_pressed() then
+					self:set_axis_y_timer(delay_pressed)
+				end
+			else
+				self:next_item()
+				self:set_axis_y_timer(0.12)
+
+				if self:menu_down_pressed() then
+					self:set_axis_y_timer(0.3)
+				end
+			end
+		end
+	end
+
+	if (controller:get_input_pressed("confirm") or mouse_click) and item:set_to_selection() then
+		self:post_event("selection_next")
 		self._logic:trigger_item(true, item)
 	end
 end
@@ -476,6 +572,12 @@ function MenuInput:mouse_pressed(o, button, x, y)
 							self._item_input_action_map[item.TYPE](item, self._controller, true)
 
 							return node_gui.mouse_pressed and node_gui:mouse_pressed(button, x, y)
+						end
+					elseif row_item.type == "grid" then
+						local item = self._logic:selected_item()
+
+						if row_item.item == item then
+							self._item_input_action_map[item.TYPE](item, self._controller, true)
 						end
 					elseif row_item.type == "multi_choice" then
 						local item = row_item.item

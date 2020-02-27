@@ -707,4 +707,14 @@ function EquipmentsTweakData:init()
 		icon = "equipment_blueprint",
 		text_id = "hud_equipment_blueprints"
 	}
+	self.specials.fingerprint = {
+		sync_possession = true,
+		icon = "equipment_tape_fingerprint",
+		text_id = "hud_fingerprint"
+	}
+	self.specials.tape = {
+		sync_possession = true,
+		icon = "equipment_tape",
+		text_id = "hud_equipment_take_tape"
+	}
 end

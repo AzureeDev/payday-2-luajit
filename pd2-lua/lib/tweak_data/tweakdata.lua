@@ -1784,6 +1784,9 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_67"
 		},
 		{
+			track = "track_68"
+		},
+		{
 			track = "track_pth_01",
 			lock = "payday"
 		},

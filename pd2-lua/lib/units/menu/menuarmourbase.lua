@@ -90,11 +90,17 @@ end
 function MenuArmourBase:set_mask_id(id)
 	self._mask_id = id
 
-	call_on_next_update(function ()
+	local function call_func()
 		if not self._applying_cosmetics and not self._request_update then
 			self:update_character_visuals(self._cosmetics)
 		end
-	end)
+	end
+
+	if is_next_update_funcs_busy() then
+		call_func()
+	else
+		call_on_next_update(call_func)
+	end
 end
 
 function MenuArmourBase:set_armor_skin_id(id)
@@ -120,7 +126,11 @@ function MenuArmourBase:request_cosmetics_update()
 	if not self._request_update then
 		self._request_update = true
 
-		call_on_next_update(callback(self, self, "_apply_cosmetics"))
+		if is_next_update_funcs_busy() then
+			self:_apply_cosmetics()
+		else
+			call_on_next_update(callback(self, self, "_apply_cosmetics"))
+		end
 	end
 end
 
@@ -198,14 +208,13 @@ function MenuArmourBase:get_suit_variation_check_job()
 end
 
 function MenuArmourBase:_apply_cosmetics(clbks)
-	self._request_update = nil
-
 	if self._applying_cosmetics then
-		self:request_cosmetics_update()
+		call_on_next_update(callback(self, self, "_apply_cosmetics"))
 
 		return
 	end
 
+	self._request_update = nil
 	self._is_visuals_updated = false
 	self._clbks = clbks or {}
 	local units = {}

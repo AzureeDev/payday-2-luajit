@@ -4817,8 +4817,7 @@ function PlayerStandard:set_night_vision_state(state)
 	end
 
 	local ambient_color_key = CoreEnvironmentFeeder.PostAmbientColorFeeder.DATA_PATH_KEY
-	local default_color_grading = EnvironmentControllerManager._GAME_DEFAULT_COLOR_GRADING
-	local effect = state and night_vision.effect or default_color_grading
+	local effect = nil
 
 	if state then
 		local function light_modifier(handler, feeder)
@@ -4829,13 +4828,22 @@ function PlayerStandard:set_night_vision_state(state)
 		end
 
 		managers.viewport:create_global_environment_modifier(ambient_color_key, true, light_modifier)
+
+		self._night_vision_saved_default_color_grading = managers.environment_controller:default_color_grading()
+		effect = night_vision.effect
 	else
 		managers.viewport:destroy_global_environment_modifier(ambient_color_key)
+
+		effect = self._night_vision_saved_default_color_grading
+		self._night_vision_saved_default_color_grading = nil
 	end
 
 	self._unit:sound():play(state and "night_vision_on" or "night_vision_off", nil, false)
-	managers.environment_controller:set_default_color_grading(effect, state)
-	managers.environment_controller:refresh_render_settings()
+
+	if effect then
+		managers.environment_controller:set_default_color_grading(effect, state)
+		managers.environment_controller:refresh_render_settings()
+	end
 
 	self._state_data.night_vision_active = state
 end

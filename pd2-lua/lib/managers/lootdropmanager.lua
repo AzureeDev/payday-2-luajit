@@ -77,8 +77,10 @@ function LootDropManager:_setup_items()
 		end
 	end
 
-	for type, data in pairs(tweak_data.blackmarket) do
-		sort_pc(type, data)
+	for key, data in pairs(tweak_data.blackmarket) do
+		if type(data) == "table" then
+			sort_pc(key, data)
+		end
 	end
 end
 

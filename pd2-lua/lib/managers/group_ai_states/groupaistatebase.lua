@@ -6,6 +6,7 @@ local mvec3_dir = mvector3.direction
 local mvec3_l_sq = mvector3.length_sq
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
+local ids_unit = Idstring("unit")
 GroupAIStateBase = GroupAIStateBase or class()
 GroupAIStateBase._nr_important_cops = 3
 GroupAIStateBase.BLAME_SYNC = {
@@ -2934,18 +2935,40 @@ function GroupAIStateBase:set_unit_teamAI(unit, character_name, team_id, visual_
 	unit:movement():set_character_anim_variables()
 
 	local visual_state = {
-		player_style = "none",
 		armor_skin = "none",
-		suit_variation = "default",
 		armor_id = "level_1",
 		visual_seed = visual_seed,
+		player_style = loadout and loadout.player_style or managers.blackmarket:get_default_player_style(),
+		suit_variation = loadout and loadout.suit_variation or "default",
 		mask_id = character.data.mask_id
 	}
+
+	self:remove_suit_teamAI(character_name)
+
+	local crim_data = character.data
+	crim_data.current_player_style = visual_state.player_style
+	crim_data.current_suit_variation = visual_state.suit_variation
+	local new_unit = tweak_data.blackmarket:get_player_style_value(visual_state.player_style, character_name, "third_unit")
+
+	if new_unit then
+		local new_unit_ids = Idstring(new_unit)
+		crim_data.player_style_unit_ids = new_unit_ids
+
+		if managers.dyn_resource:is_resource_ready(ids_unit, new_unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, true) then
+			managers.dyn_resource:load(ids_unit, new_unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
+		else
+			visual_state.player_style = managers.blackmarket:get_default_player_style()
+			visual_state.suit_variation = "default"
+
+			managers.dyn_resource:load(ids_unit, new_unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, callback(self, self, "on_suit_loaded_teamAI", character_name))
+		end
+	end
 
 	managers.criminals:update_character_visual_state(character_name, visual_state)
 end
 
 function GroupAIStateBase:sync_remove_one_teamAI(name, replace_with_player)
+	self:remove_suit_teamAI(name)
 	managers.criminals:remove_character_by_name(name)
 
 	if replace_with_player then
@@ -2954,6 +2977,33 @@ function GroupAIStateBase:sync_remove_one_teamAI(name, replace_with_player)
 		managers.trade:remove_from_trade(name)
 
 		return true
+	end
+end
+
+function GroupAIStateBase:remove_suit_teamAI(character_name)
+	local crim_data = managers.criminals:character_data_by_name(character_name)
+
+	if crim_data then
+		local unit_ids = crim_data.player_style_unit_ids
+
+		if unit_ids then
+			managers.dyn_resource:unload(ids_unit, unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
+		end
+
+		crim_data.player_style_unit_ids = nil
+		crim_data.current_player_style = nil
+		crim_data.current_suit_variation = nil
+	end
+end
+
+function GroupAIStateBase:on_suit_loaded_teamAI(character_name)
+	local crim_data = managers.criminals:character_data_by_name(character_name)
+
+	if crim_data and crim_data.current_player_style then
+		managers.criminals:update_character_visual_state(character_name, {
+			player_style = crim_data.current_player_style,
+			suit_variation = crim_data.current_suit_variation
+		})
 	end
 end
 
@@ -5189,7 +5239,10 @@ GroupAIStateBase.blame_triggers = {
 	dealer = "gan",
 	tank = "cop",
 	security_camera = "cam",
+	bolivian_indoors_mex = "gan",
 	spooc = "cop",
+	security_mex = "cop",
+	civilian_mariachi = "civ",
 	taser = "cop",
 	mobster_boss = "gan"
 }

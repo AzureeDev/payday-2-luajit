@@ -422,6 +422,15 @@ function TweakDataVR:init(tweak_data)
 			shrew = {
 				position = Vector3(-0.5, 1, 1)
 			},
+			stech = {
+				position = Vector3(-0.5, 1, 1)
+			},
+			beer = {
+				position = Vector3(-0.5, 1, 1)
+			},
+			czech = {
+				position = Vector3(-0.5, 1, 1)
+			},
 			x_usp = {
 				position = Vector3(-0.5, 2.5, 1)
 			},
@@ -453,6 +462,15 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-0.5, 2, 2)
 			},
 			x_breech = {
+				position = Vector3(-0.5, 1, 1)
+			},
+			x_stech = {
+				position = Vector3(-0.5, 1, 1)
+			},
+			x_beer = {
+				position = Vector3(-0.5, 1, 1)
+			},
+			x_czech = {
 				position = Vector3(-0.5, 1, 1)
 			},
 			akmsu = {
@@ -1328,6 +1346,12 @@ function TweakDataVR:init(tweak_data)
 	}
 	self.weapon_assist = {
 		weapons = {
+			beer = {
+				position = Vector3(0, 12, -2)
+			},
+			czech = {
+				position = Vector3(0, 12, -2)
+			},
 			striker = {
 				position = Vector3(0, 28, 0)
 			},
@@ -2635,6 +2659,111 @@ function TweakDataVR:init(tweak_data)
 				{
 					time = 0.6,
 					sound = "wp_packrat_slide_release",
+					pos = Vector3()
+				}
+			}
+		},
+		beer = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -7, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_in",
+					visible = true,
+					pos = Vector3(0, -7, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.6,
+					sound = "wp_g17_lever_release",
+					pos = Vector3()
+				}
+			}
+		},
+		czech = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -7, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_in",
+					visible = true,
+					pos = Vector3(0, -7, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.6,
+					sound = "wp_g17_lever_release",
+					pos = Vector3()
+				}
+			}
+		},
+		stech = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -7, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_in",
+					visible = true,
+					pos = Vector3(0, -7, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.6,
+					sound = "wp_g17_lever_release",
 					pos = Vector3()
 				}
 			}
@@ -5883,6 +6012,111 @@ function TweakDataVR:init(tweak_data)
 				{
 					time = 0.6,
 					sound = "wp_packrat_slide_release",
+					pos = Vector3()
+				}
+			}
+		},
+		x_beer = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -7, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_in",
+					visible = true,
+					pos = Vector3(0, -7, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.6,
+					sound = "wp_g17_lever_release",
+					pos = Vector3()
+				}
+			}
+		},
+		x_czech = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -7, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_in",
+					visible = true,
+					pos = Vector3(0, -7, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.6,
+					sound = "wp_g17_lever_release",
+					pos = Vector3()
+				}
+			}
+		},
+		x_stech = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -7, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_g17_clip_slide_in",
+					visible = true,
+					pos = Vector3(0, -7, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -4, -10)
+				},
+				{
+					time = 0.6,
+					sound = "wp_g17_lever_release",
 					pos = Vector3()
 				}
 			}

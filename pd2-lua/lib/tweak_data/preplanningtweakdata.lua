@@ -64,6 +64,9 @@ function PrePlanningTweakData:init(tweak_data)
 	self.plans.entry_plan = {
 		category = "entry_plan"
 	}
+	self.plans.entry_plan_generic = {
+		category = "entry_plan_generic"
+	}
 	self.gui = {
 		custom_icons_path = "guis/dlcs/big_bank/textures/pd2/pre_planning/preplan_icon_types",
 		type_icons_path = "guis/dlcs/big_bank/textures/pd2/pre_planning/preplan_icon_types",
@@ -137,6 +140,14 @@ function PrePlanningTweakData:init(tweak_data)
 		name_id = "menu_pp_cat_plan_of_action",
 		desc_id = "menu_pp_cat_plan_of_action_desc",
 		plan = "plan_of_action",
+		icon = 12,
+		total = 1,
+		prio = 1
+	}
+	self.categories.entry_plan_generic = {
+		name_id = "menu_pp_cat_entry_plan_generic",
+		desc_id = "menu_pp_cat_entry_plan_generic_desc",
+		plan = "entry_plan",
 		icon = 12,
 		total = 1,
 		prio = 1
@@ -1454,6 +1465,50 @@ function PrePlanningTweakData:init(tweak_data)
 		prio = 1,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_crowbar_single"),
 		budget_cost = 1
+	}
+	self.types.bex_car_pull = {
+		name_id = "menu_pp_asset_bex_car_pull",
+		desc_id = "menu_pp_asset_bex_car_pull_desc",
+		category = "hired_help",
+		icon = 103,
+		total = 1,
+		post_event = "gus_preplan_07",
+		prio = 1,
+		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
+		budget_cost = 6
+	}
+	self.types.bex_drunk_mariachi = {
+		name_id = "menu_pp_asset_bex_drunk_mariachi",
+		desc_id = "menu_pp_asset_bex_drunk_mariachi_desc",
+		category = "hired_help",
+		icon = 101,
+		total = 1,
+		post_event = "gus_preplan_07",
+		prio = 3,
+		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
+		budget_cost = 3
+	}
+	self.types.bex_garbage_truck = {
+		name_id = "menu_pp_asset_bex_garbage_truck",
+		desc_id = "menu_pp_asset_bex_garbage_truck_desc",
+		category = "hired_help",
+		icon = 102,
+		total = 1,
+		post_event = "gus_preplan_07",
+		prio = 3,
+		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
+		budget_cost = 3
+	}
+	self.types.bex_zipline = {
+		name_id = "menu_pp_asset_bex_zipline",
+		desc_id = "menu_pp_asset_bex_zipline_desc",
+		category = "hired_help",
+		icon = 95,
+		total = 1,
+		post_event = "gus_preplan_07",
+		prio = 3,
+		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
+		budget_cost = 3
 	}
 end
 
@@ -2982,6 +3037,57 @@ function PrePlanningTweakData:_create_locations(tweak_data)
 		active_location_groups = {
 			"a",
 			"b"
+		}
+	}
+	self.locations.bex = {
+		{
+			texture = "guis/dlcs/bex/textures/pd2/pre_planning/bex_01",
+			x2 = 6000,
+			rotation = 180,
+			map_size = 1,
+			map_x = -0.55,
+			map_y = 0,
+			name_id = "menu_pp_bex_bpr_loc_a",
+			y2 = 5000,
+			y1 = -7000,
+			x1 = -0 - 6000,
+			custom_points = {}
+		},
+		{
+			texture = "guis/dlcs/bex/textures/pd2/pre_planning/bex_02",
+			x2 = 6000,
+			rotation = 180,
+			map_size = 1,
+			map_x = 0.25,
+			map_y = 0,
+			name_id = "menu_pp_bex_bpr_loc_b",
+			y2 = 5000,
+			y1 = -7000,
+			x1 = -0 - 6000,
+			custom_points = {}
+		},
+		{
+			texture = "guis/dlcs/bex/textures/pd2/pre_planning/bex_03",
+			x2 = 6000,
+			rotation = 180,
+			map_size = 1,
+			map_x = 1.05,
+			map_y = 0,
+			name_id = "menu_pp_bex_bpr_loc_c",
+			y2 = 5000,
+			y1 = -7000,
+			x1 = -0 - 6000,
+			custom_points = {}
+		},
+		mission_briefing_texture = "guis/dlcs/bex/textures/pd2/pre_planning/bex_preview",
+		post_event_prefix = "loc",
+		total_budget = 10,
+		default_plans = {},
+		start_location = {
+			group = "a",
+			zoom = 1,
+			x = 512,
+			y = 512
 		}
 	}
 end

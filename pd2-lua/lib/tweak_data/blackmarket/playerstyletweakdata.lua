@@ -754,10 +754,10 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 	})
 
 	self.player_styles.raincoat.characters.bonnie = {
-		third_unit = "units/pd2_dlc_glace/characters/glc_acc_raincoat_female/glc_acc_raincoat_female"
+		third_unit = "units/pd2_dlc_glace/characters/glc_acc_raincoat_bonnie/glc_acc_raincoat_bonnie"
 	}
 	self.player_styles.raincoat.characters.ecp_male = {
-		third_unit = "units/pd2_dlc_glace/characters/glc_acc_raincoat_male/glc_acc_raincoat_male"
+		third_unit = "units/pd2_dlc_glace/characters/glc_acc_raincoat_ethan/glc_acc_raincoat_ethan"
 	}
 	self.player_styles.murky_suit = {
 		name_id = "bm_suit_murky_suit",
@@ -920,6 +920,9 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		third_unit = "units/pd2_dlc_wwh/characters/wwh_acc_stealth_suit_female_big/wwh_acc_stealth_suit_female_big"
 	})
 
+	self.player_styles.winter_suit.characters.ecp_male = {
+		third_unit = "units/pd2_dlc_wwh/characters/wwh_acc_stealth_suit_male_fat/wwh_acc_stealth_suit_male_fat"
+	}
 	self.player_styles.poolrepair = {
 		name_id = "bm_suit_poolrepair",
 		desc_id = "bm_suit_poolrepair_desc",
@@ -1325,6 +1328,410 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/npc_acc_xmas_tuxedo_suit/npc_acc_xmas_tuxedo_suit_green"
 	}
 	self.player_styles.xmas_tuxedo.characters.dallas = xmas_tuxedo_dallas
+	self.player_styles.mariachi = {
+		name_id = "bm_suit_mariachi",
+		desc_id = "bm_suit_mariachi_desc",
+		locks = {
+			achievement = "bex_1"
+		},
+		texture_bundle_folder = "bex",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_bex/characters/bex_acc_mariachi/bex_acc_fps_mariachi/bex_acc_fps_mariachi",
+		material_variations = {}
+	}
+	self.player_styles.mariachi.material_variations.default = {
+		name_id = "bm_suit_var_mariachi_default",
+		global_value = "normal",
+		desc_id = "bm_suit_var_mariachi_default_desc",
+		prio = 1
+	}
+	self.player_styles.mariachi.material_variations.black = {
+		desc_id = "bm_suit_var_mariachi_black_desc",
+		global_value = "normal",
+		prio = 7,
+		name_id = "bm_suit_var_mariachi_black",
+		third_material = "units/pd2_dlc_bex/characters/bex_acc_mariachi/shared_materials/bex_acc_mariachi_black",
+		material = "units/pd2_dlc_bex/characters/bex_acc_mariachi/shared_materials/bex_acc_fps_mariachi_black",
+		locks = {
+			achievement = "bex_7"
+		}
+	}
+	self.player_styles.mariachi.material_variations.brown = {
+		desc_id = "bm_suit_var_mariachi_brown_desc",
+		global_value = "normal",
+		prio = 2,
+		name_id = "bm_suit_var_mariachi_brown",
+		third_material = "units/pd2_dlc_bex/characters/bex_acc_mariachi/shared_materials/bex_acc_mariachi_brown",
+		material = "units/pd2_dlc_bex/characters/bex_acc_mariachi/shared_materials/bex_acc_fps_mariachi_brown",
+		locks = {
+			achievement = "bex_2"
+		}
+	}
+	self.player_styles.mariachi.material_variations.red = {
+		desc_id = "bm_suit_var_mariachi_red_desc",
+		global_value = "normal",
+		prio = 6,
+		name_id = "bm_suit_var_mariachi_red",
+		third_material = "units/pd2_dlc_bex/characters/bex_acc_mariachi/shared_materials/bex_acc_mariachi_red",
+		material = "units/pd2_dlc_bex/characters/bex_acc_mariachi/shared_materials/bex_acc_fps_mariachi_red",
+		locks = {
+			achievement = "bex_6"
+		}
+	}
+	self.player_styles.mariachi.material_variations.white = {
+		desc_id = "bm_suit_var_mariachi_white_desc",
+		global_value = "normal",
+		prio = 4,
+		name_id = "bm_suit_var_mariachi_white",
+		third_material = "units/pd2_dlc_bex/characters/bex_acc_mariachi/shared_materials/bex_acc_mariachi_white",
+		material = "units/pd2_dlc_bex/characters/bex_acc_mariachi/shared_materials/bex_acc_fps_mariachi_white",
+		locks = {
+			achievement = "bex_4"
+		}
+	}
+	self.player_styles.mariachi.characters = {}
+	local mariachi_characters_male = {
+		third_unit = "units/pd2_dlc_bex/characters/bex_acc_mariachi/bex_acc_mariachi_male_average/bex_acc_mariachi_male_average"
+	}
+
+	set_characters_data("mariachi", characters_male, mariachi_characters_male)
+
+	local mariachi_characters_male_big = {
+		third_unit = "units/pd2_dlc_bex/characters/bex_acc_mariachi/bex_acc_mariachi_male_big/bex_acc_mariachi_male_big"
+	}
+
+	set_characters_data("mariachi", characters_male_big, mariachi_characters_male_big)
+
+	local mariachi_characters_female = {
+		third_unit = "units/pd2_dlc_bex/characters/bex_acc_mariachi/bex_acc_mariachi_female_average/bex_acc_mariachi_female_average"
+	}
+
+	set_characters_data("mariachi", characters_female, mariachi_characters_female)
+
+	local mariachi_characters_female_big = {
+		third_unit = "units/pd2_dlc_bex/characters/bex_acc_mariachi/bex_acc_mariachi_female_big/bex_acc_mariachi_female_big"
+	}
+
+	set_characters_data("mariachi", characters_female_big, mariachi_characters_female_big)
+
+	local mariachi_characters_male_fat = {
+		third_unit = "units/pd2_dlc_bex/characters/bex_acc_mariachi/bex_acc_mariachi_male_fat/bex_acc_mariachi_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.mariachi.characters.ecp_male = mariachi_characters_male_fat
+	self.player_styles.desperado = {
+		name_id = "bm_suit_desperado",
+		desc_id = "bm_suit_desperado_desc",
+		global_value = "mbs",
+		texture_bundle_folder = "mbs",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/mbs_acc_fps_desperado/mbs_acc_fps_desperado_male",
+		material_variations = {}
+	}
+	self.player_styles.desperado.material_variations.default = {
+		name_id = "bm_suit_var_desperado_default",
+		global_value = "mbs",
+		desc_id = "bm_suit_var_desperado_default_desc"
+	}
+	self.player_styles.desperado.material_variations.blue = {
+		desc_id = "bm_suit_var_desperado_blue_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_desperado_blue",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/shared_materials/mbs_acc_desperado_blue",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/shared_materials/mbs_acc_fps_desperado_blue"
+	}
+	self.player_styles.desperado.material_variations.green = {
+		desc_id = "bm_suit_var_desperado_green_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_desperado_green",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/shared_materials/mbs_acc_desperado_green",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/shared_materials/mbs_acc_fps_desperado_green"
+	}
+	self.player_styles.desperado.material_variations.red = {
+		desc_id = "bm_suit_var_desperado_red_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_desperado_red",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/shared_materials/mbs_acc_desperado_red",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/shared_materials/mbs_acc_fps_desperado_red"
+	}
+	self.player_styles.desperado.material_variations.white = {
+		desc_id = "bm_suit_var_desperado_white_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_desperado_white",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/shared_materials/mbs_acc_desperado_white",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/shared_materials/mbs_acc_fps_desperado_white"
+	}
+	self.player_styles.desperado.characters = {}
+	local desperado_characters_male = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/mbs_acc_desperado_male_average/mbs_acc_desperado_male_average"
+	}
+
+	set_characters_data("desperado", characters_male, desperado_characters_male)
+
+	local desperado_characters_male_big = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/mbs_acc_desperado_male_big/mbs_acc_desperado_male_big"
+	}
+
+	set_characters_data("desperado", characters_male_big, desperado_characters_male_big)
+
+	local desperado_characters_female = {
+		unit = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/mbs_acc_fps_desperado/mbs_acc_fps_desperado_female",
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/mbs_acc_desperado_female_average/mbs_acc_desperado_female_average"
+	}
+
+	set_characters_data("desperado", characters_female, desperado_characters_female)
+
+	local desperado_characters_female_big = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/mbs_acc_desperado_female_big/mbs_acc_desperado_female_big"
+	}
+
+	set_characters_data("desperado", characters_female_big, desperado_characters_female_big)
+
+	local desperado_characters_male_fat = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_desperado/mbs_acc_desperado_male_fat/mbs_acc_desperado_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.desperado.characters.ecp_male = desperado_characters_male_fat
+	self.player_styles.punk = {
+		name_id = "bm_suit_punk",
+		desc_id = "bm_suit_punk_desc",
+		global_value = "mbs",
+		texture_bundle_folder = "mbs",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_mbs/characters/mbs_acc_punk/mbs_acc_fps_punk/mbs_acc_fps_punk_male",
+		material_variations = {}
+	}
+	self.player_styles.punk.material_variations.default = {
+		name_id = "bm_suit_var_punk_default",
+		global_value = "mbs",
+		desc_id = "bm_suit_var_punk_default_desc"
+	}
+	self.player_styles.punk.material_variations.billieboy = {
+		desc_id = "bm_suit_var_punk_billieboy_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_punk_billieboy",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_punk/shared_materials/mbs_acc_punk_billieboy",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_punk/shared_materials/mbs_acc_fps_punk_default"
+	}
+	self.player_styles.punk.material_variations.blue = {
+		desc_id = "bm_suit_var_punk_blue_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_punk_blue",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_punk/shared_materials/mbs_acc_punk_blue",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_punk/shared_materials/mbs_acc_fps_punk_blue"
+	}
+	self.player_styles.punk.material_variations.red = {
+		desc_id = "bm_suit_var_punk_red_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_punk_red",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_punk/shared_materials/mbs_acc_punk_red",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_punk/shared_materials/mbs_acc_fps_punk_red"
+	}
+	self.player_styles.punk.material_variations.scottish = {
+		desc_id = "bm_suit_var_punk_scottish_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_punk_scottish",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_punk/shared_materials/mbs_acc_punk_scottish",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_punk/shared_materials/mbs_acc_fps_punk_default"
+	}
+	self.player_styles.punk.characters = {}
+	local punk_characters_male = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_punk/mbs_acc_punk_male_average/mbs_acc_punk_male_average"
+	}
+
+	set_characters_data("punk", characters_male, punk_characters_male)
+
+	local punk_characters_male_big = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_punk/mbs_acc_punk_male_big/mbs_acc_punk_male_big"
+	}
+
+	set_characters_data("punk", characters_male_big, punk_characters_male_big)
+
+	local punk_characters_female = {
+		unit = "units/pd2_dlc_mbs/characters/mbs_acc_punk/mbs_acc_fps_punk/mbs_acc_fps_punk_female",
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_punk/mbs_acc_punk_female_average/mbs_acc_punk_female_average"
+	}
+
+	set_characters_data("punk", characters_female, punk_characters_female)
+
+	local punk_characters_female_big = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_punk/mbs_acc_punk_female_big/mbs_acc_punk_female_big"
+	}
+
+	set_characters_data("punk", characters_female_big, punk_characters_female_big)
+
+	local punk_characters_male_fat = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_punk/mbs_acc_punk_male_fat/mbs_acc_punk_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.punk.characters.ecp_male = punk_characters_male_fat
+	self.player_styles.hiphop = {
+		name_id = "bm_suit_hiphop",
+		desc_id = "bm_suit_hiphop_desc",
+		global_value = "mbs",
+		texture_bundle_folder = "mbs",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/mbs_acc_fps_hiphop/mbs_acc_fps_hiphop_male",
+		material_variations = {}
+	}
+	self.player_styles.hiphop.material_variations.default = {
+		name_id = "bm_suit_var_hiphop_default",
+		global_value = "mbs",
+		desc_id = "bm_suit_var_hiphop_default_desc"
+	}
+	self.player_styles.hiphop.material_variations.beige = {
+		desc_id = "bm_suit_var_hiphop_beige_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_hiphop_beige",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/shared_materials/mbs_acc_hiphop_beige",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/shared_materials/mbs_acc_fps_hiphop_beige"
+	}
+	self.player_styles.hiphop.material_variations.green = {
+		desc_id = "bm_suit_var_hiphop_green_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_hiphop_green",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/shared_materials/mbs_acc_hiphop_green",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/shared_materials/mbs_acc_fps_hiphop_green"
+	}
+	self.player_styles.hiphop.material_variations.red = {
+		desc_id = "bm_suit_var_hiphop_red_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_hiphop_red",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/shared_materials/mbs_acc_hiphop_red",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/shared_materials/mbs_acc_fps_hiphop_red"
+	}
+	self.player_styles.hiphop.material_variations.white = {
+		desc_id = "bm_suit_var_hiphop_white_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_hiphop_white",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/shared_materials/mbs_acc_hiphop_white",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/shared_materials/mbs_acc_fps_hiphop_white"
+	}
+	self.player_styles.hiphop.characters = {}
+	local hiphop_characters_male = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/mbs_acc_hiphop_male_average/mbs_acc_hiphop_male_average"
+	}
+
+	set_characters_data("hiphop", characters_male, hiphop_characters_male)
+
+	local hiphop_characters_male_big = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/mbs_acc_hiphop_male_big/mbs_acc_hiphop_male_big"
+	}
+
+	set_characters_data("hiphop", characters_male_big, hiphop_characters_male_big)
+
+	local hiphop_characters_female = {
+		unit = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/mbs_acc_fps_hiphop/mbs_acc_fps_hiphop_female",
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/mbs_acc_hiphop_female_average/mbs_acc_hiphop_female_average"
+	}
+
+	set_characters_data("hiphop", characters_female, hiphop_characters_female)
+
+	local hiphop_characters_female_big = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/mbs_acc_hiphop_female_big/mbs_acc_hiphop_female_big"
+	}
+
+	set_characters_data("hiphop", characters_female_big, hiphop_characters_female_big)
+
+	local hiphop_characters_male_fat = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hiphop/mbs_acc_hiphop_male_fat/mbs_acc_hiphop_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.hiphop.characters.ecp_male = hiphop_characters_male_fat
+	self.player_styles.hippie = {
+		name_id = "bm_suit_hippie",
+		desc_id = "bm_suit_hippie_desc",
+		global_value = "mbs",
+		texture_bundle_folder = "mbs",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/mbs_acc_fps_hippie/mbs_acc_fps_hippie_male",
+		material_variations = {}
+	}
+	self.player_styles.hippie.material_variations.default = {
+		name_id = "bm_suit_var_hippie_default",
+		global_value = "mbs",
+		desc_id = "bm_suit_var_hippie_default_desc"
+	}
+	self.player_styles.hippie.material_variations.abstraction = {
+		desc_id = "bm_suit_var_hippie_abstraction_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_hippie_abstraction",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/shared_materials/mbs_acc_hippie_abstraction",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/shared_materials/mbs_acc_fps_hippie_abstraction"
+	}
+	self.player_styles.hippie.material_variations.flowerpower = {
+		desc_id = "bm_suit_var_hippie_flowerpower_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_hippie_flowerpower",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/shared_materials/mbs_acc_hippie_flowerpower",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/shared_materials/mbs_acc_fps_hippie_flowerpower"
+	}
+	self.player_styles.hippie.material_variations.native = {
+		desc_id = "bm_suit_var_hippie_native_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_hippie_native",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/shared_materials/mbs_acc_hippie_native",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/shared_materials/mbs_acc_fps_hippie_native"
+	}
+	self.player_styles.hippie.material_variations.tribe = {
+		desc_id = "bm_suit_var_hippie_tribe_desc",
+		global_value = "mbs",
+		auto_aquire = true,
+		name_id = "bm_suit_var_hippie_tribe",
+		third_material = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/shared_materials/mbs_acc_hippie_tribe",
+		material = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/shared_materials/mbs_acc_fps_hippie_tribe"
+	}
+	self.player_styles.hippie.characters = {}
+	local hippie_characters_male = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/mbs_acc_hippie_male_average/mbs_acc_hippie_male_average"
+	}
+
+	set_characters_data("hippie", characters_male, hippie_characters_male)
+
+	local hippie_characters_male_big = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/mbs_acc_hippie_male_big/mbs_acc_hippie_male_big"
+	}
+
+	set_characters_data("hippie", characters_male_big, hippie_characters_male_big)
+
+	local hippie_characters_female = {
+		unit = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/mbs_acc_fps_hippie/mbs_acc_fps_hippie_female",
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/mbs_acc_hippie_female_average/mbs_acc_hippie_female_average"
+	}
+
+	set_characters_data("hippie", characters_female, hippie_characters_female)
+
+	local hippie_characters_female_big = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/mbs_acc_hippie_female_big/mbs_acc_hippie_female_big"
+	}
+
+	set_characters_data("hippie", characters_female_big, hippie_characters_female_big)
+
+	local hippie_characters_male_fat = {
+		third_unit = "units/pd2_dlc_mbs/characters/mbs_acc_hippie/mbs_acc_hippie_male_fat/mbs_acc_hippie_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.hippie.characters.ecp_male = hippie_characters_male_fat
 end
 
 function BlackMarketTweakData:get_player_style_value(player_style, character_name, key)
@@ -1423,6 +1830,8 @@ function BlackMarketTweakData:get_suit_variations_sorted(player_style)
 		end
 	end
 
+	local x_prio, y_prio = nil
+
 	table.sort(suit_variations, function (x, y)
 		if x == "default" then
 			return true
@@ -1430,6 +1839,13 @@ function BlackMarketTweakData:get_suit_variations_sorted(player_style)
 
 		if y == "default" then
 			return false
+		end
+
+		x_prio = data.material_variations[x].prio or 1
+		y_prio = data.material_variations[y].prio or 1
+
+		if x_prio ~= y_prio then
+			return x_prio < y_prio
 		end
 
 		return y < x

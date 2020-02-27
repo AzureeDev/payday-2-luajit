@@ -402,6 +402,8 @@ function MenuLobbyRenderer:trigger_item(item)
 			if percentage > 0 and percentage < 100 then
 				-- Nothing
 			end
+		elseif item_type == "grid" then
+			-- Nothing
 		elseif item_type == "multi_choice" then
 			-- Nothing
 		end

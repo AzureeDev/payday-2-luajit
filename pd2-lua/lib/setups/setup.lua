@@ -130,7 +130,7 @@ script_data = script_data or {}
 game_state_machine = game_state_machine or nil
 Setup = Setup or class(CoreSetup.CoreSetup)
 _next_update_funcs = _next_update_funcs or {}
-local next_update_funcs_busy = nil
+local next_update_funcs_busy = false
 
 function call_on_next_update(func, optional_key)
 	if not optional_key then
@@ -144,10 +144,17 @@ end
 function call_next_update_functions()
 	local current = _next_update_funcs
 	_next_update_funcs = {}
+	next_update_funcs_busy = true
 
 	for _, func in pairs(current) do
 		func()
 	end
+
+	next_update_funcs_busy = false
+end
+
+function is_next_update_funcs_busy()
+	return next_update_funcs_busy
 end
 
 function Setup:init_category_print()

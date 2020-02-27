@@ -4631,7 +4631,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	local padding = 10
 	local content_padding = 1
 
-	if self._drill_amount == drill_amount and self._safe_amount == safe_amount then
+	if self._drill_amount == drill_amount and self._safe_amount == safe_amount and container_data.content == self._content then
 		self.item_panel:set_world_left(self._safe_panel:world_right() + padding - self.node:parameters().align_line_proportions * self.item_panel:w())
 		self.item_panel:set_world_center_y(self._safe_panel:world_center_y())
 
@@ -4657,6 +4657,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 		self._fullscreen_panel:parent():remove(self._fullscreen_panel)
 	end
 
+	self._content = container_data.content
 	self._panel = self.safe_rect_panel:panel({
 		layer = 151,
 		name = "open_safe_panel"
@@ -4713,7 +4714,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	})
 
 	self._panel:rect({
-		alpha = 0.75,
+		alpha = 0.6,
 		color = Color.black
 	})
 
@@ -4823,6 +4824,62 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	amount_text:set_center_x(safe_panel:w() / 2)
 	amount_text:set_bottom(safe_panel:h() - 10)
 
+	if container_data.active_market_bundle then
+		local is_pc_controller = managers.menu:is_pc_controller()
+		local is_steam_controller = managers.menu:is_steam_controller()
+		local prev_button = is_steam_controller and managers.localization:steam_btn("bumper_l") or is_pc_controller and "<" or managers.localization:get_default_macro("BTN_BOTTOM_L")
+		local next_button = is_steam_controller and managers.localization:steam_btn("bumper_r") or is_pc_controller and ">" or managers.localization:get_default_macro("BTN_BOTTOM_R")
+		local prev_panel = safe_panel:panel({
+			name = "prev_panel"
+		})
+		local next_panel = safe_panel:panel({
+			name = "next_panel"
+		})
+		local prev_text = prev_panel:text({
+			name = "prev_text",
+			text = prev_button,
+			font = tweak_data.menu.pd2_medium_font,
+			font_size = tweak_data.menu.pd2_medium_font_size
+		})
+		local next_text = next_panel:text({
+			name = "next_text",
+			text = next_button,
+			font = tweak_data.menu.pd2_medium_font,
+			font_size = tweak_data.menu.pd2_medium_font_size
+		})
+		local color = managers.menu:is_pc_controller() and tweak_data.screen_colors.button_stage_3 or Color.white
+
+		prev_text:set_color(color)
+		next_text:set_color(color)
+		make_fine_text(prev_text)
+		make_fine_text(next_text)
+		prev_panel:set_size(prev_text:size())
+		next_panel:set_size(next_text:size())
+		prev_panel:set_lefttop(0, safe_bitmap_panel:y() + 10)
+		next_panel:set_righttop(safe_panel:w(), safe_bitmap_panel:y() + 10)
+
+		if is_pc_controller then
+			table.insert(self._text_buttons, {
+				highlighted = false,
+				panel = prev_panel,
+				text = prev_text,
+				clbk = callback(self, self, "prev_container"),
+				highlighted_color = tweak_data.screen_colors.button_stage_2,
+				default_color = tweak_data.screen_colors.button_stage_3,
+				params = {}
+			})
+			table.insert(self._text_buttons, {
+				highlighted = false,
+				panel = next_panel,
+				text = next_text,
+				clbk = callback(self, self, "next_container"),
+				highlighted_color = tweak_data.screen_colors.button_stage_2,
+				default_color = tweak_data.screen_colors.button_stage_3,
+				params = {}
+			})
+		end
+	end
+
 	local contents = {}
 
 	for category, content_data in pairs(content_td.contains) do
@@ -4884,7 +4941,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 			local texture_path, rarity_path = nil
 
 			if is_weapon_skin then
-				texture_path, rarity_path = managers.blackmarket:get_weapon_icon_path(c_td.weapon_ids and c_td.weapon_ids[1] or c_td.weapon_id, {
+				texture_path, rarity_path = managers.blackmarket:get_weapon_icon_path(managers.blackmarket:get_weapon_id_by_cosmetic_id(content.entry), {
 					id = content.entry
 				})
 
@@ -4961,7 +5018,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 					default_color = Color(0, 0, 0, 0),
 					params = {
 						quality = "mint",
-						weapon_id = c_td.weapon_ids and c_td.weapon_ids[1] or c_td.weapon_id,
+						weapon_id = managers.blackmarket:get_weapon_id_by_cosmetic_id(content.entry),
 						cosmetic_id = content.entry
 					}
 				})
@@ -5006,7 +5063,7 @@ function MenuNodeOpenContainerGui:setup(half_fade)
 	info_panel:set_world_top(content_panel:world_top())
 	info_panel:set_h(self._panel:bottom() - info_panel:top())
 	info_panel:rect({
-		alpha = 0.75,
+		alpha = 0.6,
 		color = Color.black
 	})
 	BoxGuiObject:new(info_panel, {
@@ -5213,9 +5270,74 @@ function MenuNodeOpenContainerGui:armor_cosmetics_callback(button, data)
 	end
 end
 
+function MenuNodeOpenContainerGui:prev_container()
+	local data = self.node:parameters().container_data
+	local market_bundle = data.active_market_bundle - 1
+
+	if market_bundle == 0 then
+		market_bundle = data.num_bundles
+	end
+
+	self:open_container(market_bundle)
+end
+
+function MenuNodeOpenContainerGui:next_container()
+	local data = self.node:parameters().container_data
+	local market_bundle = data.active_market_bundle % data.num_bundles + 1
+
+	self:open_container(market_bundle)
+end
+
+function MenuNodeOpenContainerGui:open_container(market_bundle)
+	local data = self.node:parameters().container_data
+	local active_bundle = data.market_bundles[market_bundle]
+	data.content = active_bundle.content
+	data.drill = active_bundle.drill
+	data.safe = active_bundle.safe
+	data.active_market_bundle = market_bundle
+
+	if managers.menu_component._blackmarket_gui and managers.menu_component._blackmarket_gui._market_bundles then
+		managers.menu_component._blackmarket_gui._data.active_market_bundle = market_bundle
+	end
+
+	local logic = managers.menu:active_menu().logic
+
+	if logic then
+		logic:refresh_node_stack()
+	end
+end
+
+function MenuNodeOpenContainerGui:previous_page()
+	local data = self.node:parameters().container_data
+
+	if data.active_market_bundle then
+		managers.menu_component:post_event("menu_enter")
+		self:prev_container()
+	end
+end
+
+function MenuNodeOpenContainerGui:next_page()
+	local data = self.node:parameters().container_data
+
+	if data.active_market_bundle then
+		managers.menu_component:post_event("menu_enter")
+		self:next_container()
+	end
+end
+
 function MenuNodeOpenContainerGui:set_visible(visible)
 	MenuNodeOpenContainerGui.super.set_visible(self, visible)
 	self._fullscreen_panel:set_visible(visible)
+end
+
+function MenuNodeOpenContainerGui:_setup_item_panel(...)
+	MenuNodeOpenContainerGui.super._setup_item_panel(self, ...)
+
+	local active_menu = managers.menu:active_menu()
+
+	if active_menu then
+		active_menu.input:set_force_input(true)
+	end
 end
 
 function MenuNodeOpenContainerGui:close()
@@ -5223,6 +5345,12 @@ function MenuNodeOpenContainerGui:close()
 
 	if alive(self._fullscreen_panel) then
 		self._fullscreen_panel:parent():remove(self._fullscreen_panel)
+	end
+
+	local active_menu = managers.menu:active_menu()
+
+	if active_menu then
+		active_menu.input:set_force_input(false)
 	end
 end
 

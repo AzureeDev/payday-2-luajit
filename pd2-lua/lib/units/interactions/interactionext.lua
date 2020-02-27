@@ -2423,6 +2423,12 @@ function MissionDoorDeviceInteractionExt:interact(player)
 end
 
 function MissionDoorDeviceInteractionExt:sync_interacted(peer, player, status, skip_alive_check)
+	if not self._active then
+		self._unit:damage():run_sequence_simple("interact", {
+			unit = player
+		})
+	end
+
 	MissionDoorDeviceInteractionExt.super.sync_interacted(self, peer, nil, nil, true)
 	self:check_for_upgrade()
 end
@@ -2565,6 +2571,16 @@ end
 
 function SpecialEquipmentInteractionExt:can_remove_item()
 	return self._remove_on_interact
+end
+
+SpecialEquipmentGiveAndTakeInteractionExt = SpecialEquipmentGiveAndTakeInteractionExt or class(SpecialEquipmentInteractionExt)
+
+function SpecialEquipmentGiveAndTakeInteractionExt:interact(player)
+	if self._tweak_data.equipment_consume then
+		managers.player:remove_special(self._tweak_data.special_equipment)
+	end
+
+	return SpecialEquipmentGiveAndTakeInteractionExt.super.interact(self, player)
 end
 
 AccessCameraInteractionExt = AccessCameraInteractionExt or class(UseInteractionExt)

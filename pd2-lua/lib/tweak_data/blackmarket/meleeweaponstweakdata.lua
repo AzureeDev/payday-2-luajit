@@ -2853,6 +2853,7 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.shock.stats.concealment = 28
 	self.melee_weapons.fear = {
 		name_id = "bm_melee_fear",
+		info_id = "bm_melee_fear_info",
 		hit_pre_calculation = true,
 		anim_attack_vars = {
 			"var1",
@@ -2910,6 +2911,67 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	}
 	self.melee_weapons.fear.anims.var1_attack_hit = self.melee_weapons.fear.anims.var1_attack
 	self.melee_weapons.fear.anims.var2_attack_hit = self.melee_weapons.fear.anims.var2_attack
+	self.melee_weapons.chac = deep_clone(self.melee_weapons.tomahawk)
+	self.melee_weapons.chac.name_id = "bm_melee_chac"
+	self.melee_weapons.chac.info_id = "bm_melee_chac_info"
+	self.melee_weapons.chac.type = "blunt"
+	self.melee_weapons.chac.unit = "units/pd2_dlc_bex/weapons/wpn_fps_mel_chac/wpn_fps_mel_chac"
+	self.melee_weapons.chac.third_unit = "units/pd2_dlc_bex/weapons/wpn_fps_mel_chac/wpn_third_mel_chac"
+	self.melee_weapons.chac.stats.weapon_type = "blunt"
+	self.melee_weapons.chac.anim_global_param = "melee_chac"
+	self.melee_weapons.chac.anim_attack_vars = {
+		"var1",
+		"var2",
+		"var3",
+		"var4"
+	}
+	self.melee_weapons.chac.melee_charge_shaker = "player_melee_charge_wing"
+	self.melee_weapons.chac.animation = nil
+	self.melee_weapons.chac.dlc = "bex"
+	self.melee_weapons.chac.hit_pre_calculation = true
+	self.melee_weapons.chac.align_objects = {
+		"a_weapon_right"
+	}
+	self.melee_weapons.chac.texture_bundle_folder = "bex"
+	self.melee_weapons.chac.stats = {
+		remove_weapon_movement_penalty = true,
+		min_damage = 3,
+		max_damage = 5.5,
+		min_damage_effect = 3,
+		max_damage_effect = 2,
+		charge_time = 2,
+		range = 150,
+		weapon_type = "blunt"
+	}
+	self.melee_weapons.chac.repeat_expire_t = 0.5
+	self.melee_weapons.chac.expire_t = 1.2
+	self.melee_weapons.chac.melee_damage_delay = 0.1
+	self.melee_weapons.chac.sounds = {
+		equip = "chac_equip",
+		hit_air = "chac_hit_air",
+		hit_gen = "chac_hit_gen",
+		hit_body = "chac_hit_body",
+		charge = "chac_charge"
+	}
+	self.melee_weapons.chac.stats.concealment = 30
+	self.melee_weapons.chac.anims = {
+		var1_attack = {
+			anim = "var1"
+		},
+		var2_attack = {
+			anim = "var2"
+		},
+		var3_attack = {
+			anim = "var3"
+		},
+		var4_attack = {
+			anim = "var4"
+		},
+		charge = {
+			loop = true,
+			anim = "charge"
+		}
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.melee_weapons) do

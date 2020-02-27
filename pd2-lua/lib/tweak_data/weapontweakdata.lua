@@ -218,6 +218,12 @@ function WeaponTweakData:init(tweak_data)
 	self:_init_data_legacy_crew()
 	self:_init_data_x_legacy_crew()
 	self:_init_data_coach_crew()
+	self:_init_data_beer_crew()
+	self:_init_data_x_beer_crew()
+	self:_init_data_czech_crew()
+	self:_init_data_x_czech_crew()
+	self:_init_data_stech_crew()
+	self:_init_data_x_stech_crew()
 	self:_precalculate_values()
 end
 
@@ -4380,6 +4386,111 @@ function WeaponTweakData:_init_data_coach_crew()
 	self.coach_crew.is_shotgun = true
 end
 
+function WeaponTweakData:_init_data_beer_crew()
+	self.beer_crew.categories = clone(self.beer.categories)
+	self.beer_crew.sounds.prefix = "beer_npc"
+	self.beer_crew.use_data.selection_index = SELECTION.SECONDARY
+	self.beer_crew.DAMAGE = 1
+	self.beer_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.beer_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.beer_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.beer_crew.CLIP_AMMO_MAX = 20
+	self.beer_crew.NR_CLIPS_MAX = 8
+	self.beer_crew.hold = "pistol"
+	self.beer_crew.auto = {
+		fire_rate = 0.092
+	}
+	self.beer_crew.alert_size = 2500
+	self.beer_crew.suppression = 0.45
+	self.beer_crew.FIRE_MODE = "auto"
+end
+
+function WeaponTweakData:_init_data_x_beer_crew()
+	self.x_beer_crew.categories = clone(self.x_beer.categories)
+	self.x_beer_crew.sounds.prefix = "beer_x_npc"
+	self.x_beer_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.x_beer_crew.DAMAGE = 1
+	self.x_beer_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.x_beer_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.x_beer_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_beer_crew.CLIP_AMMO_MAX = 10
+	self.x_beer_crew.NR_CLIPS_MAX = 5
+	self.x_beer_crew.hold = "akimbo_pistol"
+	self.x_beer_crew.alert_size = 2500
+	self.x_beer_crew.suppression = 1
+	self.x_beer_crew.FIRE_MODE = "auto"
+end
+
+function WeaponTweakData:_init_data_czech_crew()
+	self.czech_crew.categories = clone(self.czech.categories)
+	self.czech_crew.sounds.prefix = "czech_npc"
+	self.czech_crew.use_data.selection_index = SELECTION.SECONDARY
+	self.czech_crew.DAMAGE = 1
+	self.czech_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.czech_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.czech_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.czech_crew.CLIP_AMMO_MAX = 20
+	self.czech_crew.NR_CLIPS_MAX = 8
+	self.czech_crew.hold = "pistol"
+	self.czech_crew.auto = {
+		fire_rate = 0.092
+	}
+	self.czech_crew.alert_size = 2500
+	self.czech_crew.suppression = 0.45
+	self.czech_crew.FIRE_MODE = "auto"
+end
+
+function WeaponTweakData:_init_data_x_czech_crew()
+	self.x_czech_crew.categories = clone(self.x_czech.categories)
+	self.x_czech_crew.sounds.prefix = "czech_x_npc"
+	self.x_czech_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.x_czech_crew.DAMAGE = 1
+	self.x_czech_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.x_czech_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.x_czech_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_czech_crew.CLIP_AMMO_MAX = 10
+	self.x_czech_crew.NR_CLIPS_MAX = 5
+	self.x_czech_crew.hold = "akimbo_pistol"
+	self.x_czech_crew.alert_size = 2500
+	self.x_czech_crew.suppression = 1
+	self.x_czech_crew.FIRE_MODE = "auto"
+end
+
+function WeaponTweakData:_init_data_stech_crew()
+	self.stech_crew.categories = clone(self.stech.categories)
+	self.stech_crew.sounds.prefix = "stetch_npc"
+	self.stech_crew.use_data.selection_index = SELECTION.SECONDARY
+	self.stech_crew.DAMAGE = 1
+	self.stech_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.stech_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.stech_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.stech_crew.CLIP_AMMO_MAX = 20
+	self.stech_crew.NR_CLIPS_MAX = 8
+	self.stech_crew.hold = "pistol"
+	self.stech_crew.auto = {
+		fire_rate = 0.092
+	}
+	self.stech_crew.alert_size = 2500
+	self.stech_crew.suppression = 0.45
+	self.stech_crew.FIRE_MODE = "auto"
+end
+
+function WeaponTweakData:_init_data_x_stech_crew()
+	self.x_stech_crew.categories = clone(self.x_stech.categories)
+	self.x_stech_crew.sounds.prefix = "stetch_x_npc"
+	self.x_stech_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.x_stech_crew.DAMAGE = 1
+	self.x_stech_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.x_stech_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.x_stech_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_stech_crew.CLIP_AMMO_MAX = 10
+	self.x_stech_crew.NR_CLIPS_MAX = 5
+	self.x_stech_crew.hold = "akimbo_pistol"
+	self.x_stech_crew.alert_size = 2500
+	self.x_stech_crew.suppression = 1
+	self.x_stech_crew.FIRE_MODE = "auto"
+end
+
 function WeaponTweakData:_init_data_player_weapons(tweak_data)
 	local autohit_rifle_default, autohit_pistol_default, autohit_shotgun_default, autohit_lmg_default, autohit_snp_default, autohit_smg_default, autohit_minigun_default, aim_assist_rifle_default, aim_assist_pistol_default, aim_assist_shotgun_default, aim_assist_lmg_default, aim_assist_snp_default, aim_assist_smg_default, aim_assist_minigun_default = nil
 
@@ -5229,6 +5340,12 @@ function WeaponTweakData:_init_new_weapons(weapon_data)
 	self:_init_legacy(weapon_data)
 	self:_init_x_legacy(weapon_data)
 	self:_init_coach(weapon_data)
+	self:_init_beer(weapon_data)
+	self:_init_x_beer(weapon_data)
+	self:_init_stech(weapon_data)
+	self:_init_x_stech(weapon_data)
+	self:_init_czech(weapon_data)
+	self:_init_x_czech(weapon_data)
 end
 
 function WeaponTweakData:_init_new_m4(weapon_data)
@@ -5325,7 +5442,7 @@ function WeaponTweakData:_init_new_m4(weapon_data)
 	self.new_m4.transition_duration = 0.02
 	self.new_m4.panic_suppression_chance = 0.2
 	self.new_m4.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 52,
 		alert_size = 7,
@@ -5534,7 +5651,7 @@ function WeaponTweakData:_init_mp9(weapon_data)
 	}
 	self.mp9.panic_suppression_chance = 0.2
 	self.mp9.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 44,
 		alert_size = 7,
@@ -5641,7 +5758,7 @@ function WeaponTweakData:_init_r870(weapon_data)
 	}
 	self.r870.panic_suppression_chance = 0.2
 	self.r870.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 90,
 		alert_size = 7,
@@ -5859,7 +5976,7 @@ function WeaponTweakData:_init_amcar(weapon_data)
 	}
 	self.amcar.panic_suppression_chance = 0.2
 	self.amcar.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 42,
 		alert_size = 7,
@@ -5962,7 +6079,7 @@ function WeaponTweakData:_init_m16(weapon_data)
 	}
 	self.m16.panic_suppression_chance = 0.2
 	self.m16.stats = {
-		zoom = 4,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 94,
 		alert_size = 7,
@@ -6065,7 +6182,7 @@ function WeaponTweakData:_init_olympic(weapon_data)
 	}
 	self.olympic.panic_suppression_chance = 0.2
 	self.olympic.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 55,
 		alert_size = 7,
@@ -6168,7 +6285,7 @@ function WeaponTweakData:_init_ak74(weapon_data)
 	}
 	self.ak74.panic_suppression_chance = 0.2
 	self.ak74.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 56,
 		alert_size = 7,
@@ -6271,7 +6388,7 @@ function WeaponTweakData:_init_akm(weapon_data)
 	}
 	self.akm.panic_suppression_chance = 0.2
 	self.akm.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 97,
 		alert_size = 7,
@@ -6375,7 +6492,7 @@ function WeaponTweakData:_init_akm_gold(weapon_data)
 	}
 	self.akm_gold.panic_suppression_chance = 0.2
 	self.akm_gold.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 97,
 		alert_size = 7,
@@ -6478,7 +6595,7 @@ function WeaponTweakData:_init_akmsu(weapon_data)
 	}
 	self.akmsu.panic_suppression_chance = 0.2
 	self.akmsu.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 99,
 		alert_size = 7,
@@ -6580,7 +6697,7 @@ function WeaponTweakData:_init_saiga(weapon_data)
 	}
 	self.saiga.panic_suppression_chance = 0.2
 	self.saiga.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 42,
 		alert_size = 7,
@@ -6682,7 +6799,7 @@ function WeaponTweakData:_init_ak5(weapon_data)
 	}
 	self.ak5.panic_suppression_chance = 0.2
 	self.ak5.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 56,
 		alert_size = 7,
@@ -6780,7 +6897,7 @@ function WeaponTweakData:_init_aug(weapon_data)
 	}
 	self.aug.panic_suppression_chance = 0.2
 	self.aug.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 55,
 		alert_size = 7,
@@ -6879,7 +6996,7 @@ function WeaponTweakData:_init_g36(weapon_data)
 	}
 	self.g36.panic_suppression_chance = 0.2
 	self.g36.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 44,
 		alert_size = 7,
@@ -6977,7 +7094,7 @@ function WeaponTweakData:_init_p90(weapon_data)
 	}
 	self.p90.panic_suppression_chance = 0.2
 	self.p90.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 56,
 		alert_size = 7,
@@ -7076,7 +7193,7 @@ function WeaponTweakData:_init_new_m14(weapon_data)
 	}
 	self.new_m14.panic_suppression_chance = 0.2
 	self.new_m14.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 160,
 		alert_size = 7,
@@ -7172,7 +7289,7 @@ function WeaponTweakData:_init_deagle(weapon_data)
 	}
 	self.deagle.panic_suppression_chance = 0.2
 	self.deagle.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 120,
 		alert_size = 7,
@@ -7272,7 +7389,7 @@ function WeaponTweakData:_init_new_mp5(weapon_data)
 	}
 	self.new_mp5.panic_suppression_chance = 0.2
 	self.new_mp5.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 44,
 		alert_size = 7,
@@ -7370,7 +7487,7 @@ function WeaponTweakData:_init_colt_1911(weapon_data)
 	}
 	self.colt_1911.panic_suppression_chance = 0.2
 	self.colt_1911.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 65,
 		alert_size = 7,
@@ -7470,7 +7587,7 @@ function WeaponTweakData:_init_mac10(weapon_data)
 	}
 	self.mac10.panic_suppression_chance = 0.2
 	self.mac10.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 58,
 		alert_size = 7,
@@ -7567,7 +7684,7 @@ function WeaponTweakData:_init_serbu(weapon_data)
 	}
 	self.serbu.panic_suppression_chance = 0.2
 	self.serbu.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 90,
 		alert_size = 7,
@@ -7677,7 +7794,7 @@ function WeaponTweakData:_init_huntsman(weapon_data)
 	}
 	self.huntsman.panic_suppression_chance = 0.2
 	self.huntsman.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 155,
 		alert_size = 7,
@@ -7778,7 +7895,7 @@ function WeaponTweakData:_init_b92fs(weapon_data)
 	}
 	self.b92fs.panic_suppression_chance = 0.2
 	self.b92fs.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 37,
 		alert_size = 7,
@@ -7879,7 +7996,7 @@ function WeaponTweakData:_init_new_raging_bull(weapon_data)
 	}
 	self.new_raging_bull.panic_suppression_chance = 0.2
 	self.new_raging_bull.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 175,
 		alert_size = 7,
@@ -8325,7 +8442,7 @@ function WeaponTweakData:_init_judge(weapon_data)
 	}
 	self.judge.panic_suppression_chance = 0.2
 	self.judge.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 155,
 		alert_size = 7,
@@ -8527,7 +8644,7 @@ function WeaponTweakData:_init_s552(weapon_data)
 	}
 	self.s552.panic_suppression_chance = 0.2
 	self.s552.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 42,
 		alert_size = 7,
@@ -8627,7 +8744,7 @@ function WeaponTweakData:_init_ppk(weapon_data)
 	}
 	self.ppk.panic_suppression_chance = 0.2
 	self.ppk.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 37,
 		alert_size = 7,
@@ -8831,7 +8948,7 @@ function WeaponTweakData:_init_scar(weapon_data)
 	}
 	self.scar.panic_suppression_chance = 0.2
 	self.scar.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 98,
 		alert_size = 7,
@@ -8931,7 +9048,7 @@ function WeaponTweakData:_init_p226(weapon_data)
 	}
 	self.p226.panic_suppression_chance = 0.2
 	self.p226.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 65,
 		alert_size = 7,
@@ -9049,7 +9166,7 @@ function WeaponTweakData:_init_hk21(weapon_data)
 	}
 	self.hk21.panic_suppression_chance = 0.2
 	self.hk21.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 120,
 		alert_size = 8,
@@ -9285,7 +9402,7 @@ function WeaponTweakData:_init_rpk(weapon_data)
 	}
 	self.rpk.panic_suppression_chance = 0.2
 	self.rpk.stats = {
-		zoom = 2,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 120,
 		alert_size = 7,
@@ -9737,7 +9854,7 @@ function WeaponTweakData:_init_fal(weapon_data)
 	}
 	self.fal.panic_suppression_chance = 0.2
 	self.fal.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 98,
 		alert_size = 7,
@@ -9837,7 +9954,7 @@ function WeaponTweakData:_init_benelli(weapon_data)
 	}
 	self.benelli.panic_suppression_chance = 0.2
 	self.benelli.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 55,
 		alert_size = 7,
@@ -9945,7 +10062,7 @@ function WeaponTweakData:_init_striker(weapon_data)
 	}
 	self.striker.panic_suppression_chance = 0.2
 	self.striker.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 42,
 		alert_size = 7,
@@ -10054,7 +10171,7 @@ function WeaponTweakData:_init_ksg(weapon_data)
 	}
 	self.ksg.panic_suppression_chance = 0.2
 	self.ksg.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 90,
 		alert_size = 7,
@@ -10170,7 +10287,7 @@ function WeaponTweakData:_init_gre_m79(weapon_data)
 	self.gre_m79.panic_suppression_chance = 0.2
 	self.gre_m79.ignore_damage_upgrades = true
 	self.gre_m79.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 130,
 		alert_size = 7,
@@ -10273,7 +10390,7 @@ function WeaponTweakData:_init_g3(weapon_data)
 	}
 	self.g3.panic_suppression_chance = 0.2
 	self.g3.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 99,
 		alert_size = 7,
@@ -10375,7 +10492,7 @@ function WeaponTweakData:_init_galil(weapon_data)
 	}
 	self.galil.panic_suppression_chance = 0.2
 	self.galil.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 57,
 		alert_size = 7,
@@ -10475,7 +10592,7 @@ function WeaponTweakData:_init_famas(weapon_data)
 	}
 	self.famas.panic_suppression_chance = 0.2
 	self.famas.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 41,
 		alert_size = 7,
@@ -11310,7 +11427,7 @@ function WeaponTweakData:_init_g26(weapon_data)
 	}
 	self.g26.panic_suppression_chance = 0.2
 	self.g26.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 37,
 		alert_size = 7,
@@ -11414,7 +11531,7 @@ function WeaponTweakData:_init_spas12(weapon_data)
 	}
 	self.spas12.panic_suppression_chance = 0.2
 	self.spas12.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 55,
 		alert_size = 7,
@@ -11632,7 +11749,7 @@ function WeaponTweakData:_init_c96(weapon_data)
 	}
 	self.c96.panic_suppression_chance = 0.2
 	self.c96.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 65,
 		alert_size = 7,
@@ -12273,7 +12390,7 @@ function WeaponTweakData:_init_hs2000(weapon_data)
 	}
 	self.hs2000.panic_suppression_chance = 0.2
 	self.hs2000.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 65,
 		alert_size = 7,
@@ -12497,7 +12614,7 @@ function WeaponTweakData:_init_rpg7(weapon_data)
 	self.rpg7.panic_suppression_chance = 0.2
 	self.rpg7.ignore_damage_upgrades = true
 	self.rpg7.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 125,
 		alert_size = 7,
@@ -12608,7 +12725,7 @@ function WeaponTweakData:_init_cobray(weapon_data)
 	}
 	self.cobray.panic_suppression_chance = 0.2
 	self.cobray.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 57,
 		alert_size = 7,
@@ -12720,7 +12837,7 @@ function WeaponTweakData:_init_b682(weapon_data)
 	}
 	self.b682.panic_suppression_chance = 0.2
 	self.b682.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 155,
 		alert_size = 7,
@@ -12832,7 +12949,7 @@ function WeaponTweakData:_init_x_g22c(weapon_data)
 	}
 	self.x_g22c.panic_suppression_chance = 0.2
 	self.x_g22c.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 65,
 		alert_size = 7,
@@ -12941,7 +13058,7 @@ function WeaponTweakData:_init_x_g17(weapon_data)
 	}
 	self.x_g17.panic_suppression_chance = 0.2
 	self.x_g17.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 37,
 		alert_size = 7,
@@ -13050,7 +13167,7 @@ function WeaponTweakData:_init_x_usp(weapon_data)
 	}
 	self.x_usp.panic_suppression_chance = 0.2
 	self.x_usp.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 65,
 		alert_size = 7,
@@ -13166,7 +13283,7 @@ function WeaponTweakData:_init_flamethrower_mk2(weapon_data)
 		dot_tick_period = 0.5
 	}
 	self.flamethrower_mk2.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 7,
 		alert_size = 1,
@@ -13289,7 +13406,7 @@ function WeaponTweakData:_init_m32(weapon_data)
 	self.m32.panic_suppression_chance = 0.2
 	self.m32.ignore_damage_upgrades = true
 	self.m32.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 130,
 		alert_size = 7,
@@ -13398,7 +13515,7 @@ function WeaponTweakData:_init_aa12(weapon_data)
 	}
 	self.aa12.panic_suppression_chance = 0.2
 	self.aa12.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 42,
 		alert_size = 7,
@@ -13513,7 +13630,7 @@ function WeaponTweakData:_init_peacemaker(weapon_data)
 	}
 	self.peacemaker.panic_suppression_chance = 0.2
 	self.peacemaker.stats = {
-		zoom = 5,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 180,
 		alert_size = 7,
@@ -13856,7 +13973,7 @@ function WeaponTweakData:_init_mateba(weapon_data)
 	}
 	self.mateba.panic_suppression_chance = 0.2
 	self.mateba.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 180,
 		alert_size = 7,
@@ -13961,7 +14078,7 @@ function WeaponTweakData:_init_asval(weapon_data)
 	}
 	self.asval.panic_suppression_chance = 0.2
 	self.asval.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 41,
 		alert_size = 12,
@@ -14060,7 +14177,7 @@ function WeaponTweakData:_init_sub2000(weapon_data)
 		recoil_steelsight = true
 	}
 	self.sub2000.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 160,
 		alert_size = 7,
@@ -14282,7 +14399,7 @@ function WeaponTweakData:_init_polymer(weapon_data)
 	}
 	self.polymer.panic_suppression_chance = 0.2
 	self.polymer.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 58,
 		alert_size = 7,
@@ -14394,7 +14511,7 @@ function WeaponTweakData:_init_hunter(weapon_data)
 	self.hunter.panic_suppression_chance = 0.2
 	self.hunter.ignore_damage_upgrades = true
 	self.hunter.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 35,
 		alert_size = 7,
@@ -14504,7 +14621,7 @@ function WeaponTweakData:_init_baka(weapon_data)
 	}
 	self.baka.panic_suppression_chance = 0.2
 	self.baka.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 44,
 		alert_size = 7,
@@ -14616,7 +14733,7 @@ function WeaponTweakData:_init_arblast(weapon_data)
 	self.arblast.panic_suppression_chance = 0.2
 	self.arblast.ignore_damage_upgrades = true
 	self.arblast.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 20,
 		alert_size = 7,
@@ -14731,7 +14848,7 @@ function WeaponTweakData:_init_frankish(weapon_data)
 	self.frankish.panic_suppression_chance = 0.2
 	self.frankish.ignore_damage_upgrades = true
 	self.frankish.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 75,
 		alert_size = 7,
@@ -15068,7 +15185,7 @@ function WeaponTweakData:_init_sparrow(weapon_data)
 	}
 	self.sparrow.panic_suppression_chance = 0.2
 	self.sparrow.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 120,
 		alert_size = 7,
@@ -15300,7 +15417,7 @@ function WeaponTweakData:_init_m37(weapon_data)
 	}
 	self.m37.panic_suppression_chance = 0.2
 	self.m37.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 155,
 		alert_size = 7,
@@ -15423,7 +15540,7 @@ function WeaponTweakData:_init_china(weapon_data)
 	self.china.panic_suppression_chance = 0.2
 	self.china.ignore_damage_upgrades = true
 	self.china.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 96,
 		alert_size = 7,
@@ -15531,7 +15648,7 @@ function WeaponTweakData:_init_sr2(weapon_data)
 	}
 	self.sr2.panic_suppression_chance = 0.2
 	self.sr2.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 58,
 		alert_size = 7,
@@ -15742,7 +15859,7 @@ function WeaponTweakData:_init_pl14(weapon_data)
 	}
 	self.pl14.panic_suppression_chance = 0.2
 	self.pl14.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 120,
 		alert_size = 7,
@@ -16065,7 +16182,7 @@ function WeaponTweakData:_init_tecci(weapon_data)
 	self.tecci.transition_duration = 0.02
 	self.tecci.panic_suppression_chance = 0.2
 	self.tecci.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 40,
 		alert_size = 7,
@@ -16172,7 +16289,7 @@ function WeaponTweakData:_init_hajk(weapon_data)
 	}
 	self.hajk.panic_suppression_chance = 0.2
 	self.hajk.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 99,
 		alert_size = 7,
@@ -16286,7 +16403,7 @@ function WeaponTweakData:_init_boot(weapon_data)
 	}
 	self.boot.panic_suppression_chance = 0.2
 	self.boot.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 155,
 		alert_size = 7,
@@ -16386,7 +16503,7 @@ function WeaponTweakData:_init_packrat(weapon_data)
 	}
 	self.packrat.panic_suppression_chance = 0.2
 	self.packrat.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 66,
 		alert_size = 7,
@@ -16494,7 +16611,7 @@ function WeaponTweakData:_init_schakal(weapon_data)
 	}
 	self.schakal.panic_suppression_chance = 0.2
 	self.schakal.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 99,
 		alert_size = 7,
@@ -16826,7 +16943,7 @@ function WeaponTweakData:_init_rota(weapon_data)
 	}
 	self.rota.panic_suppression_chance = 0.2
 	self.rota.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 42,
 		alert_size = 7,
@@ -16941,7 +17058,7 @@ function WeaponTweakData:_init_arbiter(weapon_data)
 	self.arbiter.panic_suppression_chance = 0.2
 	self.arbiter.ignore_damage_upgrades = true
 	self.arbiter.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 48,
 		alert_size = 7,
@@ -17046,7 +17163,7 @@ function WeaponTweakData:_init_contraband(weapon_data)
 	}
 	self.contraband.panic_suppression_chance = 0.2
 	self.contraband.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 160,
 		alert_size = 7,
@@ -17158,7 +17275,7 @@ function WeaponTweakData:_init_contraband(weapon_data)
 	self.contraband_m203.panic_suppression_chance = 0.2
 	self.contraband_m203.ignore_damage_upgrades = true
 	self.contraband_m203.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 960,
 		alert_size = 7,
@@ -17280,7 +17397,7 @@ function WeaponTweakData:_init_ray(weapon_data)
 	self.ray.panic_suppression_chance = 0.2
 	self.ray.ignore_damage_upgrades = true
 	self.ray.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 62,
 		alert_size = 7,
@@ -17615,7 +17732,7 @@ function WeaponTweakData:_init_flint(weapon_data)
 	}
 	self.flint.panic_suppression_chance = 0.2
 	self.flint.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 99,
 		alert_size = 7,
@@ -17722,7 +17839,7 @@ function WeaponTweakData:_init_coal(weapon_data)
 	}
 	self.coal.panic_suppression_chance = 0.2
 	self.coal.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 99,
 		alert_size = 7,
@@ -17825,7 +17942,7 @@ function WeaponTweakData:_init_lemming(weapon_data)
 	self.lemming.can_shoot_through_shield = true
 	self.lemming.can_shoot_through_wall = true
 	self.lemming.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 120,
 		alert_size = 7,
@@ -17928,7 +18045,7 @@ function WeaponTweakData:_init_chinchilla(weapon_data)
 	}
 	self.chinchilla.panic_suppression_chance = 0.2
 	self.chinchilla.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 180,
 		alert_size = 7,
@@ -18153,7 +18270,7 @@ function WeaponTweakData:_init_shepheard(weapon_data)
 	}
 	self.shepheard.panic_suppression_chance = 0.2
 	self.shepheard.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 44,
 		alert_size = 7,
@@ -18360,7 +18477,7 @@ function WeaponTweakData:_init_breech(weapon_data)
 	}
 	self.breech.panic_suppression_chance = 0.2
 	self.breech.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 180,
 		alert_size = 7,
@@ -18467,7 +18584,7 @@ function WeaponTweakData:_init_ching(weapon_data)
 	}
 	self.ching.panic_suppression_chance = 0.2
 	self.ching.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 160,
 		alert_size = 7,
@@ -18683,7 +18800,7 @@ function WeaponTweakData:_init_ecp(weapon_data)
 	self.ecp.panic_suppression_chance = 0.2
 	self.ecp.ignore_damage_upgrades = true
 	self.ecp.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 70,
 		alert_size = 7,
@@ -18900,7 +19017,7 @@ function WeaponTweakData:_init_x_shrew(weapon_data)
 	self.x_shrew.panic_suppression_chance = 0.2
 	self.x_shrew.texture_bundle_folder = "myh"
 	self.x_shrew.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 37,
 		alert_size = 7,
@@ -19004,7 +19121,7 @@ function WeaponTweakData:_init_basset(weapon_data)
 	self.basset.texture_bundle_folder = "dsg"
 	self.basset.panic_suppression_chance = 0.2
 	self.basset.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 18,
 		alert_size = 7,
@@ -19336,7 +19453,7 @@ function WeaponTweakData:_init_slap(weapon_data)
 	self.slap.texture_bundle_folder = "fgl"
 	self.slap.ignore_damage_upgrades = true
 	self.slap.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 130,
 		alert_size = 7,
@@ -19772,7 +19889,7 @@ function WeaponTweakData:_init_x_erma(weapon_data)
 	}
 	self.x_erma.panic_suppression_chance = 0.2
 	self.x_erma.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 99,
 		alert_size = 7,
@@ -19989,7 +20106,7 @@ function WeaponTweakData:_init_x_m45(weapon_data)
 	}
 	self.x_m45.panic_suppression_chance = 0.2
 	self.x_m45.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 99,
 		alert_size = 7,
@@ -20097,7 +20214,7 @@ function WeaponTweakData:_init_x_m1928(weapon_data)
 	}
 	self.x_m1928.panic_suppression_chance = 0.2
 	self.x_m1928.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 58,
 		alert_size = 8,
@@ -20314,7 +20431,7 @@ function WeaponTweakData:_init_x_mp7(weapon_data)
 	}
 	self.x_mp7.panic_suppression_chance = 0.2
 	self.x_mp7.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 58,
 		alert_size = 7,
@@ -20965,7 +21082,7 @@ function WeaponTweakData:_init_x_scorpion(weapon_data)
 	}
 	self.x_scorpion.panic_suppression_chance = 0.2
 	self.x_scorpion.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 44,
 		alert_size = 7,
@@ -21074,7 +21191,7 @@ function WeaponTweakData:_init_x_sterling(weapon_data)
 	}
 	self.x_sterling.panic_suppression_chance = 0.2
 	self.x_sterling.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 42,
 		alert_size = 7,
@@ -21182,7 +21299,7 @@ function WeaponTweakData:_init_x_tec9(weapon_data)
 	}
 	self.x_tec9.panic_suppression_chance = 0.2
 	self.x_tec9.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 44,
 		alert_size = 7,
@@ -21290,7 +21407,7 @@ function WeaponTweakData:_init_x_uzi(weapon_data)
 	}
 	self.x_uzi.panic_suppression_chance = 0.2
 	self.x_uzi.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 44,
 		alert_size = 7,
@@ -21728,7 +21845,7 @@ function WeaponTweakData:_init_x_g18c(weapon_data)
 	}
 	self.x_g18c.panic_suppression_chance = 0.2
 	self.x_g18c.stats = {
-		zoom = 1,
+		zoom = 3,
 		total_ammo_mod = 21,
 		damage = 35,
 		alert_size = 7,
@@ -22825,7 +22942,7 @@ function WeaponTweakData:_init_system(weapon_data)
 		dot_tick_period = 0.5
 	}
 	self.system.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 7,
 		alert_size = 1,
@@ -23041,7 +23158,7 @@ function WeaponTweakData:_init_elastic(weapon_data)
 	self.elastic.panic_suppression_chance = 0.2
 	self.elastic.ignore_damage_upgrades = true
 	self.elastic.stats = {
-		zoom = 5,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 20,
 		alert_size = 7,
@@ -23144,7 +23261,7 @@ function WeaponTweakData:_init_legacy(weapon_data)
 	}
 	self.legacy.panic_suppression_chance = 0.2
 	self.legacy.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 37,
 		alert_size = 7,
@@ -23372,7 +23489,7 @@ function WeaponTweakData:_init_coach(weapon_data)
 	}
 	self.coach.panic_suppression_chance = 0.2
 	self.coach.stats = {
-		zoom = 3,
+		zoom = 1,
 		total_ammo_mod = 21,
 		damage = 155,
 		alert_size = 7,
@@ -23384,6 +23501,690 @@ function WeaponTweakData:_init_coach(weapon_data)
 		reload = 11,
 		suppression = 5,
 		concealment = 10
+	}
+end
+
+function WeaponTweakData:_init_beer(weapon_data)
+	self.beer = {
+		categories = {
+			"pistol"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.beer.sounds.fire = "beer_fire_single"
+	self.beer.sounds.fire_single = "beer_fire_single"
+	self.beer.sounds.fire_auto = "beer_fire"
+	self.beer.sounds.stop_fire = "beer_stop"
+	self.beer.sounds.dryfire = "secondary_dryfire"
+	self.beer.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.beer.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.beer.sounds.magazine_empty = "wp_pistol_slide_lock"
+	self.beer.timers = {
+		reload_not_empty = 1.47,
+		reload_empty = 2.12,
+		unequip = 0.5,
+		equip = 0.35
+	}
+	self.beer.name_id = "bm_w_beer"
+	self.beer.desc_id = "bm_w_beer_desc"
+	self.beer.description_id = "des_glock"
+	self.beer.global_value = "afp"
+	self.beer.texture_bundle_folder = "afp"
+	self.beer.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.beer.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.beer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.beer.use_data = {
+		selection_index = SELECTION.SECONDARY
+	}
+	self.beer.DAMAGE = 1
+	self.beer.CLIP_AMMO_MAX = 15
+	self.beer.NR_CLIPS_MAX = 13
+	self.beer.AMMO_MAX = self.beer.CLIP_AMMO_MAX * self.beer.NR_CLIPS_MAX
+	self.beer.AMMO_PICKUP = self:_pickup_chance(self.beer.AMMO_MAX, PICKUP.OTHER)
+	self.beer.FIRE_MODE = "auto"
+	self.beer.fire_mode_data = {
+		fire_rate = 0.0545
+	}
+	self.beer.CAN_TOGGLE_FIREMODE = true
+	self.beer.auto = {
+		fire_rate = 0.0545
+	}
+	self.beer.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.beer.kick = {
+		standing = {
+			0.4,
+			0.5,
+			-0.2,
+			0.2
+		}
+	}
+	self.beer.kick.crouching = self.beer.kick.standing
+	self.beer.kick.steelsight = self.beer.kick.standing
+	self.beer.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.beer.crosshair.standing.offset = 0.3
+	self.beer.crosshair.standing.moving_offset = 0.5
+	self.beer.crosshair.standing.kick_offset = 0.6
+	self.beer.crosshair.crouching.offset = 0.2
+	self.beer.crosshair.crouching.moving_offset = 0.5
+	self.beer.crosshair.crouching.kick_offset = 0.3
+	self.beer.crosshair.steelsight.hidden = true
+	self.beer.crosshair.steelsight.offset = 0.2
+	self.beer.crosshair.steelsight.moving_offset = 0.2
+	self.beer.crosshair.steelsight.kick_offset = 0.3
+	self.beer.shake = {
+		fire_multiplier = 0.65,
+		fire_steelsight_multiplier = 0.2
+	}
+	self.beer.autohit = weapon_data.autohit_pistol_default
+	self.beer.aim_assist = weapon_data.aim_assist_pistol_default
+	self.beer.weapon_hold = "czech"
+	self.beer.animations = {
+		fire = "recoil",
+		reload = "reload",
+		reload_not_empty = "reload_not_empty",
+		equip_id = "equip_czech",
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
+	}
+	self.beer.transition_duration = 0
+	self.beer.panic_suppression_chance = 0.2
+	self.beer.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 25,
+		alert_size = 7,
+		spread = 11,
+		spread_moving = 11,
+		recoil = 17,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 14,
+		concealment = 28
+	}
+end
+
+function WeaponTweakData:_init_x_beer(weapon_data)
+	self.x_beer = {
+		categories = {
+			"akimbo",
+			"pistol"
+		},
+		allow_akimbo_autofire = true,
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.x_beer.sounds.fire = "beer_x_fire"
+	self.x_beer.sounds.fire_single = "beer_x_fire_single"
+	self.x_beer.sounds.fire_auto = "beer_x_fire"
+	self.x_beer.sounds.stop_fire = "beer_x_stop"
+	self.x_beer.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.x_beer.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.x_beer.sounds.dryfire = "secondary_dryfire"
+	self.x_beer.sounds.magazine_empty = "wp_akimbo_pistol_slide_lock"
+	self.x_beer.timers = {
+		reload_not_empty = 3.17,
+		reload_empty = 4,
+		unequip = 0.5,
+		equip = 0.5
+	}
+	self.x_beer.name_id = "bm_w_x_beer"
+	self.x_beer.desc_id = "bm_w_x_beer_desc"
+	self.x_beer.description_id = "des_x_beer"
+	self.x_beer.global_value = "afp"
+	self.x_beer.texture_bundle_folder = "afp"
+	self.x_beer.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.x_beer.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.x_beer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_beer.use_data = {
+		selection_index = SELECTION.PRIMARY
+	}
+	self.x_beer.DAMAGE = 1
+	self.x_beer.CLIP_AMMO_MAX = 30
+	self.x_beer.NR_CLIPS_MAX = 7
+	self.x_beer.AMMO_MAX = self.x_beer.CLIP_AMMO_MAX * self.x_beer.NR_CLIPS_MAX
+	self.x_beer.AMMO_PICKUP = self:_pickup_chance(self.x_beer.AMMO_MAX, PICKUP.OTHER)
+	self.x_beer.FIRE_MODE = "auto"
+	self.x_beer.fire_mode_data = {
+		fire_rate = 0.0545
+	}
+	self.x_beer.CAN_TOGGLE_FIREMODE = true
+	self.x_beer.single = {
+		fire_rate = 0.16
+	}
+	self.x_beer.spread = {
+		standing = self.colt_1911.spread.standing,
+		crouching = self.colt_1911.spread.crouching,
+		steelsight = self.colt_1911.spread.steelsight,
+		moving_standing = self.colt_1911.spread.moving_standing,
+		moving_crouching = self.colt_1911.spread.moving_crouching,
+		moving_steelsight = self.colt_1911.spread.moving_steelsight
+	}
+	self.x_beer.kick = {
+		standing = {
+			0.5,
+			0.8,
+			-0.6,
+			0.6
+		}
+	}
+	self.x_beer.kick.crouching = self.x_beer.kick.standing
+	self.x_beer.kick.steelsight = self.x_beer.kick.standing
+	self.x_beer.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.x_beer.crosshair.standing.offset = 0.2
+	self.x_beer.crosshair.standing.moving_offset = 0.6
+	self.x_beer.crosshair.standing.kick_offset = 0.4
+	self.x_beer.crosshair.crouching.offset = 0.1
+	self.x_beer.crosshair.crouching.moving_offset = 0.6
+	self.x_beer.crosshair.crouching.kick_offset = 0.3
+	self.x_beer.crosshair.steelsight.hidden = true
+	self.x_beer.crosshair.steelsight.offset = 0
+	self.x_beer.crosshair.steelsight.moving_offset = 0
+	self.x_beer.crosshair.steelsight.kick_offset = 0.1
+	self.x_beer.shake = {
+		fire_multiplier = 1,
+		fire_steelsight_multiplier = -1
+	}
+	self.x_beer.autohit = weapon_data.autohit_pistol_default
+	self.x_beer.aim_assist = weapon_data.aim_assist_pistol_default
+	self.x_beer.weapon_hold = "jowi_pistol"
+	self.x_beer.animations = {
+		second_gun_versions = {
+			reload_not_empty = "reload_not_empty_left",
+			reload = "reload_left"
+		},
+		has_steelsight_stance = true,
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
+	}
+	self.x_beer.panic_suppression_chance = 0.2
+	self.x_beer.stats = {
+		zoom = 3,
+		total_ammo_mod = 21,
+		damage = 25,
+		alert_size = 7,
+		spread = 11,
+		spread_moving = 11,
+		recoil = 20,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 14,
+		concealment = 28
+	}
+end
+
+function WeaponTweakData:_init_czech(weapon_data)
+	self.czech = {
+		categories = {
+			"pistol"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.czech.sounds.fire = "czech_fire_single"
+	self.czech.sounds.fire_single = "czech_fire_single"
+	self.czech.sounds.fire_auto = "czech_fire"
+	self.czech.sounds.stop_fire = "czech_stop"
+	self.czech.sounds.dryfire = "secondary_dryfire"
+	self.czech.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.czech.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.czech.sounds.magazine_empty = "wp_pistol_slide_lock"
+	self.czech.timers = {
+		reload_not_empty = 1.47,
+		reload_empty = 2.12,
+		unequip = 0.5,
+		equip = 0.35
+	}
+	self.czech.name_id = "bm_w_czech"
+	self.czech.desc_id = "bm_w_czech_desc"
+	self.czech.description_id = "des_glock"
+	self.czech.global_value = "afp"
+	self.czech.texture_bundle_folder = "afp"
+	self.czech.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.czech.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.czech.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.czech.use_data = {
+		selection_index = SELECTION.SECONDARY
+	}
+	self.czech.DAMAGE = 1
+	self.czech.CLIP_AMMO_MAX = 15
+	self.czech.NR_CLIPS_MAX = 10
+	self.czech.AMMO_MAX = self.czech.CLIP_AMMO_MAX * self.czech.NR_CLIPS_MAX
+	self.czech.AMMO_PICKUP = self:_pickup_chance(self.czech.AMMO_MAX, PICKUP.OTHER)
+	self.czech.FIRE_MODE = "auto"
+	self.czech.fire_mode_data = {
+		fire_rate = 0.06
+	}
+	self.czech.CAN_TOGGLE_FIREMODE = true
+	self.czech.auto = {
+		fire_rate = 0.06
+	}
+	self.czech.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.czech.kick = {
+		standing = {
+			0.5,
+			0.4,
+			-0.5,
+			0.3
+		}
+	}
+	self.czech.kick.crouching = self.czech.kick.standing
+	self.czech.kick.steelsight = self.czech.kick.standing
+	self.czech.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.czech.crosshair.standing.offset = 0.3
+	self.czech.crosshair.standing.moving_offset = 0.5
+	self.czech.crosshair.standing.kick_offset = 0.6
+	self.czech.crosshair.crouching.offset = 0.2
+	self.czech.crosshair.crouching.moving_offset = 0.5
+	self.czech.crosshair.crouching.kick_offset = 0.3
+	self.czech.crosshair.steelsight.hidden = true
+	self.czech.crosshair.steelsight.offset = 0.2
+	self.czech.crosshair.steelsight.moving_offset = 0.2
+	self.czech.crosshair.steelsight.kick_offset = 0.3
+	self.czech.shake = {
+		fire_multiplier = 0.65,
+		fire_steelsight_multiplier = 0.2
+	}
+	self.czech.autohit = weapon_data.autohit_pistol_default
+	self.czech.aim_assist = weapon_data.aim_assist_pistol_default
+	self.czech.weapon_hold = "czech"
+	self.czech.animations = {
+		fire = "recoil",
+		reload = "reload",
+		reload_not_empty = "reload_not_empty",
+		equip_id = "equip_czech",
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
+	}
+	self.czech.transition_duration = 0
+	self.czech.panic_suppression_chance = 0.2
+	self.czech.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 38,
+		alert_size = 7,
+		spread = 16,
+		spread_moving = 14,
+		recoil = 16,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 14,
+		concealment = 26
+	}
+end
+
+function WeaponTweakData:_init_x_czech(weapon_data)
+	self.x_czech = {
+		categories = {
+			"akimbo",
+			"pistol"
+		},
+		allow_akimbo_autofire = true,
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.x_czech.sounds.fire = "czech_x_fire"
+	self.x_czech.sounds.fire_single = "czech_x_fire_single"
+	self.x_czech.sounds.fire_auto = "czech_x_fire"
+	self.x_czech.sounds.stop_fire = "czech_x_stop"
+	self.x_czech.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.x_czech.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.x_czech.sounds.dryfire = "secondary_dryfire"
+	self.x_czech.sounds.magazine_empty = "wp_akimbo_pistol_slide_lock"
+	self.x_czech.timers = {
+		reload_not_empty = 3.17,
+		reload_empty = 4,
+		unequip = 0.5,
+		equip = 0.5
+	}
+	self.x_czech.name_id = "bm_w_x_czech"
+	self.x_czech.desc_id = "bm_w_x_czech_desc"
+	self.x_czech.description_id = "des_x_czech"
+	self.x_czech.global_value = "afp"
+	self.x_czech.texture_bundle_folder = "afp"
+	self.x_czech.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.x_czech.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.x_czech.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_czech.use_data = {
+		selection_index = SELECTION.PRIMARY
+	}
+	self.x_czech.DAMAGE = 1
+	self.x_czech.CLIP_AMMO_MAX = 30
+	self.x_czech.NR_CLIPS_MAX = 6
+	self.x_czech.AMMO_MAX = self.x_czech.CLIP_AMMO_MAX * self.x_czech.NR_CLIPS_MAX
+	self.x_czech.AMMO_PICKUP = self:_pickup_chance(self.x_czech.AMMO_MAX, PICKUP.OTHER)
+	self.x_czech.FIRE_MODE = "auto"
+	self.x_czech.fire_mode_data = {
+		fire_rate = 0.06
+	}
+	self.x_czech.CAN_TOGGLE_FIREMODE = true
+	self.x_czech.single = {
+		fire_rate = 0.166
+	}
+	self.x_czech.spread = {
+		standing = self.colt_1911.spread.standing,
+		crouching = self.colt_1911.spread.crouching,
+		steelsight = self.colt_1911.spread.steelsight,
+		moving_standing = self.colt_1911.spread.moving_standing,
+		moving_crouching = self.colt_1911.spread.moving_crouching,
+		moving_steelsight = self.colt_1911.spread.moving_steelsight
+	}
+	self.x_czech.kick = {
+		standing = {
+			0.5,
+			0.8,
+			-0.7,
+			0.6
+		}
+	}
+	self.x_czech.kick.crouching = self.x_czech.kick.standing
+	self.x_czech.kick.steelsight = self.x_czech.kick.standing
+	self.x_czech.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.x_czech.crosshair.standing.offset = 0.2
+	self.x_czech.crosshair.standing.moving_offset = 0.6
+	self.x_czech.crosshair.standing.kick_offset = 0.4
+	self.x_czech.crosshair.crouching.offset = 0.1
+	self.x_czech.crosshair.crouching.moving_offset = 0.6
+	self.x_czech.crosshair.crouching.kick_offset = 0.3
+	self.x_czech.crosshair.steelsight.hidden = true
+	self.x_czech.crosshair.steelsight.offset = 0
+	self.x_czech.crosshair.steelsight.moving_offset = 0
+	self.x_czech.crosshair.steelsight.kick_offset = 0.1
+	self.x_czech.shake = {
+		fire_multiplier = 1,
+		fire_steelsight_multiplier = -1
+	}
+	self.x_czech.autohit = weapon_data.autohit_pistol_default
+	self.x_czech.aim_assist = weapon_data.aim_assist_pistol_default
+	self.x_czech.weapon_hold = "jowi_pistol"
+	self.x_czech.animations = {
+		second_gun_versions = {
+			reload_not_empty = "reload_not_empty_left",
+			reload = "reload_left"
+		},
+		has_steelsight_stance = true,
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
+	}
+	self.x_czech.panic_suppression_chance = 0.2
+	self.x_czech.stats = {
+		zoom = 3,
+		total_ammo_mod = 21,
+		damage = 38,
+		alert_size = 7,
+		spread = 16,
+		spread_moving = 14,
+		recoil = 16,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 14,
+		concealment = 26
+	}
+end
+
+function WeaponTweakData:_init_stech(weapon_data)
+	self.stech = {
+		categories = {
+			"pistol"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.stech.sounds.fire = "stetch_fire_single"
+	self.stech.sounds.fire_single = "stetch_fire_single"
+	self.stech.sounds.fire_auto = "stetch_fire"
+	self.stech.sounds.stop_fire = "stetch_stop"
+	self.stech.sounds.dryfire = "secondary_dryfire"
+	self.stech.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.stech.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.stech.sounds.magazine_empty = "wp_pistol_slide_lock"
+	self.stech.timers = {
+		reload_not_empty = 2,
+		reload_empty = 2.7,
+		unequip = 0.5,
+		equip = 0.35
+	}
+	self.stech.name_id = "bm_w_stech"
+	self.stech.desc_id = "bm_w_stech_desc"
+	self.stech.description_id = "des_glock"
+	self.stech.global_value = "afp"
+	self.stech.texture_bundle_folder = "afp"
+	self.stech.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.stech.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.stech.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.stech.use_data = {
+		selection_index = SELECTION.SECONDARY
+	}
+	self.stech.DAMAGE = 1
+	self.stech.CLIP_AMMO_MAX = 20
+	self.stech.NR_CLIPS_MAX = 4
+	self.stech.AMMO_MAX = self.stech.CLIP_AMMO_MAX * self.stech.NR_CLIPS_MAX
+	self.stech.AMMO_PICKUP = self:_pickup_chance(self.stech.AMMO_MAX, PICKUP.OTHER)
+	self.stech.FIRE_MODE = "auto"
+	self.stech.fire_mode_data = {
+		fire_rate = 0.08
+	}
+	self.stech.CAN_TOGGLE_FIREMODE = true
+	self.stech.auto = {
+		fire_rate = 0.08
+	}
+	self.stech.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.stech.kick = {
+		standing = {
+			0.3,
+			0.4,
+			-0.3,
+			0.3
+		}
+	}
+	self.stech.kick.crouching = self.stech.kick.standing
+	self.stech.kick.steelsight = self.stech.kick.standing
+	self.stech.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.stech.crosshair.standing.offset = 0.3
+	self.stech.crosshair.standing.moving_offset = 0.5
+	self.stech.crosshair.standing.kick_offset = 0.6
+	self.stech.crosshair.crouching.offset = 0.2
+	self.stech.crosshair.crouching.moving_offset = 0.5
+	self.stech.crosshair.crouching.kick_offset = 0.3
+	self.stech.crosshair.steelsight.hidden = true
+	self.stech.crosshair.steelsight.offset = 0.2
+	self.stech.crosshair.steelsight.moving_offset = 0.2
+	self.stech.crosshair.steelsight.kick_offset = 0.3
+	self.stech.shake = {
+		fire_multiplier = 0.65,
+		fire_steelsight_multiplier = 0.2
+	}
+	self.stech.autohit = weapon_data.autohit_pistol_default
+	self.stech.aim_assist = weapon_data.aim_assist_pistol_default
+	self.stech.weapon_hold = "glock"
+	self.stech.animations = {
+		fire = "recoil",
+		reload = "reload",
+		reload_not_empty = "reload_not_empty",
+		equip_id = "equip_glock",
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
+	}
+	self.stech.transition_duration = 0
+	self.stech.panic_suppression_chance = 0.2
+	self.stech.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 65,
+		alert_size = 7,
+		spread = 15,
+		spread_moving = 7,
+		recoil = 8,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 16,
+		concealment = 25
+	}
+end
+
+function WeaponTweakData:_init_x_stech(weapon_data)
+	self.x_stech = {
+		categories = {
+			"akimbo",
+			"pistol"
+		},
+		allow_akimbo_autofire = true,
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.x_stech.sounds.fire = "stetch_x_fire"
+	self.x_stech.sounds.fire_single = "stetch_x_fire_single"
+	self.x_stech.sounds.fire_auto = "stetch_x_fire"
+	self.x_stech.sounds.stop_fire = "stetch_x_stop"
+	self.x_stech.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.x_stech.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.x_stech.sounds.dryfire = "secondary_dryfire"
+	self.x_stech.sounds.magazine_empty = "wp_akimbo_pistol_slide_lock"
+	self.x_stech.timers = {
+		reload_not_empty = 3.17,
+		reload_empty = 4,
+		unequip = 0.5,
+		equip = 0.5
+	}
+	self.x_stech.name_id = "bm_w_x_stech"
+	self.x_stech.desc_id = "bm_w_x_stech_desc"
+	self.x_stech.description_id = "des_x_stech"
+	self.x_stech.global_value = "afp"
+	self.x_stech.texture_bundle_folder = "afp"
+	self.x_stech.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.x_stech.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.x_stech.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_stech.use_data = {
+		selection_index = SELECTION.PRIMARY
+	}
+	self.x_stech.DAMAGE = 1
+	self.x_stech.CLIP_AMMO_MAX = 40
+	self.x_stech.NR_CLIPS_MAX = 3
+	self.x_stech.AMMO_MAX = self.x_stech.CLIP_AMMO_MAX * self.x_stech.NR_CLIPS_MAX
+	self.x_stech.AMMO_PICKUP = self:_pickup_chance(self.x_stech.AMMO_MAX, PICKUP.OTHER)
+	self.x_stech.FIRE_MODE = "auto"
+	self.x_stech.fire_mode_data = {
+		fire_rate = 0.08
+	}
+	self.x_stech.CAN_TOGGLE_FIREMODE = true
+	self.x_stech.single = {
+		fire_rate = 0.166
+	}
+	self.x_stech.spread = {
+		standing = self.colt_1911.spread.standing,
+		crouching = self.colt_1911.spread.crouching,
+		steelsight = self.colt_1911.spread.steelsight,
+		moving_standing = self.colt_1911.spread.moving_standing,
+		moving_crouching = self.colt_1911.spread.moving_crouching,
+		moving_steelsight = self.colt_1911.spread.moving_steelsight
+	}
+	self.x_stech.kick = {
+		standing = {
+			0.5,
+			0.8,
+			-0.6,
+			0.6
+		}
+	}
+	self.x_stech.kick.crouching = self.x_stech.kick.standing
+	self.x_stech.kick.steelsight = self.x_stech.kick.standing
+	self.x_stech.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.x_stech.crosshair.standing.offset = 0.2
+	self.x_stech.crosshair.standing.moving_offset = 0.6
+	self.x_stech.crosshair.standing.kick_offset = 0.4
+	self.x_stech.crosshair.crouching.offset = 0.1
+	self.x_stech.crosshair.crouching.moving_offset = 0.6
+	self.x_stech.crosshair.crouching.kick_offset = 0.3
+	self.x_stech.crosshair.steelsight.hidden = true
+	self.x_stech.crosshair.steelsight.offset = 0
+	self.x_stech.crosshair.steelsight.moving_offset = 0
+	self.x_stech.crosshair.steelsight.kick_offset = 0.1
+	self.x_stech.shake = {
+		fire_multiplier = 1,
+		fire_steelsight_multiplier = -1
+	}
+	self.x_stech.autohit = weapon_data.autohit_pistol_default
+	self.x_stech.aim_assist = weapon_data.aim_assist_pistol_default
+	self.x_stech.weapon_hold = "jowi_pistol"
+	self.x_stech.animations = {
+		second_gun_versions = {
+			reload_not_empty = "reload_not_empty_left",
+			reload = "reload_left"
+		},
+		has_steelsight_stance = true,
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
+	}
+	self.x_stech.panic_suppression_chance = 0.2
+	self.x_stech.stats = {
+		zoom = 3,
+		total_ammo_mod = 21,
+		damage = 65,
+		alert_size = 7,
+		spread = 15,
+		spread_moving = 7,
+		recoil = 8,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 16,
+		concealment = 25
 	}
 end
 
@@ -24605,6 +25406,42 @@ function WeaponTweakData:_create_table_structure()
 	}
 	self.coach_crew = {
 		usage = "is_shotgun_pump",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.beer_crew = {
+		usage = "is_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.x_beer_crew = {
+		usage = "akimbo_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.czech_crew = {
+		usage = "is_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.x_czech_crew = {
+		usage = "akimbo_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.stech_crew = {
+		usage = "is_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.x_stech_crew = {
+		usage = "akimbo_pistol",
 		sounds = {},
 		use_data = {},
 		auto = {}

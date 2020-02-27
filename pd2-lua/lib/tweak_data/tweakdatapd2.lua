@@ -968,8 +968,13 @@ function TweakData:_setup_scene_poses()
 	}
 	self.scene_poses.player_style = {
 		generic = {
-			"standard_suit",
-			"standard_suit"
+			"suit_generic1",
+			"suit_generic2",
+			"suit_generic3",
+			"suit_generic4",
+			"suit_generic5",
+			"suit_generic6",
+			"suit_generic7"
 		},
 		sneak_suit = {
 			"sneak",

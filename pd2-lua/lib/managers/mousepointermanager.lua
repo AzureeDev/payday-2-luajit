@@ -292,16 +292,21 @@ function MousePointerManager:_deactivate()
 	self._active = false
 	self._enabled = nil
 
-	self._ws:hide()
-	self._mouse:mouse_move(nil)
-	self._mouse:mouse_press(nil)
-	self._mouse:mouse_release(nil)
-	self._mouse:mouse_click(nil)
-	self._mouse:mouse_double_click(nil)
-	self._mouse:axis_move(nil)
-	self._mouse:button_press(nil)
-	self._mouse:button_release(nil)
-	self._mouse:button_click(nil)
+	if alive(self._ws) then
+		self._ws:hide()
+	end
+
+	if alive(self._mouse) then
+		self._mouse:mouse_move(nil)
+		self._mouse:mouse_press(nil)
+		self._mouse:mouse_release(nil)
+		self._mouse:mouse_click(nil)
+		self._mouse:mouse_double_click(nil)
+		self._mouse:axis_move(nil)
+		self._mouse:button_press(nil)
+		self._mouse:button_release(nil)
+		self._mouse:button_click(nil)
+	end
 end
 
 function MousePointerManager:enable()

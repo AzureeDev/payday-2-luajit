@@ -5914,11 +5914,114 @@ function InteractionTweakData:init(tweak_data)
 		sound_done = "bar_hose_drag_out_finish",
 		axis = "y"
 	}
+	self.security_cable_grey = {
+		text_id = "hud_int_hold_cut_wire_grey",
+		icon = "interaction_wirecutter",
+		start_active = false,
+		timer = 5,
+		interact_distance = 75
+	}
 	self.bex_take_cup = {
 		text_id = "hud_int_take_cup",
 		action_text_id = "hud_action_taking_cup",
 		interact_distance = 200,
 		start_active = false,
 		timer = 1
+	}
+	self.bex_take_cupprint = {
+		text_id = "hud_int_take_fingerprint",
+		action_text_id = "hud_action_take_fingerprint",
+		start_active = false,
+		timer = 1,
+		equipment_text_id = "hud_interact_take_fingerprint",
+		special_equipment = "tape",
+		equipment_consume = true,
+		interact_distance = 100,
+		special_equipment_block = "fingerprint"
+	}
+	self.bex_activate_flare = {
+		text_id = "hud_int_activate_flare",
+		action_text_id = "hud_int_activating_flare",
+		interact_distance = 200,
+		start_active = false,
+		timer = 1
+	}
+	self.bex_restore_power = {
+		text_id = "hud_int_restore_power",
+		action_text_id = "hud_action_restore_power",
+		interact_distance = 200,
+		start_active = false,
+		timer = 0
+	}
+	self.bex_open_window = {
+		text_id = "hud_int_bex_open_window",
+		equipment_text_id = "hud_action_bex_open_window",
+		timer = 5,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.thermite_directional = deep_clone(self.thermite)
+	self.thermite_directional.axis = "y"
+	self.apply_thermite_paste_directional = deep_clone(self.apply_thermite_paste)
+	self.apply_thermite_paste_directional.axis = "y"
+	self.mex_red_room_key_directional = deep_clone(self.mex_red_room_key)
+	self.mex_red_room_key_directional.axis = "y"
+	self.take_tape = {
+		text_id = "hud_int_take_tape",
+		action_text_id = "hud_action_take_tape",
+		icon = "equipment_ticket",
+		timer = 3,
+		special_equipment_block = "tape",
+		start_active = false
+	}
+	self.bex_take_record_tape = {
+		text_id = "hud_int_take_record_tape",
+		action_text_id = "hud_action_take_record_tape",
+		interact_distance = 200,
+		start_active = true,
+		timer = 1
+	}
+	self.bex_open_safe = {
+		text_id = "hud_int_hold_open_safe",
+		action_text_id = "hud_action_opening_safe",
+		start_active = false,
+		timer = 3,
+		equipment_text_id = "hud_hint_need_fingerprint",
+		special_equipment = "fingerprint",
+		axis = "x",
+		equipment_consume = true,
+		interact_distance = 200
+	}
+	self.bex_prop_faberge_egg = {
+		text_id = "hud_int_hold_take_faberge_egg",
+		action_text_id = "hud_action_taking_faberge_egg",
+		timer = 3,
+		start_active = false,
+		sound_start = "bar_bag_money",
+		sound_interupt = "bar_bag_money_cancel",
+		sound_done = "bar_bag_money_finished",
+		blocked_hint = "carry_block"
+	}
+	self.bex_pku_treasure = {
+		text_id = "hud_int_hold_take_treasure",
+		action_text_id = "hud_action_taking_treasure",
+		timer = 3,
+		start_active = false,
+		sound_start = "bar_bag_money",
+		sound_interupt = "bar_bag_money_cancel",
+		sound_done = "bar_bag_money_finished",
+		blocked_hint = "carry_block"
+	}
+	self.bex_safe_door = {
+		icon = "equipment_bank_manager_key",
+		equipment_text_id = "hud_action_try_keys_no_key",
+		special_equipment = "keychain",
+		text_id = "hud_int_hold_open_door",
+		action_text_id = "hud_action_opening_door",
+		interact_distance = 200,
+		start_active = false,
+		timer = 1,
+		equipment_consume = true,
+		axis = "y"
 	}
 end

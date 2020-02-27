@@ -1139,7 +1139,7 @@ function AssetsTweakData:_init_assets(tweak_data)
 	}
 	self.crojob1_plan = {
 		name_id = "menu_asset_arm_info",
-		texture = "guis/textures/pd2/mission_briefing/assets/crojob/stage_1/assets_crojob_insiderinfo_bomb",
+		texture = "guis/textures/pd2/mission_briefing/assets/bcrojob/stage_1/assets_crojob_insiderinfo_bomb",
 		stages = {
 			"crojob1"
 		},

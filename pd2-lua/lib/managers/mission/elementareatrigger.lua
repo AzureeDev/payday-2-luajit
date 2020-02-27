@@ -237,7 +237,9 @@ function ElementAreaTrigger:project_instigators()
 					"box_unknown",
 					"black_tablet",
 					"uno_gold",
-					"roman_armor"
+					"roman_armor",
+					"faberge_egg",
+					"treasure"
 				}
 
 				if table.contains(carry_list, carry_id) then

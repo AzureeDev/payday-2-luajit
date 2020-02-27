@@ -234,7 +234,10 @@ function MissionManager:init(...)
 		"pku_german_folder",
 		"pku_old_wine",
 		"uno_access_granted",
-		"uno_access_denied"
+		"uno_access_denied",
+		"pku_faberge_egg",
+		"pku_faberge_egg",
+		"pku_treasure"
 	})
 
 	self._mission_filter = {}

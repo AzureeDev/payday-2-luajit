@@ -13,6 +13,7 @@ function NewRaycastWeaponBase:set_cosmetics_data(cosmetics)
 		self._cosmetics_id = nil
 		self._cosmetics_quality = nil
 		self._cosmetics_bonus = nil
+		self._cosmetics_color_index = nil
 		self._cosmetics_data = nil
 
 		return
@@ -22,6 +23,37 @@ function NewRaycastWeaponBase:set_cosmetics_data(cosmetics)
 	self._cosmetics_quality = cosmetics and cosmetics.quality
 	self._cosmetics_bonus = cosmetics and cosmetics.bonus
 	self._cosmetics_data = self._cosmetics_id and tweak_data.blackmarket.weapon_skins[self._cosmetics_id]
+	self._cosmetics_color_index = cosmetics and cosmetics.color_index
+
+	if self._cosmetics_color_index then
+		if not self._cosmetics_data[self._cosmetics_color_index] then
+			self._cosmetics_id = nil
+			self._cosmetics_quality = nil
+			self._cosmetics_bonus = nil
+			self._cosmetics_color_index = nil
+			self._cosmetics_data = nil
+
+			return
+		end
+
+		local weapon_color_data = {}
+
+		for k, v in pairs(self._cosmetics_data) do
+			if type(k) ~= "number" then
+				weapon_color_data[k] = v
+			end
+		end
+
+		for k, v in pairs(self._cosmetics_data[self._cosmetics_color_index]) do
+			weapon_color_data[k] = v
+		end
+
+		self._cosmetics_data = weapon_color_data
+	end
+end
+
+function NewRaycastWeaponBase:get_cosmetics_color_index()
+	return self._cosmetics_color_index
 end
 
 function NewRaycastWeaponBase:get_cosmetics_bonus()
@@ -192,7 +224,7 @@ function NewRaycastWeaponBase:_apply_cosmetics(async_clbk)
 			end
 
 			for key, material_texture in pairs(material_textures) do
-				value = self:get_cosmetic_value("weapons", self._name_id, "parts", part_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", part_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
+				value = self:get_cosmetic_value("weapons", self._name_id, "parts", part_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", part_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key) or material_defaults[material_texture]
 
 				if value then
 					if type_name(value) ~= "Idstring" then
@@ -284,7 +316,7 @@ function NewRaycastWeaponBase:_set_material_textures()
 
 		for _, material in pairs(materials) do
 			for key, material_texture in pairs(material_textures) do
-				value = self:get_cosmetic_value("weapons", self._name_id, "parts", part_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", part_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
+				value = self:get_cosmetic_value("weapons", self._name_id, "parts", part_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", part_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key) or material_defaults[material_texture]
 
 				if value then
 					if type_name(value) ~= "Idstring" then
@@ -379,7 +411,7 @@ function NewRaycastWeaponBase:spawn_magazine_unit(pos, rot, hide_bullets)
 		end
 
 		for key, material_texture in pairs(material_textures) do
-			value = self:get_cosmetic_value("weapons", self._name_id, "parts", mag_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", mag_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
+			value = self:get_cosmetic_value("weapons", self._name_id, "parts", mag_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", mag_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key) or material_defaults[material_texture]
 
 			if value then
 				if type_name(value) ~= "Idstring" then

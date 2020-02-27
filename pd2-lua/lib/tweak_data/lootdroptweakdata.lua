@@ -219,11 +219,14 @@ function LootDropTweakData:init(tweak_data)
 		name_id = "bm_global_value_collaboration",
 		sort_number = 25
 	}
+	self.global_value_category.collectable = {
+		name_id = "bm_global_value_collectable",
+		sort_number = 0
+	}
 	self.global_values = {
 		normal = {}
 	}
 	self.global_values.normal.name_id = "bm_global_value_normal"
-	self.global_values.normal.desc_id = "menu_l_global_value_normal"
 	self.global_values.normal.color = Color.white
 	self.global_values.normal.dlc = false
 	self.global_values.normal.chance = 0.84
@@ -235,7 +238,6 @@ function LootDropTweakData:init(tweak_data)
 	self.global_values.normal.category = "normal"
 	self.global_values.superior = {
 		name_id = "bm_global_value_superior",
-		desc_id = "menu_l_global_value_superior",
 		color = Color.blue,
 		dlc = false,
 		chance = 0.1,
@@ -248,7 +250,6 @@ function LootDropTweakData:init(tweak_data)
 	}
 	self.global_values.exceptional = {
 		name_id = "bm_global_value_exceptional",
-		desc_id = "menu_l_global_value_exceptional",
 		color = Color.yellow,
 		dlc = false,
 		chance = 0.05,

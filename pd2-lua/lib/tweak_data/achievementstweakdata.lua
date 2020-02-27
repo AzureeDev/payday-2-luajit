@@ -6,6 +6,12 @@ local function get_texture_path(tweak_data, category, id)
 
 	if category == "armor_skins" then
 		td = tweak_data.economy.armor_skins[id]
+	elseif category == "suit_variations" then
+		local player_style = id[1]
+		local suit_variation = id[2]
+		local ps_td = tweak_data:get_raw_value("blackmarket", "player_styles", player_style)
+		local sv_td = ps_td.material_variations and ps_td.material_variations[suit_variation]
+		td = sv_td and (sv_td.texture_bundle_folder and sv_td or ps_td)
 	else
 		td = tweak_data:get_raw_value("blackmarket", category, id)
 	end
@@ -23,6 +29,12 @@ local function get_texture_path(tweak_data, category, id)
 
 		if category == "armor_skins" then
 			rtn.texture = guis_catalog .. "armor_skins/" .. id
+		elseif category == "weapon_skins" then
+			rtn.texture = guis_catalog .. "textures/pd2/blackmarket/icons/" .. (td.is_a_color_skin and "weapon_color" or "weapon_skins") .. "/" .. id
+		elseif category == "suit_variations" then
+			local player_style = id[1]
+			local suit_variation = id[2]
+			rtn.texture = guis_catalog .. "textures/pd2/blackmarket/icons/player_styles/" .. player_style .. "_" .. suit_variation
 		else
 			rtn.texture = guis_catalog .. "textures/pd2/blackmarket/icons/" .. (category == "weapon_mods" and "mods" or category) .. "/" .. id
 		end
@@ -1162,6 +1174,12 @@ function AchievementsTweakData:init(tweak_data)
 			stat = "bph_9_stat",
 			is_dropin = false,
 			difficulty = overkill_and_above
+		},
+		bex_9 = {
+			award = "bex_9",
+			melee_id = "chac",
+			enemy = "civilian_mariachi",
+			job = "bex"
 		}
 	}
 	self.complete_heist_achievements = {
@@ -4810,6 +4828,47 @@ function AchievementsTweakData:init(tweak_data)
 			job = "mex_cooking",
 			difficulty = sm_wish_and_above
 		},
+		bex_1 = {
+			award = "bex_1",
+			job = "bex",
+			difficulty = normal_and_above
+		},
+		bex_2 = {
+			award = "bex_2",
+			job = "bex",
+			difficulty = hard_and_above
+		},
+		bex_3 = {
+			award = "bex_3",
+			job = "bex",
+			difficulty = veryhard_and_above
+		},
+		bex_4 = {
+			award = "bex_4",
+			job = "bex",
+			difficulty = overkill_and_above
+		},
+		bex_5 = {
+			award = "bex_5",
+			job = "bex",
+			difficulty = easywish_and_above
+		},
+		bex_6 = {
+			award = "bex_6",
+			job = "bex",
+			difficulty = deathwish_and_above
+		},
+		bex_7 = {
+			award = "bex_7",
+			job = "bex",
+			difficulty = sm_wish_and_above
+		},
+		bex_8 = {
+			award = "bex_8",
+			one_down = true,
+			job = "bex",
+			difficulty = sm_wish_and_above
+		},
 		uno_1 = {
 			award = "uno_1",
 			bag_loot_value = 400000,
@@ -6063,7 +6122,8 @@ function AchievementsTweakData:init(tweak_data)
 			"bph",
 			"vit",
 			"mex",
-			"mex_cooking"
+			"mex_cooking",
+			"bex"
 		},
 		jimmy = {
 			"mad",
@@ -7058,7 +7118,8 @@ function AchievementsTweakData:init(tweak_data)
 				"skulloverkillplus",
 				"gitgud_e_wish",
 				"gitgud_sm_wish",
-				"dnm"
+				"dnm",
+				"ggac_od_t2"
 			}
 		},
 		funding_father = {
@@ -7847,6 +7908,7 @@ function AchievementsTweakData:_init_visual(tweak_data)
 	}
 
 	table.insert(self.tags.unlock, "outfit")
+	table.insert(self.tags.unlock, "weapon_color")
 
 	local contacts = {}
 
@@ -7916,6 +7978,7 @@ function AchievementsTweakData:_init_visual(tweak_data)
 				local sort_order = {
 					"characters",
 					"weapon_mods",
+					"weapon_skins",
 					"masks",
 					"player_styles",
 					"melee_weapons",

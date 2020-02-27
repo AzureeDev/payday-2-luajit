@@ -20,6 +20,10 @@ function ItemOption:value()
 	return self._parameters.value
 end
 
+function ItemOption:get_parameter(name)
+	return self._parameters[name]
+end
+
 function ItemOption:parameters()
 	return self._parameters
 end
