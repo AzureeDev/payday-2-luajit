@@ -1976,6 +1976,7 @@ function LevelsTweakData:init()
 		},
 		ai_group_type = federales,
 		narrator = "locke",
+		ghost_bonus = 0.15,
 		load_screen = "guis/dlcs/bex/textures/loading/job_bex_01_df"
 	}
 	self._level_index = {
