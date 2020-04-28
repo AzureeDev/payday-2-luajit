@@ -237,7 +237,8 @@ function MissionManager:init(...)
 		"uno_access_denied",
 		"pku_faberge_egg",
 		"pku_faberge_egg",
-		"pku_treasure"
+		"pku_treasure",
+		"player_criminal_death"
 	})
 
 	self._mission_filter = {}

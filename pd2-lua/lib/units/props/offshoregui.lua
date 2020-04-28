@@ -43,11 +43,11 @@ function OffshoreGui:setup()
 	self._title_text = panel:text({
 		vertical = "bottom",
 		align = "center",
-		font = "fonts/font_medium_noshadow_mf",
 		visible = true,
 		layer = 0,
 		text = text,
 		y = -self._ws:panel():h() / 2 - default_offset,
+		font = tweak_data.menu.pd2_medium_font,
 		font_size = font_size,
 		color = OffshoreGui.TITLE_COLOR
 	})
@@ -56,11 +56,11 @@ function OffshoreGui:setup()
 	self._money_text = panel:text({
 		vertical = "top",
 		align = "center",
-		font = "fonts/font_medium_noshadow_mf",
 		visible = true,
 		layer = 0,
 		text = money_text,
 		y = self._ws:panel():h() / 2 - default_offset,
+		font = tweak_data.menu.pd2_massive_font,
 		font_size = font_size,
 		color = OffshoreGui.MONEY_COLOR
 	})

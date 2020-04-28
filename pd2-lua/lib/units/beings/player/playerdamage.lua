@@ -1103,7 +1103,7 @@ function PlayerDamage:damage_bullet(attack_data)
 	local dmg_mul = pm:damage_reduction_skill_multiplier("bullet")
 	attack_data.damage = attack_data.damage * dmg_mul
 	attack_data.damage = managers.mutators:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
-	attack_data.damage = managers.modifiers:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
+	attack_data.damage = managers.modifiers:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage, attack_data.attacker_unit:base()._tweak_table)
 
 	if _G.IS_VR then
 		local distance = mvector3.distance(self._unit:position(), attack_data.attacker_unit:position())

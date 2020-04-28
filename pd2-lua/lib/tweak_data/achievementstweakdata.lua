@@ -5853,6 +5853,43 @@ function AchievementsTweakData:init(tweak_data)
 			}
 		}
 	}
+	local skirmish_complete_heists = {
+		"skm_cas",
+		"skm_big2",
+		"skm_mallcrasher",
+		"skm_arena",
+		"skm_watchdogs_stage2",
+		"skm_red2",
+		"skm_run",
+		"skm_mus",
+		"skm_bex"
+	}
+	self.skirmish_wave_achievements = {}
+
+	for index, job_id in pairs(skirmish_complete_heists) do
+		local achievement_index = (index - 1) * 4
+		self.skirmish_wave_achievements["skm_" .. tostring(achievement_index + 1)] = {
+			skirmish_wave = 3,
+			award = "skm_" .. tostring(achievement_index + 1),
+			level_id = job_id
+		}
+		self.skirmish_wave_achievements["skm_" .. tostring(achievement_index + 2)] = {
+			skirmish_wave = 5,
+			award = "skm_" .. tostring(achievement_index + 2),
+			level_id = job_id
+		}
+		self.skirmish_wave_achievements["skm_" .. tostring(achievement_index + 3)] = {
+			skirmish_wave = 7,
+			award = "skm_" .. tostring(achievement_index + 3),
+			level_id = job_id
+		}
+		self.skirmish_wave_achievements["skm_" .. tostring(achievement_index + 4)] = {
+			skirmish_wave = 9,
+			award = "skm_" .. tostring(achievement_index + 4),
+			level_id = job_id
+		}
+	end
+
 	self.check_equipment_memory_on_leave = {
 		self.complete_heist_achievements.daily_whats_stealth,
 		self.complete_heist_achievements.daily_gears

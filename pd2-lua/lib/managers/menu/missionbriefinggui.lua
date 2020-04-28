@@ -311,7 +311,6 @@ function DescriptionItem:init(panel, text, i, saved_descriptions)
 	local briefing_id = managers.job:current_briefing_id()
 
 	if managers.skirmish:is_skirmish() and not managers.skirmish:is_weekly_skirmish() then
-		name_id = "heist_skm_random_h1"
 		briefing_id = "heist_skm_random_briefing"
 	end
 
@@ -2116,8 +2115,8 @@ function TeamLoadoutItem:set_slot_outfit(slot, criminal_name, outfit)
 			akibmo_bitmap:set_w(h * aspect * scale)
 			primary_bitmap:set_h(h * scale)
 			akibmo_bitmap:set_h(h * scale)
-			primary_bitmap:set_center_x(panel_width * (0.5 - offset))
-			akibmo_bitmap:set_center_x(panel_width * (0.5 + offset))
+			primary_bitmap:set_center_x(panel_width * (0.5 - offset * 0.8))
+			akibmo_bitmap:set_center_x(panel_width * (0.5 + offset * 0.8))
 			primary_bitmap:set_center_y(y * 3)
 			akibmo_bitmap:set_center_y(y * 3)
 			primary_bitmap:set_rotation(rotation)

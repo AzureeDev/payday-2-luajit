@@ -114,10 +114,14 @@ function SentryGunBase.spawn(owner, pos, rot, peer_id, verify_equipment, unit_id
 	local attached_data = SentryGunBase._attach(pos, rot)
 
 	if not attached_data then
+		Application:error("[SentryGunBase.spawn] Failed attaching sentry gun", owner, pos, rot, peer_id, verify_equipment, unit_idstring_index)
+
 		return
 	end
 
 	if verify_equipment and not managers.player:verify_equipment(peer_id, "sentry_gun") then
+		Application:error("[SentryGunBase.spawn] Player equipment verification failed", owner, pos, rot, peer_id, verify_equipment, unit_idstring_index)
+
 		return
 	end
 
@@ -329,6 +333,10 @@ function SentryGunBase:post_setup()
 		"on_picked_up_carry"
 	}, callback(self, self, "_on_picked_up_cash"))
 
+	if alive(self._owner) then
+		self._owner:base():add_destroy_listener(self._sentry_uid, callback(self, self, "remove_dead_owner"))
+	end
+
 	sentry_uid = sentry_uid + 1
 	self._attached_data = self._attach(nil, nil, self._unit)
 end
@@ -356,6 +364,12 @@ end
 
 function SentryGunBase:get_type()
 	return self._type or "sentry_gun"
+end
+
+function SentryGunBase:remove_dead_owner(dead_owner)
+	if alive(self._unit) then
+		self._unit:weapon():remove_dead_owner(dead_owner)
+	end
 end
 
 function SentryGunBase:update(unit, t, dt)
@@ -735,6 +749,10 @@ function SentryGunBase:pre_destroy()
 	self:unregister()
 
 	self._removed = true
+
+	if alive(self._owner) then
+		self._owner:base():remove_destroy_listener(self._sentry_uid)
+	end
 
 	if self._validate_clbk_id then
 		managers.enemy:remove_delayed_clbk(self._validate_clbk_id)

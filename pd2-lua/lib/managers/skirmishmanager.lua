@@ -8,6 +8,8 @@ function SkirmishManager:init()
 end
 
 function SkirmishManager:init_finalize()
+	print("SkirmishManager:init_finalize")
+
 	if not self:is_skirmish() then
 		return
 	end
@@ -26,6 +28,11 @@ function SkirmishManager:init_finalize()
 	end
 
 	managers.network:add_event_listener({}, "on_set_dropin", callback(self, self, "block_weekly_progress"))
+
+	self._start_wave = self:wave_range()
+	self._loot_drops = nil
+	self._lootdrops_coroutine = nil
+	self._generated_lootdrops = nil
 end
 
 function SkirmishManager:is_skirmish()
@@ -169,6 +176,8 @@ function SkirmishManager:_has_players_in_custody()
 end
 
 function SkirmishManager:check_gameover_conditions()
+	return false
+
 	if not self:is_skirmish() or not self._game_over_delay then
 		return false
 	end
@@ -205,6 +214,8 @@ function SkirmishManager:sync_load(data)
 	local state = data.SkirmishManager
 
 	self:sync_start_assault(state.wave_number)
+
+	self._start_wave = state.wave_number
 end
 
 function SkirmishManager:apply_matchmake_attributes(lobby_attributes)
@@ -241,7 +252,8 @@ function SkirmishManager:save(data)
 		active_weekly = self._global.active_weekly,
 		weekly_progress = self._global.weekly_progress,
 		weekly_rewards = self._global.weekly_rewards,
-		claimed_rewards = self._global.claimed_rewards
+		claimed_rewards = self._global.claimed_rewards,
+		special_rewards = self._global.special_rewards
 	}
 end
 
@@ -256,6 +268,19 @@ function SkirmishManager:load(data)
 	self._global.weekly_progress = data.weekly_progress
 	self._global.weekly_rewards = data.weekly_rewards
 	self._global.claimed_rewards = data.claimed_rewards
+	self._global.special_rewards = data.special_rewards
+
+	if not self._global.special_rewards and self._global.claimed_rewards then
+		self._global.special_rewards = {}
+
+		for type, rewards in pairs(self._global.claimed_rewards) do
+			self._global.special_rewards[type] = {}
+
+			for entry, _ in pairs(rewards) do
+				self._global.special_rewards[type][entry] = true
+			end
+		end
+	end
 end
 
 function SkirmishManager:activate_weekly_skirmish(weekly_skirmish_string, force)
@@ -398,4 +423,165 @@ end
 
 function SkirmishManager:claimed_reward_by_id(id)
 	return self._global.weekly_rewards and self._global.weekly_rewards[id]
+end
+
+function SkirmishManager:get_wave_progress()
+	print("SkirmishManager:get_wave_progress", self:current_wave_number(), self._start_wave)
+
+	return self:current_wave_number()
+end
+
+function SkirmishManager:add_random_special_reward(lootpool)
+	self._global.special_rewards = self._global.special_rewards or {}
+	local possible_rewards = {}
+	local blackmarket_tweak = tweak_data.blackmarket
+	local category_tweak, item_tweak, global_value, has_unlockable, special_category = nil
+
+	for category, items in pairs(lootpool) do
+		special_category = self._global.special_rewards[category]
+		category_tweak = blackmarket_tweak[category]
+
+		for _, entry in ipairs(items) do
+			item_tweak = category_tweak[entry]
+			global_value = managers.blackmarket:get_global_value(category, entry)
+			has_unlockable = item_tweak.is_a_unlockable and managers.blackmarket:has_item(global_value, category, entry)
+
+			if not has_unlockable and (not special_category or not special_category[entry]) then
+				table.insert(possible_rewards, {
+					global_value = global_value,
+					type_items = category,
+					item_entry = entry
+				})
+			else
+				print("skipping", global_value, category, entry)
+			end
+		end
+	end
+
+	local reward = table.random(possible_rewards)
+	item_tweak = blackmarket_tweak[reward.type_items][reward.item_entry]
+
+	if not item_tweak.is_a_unlockable then
+		self._global.special_rewards[reward.type_items] = self._global.special_rewards[reward.type_items] or {}
+		special_category = self._global.special_rewards[reward.type_items]
+		special_category[reward.item_entry] = true
+		local got_all_rewards_of_type = true
+
+		for _, entry in ipairs(lootpool[reward.type_items]) do
+			if not special_category[entry] then
+				got_all_rewards_of_type = false
+
+				break
+			end
+		end
+
+		if got_all_rewards_of_type then
+			for _, entry in ipairs(lootpool[reward.type_items]) do
+				special_category[entry] = nil
+			end
+		end
+	end
+
+	managers.blackmarket:add_to_inventory(reward.global_value, reward.type_items, reward.item_entry)
+
+	return reward
+end
+
+function SkirmishManager:get_amount_rewards()
+	local wave_progress = self:get_wave_progress()
+	local num_rewards = 1
+
+	for wave, amount in pairs(tweak_data.skirmish.additional_coins) do
+		if wave <= wave_progress and amount > 0 then
+			num_rewards = num_rewards + 1
+
+			break
+		end
+	end
+
+	for wave, lootpool in pairs(tweak_data.skirmish.additional_rewards) do
+		if wave <= wave_progress then
+			num_rewards = num_rewards + 1
+		end
+	end
+
+	for wave, amount in pairs(tweak_data.skirmish.additional_lootdrops) do
+		if wave <= wave_progress then
+			num_rewards = num_rewards + amount
+		end
+	end
+
+	return num_rewards
+end
+
+function SkirmishManager:make_lootdrops(got_inventory_reward)
+	local wave_progress = self:get_wave_progress()
+	self._generated_lootdrops = {}
+	local amount_coins = 0
+
+	for wave, amount in pairs(tweak_data.skirmish.additional_coins) do
+		if wave <= wave_progress then
+			amount_coins = amount_coins + amount
+		end
+	end
+
+	self._generated_lootdrops.coins = amount_coins
+
+	if amount_coins > 0 then
+		managers.custom_safehouse:add_coins(amount_coins)
+	end
+
+	self._generated_lootdrops.special_rewards = {}
+
+	for wave, lootpool in pairs(tweak_data.skirmish.additional_rewards) do
+		if wave <= wave_progress then
+			table.insert(self._generated_lootdrops.special_rewards, self:add_random_special_reward(lootpool))
+		end
+	end
+
+	local amount_lootdrops = not got_inventory_reward and 1 or 0
+
+	for wave, amount in pairs(tweak_data.skirmish.additional_lootdrops) do
+		if wave <= wave_progress then
+			amount_lootdrops = amount_lootdrops + amount
+		end
+	end
+
+	local item_pc = managers.lootdrop:get_random_item_pc()
+	self._lootdrops_coroutine = managers.lootdrop:new_make_mass_drop(amount_lootdrops, item_pc, self._generated_lootdrops)
+end
+
+function SkirmishManager:get_generated_lootdrops()
+	return self._loot_drops or {}
+end
+
+function SkirmishManager:has_finished_generating_additional_rewards()
+	if self._lootdrops_coroutine then
+		local status = coroutine.status(self._lootdrops_coroutine)
+
+		if status == "dead" then
+			self._loot_drops = {
+				items = clone(self._generated_lootdrops.items)
+			}
+
+			table.list_append(self._loot_drops.items, self._generated_lootdrops.special_rewards or {})
+
+			if self._generated_lootdrops.coins > 0 then
+				self._loot_drops.coins = self._generated_lootdrops.coins
+			end
+
+			self._generated_lootdrops = nil
+			self._lootdrops_coroutine = nil
+
+			return true
+		elseif status == "suspended" then
+			coroutine.resume(self._lootdrops_coroutine)
+
+			return false
+		else
+			return false
+		end
+	end
+
+	return true
 end

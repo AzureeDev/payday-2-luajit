@@ -174,7 +174,9 @@ function IngameContractGuiCrimeSpree:mouse_wheel_down(x, y)
 end
 
 function IngameContractGuiCrimeSpree:special_btn_pressed(button)
-	if button == Idstring("menu_modify_item") then
+	print("[IngameContractGuiCrimeSpree:special_btn_pressed]")
+
+	if button == Idstring("menu_modify_item") and alive(self._potential_rewards_title) then
 		self:_toggle_potential_rewards()
 	end
 

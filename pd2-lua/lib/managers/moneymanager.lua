@@ -1,3 +1,6 @@
+require("lib/utils/accelbyte/Telemetry")
+require("lib/utils/accelbyte/TelemetryConst")
+
 MoneyManager = MoneyManager or class()
 
 function MoneyManager:init()
@@ -174,7 +177,7 @@ function MoneyManager:civilian_killed()
 		text = text,
 		title = title
 	})
-	self:_deduct_from_total(deduct_amount)
+	self:_deduct_from_total(deduct_amount, TelemetryConst.economy_origin.civilian_killed)
 end
 
 function MoneyManager:on_mission_completed(num_winners)
@@ -202,7 +205,8 @@ function MoneyManager:on_mission_completed(num_winners)
 
 	self._mutators_reduction = mutators_reduction
 
-	self:_add_to_total(total_payout)
+	Telemetry:set_mission_payout(total_payout)
+	self:_add_to_total(total_payout, nil, TelemetryConst.economy_origin.mission_complete_reward)
 end
 
 function MoneyManager:get_contract_money_by_stars(job_stars, risk_stars, job_days, job_id, level_id, extra_params)
@@ -568,7 +572,7 @@ end
 function MoneyManager:debug_job_completed(stars)
 	local amount = self:get_tweak_value("money_manager", "job_completion", stars)
 
-	self:_add_to_total(amount)
+	self:_add_to_total(amount, nil, TelemetryConst.debug.economy_origin.job_completed)
 end
 
 function MoneyManager:get_job_payout_by_stars(stars, cap_stars)
@@ -692,7 +696,7 @@ end
 function MoneyManager:on_buy_weapon_platform(weapon_id, discount)
 	local amount = self:get_weapon_price_modified(weapon_id)
 
-	self:_deduct_from_total(math.round(amount * (discount and self:get_tweak_value("money_manager", "sell_weapon_multiplier") or 1)))
+	self:_deduct_from_total(math.round(amount * (discount and self:get_tweak_value("money_manager", "sell_weapon_multiplier") or 1)), TelemetryConst.economy_origin.buy_weapon_platform .. weapon_id)
 end
 
 function MoneyManager:on_sell_weapon(category, slot)
@@ -700,7 +704,7 @@ function MoneyManager:on_sell_weapon(category, slot)
 
 	self:_add_to_total(amount, {
 		no_offshore = true
-	})
+	}, TelemetryConst.economy_origin.sell_weapon .. category)
 end
 
 function MoneyManager:get_weapon_part_sell_value(part_id, global_value)
@@ -729,7 +733,7 @@ function MoneyManager:on_sell_weapon_part(part_id, global_value)
 	Application:debug("value of removed weapon part", amount)
 	self:_add_to_total(amount, {
 		no_offshore = true
-	})
+	}, TelemetryConst.economy_origin.sell_weapon_part .. part_id)
 end
 
 function MoneyManager:on_sell_weapon_slot(category, slot)
@@ -737,7 +741,7 @@ function MoneyManager:on_sell_weapon_slot(category, slot)
 
 	self._add_to_total(amount, {
 		no_offshore = true
-	})
+	}, TelemetryConst.economy_origin.sell_weapon_slot)
 end
 
 function MoneyManager:can_afford_mission_asset(asset_id)
@@ -747,7 +751,7 @@ end
 function MoneyManager:on_buy_mission_asset(asset_id)
 	local amount = self:get_mission_asset_cost_by_id(asset_id)
 
-	self:_deduct_from_total(amount)
+	self:_deduct_from_total(amount, TelemetryConst.economy_origin.buy_mission_asset .. asset_id)
 
 	return amount
 end
@@ -757,7 +761,7 @@ function MoneyManager:refund_mission_assets()
 
 	self:_add_to_total(amount, {
 		no_offshore = true
-	})
+	}, TelemetryConst.economy_origin.refund_mission_assets)
 end
 
 function MoneyManager:can_afford_spend_skillpoint(tree, tier, points)
@@ -771,7 +775,7 @@ end
 function MoneyManager:on_skillpoint_spent(tree, tier, points)
 	local amount = self:get_skillpoint_cost(tree, tier, points)
 
-	self:_deduct_from_total(amount)
+	self:_deduct_from_total(amount, TelemetryConst.economy_origin.skillpoint_spent .. tree)
 end
 
 function MoneyManager:on_respec_skilltree(tree, forced_respec_multiplier)
@@ -779,7 +783,7 @@ function MoneyManager:on_respec_skilltree(tree, forced_respec_multiplier)
 
 	self:_add_to_total(amount, {
 		no_offshore = true
-	})
+	}, TelemetryConst.economy_origin.respec_skilltree .. tree)
 end
 
 function MoneyManager:refund_weapon_part(weapon_id, part_id, global_value)
@@ -790,7 +794,7 @@ function MoneyManager:refund_weapon_part(weapon_id, part_id, global_value)
 
 	self:_add_to_total(math.round(mod_price * global_value_multiplier), {
 		no_offshore = true
-	})
+	}, TelemetryConst.economy_origin.refund_weapon_part .. weapon_id .. "_" .. part_id)
 end
 
 function MoneyManager:get_weapon_modify_price(weapon_id, part_id, global_value)
@@ -819,7 +823,7 @@ end
 function MoneyManager:on_buy_weapon_modification(weapon_id, part_id, global_value)
 	local amount = self:get_weapon_modify_price(weapon_id, part_id, global_value)
 
-	self:_deduct_from_total(amount)
+	self:_deduct_from_total(amount, TelemetryConst.economy_origin.buy_weapon_modification .. weapon_id .. "_" .. part_id)
 end
 
 function MoneyManager:_get_pc_entry(entry)
@@ -864,7 +868,7 @@ end
 function MoneyManager:on_buy_mask_slot(slot)
 	local amount = self:get_buy_mask_slot_price()
 
-	self:_deduct_from_total(amount)
+	self:_deduct_from_total(amount, TelemetryConst.economy_origin.buy_mask_slot)
 end
 
 function MoneyManager:get_buy_weapon_slot_price()
@@ -882,7 +886,7 @@ end
 function MoneyManager:on_buy_weapon_slot(slot)
 	local amount = self:get_buy_weapon_slot_price()
 
-	self:_deduct_from_total(amount)
+	self:_deduct_from_total(amount, TelemetryConst.economy_origin.buy_weapon_slot)
 end
 
 function MoneyManager:get_mask_part_price_modified(category, id, global_value, mask_id)
@@ -1012,7 +1016,7 @@ end
 function MoneyManager:on_buy_mask(mask_id, global_value, blueprint, default_blueprint)
 	local amount = self:get_mask_crafting_price_modified(mask_id, global_value, blueprint, default_blueprint)
 
-	self:_deduct_from_total(amount)
+	self:_deduct_from_total(amount, TelemetryConst.economy_origin.buy_mask .. mask_id)
 end
 
 function MoneyManager:on_sell_mask(mask_id, global_value, blueprint)
@@ -1020,7 +1024,7 @@ function MoneyManager:on_sell_mask(mask_id, global_value, blueprint)
 
 	self:_add_to_total(amount, {
 		no_offshore = true
-	})
+	}, TelemetryConst.economy_origin.sell_mask .. mask_id)
 end
 
 function MoneyManager:get_loot_drop_cash_value(value_id)
@@ -1032,7 +1036,7 @@ function MoneyManager:on_loot_drop_cash(value_id)
 
 	self:_add_to_total(amount, {
 		no_offshore = true
-	})
+	}, TelemetryConst.economy_origin.loot_drop_cash)
 end
 
 function MoneyManager:get_tweak_value(...)
@@ -1068,7 +1072,7 @@ end
 function MoneyManager:on_buy_preplanning_types()
 	local cost = self:get_preplanning_types_cost()
 
-	self:_deduct_from_total(cost)
+	self:_deduct_from_total(cost, TelemetryConst.economy_origin.buy_preplanning_types)
 end
 
 function MoneyManager:get_preplanning_types_cost()
@@ -1093,7 +1097,7 @@ end
 function MoneyManager:on_buy_preplanning_votes()
 	local total_cost = self:get_preplanning_votes_cost()
 
-	self:_deduct_from_total(total_cost)
+	self:_deduct_from_total(total_cost, TelemetryConst.economy_origin.buy_preplanning_votes)
 end
 
 function MoneyManager:get_skillpoint_cost(tree, tier, points)
@@ -1267,7 +1271,7 @@ function MoneyManager:on_unlock_skill_switch(selected_skill_switch)
 	local spending_cost = self:get_unlock_skill_switch_spending_cost(selected_skill_switch)
 	local offshore_cost = self:get_unlock_skill_switch_offshore_cost(selected_skill_switch)
 
-	self:deduct_from_total(spending_cost)
+	self:deduct_from_total(spending_cost, TelemetryConst.economy_origin.unlock_skill_switch .. selected_skill_switch)
 	self:deduct_from_offshore(offshore_cost)
 end
 
@@ -1311,24 +1315,31 @@ function MoneyManager:_set_total_spent(value)
 	self._global.total_spent = Application:digest_value(value, true)
 end
 
-function MoneyManager:add_to_total(amount)
+function MoneyManager:add_to_total(amount, reason)
 	amount = math.round(amount)
 
 	print("MoneyManager:add_to_total", amount)
-	self:_add_to_total(amount)
+	self:_add_to_total(amount, nil, reason)
 end
 
-function MoneyManager:_add_to_total(amount, params)
+function MoneyManager:_add_to_total(amount, params, reason)
 	local no_offshore = params and params.no_offshore
 	local offshore = math.round(no_offshore and 0 or amount * (1 - self:get_tweak_value("money_manager", "offshore_rate")))
 	local spending_cash = math.round(no_offshore and amount or amount * self:get_tweak_value("money_manager", "offshore_rate"))
 	local rounding_error = math.round(amount - (offshore + spending_cash))
 	spending_cash = spending_cash + rounding_error
+	local total_cash = self:total() + spending_cash
+	local total_collected_cash = self:total_collected() + math.round(amount)
+	local offshore_cash = self:offshore() + offshore
 
-	self:_set_total(self:total() + spending_cash)
-	self:_set_total_collected(self:total_collected() + math.round(amount))
-	self:_set_offshore(self:offshore() + offshore)
+	self:_set_total(total_cash)
+	self:_set_total_collected(total_collected_cash)
+	self:_set_offshore(offshore_cash)
 	self:_on_total_changed(amount, spending_cash, offshore)
+
+	reason = reason or "generic"
+
+	Telemetry:send_on_player_economy_event(reason, "cash", amount, "earn")
 
 	if managers.challenge then
 		managers.challenge:award_progress("earn_cash", math.max(spending_cash, 0))
@@ -1336,19 +1347,23 @@ function MoneyManager:_add_to_total(amount, params)
 	end
 end
 
-function MoneyManager:deduct_from_total(amount)
+function MoneyManager:deduct_from_total(amount, reason)
 	amount = math.round(amount)
 
 	print("[MoneyManager] deduct_from_total", amount)
-	self:_deduct_from_total(amount)
+	self:_deduct_from_total(amount, reason)
 end
 
-function MoneyManager:_deduct_from_total(amount)
+function MoneyManager:_deduct_from_total(amount, reason)
 	amount = math.min(amount, self:total())
 
 	self:_set_total(math.max(0, self:total() - amount))
 	self:_set_total_spent(self:total_spent() + amount)
 	self:_on_total_changed(-amount, -amount, 0)
+
+	reason = reason or "generic"
+
+	Telemetry:send_on_player_economy_event(reason, "cash", amount, "spend")
 end
 
 function MoneyManager:add_to_spending(amount)

@@ -1,6 +1,8 @@
+require("lib/utils/accelbyte/Telemetry")
+
 NetworkMatchMakingSTEAM = NetworkMatchMakingSTEAM or class()
 NetworkMatchMakingSTEAM.OPEN_SLOTS = tweak_data.max_players
-NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "payday2_v1.94.862"
+NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "payday2_v1.94.876"
 
 function NetworkMatchMakingSTEAM:init()
 	cat_print("lobby", "matchmake = NetworkMatchMakingSTEAM")
@@ -200,6 +202,7 @@ function NetworkMatchMakingSTEAM:leave_game()
 		self._try_re_enter_lobby = nil
 	end
 
+	Telemetry:last_quickplay_room_id(0)
 	print("NetworkMatchMakingSTEAM:leave_game()")
 end
 
@@ -493,10 +496,6 @@ function NetworkMatchMakingSTEAM:search_lobby(friends_only, no_filters)
 			elseif Global.game_settings.gamemode_filter == "skirmish" then
 				local min = SkirmishManager.LOBBY_NORMAL
 
-				if Global.game_settings.search_only_weekly_skirmish then
-					min = SkirmishManager.LOBBY_WEEKLY
-				end
-
 				self.browser:set_lobby_filter("skirmish", min, "equalto_or_greater_than")
 				self.browser:set_lobby_filter("skirmish_wave", Global.game_settings.skirmish_wave_filter or 99, "equalto_less_than")
 			elseif Global.game_settings.gamemode_filter == GamemodeStandard.id then
@@ -718,7 +717,7 @@ function NetworkMatchMakingSTEAM._handle_chat_message(user, message)
 	managers.chat:receive_message_by_name(ChatManager.GLOBAL, user:name(), s)
 end
 
-function NetworkMatchMakingSTEAM:join_server(room_id, skip_showing_dialog)
+function NetworkMatchMakingSTEAM:join_server(room_id, skip_showing_dialog, quickplay)
 	if not skip_showing_dialog then
 		managers.menu:show_joining_lobby_dialog()
 	end
@@ -853,6 +852,10 @@ function NetworkMatchMakingSTEAM:join_server(room_id, skip_showing_dialog)
 			end
 
 			managers.network:join_game_at_host_rpc(self._server_rpc, joined_game)
+
+			if quickplay then
+				Telemetry:last_quickplay_room_id(self.lobby_handler:id())
+			end
 		else
 			managers.menu:show_failed_joining_dialog()
 			self:search_lobby(self:search_friends_only())

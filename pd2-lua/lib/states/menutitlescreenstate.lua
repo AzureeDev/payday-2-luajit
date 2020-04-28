@@ -1,5 +1,6 @@
 require("lib/states/GameState")
 require("lib/utils/gui/Blackborders")
+require("lib/utils/accelbyte/Telemetry")
 
 MenuTitlescreenState = MenuTitlescreenState or class(GameState)
 
@@ -146,6 +147,8 @@ function MenuTitlescreenState:update(t, dt)
 	if self._waiting_for_loaded_savegames then
 		if not managers.savefile:is_in_loading_sequence() and not self._user_has_changed then
 			self:_load_savegames_done()
+			Telemetry:on_login()
+			Telemetry:on_login_screen_passed()
 		end
 
 		return

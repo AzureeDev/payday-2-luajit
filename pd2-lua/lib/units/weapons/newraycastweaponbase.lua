@@ -881,7 +881,7 @@ function NewRaycastWeaponBase:tweak_data_anim_play(anim, speed_multiplier)
 	end
 
 	for part_id, data in pairs(self._parts) do
-		if data.animations and data.animations[unit_anim] then
+		if data.unit and data.animations and data.animations[unit_anim] then
 			local anim_name = data.animations[unit_anim]
 			local ids_anim_name = Idstring(anim_name)
 			local length = data.unit:anim_length(ids_anim_name)
@@ -921,7 +921,7 @@ function NewRaycastWeaponBase:tweak_data_anim_play_at_end(anim, speed_multiplier
 	end
 
 	for part_id, data in pairs(self._parts) do
-		if data.animations and data.animations[unit_anim] then
+		if data.unit and data.animations and data.animations[unit_anim] then
 			local anim_name = data.animations[unit_anim]
 			local ids_anim_name = Idstring(anim_name)
 			local length = data.unit:anim_length(ids_anim_name)

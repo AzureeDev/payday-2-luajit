@@ -72,6 +72,26 @@ function MenuMainState:at_enter(old_state)
 		managers.menu:check_vr_dlc()
 	end
 
+	if SystemInfo:platform() == Idstring("WIN32") and not Global.use_telemetry_decided then
+		local function yes_func()
+			managers.user:set_setting("use_telemetry", true, true)
+			MenuCallbackHandler:save_settings()
+		end
+
+		local function no_func()
+			managers.user:set_setting("use_telemetry", false, true)
+			MenuCallbackHandler:save_settings()
+		end
+
+		Global.use_telemetry_decided = true
+
+		managers.savefile:setting_changed()
+		managers.menu:show_accept_telemetry({
+			yes_func = yes_func,
+			no_func = no_func
+		})
+	end
+
 	local has_invite = false
 
 	if SystemInfo:platform() == Idstring("PS3") or SystemInfo:platform() == Idstring("PS4") then

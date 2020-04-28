@@ -774,6 +774,67 @@ function ConnectionNetworkHandler:choose_lootcard(card_id, sender)
 	end
 end
 
+function ConnectionNetworkHandler:make_lootdrop_skirmish(amount_cards, sender)
+	print("make_lootdrop_skirmish", amount_cards)
+
+	local peer = self._verify_sender(sender)
+
+	if not peer then
+		print("NO PEER")
+
+		return
+	end
+
+	if not managers.hud then
+		print("NO HUD")
+
+		return
+	end
+
+	managers.hud:make_skirmish_cards_hud(peer, amount_cards)
+end
+
+function ConnectionNetworkHandler:feed_lootdrop_skirmish(reward_string, sender)
+	print("feed_lootdrop_skirmish", reward_string)
+
+	local peer = self._verify_sender(sender)
+
+	if not peer then
+		print("NO PEER")
+
+		return
+	end
+
+	if not managers.hud then
+		print("NO HUD")
+
+		return
+	end
+
+	local lootdrops = string.split(reward_string, " ")
+	local loot_index = 1
+	local lootdrop_data = {
+		peer = peer,
+		items = {},
+		coins = tonumber(lootdrops[loot_index])
+	}
+	loot_index = loot_index + 1
+	local global_values = tweak_data.lootdrop.global_value_list_index
+	local item = nil
+
+	for index = loot_index, #lootdrops, 1 do
+		item = string.split(lootdrops[index], "-")
+
+		table.insert(lootdrop_data.items, {
+			global_value = global_values[tonumber(item[1])],
+			type_items = item[2],
+			item_entry = item[3]
+		})
+	end
+
+	managers.hud:make_lootdrop_hud(lootdrop_data)
+end
+
 function ConnectionNetworkHandler:sync_explode_bullet(position, normal, damage, peer_id_or_selection_index, sender)
 	local peer = self._verify_sender(sender)
 

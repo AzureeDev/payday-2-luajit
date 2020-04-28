@@ -217,7 +217,7 @@ function InventoryIconCreator:start_all_weapons_skin(test)
 		local weapon_id = managers.weapon_factory:get_weapon_id_by_factory_id(factory_id)
 
 		for name, item_data in pairs(tweak_data.blackmarket.weapon_skins) do
-			local match_weapon_id = item_data.weapon_id or item_data.weapons[1]
+			local match_weapon_id = item_data.weapon_id or item_data.weapon_ids[1]
 
 			if match_weapon_id == weapon_id and string.find(name, search_string) then
 				local bp = name and tweak_data.blackmarket.weapon_skins[name].default_blueprint or blueprint
@@ -363,7 +363,7 @@ function InventoryIconCreator:_get_weapon_skins()
 	}
 
 	for name, item_data in pairs(tweak_data.blackmarket.weapon_skins) do
-		local match_weapon_id = not item_data.is_a_color_skin and (item_data.weapon_id or item_data.weapons[1])
+		local match_weapon_id = not item_data.is_a_color_skin and (item_data.weapon_id or item_data.weapon_ids[1])
 
 		if match_weapon_id == weapon_id then
 			table.insert(t, name)

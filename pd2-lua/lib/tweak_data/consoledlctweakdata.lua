@@ -2737,6 +2737,304 @@ function DLCTweakData:init_console()
 			amount = 1
 		}
 	}
+	self.ant_free = {
+		content_on_consoles = true,
+		free = true,
+		content = {}
+	}
+	self.ant_free.content.loot_global_value = "ant"
+	self.ant_free.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ant_05",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "ant_07",
+			amount = 1
+		}
+	}
+	self.ant = {
+		content_on_consoles = true,
+		content = {}
+	}
+	self.ant.content.loot_global_value = "ant"
+	self.ant.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "ant_01",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "ant_02",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "ant_03",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "ant_04",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "ant_06",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "ant_08",
+			amount = 1
+		}
+	}
+	self.ach_eng_1 = {
+		content_on_consoles = true,
+		content = {},
+		dlc = true,
+		free = true
+	}
+	self.ach_eng_1.content.loot_global_value = "eng"
+	self.ach_eng_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "eng_01",
+			amount = 1
+		}
+	}
+	self.ach_eng_2 = {
+		content_on_consoles = true,
+		content = {},
+		dlc = true,
+		free = true
+	}
+	self.ach_eng_2.content.loot_global_value = "eng"
+	self.ach_eng_2.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "eng_02",
+			amount = 1
+		}
+	}
+	self.ach_eng_3 = {
+		content_on_consoles = true,
+		content = {},
+		dlc = true,
+		free = true
+	}
+	self.ach_eng_3.content.loot_global_value = "eng"
+	self.ach_eng_3.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "eng_03",
+			amount = 1
+		}
+	}
+	self.ach_eng_4 = {
+		content_on_consoles = true,
+		content = {},
+		dlc = true,
+		free = true
+	}
+	self.ach_eng_4.content.loot_global_value = "eng"
+	self.ach_eng_4.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "eng_04",
+			amount = 1
+		}
+	}
+	self.sha_bundle = {
+		content = {},
+		free = true,
+		content_on_consoles = true
+	}
+	self.sha_bundle.content.loot_global_value = "sha"
+	self.sha_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "sha_01",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sha_02",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sha_03",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "sha_04",
+			amount = 1
+		}
+	}
+	self.kouti_bundle = {
+		content_on_consoles = true,
+		content = {}
+	}
+	self.kouti_bundle.content.loot_global_value = "infamous"
+	self.kouti_bundle.dlc = "has_parent_dlc"
+	self.kouti_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "unforsaken_mega",
+			amount = 1
+		},
+		{
+			type_items = "armor_skins",
+			item_entry = "ast_armor1"
+		},
+		{
+			type_items = "armor_skins",
+			item_entry = "ast_armor2"
+		},
+		{
+			type_items = "armor_skins",
+			item_entry = "ast_armor3"
+		},
+		{
+			type_items = "armor_skins",
+			item_entry = "ast_armor4"
+		},
+		{
+			type_items = "armor_skins",
+			item_entry = "ast_armor5"
+		},
+		{
+			type_items = "armor_skins",
+			item_entry = "ast_armor6"
+		}
+	}
+	self.dbd_clan_award = {
+		dlc = true,
+		free = true,
+		content_on_consoles = true,
+		content = {}
+	}
+	self.dbd_clan_award.content.loot_global_value = "dbd_clan"
+	self.dbd_clan_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "devourer",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "unborn",
+			amount = 1
+		}
+	}
+	self.dbd_deluxe = {
+		content_on_consoles = true,
+		dlc = true,
+		content = {}
+	}
+	self.dbd_deluxe.content.loot_global_value = "dbd_clan"
+	self.dbd_deluxe.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dbd_02",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "dbd_03",
+			amount = 1
+		}
+	}
+	self.dbd_boo_0_award = {
+		content_on_consoles = true,
+		dlc = "has_dbd_clan",
+		content = {}
+	}
+	self.dbd_boo_0_award.content.loot_global_value = "dbd_clan"
+	self.dbd_boo_0_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dbd_04",
+			amount = 1
+		}
+	}
+	self.dbd_boo_1_award = {
+		content_on_consoles = true,
+		dlc = "has_dbd_clan",
+		content = {}
+	}
+	self.dbd_boo_1_award.content.loot_global_value = "dbd_clan"
+	self.dbd_boo_1_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dbd_01",
+			amount = 1
+		}
+	}
+	self.dbd_boo_4_award = {
+		content_on_consoles = true,
+		dlc = "has_dbd_clan",
+		content = {}
+	}
+	self.dbd_boo_4_award.content.loot_global_value = "dbd_clan"
+	self.dbd_boo_4_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "dbd_slasher",
+			amount = 1
+		}
+	}
+	self.solus_clan_award = {
+		free = true,
+		dlc = true,
+		content_on_consoles = true,
+		content = {}
+	}
+	self.solus_clan_award.content.loot_global_value = "solus_clan"
+	self.solus_clan_award.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "solus",
+			amount = 1
+		}
+	}
+	self.console_wmp_bundle = {
+		free = true,
+		content_on_consoles = true,
+		content = {}
+	}
+	self.console_wmp_bundle.content.loot_global_value = "normal"
+	self.console_wmp_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "wmp_01",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "wmp_02",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "wmp_03",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "wmp_04",
+			amount = 1
+		}
+	}
+	self.console_jfr = {
+		content = {},
+		content_on_consoles = true
+	}
 	self.console_dgm_bundle = {
 		free = true,
 		content_on_consoles = true,
@@ -2829,7 +3127,7 @@ function DLCTweakData:init_console()
 		free = true,
 		content_on_consoles = true
 	}
-	self.console_rvd_bundle.content.loot_global_value = "normal"
+	self.console_rvd_bundle.content.loot_global_value = "rvd"
 	self.console_rvd_bundle.content.loot_drops = {
 		{
 			type_items = "masks",

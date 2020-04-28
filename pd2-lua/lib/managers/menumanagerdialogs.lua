@@ -2788,3 +2788,32 @@ function MenuManager:show_movie_theater_unlocked_dialog()
 
 	managers.system_menu:show(dialog_data)
 end
+
+function MenuManager:show_accept_telemetry(params)
+	local dialog_data = {
+		title = managers.localization:text("dialog_telemetry_title"),
+		button_sub_title = managers.localization:text("dialog_telemetry_question"),
+		file_name = "telemetry"
+	}
+	local is_pc_controller = managers.controller:get_default_wrapper_type() == "pc" or managers.controller:get_default_wrapper_type() == "steam" or managers.controller:get_default_wrapper_type() == "vr"
+	local yes_legend = is_pc_controller and managers.localization:btn_macro("continue") or managers.localization:get_default_macro("BTN_ACCEPT")
+	local no_legend = is_pc_controller and managers.localization:btn_macro("back") or managers.localization:get_default_macro("BTN_CANCEL")
+	local yes_button = {
+		text = managers.localization:to_upper_text("dialog_telemetry_accept", {
+			ACCEPT = yes_legend
+		}),
+		callback_func = params.yes_func
+	}
+	local no_button = {
+		text = managers.localization:to_upper_text("dialog_telemetry_decline", {
+			DECLINE = no_legend
+		}),
+		cancel_button = true
+	}
+	dialog_data.button_list = {
+		yes_button,
+		no_button
+	}
+
+	managers.system_menu:show_document(dialog_data)
+end

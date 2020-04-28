@@ -4,6 +4,7 @@ AchievmentManager.FILE_EXTENSION = "achievment"
 AchievmentManager.MAX_TRACKED = 4
 
 require("lib/managers/achievement/CAC_CustomAchievements")
+require("lib/utils/accelbyte/TelemetryConst")
 
 function AchievmentManager:init()
 	self.exp_awards = {
@@ -402,7 +403,7 @@ function AchievmentManager:_update_current_milestone()
 			milestone.awarded = 0
 
 			if milestone.coins then
-				managers.custom_safehouse:add_coins_ingore_locked(milestone.coins)
+				managers.custom_safehouse:add_coins_ingore_locked(milestone.coins, TelemetryConst.economy_origin.milestone_award .. milestone.id)
 			end
 
 			if milestone.has_drop then

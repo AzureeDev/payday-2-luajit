@@ -45,6 +45,11 @@ function ContractBrokerGui:init(ws, fullscreen_ws, node)
 		layer = 1100
 	})
 	self.make_fine_text = BlackMarketGui.make_fine_text
+	local component_data = node:parameters().menu_component_data or {}
+	self._hide_title = component_data.hide_title or false
+	self._hide_filters = component_data.hide_filters or false
+	self._panel_align = component_data.align or "center"
+	self.tabs = component_data.tabs or self.tabs
 	self._enabled = true
 	self._current_filter = Global.contract_broker and Global.contract_broker.filter or 1
 	self._highlighted_filter = Global.contract_broker and Global.contract_broker.filter or 1
@@ -102,7 +107,11 @@ end
 
 function ContractBrokerGui:setup()
 	self:_create_background()
-	self:_create_title()
+
+	if not self._hide_title then
+		self:_create_title()
+	end
+
 	self:_create_panels()
 	self:_create_back_button()
 	self:_create_legend()
@@ -183,7 +192,14 @@ function ContractBrokerGui:_create_panels()
 		h = self._panel:h() * 0.7
 	})
 
-	main_panel:set_center_x(self._panel:w() * 0.5)
+	if self._panel_align == "left" then
+		main_panel:set_left(0)
+	elseif self._panel_align == "right" then
+		main_panel:set_right(self._panel:w())
+	else
+		main_panel:set_center_x(self._panel:w() * 0.5)
+	end
+
 	main_panel:set_top(padding * 2 + tweak_data.menu.pd2_large_font_size * 2)
 	BoxGuiObject:new(main_panel:panel({
 		layer = 100
@@ -329,7 +345,7 @@ end
 function ContractBrokerGui:_setup_tabs()
 	local last_x = 0
 
-	if not managers.menu:is_pc_controller() then
+	if not managers.menu:is_pc_controller() and #self.tabs > 1 then
 		local icon_text = self._panels.tabs:text({
 			vertical = "top",
 			alpha = 1,
@@ -381,7 +397,7 @@ function ContractBrokerGui:_setup_tabs()
 		table.insert(self._tab_buttons, text)
 	end
 
-	if not managers.menu:is_pc_controller() then
+	if not managers.menu:is_pc_controller() and #self.tabs > 1 then
 		local icon_text = self._panels.tabs:text({
 			vertical = "top",
 			alpha = 1,
@@ -704,6 +720,18 @@ function ContractBrokerGui:_setup_filter_favourite()
 	self:set_sorting_function(ContractBrokerGui.perform_standard_sort)
 end
 
+function ContractBrokerGui:_setup_filter_skirmish()
+	self._contact_filter = callback(self, self, "perform_filter_skirmish")
+
+	self:_add_filter_button("menu_skirmish_selected", 0)
+	self:add_filter("contact", ContractBrokerGui.perform_filter_skirmish)
+	self:set_sorting_function(ContractBrokerGui.perform_standard_sort)
+end
+
+function ContractBrokerGui:perform_filter_skirmish(value)
+	return value == "skirmish"
+end
+
 function ContractBrokerGui:perform_filter_contact(value)
 	return value == (self._contact_filter_list[self._current_filter] or self._contact_filter_list[1] or {}).id
 end
@@ -822,6 +850,7 @@ function ContractBrokerGui.perform_most_played_sort(x, y)
 end
 
 function ContractBrokerGui:clear_filters()
+	self._contact_filter = nil
 	self._active_filters = {}
 	self._current_filter = 1
 end
@@ -877,7 +906,7 @@ function ContractBrokerGui:_setup_jobs()
 
 		if contact then
 			contact_pass = true
-			contact_pass = not contact_tweak or not contact_tweak.hidden
+			contact_pass = (not self._contact_filter or self._contact_filter(contact)) and (not contact_tweak or not contact_tweak.hidden)
 		end
 
 		if self._search_filter_visible and self._current_filter == #self._filter_buttons then
@@ -961,6 +990,8 @@ function ContractBrokerGui:update(t, dt)
 end
 
 function ContractBrokerGui:refresh()
+	self._panels.filters:set_visible(not self._hide_filters)
+
 	if self._filter_buttons[self._current_filter] then
 		self._filter_selection_bg:set_y(self._filter_buttons[self._current_filter]:y())
 		self._filter_selection_bg:set_visible(true)
@@ -1033,33 +1064,35 @@ function ContractBrokerGui:mouse_moved(button, x, y)
 		end
 	end
 
-	if self._filter_buttons[self._current_filter] then
-		self._filter_selection_bg:set_y(self._filter_buttons[self._current_filter]:y())
-		self._filter_selection_bg:set_visible(true)
-	else
-		self._filter_selection_bg:set_visible(false)
-	end
-
-	for idx, btn in ipairs(self._filter_buttons) do
-		if not used and self._current_filter ~= idx and btn:inside(x, y) then
-			pointer = "link"
-			used = true
-
-			btn:set_color(tweak_data.screen_colors.button_stage_2)
-			btn:set_blend_mode("add")
-			self._filter_selection_bg:set_y(btn:y())
-
-			if self._highlighted_filter ~= idx then
-				self._highlighted_filter = idx
-
-				managers.menu:post_event("highlight")
-			end
-		elseif idx == self._current_filter then
-			btn:set_color(tweak_data.screen_colors.button_stage_2)
-			btn:set_blend_mode("add")
+	if self._panels.filters:visible() then
+		if self._filter_buttons[self._current_filter] then
+			self._filter_selection_bg:set_y(self._filter_buttons[self._current_filter]:y())
+			self._filter_selection_bg:set_visible(true)
 		else
-			btn:set_color(tweak_data.screen_colors.button_stage_3)
-			btn:set_blend_mode("normal")
+			self._filter_selection_bg:set_visible(false)
+		end
+
+		for idx, btn in ipairs(self._filter_buttons) do
+			if not used and self._current_filter ~= idx and btn:inside(x, y) then
+				pointer = "link"
+				used = true
+
+				btn:set_color(tweak_data.screen_colors.button_stage_2)
+				btn:set_blend_mode("add")
+				self._filter_selection_bg:set_y(btn:y())
+
+				if self._highlighted_filter ~= idx then
+					self._highlighted_filter = idx
+
+					managers.menu:post_event("highlight")
+				end
+			elseif idx == self._current_filter then
+				btn:set_color(tweak_data.screen_colors.button_stage_2)
+				btn:set_blend_mode("add")
+			else
+				btn:set_color(tweak_data.screen_colors.button_stage_3)
+				btn:set_blend_mode("normal")
+			end
 		end
 	end
 
@@ -1136,14 +1169,16 @@ function ContractBrokerGui:mouse_clicked(o, button, x, y)
 		return true
 	end
 
-	for idx, btn in ipairs(self._filter_buttons) do
-		if self._current_filter ~= idx and btn:inside(x, y) then
-			self._current_filter = idx
+	if self._panels.filters:visible() then
+		for idx, btn in ipairs(self._filter_buttons) do
+			if self._current_filter ~= idx and btn:inside(x, y) then
+				self._current_filter = idx
 
-			self:_setup_change_filter()
-			managers.menu:post_event("menu_enter")
+				self:_setup_change_filter()
+				managers.menu:post_event("menu_enter")
 
-			return true
+				return true
+			end
 		end
 	end
 
@@ -1271,6 +1306,10 @@ function ContractBrokerGui:move_down()
 end
 
 function ContractBrokerGui:next_page()
+	if #self._tab_buttons == 1 then
+		return
+	end
+
 	self._current_tab = self._current_tab + 1
 
 	if self._current_tab > #self._tab_buttons then
@@ -1282,6 +1321,10 @@ function ContractBrokerGui:next_page()
 end
 
 function ContractBrokerGui:previous_page()
+	if #self._tab_buttons == 1 then
+		return
+	end
+
 	self._current_tab = self._current_tab - 1
 
 	if self._current_tab < 1 then

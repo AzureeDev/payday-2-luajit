@@ -1092,7 +1092,7 @@ function BaseNetworkSession:chk_send_connection_established(name, user_id, peer)
 				print("[BaseNetworkSession:chk_send_connection_established] reporting dead connection", name)
 
 				if self._server_peer then
-					self._server_peer:send_queued_load("report_dead_connection", peer:id())
+					self._server_peer:send_after_load("report_dead_connection", peer:id())
 				end
 			end
 

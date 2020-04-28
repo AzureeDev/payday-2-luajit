@@ -140,6 +140,7 @@ function GenericUserManager:setup_setting_map()
 	self:setup_setting(88, "crimenet_filter_one_down", false)
 	self:setup_setting(89, "crimenet_filter_weekly_skirmish", false)
 	self:setup_setting(90, "crimenet_filter_skirmish_wave", 99)
+	self:setup_setting(200, "use_telemetry", false)
 	self:setup_setting(300, "adaptive_quality", true)
 	self:setup_setting(301, "window_zoom", true)
 	self:setup_setting(302, "arm_animation", true)
@@ -765,6 +766,8 @@ function GenericUserManager:save(data)
 	if Global.DEBUG_MENU_ON then
 		data.debug_post_effects_enabled = Global.debug_post_effects_enabled
 	end
+
+	data.use_telemetry_decided = Global.use_telemetry_decided
 end
 
 function GenericUserManager:load(data, cache_version)
@@ -788,6 +791,8 @@ function GenericUserManager:load(data, cache_version)
 	else
 		Global.debug_post_effects_enabled = true
 	end
+
+	Global.use_telemetry_decided = data.use_telemetry_decided
 
 	self:sanitize_settings()
 end

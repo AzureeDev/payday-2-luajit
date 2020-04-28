@@ -61,6 +61,7 @@ require("lib/managers/menu/SkirmishModifierList")
 require("lib/managers/menu/SkirmishLandingMenuComponent")
 require("lib/managers/menu/SkirmishContractMenuComponent")
 require("lib/managers/menu/SkirmishWeeklyContractMenuComponent")
+require("lib/managers/menu/SkirmishSelectInfoMenuComponent")
 require("lib/managers/menu/SkirmishContractBoxGui")
 require("lib/managers/menu/IngameContractGuiSkirmish")
 require("lib/managers/menu/MovieTheaterGui")
@@ -321,6 +322,7 @@ function MenuComponentManager:init()
 			close = callback(self, self, "close_skirmish_contract_join_gui")
 		},
 		weekly_skirmish_rewards = self:create_component_callback("SkirmishWeeklyRewardsMenuComponent", "weekly_skirmish_rewards"),
+		skirmish_select_info = self:create_component_callback("SkirmishSelectInfoMenuComponent", "skirmish_select_info"),
 		movie_theater = {
 			create = callback(self, self, "create_movie_theater_gui"),
 			close = callback(self, self, "close_movie_theater_gui")

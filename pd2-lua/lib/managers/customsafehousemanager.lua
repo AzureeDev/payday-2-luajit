@@ -1,4 +1,6 @@
 require("lib/managers/custom_safehouse/UnoAchievementChallenge")
+require("lib/utils/accelbyte/Telemetry")
+require("lib/utils/accelbyte/TelemetryConst")
 
 local one_day_seconds = 86400
 CustomSafehouseManager = CustomSafehouseManager or class()
@@ -220,7 +222,7 @@ function CustomSafehouseManager:coins_spent()
 	return self:total_coins_earned() - self:coins()
 end
 
-function CustomSafehouseManager:add_coins(amount)
+function CustomSafehouseManager:add_coins(amount, reason)
 	if not self:unlocked() then
 		return
 	end
@@ -232,12 +234,16 @@ function CustomSafehouseManager:add_coins(amount)
 
 	print("[Safehouse] adding coins to safehouse: ", amount, Application:digest_value(self._global.total, false))
 
+	reason = reason or "generic"
+
+	Telemetry:send_on_player_economy_event(reason, "coin", amount, "earn")
+
 	if managers.statistics then
 		managers.statistics:aquired_coins(amount)
 	end
 end
 
-function CustomSafehouseManager:add_coins_ingore_locked(amount)
+function CustomSafehouseManager:add_coins_ingore_locked(amount, reason)
 	local need_to_give_inital = self:total_coins_earned() == 0
 
 	if self:total_coins_earned() == 0 then
@@ -253,14 +259,21 @@ function CustomSafehouseManager:add_coins_ingore_locked(amount)
 
 	print("[Safehouse] adding coins to safehouse: ", amount, Application:digest_value(self._global.total, false))
 
+	reason = reason or "generic"
+
+	Telemetry:send_on_player_economy_event(reason, "coin", amount, "earn")
+
 	if managers.statistics then
 		managers.statistics:aquired_coins(amount)
 	end
 end
 
-function CustomSafehouseManager:deduct_coins(amount)
+function CustomSafehouseManager:deduct_coins(amount, reason)
 	amount = math.clamp(amount, 0, self:coins())
 	Global.custom_safehouse_manager.total = Application:digest_value(self:coins() - amount, true)
+	reason = reason or "generic"
+
+	Telemetry:send_on_player_economy_event(reason, "coin", amount, "spend")
 end
 
 function CustomSafehouseManager:attempt_give_initial_coins()
@@ -270,7 +283,7 @@ function CustomSafehouseManager:attempt_give_initial_coins()
 
 	if self:total_coins_earned() == 0 then
 		print("[Safehouse] adding initial coins! ", tweak_data.safehouse.rewards.initial)
-		self:add_coins(tweak_data.safehouse.rewards.initial)
+		self:add_coins(tweak_data.safehouse.rewards.initial, TelemetryConst.economy_origin.initial_coins)
 	end
 end
 
@@ -363,7 +376,7 @@ function CustomSafehouseManager:purchase_room_tier(room_id, tier)
 			current_tier = current_tier + 1
 
 			table.insert(self._global.rooms[room_id].unlocked_tiers, current_tier)
-			self:deduct_coins(tweak_data.safehouse.prices.rooms[current_tier])
+			self:deduct_coins(tweak_data.safehouse.prices.rooms[current_tier], TelemetryConst.economy_origin.purchase_room_tier)
 		end
 
 		managers.mission:call_global_event(Message.OnSafeHouseUpgrade)
@@ -497,7 +510,7 @@ function CustomSafehouseManager:get_coins_income()
 end
 
 function CustomSafehouseManager:give_upgrade_points(exp)
-	self:add_coins(exp / tweak_data.safehouse.rewards.experience_ratio)
+	self:add_coins(exp / tweak_data.safehouse.rewards.experience_ratio, TelemetryConst.economy_origin.upgrade_points)
 end
 
 function CustomSafehouseManager:trophies()
@@ -673,7 +686,7 @@ function CustomSafehouseManager:complete_trophy(trophy_or_id)
 		self:add_completed_trophy(trophy, "trophy")
 
 		if trophy.gives_reward == nil or trophy.gives_reward then
-			self:add_coins(tweak_data.safehouse.rewards.challenge)
+			self:add_coins(tweak_data.safehouse.rewards.challenge, TelemetryConst.economy_origin.complete_trophy .. trophy.id)
 		end
 
 		self:run_trophy_unlocked_callbacks(trophy.id, "trophy")
@@ -833,7 +846,7 @@ end
 function CustomSafehouseManager:reward_daily()
 	if self._global.daily.trophy.completed and not self._global.daily.trophy.rewarded then
 		self:add_completed_trophy(self._global.daily.trophy, "daily")
-		self:add_coins(tweak_data.safehouse.rewards.daily_complete)
+		self:add_coins(tweak_data.safehouse.rewards.daily_complete, TelemetryConst.economy_origin.reward_daily)
 		self:_set_daily_state("rewarded")
 
 		self._global.daily.trophy.rewarded = true

@@ -1144,8 +1144,8 @@ function LootDropTweakData:init(tweak_data)
 		sort_number = -100,
 		unique_lock_icon = "guis/textures/pd2/lock_community",
 		sort_number = 2,
-		unlock_id = "bm_global_value_dbd_clan_unlock",
 		dlc = true,
+		unlock_id = "bm_global_value_dbd_clan_unlock",
 		category = "pd2_clan"
 	}
 	self.global_values.dbd_deluxe = {
@@ -1203,8 +1203,8 @@ function LootDropTweakData:init(tweak_data)
 		sort_number = -100,
 		unique_lock_icon = "guis/textures/pd2/lock_community",
 		sort_number = 2,
-		unlock_id = "bm_global_value_solus_clan_unlock",
 		dlc = true,
+		unlock_id = "bm_global_value_solus_clan_unlock",
 		category = "pd2_clan"
 	}
 	self.global_values.legendary = {
@@ -1323,7 +1323,6 @@ function LootDropTweakData:init(tweak_data)
 	self.global_values.sha = {
 		name_id = "bm_global_value_sha",
 		desc_id = "menu_l_global_value_sha",
-		color = dlc_color,
 		chance = 1,
 		value_multiplier = tweak_data:get_value("money_manager", "global_value_multipliers", "sha"),
 		durability_multiplier = 1,
@@ -1331,6 +1330,7 @@ function LootDropTweakData:init(tweak_data)
 		track = true,
 		sort_number = 302,
 		unlock_id = "bm_global_value_sha_unlock",
+		color = dlc_color,
 		category = "collaboration",
 		dlc = true
 	}
@@ -1393,7 +1393,6 @@ function LootDropTweakData:init(tweak_data)
 	self.global_values.ant = {
 		name_id = "bm_global_value_ant",
 		desc_id = "menu_l_global_value_ant",
-		color = dlc_color,
 		chance = 1,
 		value_multiplier = tweak_data:get_value("money_manager", "global_value_multipliers", "ant"),
 		durability_multiplier = 1,
@@ -1403,12 +1402,12 @@ function LootDropTweakData:init(tweak_data)
 		unique_lock_icon = "guis/textures/pd2/blackmarket/money_lock",
 		unlock_id = "bm_global_value_ant_unlock",
 		dlc = true,
+		color = dlc_color,
 		category = "collaboration"
 	}
 	self.global_values.ant_free = {
 		name_id = "bm_global_value_ant",
 		desc_id = "menu_l_global_value_ant",
-		color = dlc_color,
 		chance = 1,
 		value_multiplier = tweak_data:get_value("money_manager", "global_value_multipliers", "ant_free"),
 		durability_multiplier = 1,
@@ -1418,12 +1417,14 @@ function LootDropTweakData:init(tweak_data)
 		unique_lock_icon = "guis/textures/pd2/blackmarket/money_lock",
 		unlock_id = "bm_global_value_ant_free_unlock",
 		dlc = true,
+		color = dlc_color,
 		category = "collaboration"
 	}
 	self.global_values.eng = {
 		name_id = "bm_global_value_eng",
 		desc_id = "menu_l_global_value_eng",
-		color = dlc_color,
+		dlc = true,
+		category = "collaboration",
 		chance = 1,
 		value_multiplier = tweak_data:get_value("money_manager", "global_value_multipliers", "eng"),
 		durability_multiplier = 1,
@@ -1432,8 +1433,7 @@ function LootDropTweakData:init(tweak_data)
 		sort_number = 306,
 		unique_lock_icon = "guis/textures/pd2/blackmarket/money_lock",
 		unlock_id = "bm_global_value_eng_unlock",
-		dlc = true,
-		category = "collaboration"
+		color = dlc_color
 	}
 	self.global_values.pn2 = {
 		name_id = "bm_global_value_pn2",

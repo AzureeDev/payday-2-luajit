@@ -451,6 +451,7 @@ end
 function create_text_field(parent, view, prop)
 	local field = EWS:TextCtrl(parent, prop._value, "", "TE_PROCESS_ENTER")
 
+	field:set_min_size(Vector3(20, 20, 0))
 	field:connect("EVT_COMMAND_TEXT_UPDATED", callback(prop, prop, "on_change", {
 		widget = field,
 		view = view
@@ -681,9 +682,12 @@ function create_key_curve_widget(parent, view, prop)
 	local remove_button = EWS:Button(panel, "Remove", "", "BU_EXACTFIT")
 	local t = EWS:TextCtrl(panel, "0", "", "TE_PROCESS_ENTER")
 
-	t:set_min_size(Vector3(40, -1, 0))
+	t:set_min_size(Vector3(40, 20, 0))
 
 	local v = EWS:TextCtrl(panel, "0 0 0", "", "TE_PROCESS_ENTER")
+
+	v:set_min_size(Vector3(40, 20, 0))
+
 	local top_sizer = EWS:BoxSizer("VERTICAL")
 
 	top_sizer:add(listbox, 1, 0, "EXPAND")

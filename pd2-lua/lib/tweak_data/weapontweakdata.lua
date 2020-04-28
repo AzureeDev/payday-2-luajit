@@ -6893,7 +6893,8 @@ function WeaponTweakData:_init_aug(weapon_data)
 	self.aug.aim_assist = weapon_data.aim_assist_pistol_default
 	self.aug.animations = {
 		equip_id = "equip_mp5_rifle",
-		recoil_steelsight = true
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
 	}
 	self.aug.panic_suppression_chance = 0.2
 	self.aug.stats = {

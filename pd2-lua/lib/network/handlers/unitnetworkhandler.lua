@@ -1693,6 +1693,8 @@ function UnitNetworkHandler:place_sentry_gun(pos, rot, equipment_selection_index
 	local peer = self._verify_sender(rpc)
 
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not peer then
+		Application:error("[UnitNetworkHandler:place_sentry_gun] Verification failed", pos, rot, equipment_selection_index, user_unit, unit_idstring_index, ammo_level)
+
 		return
 	end
 
@@ -2831,11 +2833,13 @@ function UnitNetworkHandler:mark_minion(unit, minion_owner_peer_id, convert_enem
 		health_multiplier = health_multiplier * tweak_data.upgrades.values.player.passive_convert_enemies_health_multiplier[passive_convert_enemies_health_multiplier_level]
 	end
 
+	local is_local_owner = minion_owner_peer_id == managers.network:session():local_peer():id()
+
 	unit:character_damage():convert_to_criminal(health_multiplier)
-	unit:contour():add("friendly", false)
+	unit:contour():add("friendly", false, nil, is_local_owner and tweak_data.contour.character.friendly_minion_color)
 	managers.groupai:state():sync_converted_enemy(unit, minion_owner_peer_id)
 
-	if minion_owner_peer_id == managers.network:session():local_peer():id() then
+	if is_local_owner then
 		managers.player:count_up_player_minions()
 	end
 end

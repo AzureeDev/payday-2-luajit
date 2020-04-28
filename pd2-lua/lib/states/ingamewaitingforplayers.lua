@@ -1,4 +1,5 @@
 core:import("CoreUnit")
+require("lib/utils/accelbyte/Telemetry")
 require("lib/states/GameState")
 
 IngameWaitingForPlayersState = IngameWaitingForPlayersState or class(GameState)
@@ -558,6 +559,7 @@ function IngameWaitingForPlayersState:at_exit(next_state)
 	end
 
 	TestAPIHelper.on_event("start_job")
+	Telemetry:on_start_heist()
 end
 
 function IngameWaitingForPlayersState:_get_cameras()

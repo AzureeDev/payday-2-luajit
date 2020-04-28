@@ -4,13 +4,14 @@ function MenuInitiatorBase:modify_node(original_node, data)
 	return original_node
 end
 
-function MenuInitiatorBase:create_divider(node, id, text_id, size, color)
+function MenuInitiatorBase:create_divider(node, id, text_id, size, color, visible_callback)
 	local params = {
 		name = "divider_" .. id,
 		no_text = not text_id,
 		text_id = text_id,
 		size = size or 8,
-		color = color
+		color = color,
+		visible_callback = visible_callback
 	}
 	local data_node = {
 		type = "MenuItemDivider"

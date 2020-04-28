@@ -1,3 +1,5 @@
+require("lib/utils/accelbyte/TelemetryConst")
+
 StoryMissionsManager = StoryMissionsManager or class()
 StoryMissionsManager._version = 2
 
@@ -153,7 +155,7 @@ function StoryMissionsManager:_reward(reward)
 			Application:error("[Story] Failed to give reward", reward.type_items, reward.item_entry)
 		end
 	elseif reward[1] == "safehouse_coins" and reward[2] > 0 then
-		managers.custom_safehouse:add_coins(reward[2])
+		managers.custom_safehouse:add_coins(reward[2], TelemetryConst.economy_origin.mission_reward)
 	else
 		Application:error("[Story] Failed to give reward")
 	end

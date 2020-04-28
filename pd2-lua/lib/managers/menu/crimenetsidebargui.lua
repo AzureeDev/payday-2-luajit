@@ -394,7 +394,23 @@ function CrimeNetSidebarGui:clbk_open_story_missions()
 end
 
 function CrimeNetSidebarGui:clbk_skirmish()
-	SkirmishLandingMenuComponent:open_node()
+	local tab_filter = {
+		"",
+		"_setup_filter_skirmish"
+	}
+	local tabs = {
+		tab_filter
+	}
+
+	managers.menu_component:post_event("menu_enter")
+	managers.menu:open_node("skirmish_select_contract", {
+		{
+			hide_filters = true,
+			align = "right",
+			hide_title = true,
+			tabs = tabs
+		}
+	})
 end
 
 function CrimeNetSidebarGui:clbk_visible_skirmish()

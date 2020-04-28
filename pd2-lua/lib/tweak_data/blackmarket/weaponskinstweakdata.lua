@@ -1,4 +1,6 @@
-function BlackMarketTweakData:_init_weapon_skins()
+require("lib/tweak_data/blackmarket/WeaponColorTemplates")
+
+function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 	self.weapon_skins = {
 		serbu_woodland = {}
 	}
@@ -37393,352 +37395,84 @@ function BlackMarketTweakData:_init_weapon_skins()
 		}
 	}
 
-	self:_setup_weapon_color_skins()
+	self:_setup_weapon_color_skins(tweak_data)
 end
 
-local weapon_color_skin_template = {
-	base_gradient = "default",
-	weapons = {},
-	types = {},
-	parts = {}
-}
-weapon_color_skin_template.types.sight = {
-	base_gradient = "sights"
-}
-weapon_color_skin_template.types.magazine = {
-	base_gradient = "magazine"
-}
-weapon_color_skin_template.types.grip = {
-	base_gradient = "grip"
-}
-weapon_color_skin_template.types.foregrip = {
-	base_gradient = "foregrip"
-}
-weapon_color_skin_template.types.vertical_grip = {
-	base_gradient = "vertical_grip"
-}
-weapon_color_skin_template.types.stock = {
-	base_gradient = "stock"
-}
-weapon_color_skin_template.types.gadget = {
-	base_gradient = "gadget"
-}
-weapon_color_skin_template.types.barrel = {
-	base_gradient = "barrel"
-}
-weapon_color_skin_template.types.barrel_ext = {
-	base_gradient = "barrel_ext"
-}
-weapon_color_skin_template.types.slide = {
-	base_gradient = "slide"
-}
-weapon_color_skin_template.weapons.ching = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.gre_m79 = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.plainsrider = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.frankish = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.long = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.arblast = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.model70 = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.msr = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.winchester1874 = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.wa2000 = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.b682 = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.huntsman = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.boot = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.m37 = {
-	base_gradient = "another_key"
-}
-weapon_color_skin_template.weapons.mosin = {
-	base_gradient = "another_key",
-	parts = {
-		wpn_fps_snp_mosin_body_standard = {
-			[Idstring("mtr_bolt"):key()] = {
-				base_gradient = "default"
-			}
-		}
-	}
-}
-weapon_color_skin_template.weapons.siltstone = {
-	base_gradient = "another_key",
-	parts = {
-		wpn_fps_snp_siltstone_body_receiver = {
-			[Idstring("mat_body_low"):key()] = {
-				base_gradient = "default"
-			}
-		}
-	},
-	types = {
-		magazine = {
-			base_gradient = "default"
-		}
-	}
-}
-weapon_color_skin_template.weapons.sub2000 = {
-	parts = {
-		wpn_fps_ass_sub2000_m_standard = {
-			[Idstring("mtr_mag"):key()] = {
-				base_gradient = "another_key"
-			}
-		}
-	}
-}
-weapon_color_skin_template.weapons.tecci = {
-	parts = {
-		wpn_fps_upg_m4_s_ubr = {
-			[Idstring("mtr_ubr"):key()] = {
-				base_gradient = "another_key"
-			}
-		}
-	}
-}
-weapon_color_skin_template.weapons.ak74 = {
-	parts = {
-		wpn_fps_upg_ak_s_solidstock = {
-			[Idstring("mtr_solid"):key()] = {
-				base_gradient = "another_key"
-			}
-		},
-		wpn_upg_ak_fg_combo2 = {
-			[Idstring("handguard_lower_wood"):key()] = {
-				base_gradient = "another_key"
-			}
-		},
-		wpn_upg_ak_s_psl = {
-			[Idstring("psl"):key()] = {
-				base_gradient = "another_key"
-			}
-		},
-		wpn_upg_ak_fg_standard = {
-			[Idstring("handguard_upper_wood"):key()] = {
-				base_gradient = "another_key"
-			},
-			[Idstring("handguard_lower_wood"):key()] = {
-				base_gradient = "another_key"
-			}
-		}
-	}
-}
-weapon_color_skin_template.weapons.akm = {
-	parts = {
-		wpn_upg_ak_s_psl = {
-			[Idstring("psl"):key()] = {
-				base_gradient = "another_key"
-			}
-		},
-		wpn_fps_upg_ak_s_solidstock = {
-			[Idstring("mtr_solid"):key()] = {
-				base_gradient = "another_key"
-			}
-		},
-		wpn_upg_ak_fg_standard = {
-			[Idstring("handguard_upper_wood"):key()] = {
-				base_gradient = "another_key"
-			},
-			[Idstring("handguard_lower_wood"):key()] = {
-				base_gradient = "another_key"
-			}
-		}
-	}
-}
-weapon_color_skin_template.weapons.peacemaker = {
-	uv_scale = Vector3(1, 1, 0.131887)
-}
-weapon_color_skin_template.weapons.polymer = {
-	parts = {
-		wpn_fps_smg_polymer_body_standard = {
-			[Idstring("mtr_body"):key()] = {
-				uv_offset_rot = Vector3(0.080979, 0.800457, 0),
-				uv_scale = Vector3(7.69993, 7.41388, 1)
-			}
-		},
-		wpn_fps_smg_polymer_m_standard = {
-			[Idstring("mtr_mag"):key()] = {
-				uv_offset_rot = Vector3(-0.251371, 1.2082, 4.69478),
-				uv_scale = Vector3(5.79294, 7.08016, 1)
-			}
-		}
-	}
-}
-weapon_color_skin_template.weapons.m16 = {
-	parts = {
-		wpn_fps_m16_s_solid_vanilla = {
-			[Idstring("solid"):key()] = {
-				uv_offset_rot = Vector3(-0.453705, 1.11281, 0),
-				uv_scale = Vector3(20, 20, 0)
-			}
-		}
-	}
-}
-weapon_color_skin_template.weapons.saw = {
-	parts = {
-		wpn_fps_saw_m_blade = {
-			[Idstring("mtr_blade"):key()] = {
-				uv_offset_rot = Vector3(-0.01, 0, 0)
-			}
-		}
-	}
-}
-local weapon_color_variation_template = {
-	{
-		default = "base_default",
-		vertical_grip = "variation_default",
-		grip = "variation_default",
-		stock = "variation_default",
-		magazine = "variation_default",
-		sights = "variation_default",
-		foregrip = "base_metal",
-		gadget = "variation_default"
-	},
-	{
-		default = "base_default",
-		gadget = "variation_default",
-		grip = "variation_default",
-		barrel = "variation_default",
-		magazine = "variation_default",
-		sights = "variation_default",
-		slide = "variation_default",
-		barrel_ext = "variation_default"
-	},
-	{
-		default = "base_metal",
-		sights = "variation_default",
-		gadget = "variation_default",
-		magazine = "variation_default"
-	},
-	{
-		default = "base_plastic",
-		sights = "variation_default",
-		gadget = "variation_default",
-		magazine = "variation_default"
-	},
-	{
-		default = "base_half",
-		sights = "variation_default",
-		gadget = "variation_default",
-		magazine = "variation_default"
-	},
-	{
-		default = "base_half_02",
-		barrel_ext = "variation_default",
-		gadget = "variation_default",
-		magazine = "variation_default",
-		sights = "variation_default"
-	}
-}
+function BlackMarketTweakData:populate_weapon_color_skin(weapon_color_data, variation_data, weapon_id)
+	local weapon_color_skin_template = self.weapon_color_templates.color_skin
+	weapon_color_data.base_gradient = variation_data[weapon_color_skin_template.base_gradient]
+	weapon_color_data.weapons = {}
 
-function BlackMarketTweakData:populate_weapon_color_skin(weapon_skin_data, base_gradients)
-	weapon_skin_data.base_gradient = base_gradients[weapon_color_skin_template.base_gradient]
-	weapon_skin_data.weapons = {}
-	weapon_skin_data.types = {}
-	weapon_skin_data.parts = {}
+	for wid, weapon_data in pairs(weapon_color_skin_template.weapons) do
+		if weapon_id == nil or weapon_id == wid then
+			weapon_color_data.weapons[wid] = {
+				base_gradient = variation_data[weapon_data.base_gradient]
+			}
 
-	for weapon_id, weapon_data in pairs(weapon_color_skin_template.weapons) do
-		weapon_skin_data.weapons[weapon_id] = {
-			base_gradient = base_gradients[weapon_data.base_gradient]
-		}
+			if weapon_data.types then
+				weapon_color_data.weapons[wid].types = {}
 
-		if weapon_data.types then
-			weapon_skin_data.weapons[weapon_id].types = {}
-
-			for type_id, type_data in pairs(weapon_data.types) do
-				weapon_skin_data.weapons[weapon_id].types[type_id] = {
-					base_gradient = base_gradients[type_data.base_gradient]
-				}
-			end
-		end
-
-		if weapon_data.parts then
-			weapon_skin_data.weapons[weapon_id].parts = {}
-
-			for part_id, materials in pairs(weapon_data.parts) do
-				weapon_skin_data.weapons[weapon_id].parts[part_id] = {}
-
-				for material_key, material_data in pairs(materials) do
-					weapon_skin_data.weapons[weapon_id].parts[part_id][material_key] = {
-						base_gradient = base_gradients[material_data.base_gradient]
+				for type_id, type_data in pairs(weapon_data.types) do
+					weapon_color_data.weapons[wid].types[type_id] = {
+						base_gradient = variation_data[type_data.base_gradient]
 					}
+				end
+			end
+
+			if weapon_data.parts then
+				weapon_color_data.weapons[wid].parts = {}
+
+				for part_id, materials in pairs(weapon_data.parts) do
+					weapon_color_data.weapons[wid].parts[part_id] = {}
+
+					for material_key, material_data in pairs(materials) do
+						weapon_color_data.weapons[wid].parts[part_id][material_key] = {
+							base_gradient = variation_data[material_data.base_gradient]
+						}
+					end
 				end
 			end
 		end
 	end
 
+	weapon_color_data.types = {}
+
 	for type_id, type_data in pairs(weapon_color_skin_template.types) do
-		weapon_skin_data.types[type_id] = {
-			base_gradient = base_gradients[type_data.base_gradient] or nil
-		}
-		weapon_skin_data.types[type_id] = {
-			base_gradient = base_gradients[type_data.base_gradient]
+		weapon_color_data.types[type_id] = {
+			base_gradient = variation_data[type_data.base_gradient]
 		}
 	end
 
+	weapon_color_data.parts = {}
+
 	for part_id, materials in pairs(weapon_color_skin_template.parts) do
-		weapon_skin_data.parts[part_id] = {}
+		weapon_color_data.parts[part_id] = {}
 
 		for material_key, material_data in pairs(materials) do
-			weapon_skin_data.parts[part_id][material_key] = {
-				base_gradient = base_gradients[material_data.base_gradient]
+			weapon_color_data.parts[part_id][material_key] = {
+				base_gradient = variation_data[material_data.base_gradient]
 			}
 		end
 	end
 end
 
-function BlackMarketTweakData:create_new_color_skin(name, data, base_gradients)
+function BlackMarketTweakData:create_new_color_skin(name, data, color_skin_data)
 	data.name_id = "bm_wskn_" .. name
 	data.rarity = "common"
 	data.weapon_ids = {
 		"akm_gold"
 	}
 	data.use_blacklist = true
-	data.unlocked = true
 	data.is_a_unlockable = true
 	data.is_a_color_skin = true
 	data.group_id = data.global_value_category or data.global_value or data.dlc or "normal"
-	local skin_data = clone(data)
-	local color_name, color_data, variation_data = nil
-
-	for index, template_data in ipairs(weapon_color_variation_template) do
-		color_data = {}
-		variation_data = {}
-
-		for key, value in pairs(template_data) do
-			variation_data[key] = base_gradients[value] or base_gradients.base_default or next(base_gradients)
-		end
-
-		self:populate_weapon_color_skin(color_data, variation_data)
-		table.insert(skin_data, color_data)
-	end
+	data.color_skin_data = color_skin_data
 
 	if not table.contains(self.weapon_color_groups, data.group_id) then
 		table.insert(self.weapon_color_groups, data.group_id)
 	end
 
-	self.weapon_skins[name] = skin_data
+	self.weapon_skins[name] = data
 
 	table.insert(self.weapon_colors, name)
 end
@@ -37747,7 +37481,8 @@ function BlackMarketTweakData:get_weapon_color_index_string(color_index)
 	return "menu_weapon_color_index_" .. tostring(color_index)
 end
 
-function BlackMarketTweakData:_setup_weapon_color_skins()
+function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
+	self.weapon_color_templates = WeaponColorTemplates.setup_weapon_color_templates(tweak_data)
 	self.weapon_color_groups = {}
 	self.weapon_colors = {}
 	self.weapon_color_default = "color_tan_khaki"
@@ -37765,7 +37500,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_khaki_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_khaki_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_khaki_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_gray_black", {
 		texture_bundle_folder = "wcs",
@@ -37780,7 +37515,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_gray_black_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_gray_black_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_gray_black_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_white", {
 		texture_bundle_folder = "wcs",
@@ -37795,7 +37530,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_white_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_white_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_white_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_green_money", {
 		texture_bundle_folder = "wcs",
@@ -37810,7 +37545,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_money_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_money_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_money_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_green_gray", {
 		texture_bundle_folder = "wcs",
@@ -37825,7 +37560,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_gray_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_gray_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_gray_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_blue_payday", {
 		texture_bundle_folder = "wcs",
@@ -37840,7 +37575,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_payday_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_payday_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_payday_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_tan", {
 		texture_bundle_folder = "wcs",
@@ -37854,7 +37589,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_green_dark", {
 		texture_bundle_folder = "wcs",
@@ -37868,7 +37603,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_dark_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_dark_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_dark_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_green_foliage", {
 		texture_bundle_folder = "wcs",
@@ -37882,7 +37617,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_foliage_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_foliage_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_foliage_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_blue_navy", {
 		texture_bundle_folder = "wcs",
@@ -37896,7 +37631,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_navy_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_navy_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_navy_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_blue_gray", {
 		texture_bundle_folder = "wcs",
@@ -37910,7 +37645,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_gray_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_gray_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_gray_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_gray", {
 		texture_bundle_folder = "wcs",
@@ -37924,7 +37659,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_gray_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_gray_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_gray_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_olive_brown", {
 		texture_bundle_folder = "wcs",
@@ -37938,7 +37673,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_olive_brown_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_olive_brown_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_olive_brown_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_olive_green", {
 		texture_bundle_folder = "wcs",
@@ -37952,7 +37687,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_olive_green_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_olive_green_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_olive_green_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_red", {
 		texture_bundle_folder = "wcs",
@@ -37966,7 +37701,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_red_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_red_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_red_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_red_dark", {
 		texture_bundle_folder = "wcs",
@@ -37980,7 +37715,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_red_dark_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_red_dark_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_red_dark_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_yellow", {
 		texture_bundle_folder = "wcs",
@@ -37994,7 +37729,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_yellow_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_yellow_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_yellow_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_yellow_dark", {
 		texture_bundle_folder = "wcs",
@@ -38008,7 +37743,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_yellow_dark_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_yellow_dark_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_yellow_dark_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_orange", {
 		texture_bundle_folder = "wcs",
@@ -38022,7 +37757,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_orange_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_orange_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_orange_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_green_intense", {
 		texture_bundle_folder = "wcs",
@@ -38036,7 +37771,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_intense_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_intense_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_green_intense_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_mint", {
 		texture_bundle_folder = "wcs",
@@ -38050,7 +37785,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_mint_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_mint_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_mint_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_blue", {
 		texture_bundle_folder = "wcs",
@@ -38064,7 +37799,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_blue_bhodi", {
 		texture_bundle_folder = "wcs",
@@ -38078,7 +37813,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_bhodi_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_bhodi_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_blue_bhodi_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_purple", {
 		texture_bundle_folder = "wcs",
@@ -38092,7 +37827,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_purple_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_purple_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_purple_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_pink", {
 		texture_bundle_folder = "wcs",
@@ -38106,7 +37841,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_pink_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_pink_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_pink_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 	self:create_new_color_skin("color_tan_chocolate", {
 		texture_bundle_folder = "wcs",
@@ -38120,6 +37855,156 @@ function BlackMarketTweakData:_setup_weapon_color_skins()
 		base_half = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_chocolate_half_df"),
 		base_half_02 = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_chocolate_half_02_df"),
 		base_detail = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_tan_chocolate_detail_df"),
-		variation_default = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_blue_deep", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("0842c4")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deep_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deep_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deep_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deep_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deep_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deep_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_blue_deluxe", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("1b395b")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deluxe_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deluxe_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deluxe_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deluxe_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deluxe_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_deluxe_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_blue_ice", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("09a4d1")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_ice_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_ice_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_ice_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_ice_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_ice_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_ice_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_blue_teal", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("79c6c7")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_teal_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_teal_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_teal_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_teal_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_teal_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_blue_teal_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_green_deluxe", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("07a166")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_deluxe_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_deluxe_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_deluxe_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_deluxe_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_deluxe_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_deluxe_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_green_mellow", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("60c46a")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_mellow_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_mellow_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_mellow_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_mellow_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_mellow_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_green_mellow_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_orange_mellow", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("d95252")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_orange_mellow_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_orange_mellow_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_orange_mellow_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_orange_mellow_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_orange_mellow_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_orange_mellow_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_pink_cat", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("cc91e5")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_pink_cat_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_pink_cat_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_pink_cat_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_pink_cat_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_pink_cat_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_pink_cat_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_purple_song", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("633357")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_purple_song_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_purple_song_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_purple_song_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_purple_song_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_purple_song_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_purple_song_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
+	})
+	self:create_new_color_skin("color_red_crust", {
+		texture_bundle_folder = "shl",
+		global_value = "shl",
+		sort_number = 0,
+		global_value_category = "collectable",
+		color = Color("81301a")
+	}, {
+		base_default = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_red_crust_df"),
+		base_metal = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_red_crust_metal_df"),
+		base_plastic = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_red_crust_plastic_df"),
+		base_half = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_red_crust_half_df"),
+		base_half_02 = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_red_crust_half_02_df"),
+		base_detail = Idstring("units/pd2_dlc_shl/weapon_colors/base_gradient/wcr_red_crust_detail_df"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df")
 	})
 end

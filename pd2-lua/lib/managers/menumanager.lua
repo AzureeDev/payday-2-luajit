@@ -24,6 +24,7 @@ require("lib/managers/menu/items/MenuItemDummy")
 require("lib/managers/menu/nodes/MenuNodeTable")
 require("lib/managers/menu/nodes/MenuNodeServerList")
 require("lib/managers/menu/items/MenuItemCrimeSpreeItem")
+require("lib/utils/accelbyte/TelemetryConst")
 core:import("CoreEvent")
 
 MenuManager = MenuManager or class(CoreMenuManager.Manager)
@@ -148,6 +149,7 @@ function MenuManager:init(is_start_menu)
 
 	self._active_changed_callback_handler = CoreEvent.CallbackEventHandler:new()
 
+	Telemetry:init()
 	managers.user:add_setting_changed_callback("brightness", callback(self, self, "brightness_changed"), true)
 	managers.user:add_setting_changed_callback("camera_sensitivity_x", callback(self, self, "camera_sensitivity_x_changed"), true)
 	managers.user:add_setting_changed_callback("camera_sensitivity_y", callback(self, self, "camera_sensitivity_y_changed"), true)
@@ -171,6 +173,7 @@ function MenuManager:init(is_start_menu)
 	managers.user:add_setting_changed_callback("net_use_compression", callback(self, self, "net_use_compression_changed"), true)
 	managers.user:add_setting_changed_callback("flush_gpu_command_queue", callback(self, self, "flush_gpu_command_queue_changed"), true)
 	managers.user:add_setting_changed_callback("use_thq_weapon_parts", callback(self, self, "use_thq_weapon_parts_changed"), true)
+	managers.user:add_setting_changed_callback("use_telemetry", callback(self, self, "use_telemetry_changed"), true)
 	managers.user:add_active_user_state_changed_callback(callback(self, self, "on_user_changed"))
 	managers.user:add_storage_changed_callback(callback(self, self, "on_storage_changed"))
 	managers.savefile:add_active_changed_callback(callback(self, self, "safefile_manager_active_changed"))
@@ -826,6 +829,10 @@ function MenuManager:lightfx_changed(name, old_value, new_value)
 	if managers.network and managers.network.account then
 		managers.network.account:set_lightfx()
 	end
+end
+
+function MenuManager:use_telemetry_changed(name, old_value, new_value)
+	Telemetry:enable(new_value)
 end
 
 function MenuManager:set_debug_menu_enabled(enabled)
@@ -1509,7 +1516,9 @@ function MenuCallbackHandler:is_overlay_enabled()
 		return false
 	end
 
-	return true
+	if SystemInfo:distribution() == Idstring("STEAM") then
+		return Steam:overlay_enabled() or false
+	end
 end
 
 function MenuCallbackHandler:is_installed()
@@ -1994,6 +2003,8 @@ function MenuCallbackHandler:quit_game()
 end
 
 function MenuCallbackHandler:_dialog_quit_yes()
+	Telemetry:send_on_player_logged_out()
+	Telemetry:send_batch_immediately()
 	self:_dialog_save_progress_backup_no()
 end
 
@@ -2941,7 +2952,7 @@ function MenuCallbackHandler:_increase_infamous(yes_clbk)
 	local offshore_cost = Application:digest_value(tweak_data.infamy.ranks[rank], false)
 
 	if offshore_cost > 0 then
-		managers.money:deduct_from_total(managers.money:total())
+		managers.money:deduct_from_total(managers.money:total(), TelemetryConst.economy_origin.increase_infamous)
 		managers.money:deduct_from_offshore(offshore_cost)
 	end
 
@@ -3122,6 +3133,10 @@ end
 
 function MenuCallbackHandler:toggle_workshop(item)
 	managers.user:set_setting("workshop", item:value() == "on")
+end
+
+function MenuCallbackHandler:toggle_telemetry(item)
+	managers.user:set_setting("use_telemetry", item:value() == "on")
 end
 
 function MenuCallbackHandler:choice_choose_anti_alias(item)
@@ -3620,6 +3635,10 @@ function MenuCallbackHandler:restart_game(item)
 				return
 			end
 
+			if managers.statistics:has_session_started() then
+				Telemetry:on_end_heist("restart_game", 0)
+			end
+
 			managers.game_play_central:restart_the_game()
 		end
 	})
@@ -3832,6 +3851,7 @@ function MenuCallbackHandler:end_game()
 end
 
 function MenuCallbackHandler:_dialog_end_game_yes()
+	print("[MenuCallbackHandler:_dialog_end_game_yes]")
 	managers.platform:set_playing(false)
 	managers.job:clear_saved_ghost_bonus()
 	managers.statistics:stop_session({
@@ -3851,7 +3871,11 @@ function MenuCallbackHandler:_dialog_end_game_yes()
 
 	managers.network.matchmake:destroy_game()
 	managers.network.voice_chat:destroy_voice()
-	managers.groupai:state():set_AI_enabled(false)
+
+	if managers.groupai then
+		managers.groupai:state():set_AI_enabled(false)
+	end
+
 	managers.menu:post_event("menu_exit")
 	managers.menu:close_menu("menu_pause")
 	setup:load_start_menu()
@@ -5874,14 +5898,21 @@ function MenuSkirmishContractInitiator:modify_node(original_node, data)
 	return node
 end
 
-function MenuCallbackHandler:accept_skirmish_contract(item, node)
+function MenuCallbackHandler:accept_skirmish_contract(item)
+	local node = item:parameters().gui_node.node
+
 	managers.menu:active_menu().logic:navigate_back(true)
 	managers.menu:active_menu().logic:navigate_back(true)
 
+	local job_id = (node:parameters().menu_component_data or {}).job_id
 	local job_data = {
 		difficulty = "overkill_145",
-		job_id = managers.skirmish:random_skirmish_job_id()
+		customize_contract = true,
+		job_id = job_id or managers.skirmish:random_skirmish_job_id(),
+		difficulty_id = tweak_data:difficulty_to_index("overkill_145")
 	}
+
+	managers.job:on_buy_job(job_data.job_id, job_data.difficulty_id or 3)
 
 	if Global.game_settings.single_player then
 		MenuCallbackHandler:start_single_player_job(job_data)
@@ -5890,7 +5921,7 @@ function MenuCallbackHandler:accept_skirmish_contract(item, node)
 	end
 end
 
-function MenuCallbackHandler:accept_skirmish_weekly_contract(item, node)
+function MenuCallbackHandler:accept_skirmish_weekly_contract(item)
 	managers.menu:active_menu().logic:navigate_back(true)
 	managers.menu:active_menu().logic:navigate_back(true)
 
@@ -9135,7 +9166,6 @@ function MenuCrimeNetFiltersInitiator:modify_node(original_node, data)
 		node:item("job_plan_filter"):set_value(matchmake_filters.job_plan and matchmake_filters.job_plan.value or -1)
 		node:item("gamemode_filter"):set_value(Global.game_settings.gamemode_filter or GamemodeStandard.id)
 		node:item("max_spree_difference_filter"):set_value(Global.game_settings.crime_spree_max_lobby_diff or -1)
-		node:item("toggle_weekly_skirmish_filter"):set_value(Global.game_settings.search_only_weekly_skirmish and "on" or "off")
 		node:item("skirmish_wave_filter"):set_value(Global.game_settings.skirmish_wave_filter or 99)
 
 		local job_id_filter = node:item("job_id_filter")
@@ -9189,7 +9219,6 @@ function MenuCrimeNetFiltersInitiator:update_node(node)
 		node:item("difficulty_filter"):set_visible(self:is_standard())
 		node:item("job_id_filter"):set_visible(self:is_standard())
 		node:item("max_spree_difference_filter"):set_visible(self:is_crime_spree())
-		node:item("toggle_weekly_skirmish_filter"):set_visible(self:is_skirmish())
 		node:item("skirmish_wave_filter"):set_visible(self:is_skirmish())
 		node:item("job_plan_filter"):set_visible(not self:is_skirmish())
 	elseif MenuCallbackHandler:is_xb1() then

@@ -1480,6 +1480,7 @@ Play the full version soon to get your full PAYDAY!]],
 	}
 	self.contour.character.standard_color = Vector3(0.1, 1, 0.5)
 	self.contour.character.friendly_color = Vector3(0.2, 0.8, 1)
+	self.contour.character.friendly_minion_color = Vector3(0.1, 0.4, 1)
 	self.contour.character.downed_color = Vector3(1, 0.5, 0)
 	self.contour.character.dead_color = Vector3(1, 0.1, 0.1)
 	self.contour.character.dangerous_color = Vector3(0.6, 0.2, 0.2)
@@ -1502,7 +1503,7 @@ Play the full version soon to get your full PAYDAY!]],
 	self.contour.deployable = {
 		standard_color = Vector3(0.1, 1, 0.5),
 		selected_color = Vector3(1, 1, 1),
-		active_color = Vector3(0.1, 0.5, 1),
+		active_color = Vector3(0.1, 0.4, 1),
 		interact_color = Vector3(0.1, 1, 0.1),
 		disabled_color = Vector3(1, 0.1, 0.1)
 	}
@@ -2077,6 +2078,12 @@ Play the full version soon to get your full PAYDAY!]],
 		},
 		{
 			track = "music_tag"
+		},
+		{
+			track = "ojos_de_diamante"
+		},
+		{
+			track = "ojos_de_esmeralda"
 		}
 	}
 	self.music.soundbank_list = {

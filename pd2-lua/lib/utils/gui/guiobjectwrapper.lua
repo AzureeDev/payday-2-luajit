@@ -276,6 +276,14 @@ function GUIObjectWrapper:set_visible(...)
 	self._gui_obj:set_visible(...)
 end
 
+function GUIObjectWrapper:set_valign(...)
+	self._gui_obj:set_valign(...)
+end
+
+function GUIObjectWrapper:set_halign(...)
+	self._gui_obj:set_halign(...)
+end
+
 function GUIObjectWrapper:move(...)
 	self._gui_obj:move(...)
 end

@@ -62,7 +62,7 @@ function IngameContractGuiSkirmish:init(ws, node)
 	if managers.skirmish:is_weekly_skirmish() then
 		text = job_data and managers.localization:text(job_data.briefing_id) or ""
 	else
-		text = managers.localization:text("menu_skirmish_random_briefing")
+		text = managers.localization:text("menu_skirmish_selected_briefing")
 	end
 
 	local briefing_description = text_panel:text({

@@ -17,6 +17,7 @@ require("lib/managers/dialogs/Xbox360MarketplaceDialog")
 require("lib/managers/dialogs/NewUnlockDialog")
 require("lib/managers/dialogs/SpecializationDialog")
 require("lib/managers/dialogs/ButtonsDialog")
+require("lib/managers/dialogs/DocumentDialog")
 require("lib/managers/dialogs/DrillConvertDialog")
 
 SystemMenuManager = SystemMenuManager or class()
@@ -38,6 +39,8 @@ GenericSystemMenuManager.SPECIALIZATION_CLASS = SpecializationDialog
 GenericSystemMenuManager.GENERIC_SPECIALIZATION_CLASS = SpecializationDialog
 GenericSystemMenuManager.DRILLCONVERT_CLASS = DrillConvertDialog
 GenericSystemMenuManager.GENERIC_DRILLCONVERT_CLASS = DrillConvertDialog
+GenericSystemMenuManager.DOCUMENT_CLASS = DocumentDialog
+GenericSystemMenuManager.GENERIC_DOCUMENT_CLASS = DocumentDialog
 GenericSystemMenuManager.BUTTON_DIALOG_CLASS = ButtonsDialog
 GenericSystemMenuManager.GENERIC_BUTTON_DIALOG_CLASS = ButtonsDialog
 
@@ -400,6 +403,12 @@ end
 
 function GenericSystemMenuManager:show_drillconvert(data)
 	local success = self:_show_class(data, self.GENERIC_DRILLCONVERT_CLASS, self.DRILLCONVERT_CLASS, data.force)
+
+	self:_show_result(success, data)
+end
+
+function GenericSystemMenuManager:show_document(data)
+	local success = self:_show_class(data, self.GENERIC_DOCUMENT_CLASS, self.DOCUMENT_CLASS, data.force)
 
 	self:_show_result(success, data)
 end

@@ -20,6 +20,7 @@ function ImageBoxGui:_create_image_box(image_config)
 	} or {}
 	local image_video = image_config.video or nil
 	local video_loop = image_config.video_loop or false
+	local video_start_paused = image_config.video_start_paused or false
 	local keep_texure_ratio = image_config.keep_ratio or false
 	local image_render_template = image_config.render_template
 	local image_blend_mode = image_config.blend_mode
@@ -125,6 +126,10 @@ function ImageBoxGui:_create_image_box(image_config)
 			image:set_render_template(image_render_template)
 		end
 
+		if video_start_paused then
+			image:pause()
+		end
+
 		if keep_texure_ratio then
 			local texture_width = image:video_width()
 			local texture_height = image:video_height()
@@ -137,6 +142,8 @@ function ImageBoxGui:_create_image_box(image_config)
 			image:set_size(sw, sh)
 			image:set_center(image_panel:w() / 2, image_panel:h() / 2)
 		end
+
+		self._video = image
 	end
 
 	if image_shapes then
@@ -178,6 +185,16 @@ function ImageBoxGui:_create_image_box(image_config)
 	})
 	self:_set_scroll_indicator()
 	main:set_center(main:parent():w() / 2, main:parent():h() / 2)
+end
+
+function ImageBoxGui:set_video_paused(paused)
+	if self._video then
+		if paused then
+			self._video:pause()
+		else
+			self._video:play()
+		end
+	end
 end
 
 function ImageBoxGui:request_texture(texture_path, panel, keep_aspect_ratio, blend_mode, layer, render_template)

@@ -989,7 +989,7 @@ end
 
 MenuNodeCrimenetContactInfoGui = MenuNodeCrimenetContactInfoGui or class(MenuNodeGui)
 MenuNodeCrimenetContactInfoGui.WIDTH = 600
-MenuNodeCrimenetContactInfoGui.HEIGHT = 465
+MenuNodeCrimenetContactInfoGui.HEIGHT = 515
 MenuNodeCrimenetContactInfoGui.MENU_WIDTH = 220
 MenuNodeCrimenetContactInfoGui.PADDING = 10
 MenuNodeCrimenetContactInfoGui.CODEX_TEXT_ID = "menu_contact_info_title"

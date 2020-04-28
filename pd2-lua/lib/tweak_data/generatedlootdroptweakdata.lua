@@ -31,6 +31,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 300,
 		category = "dlc"
 	}
+	self.global_values.ess = {
+		name_id = "bm_global_value_ess",
+		desc_id = "menu_l_global_value_ess",
+		unlock_id = "bm_global_value_ess_unlock",
+		color = tweak_data.screen_colors.event_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = true,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 250,
+		category = "global_event"
+	}
 	self.global_values.flm = {
 		name_id = "bm_global_value_flm",
 		desc_id = "menu_l_global_value_sb18",
@@ -191,6 +207,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 332,
 		category = "normal"
 	}
+	self.global_values.shl = {
+		name_id = "bm_global_value_shl",
+		desc_id = "menu_l_global_value_shl",
+		unlock_id = "bm_global_value_shl_unlock",
+		color = tweak_data.screen_colors.event_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 301,
+		category = "global_event"
+	}
 	self.global_values.skm = {
 		name_id = "bm_global_value_skm",
 		desc_id = "menu_l_global_value_skm",
@@ -238,6 +270,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		track = true,
 		sort_number = 499,
 		category = "infamous"
+	}
+	self.global_values.sus = {
+		name_id = "bm_global_value_sus",
+		desc_id = "menu_l_global_value_sus",
+		unlock_id = "bm_global_value_sus_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 100,
+		category = "normal"
 	}
 	self.global_values.svc = {
 		name_id = "bm_global_value_svc",
@@ -354,7 +402,7 @@ function LootDropTweakData:init_generated(tweak_data)
 		name_id = "bm_global_value_xmn",
 		desc_id = "menu_l_global_value_xmn",
 		unlock_id = "bm_global_value_xmn_unlock",
-		color = tweak_data.screen_colors.dlc_color,
+		color = tweak_data.screen_colors.event_color,
 		dlc = true,
 		free = true,
 		hide_unavailable = false,
@@ -363,8 +411,8 @@ function LootDropTweakData:init_generated(tweak_data)
 		durability_multiplier = 1,
 		drops = true,
 		track = true,
-		sort_number = 300,
-		category = "normal"
+		sort_number = 250,
+		category = "global_event"
 	}
 
 	table.insert(self.global_value_list_index, "afp")

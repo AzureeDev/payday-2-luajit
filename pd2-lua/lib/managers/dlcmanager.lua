@@ -26,6 +26,7 @@ end
 function GenericDLCManager:setup()
 	self:_modify_locked_content()
 	self:_create_achievement_locked_content_table()
+	self:_create_skirmish_locked_content_table()
 end
 
 function GenericDLCManager:_create_achievement_locked_content_table()
@@ -54,6 +55,34 @@ function GenericDLCManager:_create_achievement_locked_content_table()
 						end
 					end
 				end
+			end
+		end
+	end
+end
+
+function GenericDLCManager:_create_skirmish_locked_content_table()
+	self._skirmish_locked_content = {}
+
+	for id, rewards in pairs(tweak_data.skirmish.weekly_rewards) do
+		for category, reward_list in pairs(rewards) do
+			self._skirmish_locked_content[category] = self._skirmish_locked_content[category] or {}
+
+			for _, entry in ipairs(reward_list) do
+				self._skirmish_locked_content[category][entry] = self._skirmish_locked_content[category][entry] or {}
+
+				table.insert(self._skirmish_locked_content[category][entry], "w_" .. tostring(id))
+			end
+		end
+	end
+
+	for id, rewards in pairs(tweak_data.skirmish.additional_rewards) do
+		for category, reward_list in pairs(rewards) do
+			self._skirmish_locked_content[category] = self._skirmish_locked_content[category] or {}
+
+			for _, entry in ipairs(reward_list) do
+				self._skirmish_locked_content[category][entry] = self._skirmish_locked_content[category][entry] or {}
+
+				table.insert(self._skirmish_locked_content[category][entry], "a_" .. tostring(id))
 			end
 		end
 	end
@@ -115,6 +144,33 @@ function GenericDLCManager:_modify_locked_content()
 	end
 end
 
+function GenericDLCManager:is_content_achievement_locked(category, entry)
+	local achievement_dlc_id = self._achievement_locked_content and self._achievement_locked_content[category] and self._achievement_locked_content[category][entry]
+
+	if achievement_dlc_id then
+		local dlc_tweak = tweak_data.dlc[achievement_dlc_id]
+		local achievement = dlc_tweak and dlc_tweak.achievement_id
+
+		if achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
+			return true
+		end
+	end
+
+	return false
+end
+
+function GenericDLCManager:is_content_achievement_milestone_locked(category, entry)
+	local dlc_id = self._achievement_milestone_locked_content and self._achievement_milestone_locked_content[category] and self._achievement_milestone_locked_content[category][entry]
+	local dlc_tweak = tweak_data.dlc[dlc_id]
+	local unlocked_check_function = dlc_tweak and self[dlc_tweak.dlc]
+
+	if unlocked_check_function then
+		return not unlocked_check_function(self, dlc_tweak)
+	end
+
+	return false
+end
+
 function GenericDLCManager:achievement_locked_content()
 	return self._achievement_locked_content
 end
@@ -137,6 +193,18 @@ end
 
 function GenericDLCManager:is_mask_achievement_milestone_locked(mask_id)
 	return self._achievement_milestone_locked_content.masks and self._achievement_milestone_locked_content.masks[mask_id]
+end
+
+function GenericDLCManager:is_weapon_mod_achievement_milestone_locked(weapon_mod_id)
+	return self._achievement_milestone_locked_content.weapon_mods and self._achievement_milestone_locked_content.weapon_mods[weapon_mod_id]
+end
+
+function GenericDLCManager:skirmish_locked_content()
+	return self._skirmish_locked_content
+end
+
+function GenericDLCManager:is_content_skirmish_locked(category, entry)
+	return self._skirmish_locked_content and self._skirmish_locked_content[category] and self._skirmish_locked_content[category][entry] and true or false
 end
 
 function GenericDLCManager:dlc_locked_content()

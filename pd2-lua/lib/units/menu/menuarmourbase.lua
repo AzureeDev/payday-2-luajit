@@ -162,14 +162,17 @@ function MenuArmourBase:update_character_visuals(cosmetics)
 
 	local visual_state = cosmetics and cosmetics.state or {}
 	local character_name = visual_state.character_name or self._character_name
-	local is_local_peer = false
-	local player_style = visual_state.player_style or "none"
-	local suit_variation = visual_state.suit_variation or "default"
-	local mask = visual_state.mask or self._mask_id
-	local armor = visual_state.armor or "level_1"
-	local armor_skin = visual_state.armor_skin or "none"
+	local character_visual_state = {
+		is_local_peer = false,
+		visual_seed = self._visual_seed,
+		player_style = visual_state.player_style or "none",
+		suit_variation = visual_state.suit_variation or "default",
+		mask_id = visual_state.mask or self._mask_id,
+		armor_id = visual_state.armor or "level_1",
+		armor_skin = visual_state.armor_skin or "none"
+	}
 
-	CriminalsManager.set_character_visual_state(self._unit, character_name, is_local_peer, self._visual_seed, player_style, suit_variation, mask, armor, armor_skin)
+	CriminalsManager.set_character_visual_state(self._unit, character_name, character_visual_state)
 
 	self._is_visuals_updated = true
 end

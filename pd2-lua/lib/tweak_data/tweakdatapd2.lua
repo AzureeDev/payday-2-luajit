@@ -675,6 +675,24 @@ function TweakData:_init_pd2()
 			32
 		}
 	}
+	self.hud_icons.minions_converted = {
+		texture = "guis/textures/pd2/skilltree/icons_atlas",
+		texture_rect = {
+			384,
+			512,
+			64,
+			64
+		}
+	}
+	self.hud_icons.pagers_used = {
+		texture = "guis/textures/pd2/equipment_02",
+		texture_rect = {
+			32,
+			64,
+			32,
+			32
+		}
+	}
 	self.hud_icons.none_icon = {
 		texture = "guis/textures/pd2/equipment_02",
 		texture_rect = {

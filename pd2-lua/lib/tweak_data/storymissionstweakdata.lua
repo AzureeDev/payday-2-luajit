@@ -43,8 +43,6 @@ function StoryMissionsTweakData:_level_progress(progress_id, ...)
 	} or ach.jobs
 	data.difficulty = ach.difficulty and ach.difficulty[1]
 
-	print("difficulty", data.difficulty, ach.difficulty and ach.difficulty[1])
-
 	if not data.levels then
 		Application:error("Can't find jobs data from achievement", progress_id)
 

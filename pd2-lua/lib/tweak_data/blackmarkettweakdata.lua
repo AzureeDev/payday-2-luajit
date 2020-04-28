@@ -24,9 +24,44 @@ function BlackMarketTweakData:init(tweak_data)
 	self:_init_bullets(tweak_data)
 	self:_init_projectiles(tweak_data)
 	self:_init_melee_weapons(tweak_data)
-	self:_init_weapon_skins()
+	self:_init_weapon_skins(tweak_data)
 	self:_init_player_styles(tweak_data)
 	self:_init_weapon_mods(tweak_data)
+end
+
+function BlackMarketTweakData:_get_character_groups()
+	local characters_female = {
+		"female_1",
+		"sydney",
+		"joy",
+		"ecp_female"
+	}
+	local characters_female_big = {
+		"bonnie",
+		"ecp_male"
+	}
+	local characters_male = {
+		"dallas",
+		"wolf",
+		"hoxton",
+		"chains",
+		"jowi",
+		"old_hoxton",
+		"dragan",
+		"jacket",
+		"sokol",
+		"dragon",
+		"bodhi",
+		"jimmy",
+		"chico",
+		"myh"
+	}
+	local characters_male_big = {
+		"wild",
+		"max"
+	}
+
+	return characters_female, characters_female_big, characters_male, characters_male_big
 end
 
 function BlackMarketTweakData:print_missing_strings(skip_print_id)

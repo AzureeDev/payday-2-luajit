@@ -1,3 +1,5 @@
+require("lib/utils/accelbyte/TelemetryConst")
+
 CrimeSpreeManager = CrimeSpreeManager or class()
 CrimeSpreeManager.CS_VERSION = 3
 
@@ -729,7 +731,7 @@ function CrimeSpreeManager:start_crime_spree(starting_level)
 
 	local cost = self:get_start_cost(starting_level)
 
-	managers.custom_safehouse:deduct_coins(cost)
+	managers.custom_safehouse:deduct_coins(cost, TelemetryConst.economy_origin.start_crime_spree)
 	self:reset_crime_spree()
 
 	self._global.in_progress = true
@@ -747,7 +749,7 @@ function CrimeSpreeManager:continue_crime_spree()
 
 	local cost = self:get_continue_cost(self:spree_level())
 
-	managers.custom_safehouse:deduct_coins(cost)
+	managers.custom_safehouse:deduct_coins(cost, TelemetryConst.economy_origin.continue_crime_spree)
 
 	self._global.failure_data = nil
 	self._global.randomization_cost = false
@@ -831,7 +833,7 @@ function CrimeSpreeManager:_give_all_cosmetics_reward(amount)
 		if all_cosmetics_reward.type == "continental_coins" then
 			amt = all_cosmetics_reward.amount * amount
 
-			managers.custom_safehouse:add_coins(amt)
+			managers.custom_safehouse:add_coins(amt, TelemetryConst.economy_origin.cosmetics_reward)
 		end
 	end
 
@@ -908,9 +910,9 @@ function CrimeSpreeManager:award_rewards(rewards_table)
 		if id == "experience" then
 			managers.experience:give_experience(amount, true)
 		elseif id == "cash" then
-			managers.money:add_to_total(amount)
+			managers.money:add_to_total(amount, TelemetryConst.economy_origin.crime_spree_reward .. id)
 		elseif id == "continental_coins" then
-			managers.custom_safehouse:add_coins(amount)
+			managers.custom_safehouse:add_coins(amount, TelemetryConst.economy_origin.crime_spree_reward .. id)
 		elseif id == "loot_drop" then
 			self:generate_loot_drops(amount)
 		elseif id == "random_cosmetic" then
@@ -1060,7 +1062,7 @@ function CrimeSpreeManager:unlock_gage_asset(asset_id)
 		return false
 	end
 
-	managers.custom_safehouse:deduct_coins(asset_tweak_data.cost)
+	managers.custom_safehouse:deduct_coins(asset_tweak_data.cost, TelemetryConst.economy_origin.unlock_gage_asset .. asset_tweak_data.name_id)
 
 	local params = {
 		CrimeSpreeManager.GageAssetEvents.Unlock,

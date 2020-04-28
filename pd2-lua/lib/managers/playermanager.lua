@@ -2992,6 +2992,12 @@ function PlayerManager:remove_synced_carry(peer)
 end
 
 function PlayerManager:get_my_carry_data()
+	print("[PlayerManager:get_my_carry_data]")
+
+	if not managers.network:session() then
+		return true
+	end
+
 	local peer_id = managers.network:session():local_peer():id()
 
 	return self._global.synced_carry[peer_id]

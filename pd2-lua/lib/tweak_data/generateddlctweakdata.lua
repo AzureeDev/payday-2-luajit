@@ -87,6 +87,18 @@ function DLCTweakData:init_generated()
 	}
 	self.bex_bundle.content.loot_global_value = "bex"
 	self.bex_bundle.content.loot_drops = {}
+	self.ess_bundle = {
+		dlc = "has_ess",
+		content = {}
+	}
+	self.ess_bundle.content.loot_global_value = "ess"
+	self.ess_bundle.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "esport",
+			amount = 1
+		}
+	}
 	self.flm_bundle = {
 		free = true,
 		content = {}
@@ -264,6 +276,12 @@ function DLCTweakData:init_generated()
 	}
 	self.sft_bundle.content.loot_global_value = "sft"
 	self.sft_bundle.content.loot_drops = {}
+	self.shl_bundle = {
+		free = true,
+		content = {}
+	}
+	self.shl_bundle.content.loot_global_value = "shl"
+	self.shl_bundle.content.loot_drops = {}
 	self.skm_bundle = {
 		free = true,
 		content = {}
@@ -282,6 +300,12 @@ function DLCTweakData:init_generated()
 	}
 	self.sms_bundle.content.loot_global_value = "sms"
 	self.sms_bundle.content.loot_drops = {}
+	self.sus_bundle = {
+		dlc = "has_sus",
+		content = {}
+	}
+	self.sus_bundle.content.loot_global_value = "sus"
+	self.sus_bundle.content.loot_drops = {}
 	self.svc_bundle = {
 		dlc = "has_svc",
 		content = {}

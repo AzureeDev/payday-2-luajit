@@ -574,7 +574,8 @@ function MenuSceneManager:_set_up_templates()
 	end
 
 	self._scene_templates.blackmarket_weapon_color = deep_clone(self._scene_templates.blackmarket_crafting)
-	self._scene_templates.blackmarket_weapon_color.target_pos = self._scene_templates.blackmarket_weapon_color.item_pos - Vector3(15, 0, 20)
+	self._scene_templates.blackmarket_weapon_color.camera_pos = self._scene_templates.blackmarket_crafting.item_pos - Vector3(-0, 240, 18)
+	self._scene_templates.blackmarket_weapon_color.target_pos = self._scene_templates.blackmarket_crafting.item_pos + Vector3(0, 0, -18)
 	self._scene_templates.safe = {
 		camera_pos = Vector3(1500, -2000, 0)
 	}
@@ -2106,7 +2107,7 @@ end
 function MenuSceneManager:set_character_player_style(player_style, material_variation, unit)
 	unit = unit or self._character_unit
 
-	if not unit or not unit:base() then
+	if not alive(unit) or not unit:base() then
 		return
 	end
 
@@ -2806,7 +2807,7 @@ function MenuSceneManager:set_scene_template(template, data, custom_name, skip_t
 
 	if template_data then
 		if template_data.use_workbench_room then
-			self:spawn_workbench_room()
+			self:spawn_workbench_room(template_data.workbench_name)
 		else
 			self:delete_workbench_room()
 		end
@@ -3577,7 +3578,17 @@ function MenuSceneManager:change_fov(zoom, amount)
 end
 
 function MenuSceneManager:mouse_pressed(o, button, x, y)
-	if managers.menu_component:input_focus() == true or managers.menu_component:input_focus() == 1 then
+	local input_focus = managers.menu_component:input_focus()
+
+	if not input_focus then
+		local node_gui = managers.menu:active_menu() and managers.menu:active_menu().renderer:active_node_gui()
+
+		if node_gui and node_gui.input_focus then
+			input_focus = node_gui:input_focus()
+		end
+	end
+
+	if input_focus == true or input_focus == 1 then
 		return
 	end
 
@@ -4089,7 +4100,7 @@ function MenuSceneManager:load_safe_result_content(result, ready_clbk)
 	}
 
 	if result.category == "weapon_skins" then
-		local weapon_id = item_data.weapon_id or item_data.weapons[1]
+		local weapon_id = item_data.weapon_id or item_data.weapon_ids[1]
 		local factory_id = managers.weapon_factory:get_factory_id_by_weapon_id(weapon_id)
 		local blueprint = item_data.default_blueprint or deep_clone(managers.weapon_factory:get_default_blueprint_by_factory_id(factory_id))
 		local weapon_name = Idstring(tweak_data.weapon.factory[factory_id].unit)

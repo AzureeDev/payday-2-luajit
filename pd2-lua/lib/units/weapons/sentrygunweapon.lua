@@ -626,6 +626,12 @@ function SentryGunWeapon:remove_fire_mode_interaction()
 	end
 end
 
+function SentryGunWeapon:remove_dead_owner(dead_owner)
+	if self._setup.ignore_units then
+		table.delete(self._setup.ignore_units, dead_owner)
+	end
+end
+
 function SentryGunWeapon:setup_virtual_ammo(mul)
 	local ammo_amount = tweak_data.upgrades.sentry_gun_base_ammo * mul
 	self._virtual_max_ammo = ammo_amount

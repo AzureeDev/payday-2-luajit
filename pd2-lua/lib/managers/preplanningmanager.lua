@@ -473,6 +473,28 @@ function PrePlanningManager:client_reserve_mission_element(type, id, peer_id)
 	end
 end
 
+function PrePlanningManager:on_multi_profile_changed()
+	local upgrade_lock, upgrade_unlocked, type, index, type_data = nil
+	local peer_id = managers.network:session():local_peer():id()
+	local mission_elements_to_lock = {}
+
+	for id, data in pairs(self._reserved_mission_elements) do
+		if data.peer_id == peer_id then
+			type, index = unpack(data.pack)
+			type_data = tweak_data:get_raw_value("preplanning", "types", type) or {}
+			upgrade_lock = type_data and type_data.upgrade_lock
+
+			if upgrade_lock and upgrade_lock ~= "none" and not managers.player:has_category_upgrade("player", upgrade_lock) then
+				table.insert(mission_elements_to_lock, id)
+			end
+		end
+	end
+
+	for _, id in ipairs(mission_elements_to_lock) do
+		self:unreserve_mission_element(id)
+	end
+end
+
 function PrePlanningManager:get_reserved_mission_element(id)
 	return self._reserved_mission_elements[id]
 end

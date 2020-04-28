@@ -508,13 +508,22 @@ function ContractBrokerHeistItem:trigger()
 	local job_tweak = tweak_data.narrative:job_data(self._job_data.job_id)
 	local is_professional = job_tweak and job_tweak.professional or false
 	local is_competitive = job_tweak and job_tweak.competitive or false
+	local node = Global.game_settings.single_player and "crimenet_contract_singleplayer" or "crimenet_contract_host"
+	local difficulty = is_professional and "hard" or "normal"
+	local difficulty_id = is_professional and 3 or 2
 
-	managers.menu:open_node(Global.game_settings.single_player and "crimenet_contract_singleplayer" or "crimenet_contract_host", {
+	if job_tweak.contact == "skirmish" then
+		node = "skirmish_contract"
+		difficulty = "overkill_145"
+		difficulty_id = tweak_data:difficulty_to_index(difficulty)
+	end
+
+	managers.menu:open_node(node, {
 		{
 			customize_contract = true,
 			job_id = self._job_data.job_id,
-			difficulty = is_professional and "hard" or "normal",
-			difficulty_id = is_professional and 3 or 2,
+			difficulty = difficulty,
+			difficulty_id = difficulty_id,
 			professional = is_professional,
 			competitive = is_competitive,
 			contract_visuals = job_tweak.contract_visuals

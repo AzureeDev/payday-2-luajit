@@ -10,6 +10,48 @@ function EconomyTweakData:init()
 	self.bundles = {}
 	self.rarities = {}
 	self.qualities = {}
+	self.item_convert = {
+		[103602] = {
+			item_id = 100497,
+			bundle_id = 3602
+		},
+		[103603] = {
+			item_id = 100527,
+			bundle_id = 3603
+		},
+		[103604] = {
+			item_id = 100272,
+			bundle_id = 3604
+		},
+		[103605] = {
+			item_id = 100304,
+			bundle_id = 3605
+		},
+		[103606] = {
+			item_id = 100219,
+			bundle_id = 3606
+		},
+		[103607] = {
+			item_id = 100030,
+			bundle_id = 3607
+		},
+		[103608] = {
+			item_id = 100400,
+			bundle_id = 3608
+		},
+		[103609] = {
+			item_id = 100212,
+			bundle_id = 3609
+		},
+		[103610] = {
+			item_id = 100406,
+			bundle_id = 3610
+		},
+		[103611] = {
+			item_id = 100453,
+			bundle_id = 3611
+		}
+	}
 	self.market_links = init_auto_generated_steam_market_links()
 	self.rarities.common = {
 		index = 1,
@@ -1259,7 +1301,7 @@ function EconomyTweakData:init()
 	}
 	self.bundles.nin_01 = {
 		def_id = 30009,
-		dlc_id = "892410",
+		dlc_id = "1257321",
 		quality = "mint",
 		bonus = false,
 		contains = {

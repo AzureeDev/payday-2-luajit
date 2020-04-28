@@ -1,5 +1,6 @@
 require("lib/managers/workshop/SkinEditor")
 require("lib/managers/workshop/ArmorSkinEditor")
+require("lib/utils/accelbyte/TelemetryConst")
 
 BlackMarketManager = BlackMarketManager or class()
 local INV_TO_CRAFT = Idstring("inventory_to_crafted")
@@ -8,6 +9,11 @@ local INV_ADD = Idstring("add_to_inventory")
 local INV_REMOVE = Idstring("remove_from_inventory")
 local CRAFT_ADD = Idstring("add_to_crafted")
 local CRAFT_REMOVE = Idstring("remove_from_crafted")
+local MASK_COLOR_CONVERT_MAP = {
+	color = "colors",
+	pattern = "textures",
+	material = "materials"
+}
 
 function BlackMarketManager:init()
 	self:_setup()
@@ -314,6 +320,67 @@ function BlackMarketManager:_give_infamy_colors()
 			my_clrs[clr] = 1
 		end
 	end
+end
+
+function BlackMarketManager:_combine_mask_colors()
+	print("--- BlackMarketManager:_combine_mask_colors ---")
+
+	local colors, color_tweak_data = nil
+
+	for global_value, categories in pairs(self._global.inventory or {}) do
+		for color_id, amount in pairs(categories.mask_colors or {}) do
+			print("Removing " .. tostring(color_id) .. " with global_value " .. tostring(global_value) .. " and amount " .. tostring(amount) .. " from inventory, unable to combine")
+		end
+
+		categories.mask_colors = nil
+	end
+
+	local type_unlocked_color = self._global.new_item_type_unlocked and self._global.new_item_type_unlocked.mask_colors
+
+	if type_unlocked_color then
+		print("Replacing " .. tostring(type_unlocked_color) .. " with red_solid, unable to combine")
+
+		self._global.new_item_type_unlocked.colors = "red_solid"
+		self._global.new_item_type_unlocked.mask_colors = nil
+	end
+
+	for global_value, categories in pairs(self._global.new_drops or {}) do
+		for color_id, new_drop in pairs(categories.colors or {}) do
+			print("Removing " .. tostring(color_id) .. " from new_drop, unable to combine")
+		end
+
+		categories.mask_colors = nil
+	end
+
+	local color_a, color_b, color_id = nil
+
+	for slot, crafted_item in pairs(self._global.crafted_items and self._global.crafted_items.masks or {}) do
+		if crafted_item.blueprint.color_a and crafted_item.blueprint.color_b then
+			color_a = crafted_item.blueprint.color_a.id
+			color_b = crafted_item.blueprint.color_b.id
+			color_id = tostring(color_a) .. "_" .. tostring(color_b)
+
+			if color_id == "nothing_nothing" then
+				color_id = "nothing"
+			end
+
+			if tweak_data.blackmarket.colors[color_id] then
+				print("Combining " .. tostring(color_a) .. " and " .. tostring(color_b) .. " into " .. tostring(color_id) .. " with global_value " .. crafted_item.blueprint.color_a.global_value .. " for mask in slot " .. tostring(slot))
+
+				crafted_item.blueprint.color = {
+					id = color_id,
+					global_value = crafted_item.blueprint.color_a.global_value
+				}
+			else
+				print("Unable to find " .. tostring(color_id) .. " with global_value " .. crafted_item.blueprint.color_a.global_value .. " for mask in slot " .. tostring(slot))
+			end
+
+			crafted_item.blueprint.color_a = nil
+			crafted_item.blueprint.color_b = nil
+		end
+	end
+
+	print("------------------------------------------------")
 end
 
 function BlackMarketManager:_setup_weapons()
@@ -1192,7 +1259,7 @@ function BlackMarketManager:unpack_outfit_from_string(outfit_string)
 	outfit.armor_current_state = next_armor_value() or outfit.armor_current
 	outfit.armor_skin = next_armor_value() or "none"
 	outfit.player_style = next_armor_value() or "none"
-	outfit.suit_variation = next_armor_value() or "none"
+	outfit.suit_variation = next_armor_value() or "default"
 	outfit.primary = {
 		factory_id = data[self:outfit_string_index("primary")] or "wpn_fps_ass_amcar"
 	}
@@ -1591,7 +1658,7 @@ function BlackMarketManager:buy_crew_item(item)
 
 	if cost <= coins then
 		managers.blackmarket:_unlock_crew_item(item)
-		managers.custom_safehouse:deduct_coins(cost)
+		managers.custom_safehouse:deduct_coins(cost, TelemetryConst.economy_origin.buy_crew_item .. item)
 	end
 end
 
@@ -1633,6 +1700,11 @@ function BlackMarketManager:henchman_loadout(index, should_filter_usage)
 	local loadout = self._global._selected_henchmen[index]
 
 	return loadout
+end
+
+function BlackMarketManager:set_henchman_loadout(index, loadout)
+	self._global._selected_henchmen = self._global._selected_henchmen or {}
+	self._global._selected_henchmen[index] = loadout
 end
 
 function BlackMarketManager:reset_henchman_loadout(index)
@@ -3127,9 +3199,6 @@ function BlackMarketManager:apply_mask_craft_on_unit(unit, blueprint)
 	material:set_variable(Idstring("tint_color_b"), tint_color_b)
 
 	local pattern = tweak_data.blackmarket.textures[pattern_id].texture
-
-	print("pattern", pattern)
-
 	local material_texture = TextureCache:retrieve(pattern, "normal")
 
 	Application:set_material_texture(material, Idstring("material_texture"), material_texture)
@@ -3299,32 +3368,24 @@ function BlackMarketManager:has_item(global_value, category, id)
 	local global_value_data = self._global.inventory[global_value]
 
 	if not global_value_data then
-		print("[BlackMarketManager:has_item] No such global value", global_value)
-
 		return false
 	end
 
 	local category_data = global_value_data[category]
 
 	if not category_data then
-		print("[BlackMarketManager:has_item] No such category", category, "of global value", global_value)
-
 		return false
 	end
 
 	local item_amount = category_data[id]
 
 	if not item_amount then
-		print("[BlackMarketManager:has_item] No such item id", id, "in category", category, "of global value", global_value)
-
 		return false
 	end
 
 	local item_def = tweak_data.blackmarket[category][id]
 
 	if not item_def then
-		print("[BlackMarketManager:has_item] No item", category, id)
-
 		return false
 	end
 
@@ -4590,7 +4651,7 @@ function BlackMarketManager:get_weapon_icon_path(weapon_id, cosmetics)
 
 		if use_cosmetics then
 			if weapon_tweak.color then
-				rarity_path = guis_catalog .. "textures/pd2/blackmarket/icons/rarity_color"
+				rarity_path = "guis/dlcs/wcs/textures/pd2/blackmarket/icons/rarity_color"
 				texture_path = self:get_weapon_icon_path(weapon_id, nil)
 			else
 				local rarity = weapon_tweak.rarity or "common"
@@ -5957,10 +6018,6 @@ function BlackMarketManager:can_modify_mask(slot)
 		return false
 	end
 
-	local materials = managers.blackmarket:get_inventory_category("materials")
-	local textures = managers.blackmarket:get_inventory_category("textures")
-	local colors = managers.blackmarket:get_inventory_category("colors")
-
 	return true
 end
 
@@ -6590,9 +6647,8 @@ function BlackMarketManager:on_sell_mask(slot, skip_verification)
 	local blueprint = mask.blueprint or {}
 
 	for category, part in pairs(blueprint) do
-		local converted_category = category == "color" and "colors" or category == "material" and "materials" or category == "pattern" and "textures" or category
+		local converted_category = MASK_COLOR_CONVERT_MAP[category] or category
 
-		Application:debug(part.global_value, converted_category, slot, part.id, CRAFT_REMOVE)
 		self:alter_global_value_item(part.global_value, converted_category, slot, part.id, CRAFT_REMOVE)
 
 		local default = self:customize_mask_category_default(converted_category, true) or {}
@@ -7502,6 +7558,12 @@ function BlackMarketManager:load(data)
 		Global.blackmarket_manager = data.blackmarket
 		self._global = Global.blackmarket_manager
 
+		if self._global._has_separated_mask_colors then
+			self:_combine_mask_colors()
+		end
+
+		self._global._has_separated_mask_colors = nil
+
 		if self._global.equipped_armor and type(self._global.equipped_armor) ~= "string" then
 			self._global.equipped_armor = nil
 		end
@@ -7857,7 +7919,7 @@ function BlackMarketManager:refill_track_global_values()
 		add_crafted_item_func(mask_global_value, "masks", slot, data.mask_id)
 
 		for category, item in pairs(data.blueprint or {}) do
-			local converted_category = category == "color" and "colors" or category == "material" and "materials" or category == "pattern" and "textures" or category
+			local converted_category = MASK_COLOR_CONVERT_MAP[category] or category
 
 			add_crafted_item_func(item.global_value, converted_category, slot, item.id)
 		end
@@ -7979,7 +8041,7 @@ function BlackMarketManager:_cleanup_blackmarket()
 
 		if not cleanup_mask then
 			for part_type, data in pairs(blueprint) do
-				local converted_category = part_type == "color" and "colors" or part_type == "material" and "materials" or part_type == "pattern" and "textures" or part_type
+				local converted_category = MASK_COLOR_CONVERT_MAP[part_type] or part_type
 				local part_data = tweak_data.blackmarket[converted_category][data.id]
 				cleanup_mask = not part_data
 				cleanup_mask = cleanup_mask or not chk_global_value_func(data.global_value, data, part_data.infamous and "infamous" or part_data.dlc or part_data.global_value)
@@ -8395,11 +8457,6 @@ function BlackMarketManager:_verify_dlc_items()
 	}
 	local equipped_mask = managers.blackmarket:equipped_mask()
 	local default_blueprint = equipped_mask and tweak_data.blackmarket.masks[equipped_mask.mask_id] and tweak_data.blackmarket.masks[equipped_mask.mask_id].default_blueprint or {}
-	local name_converter = {
-		pattern = "textures",
-		color = "colors",
-		material = "materials"
-	}
 	local owns_dlc = nil
 
 	for package_id, data in pairs(tweak_data.dlc) do
@@ -8430,7 +8487,7 @@ function BlackMarketManager:_verify_dlc_items()
 
 					if not is_locked then
 						for type, part in pairs(equipped_mask.blueprint) do
-							if default_blueprint[type] ~= part.id and default_blueprint[name_converter[type]] ~= part.id then
+							if default_blueprint[type] ~= part.id and default_blueprint[MASK_COLOR_CONVERT_MAP[type] or type] ~= part.id then
 								is_locked = part.global_value == package_id
 
 								if is_locked then
@@ -8641,8 +8698,7 @@ function BlackMarketManager:verfify_recived_crew_loadout(loadout, mark_host_as_c
 	loadout.primary = weapon_passed and loadout.primary or nil
 	loadout.player_style = suit_passed and loadout.player_style or nil
 	loadout.suit_variation = suit_passed and loadout.suit_variation or nil
-	local passed = weapon_passed and skill_passed and ability_passed
-	passed = passed and suit_passed
+	local passed = weapon_passed and skill_passed and ability_passed and suit_passed
 
 	if not passed and mark_host_as_cheater then
 		local session = managers.network and managers.network:session()

@@ -451,7 +451,7 @@ function NetworkAccountSTEAM:_save_globals()
 end
 
 function NetworkAccountSTEAM:is_ready_to_close()
-	return not self._inventory_is_loading and not self._inventory_outfit_refresh_requested and not self._inventory_outfit_refresh_in_progress and not self._inventory_is_converting_drills
+	return not self._inventory_is_loading and not self._inventory_outfit_refresh_requested and not self._inventory_outfit_refresh_in_progress
 end
 
 function NetworkAccountSTEAM:inventory_load()
@@ -459,7 +459,7 @@ function NetworkAccountSTEAM:inventory_load()
 		return
 	end
 
-	if self._inventory_is_converting_drills then
+	if self._inventory_is_converting_drills or self._inventory_is_converting_items then
 		return
 	end
 
@@ -469,7 +469,7 @@ function NetworkAccountSTEAM:inventory_load()
 end
 
 function NetworkAccountSTEAM:inventory_is_loading()
-	return self._inventory_is_loading
+	return self._inventory_is_loading or self._inventory_is_converting_drills or self._inventory_is_converting_items
 end
 
 function NetworkAccountSTEAM:inventory_reward(reward_callback, item)
@@ -576,8 +576,32 @@ function NetworkAccountSTEAM:inventory_outfit_signature()
 	return self._outfit_signature
 end
 
+function NetworkAccountSTEAM:_on_item_converted(error, items_new, items_removed)
+	if not error then
+		managers.blackmarket:tradable_exchange(items_new, items_removed)
+	end
+
+	self._inventory_is_converting_items = self._inventory_is_converting_items - 1
+	self._item_convert_error = self._item_convert_error or error
+
+	if self._inventory_is_converting_items == 0 then
+		self._inventory_is_converting_items = nil
+
+		managers.menu_component:set_blackmarket_tradable_loaded(self._item_convert_error)
+
+		self._item_convert_error = nil
+
+		if managers.menu_scene then
+			managers.menu_scene:set_blackmarket_tradable_loaded()
+		end
+	end
+end
+
 function NetworkAccountSTEAM:inventory_repair_list(list)
 	if list then
+		self._inventory_is_converting_items = 0
+		local item_convert = nil
+
 		for _, item in pairs(list) do
 			if not item.category or item.category == "" or not item.entry or item.entry == "" then
 				print("[NetworkAccountSTEAM:inventory_repair_list] Item Def ID " .. tostring(item.def_id) .. " is missing information!")
@@ -593,6 +617,18 @@ function NetworkAccountSTEAM:inventory_repair_list(list)
 					end
 				end
 			end
+
+			item_convert = tweak_data.economy.item_convert[item.def_id]
+
+			if item_convert then
+				Steam:inventory_reward_open(item.instance_id, item_convert.bundle_id, callback(self, self, "_on_item_converted"))
+
+				self._inventory_is_converting_items = self._inventory_is_converting_items + 1
+			end
+		end
+
+		if self._inventory_is_converting_items == 0 then
+			self._inventory_is_converting_items = nil
 		end
 	end
 end

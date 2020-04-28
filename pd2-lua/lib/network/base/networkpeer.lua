@@ -1664,14 +1664,20 @@ function NetworkPeer:_reload_outfit()
 
 	self:_chk_outfit_loading_complete()
 
-	if self._all_outfit_load_requests_sent and alive(self._unit) and managers.criminals then
-		local character = managers.criminals:character_by_name(self._character)
+	if self._all_outfit_load_requests_sent and alive(self._unit) then
+		local character = managers.criminals and managers.criminals:character_by_name(self._character)
 
-		if character and character.visual_state and character.visual_state.player_style ~= complete_outfit.player_style then
-			self:update_character_visual_state({
-				player_style = "none",
-				suit_variation = "none"
-			})
+		if character and character.visual_state then
+			local default_while_loading_state = {}
+
+			if character.visual_state.player_style ~= complete_outfit.player_style then
+				default_while_loading_state.player_style = "none"
+				default_while_loading_state.suit_variation = "default"
+			end
+
+			if table.size(default_while_loading_state) > 0 then
+				self:update_character_visual_state(default_while_loading_state)
+			end
 		end
 	end
 end

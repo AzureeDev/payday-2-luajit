@@ -1291,7 +1291,7 @@ function CrimeNetManager:join_quick_play_game()
 		end
 
 		if selected_game then
-			managers.network.matchmake:join_server(selected_game, true)
+			managers.network.matchmake:join_server(selected_game, true, true)
 		elseif was_stealth_enabled and not loud_enabled and not managers.blackmarket:player_owns_silenced_weapon() then
 			local dialog_data = {
 				title = managers.localization:text("menu_cn_quickplay_not_found_stealth_title"),
@@ -4278,6 +4278,7 @@ function CrimeNetGui:check_job_pressed(x, y)
 				server_data = job.server_data,
 				mods = job.mods,
 				skirmish = job.skirmish,
+				skirmish_wave = job.skirmish_wave,
 				skirmish_weekly_modifiers = job.skirmish_weekly_modifiers
 			}
 

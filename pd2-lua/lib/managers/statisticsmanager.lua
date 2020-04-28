@@ -1,3 +1,5 @@
+require("lib/utils/accelbyte/Telemetry")
+
 StatisticsManager = StatisticsManager or class()
 StatisticsManager.special_unit_ids = {
 	"shield",
@@ -387,6 +389,10 @@ function StatisticsManager:stop_session(data)
 
 	if SystemInfo:distribution() == Idstring("STEAM") then
 		self:publish_to_steam(self._global.session, success, completion)
+
+		if data and data.quit then
+			Telemetry:on_end_heist("quit_game", 0)
+		end
 	end
 end
 
@@ -1029,13 +1035,13 @@ function StatisticsManager:_table_contains(list, item)
 	end
 end
 
-function StatisticsManager:publish_equipped_to_steam()
+function StatisticsManager:gather_equipment_data()
 	if Application:editor() then
 		return
 	end
 
 	local stats = {}
-	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, _ = tweak_data.statistics:statistics_table()
+	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list = tweak_data.statistics:statistics_table()
 	local mask_name = managers.blackmarket:equipped_mask().mask_id
 	local mask_index = self:_table_contains(mask_list, mask_name)
 
@@ -1135,7 +1141,18 @@ function StatisticsManager:publish_equipped_to_steam()
 		}
 	end
 
+	return stats
+end
+
+function StatisticsManager:publish_equipped_to_steam()
+	local stats = self:gather_equipment_data()
+
+	if not stats then
+		return
+	end
+
 	managers.network.account:publish_statistics(stats)
+	Telemetry:send_on_player_change_loadout(stats)
 end
 
 function StatisticsManager:publish_skills_to_steam(skip_version_check)

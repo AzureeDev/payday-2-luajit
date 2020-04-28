@@ -344,7 +344,15 @@ function MusicManager:current_track_string()
 		return utf8.to_upper(managers.localization:text("menu_jukebox_screen_" .. Global.music_manager.current_music_ext))
 	end
 
-	return utf8.to_upper(managers.localization:text("menu_jukebox_" .. Global.music_manager.current_track))
+	if level_data and level_data.music == "no_music" then
+		return utf8.to_upper(managers.localization:text("menu_jukebox_track_" .. Global.level_data.level_id))
+	end
+
+	if Global.music_manager.current_track then
+		return utf8.to_upper(managers.localization:text("menu_jukebox_" .. Global.music_manager.current_track))
+	end
+
+	return ""
 end
 
 function MusicManager:jukebox_random_all()

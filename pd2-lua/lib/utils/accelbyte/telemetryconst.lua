@@ -1,0 +1,53 @@
+TelemetryConst = TelemetryConst or {
+	economy_origin = {
+		buy_crew_item = "buy_crew_item_",
+		cosmetics_reward = "cosmetics_reward",
+		unlock_gage_asset = "unlock_gage_asset_",
+		crime_spree_reroll = "crime_spree_reroll",
+		refund_mission_assets = "refund_mission_assets",
+		sell_weapon = "sell_weapon_",
+		increase_infamous = "increase_infamous",
+		purchase_weapon_mod = "purchase_weapon_mod_",
+		civilian_killed = "civilian_killed",
+		reward_daily = "reward_daily",
+		mission_complete_reward = "mission_complete_reward",
+		buy_mask = "buy_mask_",
+		sell_mask = "sell_mask_",
+		buy_preplanning_types = "buy_preplanning_types",
+		loot_drop_cash = "loot_drop_cash",
+		start_crime_spree = "start_crime_spree",
+		buy_preplanning_votes = "buy_preplanning_votes",
+		buy_weapon_slot = "buy_weapon_slot",
+		unlock_skill_switch = "unlock_skill_switch_",
+		safehouse_raid_reward = "safehouse_raid_reward",
+		buy_weapon_platform = "buy_weapon_platform_",
+		purchase_room_tier = "purchase_room_tier",
+		refund_weapon_part = "refund_weapon_part_",
+		milestone_award = "milestone_award_",
+		mission_reward = "mission_reward",
+		buy_weapon_modification = "buy_weapon_modification_",
+		respec_skilltree = "respec_skilltree_",
+		sell_weapon_slot = "sell_weapon_slot",
+		sell_weapon_part = "sell_weapon_part_",
+		job_reward = "job_reward",
+		complete_trophy = "complete_",
+		purchase_mask = "purchase_mask_",
+		buy_mission_asset = "buy_mission_asset_",
+		black_market_max_progress = "black_market_max_progress",
+		skillpoint_spent = "skillpoint_spent_",
+		continue_crime_spree = "continue_crime_spree",
+		crime_spree_reward = "crime_spree_reward_",
+		refund_crime_spree = "refund_crime_spree",
+		buy_mask_slot = "buy_mask_slot",
+		upgrade_points = "upgrade_points",
+		initial_coins = "initial_coins"
+	},
+	debug = {
+		economy_origin = {
+			job_completed = "debug_job_completed",
+			give_safehouse_coins_all = "debug_give_safehouse_coins_all",
+			give_safehouse_coins = "debug_give_safehouse_coins",
+			profile_get_cash = "debug_profile_get_cash"
+		}
+	}
+}

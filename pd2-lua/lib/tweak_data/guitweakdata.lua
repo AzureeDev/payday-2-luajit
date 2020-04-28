@@ -5077,6 +5077,11 @@ function GuiTweakData:init(tweak_data)
 	}
 
 	table.insert(self.new_heists, {
+		name_id = "menu_nh_u1993",
+		texture_path = "guis/textures/pd2/new_heists/u1993",
+		url = "http://ovk.af/april2020"
+	})
+	table.insert(self.new_heists, {
 		name_id = "menu_nh_bex",
 		texture_path = "guis/textures/pd2/new_heists/bex",
 		url = "ovk.af/bexheistslider"

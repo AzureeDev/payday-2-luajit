@@ -762,7 +762,14 @@ function VehicleDrivingExt:_evacuate_seat(seat)
 end
 
 function VehicleDrivingExt:find_exit_position(player)
+	print("[VehicleDrivingExt:find_exit_position]")
+
 	local seat = self:find_seat_for_player(player)
+
+	if not seat then
+		return nil
+	end
+
 	local seat_position = self._vehicle:object_position(seat.object)
 	local exit_position = self._unit:get_object(Idstring(VehicleDrivingExt.EXIT_PREFIX .. seat.name))
 	local found_exit = true

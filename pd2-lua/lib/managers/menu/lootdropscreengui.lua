@@ -16,13 +16,15 @@ function LootDropScreenGui:init(saferect_ws, fullrect_ws, lootscreen_hud, saved_
 		self._fullscreen_panel:hide()
 	end
 
+	local is_skirmish = managers.skirmish:is_skirmish()
+	local waiting_text_string = managers.localization:to_upper_text(is_skirmish and "menu_l_waiting_for_cards" or "menu_l_waiting_for_all")
 	self._continue_button = self._panel:text({
 		name = "ready_button",
 		vertical = "center",
 		h = 32,
 		align = "right",
 		layer = 2,
-		text = utf8.to_upper(managers.localization:text("menu_l_waiting_for_all")),
+		text = waiting_text_string,
 		font_size = tweak_data.menu.pd2_large_font_size,
 		font = tweak_data.menu.pd2_large_font,
 		color = tweak_data.screen_colors.button_stage_3
@@ -44,7 +46,7 @@ function LootDropScreenGui:init(saferect_ws, fullrect_ws, lootscreen_hud, saved_
 		alpha = 0.4,
 		align = "right",
 		layer = 1,
-		text = utf8.to_upper(managers.localization:text("menu_l_waiting_for_all")),
+		text = waiting_text_string,
 		font_size = tweak_data.menu.pd2_massive_font_size,
 		font = tweak_data.menu.pd2_massive_font,
 		color = tweak_data.screen_colors.button_stage_3
@@ -86,6 +88,12 @@ function LootDropScreenGui:init(saferect_ws, fullrect_ws, lootscreen_hud, saved_
 	end
 
 	if self._no_loot_for_me then
+		return
+	end
+
+	if is_skirmish then
+		self._card_chosen = true
+
 		return
 	end
 
@@ -236,7 +244,7 @@ function LootDropScreenGui:update(t, dt)
 			self._fade_time_left = self._fade_time_left - dt
 
 			if self._fade_time_left <= 0 then
-				self._time_left_text:set_alpha(1)
+				self._time_left_text:set_alpha(not self._card_chosen and 1 or 0)
 
 				self._fade_time_left = nil
 			end

@@ -195,7 +195,7 @@ function ContourExt:apply_to_linked(func_name, ...)
 	end
 end
 
-function ContourExt:add(type, sync, multiplier)
+function ContourExt:add(type, sync, multiplier, override_color)
 	if Global.debug_contour_enabled then
 		return
 	end
@@ -233,6 +233,8 @@ function ContourExt:add(type, sync, multiplier)
 				setup.ref_c = (setup.ref_c or 0) + 1
 			end
 
+			setup.color = override_color or setup.color
+
 			return setup
 		end
 
@@ -245,7 +247,8 @@ function ContourExt:add(type, sync, multiplier)
 		ref_c = 1,
 		type = type,
 		fadeout_t = fadeout and TimerManager:game():time() + fadeout or nil,
-		sync = sync
+		sync = sync,
+		color = override_color
 	}
 	local old_preset_type = self._contour_list[1] and self._contour_list[1].type
 	local i = 1
@@ -535,7 +538,7 @@ function ContourExt:_upd_color(is_retry)
 		return
 	end
 
-	local color = self._types[self._contour_list[1].type].color or self._contour_list[1].color
+	local color = self._contour_list[1].color or self._types[self._contour_list[1].type].color
 
 	if not color then
 		return

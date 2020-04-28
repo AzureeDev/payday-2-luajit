@@ -1899,6 +1899,96 @@ function LevelsTweakData:init()
 		wave_count = 9,
 		narrator = "locke"
 	}
+	self.skm_cas = {
+		name_id = "heist_skm_cas_h1",
+		briefing_id = "heist_skm_cas_briefing",
+		briefing_dialog = "Play_loc_skm_brf",
+		world_name = "narratives/skm/skm_cas",
+		intro_event = "Play_loc_skm_intro",
+		outro_event = {
+			"Play_loc_skm_end_win",
+			"Play_loc_skm_end_fail"
+		},
+		music = "heist",
+		package = "packages/dlcs/skm/job_skm",
+		cube = "cube_apply_heist_bank",
+		ai_group_type = america,
+		group_ai_state = "skirmish",
+		wave_count = 9,
+		narrator = "locke"
+	}
+	self.skm_big2 = {
+		name_id = "heist_skm_big2_h1",
+		briefing_id = "heist_skm_big2_briefing",
+		briefing_dialog = "Play_loc_skm_brf",
+		world_name = "narratives/skm/skm_big2",
+		intro_event = "Play_loc_skm_intro",
+		outro_event = {
+			"Play_loc_skm_end_win",
+			"Play_loc_skm_end_fail"
+		},
+		music = "heist",
+		package = "packages/dlcs/skm/job_skm",
+		cube = "cube_apply_heist_bank",
+		ai_group_type = america,
+		group_ai_state = "skirmish",
+		wave_count = 9,
+		narrator = "locke"
+	}
+	self.skm_mallcrasher = {
+		name_id = "heist_skm_mallcrasher_h1",
+		briefing_id = "heist_skm_mallcrasher_briefing",
+		briefing_dialog = "Play_loc_skm_brf",
+		world_name = "narratives/skm/skm_mallcrasher",
+		intro_event = "Play_loc_skm_intro",
+		outro_event = {
+			"Play_loc_skm_end_win",
+			"Play_loc_skm_end_fail"
+		},
+		music = "heist",
+		package = "packages/dlcs/skm/job_skm",
+		cube = "cube_apply_heist_bank",
+		ai_group_type = america,
+		group_ai_state = "skirmish",
+		wave_count = 9,
+		narrator = "locke"
+	}
+	self.skm_arena = {
+		name_id = "heist_skm_arena_h1",
+		briefing_id = "heist_skm_arena_briefing",
+		briefing_dialog = "Play_loc_skm_brf",
+		world_name = "narratives/skm/skm_arena",
+		intro_event = "Play_loc_skm_intro",
+		outro_event = {
+			"Play_loc_skm_end_win",
+			"Play_loc_skm_end_fail"
+		},
+		music = "heist",
+		package = "packages/dlcs/skm/job_skm",
+		cube = "cube_apply_heist_bank",
+		ai_group_type = america,
+		group_ai_state = "skirmish",
+		wave_count = 9,
+		narrator = "locke"
+	}
+	self.skm_bex = {
+		name_id = "heist_skm_bex_h1",
+		briefing_id = "heist_skm_bex_briefing",
+		briefing_dialog = "Play_loc_skm_brf",
+		world_name = "narratives/skm/skm_bex",
+		intro_event = "Play_loc_skm_intro",
+		outro_event = {
+			"Play_loc_skm_end_win",
+			"Play_loc_skm_end_fail"
+		},
+		music = "heist",
+		package = "packages/dlcs/skm/job_bex_skm",
+		cube = "cube_apply_heist_bank",
+		ai_group_type = federales,
+		group_ai_state = "skirmish",
+		wave_count = 9,
+		narrator = "locke"
+	}
 	self.vit = {
 		name_id = "heist_vit_hl",
 		briefing_id = "heist_vit_briefing",
@@ -2088,6 +2178,11 @@ function LevelsTweakData:init()
 		"skm_red2",
 		"skm_run",
 		"skm_watchdogs_stage2",
+		"skm_cas",
+		"skm_big2",
+		"skm_mallcrasher",
+		"skm_arena",
+		"skm_bex",
 		"vit",
 		"bph",
 		"mex",

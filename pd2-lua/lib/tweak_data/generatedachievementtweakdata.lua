@@ -7262,6 +7262,7 @@ function init_auto_generated_achievement_data(tags)
 			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D0",
 			ladder = "H_SanMartin",
 			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D0",
+			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.completion,
@@ -7304,6 +7305,7 @@ function init_auto_generated_achievement_data(tags)
 			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D1",
 			ladder = "H_SanMartin",
 			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D1",
+			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.completion,
@@ -7315,9 +7317,10 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		bex_3 = {
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D2",
 			ladder = "H_SanMartin",
 			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D2",
-			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D2",
+			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.very_hard,
@@ -7331,6 +7334,7 @@ function init_auto_generated_achievement_data(tags)
 			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D3",
 			ladder = "H_SanMartin",
 			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D3",
+			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.completion,
@@ -7342,9 +7346,10 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		bex_5 = {
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D4",
 			ladder = "H_SanMartin",
 			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D4",
-			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D4",
+			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.mayhem,
@@ -7358,6 +7363,7 @@ function init_auto_generated_achievement_data(tags)
 			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D5",
 			ladder = "H_SanMartin",
 			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D5",
+			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.completion,
@@ -7373,6 +7379,7 @@ function init_auto_generated_achievement_data(tags)
 			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_D6",
 			ladder = "H_SanMartin",
 			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_D6",
+			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.completion,
@@ -7384,9 +7391,10 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		bex_8 = {
+			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_OD_D6",
 			ladder = "H_SanMartin",
 			sort_name = "C_Vlad_H_SanMartinBank_AllDiffs_OD_D6",
-			icon_id = "C_Vlad_H_SanMartinBank_AllDiffs_OD_D6",
+			additional_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.death_sentence,
@@ -8726,6 +8734,438 @@ function init_auto_generated_achievement_data(tags)
 				tags.tactics.stealth,
 				tags.tactics.timed,
 				tags.contracts.locke
+			}
+		},
+		skm_1 = {
+			icon_id = "C_Dentist_H_GoldenGrinCasino_Holdout_3",
+			ladder = "S_GoldenGrinCasino",
+			sort_name = "C_Dentist_H_GoldenGrinCasino_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_10 = {
+			icon_id = "C_Vlad_H_Mallcrasher_Holdout_5",
+			ladder = "S_Mallcrasher",
+			sort_name = "C_Vlad_H_Mallcrasher_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
+		skm_11 = {
+			icon_id = "C_Vlad_H_Mallcrasher_Holdout_7",
+			ladder = "S_Mallcrasher",
+			sort_name = "C_Vlad_H_Mallcrasher_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
+		skm_12 = {
+			icon_id = "C_Vlad_H_Mallcrasher_Holdout_9",
+			ladder = "S_Mallcrasher",
+			sort_name = "C_Vlad_H_Mallcrasher_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
+		skm_13 = {
+			icon_id = "C_Bain_H_Arena_Holdout_3",
+			ladder = "S_Arena",
+			sort_name = "C_Bain_H_Arena_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.bain
+			}
+		},
+		skm_14 = {
+			icon_id = "C_Bain_H_Arena_Holdout_5",
+			ladder = "S_Arena",
+			sort_name = "C_Bain_H_Arena_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.bain
+			}
+		},
+		skm_15 = {
+			icon_id = "C_Bain_H_Arena_Holdout_7",
+			ladder = "S_Arena",
+			sort_name = "C_Bain_H_Arena_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.bain
+			}
+		},
+		skm_16 = {
+			icon_id = "C_Bain_H_Arena_Holdout_9",
+			ladder = "S_Arena",
+			sort_name = "C_Bain_H_Arena_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.bain
+			}
+		},
+		skm_17 = {
+			icon_id = "C_Hector_H_Watchdogs_Holdout_3",
+			ladder = "S_Watchdogs",
+			sort_name = "C_Hector_H_Watchdogs_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.hector
+			}
+		},
+		skm_18 = {
+			icon_id = "C_Hector_H_Watchdogs_Holdout_5",
+			ladder = "S_Watchdogs",
+			sort_name = "C_Hector_H_Watchdogs_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.hector
+			}
+		},
+		skm_19 = {
+			icon_id = "C_Hector_H_Watchdogs_Holdout_7",
+			ladder = "S_Watchdogs",
+			sort_name = "C_Hector_H_Watchdogs_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.hector
+			}
+		},
+		skm_2 = {
+			icon_id = "C_Dentist_H_GoldenGrinCasino_Holdout_5",
+			ladder = "S_GoldenGrinCasino",
+			sort_name = "C_Dentist_H_GoldenGrinCasino_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_20 = {
+			icon_id = "C_Hector_H_Watchdogs_Holdout_9",
+			ladder = "S_Watchdogs",
+			sort_name = "C_Hector_H_Watchdogs_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.hector
+			}
+		},
+		skm_21 = {
+			icon_id = "C_Classics_H_FirstWorldBank_Holdout_3",
+			ladder = "S_FirstWorldBank",
+			sort_name = "C_Classics_H_FirstWorldBank_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		skm_22 = {
+			icon_id = "C_Classics_H_FirstWorldBank_Holdout_5",
+			ladder = "S_FirstWorldBank",
+			sort_name = "C_Classics_H_FirstWorldBank_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		skm_23 = {
+			icon_id = "C_Classics_H_FirstWorldBank_Holdout_7",
+			ladder = "S_FirstWorldBank",
+			sort_name = "C_Classics_H_FirstWorldBank_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		skm_24 = {
+			icon_id = "C_Classics_H_FirstWorldBank_Holdout_9",
+			ladder = "S_FirstWorldBank",
+			sort_name = "C_Classics_H_FirstWorldBank_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		skm_25 = {
+			icon_id = "C_Classics_H_HeatStreet_Holdout_3",
+			ladder = "S_HeatStreet",
+			sort_name = "C_Classics_H_HeatStreet_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		skm_26 = {
+			icon_id = "C_Classics_H_HeatStreet_Holdout_5",
+			ladder = "S_HeatStreet",
+			sort_name = "C_Classics_H_HeatStreet_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		skm_27 = {
+			icon_id = "C_Classics_H_HeatStreet_Holdout_7",
+			ladder = "S_HeatStreet",
+			sort_name = "C_Classics_H_HeatStreet_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		skm_28 = {
+			icon_id = "C_Classics_H_HeatStreet_Holdout_9",
+			ladder = "S_HeatStreet",
+			sort_name = "C_Classics_H_HeatStreet_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.classic
+			}
+		},
+		skm_29 = {
+			icon_id = "C_Dentist_H_Diamond_Holdout_3",
+			ladder = "S_Diamond",
+			sort_name = "C_Dentist_H_Diamond_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_3 = {
+			icon_id = "C_Dentist_H_GoldenGrinCasino_Holdout_7",
+			ladder = "S_GoldenGrinCasino",
+			sort_name = "C_Dentist_H_GoldenGrinCasino_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_30 = {
+			icon_id = "C_Dentist_H_Diamond_Holdout_5",
+			ladder = "S_Diamond",
+			sort_name = "C_Dentist_H_Diamond_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_31 = {
+			icon_id = "C_Dentist_H_Diamond_Holdout_7",
+			ladder = "S_Diamond",
+			sort_name = "C_Dentist_H_Diamond_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_32 = {
+			icon_id = "C_Dentist_H_Diamond_Holdout_9",
+			ladder = "S_Diamond",
+			sort_name = "C_Dentist_H_Diamond_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_33 = {
+			icon_id = "C_Vlad_H_SanMartinBank_Holdout_3",
+			ladder = "S_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
+		skm_34 = {
+			icon_id = "C_Vlad_H_SanMartinBank_Holdout_5",
+			ladder = "S_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
+		skm_35 = {
+			icon_id = "C_Vlad_H_SanMartinBank_Holdout_7",
+			ladder = "S_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
+		skm_36 = {
+			icon_id = "C_Vlad_H_SanMartinBank_Holdout_9",
+			ladder = "S_SanMartin",
+			sort_name = "C_Vlad_H_SanMartinBank_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
+		skm_4 = {
+			icon_id = "C_Dentist_H_GoldenGrinCasino_Holdout_9",
+			ladder = "S_GoldenGrinCasino",
+			sort_name = "C_Dentist_H_GoldenGrinCasino_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_5 = {
+			icon_id = "C_Dentist_H_BigBank_Holdout_3",
+			ladder = "S_BigBank",
+			sort_name = "C_Dentist_H_BigBank_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_6 = {
+			icon_id = "C_Dentist_H_BigBank_Holdout_5",
+			ladder = "S_BigBank",
+			sort_name = "C_Dentist_H_BigBank_Holdout_5",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_7 = {
+			icon_id = "C_Dentist_H_BigBank_Holdout_7",
+			ladder = "S_BigBank",
+			sort_name = "C_Dentist_H_BigBank_Holdout_7",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_8 = {
+			icon_id = "C_Dentist_H_BigBank_Holdout_9",
+			ladder = "S_BigBank",
+			sort_name = "C_Dentist_H_BigBank_Holdout_9",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.the_dentist
+			}
+		},
+		skm_9 = {
+			icon_id = "C_Vlad_H_Mallcrasher_Holdout_3",
+			ladder = "S_Mallcrasher",
+			sort_name = "C_Vlad_H_Mallcrasher_Holdout_3",
+			additional_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.tactics.loud,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
 			}
 		},
 		tag_1 = {

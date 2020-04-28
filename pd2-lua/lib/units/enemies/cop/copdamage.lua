@@ -1750,7 +1750,7 @@ function CopDamage:damage_melee(attack_data)
 	end
 
 	local damage_effect = attack_data.damage_effect
-	local damage_effect_percent = nil
+	local damage_effect_percent = 1
 	damage = self:_apply_damage_reduction(damage)
 	damage = math.clamp(damage, self._HEALTH_INIT_PRECENT, self._HEALTH_INIT)
 	local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
@@ -3035,6 +3035,8 @@ end
 
 function CopDamage:_send_melee_attack_result(attack_data, damage_percent, damage_effect_percent, hit_offset_height, variant, body_index)
 	body_index = math.clamp(body_index, 0, 128)
+	damage_percent = math.clamp(damage_percent, 0, 512)
+	damage_effect_percent = math.clamp(damage_effect_percent, 0, 512)
 
 	self._unit:network():send("damage_melee", attack_data.attacker_unit, damage_percent, damage_effect_percent, body_index, hit_offset_height, variant, self._dead and true or false)
 end

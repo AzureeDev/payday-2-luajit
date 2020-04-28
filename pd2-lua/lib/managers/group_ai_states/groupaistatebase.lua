@@ -2608,6 +2608,7 @@ function GroupAIStateBase:save(save_data)
 	my_save_data.teams = self._teams
 	my_save_data.endscreen_variant = self._endscreen_variant
 	my_save_data.assault_number = self._assault_number
+	my_save_data.nr_successful_alarm_pager_bluffs = self._nr_successful_alarm_pager_bluffs
 end
 
 function GroupAIStateBase:load(load_data)
@@ -2638,6 +2639,7 @@ function GroupAIStateBase:load(load_data)
 
 	self._teams = my_load_data.teams
 	self._endscreen_variant = my_load_data.endscreen_variant
+	self._nr_successful_alarm_pager_bluffs = my_load_data.nr_successful_alarm_pager_bluffs
 
 	self:_call_listeners("team_def")
 	self:set_damage_reduction_buff_hud()
@@ -3516,6 +3518,7 @@ function GroupAIStateBase:on_player_criminal_death(peer_id)
 
 	managers.trade:on_player_criminal_death(criminal_name, respawn_penalty, self._criminals[unit:key()].hostages_killed or 0)
 	managers.criminals:on_last_valid_player_spawn_point_updated(unit)
+	managers.mission:call_global_event("player_criminal_death")
 end
 
 function GroupAIStateBase:all_AI_criminals()
@@ -4809,7 +4812,7 @@ function GroupAIStateBase:convert_hostage_to_criminal(unit, peer_unit)
 		debug_pause_unit(unit, "[GroupAIStateBase:convert_hostage_to_criminal]: Unit doesn't have Contour Extension")
 	end
 
-	unit:contour():add("friendly")
+	unit:contour():add("friendly", nil, nil, not peer_unit and tweak_data.contour.character.friendly_minion_color)
 
 	u_data.so_access = unit:brain():SO_access()
 
@@ -5899,6 +5902,10 @@ function GroupAIStateBase:get_nr_successful_alarm_pager_bluffs()
 end
 
 function GroupAIStateBase:on_successful_alarm_pager_bluff()
+	self._nr_successful_alarm_pager_bluffs = self._nr_successful_alarm_pager_bluffs + 1
+end
+
+function GroupAIStateBase:sync_alarm_pager_bluff()
 	self._nr_successful_alarm_pager_bluffs = self._nr_successful_alarm_pager_bluffs + 1
 end
 

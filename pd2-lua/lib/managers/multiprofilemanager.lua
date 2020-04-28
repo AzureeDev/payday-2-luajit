@@ -31,6 +31,14 @@ function MultiProfileManager:save_current()
 	profile.skillset = skt.selected_skill_switch
 	profile.perk_deck = Application:digest_value(skt.specializations.current_specialization, false)
 	profile.mask = blm:equipped_mask_slot()
+	profile.henchmen_loadout = {}
+	profile.preferred_henchmen = {}
+
+	for i = 1, CriminalsManager.MAX_NR_TEAM_AI, 1 do
+		profile.henchmen_loadout[i] = deep_clone(managers.blackmarket:henchman_loadout(i))
+		profile.preferred_henchmen[i] = blm:preferred_henchmen(i)
+	end
+
 	self._global._profiles[self._global._current_profile] = profile
 
 	print("[MultiProfileManager:save_current] done")
@@ -62,6 +70,16 @@ function MultiProfileManager:load_current()
 	blm:set_suit_variations(profile.suit_variations or {})
 	blm:equip_mask(profile.mask)
 
+	for i = 1, CriminalsManager.MAX_NR_TEAM_AI, 1 do
+		if profile.henchmen_loadout and profile.henchmen_loadout[i] then
+			blm:set_henchman_loadout(i, profile.henchmen_loadout[i])
+		end
+
+		if profile.preferred_henchmen and profile.preferred_henchmen[i] then
+			blm:set_preferred_henchmen(i, profile.preferred_henchmen[i])
+		end
+	end
+
 	local mcm = managers.menu_component
 
 	if mcm._player_inventory_gui then
@@ -71,6 +89,7 @@ function MultiProfileManager:load_current()
 		mcm:create_inventory_gui(node)
 	elseif mcm._mission_briefing_gui then
 		managers.assets:reload_locks()
+		managers.preplanning:on_multi_profile_changed()
 
 		local node = mcm._mission_briefing_gui._node
 

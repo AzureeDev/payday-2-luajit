@@ -1,6 +1,6 @@
 PlayerAction.EscapeTase = {
 	Priority = 1,
-	Function = function (player_manager, target_time)
+	Function = function (player_manager, hud_manager, target_time)
 		local time = Application:time()
 		local controller = player_manager:player_unit():base():controller()
 		local co = coroutine.running()
@@ -16,5 +16,7 @@ PlayerAction.EscapeTase = {
 
 			coroutine.yield(co)
 		end
+
+		hud_manager:remove_interact()
 	end
 }

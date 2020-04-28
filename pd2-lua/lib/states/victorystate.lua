@@ -1,4 +1,5 @@
 require("lib/states/GameState")
+require("lib/utils/accelbyte/TelemetryConst")
 
 VictoryState = VictoryState or class(MissionEndState)
 
@@ -17,7 +18,7 @@ function VictoryState:at_enter(...)
 		local was_safehouse_raid = managers.job:current_job_id() == "chill_combat"
 
 		if was_safehouse_raid then
-			managers.custom_safehouse:add_coins(tweak_data.safehouse.rewards.raid)
+			managers.custom_safehouse:add_coins(tweak_data.safehouse.rewards.raid, TelemetryConst.economy_origin.safehouse_raid_reward)
 
 			self._safehouse_raid_rewarded = true
 		end

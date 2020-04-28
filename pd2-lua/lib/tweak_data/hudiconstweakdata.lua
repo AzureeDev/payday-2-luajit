@@ -13537,6 +13537,330 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
+	self.C_Bain_H_Arena_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			89,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_Arena_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			176,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_Arena_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			2,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Bain_H_Arena_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			176,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_FirstWorldBank_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			698,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_FirstWorldBank_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			785,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_FirstWorldBank_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			2,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_FirstWorldBank_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			2,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_HeatStreet_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			350,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_HeatStreet_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			350,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_HeatStreet_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			524,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Classics_H_HeatStreet_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			698,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_BigBank_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			611,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_BigBank_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			437,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_BigBank_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			611,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_BigBank_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			437,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_Diamond_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			263,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_Diamond_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			437,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_Diamond_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			263,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_Diamond_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			437,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_GoldenGrinCasino_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			176,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_GoldenGrinCasino_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			350,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_GoldenGrinCasino_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			176,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_Dentist_H_GoldenGrinCasino_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			89,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Hector_H_Watchdogs_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			263,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Hector_H_Watchdogs_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			437,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Hector_H_Watchdogs_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			2,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Hector_H_Watchdogs_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			89,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_Mallcrasher_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			524,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_Mallcrasher_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			263,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_Mallcrasher_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			2,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_Mallcrasher_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			176,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_SanMartinBank_Holdout_3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			89,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_SanMartinBank_Holdout_5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			263,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_SanMartinBank_Holdout_7 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			611,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_Vlad_H_SanMartinBank_Holdout_9 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
+		texture_rect = {
+			89,
+			2,
+			85,
+			85
+		}
+	}
 
 	TextureCorrectionTweakData:new(self)
 

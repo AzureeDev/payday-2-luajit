@@ -1,5 +1,6 @@
 require("lib/managers/menu/WalletGuiObject")
 require("lib/utils/InventoryDescription")
+require("lib/utils/accelbyte/TelemetryConst")
 
 local is_win32 = SystemInfo:platform() == Idstring("WIN32")
 local NOT_WIN_32 = not is_win32
@@ -900,6 +901,12 @@ function BlackMarketGuiTabItem:set_scroll_indicators()
 	self._scroll_bar_panel:set_visible(visible)
 end
 
+function BlackMarketGuiTabItem:update_slots_visibility()
+	for index, slot in pairs(self._slots) do
+		slot._panel:set_visible(self._grid_panel:inside(slot._panel:world_center_x(), slot._panel:world_center_y()))
+	end
+end
+
 function BlackMarketGuiTabItem:selected_slot_center()
 	if not self._slots[self._slot_selected] then
 		return 0, 0
@@ -939,6 +946,7 @@ function BlackMarketGuiTabItem:set_scroll_y(slot)
 	self._my_node_data.scroll_y_index = new_y_index
 
 	self:set_scroll_indicators()
+	self:update_slots_visibility()
 end
 
 function BlackMarketGuiTabItem:select_slot(slot, instant)
@@ -6749,6 +6757,8 @@ function BlackMarketGui:update_info_text()
 
 			local achievement_tracker = tweak_data.achievement.mask_tracker
 			local mask_id = slot_data.name
+			local achievement_lock_id = managers.dlc:is_mask_achievement_locked(mask_id)
+			local achievement_milestone_lock_id = managers.dlc:is_mask_achievement_milestone_locked(mask_id)
 
 			if slot_data.dlc_locked then
 				updated_texts[3].text = managers.localization:to_upper_text(slot_data.dlc_locked)
@@ -6775,19 +6785,35 @@ function BlackMarketGui:update_info_text()
 					updated_texts[3].text = "##" .. managers.localization:text(achievement_data.text_id) .. "##"
 					updated_texts[3].resource_color = tweak_data.screen_colors.button_stage_2
 				end
+			elseif achievement_lock_id and (type(slot_data.unlocked) ~= "number" and not slot_data.unlocked or slot_data.unlocked == 0) then
+				local dlc_tweak = tweak_data.dlc[achievement_lock_id]
+				local achievement = dlc_tweak and dlc_tweak.achievement_id
+				local achievement_visual = tweak_data.achievement.visual[achievement]
+
+				if achievement_visual then
+					updated_texts[3].text = managers.localization:to_upper_text(achievement_visual.desc_id)
+
+					if achievement_visual.progress then
+						updated_texts[3].text = updated_texts[3].text .. " (" .. tostring(achievement_visual.progress.get()) .. "/" .. tostring(achievement_visual.progress.max) .. ")"
+					end
+				end
+			elseif achievement_milestone_lock_id and (type(slot_data.unlocked) ~= "number" and not slot_data.unlocked or slot_data.unlocked == 0) then
+				for _, data in ipairs(tweak_data.achievement.milestones) do
+					if data.id == achievement_milestone_lock_id then
+						updated_texts[3].text = managers.localization:to_upper_text("bm_menu_milestone_reward_unlock", {
+							NUM = tostring(data.at)
+						})
+
+						break
+					end
+				end
+			elseif managers.dlc:is_content_skirmish_locked("masks", mask_id) and (type(slot_data.unlocked) ~= "number" and not slot_data.unlocked or slot_data.unlocked == 0) then
+				updated_texts[3].text = managers.localization:to_upper_text("bm_menu_skirmish_content_reward")
 			end
 
 			if mask_id then
 				local desc_id = tweak_data.blackmarket.masks[mask_id].desc_id
 				updated_texts[4].text = desc_id and managers.localization:text(desc_id) or Application:production_build() and "Add ##desc_id## to ##" .. mask_id .. "## in tweak_data.blackmarket.masks" or ""
-
-				if managers.dlc:is_mask_achievement_locked(mask_id) and (not tweak_data.blackmarket.masks[mask_id].pcs or #tweak_data.blackmarket.masks[mask_id].pcs <= 0) then
-					updated_texts[4].text = updated_texts[4].text .. managers.localization:text("bm_msk_achievement_postfix")
-				end
-
-				if managers.dlc:is_mask_achievement_milestone_locked(mask_id) and (not tweak_data.blackmarket.masks[mask_id].pcs or #tweak_data.blackmarket.masks[mask_id].pcs <= 0) then
-					updated_texts[4].text = updated_texts[4].text .. managers.localization:text("bm_msk_achievement_milestone_postfix")
-				end
 
 				if slot_data.global_value and slot_data.global_value ~= "normal" then
 					local gvalue_tweak = tweak_data.lootdrop.global_values[slot_data.global_value]
@@ -6870,6 +6896,39 @@ function BlackMarketGui:update_info_text()
 			updated_texts[3].text = managers.localization:to_upper_text("bm_menu_conflict", {
 				conflict = slot_data.conflict
 			})
+		elseif slot_data.lock_texture then
+			local achievement_lock_id = managers.dlc:is_weapon_mod_achievement_locked(slot_data.name)
+			local achievement_milestone_lock_id = managers.dlc:is_weapon_mod_achievement_milestone_locked(slot_data.name)
+
+			if achievement_lock_id then
+				local dlc_tweak = tweak_data.dlc[achievement_lock_id]
+				local achievement = dlc_tweak and dlc_tweak.achievement_id
+				local achievement_visual = tweak_data.achievement.visual[achievement]
+
+				if achievement_visual then
+					updated_texts[3].text = managers.localization:to_upper_text(achievement_visual.desc_id)
+
+					if achievement_visual.progress then
+						updated_texts[3].text = updated_texts[3].text .. " (" .. tostring(achievement_visual.progress.get()) .. "/" .. tostring(achievement_visual.progress.max) .. ")"
+					end
+
+					updated_texts[3].below_stats = true
+				end
+			elseif achievement_milestone_lock_id then
+				for _, data in ipairs(tweak_data.achievement.milestones) do
+					if data.id == achievement_milestone_lock_id then
+						updated_texts[3].text = managers.localization:to_upper_text("bm_menu_milestone_reward_unlock", {
+							NUM = tostring(data.at)
+						})
+						updated_texts[3].below_stats = true
+
+						break
+					end
+				end
+			elseif managers.dlc:is_content_skirmish_locked("weapon_mods", slot_data.name) then
+				updated_texts[3].text = managers.localization:to_upper_text("bm_menu_skirmish_content_reward")
+				updated_texts[3].below_stats = true
+			end
 		end
 
 		local part_id = slot_data.name
@@ -7773,6 +7832,60 @@ function BlackMarketGui:mouse_moved(o, x, y)
 		end
 	end
 
+	if alive(self._context_panel) then
+		local context_btns = self._context_panel:child("btns"):children()
+		local update_select = false
+
+		if not self._context_btn_selected then
+			update_select = true
+		elseif not context_btns[self._context_btn_selected]:inside(x, y) then
+			context_btns[self._context_btn_selected]:set_color(tweak_data.screen_colors.button_stage_3)
+
+			self._context_btn_selected = nil
+			update_select = true
+		end
+
+		if update_select then
+			for i, btn in ipairs(context_btns) do
+				if btn:inside(x, y) then
+					self._context_btn_selected = i
+
+					managers.menu_component:post_event("highlight")
+					btn:set_color(tweak_data.screen_colors.button_stage_2)
+
+					break
+				end
+			end
+		end
+
+		if self._context_btn_selected then
+			return true, "link"
+		end
+
+		local used = false
+		local pointer = "arrow"
+
+		if self._panel:child("back_button"):inside(x, y) then
+			used = true
+			pointer = "link"
+
+			if not self._back_button_highlighted then
+				self._back_button_highlighted = true
+
+				self._panel:child("back_button"):set_color(tweak_data.screen_colors.button_stage_2)
+				managers.menu_component:post_event("highlight")
+
+				return used, pointer
+			end
+		elseif self._back_button_highlighted then
+			self._back_button_highlighted = false
+
+			self._panel:child("back_button"):set_color(tweak_data.screen_colors.button_stage_3)
+		end
+
+		return used, pointer
+	end
+
 	if self._extra_options_data then
 		local used = false
 		local pointer = "arrow"
@@ -8098,8 +8211,8 @@ function BlackMarketGui:mouse_moved(o, x, y)
 end
 
 function BlackMarketGui:mouse_pressed(button, x, y)
-	if button == Idstring("1") and managers.player:has_category_upgrade("player", "second_deployable") and self._data[1].category == "deployables" then
-		self:mouse_pressed(Idstring("0"), x, y)
+	if alive(self._context_panel) and not self._context_panel:inside(x, y) then
+		self:destroy_context_menu()
 	end
 
 	if managers.menu_scene and managers.menu_scene:input_focus() then
@@ -8117,6 +8230,21 @@ function BlackMarketGui:mouse_pressed(button, x, y)
 	end
 
 	if self._no_input then
+		return
+	end
+
+	if alive(self._context_panel) then
+		if self._context_btn_selected and button == Idstring("0") then
+			local data = self._visible_btns[self._context_btn_selected]._data
+
+			if data.callback then
+				managers.menu_component:post_event("menu_enter")
+				data.callback(self._slot_data, self._data.topic_params)
+			end
+
+			self:destroy_context_menu()
+		end
+
 		return
 	end
 
@@ -8376,6 +8504,25 @@ function BlackMarketGui:mouse_released(button, x, y)
 		return
 	end
 
+	if button == Idstring("1") and (not alive(self._context_panel) or not self._context_panel:inside(x, y)) then
+		local selected_tab = self._tabs[self._selected]
+
+		if selected_tab then
+			local slot = selected_tab:get_slot_by_mouse_position(x, y)
+
+			if slot then
+				local selected_slot = selected_tab:select_slot(slot)
+
+				self:on_slot_selected(selected_slot)
+				self:create_context_menu(x, y)
+			end
+		end
+	end
+
+	if alive(self._context_panel) then
+		return
+	end
+
 	if self._tabs[self._selected] then
 		self._tabs[self._selected]:mouse_released(button, x, y)
 	end
@@ -8383,6 +8530,10 @@ end
 
 function BlackMarketGui:mouse_clicked(o, button, x, y)
 	if not self._enabled then
+		return
+	end
+
+	if alive(self._context_panel) then
 		return
 	end
 
@@ -8409,6 +8560,10 @@ function BlackMarketGui:mouse_double_click(o, button, x, y)
 		return
 	end
 
+	if alive(self._context_panel) then
+		return
+	end
+
 	if button == Idstring("0") then
 		if not self._selected_slot._panel:inside(x, y) then
 			return
@@ -8419,16 +8574,6 @@ function BlackMarketGui:mouse_double_click(o, button, x, y)
 		end
 
 		self:press_first_btn(button)
-	elseif button == Idstring("1") then
-		if not self._selected_slot._panel:inside(x, y) then
-			return
-		end
-
-		if managers.system_menu and managers.system_menu:is_active() and not managers.system_menu:is_closing() then
-			return
-		end
-
-		self:press_second_btn(Idstring("0"))
 	end
 end
 
@@ -8802,6 +8947,10 @@ function BlackMarketGui:move_up()
 		return
 	end
 
+	if alive(self._context_panel) then
+		return
+	end
+
 	self:move(0, -1)
 end
 
@@ -8811,6 +8960,10 @@ function BlackMarketGui:move_down()
 	end
 
 	if self._renaming_item then
+		return
+	end
+
+	if alive(self._context_panel) then
 		return
 	end
 
@@ -8826,6 +8979,10 @@ function BlackMarketGui:move_left()
 		return
 	end
 
+	if alive(self._context_panel) then
+		return
+	end
+
 	self:move(-1, 0)
 end
 
@@ -8838,6 +8995,10 @@ function BlackMarketGui:move_right()
 		return
 	end
 
+	if alive(self._context_panel) then
+		return
+	end
+
 	self:move(1, 0)
 end
 
@@ -8847,6 +9008,10 @@ function BlackMarketGui:next_page(no_sound)
 	end
 
 	if self._renaming_item then
+		return
+	end
+
+	if alive(self._context_panel) then
 		return
 	end
 
@@ -8868,6 +9033,10 @@ function BlackMarketGui:previous_page(no_sound)
 	end
 
 	if self._renaming_item then
+		return
+	end
+
+	if alive(self._context_panel) then
 		return
 	end
 
@@ -8909,6 +9078,10 @@ function BlackMarketGui:press_button(button)
 
 	if self._renaming_item then
 		return
+	end
+
+	if alive(self._context_panel) then
+		return false
 	end
 
 	local btn = self._controllers_mapping and self._controllers_mapping[button:key()]
@@ -8959,6 +9132,23 @@ function BlackMarketGui:confirm_pressed()
 		return
 	end
 
+	if alive(self._context_panel) then
+		if self._context_btn_selected then
+			local data = self._visible_btns[self._context_btn_selected]._data
+
+			if data.callback then
+				managers.menu_component:post_event("menu_enter")
+				data.callback(self._slot_data, self._data.topic_params)
+			end
+
+			self:destroy_context_menu()
+
+			return true
+		end
+
+		return false
+	end
+
 	if managers.menu:is_pc_controller() and not managers.menu:is_steam_controller() then
 		return self:press_first_btn(Idstring("0"))
 	else
@@ -8973,6 +9163,16 @@ function BlackMarketGui:special_btn_pressed(button)
 
 	if self._renaming_item then
 		return
+	end
+
+	if alive(self._context_panel) then
+		if button == Idstring("cancel") then
+			self:destroy_context_menu()
+
+			return true
+		end
+
+		return false
 	end
 
 	if self._extra_options_data then
@@ -9090,6 +9290,10 @@ function BlackMarketGui:input_focus()
 		if disallow then
 			return
 		end
+	end
+
+	if alive(self._context_panel) then
+		return true
 	end
 
 	return self._renaming_item and true or not self._no_input and self._enabled and (#self._data > -1 and 1 or true) or 2
@@ -10715,9 +10919,13 @@ function BlackMarketGui:populate_player_styles(data)
 	end
 
 	local sort_data = {}
+	local tweak, global_value_tweak = nil
 
 	for i, player_style in ipairs(tweak_data.blackmarket.player_style_list) do
-		if Global.blackmarket_manager.player_styles[player_style] then
+		tweak = tweak_data.blackmarket.player_styles[player_style]
+		global_value_tweak = tweak_data.lootdrop.global_values[tweak.global_value]
+
+		if Global.blackmarket_manager.player_styles[player_style] and (not global_value_tweak or not global_value_tweak.hide_unavailable or not not managers.dlc:is_global_value_unlocked(tweak.global_value)) then
 			table.insert(sort_data, player_style)
 		end
 	end
@@ -12006,6 +12214,7 @@ function BlackMarketGui:populate_weapon_cosmetics(data)
 
 	local global_value = cosmetic_data.global_value or "normal"
 	new_data = make_cosmetic_data(data, cosmetic_id, unlocked, quality, nil, equipped)
+	new_data.akimbo_gui_data = nil
 	new_data.name_localized = managers.localization:text("bm_menu_customizable_weapon_color")
 	new_data.is_a_color_skin = true
 	new_data.bitmap_texture = color_texture
@@ -12183,46 +12392,17 @@ function BlackMarketGui:populate_mods(data)
 			new_data.corner_text.noselected_text = new_data.corner_text.selected_text
 			new_data.corner_text.noselected_color = Color.white
 		elseif not new_data.lock_texture and (not new_data.unlocked or new_data.unlocked == 0) then
-			local selected_text, noselected_text = nil
-
-			if not new_data.dlc_locked and new_data.unlock_tracker then
-				local text_id = "bm_menu_no_items"
-				local progress = ""
-				local stat = new_data.unlock_tracker.stat or false
-				local max_progress = new_data.unlock_tracker.max_progress or 0
-				local award = new_data.unlock_tracker.award or false
-
-				if false and new_data.unlock_tracker.text_id then
-					if max_progress > 0 and stat then
-						local progress_left = max_progress - (managers.achievment:get_stat(stat) or 0)
-
-						if progress_left > 0 then
-							progress = tostring(progress_left)
-							text_id = new_data.unlock_tracker.text_id
-							font = small_font
-							font_size = small_font_size
-							no_upper = true
-						end
-					elseif award then
-						local achievement = managers.achievment:get_info(award)
-						text_id = new_data.unlock_tracker.text_id
-						font = small_font
-						font_size = small_font_size
-						no_upper = true
-					end
-
-					selected_text = managers.localization:text(text_id, {
-						progress = progress
-					})
-				end
+			if managers.dlc:is_content_achievement_locked("weapon_mods", new_data.name) or managers.dlc:is_content_achievement_milestone_locked("weapon_mods", new_data.name) then
+				new_data.lock_texture = "guis/textures/pd2/lock_achievement"
+			elseif managers.dlc:is_content_skirmish_locked("weapon_mods", new_data.name) then
+				new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
+			else
+				local selected_text = managers.localization:text("bm_menu_no_items")
+				new_data.corner_text = {
+					selected_text = selected_text,
+					noselected_text = selected_text
+				}
 			end
-
-			selected_text = selected_text or managers.localization:text("bm_menu_no_items")
-			noselected_text = selected_text
-			new_data.corner_text = {
-				selected_text = selected_text,
-				noselected_text = selected_text
-			}
 		elseif new_data.unlocked and not new_data.can_afford then
 			new_data.corner_text = {
 				selected_text = managers.localization:text("bm_menu_not_enough_cash")
@@ -12344,7 +12524,7 @@ function BlackMarketGui:populate_mods(data)
 			if new_data.unlocked and not new_data.dlc_locked then
 				local weapon_mod_tweak = tweak_data.weapon.factory.parts[mod_name]
 
-				if weapon_mod_tweak and weapon_mod_tweak.type ~= "bonus" and weapon_mod_tweak.is_a_unlockable ~= true and can_apply and managers.custom_safehouse:unlocked() then
+				if weapon_mod_tweak and weapon_mod_tweak.is_a_unlockable ~= true and can_apply and managers.custom_safehouse:unlocked() then
 					table.insert(new_data, "wm_buy_mod")
 				end
 			end
@@ -12556,6 +12736,7 @@ function BlackMarketGui:populate_buy_weapon(data)
 		new_data.global_value = tweak_data.weapon[new_data.name] and tweak_data.weapon[new_data.name].global_value or "normal"
 		new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or nil
 		new_data.lock_texture = self:get_lock_icon(new_data)
+		new_data.akimbo_gui_data = tweak_data.weapon[weapon_data.weapon_id] and tweak_data.weapon[weapon_data.weapon_id].akimbo_gui_data
 
 		if new_data.unlocked and not new_data.can_afford then
 			new_data.mid_text = {
@@ -12720,6 +12901,11 @@ function BlackMarketGui:populate_buy_mask(data)
 			new_data.unlocked = -math.abs(new_data.unlocked)
 			new_data.lock_texture = self:get_lock_icon(new_data)
 			new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
+		elseif managers.dlc:is_content_achievement_locked(data.category, new_data.name) or managers.dlc:is_content_achievement_milestone_locked(data.category, new_data.name) then
+			new_data.unlocked = -math.abs(new_data.unlocked)
+			new_data.lock_texture = "guis/textures/pd2/lock_achievement"
+		elseif managers.dlc:is_content_skirmish_locked(data.category, new_data.name) and (not new_data.unlocked or new_data.unlocked == 0) then
+			new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
 		end
 
 		if tweak_data.blackmarket.masks[new_data.name].infamy_lock then
@@ -14508,7 +14694,7 @@ end
 function BlackMarketGui:_confirm_purchase_weapon_mod_callback(data)
 	managers.menu_component:post_event("item_sell")
 	managers.blackmarket:add_to_inventory(data.global_value, "weapon_mods", data.name, true)
-	managers.custom_safehouse:deduct_coins(data.cc_cost or tweak_data.safehouse.prices.weapon_mod)
+	managers.custom_safehouse:deduct_coins(data.cc_cost or tweak_data.safehouse.prices.weapon_mod, TelemetryConst.economy_origin.purchase_weapon_mod .. data.name)
 	self:reload()
 end
 
@@ -15032,7 +15218,7 @@ function BlackMarketGui:mask_mods_callback(data)
 		for i = 1, #items, 1 do
 			td = tweak_data.blackmarket[category][items[i].id]
 
-			if not listed_items[items[i].id] and td.texture or td.colors then
+			if not listed_items[items[i].id] and td.texture or td.colors or td.color then
 				table.insert(mods, items[i])
 
 				mods[#mods].pc = td.pc or td.pcs and td.pcs[1] or 10
@@ -16332,4 +16518,76 @@ function BlackMarketGui:_confirm_buy_crew_item_callback(data)
 	managers.menu_component:post_event("item_sell")
 	managers.blackmarket:buy_crew_item(data.name)
 	self:reload()
+end
+
+function BlackMarketGui:create_context_menu(x, y)
+	self:destroy_context_menu()
+
+	if #self._visible_btns == 0 then
+		return
+	end
+
+	local padding = 10
+	self._context_panel = self._panel:panel({
+		name = "context_menu",
+		x = x,
+		y = y,
+		layer = tweak_data.gui.DIALOG_LAYER
+	})
+	local btns_panel = self._context_panel:panel({
+		name = "btns",
+		layer = 2,
+		x = padding,
+		y = padding
+	})
+	local max_w = 0
+	local btn_text = nil
+
+	for index, btn in ipairs(self._visible_btns) do
+		btn_text = btns_panel:text({
+			blend_mode = "add",
+			name = btn._name,
+			text = managers.localization:to_upper_text(btn._btn_text_id, self._slot_data.btn_text_params),
+			font_size = small_font_size,
+			font = small_font,
+			color = tweak_data.screen_colors.button_stage_3
+		})
+
+		self:make_fine_text(btn_text)
+		btn_text:set_y(small_font_size * (index - 1))
+
+		max_w = math.max(max_w, btn_text:w())
+	end
+
+	btns_panel:set_size(max_w, btn_text:bottom())
+	self._context_panel:set_size(btns_panel:w() + padding * 2, btns_panel:h() + padding * 2)
+	BlackMarketGui.blur_panel(self._context_panel, 0.7)
+	BoxGuiObject:new(self._context_panel, {
+		sides = {
+			1,
+			1,
+			1,
+			1
+		}
+	})
+
+	if self._panel:w() < self._context_panel:right() then
+		self._context_panel:set_right(self._panel:w())
+	end
+
+	if self._panel:h() < self._context_panel:bottom() then
+		self._context_panel:set_bottom(y)
+	end
+end
+
+function BlackMarketGui:destroy_context_menu()
+	self._context_menu_btns = {}
+
+	if alive(self._context_panel) then
+		self._panel:remove(self._context_panel)
+		managers.menu_component:post_event("menu_exit")
+	end
+
+	self._context_panel = nil
+	self._context_btn_selected = nil
 end

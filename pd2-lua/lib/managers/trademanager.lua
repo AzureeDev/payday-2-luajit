@@ -151,6 +151,10 @@ function TradeManager:update(t, dt)
 		return
 	end
 
+	if managers.skirmish and managers.skirmish:is_skirmish() then
+		return
+	end
+
 	local is_trade_allowed = self:is_trade_allowed()
 	local is_auto_assault_ai_trade = self:update_auto_assault_ai_trade(dt, is_trade_allowed)
 

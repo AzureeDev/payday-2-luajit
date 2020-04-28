@@ -164,6 +164,8 @@ function ObjectivesManager:activate_objective(id, load_data, data)
 		return
 	end
 
+	Telemetry:send_on_player_tutorial(id)
+
 	local objective = self._objectives[id]
 
 	for _, sub_objective in pairs(objective.sub_objectives) do

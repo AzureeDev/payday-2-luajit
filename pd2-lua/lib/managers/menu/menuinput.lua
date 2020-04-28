@@ -200,17 +200,12 @@ function MenuInput:mouse_moved(o, x, y, mouse_ws)
 	local node_gui = managers.menu:active_menu().renderer:active_node_gui()
 	local select_item, select_row_item = nil
 
-	if node_gui and managers.menu_component:input_focus() ~= true then
+	if node_gui and managers.menu_component:input_focus() ~= true and not node_gui.CUSTOM_MOUSE_INPUT then
 		local inside_item_panel_parent = node_gui:item_panel_parent():inside(x, y)
 
 		for _, row_item in pairs(node_gui.row_items) do
 			if row_item.item:parameters().pd2_corner then
 				if row_item.gui_text:inside(x, y) and not self._logic:get_item(row_item.name).no_mouse_select then
-					select_item = row_item.name
-					select_row_item = row_item
-				end
-			elseif row_item.type == "grid" then
-				if row_item.gui_panel:inside(x, y) then
 					select_item = row_item.name
 					select_row_item = row_item
 				end
@@ -235,7 +230,7 @@ function MenuInput:mouse_moved(o, x, y, mouse_ws)
 		elseif selected_item.TYPE == "slider" then
 			managers.mouse_pointer:set_pointer_image("hand")
 		elseif selected_item.TYPE == "grid" then
-			local pointer = selected_item:mouse_moved(x, y, select_row_item, self._logic)
+			local pointer = selected_item:mouse_moved(x, y, select_row_item)
 
 			managers.mouse_pointer:set_pointer_image(pointer)
 		elseif selected_item.TYPE == "multi_choice" then
@@ -321,7 +316,7 @@ function MenuInput:input_grid(item, controller, mouse_click)
 
 	if axis_timer.x <= 0 then
 		if self:menu_right_input_bool() then
-			if item:move_x(1) then
+			if item:move_x(1, row_item) then
 				self:post_event("selection_next")
 				item:update_selection_position(row_item)
 			end
@@ -332,7 +327,7 @@ function MenuInput:input_grid(item, controller, mouse_click)
 				self:set_axis_x_timer(delay_pressed)
 			end
 		elseif self:menu_left_input_bool() then
-			if item:move_x(-1) then
+			if item:move_x(-1, row_item) then
 				self:post_event("selection_previous")
 				item:update_selection_position(row_item)
 			end
@@ -347,7 +342,7 @@ function MenuInput:input_grid(item, controller, mouse_click)
 
 	if axis_timer.y <= 0 then
 		if self:menu_up_input_bool() then
-			if item:move_y(-1) then
+			if item:move_y(-1, row_item) then
 				self:post_event("selection_previous")
 				item:update_selection_position(row_item)
 				self:set_axis_y_timer(delay_down)
@@ -364,7 +359,7 @@ function MenuInput:input_grid(item, controller, mouse_click)
 				end
 			end
 		elseif self:menu_down_input_bool() then
-			if item:move_y(1) then
+			if item:move_y(1, row_item) then
 				self:post_event("selection_next")
 				item:update_selection_position(row_item)
 				self:set_axis_y_timer(delay_down)
@@ -383,7 +378,7 @@ function MenuInput:input_grid(item, controller, mouse_click)
 		end
 	end
 
-	if (controller:get_input_pressed("confirm") or mouse_click) and item:set_to_selection() then
+	if controller:get_input_pressed("confirm") and item:set_to_selection() then
 		self:post_event("selection_next")
 		self._logic:trigger_item(true, item)
 	end
@@ -512,7 +507,7 @@ function MenuInput:mouse_pressed(o, button, x, y)
 			return
 		end
 
-		if node_gui then
+		if node_gui and not node_gui.CUSTOM_MOUSE_INPUT then
 			for _, row_item in pairs(node_gui.row_items) do
 				if row_item.item:parameters().pd2_corner then
 					if row_item.gui_text:inside(x, y) then
@@ -577,7 +572,7 @@ function MenuInput:mouse_pressed(o, button, x, y)
 						local item = self._logic:selected_item()
 
 						if row_item.item == item then
-							self._item_input_action_map[item.TYPE](item, self._controller, true)
+							row_item.item:mouse_pressed(button, x, y, row_item)
 						end
 					elseif row_item.type == "multi_choice" then
 						local item = row_item.item
@@ -656,6 +651,19 @@ function MenuInput:mouse_released(o, button, x, y)
 	end
 
 	self._slider_marker = nil
+	local node_gui = managers.menu:active_menu().renderer:active_node_gui()
+
+	if node_gui and not node_gui.CUSTOM_MOUSE_INPUT then
+		for _, row_item in pairs(node_gui.row_items) do
+			if row_item.type == "grid" then
+				local item = self._logic:selected_item()
+
+				if row_item.item == item then
+					row_item.item:mouse_released(button, x, y, row_item)
+				end
+			end
+		end
+	end
 
 	if managers.menu:active_menu().renderer:mouse_released(o, button, x, y) then
 		return

@@ -277,18 +277,27 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
 	local visual_seed = visual_state.visual_seed or character.visual_state.visual_seed or CriminalsManager.get_new_visual_seed()
 	local mask_id = visual_state.mask_id or character.visual_state.mask_id
 	local armor_id = visual_state.armor_id or character.visual_state.armor_id or "level_1"
+	local armor_skin = visual_state.armor_skin or character.visual_state.armor_skin or "none"
 	local player_style = self:active_player_style() or "none"
 	local suit_variation = nil
 	local user_player_style = visual_state.player_style or character.visual_state.player_style or "none"
 
 	if not self:is_active_player_style_locked() and user_player_style ~= "none" then
 		player_style = user_player_style
-		suit_variation = visual_state.suit_variation or character.visual_state.suit_variation or "none"
+		suit_variation = visual_state.suit_variation or character.visual_state.suit_variation or "default"
 	end
 
-	local armor_skin = visual_state.armor_skin or character.visual_state.armor_skin or "none"
+	local character_visual_state = {
+		is_local_peer = is_local_peer,
+		visual_seed = visual_seed,
+		player_style = player_style,
+		suit_variation = suit_variation,
+		mask_id = mask_id,
+		armor_id = armor_id,
+		armor_skin = armor_skin
+	}
 
-	CriminalsManager.set_character_visual_state(unit, character_name, is_local_peer, visual_seed, player_style, suit_variation, mask_id, armor_id, armor_skin)
+	CriminalsManager.set_character_visual_state(unit, character_name, character_visual_state)
 
 	character.visual_state = {
 		is_local_peer = is_local_peer,
@@ -301,8 +310,16 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
 	}
 end
 
-function CriminalsManager.set_character_visual_state(unit, character_name, is_local_peer, visual_seed, player_style, suit_variation, mask_id, armor_id, armor_skin)
-	print("[CriminalsManager.set_character_visual_state]", unit, character_name, is_local_peer, visual_seed, player_style, suit_variation, mask_id, armor_id, armor_skin)
+function CriminalsManager.set_character_visual_state(unit, character_name, visual_state)
+	print("[CriminalsManager.set_character_visual_state]", unit, character_name, inspect(visual_state))
+
+	local is_local_peer = visual_state.is_local_peer
+	local visual_seed = visual_state.visual_seed
+	local player_style = visual_state.player_style
+	local suit_variation = visual_state.suit_variation
+	local mask_id = visual_state.mask_id
+	local armor_id = visual_state.armor_id
+	local armor_skin = visual_state.armor_skin
 
 	if not alive(unit) then
 		return
@@ -398,7 +415,7 @@ function CriminalsManager.set_character_visual_state(unit, character_name, is_lo
 		unit:spawn_manager():remove_unit("char_mesh")
 
 		local unit_name = tweak_data.blackmarket:get_player_style_value(player_style, character_name, get_value_string("unit"))
-		local char_mesh_unit, char_name_key = nil
+		local char_mesh_unit = nil
 
 		if unit_name then
 			unit:spawn_manager():spawn_and_link_unit("_char_joint_names", "char_mesh", unit_name)

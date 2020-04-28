@@ -1,3 +1,5 @@
+require("lib/utils/accelbyte/TelemetryConst")
+
 function MenuCallbackHandler:crime_spree_is_active()
 	return managers.crime_spree:is_active()
 end
@@ -216,7 +218,7 @@ function MenuCallbackHandler:_dialog_end_crime_spree_yes()
 	if managers.crime_spree:can_refund_entry_fee() then
 		local cost = managers.crime_spree:get_start_cost(managers.crime_spree:spree_level())
 
-		managers.custom_safehouse:add_coins(cost)
+		managers.custom_safehouse:add_coins(cost, TelemetryConst.economy_origin.refund_crime_spree)
 	end
 
 	managers.crime_spree:reset_crime_spree()
@@ -547,7 +549,7 @@ function MenuCallbackHandler:crime_spree_reroll()
 end
 
 function MenuCallbackHandler:_dialog_crime_spree_reroll_yes()
-	managers.custom_safehouse:deduct_coins(managers.crime_spree:randomization_cost())
+	managers.custom_safehouse:deduct_coins(managers.crime_spree:randomization_cost(), TelemetryConst.economy_origin.crime_spree_reroll)
 	managers.crime_spree:randomize_mission_set()
 
 	if managers.menu_component:crime_spree_missions_gui() then

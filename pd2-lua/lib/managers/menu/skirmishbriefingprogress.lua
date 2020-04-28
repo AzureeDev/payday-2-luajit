@@ -8,7 +8,10 @@ function SkirmishBriefingProgress:init(parent, config)
 	self._config = deep_clone(config)
 
 	self:redraw()
-	panel:animate(callback(self, self, "_sniff_for_wave_change"))
+
+	if not self._config.static_wave then
+		panel:animate(callback(self, self, "_sniff_for_wave_change"))
+	end
 end
 
 function SkirmishBriefingProgress:_sniff_for_wave_change()
@@ -34,7 +37,7 @@ function SkirmishBriefingProgress:redraw()
 
 	self._canvas = self._gui_obj:panel()
 	local start_wave, end_wave = managers.skirmish:wave_range()
-	local current_wave = managers.skirmish:current_wave_number()
+	local current_wave = self._config.static_wave or managers.skirmish:current_wave_number() or start_wave
 	local wave_diff = end_wave - start_wave
 	local padding = 6
 	local progress = math.max((current_wave - 1) / wave_diff, 0)
@@ -49,6 +52,13 @@ function SkirmishBriefingProgress:redraw()
 
 	progress_bar:set_center_x(self._canvas:width() * 0.5)
 	progress_bar:set_center_y(self._canvas:height() * 0.5)
+
+	if self._config.align_top then
+		progress_bar:set_valign("bottom")
+		progress_bar:set_bottom(self._canvas:height())
+	end
+
+	local indicator_top = self._canvas:height()
 
 	for i = 0, wave_diff, 1 do
 		local wave_number = start_wave + i
@@ -74,6 +84,17 @@ function SkirmishBriefingProgress:redraw()
 		end
 
 		wave_indicator:set_center_x(progress_bar:x() + progress_bar:width() * wave_progress)
+
+		indicator_top = math.min(indicator_top, wave_indicator:top())
+
+		if self._config.align_top then
+			wave_indicator:set_valign("bottom")
+		end
+	end
+
+	if self._config.align_top then
+		self._canvas:set_h(self._canvas:height() - indicator_top)
+		self._gui_obj:set_h(self._canvas:height())
 	end
 end
 

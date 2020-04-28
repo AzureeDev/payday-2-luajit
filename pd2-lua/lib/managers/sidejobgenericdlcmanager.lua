@@ -1,3 +1,5 @@
+require("lib/utils/accelbyte/TelemetryConst")
+
 SideJobGenericDLCManager = SideJobGenericDLCManager or class()
 SideJobGenericDLCManager.save_version = 1
 SideJobGenericDLCManager.global_table_name = "tango"
@@ -318,7 +320,7 @@ function SideJobGenericDLCManager:_award_reward(reward)
 			end
 		end
 	elseif reward[1] == "safehouse_coins" and reward[2] > 0 then
-		managers.custom_safehouse:add_coins(reward[2])
+		managers.custom_safehouse:add_coins(reward[2], TelemetryConst.economy_origin.job_reward)
 	end
 end
 

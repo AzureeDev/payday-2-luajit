@@ -1743,12 +1743,16 @@ function IntimitateInteractionExt:interact(player)
 			if alive(managers.interaction:active_unit()) then
 				managers.interaction:active_unit():interaction():selected()
 			end
-		elseif managers.enemy:get_corpse_unit_data_from_key(self._unit:key()) then
-			local u_id = managers.enemy:get_corpse_unit_data_from_key(self._unit:key()).u_id
-
-			managers.network:session():send_to_host("alarm_pager_interaction", u_id, self.tweak_data, 3)
 		else
-			managers.network:session():send_to_host("sync_interacted", self._unit, self._unit:id(), self.tweak_data, 3)
+			managers.groupai:state():sync_alarm_pager_bluff()
+
+			if managers.enemy:get_corpse_unit_data_from_key(self._unit:key()) then
+				local u_id = managers.enemy:get_corpse_unit_data_from_key(self._unit:key()).u_id
+
+				managers.network:session():send_to_host("alarm_pager_interaction", u_id, self.tweak_data, 3)
+			else
+				managers.network:session():send_to_host("sync_interacted", self._unit, self._unit:id(), self.tweak_data, 3)
+			end
 		end
 
 		if tweak_data.achievement.nothing_to_see_here and managers.player:local_player() == player then
@@ -2021,6 +2025,8 @@ function IntimitateInteractionExt:sync_interacted(peer, player, status, skip_ali
 			end
 		elseif status == "started" then
 			self._unit:sound():stop()
+		elseif status == "complete" then
+			managers.groupai:state():sync_alarm_pager_bluff()
 		end
 	elseif self.tweak_data == "corpse_dispose" then
 		if peer then

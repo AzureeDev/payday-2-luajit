@@ -417,14 +417,11 @@ function HuskPlayerMovement:set_character_anim_variables()
 
 	self._machine:set_global("husk" .. tostring(char_index), 1)
 	self:check_visual_equipment()
-	self._unit:contour():update_materials()
-	self._unit:contour():add("teammate", nil, nil)
 
 	local color_id = managers.criminals:character_color_id_by_unit(self._unit)
 
-	if color_id then
-		self._unit:contour():change_color("teammate", tweak_data.peer_vector_colors[color_id])
-	end
+	self._unit:contour():update_materials()
+	self._unit:contour():add("teammate", nil, nil, color_id and tweak_data.peer_vector_colors[color_id])
 end
 
 function HuskPlayerMovement:check_visual_equipment()
@@ -1680,7 +1677,7 @@ function HuskPlayerMovement:_upd_attention_parachute(t, dt)
 end
 
 function HuskPlayerMovement:_upd_attention_driving(t, dt)
-	if self._driver then
+	if self._driver and self._vehicle then
 		local steer = self._vehicle:get_steer()
 		local anim = self._machine:segment_state(self._ids_base)
 		local r = math.clamp(-steer, 0, 1)

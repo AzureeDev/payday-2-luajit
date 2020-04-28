@@ -11,6 +11,7 @@ function SkirmishTweakData:init(tweak_data)
 	self:_init_ransom_amounts()
 	self:_init_job_list(tweak_data)
 	self:_init_briefing()
+	self:_init_additional_rewards()
 
 	self.custody_game_over_delay = 10
 end
@@ -635,7 +636,14 @@ function SkirmishTweakData:_init_wave_modifiers()
 		{
 			class = "ModifierEnemyHealthAndDamageByWave",
 			data = {
-				waves = health_damage_multipliers
+				waves = health_damage_multipliers,
+				excluded_enemies = {
+					damage = {
+						"sniper",
+						"heavy_swat_sniper"
+					},
+					health = {}
+				}
 			}
 		},
 		{
@@ -645,14 +653,6 @@ function SkirmishTweakData:_init_wave_modifiers()
 	self.wave_modifiers[3] = {
 		{
 			class = "ModifierSkulldozers"
-		}
-	}
-	self.wave_modifiers[5] = {
-		{
-			class = "ModifierHeavySniper",
-			data = {
-				spawn_chance = 5
-			}
 		}
 	}
 	self.wave_modifiers[7] = {
@@ -845,5 +845,40 @@ function SkirmishTweakData:_init_briefing()
 		crimenet_videos = {
 			"codex/locke1"
 		}
+	}
+end
+
+function SkirmishTweakData:_init_additional_rewards()
+	local tier1 = deep_clone(self.weekly_rewards[1])
+	local tier2 = deep_clone(self.weekly_rewards[2])
+	local tier3 = deep_clone(self.weekly_rewards[3])
+	tier2.weapon_skins = {
+		"color_red_crust",
+		"color_blue_deluxe",
+		"color_purple_song",
+		"color_blue_teal",
+		"color_green_mellow"
+	}
+	tier3.weapon_skins = {
+		"color_blue_deep",
+		"color_blue_ice",
+		"color_orange_mellow",
+		"color_green_deluxe",
+		"color_pink_cat"
+	}
+	self.additional_rewards = {
+		[3] = tier1,
+		[5] = tier2,
+		[9] = tier3
+	}
+	self.additional_lootdrops = {
+		[3.0] = 1,
+		[5.0] = 2,
+		[9.0] = 4
+	}
+	self.additional_coins = {
+		[3.0] = 1,
+		[5.0] = 2,
+		[9.0] = 3
 	}
 end

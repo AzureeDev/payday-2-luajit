@@ -207,6 +207,7 @@ function CoreParticleEditorPanel:create_effect_panel(parent)
 
 	self._atom_textctrl = EWS:TextCtrl(panel, "", "", "TE_PROCESS_ENTER")
 
+	self._atom_textctrl:set_min_size(Vector3(100, 20, 0))
 	self._atom_textctrl:connect("EVT_COMMAND_TEXT_ENTER", callback(self, self, "on_rename_atom"))
 
 	local add_button = EWS:Button(panel, "Add", "", "BU_EXACTFIT")

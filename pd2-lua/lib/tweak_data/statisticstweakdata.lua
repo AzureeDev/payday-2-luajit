@@ -262,9 +262,11 @@ function StatisticsTweakData:statistics_table()
 		self._suit_list = tweak_data.blackmarket:create_suit_strings()
 	end
 
-	local weapon_color_list = clone(tweak_data.blackmarket.weapon_colors)
+	if not self._weapon_color_list then
+		self._weapon_color_list = clone(tweak_data.blackmarket.weapon_colors)
+	end
 
-	return self._level_list, self._job_list, self._mask_list, self._weapon_list, self._melee_list, self._grenade_list, enemy_list, armor_list, character_list, deployable_list, self._suit_list, weapon_color_list
+	return self._level_list, self._job_list, self._mask_list, self._weapon_list, self._melee_list, self._grenade_list, enemy_list, armor_list, character_list, deployable_list, self._suit_list, self._weapon_color_list
 end
 
 function StatisticsTweakData:resolution_statistics_table()

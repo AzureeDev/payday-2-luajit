@@ -300,6 +300,7 @@ function SkirmishWeeklyContractDetails:_add_panels()
 	})
 	self._tabs_panel = self._panel:panel({
 		name = "TabPanel",
+		y = 2,
 		h = tab_h
 	})
 	self._tabs_scroll_panel = self._tabs_panel:panel({})

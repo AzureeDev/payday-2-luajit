@@ -65,9 +65,18 @@ function PlayerTased:enter(state_data, enter_data)
 	end
 
 	if managers.player:has_category_upgrade("player", "escape_taser") then
+		local interact_string = managers.localization:text("hud_int_escape_taser", {
+			BTN_INTERACT = managers.localization:btn_macro("interact", false)
+		})
+
+		managers.hud:show_interact({
+			icon = "mugshot_electrified",
+			text = interact_string
+		})
+
 		local target_time = managers.player:upgrade_value("player", "escape_taser", 2)
 
-		managers.player:add_coroutine("escape_tase", PlayerAction.EscapeTase, managers.player, Application:time() + target_time)
+		managers.player:add_coroutine("escape_tase", PlayerAction.EscapeTase, managers.player, managers.hud, Application:time() + target_time)
 
 		local function clbk()
 			self:give_shock_to_taser_no_damage()
@@ -126,6 +135,10 @@ function PlayerTased:exit(state_data, enter_data)
 	self._num_shocks = nil
 	self.tased = false
 	self._state_data.non_lethal_electrocution = nil
+
+	if managers.player:has_category_upgrade("player", "escape_taser") then
+		managers.hud:remove_interact()
+	end
 
 	managers.player:unregister_message(Message.SendTaserMalfunction, "taser_malfunction")
 	managers.player:unregister_message(Message.EscapeTase, "escape_tase")

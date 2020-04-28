@@ -237,32 +237,15 @@ function LootDropManager:infamous_chance(setup_data)
 	return chance * multiplier, chance, multiplier
 end
 
-function LootDropManager:new_make_drop(return_data, setup_data)
-	return_data = type(return_data) == "table" and return_data or {}
-
-	self:_new_make_drop(false, true, nil, return_data, setup_data)
+function LootDropManager:get_random_item_pc(setup_data)
+	return self:_get_random_item_pc(false, nil, setup_data)
 end
 
-function LootDropManager:_new_make_drop(debug, add_to_inventory, debug_stars, return_data, setup_data)
+function LootDropManager:_get_random_item_pc(debug, debug_stars, setup_data)
 	local plvl = managers.experience:current_level()
 	local pstars = managers.experience:level_to_stars()
 	local stars = debug_stars or pstars
 	local pc = stars * 10
-
-	if not debug then
-		print("Player level", plvl)
-		print("Player stars", pstars)
-		print("Stars", stars)
-		print("Pay class", pc)
-		print("Difficulty stars", managers.job:current_difficulty_stars() or 0)
-	end
-
-	return_data = return_data or {}
-	return_data.job_stars = stars
-	return_data.total_stars = stars
-	return_data.player_level = plvl
-	return_data.player_stars = pstars
-	return_data.payclass = pc
 	local pcs = tweak_data.lootdrop.STARS[stars].pcs
 	local chance_curve = tweak_data.lootdrop.STARS_CURVES[stars]
 	local start_chance = tweak_data.lootdrop.PC_CHANCE[stars]
@@ -293,12 +276,42 @@ function LootDropManager:_new_make_drop(debug, add_to_inventory, debug_stars, re
 			end
 
 			item_pc = pcs[i]
-			return_data.item_payclass = item_pc
 
 			break
 		end
 	end
 
+	return item_pc
+end
+
+function LootDropManager:new_make_drop(return_data, setup_data)
+	return_data = type(return_data) == "table" and return_data or {}
+
+	self:_new_make_drop(false, true, nil, return_data, setup_data)
+end
+
+function LootDropManager:_new_make_drop(debug, add_to_inventory, debug_stars, return_data, setup_data)
+	local plvl = managers.experience:current_level()
+	local pstars = managers.experience:level_to_stars()
+	local stars = debug_stars or pstars
+	local pc = stars * 10
+
+	if not debug then
+		print("Player level", plvl)
+		print("Player stars", pstars)
+		print("Stars", stars)
+		print("Pay class", pc)
+		print("Difficulty stars", managers.job:current_difficulty_stars() or 0)
+	end
+
+	return_data = return_data or {}
+	return_data.job_stars = stars
+	return_data.total_stars = stars
+	return_data.player_level = plvl
+	return_data.player_stars = pstars
+	return_data.payclass = pc
+	local item_pc = self:_get_random_item_pc(debug, debug_stars, setup_data)
+	return_data.item_payclass = item_pc
 	local infamous_chance, infamous_base_chance, infamous_base_multiplier = self:infamous_chance(setup_data)
 	local infamous_roll = math.rand(1)
 	local infamous_success = infamous_roll < infamous_chance

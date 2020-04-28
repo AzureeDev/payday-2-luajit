@@ -25,6 +25,7 @@ require("lib/managers/hud/HUDPlayerCustody")
 require("lib/managers/hud/HUDWaitingLegend")
 require("lib/managers/hud/HUDStageEndCrimeSpreeScreen")
 require("lib/managers/hud/HUDStatsScreenSkirmish")
+require("lib/managers/hud/HUDLootScreenSkirmish")
 
 HUDManager.disabled = {
 	[Idstring("guis/player_hud"):key()] = true,
@@ -1990,6 +1991,43 @@ function HUDManager:layout_lootscreen_hud()
 	end
 end
 
+function HUDManager:layout_lootscreen_skirmish_hud()
+	if self._hud_lootscreen then
+		self._hud_lootscreen:update_layout()
+	end
+end
+
+function HUDManager:setup_lootscreen_skirmish_hud()
+	local hud = managers.hud:script(IngameLobbyMenuState.GUI_LOOTSCREEN)
+	self._hud_lootscreen = HUDLootScreenSkirmish:new(hud, self:workspace("fullscreen_workspace", "menu"), self._saved_lootdrop, self._saved_setup)
+	self._saved_lootdrop = nil
+end
+
+function HUDManager:hide_lootscreen_skirmish_hud()
+	if self._hud_lootscreen then
+		self._hud_lootscreen:hide()
+	end
+end
+
+function HUDManager:show_lootscreen_skirmish_hud()
+	if self._hud_lootscreen then
+		self._hud_lootscreen:show()
+	end
+end
+
+function HUDManager:make_skirmish_cards_hud(peer, amount_cards)
+	if self._hud_lootscreen then
+		self._hud_lootscreen:make_cards(peer, amount_cards)
+	else
+		self._saved_setup = self._saved_setup or {}
+
+		table.insert(self._saved_setup, {
+			peer = peer,
+			amount_cards = amount_cards
+		})
+	end
+end
+
 function HUDManager:_create_test_circle()
 	if self._test_circle then
 		self._test_circle:remove()
@@ -2028,11 +2066,10 @@ function HUDManager:set_ai_stopped(ai_id, stopped)
 		return
 	end
 
-	local name = panel:child("name") and string.gsub(panel:child("name"):text(), "%W", "")
 	local label = nil
 
 	for _, lbl in ipairs(self._hud.name_labels) do
-		if string.gsub(lbl.character_name, "%W", "") == name then
+		if lbl.id == ai_id then
 			label = lbl
 
 			break

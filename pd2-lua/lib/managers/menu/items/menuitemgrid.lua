@@ -1,4 +1,5 @@
 require("lib/managers/menu/items/MenuItemMultiChoice")
+require("lib/managers/menu/ExtendedUiElemets")
 require("lib/managers/menu/BoxGuiObject")
 
 MenuItemGrid = MenuItemGrid or class(MenuItemMultiChoice)
@@ -15,7 +16,9 @@ function MenuItemGrid:init(data_node, parameters)
 	self._options = {}
 	self._current_index = 1
 	self._selection_index = 1
+	self._scroll_y = 1
 	self._all_options = {}
+	self._requested_textures = {}
 
 	if parameters.sort_callback then
 		self._sort_callback_name_list = string.split(parameters.sort_callback, " ")
@@ -221,12 +224,16 @@ function MenuItemGrid:input_focus()
 	return 1
 end
 
-function MenuItemGrid:move_x(x)
-	local current_column = math.ceil(self._selection_index / self._columns)
-	local new_selection_index = self._selection_index + x
-	local new_column = math.ceil(new_selection_index / self._columns)
+function MenuItemGrid:move_x(x, row_item)
+	self._selection_index = (self._selection_index + x - 1) % #self._options + 1
 
-	if new_column == current_column and new_selection_index <= #self._options then
+	return true
+
+	local current_row = math.ceil(self._selection_index / self._columns)
+	local new_selection_index = self._selection_index + x
+	local new_row = math.ceil(new_selection_index / self._columns)
+
+	if new_row == current_row and new_selection_index <= #self._options then
 		self._selection_index = new_selection_index
 
 		return true
@@ -235,11 +242,23 @@ function MenuItemGrid:move_x(x)
 	return false
 end
 
-function MenuItemGrid:move_y(y)
+function MenuItemGrid:move_y(y, row_item)
+	local current_row = math.ceil(self._selection_index / self._columns)
+	local max_row = math.ceil(#self._options / self._columns)
 	local new_selection_index = self._selection_index + self._columns * y
 
 	if new_selection_index > 0 and new_selection_index <= #self._options then
 		self._selection_index = new_selection_index
+		local selection_option = self._options[self._selection_index]
+
+		row_item.scroll_panel:scroll_to_show(selection_option.gui_panel:top(), selection_option.gui_panel:bottom())
+
+		return true
+	elseif new_selection_index > #self._options and current_row ~= max_row then
+		self._selection_index = #self._options
+		local selection_option = self._options[self._selection_index]
+
+		row_item.scroll_panel:scroll_to_show(selection_option.gui_panel:top(), selection_option.gui_panel:bottom())
 
 		return true
 	end
@@ -257,10 +276,64 @@ function MenuItemGrid:set_to_selection()
 	return false
 end
 
-function MenuItemGrid:mouse_pressed(x, y, row_item, logic)
+function MenuItemGrid:scroll_bar_grabbed(row_item)
+	return row_item.scroll_panel:scroll_item()._grabbed_scroll_bar
 end
 
-function MenuItemGrid:mouse_moved(x, y, row_item, logic)
+function MenuItemGrid:wheel_scroll_start(dy, row_item)
+	local scroll_item = row_item.scroll_panel:scroll_item()
+
+	scroll_item:perform_scroll(scroll_item.SCROLL_SPEED * TimerManager:main():delta_time() * 200, dy)
+end
+
+function MenuItemGrid:mouse_released(button, x, y, row_item)
+	row_item.grid_panel:mouse_released(button, x, y)
+
+	if self:scroll_bar_grabbed(row_item) then
+		return
+	end
+end
+
+function MenuItemGrid:mouse_pressed(button, x, y, row_item)
+	local delay_down = 0.1
+	local delay_pressed = 0.2
+	local active_menu = managers.menu:active_menu()
+
+	if not managers.menu:active_menu() then
+		return
+	end
+
+	local logic = active_menu.logic
+	local input = active_menu.input
+	local controller = input:get_controller_class()
+	local node_gui = row_item.node_gui
+	local mouse_click = button == Idstring("0")
+
+	if node_gui and node_gui._listening_to_input then
+		return
+	end
+
+	row_item.grid_panel:mouse_pressed(button, x, y)
+
+	if self:scroll_bar_grabbed(row_item) then
+		return
+	end
+
+	local inside_selection = self._options[self._selection_index].gui_panel:inside(x, y)
+
+	if (controller:get_input_pressed("confirm") or mouse_click and inside_selection) and self:set_to_selection() then
+		input:post_event("selection_next")
+		logic:trigger_item(true, self)
+	end
+end
+
+function MenuItemGrid:mouse_moved(x, y, row_item)
+	local hover, cursor_type = row_item.grid_panel:mouse_moved(self, x, y)
+
+	if self:scroll_bar_grabbed(row_item) then
+		return cursor_type
+	end
+
 	if not self._options[self._selection_index].gui_panel:inside(x, y) then
 		for index, option in ipairs(self._options) do
 			if self._selection_index ~= index and option.gui_panel:inside(x, y) then
@@ -275,62 +348,134 @@ function MenuItemGrid:mouse_moved(x, y, row_item, logic)
 		return "link"
 	end
 
-	return "arrow"
+	return cursor_type
 end
 
 function MenuItemGrid:setup_gui(node_gui, row_item)
+	local safe_rect = managers.gui_data:scaled_size()
+	local align_line_padding = self:parameters().align_line_padding or node_gui:align_line_padding()
+	local gui_width = safe_rect.width - node_gui:_mid_align(self:parameters().align_line_proportions) - align_line_padding * 2
+	local slot_width = (gui_width - 10) / self._columns
+	local slot_height = slot_width * (self:parameters().height_aspect or 1)
+	local gui_height = slot_height * self._rows
 	row_item.gui_panel = node_gui.item_panel:panel({
-		w = node_gui.item_panel:w()
+		w = gui_width,
+		h = gui_height
 	})
-	row_item.grid_panel = row_item.gui_panel:panel()
-	row_item.choice_panel = row_item.grid_panel:panel({
-		valign = "grow",
-		name = "choice_panel",
-		halign = "grow"
+	row_item.grid_panel = ExtendedPanel:new(row_item.gui_panel)
+	row_item.scroll_panel = ScrollableList:new(row_item.grid_panel, {
+		input = true,
+		input_focus = true,
+		scrollbar_y_padding = 0,
+		x_padding = 0.0001,
+		bar_minimum_size = 0,
+		y_padding = 0,
+		scrollbar_padding = 2,
+		scroll_w = 4,
+		layer = node_gui.layers.items,
+		update = self._scroll_update,
+		w = gui_width,
+		h = gui_height
+	}, {
+		padding = 0
 	})
+	local scroll_item = row_item.scroll_panel:scroll_item()
+	local scroll_canvas = row_item.scroll_panel:canvas()
+	local scroll_placer = scroll_canvas:placer()
+	local box = BoxGuiObject:new(scroll_item:scroll_panel(), {
+		w = scroll_canvas:w(),
+		sides = {
+			0,
+			0,
+			0,
+			0
+		}
+	})
+	scroll_item.scroll_indicators = {
+		up_no_scroll = BoxGuiObject:new(box._panel, {
+			sides = {
+				0,
+				0,
+				0,
+				0
+			}
+		}),
+		up_scroll = BoxGuiObject:new(box._panel, {
+			sides = {
+				0,
+				0,
+				2,
+				0
+			}
+		}),
+		down_no_scroll = BoxGuiObject:new(box._panel, {
+			sides = {
+				0,
+				0,
+				0,
+				0
+			}
+		}),
+		down_scroll = BoxGuiObject:new(box._panel, {
+			sides = {
+				0,
+				0,
+				0,
+				2
+			}
+		})
+	}
 	row_item.marker_panel = row_item.grid_panel:panel({
-		valign = "grow",
 		name = "marker_panel",
-		halign = "grow",
-		layer = node_gui.layers.marker
+		layer = node_gui.layers.items + 3
 	})
-	row_item.selection_panel = row_item.grid_panel:panel({
-		valign = "grow",
+	row_item.selection_panel = scroll_canvas:panel({
 		name = "selection_panel",
-		halign = "grow",
-		layer = node_gui.layers.marker
+		w = slot_width,
+		h = slot_height,
+		layer = node_gui.layers.items + 2
 	})
-	row_item.current_panel = row_item.grid_panel:panel({
-		valign = "grow",
+	row_item.current_panel = scroll_canvas:panel({
 		name = "current_panel",
-		halign = "grow",
-		layer = node_gui.layers.marker
-	})
-	row_item.background_panel = row_item.grid_panel:panel({
-		valign = "grow",
-		name = "background_panel",
-		halign = "grow",
-		layer = node_gui.layers.background
+		w = slot_width,
+		h = slot_height,
+		layer = node_gui.layers.items + 2
 	})
 	row_item.gui_boxes = {}
-	local color, texture_path, parameters = nil
 
-	for _, option in ipairs(self._all_options) do
-		option.gui_panel = row_item.choice_panel:panel({
-			alpha = 1,
-			w = 10,
-			h = 10,
-			layer = node_gui.layers.items
-		})
+	self:_create_gui_box(row_item, "marker", row_item.marker_panel, 2, false)
+	self:_create_gui_box(row_item, "current", row_item.current_panel, 1)
+	self:_create_gui_box(row_item, "selection", row_item.selection_panel, 2)
+	row_item.gui_boxes.selection:set_visible(self.highlighted)
+
+	local color, texture_path, parameters, column, row = nil
+	local current_row = 0
+
+	for index, option in ipairs(self._options) do
 		parameters = option:parameters()
+		column = (index - 1) % self._columns
+		row = math.floor((index - 1) / self._columns)
+
+		if row ~= current_row then
+			scroll_placer:new_row()
+
+			current_row = row
+		end
+
+		option.gui_panel = scroll_canvas:panel({
+			alpha = 1,
+			w = slot_width,
+			h = slot_height
+		})
+
+		scroll_placer:add_right(option.gui_panel)
 
 		if parameters.texture then
 			texture_path = Idstring(parameters.texture)
 
-			if DB:has(ids_texture, texture_path) then
-				option.texture_ready = false
-				option.requested_texture = texture_path
-
+			if table.contains(self._requested_textures, texture_path) then
+				self:option_texture_loaded_clbk(option, texture_path)
+			elseif DB:has(ids_texture, texture_path) then
 				TextureCache:request(texture_path, "NORMAL", callback(self, self, "option_texture_loaded_clbk", option), 100)
 			end
 		end
@@ -338,78 +483,86 @@ function MenuItemGrid:setup_gui(node_gui, row_item)
 		if not option.enabled and option.disabled_icon then
 			option.gui_disabled_icon = option.gui_panel:bitmap({
 				blend_mode = "normal",
-				layer = 2,
+				layer = 1,
+				y = 32,
+				w = 32,
 				texture = option.disabled_icon,
 				texture_rect = option.disabled_texture_rect,
 				color = parameters.disabled_icon_color or tweak_data.screen_colors.important_1
 			})
-		end
-	end
 
-	self:_layout(row_item, node_gui)
-
-	return true
-end
-
-function MenuItemGrid:_layout(row_item, node_gui)
-	local safe_rect = managers.gui_data:scaled_size()
-	local align_line_padding = self:parameters().align_line_padding or node_gui:align_line_padding()
-	local gui_width = safe_rect.width - node_gui:_mid_align(self:parameters().align_line_proportions) - align_line_padding * 2
-	local slot_width = gui_width / self._columns
-	local slot_height = slot_width * (self:parameters().height_aspect or 1)
-	local gui_height = slot_height * self._rows
-
-	row_item.gui_panel:set_size(gui_width, gui_height)
-	row_item.grid_panel:set_size(gui_width, gui_height)
-	row_item.grid_panel:set_position(0, 0)
-	self:_create_gui_box(row_item, "marker", row_item.marker_panel, 2, false)
-
-	for index, option in ipairs(self._all_options) do
-		option.gui_panel:hide()
-	end
-
-	row_item.current_panel:set_size(slot_width, slot_height)
-	row_item.selection_panel:set_size(slot_width, slot_height)
-	self:_create_gui_box(row_item, "current", row_item.current_panel, 1)
-	self:_create_gui_box(row_item, "selection", row_item.selection_panel, 2)
-	row_item.gui_boxes.selection:set_visible(self.highlighted)
-
-	local x, y = nil
-
-	for index, option in ipairs(self._options) do
-		option.gui_panel:show()
-
-		x = (index - 1) % self._columns * slot_width
-		y = math.floor((index - 1) / self._columns) * slot_height
-
-		option.gui_panel:set_shape(x, y, slot_width, slot_height)
-
-		if option.gui_disabled_icon then
-			option.gui_disabled_icon:set_size(32, 32)
 			option.gui_disabled_icon:set_center(option.gui_panel:w() / 2, option.gui_panel:h() / 2)
 		end
-
-		self:_update_option_icon_size(option)
 	end
 
+	if self.scroll_y then
+		scroll_item:scroll_to(self.scroll_y)
+	end
+
+	local current_option = self._options[self._current_index]
+
+	if current_option then
+		row_item.scroll_panel:scroll_to_show(current_option.gui_panel:top(), current_option.gui_panel:bottom())
+	end
+
+	scroll_item:reset_scroll_indicator_alphas()
 	self:update_selection_position(row_item)
 
 	if row_item.gui_info_panel then
 		node_gui:_align_item_gui_info_panel(row_item.gui_info_panel)
 		node_gui:_align_info_panel(row_item)
 	end
+
+	return true
+end
+
+function MenuItemGrid:_scroll_update(dt)
+	local element, step = nil
+
+	for element_name, data in pairs(self._alphas) do
+		step = dt == -1 and 1 or dt * data.speed
+		data.current = math.step(data.current, data.target, step)
+		element = self:panel():child(element_name)
+
+		if alive(element) then
+			element:set_alpha(data.current)
+		end
+	end
+
+	if self._alphas.scroll_up_indicator_arrow.target == 1 then
+		self.scroll_indicators.up_scroll:show()
+		self.scroll_indicators.up_no_scroll:hide()
+	else
+		self.scroll_indicators.up_scroll:hide()
+		self.scroll_indicators.up_no_scroll:show()
+	end
+
+	if self._alphas.scroll_down_indicator_arrow.target == 1 then
+		self.scroll_indicators.down_scroll:show()
+		self.scroll_indicators.down_no_scroll:hide()
+	else
+		self.scroll_indicators.down_scroll:hide()
+		self.scroll_indicators.down_no_scroll:show()
+	end
+end
+
+function MenuItemGrid:close(row_item)
+	for _, ids in ipairs(self._requested_textures) do
+		TextureCache:unretrieve(ids)
+	end
+
+	self._requested_textures = {}
 end
 
 function MenuItemGrid:option_texture_loaded_clbk(option, texture_idstring)
 	option.gui_icon = option.gui_panel:bitmap({
 		blend_mode = "normal",
-		layer = 1,
 		texture = texture_idstring
 	})
 
-	TextureCache:unretrieve(texture_idstring)
-
-	option.texture_ready = true
+	if not table.contains(self._requested_textures, texture_idstring) then
+		table.insert(self._requested_textures, texture_idstring)
+	end
 
 	if not option.enabled then
 		option.gui_icon:set_color(Color(0.5, 0.5, 0.5))
@@ -438,11 +591,17 @@ function MenuItemGrid:_update_option_icon_size(option)
 end
 
 function MenuItemGrid:clear_gui(row_item)
-	for _, option in ipairs(self._all_options) do
-		if option.requested_texture and not option.texture_ready then
-			TextureCache:unretrieve(option.requested_texture)
+	if row_item.scroll_panel then
+		self.scroll_y = -row_item.scroll_panel:canvas():y()
+	end
 
-			option.requested_texture = nil
+	for _, option in ipairs(self._all_options) do
+		if option.gui_panel then
+			option.gui_panel:parent():remove(option.gui_panel)
+
+			option.gui_panel = nil
+			option.gui_icon = nil
+			option.gui_disabled_icon = nil
 		end
 	end
 end
@@ -458,6 +617,10 @@ function MenuItemGrid:highlight_row_item(node, row_item, mouse_over)
 	self._selection_index = self._current_index
 
 	self:update_selection_position(row_item)
+
+	local selection_option = self._options[self._selection_index]
+
+	row_item.scroll_panel:scroll_to_show(selection_option.gui_panel:top(), selection_option.gui_panel:bottom())
 
 	return true
 end

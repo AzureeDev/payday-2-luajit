@@ -125,6 +125,7 @@ require("lib/utils/Bitwise")
 require("lib/utils/WeightedSelector")
 require("lib/units/MaskExt")
 require("lib/utils/dev/api/TestAPI")
+require("lib/utils/accelbyte/Telemetry")
 
 script_data = script_data or {}
 game_state_machine = game_state_machine or nil
@@ -592,6 +593,7 @@ function Setup:update(t, dt)
 	end
 
 	TestAPIHelper.update(t, dt)
+	Telemetry:update(t, dt)
 end
 
 function Setup:paused_update(t, dt)

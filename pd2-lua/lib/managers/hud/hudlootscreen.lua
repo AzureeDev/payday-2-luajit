@@ -686,7 +686,7 @@ function HUDLootScreen:make_lootdrop(lootdrop_data)
 			peer_id,
 			category == "textures" and true or false
 		})
-		local texture_path = nil
+		local texture_path, rarity_path = nil
 
 		if category == "textures" then
 			texture_path = tweak_data.blackmarket.textures[item_id].texture
@@ -722,6 +722,22 @@ function HUDLootScreen:make_lootdrop(lootdrop_data)
 			else
 				texture_path = "guis/dlcs/cash/safes/default/safes/default_01"
 			end
+		elseif category == "weapon_skins" then
+			local weapon_id = managers.blackmarket:get_weapon_id_by_cosmetic_id(item_id)
+			texture_path, rarity_path = managers.blackmarket:get_weapon_icon_path(weapon_id, {
+				id = item_id
+			})
+		elseif category == "armor_skins" then
+			local skin_tweak = tweak_data.economy.armor_skins[item_id]
+			local guis_catalog = "guis/"
+			local bundle_folder = skin_tweak.texture_bundle_folder
+
+			if bundle_folder then
+				guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
+			end
+
+			texture_path = guis_catalog .. "armor_skins/" .. item_id
+			rarity_path = managers.blackmarket:get_cosmetic_rarity_bg(skin_tweak.rarity or "common")
 		elseif category == "drills" then
 			local td = tweak_data.economy[category] and tweak_data.economy[category][item_id]
 
@@ -762,6 +778,34 @@ function HUDLootScreen:make_lootdrop(lootdrop_data)
 			texture_path = guis_catalog .. "textures/pd2/blackmarket/icons/" .. tostring(category) .. "/" .. tostring(guis_id)
 		end
 
+		if rarity_path then
+			local rarity_bitmap = item_panel:bitmap({
+				blend_mode = "add",
+				texture = rarity_path
+			})
+			local texture_width = rarity_bitmap:texture_width()
+			local texture_height = rarity_bitmap:texture_height()
+			local panel_width = item_panel:w()
+			local panel_height = item_panel:h()
+			local tw = texture_width
+			local th = texture_height
+			local pw = panel_width
+			local ph = panel_height
+
+			if tw == 0 or th == 0 then
+				Application:error("[MenuNodeOpenContainerGui] BG Texture size error!:", "width", tw, "height", th)
+
+				tw = 1
+				th = 1
+			end
+
+			local sw = math.min(pw, ph * tw / th)
+			local sh = math.min(ph, pw / (tw / th))
+
+			rarity_bitmap:set_size(math.round(sw) * 2, math.round(sh) * 2)
+			rarity_bitmap:set_center(item_panel:w() * 0.5, item_panel:h() * 0.5)
+		end
+
 		Application:debug("Requesting Texture", texture_path, "PEER", peer_id)
 
 		if DB:has(Idstring("texture"), texture_path) then
@@ -791,6 +835,7 @@ function HUDLootScreen:texture_loaded_clbk(params, texture_idstring)
 	local panel = self._peers_panel:child("peer" .. tostring(peer_id)):child("item")
 	local item = panel:bitmap({
 		blend_mode = "normal",
+		layer = 1,
 		texture = texture_idstring
 	})
 
@@ -911,6 +956,11 @@ function HUDLootScreen:begin_choose_card(peer_id, card_id)
 		"upcard_weapon_bonus"
 	}
 
+	table.insert(card_nums, "upcard_cosmetic")
+
+	type_to_card.weapon_skins = #card_nums
+	type_to_card.armor_skins = #card_nums
+
 	for i, pc in ipairs(cards) do
 		local my_card = i == card_id
 		local card_panel = panel:child("card" .. i)
@@ -982,6 +1032,11 @@ function HUDLootScreen:begin_flip_card(peer_id)
 		"upcard_drill",
 		"upcard_weapon_bonus"
 	}
+
+	table.insert(card_nums, "upcard_cosmetic")
+
+	type_to_card.weapon_skins = #card_nums
+	type_to_card.armor_skins = #card_nums
 	local lootdrop_data = self._peer_data[peer_id].lootdrops
 	local item_category = lootdrop_data[3]
 	local item_id = lootdrop_data[4]
