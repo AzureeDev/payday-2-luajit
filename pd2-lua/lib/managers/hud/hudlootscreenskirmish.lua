@@ -187,7 +187,7 @@ function HUDLootScreenSkirmish:create_peers()
 	self._peers_panel = ExtendedPanel:new(self._panel)
 	self._peer_width = peer_panel_width
 
-	for peer_id = 1, max_peers, 1 do
+	for peer_id = 1, max_peers do
 		peer_color = tweak_data.chat_colors[peer_id] or tweak_data.chat_colors[#tweak_data.chat_colors]
 		placer = UiPlacer:new(SMALL_PADDING, SMALL_PADDING, SMALL_PADDING, PADDING)
 		peer_panel = ExtendedPanel:new(self._peers_panel, {
@@ -238,7 +238,7 @@ function HUDLootScreenSkirmish:create_peers()
 		})
 		cards = {}
 
-		for i = 1, CARDS_PER_ROW * NUM_OF_ROWS, 1 do
+		for i = 1, CARDS_PER_ROW * NUM_OF_ROWS do
 			if i % CARDS_PER_ROW == 1 then
 				cards_panel:placer():new_row()
 			end
@@ -282,7 +282,7 @@ function HUDLootScreenSkirmish:set_num_visible(num)
 
 	self._num_visible = num
 
-	for peer_id = 1, tweak_data.max_players, 1 do
+	for peer_id = 1, tweak_data.max_players do
 		self._peer_data[peer_id].panel:set_visible(peer_id <= num)
 	end
 
@@ -326,7 +326,7 @@ function HUDLootScreenSkirmish:make_cards(peer, amount)
 		card.flipped = false
 	end
 
-	for i = 1, amount, 1 do
+	for i = 1, amount do
 		card = data.cards[i]
 		card.icon = card.panel:bitmap({
 			name = "card_icon",
@@ -482,7 +482,7 @@ end
 function HUDLootScreenSkirmish:clear_other_peers(peer_id)
 	peer_id = peer_id or self:get_local_peer_id()
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		if i ~= peer_id then
 			self:remove_peer(i)
 		end
@@ -528,11 +528,11 @@ function HUDLootScreenSkirmish:_update_flip_cards(t, dt)
 	local data, card = nil
 	local card_index = 1
 
-	for peer_id = 1, tweak_data.max_players, 1 do
+	for peer_id = 1, tweak_data.max_players do
 		data = self._peer_data[peer_id]
 
-		for y = 1, NUM_OF_ROWS, 1 do
-			for x = 1, CARDS_PER_ROW, 1 do
+		for y = 1, NUM_OF_ROWS do
+			for x = 1, CARDS_PER_ROW do
 				if data.active then
 					card = data.cards[(y - 1) * CARDS_PER_ROW + x]
 

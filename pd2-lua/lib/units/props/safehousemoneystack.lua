@@ -15,7 +15,7 @@ end
 function SafehouseMoneyStack:_setup()
 	self._small_sequences = {}
 
-	for i = 1, SafehouseMoneyStack.SMALL_STEPS, 1 do
+	for i = 1, SafehouseMoneyStack.SMALL_STEPS do
 		local post_fix = (i < 10 and "0" or "") .. i
 
 		table.insert(self._small_sequences, "var_small_money_grow_" .. post_fix)
@@ -24,7 +24,7 @@ function SafehouseMoneyStack:_setup()
 	self._sequences = {}
 	self._big_steps = {}
 
-	for i = 1, SafehouseMoneyStack.STEPS, 1 do
+	for i = 1, SafehouseMoneyStack.STEPS do
 		local post_fix = (i < 10 and "0" or "") .. i
 
 		table.insert(self._sequences, "var_money_grow_" .. post_fix)
@@ -58,7 +58,7 @@ function SafehouseMoneyStack:_run_sequences(money)
 
 	print("where large", where, step_index)
 
-	for i = 1, step_index, 1 do
+	for i = 1, step_index do
 		self._big_steps[i].object:set_visibility(true)
 		self._big_steps[i].body:set_enabled(true)
 	end

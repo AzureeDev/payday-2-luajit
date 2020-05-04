@@ -197,7 +197,7 @@ function ElementLaserTrigger:update_laser_draw(t, dt)
 
 			local index = self._cycle_index - 1
 
-			for j = 1, self._values.cycle_active_amount, 1 do
+			for j = 1, self._values.cycle_active_amount do
 				index = index + 1
 
 				if index > #self._cycle_order then

@@ -1114,7 +1114,7 @@ end
 
 function CrimeSpreeTweakData:get_index_from_id(level_id)
 	if level_id then
-		for i = 1, 3, 1 do
+		for i = 1, 3 do
 			local mission_type = self:get_mission_type_from_index(i)
 
 			for index, mission in ipairs(self.missions[mission_type]) do

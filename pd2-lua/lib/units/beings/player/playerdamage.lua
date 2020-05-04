@@ -351,7 +351,7 @@ function PlayerDamage:update(unit, t, dt)
 		local intensity_mul = 1 - (t - self._heartbeat_start_t) / (self._heartbeat_t - self._heartbeat_start_t)
 		local controller = self._unit:base():controller():get_controller("vr")
 
-		for i = 0, 1, 1 do
+		for i = 0, 1 do
 			local intensity = get_heartbeat_value(t)
 			intensity = intensity * (1 - math.clamp(self:health_ratio() / 0.3, 0, 1))
 			intensity = intensity * intensity_mul

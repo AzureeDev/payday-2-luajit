@@ -26,7 +26,7 @@ function HandStateMachine:init(states, default_l, default_r)
 		for connection, data in pairs(state._connections or {}) do
 			self._possible_inputs[connection] = self._possible_inputs[connection] or {}
 
-			for hand = 1, 2, 1 do
+			for hand = 1, 2 do
 				if not data.hand or data.hand == hand then
 					local hand_suffix = hand == 1 and "r" or "l"
 					local inputs = type(data.inputs) == "table" and data.inputs or {}

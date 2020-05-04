@@ -34,7 +34,7 @@ function ElementRandom:on_executed(instigator)
 		amount = element:counter_value()
 	end
 
-	for i = 1, math.min(amount, #self._original_on_executed), 1 do
+	for i = 1, math.min(amount, #self._original_on_executed) do
 		table.insert(self._values.on_executed, self._original_on_executed[self:_get_random_elements()])
 	end
 

@@ -1001,7 +1001,7 @@ function CopMovement:_change_stance(stance_code, instant)
 			stance.code = stance_code
 			stance.name = CopMovement._stance.names[stance_code]
 
-			for i = 1, 3, 1 do
+			for i = 1, 3 do
 				stance.values[i] = 0
 			end
 
@@ -2970,7 +2970,7 @@ function CopMovement:_set_unit_bullet_objects_visible(unit, bullet_objects, visi
 	if bullet_objects then
 		local prefix = bullet_objects.prefix
 
-		for i = 1, bullet_objects.amount, 1 do
+		for i = 1, bullet_objects.amount do
 			local object = unit:get_object(Idstring(prefix .. i))
 
 			if object then

@@ -80,7 +80,7 @@ function MenuBackdropGUI:init(ws, gui_data_manager, fixed_dt)
 
 	self._layer_layers = {}
 
-	for i = 1, 6, 1 do
+	for i = 1, 6 do
 		table.insert(self._layer_layers, 0)
 	end
 
@@ -373,7 +373,7 @@ function MenuBackdropGUI:set_particles_object(bitmap_texture, row, column, num_p
 
 	self:_set_layers_of_layer(4, 1)
 
-	for i = 1, num_particles, 1 do
+	for i = 1, num_particles do
 		self:_create_particle()
 	end
 end

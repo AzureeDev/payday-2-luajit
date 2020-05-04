@@ -119,7 +119,7 @@ function EnvironmentFire:on_spawn(data, normal, user_unit, added_time, range_mul
 		end
 	end
 
-	for i = 1, self._hexes, 1 do
+	for i = 1, self._hexes do
 		vector = position + offset
 		raycast = World:raycast("ray", position, vector, "slot_mask", slotmask)
 		local ray_cast, fake_ball_outline = nil

@@ -191,7 +191,7 @@ function SkirmishContractBoxGui:create_contract_box()
 		}
 	})
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		local peer = managers.network:session():peer(i)
 
 		if peer then

@@ -831,7 +831,7 @@ function NavigationManager:_draw_room_boundaries(progress)
 	local room_count = #nav_rooms
 	local draw_i = math.clamp(math.ceil(room_count * progress), 1, room_count - 1)
 
-	for i = draw_i, draw_i + 1, 1 do
+	for i = draw_i, draw_i + 1 do
 		self:_draw_room_boundary(i, nav_rooms[i])
 	end
 end
@@ -859,7 +859,7 @@ function NavigationManager:_draw_room_boundary(index, nav_room_list)
 	local hull_data = self._hulls[index]
 	local hull_points = hull_data.hull:hull()
 
-	for i = 1, #hull_points - 1, 1 do
+	for i = 1, #hull_points - 1 do
 		if hull_points[i] and hull_points[i + 1] then
 			hull_data.brush:line(hull_points[i], hull_points[i + 1], 5)
 		end
@@ -2131,7 +2131,7 @@ function NavigationManager:draw_path(path, color_link, color_node, duration)
 
 		brush_node:sphere(CopActionWalk._nav_point_pos(path[1]), 15)
 
-		for i = 2, #path, 1 do
+		for i = 2, #path do
 			if path[i].x then
 				brush_node:sphere(path[i], 8)
 

@@ -64,7 +64,7 @@ function CoreWorldInstanceManager:get_safe_name(instance_name, name)
 		names[instance_data.name] = true
 	end
 
-	for i = start_number, 10000, 1 do
+	for i = start_number, 10000 do
 		i = (i < 10 and "00" or i < 100 and "0" or "") .. i
 		local name_id = name .. i
 

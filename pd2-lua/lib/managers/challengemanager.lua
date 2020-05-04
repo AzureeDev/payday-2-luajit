@@ -170,7 +170,7 @@ function ChallengeManager:_load_challenges_from_xml()
 					if data.texture_rect then
 						texture_rect = string.split(data.texture_rect, ",")
 
-						for i = 1, #texture_rect, 1 do
+						for i = 1, #texture_rect do
 							texture_rect[i] = tonumber(texture_rect[i])
 						end
 					end
@@ -556,7 +556,7 @@ function ChallengeManager:_give_reward(challenge, reward)
 		local entry = tweak_data:get_raw_value("blackmarket", reward.type_items, reward.item_entry)
 
 		if entry then
-			for i = 1, reward.amount or 1, 1 do
+			for i = 1, reward.amount or 1 do
 				local global_value = reward.global_value or entry.infamous and "infamous" or entry.global_value or entry.dlc or entry.dlcs and entry.dlcs[math.random(#entry.dlcs)] or "normal"
 
 				cat_print("jansve", "[ChallengeManager:_give_rewards]", i .. "  give", reward.type_items, reward.item_entry, global_value)

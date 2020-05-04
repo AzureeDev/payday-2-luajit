@@ -28,7 +28,7 @@ function UnoAchievementChallenge:generate_challenge(trigger_save)
 	local pool = tweak_data.safehouse.uno_achievements_pool
 	local challenge = table.shuffled_copy(pool)
 
-	for i = self.CHALLENGE_COUNT + 1, #pool, 1 do
+	for i = self.CHALLENGE_COUNT + 1, #pool do
 		challenge[i] = nil
 	end
 

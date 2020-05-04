@@ -73,7 +73,7 @@ function HUDLootScreen:init(hud, workspace, saved_lootdrop, saved_selected, save
 	self._peer_data = {}
 	self._peers_panel = self._hud_panel:panel({})
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		self:create_peer(self._peers_panel, i)
 	end
 
@@ -253,7 +253,7 @@ function HUDLootScreen:create_peer(peers_panel, peer_id)
 	local total_cards_w = panel:w() - peer_info_panel:w() - card_info_panel:w() - 10
 	local card_w = math.round((total_cards_w - 10) / 3)
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		local card_panel = panel:panel({
 			halign = "scale",
 			y = 10,
@@ -334,7 +334,7 @@ end
 function HUDLootScreen:set_num_visible(peers_num)
 	self._num_visible = math.max(self._num_visible, peers_num)
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		self._peers_panel:child("peer" .. i):set_visible(i <= self._num_visible)
 	end
 
@@ -407,7 +407,7 @@ function HUDLootScreen:set_selected(peer_id, selected)
 	local is_local_peer = peer_id == self:get_local_peer_id()
 	local aspect = 0.7111111111111111
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		local card_panel = panel:child("card" .. i)
 		local downcard = card_panel:child("downcard")
 		local bg = card_panel:child("bg")
@@ -430,7 +430,7 @@ end
 function HUDLootScreen:clear_other_peers(peer_id)
 	peer_id = peer_id or self:get_local_peer_id()
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		if i ~= peer_id then
 			self:remove_peer(i)
 		end
@@ -440,7 +440,7 @@ end
 function HUDLootScreen:check_all_ready()
 	local ready = true
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		if self._peer_data[i].active then
 			ready = ready and self._peer_data[i].ready
 		end
@@ -614,7 +614,7 @@ function HUDLootScreen:make_cards(peer, max_pc, left_card, right_card)
 	peer_info_panel:show()
 	panel:child("card_info"):show()
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		panel:child("card" .. i):show()
 	end
 
@@ -1335,7 +1335,7 @@ function HUDLootScreen:show_item(peer_id)
 end
 
 function HUDLootScreen:update(t, dt)
-	for peer_id = 1, tweak_data.max_players, 1 do
+	for peer_id = 1, tweak_data.max_players do
 		if self._peer_data[peer_id].wait_t then
 			self._peer_data[peer_id].wait_t = math.max(self._peer_data[peer_id].wait_t - dt, 0)
 			local panel = self._peers_panel:child("peer" .. tostring(peer_id))
@@ -1413,7 +1413,7 @@ function HUDLootScreen:create_stars_giving_animation()
 
 		wait(1.35)
 
-		for i = 1, max_number_of_stars, 1 do
+		for i = 1, max_number_of_stars do
 			wait(0.1)
 
 			local star = self._stars_panel:bitmap({
@@ -1457,7 +1457,7 @@ function HUDLootScreen:check_inside_local_peer(x, y)
 	local panel = self._peers_panel:child("peer" .. tostring(peer_id))
 	x, y = managers.gui_data:safe_to_full_16_9(x, y)
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		local inside_check_card = panel:child("inside_check_card" .. tostring(i))
 
 		if inside_check_card:inside(x, y) then

@@ -81,7 +81,7 @@ function CrimeSpreeMissionsMenuComponent:_setup()
 
 	local default_index = nil
 
-	for idx = 1, tweak_data.crime_spree.gui.missions_displayed, 1 do
+	for idx = 1, tweak_data.crime_spree.gui.missions_displayed do
 		local data = managers.crime_spree:server_missions()[idx] or {}
 		local btn = CrimeSpreeMissionButton:new(idx, self._buttons_panel, data)
 
@@ -677,7 +677,7 @@ function CrimeSpreeMissionButton:_create_random_texts()
 
 	table.insert(self._random_texts, self._level_text)
 
-	for i = 1, 8, 1 do
+	for i = 1, 8 do
 		local text = self._panel:text({
 			halign = "center",
 			vertical = "center",

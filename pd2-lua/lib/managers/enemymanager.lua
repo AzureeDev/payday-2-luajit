@@ -1229,7 +1229,7 @@ function EnemyManager:add_magazine(magazine, collision)
 end
 
 function EnemyManager:cleanup_magazines()
-	for i = 1, #self._magazines - EnemyManager.MAX_MAGAZINES, 1 do
+	for i = 1, #self._magazines - EnemyManager.MAX_MAGAZINES do
 		for _, unit in ipairs(self._magazines[1]) do
 			if alive(unit) then
 				unit:set_slot(0)

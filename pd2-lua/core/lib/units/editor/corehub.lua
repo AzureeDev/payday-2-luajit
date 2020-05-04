@@ -135,7 +135,7 @@ end
 function CoreHub:set_required_triggers()
 	self._required_triggers:clear()
 
-	for i = 1, #self._hed.triggers - 1, 1 do
+	for i = 1, #self._hed.triggers - 1 do
 		self._required_triggers:append(i)
 	end
 

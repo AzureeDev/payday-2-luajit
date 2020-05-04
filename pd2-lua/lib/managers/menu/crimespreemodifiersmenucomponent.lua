@@ -113,7 +113,7 @@ function CrimeSpreeModifiersMenuComponent:_setup()
 		h = btn_size
 	})
 
-	for i = 1, tweak_data.crime_spree.max_modifiers_displayed, 1 do
+	for i = 1, tweak_data.crime_spree.max_modifiers_displayed do
 		local modifier = modifiers[i]
 		local btn = CrimeSpreeModifierButton:new(self._modifiers_panel, modifier)
 
@@ -262,7 +262,7 @@ function CrimeSpreeModifiersMenuComponent:_on_finalize_modifier()
 
 		self._number_header:set_text(managers.experience:cash_string(self._current_num, "") .. " / " .. managers.experience:cash_string(self._num_to_select, ""))
 
-		for i = 1, tweak_data.crime_spree.max_modifiers_displayed, 1 do
+		for i = 1, tweak_data.crime_spree.max_modifiers_displayed do
 			self._buttons[i]:set_modifier(modifiers[i])
 			self._buttons[i]:set_active(false)
 		end

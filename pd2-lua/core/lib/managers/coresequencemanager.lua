@@ -904,7 +904,7 @@ function SequenceManager:test_unit_damage(unit)
 						if func then
 							local damage = 0.5
 
-							for i = 1, 10, 1 do
+							for i = 1, 10 do
 								func(body:extension().damage, unit, Vector3(0, 0, 1), body:position(), Vector3(0, 0, -1), damage, Vector3(0, 0, 10000))
 
 								damage = damage * 2
@@ -2108,7 +2108,7 @@ function BaseElement:activate(env)
 				env.vars[start_time_id_var] = id
 			end
 		else
-			for i = 1, repeat_nr, 1 do
+			for i = 1, repeat_nr do
 				if alive(env.dest_unit) then
 					SequenceEnvironment.self = env
 					SequenceEnvironment.element = self
@@ -2782,7 +2782,7 @@ function ZoneFilterElement:init(node, unit_element)
 	self._func_list = {}
 	local negative = false
 
-	for i = 1, #name, 1 do
+	for i = 1, #name do
 		local __chr = string.sub(name, i, i)
 
 		if __chr == "-" then
@@ -4064,7 +4064,7 @@ function BodyElement:activate_callback(env)
 
 	local body_name_list = {}
 
-	for i = 1, env.dest_unit:num_bodies(), 1 do
+	for i = 1, env.dest_unit:num_bodies() do
 		local body = env.dest_unit:body(i - 1)
 
 		if alive(body) then
@@ -4412,7 +4412,7 @@ function EffectElement:init(node, unit_element)
 	self._store_id_list_var = self:get("store_id_list_var")
 	self._param_list = {}
 
-	for i = 1, 5, 1 do
+	for i = 1, 5 do
 		local param = self:get("param" .. i)
 
 		if param then
@@ -4999,7 +4999,7 @@ function MaterialElement:set_material_state(env, state, material)
 	end
 
 	if state and self.TIMER_STATE_MAP[state] then
-		for i = #args, self.TIMER_STATE_MAP[state] - 1, 1 do
+		for i = #args, self.TIMER_STATE_MAP[state] - 1 do
 			table.insert(args, 1)
 		end
 
@@ -5020,7 +5020,7 @@ function MorphExpressionElement:init(node, unit_element)
 	self._model = self:get("model")
 	self._parameters = {}
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		local expression = self:get("expression" .. i)
 		local weight = self:get("weight" .. i)
 
@@ -5216,7 +5216,7 @@ function PhysicEffectElement:init(node, unit_element)
 	self._store_id_var = self:get("store_id_var")
 	self._param_list = {}
 
-	for i = 1, 5, 1 do
+	for i = 1, 5 do
 		self._param_list[i] = self:get("param" .. i)
 
 		if not self._param_list[i] then
@@ -5585,7 +5585,7 @@ function SetPhysicEffectElement:init(node, unit_element)
 	self._id = self:get("id")
 	self._param_list = {}
 
-	for i = 1, 5, 1 do
+	for i = 1, 5 do
 		self._param_list[i] = self:get("param" .. i)
 	end
 
@@ -5593,7 +5593,7 @@ function SetPhysicEffectElement:init(node, unit_element)
 	self._center_of_mass = {}
 	self._offset_list = {}
 
-	for i = 1, 5, 1 do
+	for i = 1, 5 do
 		self._body_list[i] = self:get("body" .. i)
 
 		if self._body_list[i] then
@@ -5984,7 +5984,7 @@ function SlotElement:activate_callback(env)
 		data._bodies = {}
 		local body_count = env.dest_unit:num_bodies()
 
-		for i = 0, body_count - 1, 1 do
+		for i = 0, body_count - 1 do
 			table.insert(data._bodies, env.dest_unit:body(i))
 		end
 
@@ -6392,7 +6392,7 @@ function SpawnUnitElement:activate_callback(env)
 						else
 							ang_velocity = Vector3()
 
-							for i = 1, env.dest_unit:num_bodies(), 1 do
+							for i = 1, env.dest_unit:num_bodies() do
 								local body = env.dest_unit:body(i - 1)
 								local body_ang_velocity = body:angular_velocity()
 

@@ -436,7 +436,7 @@ function JobManager:_chk_fill_heat_containers()
 				if heat < 0 then
 					new_container = jobs_in_containers[index + 1]
 
-					for i = 1, num_to_move, 1 do
+					for i = 1, num_to_move do
 						local t = table.remove(container, #container)
 
 						table.insert(new_container, 1, t)
@@ -444,7 +444,7 @@ function JobManager:_chk_fill_heat_containers()
 				elseif heat > 0 then
 					new_container = jobs_in_containers[index - 1]
 
-					for i = 1, num_to_move, 1 do
+					for i = 1, num_to_move do
 						local t = table.remove(container, 1)
 
 						table.insert(new_container, t)
@@ -467,7 +467,7 @@ function JobManager:_chk_fill_heat_containers()
 			max_jobs = container.max_jobs
 		}
 
-		for i = 1, #container, 1 do
+		for i = 1, #container do
 			container[i].heat = math.clamp(container[i].heat, prev_heat, container.heat)
 			self._global.heat[container[i].job_id] = container[i].heat
 
@@ -622,7 +622,7 @@ function JobManager:_debug_spew_heat()
 	local n = #tweak_data.narrative:get_jobs_index()
 	local spewed = {}
 
-	for i = 1, 10, 1 do
+	for i = 1, 10 do
 		job_id = tweak_data.narrative:get_job_name_from_index(math.random(n))
 
 		self:_check_add_heat_to_jobs(job_id, true)
@@ -708,7 +708,7 @@ function JobManager:_check_add_heat_to_jobs(debug_job_id, ignore_debug_prints)
 	local other_jobs_ratio = math.clamp(math.round(tweak_data.narrative.HEAT_OTHER_JOBS_RATIO * #all_jobs), 0, #all_jobs)
 	local heated_jobs = {}
 
-	for i = 1, other_jobs_ratio, 1 do
+	for i = 1, other_jobs_ratio do
 		table.insert(heated_jobs, table.remove(all_jobs, math.random(#all_jobs)))
 	end
 
@@ -852,7 +852,7 @@ function JobManager:plot_heat_graph(remove_only)
 		w = my_panel:w()
 	}):set_y(my_panel:h() / 2)
 
-	for i = 1, #self._global.heat_containers, 1 do
+	for i = 1, #self._global.heat_containers do
 		local container_line = my_panel:rect({
 			w = 1,
 			rotation = 360,
@@ -899,7 +899,7 @@ function JobManager:plot_heat_graph(remove_only)
 	local points = {}
 	local prev_y = nil
 
-	for i = -self.JOB_HEAT_MAX_VALUE, self.JOB_HEAT_MAX_VALUE, 1 do
+	for i = -self.JOB_HEAT_MAX_VALUE, self.JOB_HEAT_MAX_VALUE do
 		local x = (i + self.JOB_HEAT_MAX_VALUE) * my_panel:w() / (self.JOB_HEAT_MAX_VALUE * 2)
 		local y = self:heat_to_experience_value(i) * my_panel:h() / 200
 
@@ -922,7 +922,7 @@ function JobManager:plot_heat_graph(remove_only)
 	points = {}
 	prev_y = nil
 
-	for i = -self.JOB_HEAT_MAX_VALUE, self.JOB_HEAT_MAX_VALUE, 1 do
+	for i = -self.JOB_HEAT_MAX_VALUE, self.JOB_HEAT_MAX_VALUE do
 		local x = (i + self.JOB_HEAT_MAX_VALUE) * my_panel:w() / (self.JOB_HEAT_MAX_VALUE * 2)
 		local y = self:heat_to_money_value(i) * my_panel:h() / 200
 

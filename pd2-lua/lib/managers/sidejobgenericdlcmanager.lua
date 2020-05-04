@@ -313,7 +313,7 @@ function SideJobGenericDLCManager:_award_reward(reward)
 		local entry = tweak_data:get_raw_value("blackmarket", reward.type_items, reward.item_entry)
 
 		if entry then
-			for i = 1, reward.amount or 1, 1 do
+			for i = 1, reward.amount or 1 do
 				local global_value = reward.global_value or entry.infamous and "infamous" or entry.global_value or entry.dlc or entry.dlcs and entry.dlcs[math.random(#entry.dlcs)] or "normal"
 
 				managers.blackmarket:add_to_inventory(global_value, reward.type_items, reward.item_entry)

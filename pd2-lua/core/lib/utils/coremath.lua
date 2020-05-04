@@ -270,7 +270,7 @@ function math.spline_len(points, n)
 	local len = 0
 	local old_p = points[1]
 
-	for i = 1, n, 1 do
+	for i = 1, n do
 		local p = math.spline(points, i / n)
 		len = len + (p - old_p):length()
 		old_p = p
@@ -313,7 +313,7 @@ function math.bezier_len(points, n)
 	local len = 0
 	local old_p = points[1]
 
-	for i = 1, n, 1 do
+	for i = 1, n do
 		local p = math.bezier(points, i / n)
 		len = len + (p - old_p):length()
 		old_p = p

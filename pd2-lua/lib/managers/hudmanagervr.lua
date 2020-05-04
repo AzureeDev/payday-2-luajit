@@ -165,7 +165,7 @@ function HUDManagerVR:_init_holo_gui()
 	self._holo_count = 15
 	self._holo_height = 2
 
-	for i = 1, self._holo_count, 1 do
+	for i = 1, self._holo_count do
 		local holo_ws = self._gui:create_world_workspace(100, 100, Vector3(0, 0, 0), Vector3(1, 0, 0), Vector3(0, 1, 0))
 
 		table.insert(self._holo_ws, holo_ws)
@@ -1146,7 +1146,7 @@ function HUDManager:add_waypoint(id, data)
 		end
 	end
 
-	for i = 1, 10, 1 do
+	for i = 1, 10 do
 		if not t[i] then
 			self._hud.waypoints[id].slot = i
 

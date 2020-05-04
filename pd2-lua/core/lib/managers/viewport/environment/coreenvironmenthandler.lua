@@ -327,7 +327,7 @@ function EnvironmentHandler:_check_inside(check_pos, area_list, min_prio)
 		local areas_per_frame = self.AREAS_PER_FRAME
 		local check_count = 0
 
-		for i = 1, area_count, 1 do
+		for i = 1, area_count do
 			local area = area_list[self._area_iterator]
 			self._area_iterator = math.mod(self._area_iterator, area_count) + 1
 

@@ -282,7 +282,7 @@ function UnhideByName:unhid_unit(unit)
 end
 
 function UnhideByName:_remove_unit_from_list(unit)
-	for i = 0, self._list:item_count() - 1, 1 do
+	for i = 0, self._list:item_count() - 1 do
 		if self._units[self._list:get_item_data(i)] == unit then
 			self._list:delete_item(i)
 
@@ -292,7 +292,7 @@ function UnhideByName:_remove_unit_from_list(unit)
 end
 
 function UnhideByName:unit_name_changed(unit)
-	for i = 0, self._list:item_count() - 1, 1 do
+	for i = 0, self._list:item_count() - 1 do
 		if self._units[self._list:get_item_data(i)] == unit then
 			self._list:set_item(i, 0, unit:unit_data().name_id)
 
@@ -311,7 +311,7 @@ function UnhideByName:unit_name_changed(unit)
 			if sort then
 				self:fill_unit_list()
 
-				for i = 0, self._list:item_count() - 1, 1 do
+				for i = 0, self._list:item_count() - 1 do
 					if self._units[self._list:get_item_data(i)] == unit then
 						self._list:set_item_selected(i, true)
 						self._list:ensure_visible(i)

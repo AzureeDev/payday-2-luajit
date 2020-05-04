@@ -106,7 +106,7 @@ function BrushLayer:reposition_all()
 
 					MassUnitManager:delete_units(name)
 
-					for counter = 1, #positions, 1 do
+					for counter = 1, #positions do
 						local rot = rotations[counter]
 						local pos = positions[counter]
 						local from = pos + rot:z() * 50
@@ -348,7 +348,7 @@ function BrushLayer:_draw_unit_orientations()
 	local brush_stats = self:get_brush_stats()
 
 	for _, stats in ipairs(brush_stats) do
-		for i = 1, stats.amount, 1 do
+		for i = 1, stats.amount do
 			Application:draw_rotation(stats.positions[i], stats.rotations[i])
 		end
 	end
@@ -576,7 +576,7 @@ function BrushLayer:show_create_brush(data)
 				data.brushes:append(name)
 				self:save_brushes()
 
-				for i = 0, data.brushes:nr_items() - 1, 1 do
+				for i = 0, data.brushes:nr_items() - 1 do
 					if data.brushes:get_string(i) == name then
 						data.brushes:select_index(i)
 

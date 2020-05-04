@@ -125,7 +125,7 @@ function NewFlamethrowerBase:_fire_raycast(user_unit, from_pos, direction, dmg_m
 		weapon_unit = self._unit
 	})
 
-	for i = 1, hit_enemies, 1 do
+	for i = 1, hit_enemies do
 		managers.statistics:shot_fired({
 			skip_bullet_count = true,
 			hit = true,

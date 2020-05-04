@@ -343,7 +343,7 @@ function CoreCutsceneSequencerPanel:_create_panel(parent_frame)
 
 	self._film_tracks = {}
 
-	for i = 1, 10, 1 do
+	for i = 1, 10 do
 		local track = EWS:SequencerTrack(self._scrolled_area)
 
 		track:set_icon_bitmap(CoreEWS.image_path("sequencer\\track_icon_film.bmp"), 7)

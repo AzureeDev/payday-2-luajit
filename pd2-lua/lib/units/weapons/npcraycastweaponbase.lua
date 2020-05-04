@@ -298,7 +298,7 @@ function NPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_
 	if not col_ray or col_ray.distance > 600 or result.guaranteed_miss then
 		local num_rays = (tweak_data.weapon[self._name_id] or {}).rays or 1
 
-		for i = 1, num_rays, 1 do
+		for i = 1, num_rays do
 			mvector3.set(mvec_spread, direction)
 
 			if i > 1 then

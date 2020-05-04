@@ -499,7 +499,7 @@ end
 function MutatorsManager:matchmake_pack_string(num_strings)
 	local ret = {}
 
-	for i = 1, num_strings, 1 do
+	for i = 1, num_strings do
 		ret[i] = ""
 	end
 
@@ -644,7 +644,7 @@ function MutatorsManager:_get_mutators_data(get_data_func)
 	if num_mutators > 0 then
 		local mutators_strs = {}
 
-		for i = 1, num_mutators, 1 do
+		for i = 1, num_mutators do
 			local mutator_str = get_data_func("mutator_" .. tostring(i))
 
 			if mutator_str then

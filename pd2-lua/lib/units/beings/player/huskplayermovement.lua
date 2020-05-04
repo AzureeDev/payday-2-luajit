@@ -2090,7 +2090,7 @@ function HuskPlayerMovement:_perform_path_catchup()
 
 	local node = nil
 
-	for i = 1, #self._movement_path - 2, 1 do
+	for i = 1, #self._movement_path - 2 do
 		node = self._movement_path[1]
 
 		for _, action_name in ipairs(node.action) do
@@ -2209,7 +2209,7 @@ function HuskPlayerMovement:_update_position(t, dt)
 		end
 
 		if remove_at > 1 then
-			for x = 1, remove_at - 1, 1 do
+			for x = 1, remove_at - 1 do
 				self:_perform_movement_action(1)
 
 				self._last_path_position = self._movement_path[1].pos
@@ -2763,7 +2763,7 @@ function HuskPlayerMovement:sync_action_walk_nav_point(pos, speed, action, param
 			end
 		end
 
-		for i = 1, #self._movement_history - tweak_data.network.player_path_history, 1 do
+		for i = 1, #self._movement_history - tweak_data.network.player_path_history do
 			table.remove(self._movement_history, 1)
 		end
 
@@ -3766,7 +3766,7 @@ function HuskPlayerMovement:_set_unit_bullet_objects_visible(unit, bullet_object
 	if bullet_objects then
 		local prefix = bullet_objects.prefix
 
-		for i = 1, bullet_objects.amount, 1 do
+		for i = 1, bullet_objects.amount do
 			local object = unit:get_object(Idstring(prefix .. i))
 
 			if object then

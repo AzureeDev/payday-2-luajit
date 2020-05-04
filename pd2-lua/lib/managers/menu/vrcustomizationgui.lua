@@ -2269,7 +2269,7 @@ function VRCalibrator:init(gui, menu, stop_clbk)
 	local ypos = math.max(panel:h() / 9.5 * 4, self._calibration_desc:y() + self._calibration_desc:h() + PADDING)
 	local steps = {}
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		local text = panel:text({
 			font_size = 25,
 			word_wrap = true,
@@ -2328,7 +2328,7 @@ function VRCalibrator:show_calibration_step(step)
 		self._calibration_desc:set_visible(false)
 	end
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		self._calibration_step[i]:set_visible(step > 0)
 		self._calibration_step[i]:set_alpha(step == i and 1 or 0.4)
 	end

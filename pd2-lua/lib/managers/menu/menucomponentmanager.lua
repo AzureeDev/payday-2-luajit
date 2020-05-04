@@ -586,7 +586,7 @@ function MenuComponentManager:make_color_text(text_object, color)
 	end
 
 	if #start_ci == #end_ci then
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
 		end
@@ -600,7 +600,7 @@ function MenuComponentManager:make_color_text(text_object, color)
 	if #start_ci ~= #end_ci then
 		Application:error("CrimeNetGui:make_color_text: Not even amount of ##'s in text", #start_ci, #end_ci)
 	else
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			text_object:set_range_color(start_ci[i], end_ci[i], color or tweak_data.screen_colors.resource)
 		end
 	end
@@ -2617,7 +2617,7 @@ function MenuComponentManager:create_contract_gui()
 	self._contract_gui = self:_contract_gui_class():new(self._ws, self._fullscreen_ws)
 	local peers_state = managers.menu:get_all_peers_state() or {}
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		self._contract_gui:update_character_menu_state(i, peers_state[i])
 	end
 end
@@ -2637,7 +2637,7 @@ end
 
 function MenuComponentManager:show_contract_character(state)
 	if self._contract_gui then
-		for i = 1, tweak_data.max_players, 1 do
+		for i = 1, tweak_data.max_players do
 			self._contract_gui:set_character_panel_alpha(i, state and 1 or 0.4)
 		end
 	end
@@ -4031,7 +4031,7 @@ function MenuComponentManager:sync_preplanning_draw_event(peer_id, event_id, var
 			local server_peer = managers.network and managers.network:session() and managers.network:session():server_peer()
 
 			if server_peer and server_peer:id() == peer_id then
-				for i = 1, managers.criminals.MAX_NR_CRIMINALS, 1 do
+				for i = 1, managers.criminals.MAX_NR_CRIMINALS do
 					self._preplanning_map:sync_erase_drawing(i)
 				end
 			end
@@ -4512,7 +4512,7 @@ function MenuComponentManager:add_colors_to_text_object(text_object, ...)
 	end
 
 	if #start_ci == #end_ci then
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
 		end
@@ -4528,7 +4528,7 @@ function MenuComponentManager:add_colors_to_text_object(text_object, ...)
 		if #start_ci ~= #end_ci then
 			Application:error("[MenuComponentManager:color_text_object]: Missing '#' in text:", unchanged_text, #start_ci, #end_ci)
 		else
-			for i = 1, #start_ci, 1 do
+			for i = 1, #start_ci do
 				text_object:set_range_color(start_ci[i], end_ci[i], colors[i] or default_color)
 			end
 		end
@@ -4748,7 +4748,7 @@ function MenuComponentManager:create_test_gui()
 	local size = 48
 	local x = 0
 
-	for i = 3, 3, 1 do
+	for i = 3, 3 do
 		local bitmap = panel:bitmap({
 			texture = "guis/dlcs/big_bank/textures/pd2/pre_planning/mezzanine_test",
 			name = "bitmap",
@@ -4796,12 +4796,12 @@ function MenuComponentManager:create_ingame_custom_safehouse_menu(node, category
 	local items_per_page = rows * columns
 	local item_data, selected_tab = nil
 
-	for page = 1, max_pages, 1 do
+	for page = 1, max_pages do
 		local index = 1
 		local start_i = 1 + items_per_page * (page - 1)
 		item_data = {}
 
-		for i = start_i, items_per_page * page, 1 do
+		for i = start_i, items_per_page * page do
 			item_data[index] = i
 			index = index + 1
 

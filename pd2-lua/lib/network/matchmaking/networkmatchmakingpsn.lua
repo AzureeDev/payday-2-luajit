@@ -911,7 +911,7 @@ function NetworkMatchMakingPSN:start_search_lobbys(friends_only)
 
 	if not self._friends_only then
 		local function f(info)
-			for i = 1, #info.attribute_list, 1 do
+			for i = 1, #info.attribute_list do
 				local numbers = info.attribute_list[i].numbers
 				info.attribute_list[i].numbers = numbers
 			end
@@ -1861,14 +1861,14 @@ function NetworkMatchMakingPSN:_error_message_solver(info)
 	end
 
 	local error_texts = {
-		80022b15 = "dialog_err_room_no_longer_exists",
+		["80022b15"] = "dialog_err_room_no_longer_exists",
 		ffffffff80550c36 = "dialog_err_failed_creating_lobby",
-		80022328 = "dialog_err_room_allready_joined",
-		80022b0f = "dialog_err_room_is_closed",
-		80022b19 = "dialog_err_room_is_full",
-		80022b13 = "dialog_err_room_no_longer_exists",
-		8002233a = self._creating_lobby and "dialog_err_failed_creating_lobby" or self._searching_lobbys and "dialog_err_failed_searching_lobbys" or self._joining_lobby and "dialog_err_failed_joining_lobby" or nil,
-		8002231d = self._creating_lobby and "dialog_err_failed_creating_lobby" or self._searching_lobbys and "dialog_err_failed_searching_lobbys" or self._joining_lobby and "dialog_err_failed_joining_lobby" or nil
+		["80022328"] = "dialog_err_room_allready_joined",
+		["80022b0f"] = "dialog_err_room_is_closed",
+		["80022b19"] = "dialog_err_room_is_full",
+		["80022b13"] = "dialog_err_room_no_longer_exists",
+		["8002233a"] = self._creating_lobby and "dialog_err_failed_creating_lobby" or self._searching_lobbys and "dialog_err_failed_searching_lobbys" or self._joining_lobby and "dialog_err_failed_joining_lobby" or nil,
+		["8002231d"] = self._creating_lobby and "dialog_err_failed_creating_lobby" or self._searching_lobbys and "dialog_err_failed_searching_lobbys" or self._joining_lobby and "dialog_err_failed_joining_lobby" or nil
 	}
 	local text_id = error_texts[info.error]
 	local title = managers.localization:text("dialog_error_title") .. (Application:production_build() and " [" .. info.error .. "]" or "")
@@ -1896,7 +1896,7 @@ function NetworkMatchMakingPSN:send_join_invite(friend)
 	local body = managers.localization:text("dialog_mp_invite_message")
 	local len = string.len(body)
 
-	for i = 1, 512 - len, 1 do
+	for i = 1, 512 - len do
 		body = body .. " "
 	end
 

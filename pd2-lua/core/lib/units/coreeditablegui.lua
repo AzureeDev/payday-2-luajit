@@ -28,7 +28,7 @@ function CoreEditableGui:init(unit)
 	if self._sides == 1 then
 		self:add_workspace(self._unit:get_object(Idstring(self._gui_object)))
 	else
-		for i = 1, self._sides, 1 do
+		for i = 1, self._sides do
 			self:add_workspace(self._unit:get_object(Idstring(self._gui_object .. i)))
 		end
 	end

@@ -317,7 +317,7 @@ function MenuNodeEconomySafe:_create_random_item_list(item_list)
 		if data.category ~= "contents" then
 			local amount = math.ceil(data.ratio / 1)
 
-			for j = 1, amount, 1 do
+			for j = 1, amount do
 				table.insert(list, data)
 			end
 		end

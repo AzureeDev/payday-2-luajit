@@ -56,7 +56,7 @@ function MessageSystem:_notify()
 	local messages = table.list_copy(self._messages)
 	local count = #self._messages
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		self._messages[i] = nil
 	end
 
@@ -94,7 +94,7 @@ end
 function MessageSystem:_remove()
 	local count = #self._remove_list
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		local data = self._remove_list[i]
 
 		self:_unregister(self._remove_list[i].message, self._remove_list[i].uid)
@@ -110,7 +110,7 @@ end
 function MessageSystem:_add()
 	local count = #self._add_list
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		local data = self._add_list[i]
 
 		self:_register(data.message, data.uid, data.func)

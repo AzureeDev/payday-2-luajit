@@ -427,7 +427,7 @@ function PlayerHand:_update_controllers(t, dt)
 
 	managers.hud:belt():set_alpha(look_dot * 1.5)
 
-	for i = 1, 2, 1 do
+	for i = 1, 2 do
 		local found = nil
 
 		if managers.hud:belt():visible() then

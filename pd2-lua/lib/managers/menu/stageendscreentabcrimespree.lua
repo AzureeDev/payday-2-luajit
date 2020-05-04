@@ -181,7 +181,7 @@ function CrimeSpreeResultTabItem:_create_timeline(total_w)
 	for category, step in pairs(tweak_data.crime_spree.modifier_levels) do
 		local count = managers.crime_spree:modifiers_to_select(category)
 
-		for i = 0, math.min(count, math.floor(max_step / step) - 1), 1 do
+		for i = 0, math.min(count, math.floor(max_step / step) - 1) do
 			local level = managers.crime_spree:next_modifier_level(category, start_level, i)
 
 			if level and not table.contains(modifier_levels, level) then
@@ -328,7 +328,7 @@ function CrimeSpreeResultTabItem:_create_timeline(total_w)
 
 		marker_line:set_x(cx - math.floor(marker_w * 0.5))
 
-		for i = level - level_gap, level + level_gap, 1 do
+		for i = level - level_gap, level + level_gap do
 			used_levels[i] = true
 		end
 
@@ -433,7 +433,7 @@ function CrimeSpreeResultTabItem:_create_rewards(total_w)
 			local rotation = math.rand(-10, 10)
 			local num_cards = 1
 
-			for i = 1, num_cards, 1 do
+			for i = 1, num_cards do
 				card = create_card(i, i == 1 and first_card_panel or panel, data.icon, rotation)
 
 				card:hide()

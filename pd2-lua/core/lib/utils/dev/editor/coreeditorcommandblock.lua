@@ -8,7 +8,7 @@ function CoreEditorCommandBlock:init()
 end
 
 function CoreEditorCommandBlock:execute()
-	for i = 1, #self._actions, 1 do
+	for i = 1, #self._actions do
 		self._actions[i]:execute()
 	end
 end

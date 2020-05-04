@@ -67,7 +67,7 @@ function MenuItemCrimeNetSkirmishServer:setup_gui(node, row_item)
 	})
 	local cx, cy = nil
 
-	for i = 1, 4, 1 do
+	for i = 1, 4 do
 		cx = 5 + 6 * (i - 1)
 		cy = 30
 		local player_marker = server_panel:bitmap({

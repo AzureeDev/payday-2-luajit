@@ -1014,7 +1014,7 @@ function HUDManager:add_waypoint(id, data)
 		end
 	end
 
-	for i = 1, 10, 1 do
+	for i = 1, 10 do
 		if not t[i] then
 			self._hud.waypoints[id].slot = i
 

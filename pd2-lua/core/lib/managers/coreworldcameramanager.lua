@@ -1664,7 +1664,7 @@ function CoreWorldCamera:next_value_key(time, value)
 end
 
 function CoreWorldCamera:print_points()
-	for i = 1, 4, 1 do
+	for i = 1, 4 do
 		cat_print("debug", i, self._positions[i], self._target_positions[i])
 	end
 end

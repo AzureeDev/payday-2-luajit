@@ -343,7 +343,7 @@ function MotionPathManager:_draw_editor_info()
 
 	for _, path in ipairs(self._paths) do
 		if path.points then
-			for j = 1, #path.points, 1 do
+			for j = 1, #path.points do
 				if path.points[j + 1] and path.points[j + 1].point then
 					local spline_color = path.id == self._selected_path and {
 						0,

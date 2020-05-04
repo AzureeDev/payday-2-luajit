@@ -159,7 +159,7 @@ function PlayerWarp:hide_ladder_marker(key)
 end
 
 function PlayerWarp:hide_markers()
-	for i = 1, #self._warp_markers, 1 do
+	for i = 1, #self._warp_markers do
 		self._warp_markers[i]:hide()
 	end
 
@@ -176,7 +176,7 @@ function PlayerWarp:show_markers(...)
 	}
 	local nr_args = #args
 
-	for i = 1, #self._warp_markers, 1 do
+	for i = 1, #self._warp_markers do
 		if i <= nr_args then
 			self._warp_markers[i]:show(args[i].name)
 			self._warp_markers[i]:set_orientation(args[i].position, args[i].rotation)
@@ -457,7 +457,7 @@ function PlayerWarp:_draw_bezier(brush, source, target, tangent)
 
 	local n = #line_segments
 
-	for i = 1, n - 1, 1 do
+	for i = 1, n - 1 do
 		local p1 = source + v * line_segments[i][1]
 
 		mvector3.set_z(p1, line_segments[i][2])

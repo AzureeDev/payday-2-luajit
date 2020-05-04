@@ -644,7 +644,7 @@ end
 function AssetsItem:post_init()
 	self:select_asset(self._my_menu_component_data.selected or 1, true)
 
-	for i = 1, #self._assets_names, 1 do
+	for i = 1, #self._assets_names do
 		self._panel:child("asset_" .. tostring(i)):set_rotation(0)
 	end
 end
@@ -803,7 +803,7 @@ function AssetsItem:create_assets(assets_names, max_assets)
 	local w = self._panel:w() / (self._num_items / 2)
 	local step = w * 0.5
 
-	for i = 1, #assets_names, 1 do
+	for i = 1, #assets_names do
 		local center_x = i * w - w * 0.5
 		rect = self._panel:rect({
 			w = 85,
@@ -1618,7 +1618,7 @@ function LoadoutItem:populate_category(category, data)
 	local max_rows = tweak_data.gui.MAX_WEAPON_ROWS or 3
 	max_items = max_rows * (data.override_slots and data.override_slots[1] or 3)
 
-	for i = 1, max_items, 1 do
+	for i = 1, max_items do
 		data[i] = nil
 	end
 
@@ -1682,7 +1682,7 @@ function LoadoutItem:populate_category(category, data)
 		index = i
 	end
 
-	for i = 1, max_items, 1 do
+	for i = 1, max_items do
 		if not data[i] then
 			new_data = {
 				name = "empty_slot",
@@ -1742,7 +1742,7 @@ function LoadoutItem:populate_armors(data)
 		end
 	end
 
-	for i = 1, 9, 1 do
+	for i = 1, 9 do
 		if not data[i] then
 			new_data = {
 				name = "empty",
@@ -1790,7 +1790,7 @@ function LoadoutItem:populate_deployables(data)
 		index = i
 	end
 
-	for i = 1, 9, 1 do
+	for i = 1, 9 do
 		if not data[i] then
 			new_data = {
 				name = "empty",
@@ -1837,7 +1837,7 @@ function LoadoutItem:populate_grenades(data)
 		index = i
 	end
 
-	for i = 1, 9, 1 do
+	for i = 1, 9 do
 		if not data[i] then
 			new_data = {
 				name = "empty",
@@ -2001,7 +2001,7 @@ function TeamLoadoutItem:init(panel, text, i)
 	local quarter_width = self._panel:w() / tweak_data.max_players
 	local slot_panel = nil
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		local old_right = slot_panel and slot_panel:right() or 0
 		slot_panel = self._panel:panel({
 			y = 0,
@@ -2034,7 +2034,7 @@ end
 function TeamLoadoutItem:reduce_to_small_font(iteration)
 	TeamLoadoutItem.super.reduce_to_small_font(self, iteration)
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		if self._player_slots[i].box then
 			self._player_slots[i].box:create_sides(self._player_slots[i].panel, {
 				sides = {
@@ -2824,8 +2824,8 @@ function NewLoadoutTab:init(panel, text, i, menu_component_data)
 	local columns = NewLoadoutTab.columns
 	local rows = NewLoadoutTab.rows
 
-	for row = 1, rows, 1 do
-		for column = 1, columns, 1 do
+	for row = 1, rows do
+		for column = 1, columns do
 			local item = items[(row - 1) * columns + column]
 
 			if item then
@@ -2960,7 +2960,7 @@ function NewLoadoutTab:populate_category(data)
 	local max_rows = tweak_data.gui.WEAPON_ROWS_PER_PAGE or 3
 	local max_items = max_rows * (data.override_slots and data.override_slots[1] or 3)
 
-	for i = 1, max_items, 1 do
+	for i = 1, max_items do
 		data[i] = nil
 	end
 
@@ -3028,7 +3028,7 @@ function NewLoadoutTab:populate_category(data)
 		end
 	end
 
-	for i = 1, max_items, 1 do
+	for i = 1, max_items do
 		if not data[i] then
 			new_data = {
 				name = "empty_slot",
@@ -3095,7 +3095,7 @@ function NewLoadoutTab:populate_armors(data)
 		end
 	end
 
-	for i = 1, 9, 1 do
+	for i = 1, 9 do
 		if not data[i] then
 			new_data = {
 				name = "empty",
@@ -3143,7 +3143,7 @@ function NewLoadoutTab:populate_deployables(data)
 		index = i
 	end
 
-	for i = 1, 9, 1 do
+	for i = 1, 9 do
 		if not data[i] then
 			new_data = {
 				name = "empty",
@@ -3169,12 +3169,12 @@ function NewLoadoutTab:create_weapon_loadout(category)
 	local items_per_page = rows * columns
 	local item_data, selected_tab = nil
 
-	for page = 1, max_pages, 1 do
+	for page = 1, max_pages do
 		local index = 1
 		local start_i = 1 + items_per_page * (page - 1)
 		item_data = {}
 
-		for i = start_i, items_per_page * page, 1 do
+		for i = start_i, items_per_page * page do
 			item_data[index] = i
 			index = index + 1
 
@@ -4092,7 +4092,7 @@ function MissionBriefingGui:mouse_pressed(button, x, y)
 	if MenuCallbackHandler:is_overlay_enabled() then
 		local fx, fy = managers.mouse_pointer:modified_fullscreen_16_9_mouse_pos()
 
-		for peer_id = 1, CriminalsManager.MAX_NR_CRIMINALS, 1 do
+		for peer_id = 1, CriminalsManager.MAX_NR_CRIMINALS do
 			if managers.hud:is_inside_mission_briefing_slot(peer_id, "name", fx, fy) then
 				local peer = managers.network:session() and managers.network:session():peer(peer_id)
 
@@ -4181,7 +4181,7 @@ function MissionBriefingGui:mouse_moved(x, y)
 
 	local fx, fy = managers.mouse_pointer:modified_fullscreen_16_9_mouse_pos()
 
-	for peer_id = 1, CriminalsManager.MAX_NR_CRIMINALS, 1 do
+	for peer_id = 1, CriminalsManager.MAX_NR_CRIMINALS do
 		if managers.hud:is_inside_mission_briefing_slot(peer_id, "name", fx, fy) then
 			return true, "link"
 		end

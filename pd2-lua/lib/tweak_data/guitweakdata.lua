@@ -5342,7 +5342,7 @@ function GuiTweakData:_create_location_spawning_dots()
 					local j, c = nil
 					j = #vx
 
-					for i = 1, #vx, 1 do
+					for i = 1, #vx do
 						if ry < vy[i] ~= (ry < vy[j]) and rx < (vx[j] - vx[i]) * (ry - vy[i]) / (vy[j] - vy[i]) + vx[i] then
 							found_point = not found_point
 						end

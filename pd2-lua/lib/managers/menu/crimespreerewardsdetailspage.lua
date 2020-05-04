@@ -46,7 +46,7 @@ function CrimeSpreeRewardsDetailsPage:init(...)
 			local num_cards = math.clamp(math.floor(amount / (data.card_inc or 1)), 1, data.max_cards)
 			local upcard = self:create_card(panel, data.icon, card_layer, 10, 0, num_cards > 1)
 
-			for i = 1, num_cards - 1, 1 do
+			for i = 1, num_cards - 1 do
 				self:create_card(panel, data.icon, card_layer - i * 2, 10, 6, true)
 			end
 

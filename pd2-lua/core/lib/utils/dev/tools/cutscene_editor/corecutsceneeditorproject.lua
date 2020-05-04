@@ -86,7 +86,7 @@ function CoreCutsceneEditorProject:save(audio_clips, film_clips, cutscene_keys, 
 		return math.max(highest, clip.track_index or 0)
 	end)
 
-	for track_index = 1, highest_film_track_index, 1 do
+	for track_index = 1, highest_film_track_index do
 		local track_node = film_tracks_node:make_child("track")
 
 		for _, clip in ipairs(table.find_all_values(film_clips, function (clip)

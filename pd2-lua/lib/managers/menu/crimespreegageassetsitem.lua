@@ -85,7 +85,7 @@ end
 function GageAssetsItem:post_init()
 	self:select_asset(1, true)
 
-	for i = 1, #self._assets_list, 1 do
+	for i = 1, #self._assets_list do
 		self._panel:child("asset_" .. tostring(i)):set_rotation(0)
 	end
 

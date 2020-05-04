@@ -3,7 +3,7 @@ MoneyTweakData = MoneyTweakData or class()
 function MoneyTweakData._create_value_table(min, max, table_size, round, curve)
 	local t = {}
 
-	for i = 1, table_size, 1 do
+	for i = 1, table_size do
 		local v = math.lerp(min, max, math.pow((i - 1) / (table_size - 1), curve and curve or 1))
 
 		if v > 999 then

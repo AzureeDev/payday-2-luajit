@@ -97,7 +97,7 @@ function MenuLobbyRenderer:open(...)
 		return
 	end
 
-	for i = 1, is_single_player and 1 or tweak_data.max_players, 1 do
+	for i = 1, is_single_player and 1 or tweak_data.max_players do
 		local t = {
 			player = {},
 			free = true,
@@ -105,7 +105,7 @@ function MenuLobbyRenderer:open(...)
 			params = {}
 		}
 
-		for slot = 1, PlayerManager.WEAPON_SLOTS + 3, 1 do
+		for slot = 1, PlayerManager.WEAPON_SLOTS + 3 do
 			table.insert(t.kit_slots, slot)
 		end
 

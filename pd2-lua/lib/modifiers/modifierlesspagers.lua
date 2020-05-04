@@ -19,7 +19,7 @@ function ModifierLessPagers:init(data)
 	max_pagers = max_pagers - self:value()
 	local new_pagers_data = {}
 
-	for i = 1, max_pagers, 1 do
+	for i = 1, max_pagers do
 		table.insert(new_pagers_data, 1)
 	end
 

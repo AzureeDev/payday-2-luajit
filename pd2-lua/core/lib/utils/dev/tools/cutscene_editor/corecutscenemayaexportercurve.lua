@@ -67,7 +67,7 @@ function CoreCutsceneMayaExporterCurve:write(file)
 
 		local max_frame = table.maxn(self.__samples)
 
-		for frame = 0, max_frame, 1 do
+		for frame = 0, max_frame do
 			local value = self.__samples[frame]
 
 			if value ~= nil then

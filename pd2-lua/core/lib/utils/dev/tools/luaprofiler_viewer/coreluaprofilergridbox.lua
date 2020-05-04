@@ -70,7 +70,7 @@ function LuaProfilerGridBox:set_profilerdata(...)
 	self._highlightedfuncnode = nil
 	self._item2fnid = {}
 
-	for fnid = 0, self._lpd:numfuncnodes() - 1, 1 do
+	for fnid = 0, self._lpd:numfuncnodes() - 1 do
 		table.insert(self._item2fnid, fnid)
 	end
 
@@ -80,7 +80,7 @@ function LuaProfilerGridBox:set_profilerdata(...)
 		self._listctrl:append_column(n, "")
 	end
 
-	for i = 0, self._lpd:numheaders() - 1, 1 do
+	for i = 0, self._lpd:numheaders() - 1 do
 		local name = self._lpd:headername(i)
 
 		self._listctrl:append_column("Diff " .. string.capitalize(name), "")
@@ -139,7 +139,7 @@ function LuaProfilerGridBox:_redraw()
 
 			local j = 8
 
-			for k = 0, self._lpd:numheaders() - 1, 1 do
+			for k = 0, self._lpd:numheaders() - 1 do
 				self._listctrl:set_item(i - 1, j, string.format("%s", self._lpd:fn_diff(fnid, k)))
 				self._listctrl:set_item(i - 1, j + 1, string.format("%s", self._lpd:fn_peak(fnid, k)))
 

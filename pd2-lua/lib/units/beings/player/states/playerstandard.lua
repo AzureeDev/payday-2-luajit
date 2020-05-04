@@ -667,7 +667,7 @@ function PlayerStandard:_get_input(t, dt, paused)
 	end
 
 	if self._input then
-		for i = 1, #self._input, 1 do
+		for i = 1, #self._input do
 			self._input[i]:update(t, dt, self._controller, input, self._ext_movement:current_state_name())
 		end
 	end
@@ -4005,7 +4005,7 @@ function PlayerStandard:_check_action_ladder(t, input)
 
 	local u_pos = self._unit:movement():m_pos()
 
-	for i = 1, math.min(Ladder.LADDERS_PER_FRAME, #Ladder.active_ladders), 1 do
+	for i = 1, math.min(Ladder.LADDERS_PER_FRAME, #Ladder.active_ladders) do
 		local ladder_unit = Ladder.next_ladder()
 
 		if alive(ladder_unit) then

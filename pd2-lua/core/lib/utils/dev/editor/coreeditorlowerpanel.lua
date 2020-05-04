@@ -246,13 +246,13 @@ function CoreEditor:unit_output(unit)
 		models_text = models_text .. "Models:" .. t .. unit:nr_models() .. n
 		models_text = models_text .. "Name" .. t .. t .. t .. t .. t .. "Instanced" .. t .. "Vertecies" .. t .. "Triangles" .. t .. "Atoms" .. n
 
-		for i = 0, unit:nr_models() - 1, 1 do
+		for i = 0, unit:nr_models() - 1 do
 			if unit:is_visible(i) then
 				local len = string.len(unit:model_name(i):s())
 				local tabs = 5 - math.floor(len / 7)
 				local tab = ""
 
-				for j = 1, tabs, 1 do
+				for j = 1, tabs do
 					tab = tab .. t
 				end
 

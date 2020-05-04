@@ -207,7 +207,7 @@ function ControllerManager:check_connect_change()
 			local replacement_xb1_ctrl, replacement_xb1_ctrl_index = nil
 			local nr_controllers = Input:num_controllers()
 
-			for i_controller = 0, nr_controllers - 1, 1 do
+			for i_controller = 0, nr_controllers - 1 do
 				local controller = Input:controller(i_controller)
 
 				print("[CoreControllerManager:check_connect_change] testing controller", controller, i_controller, controller:connected(), controller:type())
@@ -352,7 +352,7 @@ function ControllerManager:update_controller_wrapper_mappings()
 	local controller_type_to_old_wrapper_map = {}
 	local next_wrapper_index = 1
 
-	for controller_index = 0, controller_count, 1 do
+	for controller_index = 0, controller_count do
 		if not self._controller_to_wrapper_list[controller_index] then
 			local controller = Input:controller(controller_index)
 			local controller_type = controller:type()
@@ -680,11 +680,11 @@ function ControllerManager:create_virtual_pad()
 		if controller and controller:type() == "win32_game_controller" and controller:connected() then
 			game_pad_num = game_pad_num + 1
 
-			for i = 0, controller:num_buttons() - 1, 1 do
+			for i = 0, controller:num_buttons() - 1 do
 				self._virtual_game_pad:connect(controller, controller:button_name(i), Idstring("gamepad" .. tostring(game_pad_num) .. "_B" .. tostring(i)))
 			end
 
-			for i = 0, controller:num_axes() - 1, 1 do
+			for i = 0, controller:num_axes() - 1 do
 				self._virtual_game_pad:connect(controller, controller:axis_name(i), Idstring("gamepad" .. tostring(game_pad_num) .. "_A" .. tostring(i)))
 			end
 		end
@@ -694,7 +694,7 @@ function ControllerManager:create_virtual_pad()
 
 	local controller = Input:mouse()
 
-	for i = 0, controller:num_buttons() - 1, 1 do
+	for i = 0, controller:num_buttons() - 1 do
 		self._virtual_game_pad:connect(controller, controller:button_name(i), Idstring("mouse " .. tostring(i)))
 	end
 end

@@ -9,7 +9,7 @@ end
 
 function UnoPianoBase:note_played(note)
 	if self.SEQUENCE_LENGTH <= #self._notes_played then
-		for i = 1, #self._notes_played - 1, 1 do
+		for i = 1, #self._notes_played - 1 do
 			self._notes_played[i] = self._notes_played[i + 1]
 		end
 	end

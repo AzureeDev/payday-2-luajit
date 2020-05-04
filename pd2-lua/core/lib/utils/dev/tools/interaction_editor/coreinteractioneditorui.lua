@@ -184,7 +184,7 @@ function InteractionEditorUI:update_nb_page_caption(id, text)
 end
 
 function InteractionEditorUI:get_nb_page_by_caption(text)
-	for i = 0, self._main_notebook:get_page_count() - 1, 1 do
+	for i = 0, self._main_notebook:get_page_count() - 1 do
 		if self._main_notebook:get_page_text(i) == text then
 			return i
 		end
@@ -192,7 +192,7 @@ function InteractionEditorUI:get_nb_page_by_caption(text)
 end
 
 function InteractionEditorUI:get_nb_page_id(panel)
-	for i = 0, self._main_notebook:get_page_count() - 1, 1 do
+	for i = 0, self._main_notebook:get_page_count() - 1 do
 		if self._main_notebook:get_page(i) == panel then
 			return i
 		end

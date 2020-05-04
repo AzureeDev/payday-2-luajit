@@ -822,7 +822,7 @@ function ConnectionNetworkHandler:feed_lootdrop_skirmish(reward_string, sender)
 	local global_values = tweak_data.lootdrop.global_value_list_index
 	local item = nil
 
-	for index = loot_index, #lootdrops, 1 do
+	for index = loot_index, #lootdrops do
 		item = string.split(lootdrops[index], "-")
 
 		table.insert(lootdrop_data.items, {
@@ -902,7 +902,7 @@ function ConnectionNetworkHandler:sync_explosion_results(count_cops, count_gangs
 			weapon_unit = weapon_unit
 		})
 
-		for i = 1, enemies_hit, 1 do
+		for i = 1, enemies_hit do
 			managers.statistics:shot_fired({
 				skip_bullet_count = true,
 				hit = true,
@@ -944,7 +944,7 @@ function ConnectionNetworkHandler:sync_fire_results(count_cops, count_gangsters,
 			weapon_unit = weapon_unit
 		})
 
-		for i = 1, enemies_hit, 1 do
+		for i = 1, enemies_hit do
 			managers.statistics:shot_fired({
 				skip_bullet_count = true,
 				hit = true,

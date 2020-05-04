@@ -166,7 +166,7 @@ function Layer:get_name_id(unit, name)
 	self._name_ids[u_name] = self._name_ids[u_name] or {}
 	local t = self._name_ids[u_name]
 
-	for i = start_number, 10000, 1 do
+	for i = start_number, 10000 do
 		i = (i < 10 and "00" or i < 100 and "0" or "") .. i
 		local name_id = name .. i
 
@@ -401,7 +401,7 @@ function Layer:draw_grid(t, dt)
 		rot = self._selected_unit:rotation()
 	end
 
-	for i = -5, 5, 1 do
+	for i = -5, 5 do
 		local from_x = self._current_pos + rot:x() * i * self:grid_size() - rot:y() * 6 * self:grid_size()
 		local to_x = self._current_pos + rot:x() * i * self:grid_size() + rot:y() * 6 * self:grid_size()
 
@@ -627,7 +627,7 @@ end
 function Layer:change_combo_box_trg(data)
 	local next_i = nil
 
-	for i = 1, #self[data.t], 1 do
+	for i = 1, #self[data.t] do
 		if self[data.value] == self[data.t][i] then
 			if self:ctrl() then
 				if i == 1 then
@@ -1413,7 +1413,7 @@ function Layer:check_unit_dependencies(unit_name)
 		local recursive_check_object = nil
 
 		function recursive_check_object(node)
-			for i = 0, node:num_children() - 1, 1 do
+			for i = 0, node:num_children() - 1 do
 				local child = node:child(i)
 
 				if child:name() == "effect_spawner" and child:has_parameter("effect") then
@@ -1435,7 +1435,7 @@ function Layer:check_unit_dependencies(unit_name)
 	local recursive_check_unit = nil
 
 	function recursive_check_unit(node)
-		for i = 0, node:num_children() - 1, 1 do
+		for i = 0, node:num_children() - 1 do
 			local child = node:child(i)
 
 			if child:name() == "depends_on" and child:has_parameter("effect") then
@@ -1695,7 +1695,7 @@ function Layer:clone_edited_values(unit, source)
 	unit:unit_data().disable_collision = source:unit_data().disable_collision
 	local collision_enabled = not unit:unit_data().disable_collision
 
-	for index = 0, unit:num_bodies() - 1, 1 do
+	for index = 0, unit:num_bodies() - 1 do
 		local body = unit:body(index)
 
 		if body then

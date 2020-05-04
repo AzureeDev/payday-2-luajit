@@ -11,7 +11,7 @@ PlayerManager._SHOCK_AND_AWE_TARGET_KILLS = 2
 local function get_as_digested(amount)
 	local list = {}
 
-	for i = 1, #amount, 1 do
+	for i = 1, #amount do
 		table.insert(list, Application:digest_value(amount[i], false))
 	end
 
@@ -594,7 +594,7 @@ function PlayerManager:aquire_default_upgrades()
 		end
 	end
 
-	for i = 1, PlayerManager.WEAPON_SLOTS, 1 do
+	for i = 1, PlayerManager.WEAPON_SLOTS do
 		if not managers.player:weapon_in_slot(i) then
 			self._global.kit.weapon_slots[i] = managers.player:availible_weapons(i)[1]
 		end
@@ -836,7 +836,7 @@ function PlayerManager:spawn_dropin_penalty(dead, bleed_out, health, used_deploy
 		end
 	end
 
-	for i = 1, used_cable_ties, 1 do
+	for i = 1, used_cable_ties do
 		self:remove_special("cable_tie")
 	end
 
@@ -976,7 +976,7 @@ function PlayerManager:set_player_state(state)
 end
 
 function PlayerManager:spawn_players(position, rotation, state)
-	for var = 1, self._nr_players, 1 do
+	for var = 1, self._nr_players do
 		self._last_id = var
 	end
 
@@ -1054,7 +1054,7 @@ function PlayerManager:num_players_with_more_health()
 	local count = #self._player_list
 	local local_health = self:player_unit():character_damage():health_ratio_100()
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		if local_health < self._player_list[i].health then
 			num_players = num_players + 1
 		end
@@ -1141,7 +1141,7 @@ function PlayerManager:_verify_equipment_kit(loading)
 	local max_n = table.maxn(self._global.kit.equipment_slots)
 	local equipment_slots = {}
 
-	for i = 1, max_n, 1 do
+	for i = 1, max_n do
 		if self._global.kit.equipment_slots[i] then
 			table.insert(equipment_slots, self._global.kit.equipment_slots[i])
 		end
@@ -2705,7 +2705,7 @@ function PlayerManager:equipment_slots()
 end
 
 function PlayerManager:equipment_slot(equipment)
-	for i = 1, #self._global.kit.equipment_slots, 1 do
+	for i = 1, #self._global.kit.equipment_slots do
 		if self._global.kit.equipment_slots[i] == equipment then
 			return i
 		end
@@ -3421,7 +3421,7 @@ function PlayerManager:transfer_from_custody_special_equipment_to(target_id)
 						end
 
 						if id == local_peer_id then
-							for i = 1, amount - amount_to_transfer, 1 do
+							for i = 1, amount - amount_to_transfer do
 								self:remove_special(name)
 							end
 						end
@@ -3516,7 +3516,7 @@ function PlayerManager:transfer_special_equipment(peer_id, include_custody)
 				end
 
 				if peer_id == local_peer_id then
-					for i = 1, amount - amount_to_transfer, 1 do
+					for i = 1, amount - amount_to_transfer do
 						self:remove_special(name)
 					end
 				end
@@ -3605,7 +3605,7 @@ function PlayerManager:_add_equipment(params)
 	local amount_digest = {}
 	local quantity = tweak_data.quantity
 
-	for i = 1, #quantity, 1 do
+	for i = 1, #quantity do
 		local equipment_name = equipment
 
 		if tweak_data.upgrade_name then
@@ -3624,7 +3624,7 @@ function PlayerManager:_add_equipment(params)
 	local use_function = use_function_name or nil
 
 	if params.slot and params.slot > 1 then
-		for i = 1, #quantity, 1 do
+		for i = 1, #quantity do
 			amount[i] = math.ceil(amount[i] / 2)
 		end
 	end
@@ -3643,7 +3643,7 @@ function PlayerManager:_add_equipment(params)
 
 	add_hud_item(amount, icon)
 
-	for i = 1, #amount, 1 do
+	for i = 1, #amount do
 		self:add_equipment_amount(equipment, amount[i], i)
 	end
 end
@@ -3713,7 +3713,7 @@ function PlayerManager:select_next_item()
 	local valid = false
 	local count = #self._equipment.selections[new_index].amount
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		if Application:digest_value(self._equipment.selections[new_index].amount[i], false) > 0 then
 			valid = true
 		end
@@ -3734,7 +3734,7 @@ end
 
 function PlayerManager:clear_equipment()
 	for i, equipment in ipairs(self._equipment.selections) do
-		for j = 1, #equipment.amount, 1 do
+		for j = 1, #equipment.amount do
 			equipment.amount[j] = Application:digest_value(0, true)
 		end
 
@@ -3788,7 +3788,7 @@ function PlayerManager:selected_equipment()
 	local equipment = self._equipment.selections[self._equipment.selected_index]
 
 	if equipment and equipment.amount then
-		for i = 1, #equipment.amount, 1 do
+		for i = 1, #equipment.amount do
 			if Application:digest_value(equipment.amount[i], false) > 0 then
 				return equipment
 			end

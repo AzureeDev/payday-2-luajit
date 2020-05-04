@@ -547,7 +547,7 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 	local current_rank = managers.experience:current_rank()
 	local current_rank_range = max_ranks < current_rank and max_ranks or current_rank
 
-	for i = 0, max_ranks, 1 do
+	for i = 0, max_ranks do
 		stats["player_rank_" .. i] = {
 			value = 0,
 			method = "set",
@@ -561,7 +561,7 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 		type = "int"
 	}
 
-	for i = 1, max_specializations, 1 do
+	for i = 1, max_specializations do
 		local specialization = managers.skilltree:get_specialization_value(i)
 
 		if specialization and type(specialization) == "table" and specialization.tiers and specialization.tiers.current_tier then
@@ -578,7 +578,7 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 	local cash_amount = 1000000000
 	current_cash = current_cash / 1000
 
-	for i = 0, 9, 1 do
+	for i = 0, 9 do
 		if not cash_found and cash_amount <= current_cash then
 			stats["player_cash_" .. cash_amount .. "k"] = {
 				value = 1,
@@ -989,7 +989,7 @@ function StatisticsManager:publish_level_to_steam()
 	local current_rank = managers.experience:current_rank()
 	local current_rank_range = max_ranks < current_rank and max_ranks or current_rank
 
-	for i = 0, max_ranks, 1 do
+	for i = 0, max_ranks do
 		stats["player_rank_" .. i] = {
 			value = 0,
 			method = "set",

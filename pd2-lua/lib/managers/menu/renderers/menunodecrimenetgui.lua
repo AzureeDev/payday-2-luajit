@@ -380,7 +380,7 @@ function MenuNodeCrimenetCasinoGui:_set_cards(amount, card)
 		flip_cards = true
 	end
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		if coords then
 			self._betting_cards[i]:set_texture_coordinates(Vector3(coords[1][1], coords[1][2], 0), Vector3(coords[2][1], coords[2][2], 0), Vector3(coords[3][1], coords[3][2], 0), Vector3(coords[4][1], coords[4][2], 0))
 		else
@@ -556,7 +556,7 @@ function MenuNodeCrimenetCasinoGui:_setup_layout()
 	local texture, rect, coords = tweak_data.hud_icons:get_icon_data(self._betting_carddeck.none)
 	self._betting_cards = {}
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		self._betting_cards[i] = self._betting_cards_panel:bitmap({
 			name = "upcard",
 			halign = "scale",
@@ -905,7 +905,7 @@ function MenuNodeCrimenetCasinoGui:set_update_values(preferred_card, secured_car
 	if secured_cards > 0 then
 		breakdown_titles = breakdown_titles .. "\n" .. managers.localization:to_upper_text("menu_casino_option_safecard_title") .. ":"
 
-		for i = 1, secured_cards, 1 do
+		for i = 1, secured_cards do
 			breakdown_costs = breakdown_costs .. "\n" .. managers.experience:cash_string(tweak_data:get_value("casino", "secure_card_cost", i))
 		end
 	end
@@ -1069,7 +1069,7 @@ function MenuNodeCrimenetContactInfoGui:set_contact_info(id, name, files, overri
 
 		local size = files_menu:h() - 4
 
-		for i = 1, num_files, 1 do
+		for i = 1, num_files do
 			local file_icons = self._files[i] and self._files[i].icon_rect or self._file_icons
 			local is_locked = self._files[i] and self:is_file_locked(self._files[i].lock)
 			local texture_rect = is_locked and file_icons.locked or file_icons.unselected
@@ -1729,7 +1729,7 @@ function MenuNodeCrimenetContactShortGui:set_contact_info(id, name, files, overr
 
 		local size = files_menu:h() - 4
 
-		for i = 1, num_files, 1 do
+		for i = 1, num_files do
 			local file_icons = self._files[i] and self._files[i].icon_rect or self._file_icons
 			local is_locked = self._files[i] and self:is_file_locked(self._files[i].lock)
 			local texture_rect = is_locked and file_icons.locked or file_icons.unselected
@@ -2312,7 +2312,7 @@ function MenuNodeCrimenetContactChillGui:set_contact_info(id, name, files, overr
 
 		local size = files_menu:h() - 4
 
-		for i = 1, num_files, 1 do
+		for i = 1, num_files do
 			local file_icons = self._files[i] and self._files[i].icon_rect or self._file_icons
 			local is_locked = self._files[i] and self:is_file_locked(self._files[i].lock)
 			local texture_rect = is_locked and file_icons.locked or file_icons.unselected
@@ -3109,7 +3109,7 @@ function MenuNodeCrimenetGageAssignmentGui:create_insigna(panel, assignment)
 	local mvec1 = Vector3()
 	local mvec2 = Vector3()
 
-	for i = 1, to_aquire, 1 do
+	for i = 1, to_aquire do
 		is_progressed = i <= progress
 		pin = panel:rect({
 			x = x,
@@ -3953,7 +3953,7 @@ function MenuNodeCrimenetChallengeGui:mouse_moved(o, x, y)
 		local texts_colliding = false
 
 		if #visible_texts > 1 then
-			for i = 1, #visible_texts - 1, 1 do
+			for i = 1, #visible_texts - 1 do
 				if visible_texts[i]:world_left() < visible_texts[i + 1]:world_right() and visible_texts[i + 1]:world_left() < visible_texts[i]:world_right() then
 					texts_colliding = true
 
@@ -4155,7 +4155,7 @@ end
 function MenuNodeCrimenetChallengeGui:_clear_gui()
 	local to = #self.row_items
 
-	for i = 1, to, 1 do
+	for i = 1, to do
 		local row_item = self.row_items[i]
 
 		if alive(row_item.gui_panel) then

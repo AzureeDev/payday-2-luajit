@@ -676,7 +676,7 @@ function ElementSpecialObjective:_select_units_from_spawners()
 	local chosen_units = {}
 	local chosen_objectives = {}
 
-	for i = 1, wanted_nr_units, 1 do
+	for i = 1, wanted_nr_units do
 		local i_unit = math.random(#candidates)
 		local chosen_unit = table.remove(candidates, i_unit)
 

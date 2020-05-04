@@ -9,13 +9,13 @@ function UnoPuzzleDoorBase:init(unit)
 	self._inner = UnoPuzzleDoorRing:new(unit:get_object(Idstring("a_inner_ring")), 26)
 	local riddle_ids = {}
 
-	for i = 1, #tweak_data.safehouse.uno_door_riddles, 1 do
+	for i = 1, #tweak_data.safehouse.uno_door_riddles do
 		riddle_ids[i] = i
 	end
 
 	table.shuffle(riddle_ids)
 
-	for i = UnoPuzzleDoorBase.RIDDLE_COUNT + 1, #riddle_ids, 1 do
+	for i = UnoPuzzleDoorBase.RIDDLE_COUNT + 1, #riddle_ids do
 		riddle_ids[i] = nil
 	end
 

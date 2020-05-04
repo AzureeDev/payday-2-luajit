@@ -138,7 +138,7 @@ function CivilianLogicTravel._optimize_path(path)
 		local pos = path[i]
 		local next_index = i + 1
 
-		for j = i + 1, #path, 1 do
+		for j = i + 1, #path do
 			if not managers.navigation:raycast({
 				pos_from = pos,
 				pos_to = path[j]

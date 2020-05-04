@@ -1058,7 +1058,7 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 							local dis = 0
 							local current = spawn_group.pos
 
-							for i = 2, #path, 1 do
+							for i = 2, #path do
 								local nxt = path[i][2]
 
 								if current and nxt then
@@ -2818,11 +2818,11 @@ function GroupAIStateBesiege:_set_recon_objective_to_group(group)
 			local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group)
 
 			if forwardmost_i_nav_point and forwardmost_i_nav_point > 1 then
-				for i = forwardmost_i_nav_point + 1, #current_objective.coarse_path, 1 do
+				for i = forwardmost_i_nav_point + 1, #current_objective.coarse_path do
 					local nav_point = current_objective.coarse_path[forwardmost_i_nav_point]
 
 					if not self:is_nav_seg_safe(nav_point[1]) then
-						for i = 0, #current_objective.coarse_path - forwardmost_i_nav_point, 1 do
+						for i = 0, #current_objective.coarse_path - forwardmost_i_nav_point do
 							table.remove(current_objective.coarse_path)
 						end
 
@@ -3660,11 +3660,11 @@ function GroupAIStateBesiege:_set_reenforce_objective_to_group(group)
 			local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group)
 
 			if forwardmost_i_nav_point then
-				for i = forwardmost_i_nav_point + 1, #current_objective.coarse_path, 1 do
+				for i = forwardmost_i_nav_point + 1, #current_objective.coarse_path do
 					local nav_point = current_objective.coarse_path[forwardmost_i_nav_point]
 
 					if not self:is_nav_seg_safe(nav_point[1]) then
-						for i = 0, #current_objective.coarse_path - forwardmost_i_nav_point, 1 do
+						for i = 0, #current_objective.coarse_path - forwardmost_i_nav_point do
 							table.remove(current_objective.coarse_path)
 						end
 
@@ -3829,7 +3829,7 @@ function GroupAIStateBesiege:_chk_coarse_path_obstructed(group)
 	local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group)
 
 	if forwardmost_i_nav_point then
-		for i = forwardmost_i_nav_point + 1, #current_objective.coarse_path, 1 do
+		for i = forwardmost_i_nav_point + 1, #current_objective.coarse_path do
 			local nav_point = current_objective.coarse_path[forwardmost_i_nav_point]
 
 			if not self:is_nav_seg_safe(nav_point[1]) then

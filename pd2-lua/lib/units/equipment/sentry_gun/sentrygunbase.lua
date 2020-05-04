@@ -80,7 +80,7 @@ function SentryGunBase:is_category(...)
 		return false
 	end
 
-	for i = 1, #arg, 1 do
+	for i = 1, #arg do
 		if table.contains(categories, arg[i]) then
 			return true
 		end

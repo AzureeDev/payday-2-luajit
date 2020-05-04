@@ -37,7 +37,7 @@ local function get_root(r, z0, z1, g)
 	local s1 = g < 0 and 0 or Vector3(n, z1, 0):length() - 1
 	local s = 0
 
-	for i = 1, 10, 1 do
+	for i = 1, 10 do
 		s = (s0 + s1) * 0.5
 
 		if s == s0 or s == s1 then
@@ -170,7 +170,7 @@ function ConstraintHelper.draw_rotational_constraint(brush, pos, radius, up, rig
 	local xs = 1
 	local ys = 1
 
-	for i = 0, 360, 1 do
+	for i = 0, 360 do
 		if i < 90 then
 			xs = angles[1]
 			ys = angles[2]

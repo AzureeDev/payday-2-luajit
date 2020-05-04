@@ -163,7 +163,7 @@ function MissionElementListFlow:on_unit_selected(unit)
 end
 
 function MissionElementListFlow:_autosize_columns(list)
-	for i = 0, list:column_count() - 1, 1 do
+	for i = 0, list:column_count() - 1 do
 		list:autosize_column(i)
 	end
 end

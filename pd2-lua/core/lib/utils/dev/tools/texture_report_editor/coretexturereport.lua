@@ -189,7 +189,7 @@ function CoreTextureReport:_get_all_textures()
 	local texture_cache_report = {}
 	local texture_cache_report_raw = TextureCache:report()
 
-	for line = 0, #texture_cache_report_raw / 6 - 1, 1 do
+	for line = 0, #texture_cache_report_raw / 6 - 1 do
 		local current_texture = getFilename(texture_cache_report_raw[line * 6 + 1])
 
 		if current_texture ~= "Total memory usage" and current_texture ~= "Texture Name" then
@@ -197,7 +197,7 @@ function CoreTextureReport:_get_all_textures()
 				texture_name_from_cache = current_texture
 			}
 
-			for column = 2, 6, 1 do
+			for column = 2, 6 do
 				local try_number = tonumber(texture_cache_report_raw[line * 6 + column]) or texture_cache_report_raw[line * 6 + column]
 				texture_cache_report[current_texture][CoreTextureReport.TEXTURE_CACHE_REPORT_FIELDS[column]] = try_number
 			end
@@ -370,7 +370,7 @@ function CoreTextureReport:draw_table(report_data)
 
 	self._main_frame:layout()
 
-	for i = 0, self._list:column_count() - 1, 1 do
+	for i = 0, self._list:column_count() - 1 do
 		self._list:autosize_column(i)
 	end
 
@@ -393,7 +393,7 @@ end
 function CoreTextureReport:copy_rows(data, event)
 	local rval = ""
 
-	for i = 0, self._list:item_count() - 1, 1 do
+	for i = 0, self._list:item_count() - 1 do
 		local data = self._list:get_item_data(i)
 
 		if data then

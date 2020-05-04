@@ -898,7 +898,7 @@ end
 function Drill:_does_peer_exist(peer_id)
 	local count = #self._peer_ids
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		if self._peer_ids[i] == peer_id then
 			return true
 		end

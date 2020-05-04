@@ -5,7 +5,7 @@ function CopActionWarp:init(action_desc, common_data)
 	self._dynamic_bodies = {}
 	local nr_bodies = self._unit:num_bodies()
 
-	for i = 0, nr_bodies - 1, 1 do
+	for i = 0, nr_bodies - 1 do
 		local body = self._unit:body(i)
 
 		if body:dynamic() then

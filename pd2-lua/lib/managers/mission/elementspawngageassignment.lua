@@ -16,7 +16,7 @@ function ElementSpawnGageAssignment:on_executed(instigator)
 
 	local num_executions = tweak_data.gage_assignment:get_num_assignment_units() or 1
 
-	for i = 1, num_executions, 1 do
+	for i = 1, num_executions do
 		managers.gage_assignment:queue_spawn(self:get_orientation())
 	end
 

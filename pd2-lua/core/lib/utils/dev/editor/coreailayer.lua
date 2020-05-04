@@ -255,7 +255,7 @@ function AiLayer:build_panel(notebook)
 		graphs:append(name)
 	end
 
-	for i = 0, graphs:nr_items() - 1, 1 do
+	for i = 0, graphs:nr_items() - 1 do
 		graphs:select_index(i)
 	end
 
@@ -946,7 +946,7 @@ function AiLayer:_add_to_visible_exlude_filter(unit)
 end
 
 function AiLayer:_set_selection_patrol_paths_listbox(name)
-	for i = 0, self._patrol_paths_list:nr_items() - 1, 1 do
+	for i = 0, self._patrol_paths_list:nr_items() - 1 do
 		if self._patrol_paths_list:get_string(i) == name then
 			self._patrol_paths_list:select_index(i)
 		end
@@ -964,7 +964,7 @@ function AiLayer:_create_new_patrol_path()
 		else
 			self:_update_patrol_paths_list()
 
-			for i = 0, self._patrol_paths_list:nr_items() - 1, 1 do
+			for i = 0, self._patrol_paths_list:nr_items() - 1 do
 				if self._patrol_paths_list:get_string(i) == name then
 					self._patrol_paths_list:select_index(i)
 				end

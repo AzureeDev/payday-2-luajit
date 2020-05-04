@@ -37,7 +37,7 @@ function CustomSafehouseFilterUnitElement:_build_panel(panel, panel_sizer)
 
 	local tiers = {}
 
-	for i = 1, #tweak_data.safehouse.prices.rooms, 1 do
+	for i = 1, #tweak_data.safehouse.prices.rooms do
 		table.insert(tiers, tostring(i))
 	end
 
@@ -68,7 +68,7 @@ function CustomSafehouseFilterUnitElement:set_element_data(data)
 		local num_tiers = managers.custom_safehouse:get_room_max_tier(self._character_box:get_value())
 		local tiers = {}
 
-		for i = 1, num_tiers, 1 do
+		for i = 1, num_tiers do
 			self._tier_box:append(tostring(i))
 		end
 

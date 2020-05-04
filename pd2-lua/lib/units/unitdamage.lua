@@ -44,7 +44,7 @@ function UnitDamage:add_damage(endurance_type, attack_unit, dest_body, normal, p
 end
 
 function UnitDamage:setup_sfx_collision_body_tags()
-	for i = 0, self._unit:num_bodies() - 1, 1 do
+	for i = 0, self._unit:num_bodies() - 1 do
 		local body = self._unit:body(i)
 
 		if not self:_has_body_collision_damage(body:name()) then

@@ -380,7 +380,7 @@ function SimpleGUIEffectSpewer.lootdrop_drill_drop_show_item(panel)
 		}
 	}
 
-	for i = 1, 4, 1 do
+	for i = 1, 4 do
 		SimpleGUIEffectSpewer:new({
 			min_particle_speed = 10,
 			min_plive_time = 0.65,
@@ -581,7 +581,7 @@ function SimpleGUIEffectSpewer.lootdrop_safe_drop_show_item(panel)
 		}
 	}
 
-	for i = 1, 4, 1 do
+	for i = 1, 4 do
 		SimpleGUIEffectSpewer:new({
 			min_particle_speed = 10,
 			min_plive_time = 0.65,

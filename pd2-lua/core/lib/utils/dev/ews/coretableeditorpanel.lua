@@ -63,7 +63,7 @@ function CoreTableEditorPanel:add_item(...)
 	}
 	local item_index = self.__list_ctrl:append_item(tostring(values[1]))
 
-	for i = 2, #values, 1 do
+	for i = 2, #values do
 		self.__list_ctrl:set_item(item_index, i - 1, tostring(values[i]))
 	end
 

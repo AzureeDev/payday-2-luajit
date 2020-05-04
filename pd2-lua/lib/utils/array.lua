@@ -12,10 +12,10 @@ function Array:init(data, height, width, name)
 		self._height = #data
 		self._data = {}
 
-		for i = 1, self._height, 1 do
+		for i = 1, self._height do
 			local row = data[i]
 
-			for j = 1, self._width, 1 do
+			for j = 1, self._width do
 				self._data[(i - 1) * self._width + j] = row[j]
 			end
 		end
@@ -77,7 +77,7 @@ function Array.random(height, width, out)
 	local data = out and out._data or {}
 	out = out or Array:new(data, height, width)
 
-	for i = 1, width * height, 1 do
+	for i = 1, width * height do
 		data[i] = 2 * math.random() - 1
 	end
 
@@ -88,7 +88,7 @@ function Array.zero(height, width, out)
 	local data = out and out._data or {}
 	out = out or Array:new(data, height, width)
 
-	for i = 1, width * height, 1 do
+	for i = 1, width * height do
 		data[i] = 0
 	end
 
@@ -104,7 +104,7 @@ function Array:serialize_thread(name)
 
 	str = str .. " width=\"" .. tostring(self._width) .. "\" height=\"" .. tostring(self._height) .. "\"><![CDATA["
 
-	for i = 1, self._width * self._height, 1 do
+	for i = 1, self._width * self._height do
 		str = str .. " " .. tostring(self._data[i])
 
 		if i % 100 == 0 then
@@ -126,7 +126,7 @@ function Array:serialize(name)
 
 	str = str .. " width=\"" .. tostring(self._width) .. "\" height=\"" .. tostring(self._height) .. "\"><![CDATA["
 
-	for i = 1, self._width * self._height, 1 do
+	for i = 1, self._width * self._height do
 		str = str .. " " .. tostring(self._data[i])
 	end
 
@@ -143,12 +143,12 @@ function Array:dot(other, out)
 	local oindex = 1
 	local srowindex = 0
 
-	for i = 1, self._height, 1 do
-		for j = 1, other._width, 1 do
+	for i = 1, self._height do
+		for j = 1, other._width do
 			local v = 0
 			local drowindex = 0
 
-			for k = 1, self._width, 1 do
+			for k = 1, self._width do
 				v = v + src[srowindex + k] * dst[drowindex + j]
 				drowindex = drowindex + other._width
 			end
@@ -171,13 +171,13 @@ function Array:dot_transpose(other, out)
 	local oindex = 1
 	local srowindex = 0
 
-	for i = 1, self._height, 1 do
+	for i = 1, self._height do
 		local drowindex = 0
 
-		for j = 1, other._height, 1 do
+		for j = 1, other._height do
 			local v = 0
 
-			for k = 1, self._width, 1 do
+			for k = 1, self._width do
 				v = v + src[srowindex + k] * dst[drowindex + k]
 			end
 
@@ -197,8 +197,8 @@ function Array:transpose(out)
 	local oindex = 1
 	out = out or Array:new(data, self._width, self._height)
 
-	for i = 1, self._width, 1 do
-		for j = 1, self._height, 1 do
+	for i = 1, self._width do
+		for j = 1, self._height do
 			data[oindex] = self._data[(j - 1) * self._width + i]
 			oindex = oindex + 1
 		end
@@ -211,7 +211,7 @@ function array_tanh(dst, src)
 	local dst_data = dst:data()
 	local src_data = src:data()
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		dst_data[i] = math.tanh(src_data[i])
 	end
 
@@ -222,7 +222,7 @@ function array_tanh_d(dst, src)
 	local dst_data = dst:data()
 	local src_data = src:data()
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		dst_data[i] = 1 - src_data[i] * src_data[i]
 	end
 
@@ -233,7 +233,7 @@ function array_logistic(dst, src)
 	local dst_data = dst:data()
 	local src_data = src:data()
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		dst_data[i] = 1 / (1 + math.exp(-src_data[i]))
 	end
 
@@ -244,7 +244,7 @@ function array_logistic_d(dst, src)
 	local dst_data = dst:data()
 	local src_data = src:data()
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		dst_data[i] = src_data[i] * (1 - src_data[i])
 	end
 
@@ -255,7 +255,7 @@ function array_relu(dst, src)
 	local dst_data = dst:data()
 	local src_data = src:data()
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		dst_data[i] = math.max(0, src_data[i])
 	end
 
@@ -266,7 +266,7 @@ function array_relu_d(dst, src)
 	local dst_data = dst:data()
 	local src_data = src:data()
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		local v = src_data[i]
 		dst_data[i] = v >= 0 and 1 or 0
 	end
@@ -278,7 +278,7 @@ function array_softplus(dst, src)
 	local dst_data = dst:data()
 	local src_data = src:data()
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		dst_data[i] = math.log(1 + math.exp(src_data[i]))
 	end
 
@@ -289,7 +289,7 @@ function array_softplus_d(dst, src)
 	local dst_data = dst:data()
 	local src_data = src:data()
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		local v = src_data[i]
 		dst_data[i] = 1 / (1 + math.exp(-src_data[i]))
 	end
@@ -310,7 +310,7 @@ function array_dropout(dst, src, probability)
 	local src_data = src:data()
 	local inv_probability = 1 / probability
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		dst_data[i] = src_data[i] * (math.random() < probability and inv_probability or 0)
 	end
 end
@@ -320,7 +320,7 @@ function array_add(dst, a, b)
 	local a_data = a:data()
 	local b_data = b:data()
 
-	for i = 1, a:width() * a:height(), 1 do
+	for i = 1, a:width() * a:height() do
 		dst_data[i] = a_data[i] + b_data[i]
 	end
 
@@ -332,7 +332,7 @@ function array_mul(dst, a, b)
 	local a_data = a:data()
 	local b_data = b:data()
 
-	for i = 1, a:width() * a:height(), 1 do
+	for i = 1, a:width() * a:height() do
 		dst_data[i] = a_data[i] * b_data[i]
 	end
 
@@ -343,7 +343,7 @@ function array_scalar(dst, a, s)
 	local dst_data = dst:data()
 	local a_data = a:data()
 
-	for i = 1, a:width() * a:height(), 1 do
+	for i = 1, a:width() * a:height() do
 		dst_data[i] = a_data[i] * s
 	end
 
@@ -355,7 +355,7 @@ function array_sub(dst, a, b)
 	local a_data = a:data()
 	local b_data = b:data()
 
-	for i = 1, a:width() * a:height(), 1 do
+	for i = 1, a:width() * a:height() do
 		dst_data[i] = a_data[i] - b_data[i]
 	end
 
@@ -366,7 +366,7 @@ function array_mean_error(src)
 	local src_data = src:data()
 	local err = 0
 
-	for i = 1, src:width() * src:height(), 1 do
+	for i = 1, src:width() * src:height() do
 		err = err + math.abs(src_data[i])
 	end
 

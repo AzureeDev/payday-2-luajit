@@ -151,7 +151,7 @@ function ObjectInteractionManager:_update_targeted(player_pos, player_unit, hand
 		k = k - 1
 	end
 
-	for i = 1, self._close_freq, 1 do
+	for i = 1, self._close_freq do
 		if self._interactive_count <= self._close_index then
 			self._close_index = 1
 		else

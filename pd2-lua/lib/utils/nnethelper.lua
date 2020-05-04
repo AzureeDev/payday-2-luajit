@@ -52,7 +52,7 @@ local function fwd_resolve(points, target)
 
 	mvector3.set(c, target)
 
-	for i = 1, #points - 1, 1 do
+	for i = 1, #points - 1 do
 		local len = mvector3.distance(points[i], points[i + 1])
 
 		mvector3.set(v, points[i + 1])
@@ -77,7 +77,7 @@ local function ik_resolve_elbow(points, target)
 
 	local dir = tmpvec3
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		bkw_resolve(points, target)
 		mvector3.set(dir, points[2])
 		mvector3.subtract(dir, elbow)
@@ -284,7 +284,7 @@ local tmpvec1_itos = Vector3()
 function NNetHelper.inv_transform_output_sample(input, output)
 	local temp = {}
 
-	for i = 1, #output, 1 do
+	for i = 1, #output do
 		temp[i] = (output[i] * 2 - 1) * VALUE_SCALE
 	end
 
@@ -857,7 +857,7 @@ function NNetHelper.build_pose(output, rot, target, prev_pose)
 
 	mirror_arm_pose(next_pose, 2)
 
-	for i = 1, 2, 1 do
+	for i = 1, 2 do
 		next_pose.shoulder[i] = rot * next_pose.shoulder[i]
 		next_pose.arm[i] = rot * next_pose.arm[i]
 		next_pose.fore_arm[i] = rot * next_pose.fore_arm[i]

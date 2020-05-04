@@ -4784,7 +4784,7 @@ function SkillTreeTweakData:get_tier_unlocks()
 	local tier_unlocks = self.tier_unlocks
 	local unlock_values = {}
 
-	for i = 1, #tier_unlocks, 1 do
+	for i = 1, #tier_unlocks do
 		table.insert(unlock_values, digest(tier_unlocks[i]))
 	end
 

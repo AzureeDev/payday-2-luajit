@@ -413,7 +413,7 @@ function UnitList:on_select_unit_list(ignore_unit)
 			managers.editor:output_error("Unit " .. unit_name .. " is not placed by editor.")
 		end
 
-		for i = 0, unit_list:column_count() - 1, 1 do
+		for i = 0, unit_list:column_count() - 1 do
 			unit_list:autosize_column(i)
 		end
 	else
@@ -444,7 +444,7 @@ function UnitList:deleted_unit(unit)
 
 	local index = self._list:selected_item()
 
-	for i = 0, self._list:item_count() - 1, 1 do
+	for i = 0, self._list:item_count() - 1 do
 		if self._list:get_item(i, 0) == unit:name():s() then
 			local amount = self._list:get_item(i, 1) - 1
 
@@ -472,7 +472,7 @@ function UnitList:spawned_unit(unit)
 
 	local index = self._list:selected_item()
 
-	for i = 0, self._list:item_count() - 1, 1 do
+	for i = 0, self._list:item_count() - 1 do
 		if self._list:get_item(i, 0) == unit:name():s() then
 			local amount = self._list:get_item(i, 1) + 1
 
@@ -505,12 +505,12 @@ function UnitList:selected_unit(unit)
 		return
 	end
 
-	for i = 0, self._list:item_count() - 1, 1 do
+	for i = 0, self._list:item_count() - 1 do
 		if self._list:get_item(i, 0) == unit:name():s() then
 			self._list:set_item_selected(i, true)
 			self._list:ensure_visible(i)
 
-			for j = 0, self._unit_list:item_count() - 1, 1 do
+			for j = 0, self._unit_list:item_count() - 1 do
 				if tonumber(self._unit_list:get_item(j, 1)) == unit:unit_data().unit_id then
 					self._unit_list:set_item_selected(j, true)
 					self._unit_list:ensure_visible(j)
@@ -527,7 +527,7 @@ end
 function UnitList:unit_name_changed(unit)
 	local index = self._list:selected_item()
 
-	for i = 0, self._list:item_count() - 1, 1 do
+	for i = 0, self._list:item_count() - 1 do
 		if self._list:get_item(i, 0) == unit:name():s() then
 			if index ~= -1 and index == i then
 				self:on_select_unit_list()
@@ -570,7 +570,7 @@ function UnitList:fill_unit_list(type)
 end
 
 function UnitList:_autosize_columns()
-	for i = 0, self._list:column_count() - 1, 1 do
+	for i = 0, self._list:column_count() - 1 do
 		self._list:autosize_column(i)
 	end
 end
@@ -842,7 +842,7 @@ function UnitDuplicateIdList:fill_unit_list(type)
 end
 
 function UnitDuplicateIdList:_autosize_columns()
-	for i = 0, self._list:column_count() - 1, 1 do
+	for i = 0, self._list:column_count() - 1 do
 		self._list:autosize_column(i)
 	end
 end
@@ -2575,7 +2575,7 @@ function EditControllerBindings:init(...)
 	self._list:append_item("")
 	self:add_list(managers.editor:ctrl_menu_bindings())
 
-	for i = 0, self._list:column_count() - 1, 1 do
+	for i = 0, self._list:column_count() - 1 do
 		self._list:autosize_column(i)
 	end
 
@@ -2953,7 +2953,7 @@ function BrushLayerDebug:fill_unit_list()
 end
 
 function BrushLayerDebug:_autosize_columns(list)
-	for i = 0, list:column_count() - 1, 1 do
+	for i = 0, list:column_count() - 1 do
 		list:autosize_column(i)
 	end
 end

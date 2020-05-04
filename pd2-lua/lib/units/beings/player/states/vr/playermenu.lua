@@ -478,7 +478,7 @@ local function intersect_ws(shape, normal, from, dir)
 
 	local p = mvector3.dot(shape[1] - from, normal) / d * dir + from
 
-	for i = 1, #shape, 1 do
+	for i = 1, #shape do
 		local p1 = shape[i]
 		local p2 = nil
 

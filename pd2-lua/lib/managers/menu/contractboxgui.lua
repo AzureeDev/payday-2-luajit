@@ -534,7 +534,7 @@ function ContractBoxGui:create_contract_box()
 		}
 	})
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		local peer = managers.network:session():peer(i)
 
 		if peer then
@@ -696,7 +696,7 @@ function ContractBoxGui:refresh()
 end
 
 function ContractBoxGui:update(t, dt)
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		self:update_character(i)
 	end
 

@@ -98,7 +98,7 @@ function LootDropManager:new_debug_drop(amount, add_to_inventory, stars)
 
 	self._debug_drop_result = {}
 
-	for i = 1, amount, 1 do
+	for i = 1, amount do
 		local s = stars == "random" and math.random(10) or stars
 		local global_value, category, id, pc = self:_new_make_drop(true, add_to_inventory, s)
 		self._debug_drop_result[global_value] = self._debug_drop_result[global_value] or {}
@@ -257,7 +257,7 @@ function LootDropManager:_get_random_item_pc(debug, debug_stars, setup_data)
 		no_pcs = #pcs
 	end
 
-	for i = 1, no_pcs, 1 do
+	for i = 1, no_pcs do
 		local chance = no_pcs > 1 and math.lerp(start_chance, 1, math.pow((i - 1) / (no_pcs - 1), chance_curve)) or 1
 
 		if not debug then
@@ -413,7 +413,7 @@ function LootDropManager:new_make_mass_drop(amount, item_pc, return_data, setup_
 	local infamous_chance, infamous_base_chance, infamous_base_multiplier = self:infamous_chance(setup_data)
 	local infamous_success = false
 
-	for i = 1, amount, 1 do
+	for i = 1, amount do
 		if math.rand(1) < infamous_chance then
 			infamous_success = true
 
@@ -430,7 +430,7 @@ function LootDropManager:new_make_mass_drop(amount, item_pc, return_data, setup_
 	local co = coroutine.create(function ()
 		local itr = 0
 
-		for i = 1, amount, 1 do
+		for i = 1, amount do
 			local weighted_type_chance = {}
 			local sum = 0
 
@@ -515,7 +515,7 @@ function LootDropManager:debug_drop(amount, add_to_inventory, stars)
 
 	self._debug_drop_result = {}
 
-	for i = 1, amount, 1 do
+	for i = 1, amount do
 		local s = stars == "random" and math.random(10) or stars
 		local global_value, category, id, pc = self:_make_drop(true, add_to_inventory, s)
 		self._debug_drop_result[global_value] = self._debug_drop_result[global_value] or {}
@@ -583,7 +583,7 @@ function LootDropManager:_make_drop(debug, add_to_inventory, debug_stars, return
 	if math.rand(1) <= tweak_data.lootdrop.joker_chance then
 		pcs = deep_clone(pcs)
 
-		for i = 1, #pcs, 1 do
+		for i = 1, #pcs do
 			local new_value = pcs[i] + math.random(5) * 10 - 30
 
 			if new_value >= 5 and new_value <= 100 then
@@ -613,7 +613,7 @@ function LootDropManager:_make_drop(debug, add_to_inventory, debug_stars, return
 	local no_pcs = #pcs
 	local pc = nil
 
-	for i = 1, no_pcs, 1 do
+	for i = 1, no_pcs do
 		local chance = math.lerp(start_chance, 1, math.pow((i - 1) / (no_pcs - 1), chance_curve))
 
 		if not debug then

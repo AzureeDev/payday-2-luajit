@@ -613,7 +613,7 @@ function ZipLine:attach_bag(bag)
 	self._bag_disabled_collisions = {}
 	local nr_bodies = bag:num_bodies()
 
-	for i_body = 0, nr_bodies - 1, 1 do
+	for i_body = 0, nr_bodies - 1 do
 		local body = bag:body(i_body)
 
 		if body:collisions_enabled() then

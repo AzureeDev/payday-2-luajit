@@ -113,7 +113,7 @@ function MenuCustomizeWeaponColorInitiator:setup_node(node, node_data)
 
 		local variations_data = {}
 
-		for index = 1, #weapon_color_variation_template, 1 do
+		for index = 1, #weapon_color_variation_template do
 			table.insert(variations_data, {
 				_meta = "option",
 				value = index,

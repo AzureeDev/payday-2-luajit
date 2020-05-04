@@ -194,7 +194,7 @@ function catprint_load()
 end
 
 function print_console_result(...)
-	for i = 1, select("#", ...), 1 do
+	for i = 1, select("#", ...) do
 		cat_print("debug", CoreCode.full_representation(select(i, ...)))
 	end
 end

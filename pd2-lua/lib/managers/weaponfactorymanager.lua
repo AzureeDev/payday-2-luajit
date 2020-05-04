@@ -165,8 +165,8 @@ function WeaponFactoryManager:create_limited_blueprints(factory_id)
 	local i_table = self:_indexed_parts(factory_id)
 	local all_parts_used_once = {}
 
-	for j = 1, #i_table, 1 do
-		for k = j == 1 and 1 or 2, #i_table[j].parts, 1 do
+	for j = 1, #i_table do
+		for k = j == 1 and 1 or 2, #i_table[j].parts do
 			local perm = {}
 			local part = i_table[j].parts[k]
 
@@ -174,7 +174,7 @@ function WeaponFactoryManager:create_limited_blueprints(factory_id)
 				table.insert(perm, i_table[j].parts[k])
 			end
 
-			for l = 1, #i_table, 1 do
+			for l = 1, #i_table do
 				if j ~= l then
 					local part = i_table[l].parts[1]
 
@@ -1428,7 +1428,7 @@ function WeaponFactoryManager:get_stats(factory_id, blueprint)
 				elseif type(value) == "table" then
 					stats[stat_type] = stats[stat_type] or {}
 
-					for i = 1, #value, 1 do
+					for i = 1, #value do
 						stats[stat_type][i] = stats[stat_type][i] or 0
 						stats[stat_type][i] = stats[stat_type][i] + value[i]
 					end

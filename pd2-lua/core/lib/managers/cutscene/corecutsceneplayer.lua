@@ -797,7 +797,7 @@ function CoreCutscenePlayer:_notify_discontinuity()
 	for unit_name, _ in pairs(self._cutscene:controlled_unit_types()) do
 		local unit = self._cast:actor_unit(unit_name, self._cutscene)
 
-		for index = 0, unit:num_bodies() - 1, 1 do
+		for index = 0, unit:num_bodies() - 1 do
 			local body = unit:body(index)
 
 			if body:dynamic() and body:enabled() then

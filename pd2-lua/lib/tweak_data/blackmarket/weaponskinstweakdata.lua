@@ -9937,10 +9937,10 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 			wpn_fps_upg_m4_s_adapter = {}
 		}
 	}
-	self.weapon_skins.amcar_same.parts.wpn_fps_upg_m4_s_adapter.13b9deba857ff839 = {
+	self.weapon_skins.amcar_same.parts.wpn_fps_upg_m4_s_adapter["13b9deba857ff839"] = {
 		base_gradient = Idstring("units/payday2_cash/safes/same/base_gradient/base_gradient_same_001_df")
 	}
-	self.weapon_skins.amcar_same.parts.wpn_fps_m4_lower_reciever.6e91ed22414b0c28 = {
+	self.weapon_skins.amcar_same.parts.wpn_fps_m4_lower_reciever["6e91ed22414b0c28"] = {
 		uv_offset_rot = Vector3(0.1, 0.778917, 0),
 		uv_scale = Vector3(1.20187, 2.34606, 1),
 		sticker = Idstring("units/payday2_cash/safes/same/sticker/sticker_same_001_df")
@@ -35341,7 +35341,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		},
 		parts = {
 			wpn_fps_upg_m4_s_crane = {
-				00bd2e5c897c8fcf = {
+				["00bd2e5c897c8fcf"] = {
 					uv_scale = Vector3(2.01434, 2.01434, 1),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_001_01_df"),
 					uv_offset_rot = Vector3(0.076, 1.01171, 0)
@@ -35368,10 +35368,10 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_m4_m_straight_vanilla = {
-				75dbd214f1199f8a = {}
+				["75dbd214f1199f8a"] = {}
 			},
 			wpn_fps_upg_m4_m_quad = {
-				1f3e46eeee0938a5 = {
+				["1f3e46eeee0938a5"] = {
 					uv_scale = Vector3(6.61443, 6.61443, 1),
 					uv_offset_rot = Vector3(0.0534395, 0.604203, 0.245225),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_001_02_df")
@@ -35385,7 +35385,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_m4_upg_m_quick = {
-				47fd1974bc0ea7b7 = {},
+				["47fd1974bc0ea7b7"] = {},
 				e07bef375f9743f3 = {
 					uv_scale = Vector3(5.86431, 5.86431, 1),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_001_02_df"),
@@ -35468,41 +35468,41 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_02_df"),
 		parts = {
 			wpn_fps_smg_shepheard_g_standard = {
-				582ebac4d25632bd = {
+				["582ebac4d25632bd"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_01_df")
 				}
 			},
 			wpn_fps_smg_shepheard_dh_standard = {
-				1b35080677e98ac2 = {
+				["1b35080677e98ac2"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_02_df")
 				}
 			},
 			wpn_fps_smg_shepheard_body = {
-				13de1d1cde5f3467 = {
+				["13de1d1cde5f3467"] = {
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_03_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df")
 				},
-				1b35080677e98ac2 = {
+				["1b35080677e98ac2"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_03_df")
 				}
 			},
 			wpn_fps_upg_m4_s_ubr = {
-				95c7bb6a6952f598 = {
+				["95c7bb6a6952f598"] = {
 					pattern_tweak = Vector3(1.58836, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df")
 				}
 			},
 			wpn_fps_upg_o_fc1 = {
-				17b82e57d415e0a4 = {
+				["17b82e57d415e0a4"] = {
 					pattern_tweak = Vector3(1.39757, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df")
 				}
 			},
 			wpn_fps_smg_shepheard_s_standard = {
-				85128a8ad74029c2 = {
+				["85128a8ad74029c2"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_04_df")
 				}
 			},
@@ -35514,7 +35514,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_o_acog = {
-				4144c08a44a4f6bc = {
+				["4144c08a44a4f6bc"] = {
 					pattern_tweak = Vector3(1.06368, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df")
@@ -35529,12 +35529,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_smg_shepheard_bolt_standard = {
-				1b35080677e98ac2 = {
+				["1b35080677e98ac2"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_02_df")
 				}
 			},
 			wpn_fps_smg_shepheard_mag_extended = {
-				5cbc2022861d45ec = {
+				["5cbc2022861d45ec"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_04_df")
 				}
 			},
@@ -35544,14 +35544,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_o_cs = {
-				87a5402dd2bfd794 = {
+				["87a5402dd2bfd794"] = {
 					pattern_tweak = Vector3(0.968283, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df")
 				}
 			},
 			wpn_fps_upg_ass_ns_surefire = {
-				2bb332a65b6c38ee = {
+				["2bb332a65b6c38ee"] = {
 					pattern_tweak = Vector3(0.3959, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df")
@@ -35572,12 +35572,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ns_ass_smg_medium = {
-				7cb84bb7913848f5 = {
+				["7cb84bb7913848f5"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_03_df")
 				}
 			},
 			wpn_fps_smg_shepheard_ns_standard = {
-				1b35080677e98ac2 = {
+				["1b35080677e98ac2"] = {
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_04_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df"),
@@ -35585,7 +35585,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_m4_s_pts = {
-				26554b6c5f9b2c31 = {
+				["26554b6c5f9b2c31"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_04_df")
 				}
 			},
@@ -35599,10 +35599,10 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_smg_shepheard_body_short = {
-				1b35080677e98ac2 = {
+				["1b35080677e98ac2"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_03_df")
 				},
-				13de1d1cde5f3467 = {
+				["13de1d1cde5f3467"] = {
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_03_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df")
@@ -35616,7 +35616,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_smg_shepheard_mag_standard = {
-				5cbc2022861d45ec = {
+				["5cbc2022861d45ec"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_04_df")
 				}
 			},
@@ -35628,7 +35628,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_o_spot = {
-				1281bdd104404adc = {
+				["1281bdd104404adc"] = {
 					pattern_tweak = Vector3(1.92225, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df")
@@ -35642,7 +35642,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_o_eotech = {
-				4f2912710fde9823 = {
+				["4f2912710fde9823"] = {
 					pattern_tweak = Vector3(1.06368, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_003_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df")
@@ -35656,7 +35656,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_smg_shepheard_b_standard = {
-				1b35080677e98ac2 = {
+				["1b35080677e98ac2"] = {
 					pattern_pos = Vector3(0.454567, 0.445028, 0),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_003_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_003_02_df"),
@@ -35699,7 +35699,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_02_df"),
 		parts = {
 			wpn_fps_pis_chinchilla_m_bullets = {
-				516f36af8dd6cb7e = {
+				["516f36af8dd6cb7e"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_004_01_df")
 				}
 			},
@@ -35709,12 +35709,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_pis_chinchilla_ejector = {
-				6de7f6ff921d8dad = {
+				["6de7f6ff921d8dad"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_01_df")
 				}
 			},
 			wpn_fps_pis_chinchilla_cylinder = {
-				516f36af8dd6cb7e = {
+				["516f36af8dd6cb7e"] = {
 					pattern_tweak = Vector3(2.399, 0, 0.649),
 					uv_scale = Vector3(0.962999, 0.962999, 0.454),
 					pattern_pos = Vector3(0.283, 0, 0),
@@ -35725,12 +35725,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_pis_chinchilla_lock_arm = {
-				6de7f6ff921d8dad = {
+				["6de7f6ff921d8dad"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_01_df")
 				}
 			},
 			wpn_fps_pis_chinchilla_g_death = {
-				44eacd14aee5e9f0 = {
+				["44eacd14aee5e9f0"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_004_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_004_01_df")
@@ -35740,14 +35740,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_004_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_004_03_df")
 				},
-				1af0cd12e98e1de8 = {
+				["1af0cd12e98e1de8"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_004_03_df"),
 					uv_offset_rot = Vector3(0.579, 1.504, 0),
 					uv_scale = Vector3(0.581999, 0.581999, 1)
 				}
 			},
 			wpn_fps_pis_chinchilla_dh_hammer = {
-				6de7f6ff921d8dad = {
+				["6de7f6ff921d8dad"] = {
 					uv_scale = Vector3(2.012, 2.012, 0.301),
 					pattern_pos = Vector3(0.197, -0.261, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_02_df"),
@@ -35764,7 +35764,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_004_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_004_02_df")
 				},
-				8ff5f4d2f66c5c96 = {
+				["8ff5f4d2f66c5c96"] = {
 					pattern_tweak = Vector3(2.542, 0, 1),
 					uv_scale = Vector3(0.915998, 0.915998, 0.296),
 					pattern_pos = Vector3(0, 0.00600004, 0),
@@ -35775,12 +35775,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_pis_chinchilla_ejectorpin = {
-				516f36af8dd6cb7e = {
+				["516f36af8dd6cb7e"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_01_df")
 				}
 			},
 			wpn_fps_pis_chinchilla_body = {
-				6de7f6ff921d8dad = {
+				["6de7f6ff921d8dad"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_004_02_df"),
 					uv_scale = Vector3(1.011, 1.011, 0.337),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_02_df"),
@@ -35791,10 +35791,10 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_pis_chinchilla_b_satan = {
-				8ff5f4d2f66c5c96 = {
+				["8ff5f4d2f66c5c96"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_02_df")
 				},
-				1b1368de70bd0090 = {
+				["1b1368de70bd0090"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_004_02_df"),
 					uv_scale = Vector3(1.011, 1.011, 0.194),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_004_02_df"),
@@ -35826,14 +35826,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		},
 		parts = {
 			wpn_fps_upg_o_rms = {
-				85ec9ca927b4aad2 = {
+				["85ec9ca927b4aad2"] = {
 					pattern_pos = Vector3(0, 0, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_005_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_01_df")
 				}
 			},
 			wpn_fps_upg_o_rmr = {
-				9a33af1f56b83b07 = {
+				["9a33af1f56b83b07"] = {
 					pattern_pos = Vector3(0, 0.495726, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_005_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_01_df")
@@ -35853,20 +35853,20 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_pis_deagle_b_standard = {
-				8ff5f4d2f66c5c96 = {
+				["8ff5f4d2f66c5c96"] = {
 					pattern_tweak = Vector3(1, 0, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_005_04_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_03_df")
 				}
 			},
 			wpn_fps_pis_deagle_g_ergo = {
-				35f82306102eeb5e = {
+				["35f82306102eeb5e"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_005_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_04_df")
 				}
 			},
 			wpn_fps_pis_deagle_body_standard = {
-				6de7f6ff921d8dad = {
+				["6de7f6ff921d8dad"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_005_01_df"),
 					uv_scale = Vector3(1.39256, 1.39256, 1),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_05_df"),
@@ -35876,26 +35876,26 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_pis_deagle_g_standard = {
-				35f82306102eeb5e = {
+				["35f82306102eeb5e"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_005_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_04_df")
 				}
 			},
 			wpn_upg_o_marksmansight_rear = {
-				23a6598a3adff375 = {
+				["23a6598a3adff375"] = {
 					pattern_tweak = Vector3(1, 0, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_005_05_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_06_df")
 				}
 			},
 			wpn_upg_o_marksmansight_front = {
-				39e7095278782d53 = {
+				["39e7095278782d53"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_005_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_06_df")
 				}
 			},
 			wpn_fps_pis_deagle_b_modern = {
-				44a5f06b9bf0c48f = {
+				["44a5f06b9bf0c48f"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_005_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_005_06_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_005_01_df")
@@ -35914,28 +35914,28 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_006_01_df"),
 		parts = {
 			wpn_fps_upg_o_rms = {
-				85ec9ca927b4aad2 = {
+				["85ec9ca927b4aad2"] = {
 					pattern_tweak = Vector3(0.0620104, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_upg_o_rikt = {
-				4b1079dc98b2ac3f = {
+				["4b1079dc98b2ac3f"] = {
 					pattern_tweak = Vector3(0.0620104, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_upg_ns_pis_large = {
-				74f7d72f9474bf1b = {
+				["74f7d72f9474bf1b"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_pis_legacy_fl_mount = {
-				16ee07b2d6a48f1e = {
+				["16ee07b2d6a48f1e"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_02_df")
@@ -35948,7 +35948,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_pis_legacy_g_standard = {
-				924f1759acc1c5ca = {
+				["924f1759acc1c5ca"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_03_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_03_df")
 				}
@@ -35961,7 +35961,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ns_pis_typhoon = {
-				8ad04821354c85e3 = {
+				["8ad04821354c85e3"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
@@ -35975,34 +35975,34 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_fl_pis_tlr1 = {
-				886a0953f469491e = {
+				["886a0953f469491e"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_pis_legacy_sl_standard = {
-				3e87f0c97039b03c = {
+				["3e87f0c97039b03c"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_04_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_03_df")
 				}
 			},
 			wpn_fps_upg_fl_pis_x400v = {
-				002af6eb9050b6dc = {
+				["002af6eb9050b6dc"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_upg_ns_pis_medium = {
-				7cb84bb7913848f5 = {
+				["7cb84bb7913848f5"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_upg_fl_pis_m3x = {
-				0e9cc6cb29d35c92 = {
+				["0e9cc6cb29d35c92"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
@@ -36036,40 +36036,40 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_o_rmr = {
-				9a33af1f56b83b07 = {
+				["9a33af1f56b83b07"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_05_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_upg_fl_pis_laser = {
-				4806cfaee28ccc45 = {
+				["4806cfaee28ccc45"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_pis_legacy_m_standard = {
-				3598b99daa4ae6ea = {
+				["3598b99daa4ae6ea"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_upg_ns_pis_small = {
-				8614e82902e2333d = {
+				["8614e82902e2333d"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_pis_legacy_body_standard = {
-				8c5f71ae1530d4a7 = {
+				["8c5f71ae1530d4a7"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_05_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_03_df")
 				}
 			},
 			wpn_fps_pis_legacy_firepin_standard = {
-				8c5f71ae1530d4a7 = {
+				["8c5f71ae1530d4a7"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_03_df")
 				}
@@ -36081,7 +36081,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_pis_legacy_safety_standard = {
-				8c5f71ae1530d4a7 = {
+				["8c5f71ae1530d4a7"] = {
 					pattern_tweak = Vector3(0.0143119, 0, 1),
 					pattern_pos = Vector3(0.654901, 0.397329, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_01_df"),
@@ -36096,21 +36096,21 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ns_ass_filter = {
-				7523b5f8467479b8 = {
+				["7523b5f8467479b8"] = {
 					pattern_tweak = Vector3(0, 0, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_upg_ns_pis_ipsccomp = {
-				9098f2a74f94dc04 = {
+				["9098f2a74f94dc04"] = {
 					pattern_pos = Vector3(0.349631, 0, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
 			},
 			wpn_fps_pis_legacy_g_wood = {
-				1e9122a4f02c7d99 = {
+				["1e9122a4f02c7d99"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_006_03_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_006_01_df")
 				}
@@ -36140,25 +36140,25 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		},
 		parts = {
 			wpn_fps_upg_o_cmore = {
-				98a3d4c28b921e18 = {
+				["98a3d4c28b921e18"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df")
 				}
 			},
 			wpn_fps_upg_o_45rds = {
-				348eff0e40eed718 = {
+				["348eff0e40eed718"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_02_df")
 				},
-				6a7d20f1d66eae1f = {
+				["6a7d20f1d66eae1f"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_03_df")
 				}
 			},
 			wpn_fps_upg_ns_ass_smg_firepig = {
-				78de1cbde81b21e7 = {
+				["78de1cbde81b21e7"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df")
 				}
 			},
 			wpn_fps_upg_fl_ass_peq15 = {
-				444ef1e058f2e44e = {
+				["444ef1e058f2e44e"] = {
 					pattern_pos = Vector3(-0.0414974, -0.0605768, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
@@ -36167,14 +36167,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_ass_corgi_fg_rail = {
-				5dca471fcd9333c5 = {
+				["5dca471fcd9333c5"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_04_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_007_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df")
 				}
 			},
 			wpn_fps_ass_l85a2_m_emag = {
-				16e54595dec250cc = {
+				["16e54595dec250cc"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df")
 				}
 			},
@@ -36186,7 +36186,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ass_ns_linear = {
-				76e934a4ed9bd66c = {
+				["76e934a4ed9bd66c"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_06_df")
 				}
 			},
@@ -36196,7 +36196,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_ass_corgi_b_long = {
-				0c2a90bd61b7c6f9 = {
+				["0c2a90bd61b7c6f9"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_07_df")
 				}
 			},
@@ -36210,14 +36210,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_fl_ass_utg = {
-				8cc13135388e3c79 = {
+				["8cc13135388e3c79"] = {
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_02_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_05_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_007_03_df")
 				}
 			},
 			wpn_fps_upg_o_cs = {
-				87a5402dd2bfd794 = {
+				["87a5402dd2bfd794"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_08_df"),
 					pattern_pos = Vector3(0.254234, 0.0538997, 0),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
@@ -36226,7 +36226,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ass_ns_surefire = {
-				2bb332a65b6c38ee = {
+				["2bb332a65b6c38ee"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_09_df")
 				}
 			},
@@ -36241,36 +36241,36 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ns_ass_smg_medium = {
-				7cb84bb7913848f5 = {
+				["7cb84bb7913848f5"] = {
 					uv_offset_rot = Vector3(0, 0.998331, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_007_02_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df")
 				}
 			},
 			wpn_fps_upg_ns_ass_smg_large = {
-				5c61cb3375c00cd2 = {
+				["5c61cb3375c00cd2"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_007_02_df"),
 					uv_offset_rot = Vector3(-0.547102, 0.998331, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_12_df")
 				}
 			},
 			wpn_fps_upg_ns_ass_smg_small = {
-				8614e82902e2333d = {
+				["8614e82902e2333d"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_09_df")
 				}
 			},
 			wpn_fps_ass_corgi_ejector_standard = {
-				1ee6f49aa1196874 = {
+				["1ee6f49aa1196874"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df")
 				}
 			},
 			wpn_fps_upg_fl_ass_laser = {
-				4806cfaee28ccc45 = {
+				["4806cfaee28ccc45"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_13_df")
 				}
 			},
 			wpn_fps_upg_fl_ass_smg_sho_peqbox = {
-				6f8180a7d543eaf4 = {
+				["6f8180a7d543eaf4"] = {
 					pattern_pos = Vector3(0.101598, 0.0538997, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_07_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
@@ -36294,7 +36294,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_o_spot = {
-				1281bdd104404adc = {
+				["1281bdd104404adc"] = {
 					pattern_pos = Vector3(0.111138, 0.111138, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
@@ -36306,7 +36306,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				e07bef375f9743f3 = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df")
 				},
-				47fd1974bc0ea7b7 = {
+				["47fd1974bc0ea7b7"] = {
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_02_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_007_02_df")
@@ -36318,19 +36318,19 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_ass_corgi_ns_standard = {
-				90223043f5dcc63a = {
+				["90223043f5dcc63a"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_03_df")
 				}
 			},
 			wpn_fps_ass_corgi_body_lower_strap = {
-				1ee6f49aa1196874 = {
+				["1ee6f49aa1196874"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_007_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_02_df"),
 					uv_offset_rot = Vector3(0, 0.998331, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_007_04_df")
 				},
-				0e760830dabc11d2 = {
+				["0e760830dabc11d2"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_007_03_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_02_df")
@@ -36342,17 +36342,17 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_ass_corgi_b_short = {
-				0c2a90bd61b7c6f9 = {
+				["0c2a90bd61b7c6f9"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_07_df")
 				}
 			},
 			wpn_fps_upg_m4_m_straight = {
-				75dbd214f1199f8a = {
+				["75dbd214f1199f8a"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df")
 				}
 			},
 			wpn_fps_ass_corgi_body_upper = {
-				4a0d89ce2b6b158e = {
+				["4a0d89ce2b6b158e"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_007_03_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_13_df"),
@@ -36375,12 +36375,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_m4_m_quad = {
-				1f3e46eeee0938a5 = {
+				["1f3e46eeee0938a5"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_01_df")
 				}
 			},
 			wpn_fps_ass_corgi_dh_standard = {
-				4a0d89ce2b6b158e = {
+				["4a0d89ce2b6b158e"] = {
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_12_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_007_02_df")
@@ -36396,15 +36396,15 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_o_45rds_v2 = {
-				6a7d20f1d66eae1f = {
+				["6a7d20f1d66eae1f"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_11_df")
 				},
-				348eff0e40eed718 = {
+				["348eff0e40eed718"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_13_df")
 				}
 			},
 			wpn_fps_upg_o_acog = {
-				4144c08a44a4f6bc = {
+				["4144c08a44a4f6bc"] = {
 					pattern_pos = Vector3(0.0729792, 0.0729792, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_08_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
@@ -36418,7 +36418,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_fl_ass_smg_sho_surefire = {
-				262ac1176a4c4c89 = {
+				["262ac1176a4c4c89"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_04_df")
 				}
 			},
@@ -36435,14 +36435,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_smg_hajk_vg_moe = {
-				4aef0654d3cffde6 = {
+				["4aef0654d3cffde6"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_14_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_007_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df")
 				}
 			},
 			wpn_fps_upg_o_eotech = {
-				4f2912710fde9823 = {
+				["4f2912710fde9823"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_007_07_df"),
 					pattern_pos = Vector3(-0.0319576, 0.158837, 0),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_007_01_df"),
@@ -36488,7 +36488,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		},
 		parts = {
 			wpn_fps_smg_scorpion_body_standard = {
-				11f00d59e01de219 = {
+				["11f00d59e01de219"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_008_01_df")
 				},
 				ce53cb869d779872 = {
@@ -36496,7 +36496,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_smg_scorpion_m_extended = {
-				5a59c88e60c2af0b = {
+				["5a59c88e60c2af0b"] = {
 					pattern_tweak = Vector3(1.73146, 0, 1),
 					pattern_pos = Vector3(0.0705188, -0.0342591, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_008_02_df"),
@@ -36504,7 +36504,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_smg_scorpion_m_standard = {
-				5a59c88e60c2af0b = {
+				["5a59c88e60c2af0b"] = {
 					pattern_pos = Vector3(-0.0510371, -0.0701165, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_008_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_008_01_df")
@@ -36541,20 +36541,20 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		},
 		parts = {
 			wpn_fps_upg_ak_g_wgrip = {
-				9954fcef7b8f5aa7 = {
+				["9954fcef7b8f5aa7"] = {
 					pattern_pos = Vector3(0.244694, 0, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df")
 				}
 			},
 			wpn_fps_upg_ak_fg_trax = {
-				5b5b3b6d9a86cbe8 = {
+				["5b5b3b6d9a86cbe8"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df")
 				}
 			},
 			wpn_fps_upg_m4_s_ubr = {
-				95c7bb6a6952f598 = {
+				["95c7bb6a6952f598"] = {
 					pattern_pos = Vector3(0.502266, 0, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_02_df"),
@@ -36562,14 +36562,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ns_ass_smg_medium = {
-				7cb84bb7913848f5 = {
+				["7cb84bb7913848f5"] = {
 					pattern_pos = Vector3(0, -0.0891959, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_03_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_009_01_df")
 				}
 			},
 			wpn_upg_ak_g_standard = {
-				1235065ba88c7c4b = {
+				["1235065ba88c7c4b"] = {
 					pattern_tweak = Vector3(1.001, 0, 1),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df")
@@ -36586,12 +36586,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_02_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_02_df")
 				},
-				47fd1974bc0ea7b7 = {
+				["47fd1974bc0ea7b7"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_02_df")
 				}
 			},
 			wpn_fps_upg_ak_b_ak105 = {
-				2c5773c53ce3324b = {
+				["2c5773c53ce3324b"] = {
 					pattern_pos = Vector3(0.001, 0, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_04_df"),
@@ -36604,12 +36604,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_ak_extra_ris = {
-				0a4f944d542077bc = {
+				["0a4f944d542077bc"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_03_df")
 				}
 			},
 			wpn_upg_ak_s_psl = {
-				4849e4f825ba5280 = {
+				["4849e4f825ba5280"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df"),
 					pattern_pos = Vector3(0.38779, 0.000740896, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_02_df"),
@@ -36622,7 +36622,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ak_b_draco = {
-				00bf62049bd4fedc = {
+				["00bf62049bd4fedc"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_04_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df")
 				}
@@ -36644,37 +36644,37 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_upg_ak_fg_standard = {
-				6e9ccd9cea16d783 = {
+				["6e9ccd9cea16d783"] = {
 					pattern_pos = Vector3(0.001, 0, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_03_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df"),
 					pattern_tweak = Vector3(1.001, 0, 1)
 				},
-				6ff54c970aa172cc = {
+				["6ff54c970aa172cc"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_03_df")
 				}
 			},
 			wpn_fps_upg_m4_s_crane = {
-				00bd2e5c897c8fcf = {
+				["00bd2e5c897c8fcf"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df")
 				}
 			},
 			wpn_fps_upg_ns_ass_smg_large = {
-				5c61cb3375c00cd2 = {
+				["5c61cb3375c00cd2"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_03_df"),
 					pattern_pos = Vector3(-0.121355, -0.0637355, 0)
 				}
 			},
 			wpn_fps_upg_ns_ass_smg_small = {
-				8614e82902e2333d = {
+				["8614e82902e2333d"] = {
 					pattern_pos = Vector3(-0.0987356, -0.136894, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_03_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_009_01_df")
 				}
 			},
 			wpn_fps_upg_fg_midwest = {
-				4becc71f4aed665c = {
+				["4becc71f4aed665c"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df"),
 					pattern_pos = Vector3(-0.232292, 0, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df")
@@ -36687,7 +36687,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_upg_ak_fg_combo2 = {
-				6e9ccd9cea16d783 = {
+				["6e9ccd9cea16d783"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_03_df"),
 					pattern_pos = Vector3(0, -0.213212, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df")
@@ -36705,7 +36705,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ak_m_quad = {
-				3ed5504152409eb7 = {
+				["3ed5504152409eb7"] = {
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_009_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_02_df"),
 					pattern_pos = Vector3(-0.205212, -0.0510371, 0),
@@ -36723,7 +36723,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ak_g_pgrip = {
-				08306da316f7b7c4 = {
+				["08306da316f7b7c4"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df"),
 					pattern_pos = Vector3(0.321012, 0, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df"),
@@ -36735,13 +36735,13 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df")
 				},
-				179e8b691765c207 = {
+				["179e8b691765c207"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_01_df"),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df")
 				}
 			},
 			wpn_upg_ak_s_adapter = {
-				06e8711c6a8a4a29 = {
+				["06e8711c6a8a4a29"] = {
 					pattern_pos = Vector3(0.483726, -0.136894, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_009_03_df"),
@@ -36785,7 +36785,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_m4_s_pts = {
-				26554b6c5f9b2c31 = {
+				["26554b6c5f9b2c31"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_009_01_df")
 				}
 			},
@@ -36882,7 +36882,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_011_01_df"),
 		parts = {
 			wpn_fps_gre_ray_sight = {
-				057bb743582f9900 = {
+				["057bb743582f9900"] = {
 					uv_offset_rot = Vector3(0, 1, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_011_01_df")
 				}
@@ -36894,26 +36894,26 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_gre_ray_sight_lid = {
-				057bb743582f9900 = {
+				["057bb743582f9900"] = {
 					uv_offset_rot = Vector3(0, 1, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_011_01_df")
 				}
 			},
 			wpn_fps_gre_ray_body = {
-				610a834f63be4a13 = {
+				["610a834f63be4a13"] = {
 					uv_offset_rot = Vector3(0, 1, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_011_03_df")
 				},
-				1dabb24db7a4e9b1 = {
+				["1dabb24db7a4e9b1"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_011_04_df"),
 					uv_offset_rot = Vector3(0, 1, 0)
 				},
-				11d655c63b5997bb = {
+				["11d655c63b5997bb"] = {
 					uv_scale = Vector3(2.77513, 7.39958, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_011_03_df"),
 					uv_offset_rot = Vector3(-1.18626, 1.02141, 3.03145)
 				},
-				555cc54fda64233c = {
+				["555cc54fda64233c"] = {
 					uv_offset_rot = Vector3(0, 1, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_011_06_df")
 				}
@@ -36938,10 +36938,10 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_upg_ak_s_adapter = {
-				06e8711c6a8a4a29 = {}
+				["06e8711c6a8a4a29"] = {}
 			},
 			wpn_fps_upg_fg_midwest = {
-				4becc71f4aed665c = {
+				["4becc71f4aed665c"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_012_01_df")
 				}
 			},
@@ -36953,19 +36953,19 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_upg_ak_fg_standard = {
-				6ff54c970aa172cc = {
+				["6ff54c970aa172cc"] = {
 					uv_scale = Vector3(1.01117, 1.01117, 0.160506),
 					uv_offset_rot = Vector3(0, 1.02333, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_012_03_df")
 				},
-				6e9ccd9cea16d783 = {
+				["6e9ccd9cea16d783"] = {
 					uv_scale = Vector3(1.34489, 1.34489, 0.804436),
 					uv_offset_rot = Vector3(0.0443599, 1.01387, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_012_03_df")
 				}
 			},
 			wpn_upg_ak_fg_combo3 = {
-				179e8b691765c207 = {
+				["179e8b691765c207"] = {
 					uv_offset_rot = Vector3(-2, -2, 0),
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_012_01_df"),
 					uv_scale = Vector3(2.01234, 2.01234, 1),
@@ -36980,7 +36980,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_upg_ak_fg_trax = {
-				5b5b3b6d9a86cbe8 = {
+				["5b5b3b6d9a86cbe8"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_012_01_df")
 				}
 			},
@@ -36992,28 +36992,28 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_upg_ak_s_psl = {
-				4849e4f825ba5280 = {
+				["4849e4f825ba5280"] = {
 					uv_scale = Vector3(1.01217, 1.01217, 0.251133),
 					uv_offset_rot = Vector3(0, 1.05465, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_012_01_df")
 				}
 			},
 			wpn_fps_upg_m4_s_crane = {
-				00bd2e5c897c8fcf = {
+				["00bd2e5c897c8fcf"] = {
 					uv_scale = Vector3(1.20187, 1.20187, 0.363224),
 					uv_offset_rot = Vector3(0.072979, 1.04857, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_012_01_df")
 				}
 			},
 			wpn_fps_upg_m4_s_ubr = {
-				95c7bb6a6952f598 = {
+				["95c7bb6a6952f598"] = {
 					uv_scale = Vector3(1.77396, 1.77396, 0.248748),
 					uv_offset_rot = Vector3(0.273313, 1.03903, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_012_01_df")
 				}
 			},
 			wpn_fps_upg_m4_s_pts = {
-				26554b6c5f9b2c31 = {
+				["26554b6c5f9b2c31"] = {
 					uv_scale = Vector3(1.15419, 1.15419, 0.131887),
 					uv_offset_rot = Vector3(0, 1.04503, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_012_01_df")
@@ -37031,14 +37031,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				ed3844dbe0dba117 = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_012_01_df")
 				},
-				6e9ccd9cea16d783 = {
+				["6e9ccd9cea16d783"] = {
 					uv_scale = Vector3(1.29722, 1.29722, 0.086573),
 					uv_offset_rot = Vector3(0.120677, 0.845695, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_012_03_df")
 				}
 			},
 			wpn_fps_upg_ak_m_quad = {
-				3ed5504152409eb7 = {
+				["3ed5504152409eb7"] = {
 					uv_scale = Vector3(1.58327, 1.58327, 0),
 					uv_offset_rot = Vector3(0.137757, 1.03549, 6.02844),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_012_02_df")
@@ -37113,7 +37113,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_013_02_df"),
 		parts = {
 			wpn_fps_snp_winchester_s_standard = {
-				6f38fa894899fda9 = {
+				["6f38fa894899fda9"] = {
 					uv_scale = Vector3(1.48792, 1.48792, 1),
 					pattern_pos = Vector3(0.712139, 0.7026, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_013_01_df"),
@@ -37126,26 +37126,26 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_snp_winchester_b_long = {
-				0c2a90bd61b7c6f9 = {
+				["0c2a90bd61b7c6f9"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_013_02_df"),
 					uv_offset_rot = Vector3(-0.242831, 0.863235, 0),
 					uv_scale = Vector3(2.39374, 2.39374, 0)
 				}
 			},
 			wpn_fps_snp_winchester_b_suppressed = {
-				0c2a90bd61b7c6f9 = {
+				["0c2a90bd61b7c6f9"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_013_02_df"),
 					uv_offset_rot = Vector3(0.184916, 0.581203, 3.12136),
 					uv_scale = Vector3(1.86931, 1.86931, 0)
 				},
-				00318c3389e0f3cf = {
+				["00318c3389e0f3cf"] = {
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_013_03_df"),
 					uv_offset_rot = Vector3(0.321011, 0.759838, 0),
 					uv_scale = Vector3(0.963495, 0.963495, 1)
 				}
 			},
 			wpn_fps_snp_winchester_body_standard = {
-				8980b51e90670fd7 = {},
+				["8980b51e90670fd7"] = {},
 				c3ba24da2eab3277 = {
 					pattern_tweak = Vector3(0.920584, 0, 0),
 					uv_scale = Vector3(0.963495, 0.963495, 0),
@@ -37157,7 +37157,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_snp_winchester_b_standard = {
-				0c2a90bd61b7c6f9 = {
+				["0c2a90bd61b7c6f9"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_013_01_df"),
 					uv_scale = Vector3(2.20304, 2.20304, 0),
 					pattern_tweak = Vector3(1, 0, 0),
@@ -37194,14 +37194,14 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		},
 		parts = {
 			wpn_fps_saw_body_silent = {
-				3292716fa181e5d4 = {
+				["3292716fa181e5d4"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_014_01_df"),
 					uv_offset_rot = Vector3(0, 0.998331, 0),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_014_01_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_014_01_df"),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_014_01_df")
 				},
-				4b132c876cd7002d = {
+				["4b132c876cd7002d"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_014_02_df")
 				}
 			},
@@ -37223,12 +37223,12 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_saw_m_blade_durable = {
-				2da7dde1e6ef3472 = {
+				["2da7dde1e6ef3472"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_014_05_df"),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_014_02_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_014_01_df")
 				},
-				3f87b7e254fe27f4 = {
+				["3f87b7e254fe27f4"] = {
 					uv_scale = Vector3(2.01234, 2.01234, 0),
 					pattern_pos = Vector3(-0.089196, 0.149297, 0),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_014_03_df"),
@@ -37240,10 +37240,10 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_saw_m_blade_sharp = {
-				2da7dde1e6ef3472 = {
+				["2da7dde1e6ef3472"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_014_05_df")
 				},
-				9b4cc732c502bd54 = {
+				["9b4cc732c502bd54"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_014_02_df"),
 					uv_scale = Vector3(1.96466, 1.96466, 0),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_014_05_df"),
@@ -37252,7 +37252,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_saw_b_normal = {
-				6f8ebb7725e3818e = {
+				["6f8ebb7725e3818e"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_014_06_df")
 				}
 			},
@@ -37267,7 +37267,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 				}
 			},
 			wpn_fps_saw_m_blade = {
-				2da7dde1e6ef3472 = {
+				["2da7dde1e6ef3472"] = {
 					uv_scale = Vector3(2.06001, 2.06001, 1),
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_014_02_df"),
 					uv_offset_rot = Vector3(-0.241831, 0.998331, 4.54493),
@@ -37290,7 +37290,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_015_02_df"),
 		parts = {
 			wpn_fps_lmg_par_upper_reciever = {
-				0b27db0c0746aa95 = {
+				["0b27db0c0746aa95"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_015_01_df")
 				}
 			},
@@ -37307,7 +37307,7 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 					uv_scale = Vector3(11.3089, 11.9763, 0.837825),
 					sticker = Idstring("units/payday2_cash/safes/nin/sticker/nin_sticker_015_01_df")
 				},
-				057bb743582f9900 = {
+				["057bb743582f9900"] = {
 					base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_015_03_df")
 				}
 			}
@@ -37369,25 +37369,25 @@ function BlackMarketTweakData:_init_weapon_skins(tweak_data)
 		base_gradient = Idstring("units/payday2_cash/safes/nin/base_gradient/nin_base_gradient_016_01_df"),
 		parts = {
 			wpn_fps_sho_rota_body_upper = {
-				68a4ecccb2b975d5 = {
+				["68a4ecccb2b975d5"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_016_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_016_01_df")
 				}
 			},
 			wpn_fps_sho_rota_g_standard = {
-				80c2465ebca1dc89 = {
+				["80c2465ebca1dc89"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_016_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_016_01_df")
 				}
 			},
 			wpn_fps_sho_rota_fg_standard = {
-				6d2a718408593378 = {
+				["6d2a718408593378"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_016_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_016_01_df")
 				}
 			},
 			wpn_fps_smg_hajk_vg_moe = {
-				4aef0654d3cffde6 = {
+				["4aef0654d3cffde6"] = {
 					pattern = Idstring("units/payday2_cash/safes/nin/pattern/nin_pattern_016_01_df"),
 					pattern_gradient = Idstring("units/payday2_cash/safes/nin/pattern_gradient/nin_pattern_gradient_016_01_df")
 				}

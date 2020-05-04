@@ -423,7 +423,7 @@ function Ladder:debug_draw()
 
 	brush:quad(self._corners[1], self._corners[2], self._corners[3], self._corners[4])
 
-	for i = 1, 4, 1 do
+	for i = 1, 4 do
 		brush:line(self._corners[i], self._corners[i] + self._normal * (50 + i * 25))
 	end
 

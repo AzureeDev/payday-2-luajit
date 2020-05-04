@@ -955,7 +955,7 @@ function Xbox360UserManager:get_setting_map()
 	if platform_setting_map then
 		local packed_string_value = ""
 
-		for i = 1, self.CUSTOM_PROFILE_VARIABLE_COUNT, 1 do
+		for i = 1, self.CUSTOM_PROFILE_VARIABLE_COUNT do
 			local setting_name = "title_specific" .. i
 			packed_string_value = packed_string_value .. (platform_setting_map[setting_name] or "")
 		end
@@ -1051,7 +1051,7 @@ function Xbox360UserManager:profile_setting_changed_callback(...)
 end
 
 function Xbox360UserManager:update_all_users()
-	for user_index = 1, 4, 1 do
+	for user_index = 1, 4 do
 		self:update_user(user_index, false)
 	end
 end

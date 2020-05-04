@@ -18,7 +18,7 @@ function MenuNode:init(data_node)
 		local modifier_names = string.split(parameters.modifier, " ")
 		parameters.modifier = {}
 
-		for i = 1, #modifier_names, 1 do
+		for i = 1, #modifier_names do
 			local modifier_instance = loadstring("return " .. modifier_names[i] .. ":new()")()
 			parameters.modifier[i] = callback(modifier_instance, modifier_instance, "modify_node")
 		end
@@ -28,7 +28,7 @@ function MenuNode:init(data_node)
 		local refresh_names = string.split(parameters.refresh, " ")
 		parameters.refresh = {}
 
-		for i = 1, #refresh_names, 1 do
+		for i = 1, #refresh_names do
 			local refresh_instance = loadstring("return " .. refresh_names[i] .. ":new()")()
 			parameters.refresh[i] = callback(refresh_instance, refresh_instance, "refresh_node")
 		end
@@ -38,7 +38,7 @@ function MenuNode:init(data_node)
 		local update_names = string.split(parameters.update, " ")
 		parameters.update = {}
 
-		for i = 1, #update_names, 1 do
+		for i = 1, #update_names do
 			local update_instance = loadstring("return " .. update_names[i] .. ":new()")()
 			parameters.update[i] = callback(update_instance, update_instance, "update_node")
 		end

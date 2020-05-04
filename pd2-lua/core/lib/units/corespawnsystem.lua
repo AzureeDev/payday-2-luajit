@@ -171,7 +171,7 @@ function CoreSpawnSystem:set_var_and_cb(new_unit, lv2)
 
 			local function_arg = {}
 
-			for num_arg = 1, table.size(lv3:parameter_map()) - 2, 1 do
+			for num_arg = 1, table.size(lv3:parameter_map()) - 2 do
 				local key = "param" .. tostring(num_arg)
 
 				if lv3:parameter(key) ~= "" then

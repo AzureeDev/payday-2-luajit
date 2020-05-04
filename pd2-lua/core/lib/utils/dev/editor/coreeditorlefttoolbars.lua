@@ -110,7 +110,7 @@ function CoreEditor:on_list_units()
 		local tabs = 6 - math.floor(len / 7)
 		local tab = ""
 
-		for j = 1, tabs, 1 do
+		for j = 1, tabs do
 			tab = tab .. "\t"
 		end
 

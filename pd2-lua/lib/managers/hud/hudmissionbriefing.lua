@@ -43,7 +43,7 @@ function HUDMissionBriefing:init(hud, workspace)
 		local voice_icon, voice_texture_rect = tweak_data.hud_icons:get_icon_data("mugshot_talk")
 		local infamy_icon, infamy_rect = tweak_data.hud_icons:get_icon_data("infamy_icon")
 
-		for i = 1, tweak_data.max_players, 1 do
+		for i = 1, tweak_data.max_players do
 			local color_id = i
 			local color = tweak_data.chat_colors[color_id] or tweak_data.chat_colors[#tweak_data.chat_colors]
 			local slot_panel = self._ready_slot_panel:panel({
@@ -384,7 +384,7 @@ function HUDMissionBriefing:init(hud, workspace)
 	local js_w = self._job_schedule_panel:w() / 7
 	local js_h = self._job_schedule_panel:h()
 
-	for i = 1, 7, 1 do
+	for i = 1, 7 do
 		local day_font = text_font
 		local day_font_size = text_font_size
 		day_color = tweak_data.screen_colors.item_stage_1
@@ -452,7 +452,7 @@ function HUDMissionBriefing:init(hud, workspace)
 		}
 	}
 
-	for i = 1, managers.job:current_stage() or 0, 1 do
+	for i = 1, managers.job:current_stage() or 0 do
 		local icon = i == managers.job:current_stage() and stage_circled_icon or stage_crossed_icon
 		local stage_marker = self._job_schedule_panel:bitmap({
 			h = 64,

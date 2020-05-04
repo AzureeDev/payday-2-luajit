@@ -208,7 +208,7 @@ function IngameWaitingGui:calc_next(current)
 
 	current = current + 1
 
-	for id = current, CriminalsManager.MAX_NR_CRIMINALS, 1 do
+	for id = current, CriminalsManager.MAX_NR_CRIMINALS do
 		local peer = managers.network:session():peer(id)
 
 		if peer and managers.wait:is_waiting(id) then

@@ -270,7 +270,7 @@ function GenericDLCManager:give_dlc_package()
 					end
 
 					if add_to_inventory then
-						for i = 1, loot_drop.amount or 1, 1 do
+						for i = 1, loot_drop.amount or 1 do
 							local entry = tweak_data.blackmarket[loot_drop.type_items][loot_drop.item_entry]
 							local global_value = loot_drop.global_value or data.content.loot_global_value or package_id
 
@@ -380,7 +380,7 @@ function GenericDLCManager:give_missing_package()
 					if passed then
 						print("[GenericDLCManager:give_missing_package] Found missing Item!", loot_drop.amount, global_value, loot_drop.type_items, loot_drop.item_entry)
 
-						for i = 1, loot_drop.amount or 1, 1 do
+						for i = 1, loot_drop.amount or 1 do
 							managers.blackmarket:add_to_inventory(global_value, loot_drop.type_items, loot_drop.item_entry)
 						end
 					end
@@ -1643,7 +1643,7 @@ function XB1DLCManager:chk_content_updated()
 		print("[XB1DLCManager:chk_content_updated] content updated")
 
 		if managers.experience and managers.upgrades then
-			for level = 0, managers.experience:current_level(), 1 do
+			for level = 0, managers.experience:current_level() do
 				managers.upgrades:aquire_from_level_tree(level, true)
 				managers.upgrades:verify_level_tree(level, true)
 			end

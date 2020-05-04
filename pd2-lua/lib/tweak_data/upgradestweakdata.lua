@@ -10309,7 +10309,7 @@ function UpgradesTweakData:_rep_definitions()
 	local rep_upgrades = self.values.rep_upgrades
 
 	for index, rep_class in ipairs(rep_upgrades.classes) do
-		for i = 1, 10, 1 do
+		for i = 1, 10 do
 			self.definitions[rep_class .. i] = {
 				category = "rep_upgrade",
 				value = rep_upgrades.values[index]

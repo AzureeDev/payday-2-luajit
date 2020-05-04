@@ -118,7 +118,7 @@ function SkirmishManager:sync_start_assault(wave_number)
 		return
 	end
 
-	for i = (self._synced_wave_number or 0) + 1, wave_number, 1 do
+	for i = (self._synced_wave_number or 0) + 1, wave_number do
 		self:_apply_modifiers_for_wave(i)
 	end
 

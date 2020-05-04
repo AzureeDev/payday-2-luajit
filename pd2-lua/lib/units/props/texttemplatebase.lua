@@ -20,7 +20,7 @@ function TextTemplateBase:set_template(template)
 end
 
 function TextTemplateBase:_stock_ticker()
-	for i = 1, self._unit:text_gui().ROWS, 1 do
+	for i = 1, self._unit:text_gui().ROWS do
 		self._unit:text_gui():set_row_gap(i, 20)
 		self._unit:text_gui():clear_row_and_guis(i)
 		self._unit:text_gui():set_row_speed(i, i * 100 + 40 + 120 * math.rand(1))
@@ -220,7 +220,7 @@ function TextTemplateBase:_big_bank_welcome()
 	self._unit:text_gui():set_row_speed(2, 240 + 120 * math.rand(1))
 	self._unit:text_gui():set_row_gap(1, 320)
 
-	for i = 1, self._unit:text_gui().ROWS, 1 do
+	for i = 1, self._unit:text_gui().ROWS do
 		self._unit:text_gui():clear_row_and_guis(i)
 	end
 

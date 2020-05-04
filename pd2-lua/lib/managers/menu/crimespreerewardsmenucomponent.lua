@@ -1337,7 +1337,7 @@ function CrimeSpreeRewardsMenuComponent:_update_loot_drops()
 	local intial_delay = 0
 	local end_t = 0
 
-	for i = 1, math.min(num_items, max_items * max_pages), 1 do
+	for i = 1, math.min(num_items, max_items * max_pages) do
 		local lootdrop_data = loot_drops[i]
 		local card_types = {
 			weapon_mods = "upcard_weapon",

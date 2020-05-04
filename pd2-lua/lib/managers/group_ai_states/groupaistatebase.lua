@@ -3583,7 +3583,7 @@ function GroupAIStateBase:on_criminal_team_AI_enabled_state_changed()
 	if managers.groupai:state():team_ai_enabled() then
 		self:fill_criminal_team_with_AI()
 	else
-		for i = 1, tweak_data.max_players - 1, 1 do
+		for i = 1, tweak_data.max_players - 1 do
 			self:remove_one_teamAI()
 		end
 	end

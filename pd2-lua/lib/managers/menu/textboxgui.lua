@@ -315,7 +315,7 @@ function TextBoxGui:_create_text_box(ws, title, text, content_data, config)
 		end
 
 		if #start_ci == #end_ci then
-			for i = 1, #start_ci, 1 do
+			for i = 1, #start_ci do
 				start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 				end_ci[i] = end_ci[i] - (i * 4 - 1)
 			end
@@ -329,7 +329,7 @@ function TextBoxGui:_create_text_box(ws, title, text, content_data, config)
 		if #start_ci ~= #end_ci then
 			Application:error("TextBoxGui: Not even amount of ##'s in skill description string!", #start_ci, #end_ci)
 		else
-			for i = 1, #start_ci, 1 do
+			for i = 1, #start_ci do
 				text:set_range_color(start_ci[i], end_ci[i], text_formating_color_table and text_formating_color_table[i] or text_formating_color)
 			end
 		end

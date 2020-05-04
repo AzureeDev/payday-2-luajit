@@ -3462,7 +3462,7 @@ function HUDStageEndScreen:animate_level_progress(o, data)
 
 		local last_level = data.start_t.level
 
-		for i = 1, #data, 1 do
+		for i = 1, #data do
 			current_xp, gained_xp, speed = spin_func(self, o, data[i].current, data[i].total, data[i].total, current_xp, gained_xp, speed)
 			local package_unlocked = tweak_data.upgrades.level_tree[data[i].level]
 

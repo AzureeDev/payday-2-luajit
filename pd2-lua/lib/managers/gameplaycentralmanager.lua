@@ -89,7 +89,7 @@ function GamePlayCentralManager:_init_impact_sources()
 		sources = {}
 	}
 
-	for i = 1, 20, 1 do
+	for i = 1, 20 do
 		table.insert(self._impact_sounds.sources, SoundDevice:create_source("impact_sound" .. i))
 	end
 

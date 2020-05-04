@@ -208,7 +208,7 @@ function OverlayPresenter:_auto_word_wrap_string(subtitle_string)
 	end)
 	local wrapped_lines = {}
 
-	for line = 1, #line_breaks, 1 do
+	for line = 1, #line_breaks do
 		local range_start = line_breaks[line]
 		local range_end = line_breaks[line + 1]
 		local string_range = utf8.sub(subtitle_string, range_start, (range_end or 0) - 1)

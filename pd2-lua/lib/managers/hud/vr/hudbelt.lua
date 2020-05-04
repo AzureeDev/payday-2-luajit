@@ -749,8 +749,8 @@ function HUDBelt:set_grid_display(display)
 	if display then
 		self._grid_display_panel = self._panel:panel()
 
-		for gx = 1, HUDBelt.GRID_WIDTH, 1 do
-			for gy = 1, HUDBelt.GRID_HEIGHT, 1 do
+		for gx = 1, HUDBelt.GRID_WIDTH do
+			for gy = 1, HUDBelt.GRID_HEIGHT do
 				local x, y = grid_position(gx, gy)
 
 				self._grid_display_panel:rect({

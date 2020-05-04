@@ -184,7 +184,7 @@ function Logic:_navigate_back(skip_nodes)
 	skip_nodes = type(skip_nodes) == "number" and skip_nodes or 0
 
 	if #self._node_stack > 1 + skip_nodes then
-		for i = 1, 1 + skip_nodes, 1 do
+		for i = 1, 1 + skip_nodes do
 			table.remove(self._node_stack, #self._node_stack)
 			self:_call_callback("renderer_navigate_back")
 		end

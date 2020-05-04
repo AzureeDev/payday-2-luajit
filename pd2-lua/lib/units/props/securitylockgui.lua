@@ -38,7 +38,7 @@ function SecurityLockGui:setup()
 	local pad = 64
 	local bar_pad = 16
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		local icon = self._gui_script["timer_icon" .. i]
 		local timer_bg = self._gui_script["timer" .. i .. "_background"]
 		local timer = self._gui_script["timer" .. i]

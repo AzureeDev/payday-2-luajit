@@ -48,7 +48,7 @@ function CoreEditor:build_menubar()
 
 	local page_count = self._notebook:get_page_count()
 
-	for i = 0, page_count - 1, 1 do
+	for i = 0, page_count - 1 do
 		local text = self._notebook:get_page_text(i)
 
 		self._disable_layer_menu:append_check_item("DISABLE_" .. text, text, "Disable layer " .. text)

@@ -355,7 +355,7 @@ function CoreAreaHubElement:create_shape()
 end
 
 function CoreAreaHubElement:new_shape_name()
-	for i = 1, 100, 1 do
+	for i = 1, 100 do
 		local name = "shape" .. i
 
 		if not self._hed.shapes[name] then

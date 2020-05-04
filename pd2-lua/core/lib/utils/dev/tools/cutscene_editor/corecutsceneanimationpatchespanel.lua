@@ -35,7 +35,7 @@ function CoreCutsceneAnimationPatchesPanel:patches()
 	local list_ctrl = self.__list_ctrl
 	local row_count = list_ctrl:item_count()
 
-	for row = 0, row_count - 1, 1 do
+	for row = 0, row_count - 1 do
 		local unit_name = list_ctrl:get_item(row, 0)
 		local blend_set = list_ctrl:get_item(row, 1)
 		local animation = list_ctrl:get_item(row, 2)

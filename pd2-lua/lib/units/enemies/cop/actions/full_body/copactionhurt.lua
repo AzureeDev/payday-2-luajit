@@ -499,7 +499,7 @@ function CopActionHurt:init(action_desc, common_data)
 				return
 			end
 
-			for i = 1, variant_count, 1 do
+			for i = 1, variant_count do
 				local state_value = 0
 
 				if i == variant then
@@ -556,7 +556,7 @@ function CopActionHurt:init(action_desc, common_data)
 		local variant, height, old_variant, old_info = nil
 
 		if (action_type == "hurt" or action_type == "heavy_hurt") and self._ext_anim.hurt then
-			for i = 1, self.hurt_anim_variants_highest_num, 1 do
+			for i = 1, self.hurt_anim_variants_highest_num do
 				if self._machine:get_parameter(self._machine:segment_state(Idstring("base")), "var" .. i) then
 					old_variant = i
 
@@ -912,7 +912,7 @@ function CopActionHurt:_pseudorandom(a, b)
 
 	math.randomseed(os.time() / r + Application:time())
 
-	for i = 1, math.round(math.random() * 10), 1 do
+	for i = 1, math.round(math.random() * 10) do
 		math.random()
 	end
 
@@ -1037,7 +1037,7 @@ function CopActionHurt:_start_enemy_fire_effect_on_death(death_variant)
 	local idx = 1
 	local effect_id = nil
 
-	for i = 1, num_effects, 1 do
+	for i = 1, num_effects do
 		while tmp_used_flame_objects[idx] do
 			idx = math.random(1, num_objects)
 		end

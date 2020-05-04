@@ -1152,7 +1152,7 @@ function MainMenuGui:unretrieve_box_textures(box)
 		object = box[object_name]
 
 		if object and object.requested_textures then
-			for i = 1, #object.requested_textures, 1 do
+			for i = 1, #object.requested_textures do
 				if object.requested_indices[i] then
 					managers.menu_component:unretrieve_texture(object.requested_textures[i], object.requested_indices[i])
 				end

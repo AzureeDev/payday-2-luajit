@@ -86,7 +86,7 @@ end
 function string:rep(n)
 	local out = ""
 
-	for i = 1, n, 1 do
+	for i = 1, n do
 		out = out .. self
 	end
 

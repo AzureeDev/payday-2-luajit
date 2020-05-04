@@ -121,7 +121,7 @@ function AreaDespawnElement:set_element_data(data)
 			slots[tonumber(match)] = true
 		end
 
-		for i = 1, 63, 1 do
+		for i = 1, 63 do
 			self._slot_boxes[i]:set_value(slots[i])
 
 			self._slots_map[i] = slots[i]
@@ -175,10 +175,10 @@ function AreaDespawnElement:_build_panel(panel, panel_sizer)
 	local slot_boxes = {}
 	local slot_box_callback = callback(self, self, "_slot_box_clicked")
 
-	for i = 0, 7, 1 do
+	for i = 0, 7 do
 		local row_sizer = EWS:BoxSizer("HORIZONTAL")
 
-		for j = 0, 7, 1 do
+		for j = 0, 7 do
 			local slot_number = i * 8 + j
 			local checkbox = EWS:CheckBox(panel, tostring(slot_number), "")
 

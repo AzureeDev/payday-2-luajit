@@ -377,7 +377,7 @@ function NewRaycastWeaponBase:spawn_magazine_unit(pos, rot, hide_bullets)
 	if hide_bullets and part_data.bullet_objects then
 		local prefix = part_data.bullet_objects.prefix
 
-		for i = 1, part_data.bullet_objects.amount, 1 do
+		for i = 1, part_data.bullet_objects.amount do
 			local target_object = mag_unit:get_object(Idstring(prefix .. i))
 			local ref_object = part_data.unit:get_object(Idstring(prefix .. i))
 

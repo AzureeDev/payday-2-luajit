@@ -108,13 +108,13 @@ end
 function StaticLayer:set_bodies_keyframed(unit)
 	local bodies = unit:num_bodies()
 
-	for i = 0, bodies - 1, 1 do
+	for i = 0, bodies - 1 do
 		if unit:body(i):keyframed() then
 			return
 		end
 	end
 
-	for i = 0, bodies - 1, 1 do
+	for i = 0, bodies - 1 do
 		local body = unit:body(i)
 
 		body:set_keyframed()

@@ -686,7 +686,7 @@ function CoreEnvironmentControllerManager:bloom_blur_size(size, vp)
 		local effect = vp:get_post_processor_effect("World", Idstring("bloom_combine_post_processor"))
 
 		if effect then
-			for i = 1, table.getn(effects), 1 do
+			for i = 1, table.getn(effects) do
 				local visibility = i >= 5 - size
 				local mod = effect:modifier(effects[i])
 

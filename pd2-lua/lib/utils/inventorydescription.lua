@@ -36,7 +36,7 @@ local function is_weapon_category(weapon_tweak, ...)
 	}
 	local categories = weapon_tweak.categories
 
-	for i = 1, #arg, 1 do
+	for i = 1, #arg do
 		if table.contains(categories, arg[i]) then
 			return true
 		end

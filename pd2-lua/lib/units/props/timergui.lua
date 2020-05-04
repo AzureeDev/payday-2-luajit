@@ -382,7 +382,7 @@ function TimerGui:_set_jamming_values()
 	local jammed_times = math.random(self._jam_times)
 	local interval = self._timer / jammed_times
 
-	for i = 1, jammed_times, 1 do
+	for i = 1, jammed_times do
 		local start = interval / 2
 		self._jamming_intervals[i] = start + math.rand(start / 1.25)
 	end

@@ -257,7 +257,7 @@ function NewNPCRaycastWeaponBase:auto_fire_blank(direction, impact, sub_ids, ove
 			num_rays = self._ammo_data.rays
 		end
 
-		for i = 1, num_rays, 1 do
+		for i = 1, num_rays do
 			local spread_x, spread_y = self:_get_spread(user_unit)
 			local theta = math.random() * 360
 			local ax = math.sin(theta) * math.random() * spread_x
@@ -338,7 +338,7 @@ function NewNPCRaycastWeaponBase:fire_blank(direction, impact, sub_id, override_
 			num_rays = self._ammo_data.rays
 		end
 
-		for i = 1, num_rays, 1 do
+		for i = 1, num_rays do
 			local spread_x, spread_y = self:_get_spread(user_unit)
 			local theta = math.random() * 360
 			local ax = math.sin(theta) * math.random() * spread_x
@@ -543,7 +543,7 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 		local name_id = self.non_npc_name_id and self:non_npc_name_id() or self._name_id
 		local num_rays = (tweak_data.weapon[name_id] or {}).rays or 1
 
-		for i = 1, num_rays, 1 do
+		for i = 1, num_rays do
 			mvector3.set(mvec_spread, direction)
 
 			if i > 1 then

@@ -285,7 +285,7 @@ function PlayerEquipment:_spawn_dummy(dummy_name, pos, rot)
 
 	self._dummy_unit = World:spawn_unit(Idstring(dummy_name), pos, rot)
 
-	for i = 0, self._dummy_unit:num_bodies() - 1, 1 do
+	for i = 0, self._dummy_unit:num_bodies() - 1 do
 		self._dummy_unit:body(i):set_enabled(false)
 	end
 

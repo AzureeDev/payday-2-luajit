@@ -71,7 +71,7 @@ function ElementSpawnCivilianGroup:on_executed(instigator)
 	self:_check_spawn_points()
 
 	if #self._spawn_points > 0 then
-		for i = 1, self._group_data.amount, 1 do
+		for i = 1, self._group_data.amount do
 			local element = self._spawn_points[self:_get_spawn_point(i)]
 
 			element:produce(self._values.team and {
@@ -86,7 +86,7 @@ end
 function ElementSpawnCivilianGroup:_get_spawn_point(i)
 	if self._group_data.random then
 		if #self._unused_randoms == 0 then
-			for i = 1, #self._spawn_points, 1 do
+			for i = 1, #self._spawn_points do
 				table.insert(self._unused_randoms, i)
 			end
 		end

@@ -348,7 +348,7 @@ end
 local function indent_string(str, indent)
 	local s = ""
 
-	for i = 1, indent, 1 do
+	for i = 1, indent do
 		s = s .. "\t"
 	end
 

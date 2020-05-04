@@ -190,7 +190,7 @@ function NewRaycastWeaponBase:clbk_assembly_complete(clbk, parts, blueprint)
 			if bullet_objects then
 				local prefix = bullet_objects.prefix
 
-				for i = 1, bullet_objects.amount, 1 do
+				for i = 1, bullet_objects.amount do
 					local object = type_part.unit:get_object(Idstring(prefix .. i))
 
 					if object then

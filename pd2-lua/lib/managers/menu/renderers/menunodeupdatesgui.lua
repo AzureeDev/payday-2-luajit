@@ -74,7 +74,7 @@ function MenuNodeUpdatesGui:_db_result_recieved(success, page)
 	local prefix = "##1##"
 	local item_start = string.find(page, prefix)
 
-	for index = 1, #item_list, 1 do
+	for index = 1, #item_list do
 		local item = item_list[index]
 
 		if item and item.use_db then

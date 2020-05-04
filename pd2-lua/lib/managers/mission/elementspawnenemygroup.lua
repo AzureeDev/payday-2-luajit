@@ -86,7 +86,7 @@ function ElementSpawnEnemyGroup:on_executed(instigator)
 				managers.groupai:state():_perform_group_spawning(spawn_task, true)
 			end
 		else
-			for i = 1, self:get_random_table_value(self._group_data.amount), 1 do
+			for i = 1, self:get_random_table_value(self._group_data.amount) do
 				local element = self._spawn_points[self:_get_spawn_point(i)]
 
 				element:produce({
@@ -105,7 +105,7 @@ function ElementSpawnEnemyGroup:_get_spawn_point(i)
 	end
 
 	if #self._unused_randoms == 0 then
-		for i = 1, #self._spawn_points, 1 do
+		for i = 1, #self._spawn_points do
 			table.insert(self._unused_randoms, i)
 		end
 	end

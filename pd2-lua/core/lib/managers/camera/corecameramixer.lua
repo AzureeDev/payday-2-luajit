@@ -86,7 +86,7 @@ function CameraMixer:update(cud, cud_class, time, dt)
 		end
 	end
 
-	for i = 1, full_blend_index - 1, 1 do
+	for i = 1, full_blend_index - 1 do
 		self._cameras[1].camera:destroy()
 		table.remove(self._cameras, 1)
 	end

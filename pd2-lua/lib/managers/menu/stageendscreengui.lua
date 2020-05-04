@@ -392,7 +392,7 @@ function StatsTabItem:feed_statistics(stats_data)
 				end
 
 				if #start_ci == #end_ci then
-					for i = 1, #start_ci, 1 do
+					for i = 1, #start_ci do
 						start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 						end_ci[i] = end_ci[i] - (i * 4 - 1)
 					end
@@ -409,7 +409,7 @@ function StatsTabItem:feed_statistics(stats_data)
 				if #start_ci ~= #end_ci then
 					Application:error("StatsTabItem: Not even amount of ##'s in :set_stats() string!", #start_ci, #end_ci)
 				else
-					for i = 1, #start_ci, 1 do
+					for i = 1, #start_ci do
 						stat:set_range_color(start_ci[i], end_ci[i], resource_color)
 					end
 				end

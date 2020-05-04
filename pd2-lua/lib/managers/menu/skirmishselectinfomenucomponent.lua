@@ -98,7 +98,7 @@ function SkirmishSelectInfoMenuComponent:init(ws, fullscreen_ws, node)
 	})
 	local wave_number, wave_progress, card, arrow, indicator, number, color, cx = nil
 
-	for i = 0, wave_diff, 1 do
+	for i = 0, wave_diff do
 		wave_number = start_wave + i
 		wave_progress = i / wave_diff
 		cx = progress_padding + progress_width * wave_progress

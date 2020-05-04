@@ -132,7 +132,7 @@ local saved_characters = nil
 function MenuCallbackHandler:reset_crew_outfit()
 	managers.menu_scene:set_henchmen_visible(true)
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		managers.menu_scene:set_henchmen_loadout(i, saved_characters and saved_characters[i])
 	end
 end
@@ -316,7 +316,7 @@ function CrewManagementGui:init(ws, fullscreen_ws, node)
 	})
 	local char_images = {}
 
-	for i = 1, CriminalsManager.MAX_NR_TEAM_AI, 1 do
+	for i = 1, CriminalsManager.MAX_NR_TEAM_AI do
 		local character = managers.blackmarket:preferred_henchmen(i)
 		local texture = character and managers.blackmarket:get_character_icon(character) or "guis/textures/pd2/dice_icon"
 		local _, img = self:_add_bitmap_panel_row(char_panel, {
@@ -1106,12 +1106,12 @@ function CrewManagementGui:create_pages(new_node_data, params, identifier, selec
 	local item_data = nil
 	local selected_tab = 1
 
-	for page = 1, max_pages, 1 do
+	for page = 1, max_pages do
 		local index = 1
 		local start_i = 1 + items_per_page * (page - 1)
 		item_data = {}
 
-		for i = start_i, items_per_page * page, 1 do
+		for i = start_i, items_per_page * page do
 			item_data[index] = i
 			index = index + 1
 
@@ -1214,7 +1214,7 @@ function CrewManagementGui:next_ability(henchman_index)
 	local map = self:_create_member_loadout_map("ability")
 	local name = nil
 
-	for index = ability_index + 1, #crew_abilities, 1 do
+	for index = ability_index + 1, #crew_abilities do
 		name = crew_abilities[index]
 
 		if managers.blackmarket:is_crew_item_unlocked(name) and not map[name] then
@@ -1262,7 +1262,7 @@ function CrewManagementGui:next_skill(henchman_index)
 	local map = self:_create_member_loadout_map("skill")
 	local name = nil
 
-	for index = skill_index + 1, #crew_skills, 1 do
+	for index = skill_index + 1, #crew_skills do
 		name = crew_skills[index]
 
 		if managers.blackmarket:is_crew_item_unlocked(name) and not map[name] then
@@ -1315,7 +1315,7 @@ end
 function CrewManagementGui:_create_member_loadout_map(member_name)
 	local rtn = {}
 
-	for i = 1, CriminalsManager.MAX_NR_TEAM_AI, 1 do
+	for i = 1, CriminalsManager.MAX_NR_TEAM_AI do
 		local loadout = managers.blackmarket:henchman_loadout(i)
 		local val = loadout[member_name]
 
@@ -1385,7 +1385,7 @@ function CrewManagementGui:next_weapon_category(henchman_index)
 	local equipped_slot = loadout.primary_slot or 0
 	local crafted = nil
 
-	for slot = equipped_slot + 1, max_slots, 1 do
+	for slot = equipped_slot + 1, max_slots do
 		if managers.blackmarket:weapon_unlocked_by_crafted(category, slot) then
 			crafted = managers.blackmarket:get_crafted_category_slot(category, slot)
 
@@ -1466,7 +1466,7 @@ function CrewManagementGui:next_mask(henchman_index)
 	local crafted_masks = Global.blackmarket_manager.crafted_items.masks
 	local crafted = nil
 
-	for slot = equipped_slot + 1, max_slots, 1 do
+	for slot = equipped_slot + 1, max_slots do
 		crafted = crafted_masks[slot]
 
 		if crafted and managers.blackmarket:crafted_mask_unlocked(slot) then
@@ -1477,7 +1477,7 @@ function CrewManagementGui:next_mask(henchman_index)
 		end
 	end
 
-	for slot = 1, equipped_slot - 1, 1 do
+	for slot = 1, equipped_slot - 1 do
 		crafted = crafted_masks[slot]
 
 		if crafted and managers.blackmarket:crafted_mask_unlocked(slot) then
@@ -1711,7 +1711,7 @@ function CrewManagementGui:populate_custom(category, henchman_index, tweak, list
 
 	local max_slots = data.override_slots[1] * data.override_slots[2]
 
-	for i = 1, max_slots, 1 do
+	for i = 1, max_slots do
 		if not data[i] then
 			new_data = {
 				name = "empty",

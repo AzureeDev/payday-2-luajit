@@ -3,7 +3,7 @@ core:module("CoreLuaDump")
 local function string_to_binary(str)
 	local out_str = nil
 
-	for i = 1, string.len(str), 1 do
+	for i = 1, string.len(str) do
 		out_str = out_str and out_str .. " "
 		out_str = (out_str or "") .. string.byte(str, i)
 	end

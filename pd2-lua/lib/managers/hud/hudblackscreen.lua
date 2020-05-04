@@ -192,7 +192,7 @@ function HUDBlackScreen:_set_job_data()
 	local last_risk_level = nil
 	local blackscreen_risk_textures = tweak_data.gui.blackscreen_risk_textures
 
-	for i = 1, managers.job:current_difficulty_stars(), 1 do
+	for i = 1, managers.job:current_difficulty_stars() do
 		local difficulty_name = tweak_data.difficulties[i + 2]
 		local texture = blackscreen_risk_textures[difficulty_name] or "guis/textures/pd2/risklevel_blackscreen"
 		last_risk_level = risk_panel:bitmap({

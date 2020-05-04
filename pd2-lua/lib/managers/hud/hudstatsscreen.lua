@@ -1165,7 +1165,7 @@ function HUDStatsScreen:_update_stats_screen_loot(loot_wrapper_panel)
 			local x = 0
 			local y = 0
 
-			for i = 1, mandatory_bags_data.amount, 1 do
+			for i = 1, mandatory_bags_data.amount do
 				local alpha = i <= secured_amount and 1 or 0.25
 
 				mission_bags_panel:bitmap({
@@ -1216,7 +1216,7 @@ function HUDStatsScreen:_update_stats_screen_loot(loot_wrapper_panel)
 		bag_text:set_left(bag:right())
 		bag_text:set_center_y(math.round(bag:center_y()))
 	else
-		for i = 1, bonus_amount, 1 do
+		for i = 1, bonus_amount do
 			local x = (i - 1) * 32
 
 			bonus_bags_panel:bitmap({

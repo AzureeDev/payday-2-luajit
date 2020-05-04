@@ -308,7 +308,7 @@ function NavObstacleElement:_get_objects_by_unit(unit)
 		function _process_object_tree(obj, depth)
 			local indented_name = obj:name():s()
 
-			for i = 1, depth, 1 do
+			for i = 1, depth do
 				indented_name = "-" .. indented_name
 			end
 

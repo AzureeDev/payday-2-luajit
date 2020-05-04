@@ -277,7 +277,7 @@ function GageAssignmentTweakData:fetch_new_assignments(level_id)
 	if max_assignments and max_assignments ~= true then
 		local num_to_remove = #assignments - max_assignments
 
-		for i = 1, num_to_remove, 1 do
+		for i = 1, num_to_remove do
 			table.remove(assignments, math.random(#assignments))
 		end
 	end

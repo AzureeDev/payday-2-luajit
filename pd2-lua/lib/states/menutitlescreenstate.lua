@@ -59,7 +59,7 @@ function MenuTitlescreenState:setup()
 
 	self._controller_list = {}
 
-	for index = 1, managers.controller:get_wrapper_count(), 1 do
+	for index = 1, managers.controller:get_wrapper_count() do
 		self._controller_list[index] = managers.controller:create_controller("title_" .. index, index, false)
 
 		if is_win32 and self._controller_list[index]:get_type() == "xbox360" then

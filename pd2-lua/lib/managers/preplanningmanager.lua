@@ -1127,7 +1127,7 @@ end
 function PrePlanningManager:_create_empty_locations_table()
 	local locations = {}
 
-	for i = 1, #tweak_data.preplanning.location_groups, 1 do
+	for i = 1, #tweak_data.preplanning.location_groups do
 		table.insert(locations, {})
 	end
 

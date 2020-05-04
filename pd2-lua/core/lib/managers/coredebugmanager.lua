@@ -433,7 +433,7 @@ function DebugRaycast:update(t, dt)
 
 				local orthogonal_func = self._dir:orthogonal_func()
 
-				for i = 1, self._bundle - 1, 1 do
+				for i = 1, self._bundle - 1 do
 					local ratio = (i - 1) / (self._bundle - 1)
 					local offset = orthogonal_func(ratio) * self._radius
 
@@ -1033,7 +1033,7 @@ function GUIDebug:setup()
 		layer = 1000000
 	}
 
-	for i = 1, self.GUI_TEXT_COUNT, 1 do
+	for i = 1, self.GUI_TEXT_COUNT do
 		self._text[i] = self._panel:text(config)
 		config.y = config.y + self._text[i]:line_height()
 	end
@@ -1294,7 +1294,7 @@ function GraphDebug:get_text_size(gui_text)
 	local w = 0
 	local h = 0
 
-	for i = 1, #gui_text:text(), 1 do
+	for i = 1, #gui_text:text() do
 		local char_x, char_y, char_w, char_h = gui_text:character_rect(i - 1)
 		w = w + char_w
 		h = math.max(h, char_h)
@@ -1680,7 +1680,7 @@ function HijackDebug:default_hijacked_ray_func(obj, old_func, ...)
 				to_index = #point_list
 			end
 
-			for i = 2, to_index, 1 do
+			for i = 2, to_index do
 				ray_wrapper = DebugRaycast:new(ray_wrapper)
 
 				ray_wrapper:set_from(point_list[i - 1])
@@ -1956,7 +1956,7 @@ function ProfilerDebug:remove_counter(counter, print_counter, skip_color_update)
 
 		table.remove(self._counter_list, index)
 
-		for i = index, #self._counter_list, 1 do
+		for i = index, #self._counter_list do
 			self._counter_list[i]:set_index(i)
 		end
 
@@ -2233,7 +2233,7 @@ function ProfilerDebug:toggle_compare_find(slotmask, find_type, radius, length, 
 		for _, data in ipairs(rand_list) do
 			id = Profiler:start(data.counter)
 
-			for i = 1, count, 1 do
+			for i = 1, count do
 				data.func(from, to)
 			end
 
@@ -2543,13 +2543,13 @@ function MacroDebug:multi_spawn(unit_name, unit_offset, count_x, count_y, count_
 	count_y = (count_y or 1) - 1
 	count_z = (count_z or 1) - 1
 
-	for z = 0, count_z, 1 do
+	for z = 0, count_z do
 		local z_offset = cam_rot:y() * (count_z / 2 - z) * unit_offset
 
-		for y = 0, count_y, 1 do
+		for y = 0, count_y do
 			local yz_offset = z_offset + cam_rot:z() * (count_y / 2 - y) * unit_offset
 
-			for x = 0, count_x, 1 do
+			for x = 0, count_x do
 				local offset = yz_offset + cam_rot:x() * (count_x / 2 - x) * unit_offset
 
 				self:spawn(unit_name, pos + offset, rot)

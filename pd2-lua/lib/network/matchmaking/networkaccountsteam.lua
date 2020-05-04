@@ -254,7 +254,7 @@ function NetworkAccountSTEAM:get_global_stat(key, days)
 	elseif days then
 		global_stat = Steam:sa_handler():get_global_stat(key, days == 1 and 1 or days + 1)
 
-		for i = days > 1 and 2 or 1, #global_stat, 1 do
+		for i = days > 1 and 2 or 1, #global_stat do
 			value = value + global_stat[i]
 		end
 	else
@@ -852,7 +852,7 @@ function NetworkAccountSTEAM.output_global_stats(file)
 	}
 	local lines = {}
 
-	for i = 0, #invalid, 1 do
+	for i = 0, #invalid do
 		if i == 0 or invalid[i] == 0 then
 			local out = "" .. i
 
@@ -876,7 +876,7 @@ function NetworkAccountSTEAM.output_global_stats(file)
 
 	local file_handle = SystemFS:open(file, "w")
 
-	for i = 1, #lines, 1 do
+	for i = 1, #lines do
 		file_handle:puts(lines[i == 1 and 1 or #lines - i + 2])
 	end
 end

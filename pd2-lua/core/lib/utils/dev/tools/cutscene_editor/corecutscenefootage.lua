@@ -77,7 +77,7 @@ function CoreCutsceneFootage:colour()
 		local name = self._cutscene:name()
 		local len = string.len(name)
 
-		for i = 1, len, 1 do
+		for i = 1, len do
 			local byte = string.byte(name, i)
 			r = math.fmod(r * 33 + byte, precision + 1)
 			g = math.fmod(g * 33 + byte, precision + 1)

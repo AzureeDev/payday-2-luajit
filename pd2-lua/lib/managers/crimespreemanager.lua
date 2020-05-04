@@ -617,7 +617,7 @@ function CrimeSpreeManager:_get_modifiers(table_name, max_count, add_repeating)
 		local diff = max_count - #modifiers
 
 		if diff > 0 then
-			for i = 1, diff, 1 do
+			for i = 1, diff do
 				local idx = i % #repeating_modifiers_table + 1
 				local mod_data = repeating_modifiers_table[idx]
 				local new_mod = deep_clone(mod_data)
@@ -886,7 +886,7 @@ function CrimeSpreeManager:generate_cosmetic_drops(amount)
 		end
 	end
 
-	for i = 1, math.min(amount, num_rewards), 1 do
+	for i = 1, math.min(amount, num_rewards) do
 		local idx = math.random(#rewards_pool)
 		local reward = rewards_pool[idx]
 

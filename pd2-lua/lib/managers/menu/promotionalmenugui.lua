@@ -113,10 +113,10 @@ function PromotionalMenuGui:setup(menu_data, theme_data)
 
 		local _x, _y = nil
 
-		for x = 1, btn_data.size[1], 1 do
+		for x = 1, btn_data.size[1] do
 			_x = x + btn:position()[1] - 1
 
-			for y = 1, btn_data.size[2], 1 do
+			for y = 1, btn_data.size[2] do
 				_y = y + btn:position()[2] - 1
 				self._selection_map[self:_idx(_x, _y)] = btn
 			end

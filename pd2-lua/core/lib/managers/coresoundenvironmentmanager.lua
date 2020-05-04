@@ -463,7 +463,7 @@ function CoreSoundEnvironmentManager:add_check_object(data)
 
 	local surround = {}
 
-	for i = 1, self._ambience_sources_count, 1 do
+	for i = 1, self._ambience_sources_count do
 		local source = SoundDevice:create_source("ambience_surround_" .. i)
 
 		source:enable_env(false)
@@ -719,7 +719,7 @@ function CoreSoundEnvironmentManager:_check_inside(data)
 
 		data.object:m_position(check_pos)
 
-		for i = 1, self._areas_per_frame, 1 do
+		for i = 1, self._areas_per_frame do
 			local area = self._areas[data.sound_area_counter]
 			data.sound_area_counter = math.mod(data.sound_area_counter, #self._areas) + 1
 

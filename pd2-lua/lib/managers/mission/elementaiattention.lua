@@ -62,7 +62,7 @@ function ElementAIAttention:_select_units_from_spawners()
 	wanted_nr_units = math.min(wanted_nr_units, #candidates)
 	local chosen_units = {}
 
-	for i = 1, wanted_nr_units, 1 do
+	for i = 1, wanted_nr_units do
 		local chosen_unit = table.remove(candidates, math.random(#candidates))
 
 		table.insert(chosen_units, chosen_unit)

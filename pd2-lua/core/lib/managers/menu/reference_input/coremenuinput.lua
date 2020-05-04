@@ -347,7 +347,7 @@ function MenuInput:next_item()
 
 		for i, v in ipairs(items) do
 			if v:parameters().name == current_item_name then
-				for check = 1, #items - 1, 1 do
+				for check = 1, #items - 1 do
 					local next_item = items[(i + check - 1) % #items + 1]
 
 					if next_item:visible() and not next_item.no_select then
@@ -377,7 +377,7 @@ function MenuInput:prev_item()
 
 		for i, v in ipairs(items) do
 			if v:parameters().name == current_item_name then
-				for check = 1, #items - 1, 1 do
+				for check = 1, #items - 1 do
 					local prev_item = items[(i - check - 1) % #items + 1]
 
 					if prev_item:visible() and not prev_item.no_select then

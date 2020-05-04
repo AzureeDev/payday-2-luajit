@@ -35,7 +35,7 @@ function SafehouseVaultMoneyStacks:_setup()
 	self._tiers = {}
 	local cash_index = (self.tier - 1) * self.CHUNKS
 
-	for i = 1, self.CHUNKS, 1 do
+	for i = 1, self.CHUNKS do
 		local body = self._unit:body("body_money_chunk_" .. tostring(i))
 
 		if body then

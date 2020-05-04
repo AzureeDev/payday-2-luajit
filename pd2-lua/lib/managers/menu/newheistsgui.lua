@@ -46,7 +46,7 @@ function NewHeistsGui:init(ws, fullscreen_ws)
 
 	self:_set_text(managers.localization:to_upper_text(tweak[1].name_id))
 
-	for i = 1, self._page_count, 1 do
+	for i = 1, self._page_count do
 		local content_panel = self._internal_content_panel:panel({
 			x = (i == 1 and 0 or 1) * self._content_panel:w()
 		})
@@ -95,7 +95,7 @@ function NewHeistsGui:init(ws, fullscreen_ws)
 	local page_center_x = self._page_panel:w() / 2
 	self._page_buttons = {}
 
-	for i = 1, self._page_count, 1 do
+	for i = 1, self._page_count do
 		local page_button = self._page_panel:bitmap({
 			texture = "guis/textures/pd2/ad_spot"
 		})

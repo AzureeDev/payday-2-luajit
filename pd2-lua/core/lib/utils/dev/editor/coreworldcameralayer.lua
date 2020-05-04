@@ -567,7 +567,7 @@ function WorldCameraLayer:create_new()
 			managers.worldcamera:create_world_camera(name)
 			self:update_camera_list()
 
-			for i = 0, self._camera_list:nr_items() - 1, 1 do
+			for i = 0, self._camera_list:nr_items() - 1 do
 				if self._camera_list:get_string(i) == name then
 					self._camera_list:select_index(i)
 				end
@@ -1044,7 +1044,7 @@ function WorldCameraLayer:on_create_new_sequence()
 			managers.worldcamera:create_world_camera_sequence(name)
 			self:update_sequence_list()
 
-			for i = 0, self._sequence_list:nr_items() - 1, 1 do
+			for i = 0, self._sequence_list:nr_items() - 1 do
 				if self._sequence_list:get_string(i) == name then
 					self._sequence_list:select_index(i)
 				end

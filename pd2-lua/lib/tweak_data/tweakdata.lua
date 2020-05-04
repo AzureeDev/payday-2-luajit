@@ -139,7 +139,7 @@ function TweakData:get_raw_value(...)
 	local value = self
 	local v = nil
 
-	for i = 1, #arg, 1 do
+	for i = 1, #arg do
 		v = arg[i]
 
 		if not value[v] then
@@ -1415,7 +1415,7 @@ Play the full version soon to get your full PAYDAY!]],
 	local exp_step_last_points = 4600
 	local exp_step_curve = 3
 
-	for i = exp_step_start, exp_step_end, 1 do
+	for i = exp_step_start, exp_step_end do
 		self.experience_manager.levels[i] = {
 			points = math.round((1000000 - exp_step_last_points) * math.pow(exp_step * (i - exp_step_start), exp_step_curve) + exp_step_last_points) * multiplier
 		}
@@ -1425,7 +1425,7 @@ Play the full version soon to get your full PAYDAY!]],
 	local exp_step_end = 193
 	local exp_step = 1 / (exp_step_end - exp_step_start)
 
-	for i = 146, exp_step_end, 1 do
+	for i = 146, exp_step_end do
 		self.experience_manager.levels[i] = {
 			points = math.round(22000 * exp_step * (i - exp_step_start) - 6000) * multiplier
 		}
@@ -2692,7 +2692,7 @@ function TweakData:load_movie_list()
 	local movie_data = PackageManager:xml_data(FILE_EXTENSION:id(), CONFIG_PATH:id())
 
 	if movie_data then
-		for i = 0, movie_data:num_children() - 1, 1 do
+		for i = 0, movie_data:num_children() - 1 do
 			local item = movie_data:child(i):parameter_map()
 
 			if item.file and DB:has(Idstring("movie"), item.file) then

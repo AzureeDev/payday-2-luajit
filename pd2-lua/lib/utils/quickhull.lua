@@ -255,7 +255,7 @@ function Quickhull.test()
 	local extent_z = 0
 	local points = {}
 
-	for i = 1, 64, 1 do
+	for i = 1, 64 do
 		table.insert(points, Vector3(math.random(-extent, extent), math.random(-extent, extent), math.random(-extent_z, extent_z)))
 	end
 
@@ -269,7 +269,7 @@ function Quickhull.test()
 	local final_points = hull:compute()
 	local brush = Draw:brush(Color(1, 1, 0, 1), TEST_DURATION)
 
-	for i = 1, #final_points - 1, 1 do
+	for i = 1, #final_points - 1 do
 		brush:line(final_points[i], final_points[i + 1], 8)
 	end
 

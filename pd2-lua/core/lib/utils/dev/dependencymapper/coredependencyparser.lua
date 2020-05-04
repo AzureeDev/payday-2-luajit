@@ -282,7 +282,7 @@ function generate_report(filepath, protected_list, dp)
 		local effects = names(filter(protected_list, EFFECT))
 		local size = math.max(#levels, #units, #objects, #models, #mtrlcfgs, #textures, #cutscenes, #effects)
 
-		for i = 1, size, 1 do
+		for i = 1, size do
 			ws:add_row(CoreSsRow.Row:new(levels[i] or "", units[i] or "", objects[i] or "", models[i] or "", mtrlcfgs[i] or "", textures[i] or "", cutscenes[i] or "", effects[i] or ""))
 		end
 

@@ -899,7 +899,7 @@ function CopActionWalk:_calculate_curved_path(path, index, curvature_factor, ent
 		local nr_samples = 7
 		local prev_pos = curved_path[1]
 
-		for i = 1, nr_samples - 1, 1 do
+		for i = 1, nr_samples - 1 do
 			local pos = tmp_vec1
 
 			if nr_control_pts == 2 then
@@ -2279,13 +2279,13 @@ function CopActionWalk:stop()
 		pos_to = pos
 	}
 
-	for i_nav_point = 2, #self._simplified_path - 1, 1 do
+	for i_nav_point = 2, #self._simplified_path - 1 do
 		ray_params.pos_from = CopActionWalk._nav_point_pos(self._simplified_path[i_nav_point])
 
 		if not managers.navigation:raycast(ray_params) then
 			local nr_points_to_remove = #self._simplified_path - 1 - i_nav_point
 
-			for i = 1, nr_points_to_remove, 1 do
+			for i = 1, nr_points_to_remove do
 				table.remove(self._simplified_path, i_nav_point + 1)
 			end
 

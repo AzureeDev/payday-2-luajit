@@ -363,7 +363,7 @@ function ActionSpooc:_upd_chase_path()
 		if not walk_ray then
 			simplified = true
 
-			for i = self._nav_index + 2, #self._nav_path, 1 do
+			for i = self._nav_index + 2, #self._nav_path do
 				table.remove(self._nav_path)
 			end
 		end
@@ -711,7 +711,7 @@ function ActionSpooc:save(save_data)
 	local sync_path = {}
 	local nav_path = self._nav_path
 
-	for i = 1, self._nav_index + 1, 1 do
+	for i = 1, self._nav_index + 1 do
 		local nav_point = nav_path[i]
 
 		t_ins(sync_path, nav_point)

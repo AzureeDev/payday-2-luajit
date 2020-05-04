@@ -264,7 +264,7 @@ end
 function PlayerInventory:get_next_selection()
 	local i = self._selected_primary
 
-	for i = self._selected_primary, self._selected_primary + 9, 1 do
+	for i = self._selected_primary, self._selected_primary + 9 do
 		local selection = 1 + math.mod(i, 10)
 
 		if self._available_selections[selection] then

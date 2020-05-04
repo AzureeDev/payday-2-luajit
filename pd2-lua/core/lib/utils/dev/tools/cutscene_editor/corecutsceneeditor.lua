@@ -881,7 +881,7 @@ function CoreCutsceneEditor:_camera_icons_image_list()
 		self.__camera_icons_image_list = EWS:ImageList(16, 16)
 		local camera_icon_base_path = CoreEWS.image_path("sequencer\\clip_icon_camera_")
 
-		for i = 0, 30, 1 do
+		for i = 0, 30 do
 			self.__camera_icons_image_list:add(camera_icon_base_path .. string.format("%02i", i) .. ".png")
 		end
 	end

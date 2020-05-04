@@ -138,7 +138,7 @@ function MenuSetup:init_game()
 		if not Global.exe_arguments_parsed then
 			local arg_list = Application:argv()
 
-			for i = 1, #arg_list, 1 do
+			for i = 1, #arg_list do
 				local arg = arg_list[i]
 
 				if arg == "-event_id" then

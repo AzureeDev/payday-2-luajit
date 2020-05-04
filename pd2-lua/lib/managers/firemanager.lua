@@ -205,7 +205,7 @@ function FireManager:_start_enemy_fire_effect(dot_info)
 	local effect_id = nil
 	local effects_table = {}
 
-	for i = 1, num_effects, 1 do
+	for i = 1, num_effects do
 		while tmp_used_flame_objects[idx] do
 			idx = math.random(1, num_objects)
 		end

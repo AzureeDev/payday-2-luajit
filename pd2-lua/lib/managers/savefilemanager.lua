@@ -300,7 +300,7 @@ function SavefileManager:get_save_info_list(include_empty_slot)
 	end
 
 	if include_empty_slot then
-		for empty_slot = 0, self.MAX_SLOT, 1 do
+		for empty_slot = 0, self.MAX_SLOT do
 			local meta_data = Global.savefile_manager.meta_data_list[empty_slot]
 
 			if empty_slot ~= self.SETTING_SLOT and empty_slot ~= self.PROGRESS_SLOT and empty_slot ~= self.AUTO_SAVE_SLOT and (not meta_data or not meta_data.is_synched_text) then

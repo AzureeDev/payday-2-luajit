@@ -4279,12 +4279,12 @@ function PlayerInventoryGui:open_weapon_category_menu(category)
 	local items_per_page = rows * columns
 	local item_data, selected_tab = nil
 
-	for page = 1, max_pages, 1 do
+	for page = 1, max_pages do
 		local index = 1
 		local start_i = 1 + items_per_page * (page - 1)
 		item_data = {}
 
-		for i = start_i, items_per_page * page, 1 do
+		for i = start_i, items_per_page * page do
 			item_data[index] = i
 			index = index + 1
 
@@ -4773,12 +4773,12 @@ function PlayerInventoryGui:open_mask_menu()
 	local items_per_page = rows * columns
 	local item_data, selected_tab = nil
 
-	for page = 1, max_pages, 1 do
+	for page = 1, max_pages do
 		local index = 1
 		local start_i = 1 + items_per_page * (page - 1)
 		item_data = {}
 
-		for i = start_i, items_per_page * page, 1 do
+		for i = start_i, items_per_page * page do
 			item_data[index] = i
 			index = index + 1
 
@@ -5503,7 +5503,7 @@ function PlayerInventoryGui:unretrieve_box_textures(box)
 		object = box[object_name]
 
 		if object and object.requested_textures then
-			for i = 1, #object.requested_textures, 1 do
+			for i = 1, #object.requested_textures do
 				if object.requested_indices[i] then
 					managers.menu_component:unretrieve_texture(object.requested_textures[i], object.requested_indices[i])
 				end

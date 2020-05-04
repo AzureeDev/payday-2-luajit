@@ -231,7 +231,7 @@ end
 function NodeGui:_clear_gui()
 	local to = #self.row_items
 
-	for i = 1, to, 1 do
+	for i = 1, to do
 		local row_item = self.row_items[i]
 
 		if alive(row_item.gui_panel) then
@@ -333,7 +333,7 @@ function NodeGui:_reposition_items(highlighted_row_item)
 		local bottom_dividers_padding = 0
 		local num_dividers_top = 0
 
-		for i = 1, #self.row_items, 1 do
+		for i = 1, #self.row_items do
 			first_item = self.row_items[i]
 
 			if first_item.type ~= "divider" and not first_item.item:parameters().back and not first_item.item:parameters().pd2_corner then
@@ -377,7 +377,7 @@ function NodeGui:_reposition_items(highlighted_row_item)
 				end
 
 				if not last then
-					for index = i + 1, #self.row_items, 1 do
+					for index = i + 1, #self.row_items do
 						row_item = self.row_items[index]
 
 						if row_item.type ~= "divider" and not row_item.item:parameters().back and not row_item.item:parameters().pd2_corner then

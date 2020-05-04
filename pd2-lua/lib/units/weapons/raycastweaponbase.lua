@@ -107,7 +107,7 @@ function RaycastWeaponBase:is_category(...)
 		return false
 	end
 
-	for i = 1, #arg, 1 do
+	for i = 1, #arg do
 		if table.contains(categories, arg[i]) then
 			return true
 		end
@@ -2181,7 +2181,7 @@ function InstantExplosiveBulletBase:on_collision_server(position, normal, damage
 			weapon_unit = weapon_unit
 		})
 
-		for i = 1, enemies_hit, 1 do
+		for i = 1, enemies_hit do
 			managers.statistics:shot_fired({
 				skip_bullet_count = true,
 				hit = true,

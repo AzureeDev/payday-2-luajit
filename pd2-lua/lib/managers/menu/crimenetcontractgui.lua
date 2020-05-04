@@ -942,7 +942,7 @@ function CrimeNetContractGui:init(ws, fullscreen_ws, node)
 
 	local days_multiplier = 0
 
-	for i = 1, #narrative_chains, 1 do
+	for i = 1, #narrative_chains do
 		local day_mul = narrative.professional and tweak_data:get_value("experience_manager", "pro_day_multiplier", i) or tweak_data:get_value("experience_manager", "day_multiplier", i)
 		days_multiplier = days_multiplier + day_mul - 1
 	end
@@ -1681,7 +1681,7 @@ function CrimeNetContractGui:set_potential_rewards(show_max)
 	end
 
 	if #start_ci == #end_ci then
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
 		end
@@ -1697,7 +1697,7 @@ function CrimeNetContractGui:set_potential_rewards(show_max)
 		if #start_ci ~= #end_ci then
 			Application:error("CrimeNetContractGui: Not even amount of ##'s in skill description string!", #start_ci, #end_ci)
 		else
-			for i = 1, #start_ci, 1 do
+			for i = 1, #start_ci do
 				premium_text:set_range_color(start_ci[i], end_ci[i], i == 1 and not can_afford and tweak_data.screen_colors.pro_color or tweak_data.screen_colors.button_stage_2)
 			end
 		end
@@ -1832,7 +1832,7 @@ function CrimeNetContractGui:set_all(t, dt)
 	end
 
 	if #start_ci == #end_ci then
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
 		end
@@ -1847,7 +1847,7 @@ function CrimeNetContractGui:set_all(t, dt)
 		if #start_ci ~= #end_ci then
 			Application:error("CrimeNetContractGui: Not even amount of ##'s in skill description string!", #start_ci, #end_ci)
 		else
-			for i = 1, #start_ci, 1 do
+			for i = 1, #start_ci do
 				gui_panel:child("premium_text"):set_range_color(start_ci[i], end_ci[i], i == 1 and not can_afford and tweak_data.screen_colors.pro_color or tweak_data.screen_colors.button_stage_2)
 			end
 		end

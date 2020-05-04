@@ -111,7 +111,7 @@ function LuaProfilerViewer:_redraw_menu()
 	self._view_menu:append_radio_item("SECONDS", "Time in ms\tCtrl+M", "")
 	self._frame:connect("SECONDS", "EVT_COMMAND_MENU_SELECTED", self._on_seconds_cb, "")
 
-	for i = 0, lpd:numheaders() - 1, 1 do
+	for i = 0, lpd:numheaders() - 1 do
 		local name = string.capitalize(lpd:headername(i))
 		local diffpeak = string.format("%s:-1", i)
 

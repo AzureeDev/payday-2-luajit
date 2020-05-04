@@ -44,7 +44,7 @@ function MotionPathPathFinder:_add_path(path)
 	local point_index = 1
 	local last_marker, current_unit, current_pos = nil
 
-	for i_marker = 1, #path.markers, 1 do
+	for i_marker = 1, #path.markers do
 		local current_marker = path.markers[i_marker]
 		local current_unit = self:_get_mop_marker_data(current_marker)
 

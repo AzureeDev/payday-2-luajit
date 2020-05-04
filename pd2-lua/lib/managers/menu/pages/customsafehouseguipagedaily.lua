@@ -545,7 +545,7 @@ function CustomSafehouseGuiPageDaily:_setup_challenge(id)
 
 		local objective_count = daily_info.objectives and #daily_info.objectives or 1
 
-		for i = 1, objective_count, 1 do
+		for i = 1, objective_count do
 			if daily_info.objectives and daily_info.objectives[i] then
 				local max = daily_info.objectives[i].max_progress
 				local current = daily_info.objectives[i].progress

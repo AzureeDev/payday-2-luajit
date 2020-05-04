@@ -2228,7 +2228,7 @@ function CarryInteractionExt:register_collision_callbacks()
 	self._has_modified_timer = true
 	self._air_start_time = Application:time()
 
-	for i = 0, self._unit:num_bodies() - 1, 1 do
+	for i = 0, self._unit:num_bodies() - 1 do
 		local body = self._unit:body(i)
 
 		body:set_collision_script_tag(Idstring("throw"))
@@ -2258,7 +2258,7 @@ function CarryInteractionExt:_collision_callback(tag, unit, body, other_unit, ot
 		return
 	end
 
-	for i = 0, self._unit:num_bodies() - 1, 1 do
+	for i = 0, self._unit:num_bodies() - 1 do
 		local body = self._unit:body(i)
 
 		body:set_collision_script_tag(Idstring(""))

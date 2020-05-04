@@ -361,7 +361,7 @@ end
 function CoreEditor:change_combo_box_trg(data)
 	local next_i = nil
 
-	for i = 1, #self[data.t], 1 do
+	for i = 1, #self[data.t] do
 		if self[data.value] == self[data.t][i] then
 			if ctrl() then
 				if i == 1 then

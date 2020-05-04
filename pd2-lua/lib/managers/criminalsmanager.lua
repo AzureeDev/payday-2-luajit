@@ -14,7 +14,7 @@ function CriminalsManager:init()
 	self._loadout_map = {}
 	self._loadout_slots = {}
 
-	for i = 1, CriminalsManager.MAX_NR_TEAM_AI, 1 do
+	for i = 1, CriminalsManager.MAX_NR_TEAM_AI do
 		self._loadout_slots[i] = {}
 	end
 end
@@ -1036,7 +1036,7 @@ function CriminalsManager:_reserve_loadout_for(char)
 		self._loadout_slots[self._loadout_map[my_char.name]].char_index = nil
 	end
 
-	for i = 1, managers.criminals.MAX_NR_TEAM_AI, 1 do
+	for i = 1, managers.criminals.MAX_NR_TEAM_AI do
 		local data = self._loadout_slots[i]
 		local char_data = data and self._characters[data.char_index]
 
@@ -1058,7 +1058,7 @@ function CriminalsManager:_reassign_loadouts()
 	local current_taken = {}
 	local remove_from_index = 1
 
-	for i = 1, managers.criminals.MAX_NR_TEAM_AI, 1 do
+	for i = 1, managers.criminals.MAX_NR_TEAM_AI do
 		local data = self._loadout_slots[i]
 		local char_data = data and self._characters[data.char_index]
 		local taken_by_ai = char_data and char_data.data.ai and char_data.taken
@@ -1071,7 +1071,7 @@ function CriminalsManager:_reassign_loadouts()
 
 	local to_reassign = {}
 
-	for i = remove_from_index, managers.criminals.MAX_NR_TEAM_AI, 1 do
+	for i = remove_from_index, managers.criminals.MAX_NR_TEAM_AI do
 		local data = current_taken[i]
 
 		if data and alive(data.unit) then

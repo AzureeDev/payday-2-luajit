@@ -470,7 +470,7 @@ function SkillTreePage:init(tree, data, parent_panel, fullscreen_panel, tree_tab
 	local count = #tweak_data.skilltree.tier_unlocks + 1
 	local h = (parent_panel:h() - tree_tab_h - TOP_ADJUSTMENT) / (count - CONSOLE_PAGE_ADJUSTMENT)
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		local color = Color.black
 		local rect = tree_panel:rect({
 			h = 2,
@@ -646,7 +646,7 @@ function SkillTreePage:init(tree, data, parent_panel, fullscreen_panel, tree_tab
 	local ct = 0
 	local count = #tweak_data.skilltree.tier_unlocks
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		local tier_unlocks = managers.skilltree:tier_cost(self._tree, i)
 
 		if ps < tier_unlocks then
@@ -738,7 +738,7 @@ function SkillTreePage:on_points_spent()
 	local ct = 0
 	local count = #tweak_data.skilltree.tier_unlocks
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		local tier_unlocks = managers.skilltree:tier_cost(self._tree, i)
 
 		if ps < tier_unlocks then
@@ -2038,7 +2038,7 @@ function SkillTreeGui:update_spec_descriptions(item)
 	end
 
 	if #start_ci == #end_ci then
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
 		end
@@ -2052,7 +2052,7 @@ function SkillTreeGui:update_spec_descriptions(item)
 	if #start_ci ~= #end_ci then
 		Application:error("SkillTreeGui: Non even amount of ##'s in Perk description string!", #start_ci, #end_ci)
 	else
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			self._spec_description_text:set_range_color(start_ci[i], end_ci[i], item:desc_custom_color() or tweak_data.screen_colors.resource)
 		end
 	end
@@ -2300,7 +2300,7 @@ function SkillTreeGui:_set_selected_skill_item(item, no_sound)
 	end
 
 	if #start_ci == #end_ci then
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			start_ci[i] = start_ci[i] - ((i - 1) * 4 + 1)
 			end_ci[i] = end_ci[i] - (i * 4 - 1)
 		end
@@ -2316,7 +2316,7 @@ function SkillTreeGui:_set_selected_skill_item(item, no_sound)
 	if #start_ci ~= #end_ci then
 		Application:error("SkillTreeGui: Not even amount of ##'s in skill description string!", #start_ci, #end_ci)
 	else
-		for i = 1, #start_ci, 1 do
+		for i = 1, #start_ci do
 			desc_text:set_range_color(start_ci[i], end_ci[i], color_replace_table[i] or skill_stat_color)
 		end
 	end
@@ -4354,7 +4354,7 @@ function SpecializationTierItem:update_size(dt, tree_selected)
 	local is_done = true
 	local lerp_size, step_size = nil
 
-	for i = 1, #size, 1 do
+	for i = 1, #size do
 		lerp_size = math.lerp(size[i], end_size[i], dt * 10)
 		step_size = math.step(size[i], end_size[i], dt * 20)
 		size[i] = math.abs(size[i] - lerp_size) < math.abs(size[i] - step_size) and step_size or lerp_size

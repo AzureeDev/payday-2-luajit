@@ -68,7 +68,7 @@ function CoreExtendedMultiChoiceDialog:show_modal()
 end
 
 function CoreExtendedMultiChoiceDialog:on_ok_button()
-	for i = 0, self._right_list_box:nr_items() - 1, 1 do
+	for i = 0, self._right_list_box:nr_items() - 1 do
 		table.insert(self._value_map, self._right_list_box:get_string(i))
 	end
 

@@ -1425,7 +1425,7 @@ function MissionEndState:chk_complete_heist_achievements()
 						if not memory then
 							memory = {}
 
-							for i = 1, #managers.job:current_job_chain_data(), 1 do
+							for i = 1, #managers.job:current_job_chain_data() do
 								memory[i] = false
 							end
 						end

@@ -158,14 +158,14 @@ function InfamyTreeGui:_setup()
 	local fh = 0
 	local fhs = {}
 
-	for i = 1, tree_cols, 1 do
+	for i = 1, tree_cols do
 		fhs[i] = i
 	end
 
 	local c = 0
 	local texture_rect_x, texture_rect_y = nil
 
-	for count = 1, tree_rows * tree_cols, 1 do
+	for count = 1, tree_rows * tree_cols do
 		item = {
 			panel = self._tree_panel:panel({
 				x = x,

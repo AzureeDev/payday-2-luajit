@@ -60,7 +60,7 @@ function SkirmishBriefingProgress:redraw()
 
 	local indicator_top = self._canvas:height()
 
-	for i = 0, wave_diff, 1 do
+	for i = 0, wave_diff do
 		local wave_number = start_wave + i
 		local wave_progress = i / wave_diff
 		local color = progress >= wave_progress and tweak_data.screen_colors.skirmish_color or tweak_data.screen_colors.text:with_alpha(0.4)

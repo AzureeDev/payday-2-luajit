@@ -137,7 +137,7 @@ function PrePlanningPoint:init(map_panel, element, shape, rotation, active_node,
 				local new_icon = nil
 				local x = 0
 
-				for i = 1, managers.criminals.MAX_NR_CRIMINALS, 1 do
+				for i = 1, managers.criminals.MAX_NR_CRIMINALS do
 					new_icon = vote_panel:bitmap({
 						texture = "guis/dlcs/big_bank/textures/pd2/pre_planning/preplan_voting",
 						blend_mode = "normal",
@@ -563,7 +563,7 @@ function PrePlanningPoint:_update_extra()
 				if plan then
 					local votes = managers.preplanning:get_votes_on_element(plan, type, index) or {}
 
-					for i = 1, plan_gui:num_children(), 1 do
+					for i = 1, plan_gui:num_children() do
 						plan_gui:children()[i]:set_texture_rect(32, 0, 24, 24)
 					end
 
@@ -1819,7 +1819,7 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 	self._current_location = false
 	local button_panel, bleft, bright, btop, bbottom, new_location = nil
 
-	for i = 1, managers.preplanning:num_active_locations(), 1 do
+	for i = 1, managers.preplanning:num_active_locations() do
 		new_location = PrePlanningLocation:new(self._map_panel, i, self._location_size, self._active_node)
 
 		debug_assert(not self._locations[new_location:group()], "[PrePlanningMapGui:init] Location already taken!", "location", new_location:group(), "new index", i)
@@ -1935,7 +1935,7 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 	self._peer_draw_lines = {}
 	self._peer_draw_line_index = {}
 
-	for i = 1, managers.criminals.MAX_NR_CRIMINALS, 1 do
+	for i = 1, managers.criminals.MAX_NR_CRIMINALS do
 		self._peer_draw_lines[i] = {}
 		self._peer_draw_line_index[i] = false
 
@@ -2048,7 +2048,7 @@ function PrePlanningMapGui:setup(saferect_ws, fullscreen_ws, node)
 	offset = 10
 	self._peer_buttons = {}
 
-	for i = 1, managers.criminals.MAX_NR_CRIMINALS, 1 do
+	for i = 1, managers.criminals.MAX_NR_CRIMINALS do
 		params.texture_rect_on = {
 			88,
 			32,

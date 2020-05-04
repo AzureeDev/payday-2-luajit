@@ -225,7 +225,7 @@ function PortalManager:debug_draw_border(polygon, min, max)
 	local time = 10
 	local tbl = polygon:to_table()
 
-	for x = 2, #tbl, 1 do
+	for x = 2, #tbl do
 		local length = 0
 
 		while time > length do

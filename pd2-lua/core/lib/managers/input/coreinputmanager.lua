@@ -24,7 +24,7 @@ function InputManager:input_provider_id_that_presses_start()
 	local layer_description_ids = {}
 	local count = Input:num_real_controllers()
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		local controller = Input:controller(i)
 
 		if controller:connected() and controller:pressed(Idstring("start")) then
@@ -39,7 +39,7 @@ function InputManager:debug_primary_input_provider_id()
 	local count = Input:num_real_controllers()
 	local best_controller = nil
 
-	for i = 1, count, 1 do
+	for i = 1, count do
 		local controller = Input:controller(i)
 
 		if controller:connected() then

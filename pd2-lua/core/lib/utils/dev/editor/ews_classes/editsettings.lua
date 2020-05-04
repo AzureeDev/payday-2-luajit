@@ -112,7 +112,7 @@ function EditUnitSettings:set_disable_collision()
 			local disable = self._ctrls.disable_collision:get_value()
 			unit:unit_data().disable_collision = disable
 
-			for index = 0, unit:num_bodies() - 1, 1 do
+			for index = 0, unit:num_bodies() - 1 do
 				local body = unit:body(index)
 
 				if body then

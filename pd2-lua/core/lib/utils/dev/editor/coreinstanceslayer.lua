@@ -475,7 +475,7 @@ function InstancesLayer:add_instance(name, folder, index_size, script, pos, rot,
 
 			managers.editor:layer("Dynamics"):add_unit_to_created_units(unit)
 
-			for i = 0, unit:num_bodies() - 1, 1 do
+			for i = 0, unit:num_bodies() - 1 do
 				unit:body(i):set_keyframed(true)
 				unit:set_keyframed(true)
 			end
@@ -1178,7 +1178,7 @@ function InstancesLayer:_set_selection_instances_listbox(name)
 			}
 		end
 
-		for i = 0, self._instances_listbox:nr_items() - 1, 1 do
+		for i = 0, self._instances_listbox:nr_items() - 1 do
 			if table.contains(name, self._instances_listbox:get_string(i)) then
 				self._instances_listbox:select_index(i)
 			end

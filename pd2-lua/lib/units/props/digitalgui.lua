@@ -190,7 +190,7 @@ function DigitalGui:_update_number_text()
 
 		local zero = ""
 
-		for i = 1, self.NUMBER_DIGITS - 1, 1 do
+		for i = 1, self.NUMBER_DIGITS - 1 do
 			zero = zero .. (self._number < math.pow(10, i) and "0" or "")
 		end
 

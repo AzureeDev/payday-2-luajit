@@ -120,7 +120,7 @@ function get_intensity_preset(multiplier)
 
 	local intensity_values = INTENSITY_VALUES
 
-	for i = 1, #intensity_values, 1 do
+	for i = 1, #intensity_values do
 		local next = intensity_values[i + 1]
 		local this = intensity_values[i]
 

@@ -1130,7 +1130,7 @@ function MenuSceneManager:_setup_character_dynamic_bodies(unit)
 	self._character_dynamic_bodies = {}
 	local bodies = self._character_dynamic_bodies
 
-	for i = 0, unit:num_bodies() - 1, 1 do
+	for i = 0, unit:num_bodies() - 1 do
 		if unit:body(i):dynamic() then
 			table.insert(bodies, unit:body(i))
 		end
@@ -1503,7 +1503,7 @@ function MenuSceneManager:_setup_henchmen_characters()
 		"dallas"
 	}
 
-	for i = 1, 3, 1 do
+	for i = 1, 3 do
 		local pos, rot = self:get_henchmen_positioning(i)
 		local unit_name = tweak_data.blackmarket.characters.locked.menu_unit
 		local unit = World:spawn_unit(Idstring(unit_name), pos, rot)
@@ -1702,7 +1702,7 @@ function MenuSceneManager:_setup_lobby_characters()
 	}
 	local masks = {}
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		table.insert(masks, "dallas")
 	end
 
@@ -1711,7 +1711,7 @@ function MenuSceneManager:_setup_lobby_characters()
 	local pos = Vector3()
 	local rot = Rotation()
 
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		mrotation.set_yaw_pitch_roll(rot, self._characters_rotation[i] or self._characters_rotation[1], 0, 0)
 		mvector3.set(pos, self._characters_offset)
 		mvector3.rotate_with(pos, rot)
@@ -1766,7 +1766,7 @@ function MenuSceneManager:change_lobby_character(peer_id, character_id, preferre
 end
 
 function MenuSceneManager:hide_all_lobby_characters()
-	for i = 1, tweak_data.max_players, 1 do
+	for i = 1, tweak_data.max_players do
 		self:set_lobby_character_visible(i, false, true)
 	end
 end

@@ -21,7 +21,7 @@ function Manager:debug_bind_primary_input_provider_id(player_slot)
 	local count = Input:num_real_controllers()
 	local best_controller = nil
 
-	for i = 0, count, 1 do
+	for i = 0, count do
 		local controller = Input:controller(i)
 
 		if controller:connected() then

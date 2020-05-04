@@ -423,7 +423,7 @@ function HUDAssaultCorner:_animate_text(text_panel, bg_box, color, color_functio
 			end
 
 			if use_stars then
-				for i = 1, managers.job:current_difficulty_stars(), 1 do
+				for i = 1, managers.job:current_difficulty_stars() do
 					text_string = text_string .. managers.localization:get_default_macro("BTN_SKULL")
 				end
 			end

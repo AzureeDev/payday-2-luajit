@@ -77,7 +77,7 @@ function CoreEnvEditor:_move_selected_items(src, dst, valid_items)
 	local dst_items = {}
 	local count = dst:item_count()
 
-	for i = 0, count - 1, 1 do
+	for i = 0, count - 1 do
 		table.insert(dst_items, dst:get_item_data(i))
 	end
 
@@ -104,7 +104,7 @@ function CoreEnvEditor:_refresh_effect_list()
 	local active_effects = {}
 	local count = self._active_effect_list:item_count()
 
-	for i = 0, count - 1, 1 do
+	for i = 0, count - 1 do
 		table.insert(active_effects, self._active_effect_list:get_item_data(i))
 	end
 

@@ -18,7 +18,7 @@ PlayerAction.ShockAndAwe = {
 					local num_bullets = ammo - min_bullets
 					local math_max = math.max
 
-					for i = 1, num_bullets, 1 do
+					for i = 1, num_bullets do
 						reload_multiplier = math_max(min_reload_increase, reload_multiplier * penalty)
 					end
 				end

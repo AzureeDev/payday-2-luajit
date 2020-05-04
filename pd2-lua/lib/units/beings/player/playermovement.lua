@@ -982,7 +982,7 @@ function PlayerMovement:subtract_stamina(value)
 		local stamina_needed, ammo_refill = unpack(managers.player:upgrade_value("player", "stamina_ammo_refill_single"))
 
 		if stamina_needed < self._subtracted_stamina_single then
-			for i = 1, 2, 1 do
+			for i = 1, 2 do
 				local weapon = self._unit:inventory():unit_by_selection(i):base()
 
 				if weapon:fire_mode() == "single" then
@@ -1001,7 +1001,7 @@ function PlayerMovement:subtract_stamina(value)
 		local stamina_needed, ammo_refill = unpack(managers.player:upgrade_value("player", "stamina_ammo_refill_auto"))
 
 		if stamina_needed < self._subtracted_stamina_auto then
-			for i = 1, 2, 1 do
+			for i = 1, 2 do
 				local weapon = self._unit:inventory():unit_by_selection(i):base()
 
 				if weapon:fire_mode() == "auto" then

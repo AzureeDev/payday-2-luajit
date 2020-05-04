@@ -281,7 +281,7 @@ function InfamyTweakData:init()
 		}
 	}
 
-	for i = 1, 15, 1 do
+	for i = 1, 15 do
 		self.items["infamy_xp_medium_" .. i] = deep_clone(generic_medium_xp_item)
 	end
 
