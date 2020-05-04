@@ -1800,14 +1800,14 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 
 	set_characters_data("slaughterhouse", characters_male, slaughterhouse_characters_male)
 
-	local slaughterhouse_jiro = {
+	local slaughterhouse_dragon = {
 		unit = "units/pd2_dlc_sus/characters/sus_acc_slaughterhouse/sus_acc_fps_slaughterhouse/sus_acc_fps_slaughterhouse_02",
 		third_unit = "units/pd2_dlc_sus/characters/sus_acc_slaughterhouse/sus_acc_slaughterhouse_male_average_02/sus_acc_slaughterhouse_male_average_02"
 	}
-	self.player_styles.slaughterhouse.characters.jiro = slaughterhouse_jiro
+	self.player_styles.slaughterhouse.characters.dragon = slaughterhouse_dragon
 	local slaughterhouse_bodhi = {
-		unit = "units/pd2_dlc_sus/characters/sus_acc_slaughterhouse/sus_acc_fps_slaughterhouse/sus_acc_fps_slaughterhouse_02",
-		third_unit = "units/pd2_dlc_sus/characters/sus_acc_slaughterhouse/sus_acc_slaughterhouse_male_average_02/sus_acc_slaughterhouse_male_average_02"
+		unit = "units/pd2_dlc_sus/characters/sus_acc_slaughterhouse/sus_acc_fps_slaughterhouse/sus_acc_fps_slaughterhouse_bodhi",
+		third_unit = "units/pd2_dlc_sus/characters/sus_acc_slaughterhouse/sus_acc_slaughterhouse_male_average_bodhi/sus_acc_slaughterhouse_male_average_bodhi"
 	}
 	self.player_styles.slaughterhouse.characters.bodhi = slaughterhouse_bodhi
 	local slaughterhouse_scarface = {

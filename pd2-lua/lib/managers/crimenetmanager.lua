@@ -3135,6 +3135,7 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 	end
 
 	if data.is_skirmish then
+		contact_name:set_color(tweak_data.screen_colors.skirmish_color)
 		job_name:set_color(tweak_data.screen_colors.skirmish_color)
 	end
 
@@ -3247,17 +3248,15 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 		heat_name:set_position(0, host_name:bottom())
 	elseif data.is_skirmish then
 		local is_weekly = data.skirmish == SkirmishManager.LOBBY_WEEKLY
-		local text = managers.localization:text(is_weekly and "menu_weekly_skirmish" or "menu_skirmish")
+		local text = managers.localization:text(is_weekly and "menu_weekly_skirmish" or "menu_skirmish") .. ": "
 
-		job_name:set_text(utf8.to_upper(text))
+		contact_name:set_text(utf8.to_upper(text))
 
-		local _, _, w, h = job_name:text_rect()
+		local _, _, w, h = contact_name:text_rect()
 
-		job_name:set_size(w, h)
-		job_name:set_position(0, host_name:bottom())
-		contact_name:set_text(" ")
-		contact_name:set_w(0, 0)
-		contact_name:set_position(0, host_name:bottom())
+		contact_name:set_size(w, h)
+		contact_name:set_top(job_name:top())
+		contact_name:set_right(0)
 		info_name:set_text(" ")
 		info_name:set_size(0, 0)
 		info_name:set_position(0, host_name:bottom())

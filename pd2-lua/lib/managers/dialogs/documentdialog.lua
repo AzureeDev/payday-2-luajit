@@ -227,12 +227,19 @@ function DocumentDialog:update_input(t, dt)
 
 	self._move_button_dir = dir
 	self._move_button_time = move_time
-	local scroll = self._controller:get_input_axis("look")
 
-	if self.MOVE_AXIS_LIMIT < scroll.y then
-		self._panel_script:scroll_up(-scroll.y * 250 * dt)
-	elseif scroll.y < -self.MOVE_AXIS_LIMIT then
-		self._panel_script:scroll_down(-math.abs(scroll.y) * 250 * dt)
+	if managers.controller:get_default_wrapper_type() ~= "pc" and managers.controller:get_default_wrapper_type() ~= "steam" then
+		if managers.controller:get_default_wrapper_type() == "vr" then
+			-- Nothing
+		else
+			local scroll = self._controller:get_input_axis("look")
+
+			if self.MOVE_AXIS_LIMIT < scroll.y then
+				self._panel_script:scroll_up(-scroll.y * 250 * dt)
+			elseif scroll.y < -self.MOVE_AXIS_LIMIT then
+				self._panel_script:scroll_down(-math.abs(scroll.y) * 250 * dt)
+			end
+		end
 	end
 end
 

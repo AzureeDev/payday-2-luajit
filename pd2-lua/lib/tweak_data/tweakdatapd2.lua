@@ -685,10 +685,10 @@ function TweakData:_init_pd2()
 		}
 	}
 	self.hud_icons.pagers_used = {
-		texture = "guis/textures/pd2/equipment_02",
+		texture = "guis/textures/pd2/pagers_used",
 		texture_rect = {
-			32,
-			64,
+			0,
+			0,
 			32,
 			32
 		}
