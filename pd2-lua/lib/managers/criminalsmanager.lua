@@ -172,32 +172,41 @@ function CriminalsManager:on_last_valid_player_spawn_point_updated(unit)
 end
 
 function CriminalsManager:_remove(id)
-	local data = self._characters[id]
+	local char_data = self._characters[id]
 
-	if data.name == self._local_character then
+	if char_data.name == self._local_character then
 		self._local_character = nil
 	end
 
-	if data.unit then
-		managers.hud:remove_mugshot_by_character_name(data.name)
+	if char_data.unit then
+		managers.hud:remove_mugshot_by_character_name(char_data.name)
 
-		if not data.ai and alive(data.unit) then
-			self:on_last_valid_player_spawn_point_updated(data.unit)
+		if not char_data.data.ai and alive(char_data.unit) then
+			self:on_last_valid_player_spawn_point_updated(char_data.unit)
 		end
 	else
-		managers.hud:remove_teammate_panel_by_name_id(data.name)
+		managers.hud:remove_teammate_panel_by_name_id(char_data.name)
 	end
 
-	if not data.ai then
-		managers.trade:on_player_criminal_removed(data.name)
+	if not char_data.data.ai then
+		managers.trade:on_player_criminal_removed(char_data.name)
 	end
 
-	data.taken = false
-	data.unit = nil
-	data.peer_id = 0
-	data.data = {}
+	if char_data.safe_loaded_assets then
+		local ids_unit = Idstring("unit")
 
-	self:event_listener():call("on_criminal_removed", data)
+		for type, asset_ids in pairs(char_data.safe_loaded_assets) do
+			managers.dyn_resource:unload(ids_unit, asset_ids, managers.dyn_resource.DYN_RESOURCES_PACKAGE, false)
+		end
+	end
+
+	char_data.taken = false
+	char_data.unit = nil
+	char_data.peer_id = 0
+	char_data.data = {}
+	char_data.safe_loaded_assets = nil
+
+	self:event_listener():call("on_criminal_removed", char_data)
 
 	if Network:is_server() then
 		call_on_next_update(callback(self, self, "_reassign_loadouts"), "CriminalsManager:_reassign_loadouts")
@@ -264,6 +273,22 @@ function CriminalsManager:add_character(name, unit, peer_id, ai, ai_loadout)
 	managers.sync:send_all_synced_units_to(peer_id)
 end
 
+function CriminalsManager:safe_load_asset(character, asset_name, type)
+	local ids_unit = Idstring("unit")
+	local asset_ids = Idstring(asset_name)
+
+	managers.dyn_resource:load(ids_unit, asset_ids, managers.dyn_resource.DYN_RESOURCES_PACKAGE, nil)
+
+	character.safe_loaded_assets = character.safe_loaded_assets or {}
+	local old_asset_ids = character.safe_loaded_assets[type]
+
+	if old_asset_ids then
+		managers.dyn_resource:unload(ids_unit, old_asset_ids, managers.dyn_resource.DYN_RESOURCES_PACKAGE, false)
+	end
+
+	character.safe_loaded_assets[type] = asset_ids
+end
+
 function CriminalsManager:update_character_visual_state(character_name, visual_state)
 	local character = self:character_by_name(character_name)
 
@@ -278,24 +303,46 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
 	local mask_id = visual_state.mask_id or character.visual_state.mask_id
 	local armor_id = visual_state.armor_id or character.visual_state.armor_id or "level_1"
 	local armor_skin = visual_state.armor_skin or character.visual_state.armor_skin or "none"
-	local player_style = self:active_player_style() or "none"
+	local player_style = self:active_player_style() or managers.blackmarket:get_default_player_style()
 	local suit_variation = nil
-	local user_player_style = visual_state.player_style or character.visual_state.player_style or "none"
+	local user_player_style = visual_state.player_style or character.visual_state.player_style or managers.blackmarket:get_default_player_style()
 
-	if not self:is_active_player_style_locked() and user_player_style ~= "none" then
+	if not self:is_active_player_style_locked() and user_player_style ~= managers.blackmarket:get_default_player_style() then
 		player_style = user_player_style
 		suit_variation = visual_state.suit_variation or character.visual_state.suit_variation or "default"
 	end
 
+	local glove_id = visual_state.glove_id or character.visual_state.glove_id or managers.blackmarket:get_default_glove_id()
 	local character_visual_state = {
 		is_local_peer = is_local_peer,
 		visual_seed = visual_seed,
 		player_style = player_style,
 		suit_variation = suit_variation,
+		glove_id = glove_id,
 		mask_id = mask_id,
 		armor_id = armor_id,
 		armor_skin = armor_skin
 	}
+
+	local function get_value_string(value)
+		return is_local_peer and tostring(value) or "third_" .. tostring(value)
+	end
+
+	if player_style then
+		local unit_name = tweak_data.blackmarket:get_player_style_value(player_style, character_name, get_value_string("unit"))
+
+		if unit_name then
+			self:safe_load_asset(character, unit_name, "player_style")
+		end
+	end
+
+	if glove_id then
+		local unit_name = tweak_data.blackmarket:get_glove_value(glove_id, character_name, "unit", player_style, suit_variation)
+
+		if unit_name then
+			self:safe_load_asset(character, unit_name, "glove_id")
+		end
+	end
 
 	CriminalsManager.set_character_visual_state(unit, character_name, character_visual_state)
 
@@ -304,6 +351,7 @@ function CriminalsManager:update_character_visual_state(character_name, visual_s
 		visual_seed = visual_seed,
 		player_style = user_player_style,
 		suit_variation = suit_variation,
+		glove_id = glove_id,
 		mask_id = mask_id,
 		armor_id = armor_id,
 		armor_skin = armor_skin
@@ -317,6 +365,7 @@ function CriminalsManager.set_character_visual_state(unit, character_name, visua
 	local visual_seed = visual_state.visual_seed
 	local player_style = visual_state.player_style
 	local suit_variation = visual_state.suit_variation
+	local glove_id = visual_state.glove_id
 	local mask_id = visual_state.mask_id
 	local armor_id = visual_state.armor_id
 	local armor_skin = visual_state.armor_skin
@@ -383,7 +432,12 @@ function CriminalsManager.set_character_visual_state(unit, character_name, visua
 
 	unit_damage:set_variable("var_head_replace", body_replacement.head and 1 or 0)
 	unit_damage:set_variable("var_body_replace", body_replacement.body and 1 or 0)
-	unit_damage:set_variable("var_hands_replace", body_replacement.hands and 1 or 0)
+
+	local gloves_unit_name = tweak_data.blackmarket:get_glove_value(glove_id, character_name, "unit", player_style, suit_variation)
+	local replace_character_hands = gloves_unit_name or gloves_unit_name == false and body_replacement.hands
+
+	unit_damage:set_variable("var_hands_replace", replace_character_hands and 1 or 0)
+	unit_damage:set_variable("var_arms_replace", body_replacement.arms and 1 or 0)
 	unit_damage:set_variable("var_vest_replace", body_replacement.vest and 1 or 0)
 	unit_damage:set_variable("var_armor_replace", body_replacement.armor and 1 or 0)
 
@@ -443,6 +497,59 @@ function CriminalsManager.set_character_visual_state(unit, character_name, visua
 			end
 
 			char_mesh_unit:set_enabled(unit:enabled())
+		end
+
+		unit:spawn_manager():remove_unit("char_gloves")
+
+		local char_gloves_unit = nil
+
+		if gloves_unit_name then
+			unit:spawn_manager():spawn_and_link_unit("_char_joint_names", "char_gloves", gloves_unit_name)
+
+			char_gloves_unit = unit:spawn_manager():get_unit("char_gloves")
+		end
+
+		if alive(char_gloves_unit) then
+			if not is_local_peer then
+				char_gloves_unit:unit_data().original_material_config = char_gloves_unit:material_config()
+				local third_material_config = tweak_data.blackmarket:get_glove_value(glove_id, character_name, "third_material", player_style, suit_variation)
+				local wanted_config_ids = third_material_config and Idstring(third_material_config) or char_gloves_unit:unit_data().original_material_config
+
+				if wanted_config_ids and char_gloves_unit:material_config() ~= wanted_config_ids then
+					managers.dyn_resource:change_material_config(wanted_config_ids, char_gloves_unit, true)
+				end
+			end
+
+			local unit_sequence = tweak_data.blackmarket:get_glove_value(glove_id, character_name, "sequence", player_style, suit_variation)
+
+			run_sequence_safe(unit_sequence, char_gloves_unit)
+			char_gloves_unit:set_enabled(unit:enabled())
+		end
+
+		unit:spawn_manager():remove_unit("char_glove_adapter")
+
+		local adapter_tweak = tweak_data.blackmarket.glove_adapter
+
+		if not table.contains(adapter_tweak.player_style_exclude_list, player_style) and adapter_tweak.unit then
+			unit:spawn_manager():spawn_and_link_unit("_char_joint_names", "char_glove_adapter", adapter_tweak.unit)
+
+			local glove_adapter_unit = unit:spawn_manager():get_unit("char_glove_adapter")
+
+			if alive(glove_adapter_unit) then
+				local new_character_name = CriminalsManager.convert_old_to_new_character_workname(character_name)
+
+				run_sequence_safe(adapter_tweak.character_sequence[new_character_name], glove_adapter_unit)
+
+				if not is_local_peer then
+					glove_adapter_unit:unit_data().original_material_config = glove_adapter_unit:material_config()
+					local third_material_config = adapter_tweak.third_material
+					local wanted_config_ids = third_material_config and Idstring(third_material_config) or glove_adapter_unit:unit_data().original_material_config
+
+					if wanted_config_ids and glove_adapter_unit:material_config() ~= wanted_config_ids then
+						managers.dyn_resource:change_material_config(wanted_config_ids, glove_adapter_unit, true)
+					end
+				end
+			end
 		end
 	end
 
@@ -1003,12 +1110,10 @@ end
 
 function CriminalsManager:save_current_character_names()
 	Global.team_ai = Global.team_ai or {}
-	local index = 1
 
-	for _, data in pairs(self._characters) do
-		if data.ai or data.taken and alive(data.unit) and not data.unit:base().is_local_player then
-			Global.team_ai[index] = data.name
-			index = index + 1
+	for _, char_data in pairs(self._characters) do
+		if char_data.data and (char_data.data.ai or char_data.taken and alive(char_data.unit) and not char_data.unit:base().is_local_player) then
+			Global.team_ai[char_data.data.panel_id] = char_data.name
 		end
 	end
 end

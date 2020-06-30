@@ -2768,6 +2768,41 @@ function TweakDataVR:init(tweak_data)
 				}
 			}
 		},
+		holt = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_packrat_mag_throw"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -6, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_packrat_mag_in",
+					visible = true,
+					pos = Vector3(0, -6, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -2.5, -7)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -2.5, -7)
+				},
+				{
+					time = 0.6,
+					sound = "wp_packrat_slide_release",
+					pos = Vector3()
+				}
+			}
+		},
 		mp9 = {
 			start = {
 				{
@@ -6121,6 +6156,41 @@ function TweakDataVR:init(tweak_data)
 				}
 			}
 		},
+		x_holt = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_packrat_mag_throw"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -6, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_packrat_mag_in",
+					visible = true,
+					pos = Vector3(0, -6, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -2.5, -7)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -2.5, -7)
+				},
+				{
+					time = 0.6,
+					sound = "wp_packrat_slide_release",
+					pos = Vector3()
+				}
+			}
+		},
 		x_sr2 = {
 			start = {
 				{
@@ -8934,6 +9004,7 @@ function TweakDataVR:init(tweak_data)
 		}
 	}
 	self.driving.blackhawk_2 = deep_clone(self.driving.blackhawk_1)
+	self.driving.wanker = deep_clone(self.driving.blackhawk_1)
 	self.overlay_effects = {
 		fade_in_rotate_player = {
 			blend_mode = "normal",

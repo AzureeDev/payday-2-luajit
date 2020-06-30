@@ -797,7 +797,12 @@ function UseInteractionExt:interact(player)
 		managers.blackmarket:add_to_inventory(unpack(args))
 	end
 
-	self:set_active(false)
+	print("Trying to OFF")
+
+	if not self.keep_active_after_interaction then
+		print("OFF")
+		self:set_active(false)
+	end
 
 	return true
 end
@@ -2569,10 +2574,16 @@ function SpecialEquipmentInteractionExt:sync_interacted(peer, player, status, sk
 	end
 end
 
+function SpecialEquipmentInteractionExt:set_give_special_equipment(special_equipment)
+	self._special_equipment = special_equipment
+end
+
 function SpecialEquipmentInteractionExt:apply_item_pickup()
-	managers.player:add_special({
-		name = self._special_equipment
-	})
+	if self._special_equipment then
+		managers.player:add_special({
+			name = self._special_equipment
+		})
+	end
 end
 
 function SpecialEquipmentInteractionExt:can_remove_item()

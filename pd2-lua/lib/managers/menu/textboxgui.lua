@@ -254,12 +254,11 @@ function TextBoxGui:_create_text_box(ws, title, text, content_data, config)
 		h = main:h() - th * 2
 	})
 	local info_bg = info_area:rect({
-		name = "info_bg",
 		valign = "grow",
+		name = "info_bg",
 		halign = "grow",
-		alpha = 0.6,
 		layer = 0,
-		color = Color(0, 0, 0)
+		color = tweak_data.screen_colors.dark_bg
 	})
 	local buttons_panel = self:_setup_buttons_panel(info_area, button_list, focus_button, only_buttons)
 	local scroll_panel = info_area:panel({

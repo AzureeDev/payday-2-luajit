@@ -555,6 +555,10 @@ function MenuItemGrid:close(row_item)
 end
 
 function MenuItemGrid:option_texture_loaded_clbk(option, texture_idstring)
+	if not alive(option.gui_panel) then
+		return
+	end
+
 	option.gui_icon = option.gui_panel:bitmap({
 		blend_mode = "normal",
 		texture = texture_idstring

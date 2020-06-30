@@ -670,6 +670,7 @@ function TweakData:init()
 
 	self.hud_icons = HudIconsTweakData:new()
 	self.weapon = WeaponTweakData:new(self)
+	self.weapon_akimbo_mappings = self.weapon:get_akimbo_mappings()
 	local weapon_tweak_meta = {
 		__index = function (table, key)
 			if key == "category" then
@@ -759,6 +760,7 @@ function TweakData:init()
 	self.raid_jobs = RaidJobsTweakData:new(self)
 
 	self.blackmarket:build_player_style_list(self)
+	self.blackmarket:build_glove_list(self)
 
 	self.ai_carry = {
 		throw_distance = 500,
@@ -1788,6 +1790,9 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_68"
 		},
 		{
+			track = "track_69"
+		},
+		{
 			track = "track_pth_01",
 			lock = "payday"
 		},
@@ -2744,10 +2749,15 @@ function TweakData:init_screen_colors()
 	self.screen_colors.stats_positive = Color(255, 191, 221, 125) / 255
 	self.screen_colors.stats_negative = Color(255, 254, 93, 99) / 255
 	self.screen_colors.stats_mods = Color(255, 229, 229, 76) / 255
+	self.screen_colors.dark_bg = Color(0.65, 0, 0, 0)
 
 	if Global.test_new_colors then
+		local r, g, b = Color.purple:unpack()
+
 		for i, d in pairs(self.screen_colors) do
-			self.screen_colors[i] = Color.purple
+			self.screen_colors[i].r = r
+			self.screen_colors[i].g = g
+			self.screen_colors[i].b = b
 		end
 	end
 

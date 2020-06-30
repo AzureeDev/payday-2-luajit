@@ -110,7 +110,7 @@ function SentryGunBase:post_init()
 	end
 end
 
-function SentryGunBase.spawn(owner, pos, rot, peer_id, verify_equipment, unit_idstring_index)
+function SentryGunBase.spawn(owner, pos, rot, peer_id, verify_equipment, unit_idstring_index, fire_mode_index)
 	local attached_data = SentryGunBase._attach(pos, rot)
 
 	if not attached_data then
@@ -152,7 +152,7 @@ function SentryGunBase.spawn(owner, pos, rot, peer_id, verify_equipment, unit_id
 
 	ammo_multiplier = SentryGunBase.AMMO_MUL[ammo_multiplier]
 
-	unit:base():setup(owner, ammo_multiplier, armor_multiplier, spread_multiplier, rot_speed_multiplier, has_shield, attached_data)
+	unit:base():setup(owner, ammo_multiplier, armor_multiplier, spread_multiplier, rot_speed_multiplier, has_shield, attached_data, fire_mode_index)
 
 	local owner_id = unit:base():get_owner_id()
 
@@ -201,12 +201,13 @@ function SentryGunBase:spawn_from_sequence(align_obj_name, module_id)
 
 	unit:base():setup(managers.player:player_unit(), ammo_mul, 1, spread_mul, rot_mul, 1, true, attached_data)
 	managers.network:session():send_to_peers_synched("sync_equipment_setup", unit, 0, 0)
-	managers.network:session():send_to_peers_synched("from_server_sentry_gun_place_result", managers.network:session():local_peer():id(), 0, unit, 2, 2, true, 2)
+	managers.network:session():send_to_peers_synched("from_server_sentry_gun_place_result", managers.network:session():local_peer():id(), 0, unit, 2, 2, true, 2, 1)
 
 	local team = managers.groupai:state():team_data(tweak_data.levels:get_default_team_ID("player"))
 
 	unit:movement():set_team(team)
 	unit:brain():set_active(true)
+	unit:base():post_setup(1)
 end
 
 function SentryGunBase:activate_as_module(team_type, tweak_table_id)
@@ -321,12 +322,11 @@ function SentryGunBase:setup(owner, ammo_multiplier, armor_multiplier, spread_mu
 
 	self._unit:weapon():setup(setup_data)
 	self._unit:set_extension_update_enabled(Idstring("base"), true)
-	self:post_setup()
 
 	return true
 end
 
-function SentryGunBase:post_setup()
+function SentryGunBase:post_setup(fire_mode_index)
 	self._sentry_uid = "sentry_" .. tostring(sentry_uid)
 
 	managers.mission:add_global_event_listener(self._sentry_uid, {
@@ -339,6 +339,10 @@ function SentryGunBase:post_setup()
 
 	sentry_uid = sentry_uid + 1
 	self._attached_data = self._attach(nil, nil, self._unit)
+
+	if fire_mode_index == 2 then
+		self._unit:weapon():set_fire_mode_net(true)
+	end
 end
 
 function SentryGunBase:_on_picked_up_cash(unit)

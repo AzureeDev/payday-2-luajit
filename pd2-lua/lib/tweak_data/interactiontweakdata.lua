@@ -6026,4 +6026,279 @@ function InteractionTweakData:init(tweak_data)
 		equipment_consume = true,
 		axis = "y"
 	}
+	self.pex_pick_lock_easy_no_skill = {
+		contour = "interactable_icon",
+		icon = "equipment_bank_manager_key",
+		text_id = "hud_int_pick_lock",
+		start_active = true,
+		timer = 7,
+		action_text_id = "hud_action_picking_lock",
+		interact_distance = 100,
+		sound_start = "bar_pick_lock",
+		sound_interupt = "bar_pick_lock_cancel",
+		sound_done = "bar_pick_lock_finished"
+	}
+	self.pex_red_room_key = {
+		icon = "equipment_bank_manager_key",
+		text_id = "hud_int_pickup_asset",
+		equipment_text_id = "hud_action_pickup_asset",
+		special_equipment = "keychain",
+		sound_done = "pickup_key",
+		equipment_consume = true,
+		interact_distance = 250
+	}
+	self.pickup_police_uniform = {
+		text_id = "hud_int_hold_take_police_uniform",
+		action_text_id = "hud_action_taking_police_uniform",
+		timer = 1,
+		start_active = false
+	}
+	self.pickup_evidence_pex = {
+		text_id = "hud_int_hold_check_evidence",
+		action_text_id = "hud_action_checking_evidence",
+		equipment_text_id = "hud_equipment_need_evidence",
+		special_equipment_block = "evidence",
+		sound_start = "bar_shuffle_papers",
+		sound_interupt = "bar_shuffle_papers_cancel",
+		sound_done = "bar_shuffle_papers_finished",
+		equipment_consume = true,
+		interact_distance = 150,
+		timer = 2,
+		start_active = true
+	}
+	self.destroy_evidence_pex = {
+		text_id = "hud_int_hold_destroy_evidence",
+		action_text_id = "hud_action_destroying_evidence",
+		equipment_text_id = "hud_equipment_need_evidence",
+		special_equipment = "evidence",
+		equipment_consume = true,
+		interact_distance = 250,
+		timer = 2,
+		start_active = true,
+		axis = "y"
+	}
+	self.pickup_wanker_key = {
+		text_id = "hud_int_pickup_asset",
+		sound_done = "pick_up_key_card",
+		requires_mask_off_upgrade = {
+			upgrade = "mask_off_pickup",
+			category = "player"
+		},
+		blocked_hint = "full_keycard"
+	}
+	self.pex_pickup_cutter = {
+		text_id = "hud_int_pickup_cutter",
+		action_text_id = "hud_action_pickup_cutter",
+		sound_start = "bar_pickup_bolt_cutter",
+		sound_interupt = "bar_pickup_bolt_cutter_cancel",
+		sound_done = "bar_pickup_bolt_cutter_finished",
+		start_active = true,
+		interact_distance = 150,
+		timer = 1,
+		axis = "z"
+	}
+	self.pex_destroy_evidence_directional = deep_clone(self.destroy_evidence_pex)
+	self.pex_destroy_evidence_directional.axis = "x"
+	self.pex_destroy_evidence_directional.interact_distance = 150
+	self.pex_destroy_evidence_directional_shredder = deep_clone(self.pex_destroy_evidence_directional)
+	self.pex_destroy_evidence_directional_shredder.sound_start = "bar_put_paper_in_shredder"
+	self.pex_destroy_evidence_directional_shredder.sound_interupt = "bar_put_paper_in_shredder_cancel"
+	self.pex_destroy_evidence_directional_shredder.sound_done = "bar_put_paper_in_shredder_finished"
+	self.pex_place_evidance = deep_clone(self.destroy_evidence_pex)
+	self.pex_place_evidance.text_id = "hud_int_hold_place_evidance"
+	self.pex_place_evidance.action_text_id = "hud_action_place_evidance"
+	self.pex_place_evidance.axis = "z"
+	self.pex_place_evidance.interact_distance = 300
+	self.pex_pour_liquid_on_evidance = {
+		text_id = "hud_int_hold_pour_liquid",
+		action_text_id = "hud_action_find_liquid",
+		equipment_text_id = "hud_equipment_need_flammable_liquid",
+		timer = 3,
+		start_active = true,
+		interact_distance = 200
+	}
+	self.pex_start_fire = {
+		text_id = "hud_int_start_fire",
+		action_text_id = "hud_action_start_fire",
+		timer = 0,
+		start_active = false,
+		interact_distance = 350
+	}
+	self.pex_cut_open_chains = {
+		text_id = "hud_int_hold_cut_chains",
+		action_text_id = "hud_action_find_bolt_cutter",
+		equipment_text_id = "hud_equipment_need_bolt_cutter",
+		special_equipment = "pex_cutter",
+		sound_start = "bar_use_bolt_cutter",
+		sound_interupt = "bar_use_bolt_cutter_cancel",
+		sound_done = "bar_use_bolt_cutter_finished",
+		equipment_consume = true,
+		interact_distance = 150,
+		timer = 3,
+		start_active = true
+	}
+	self.pex_armory_hack = {
+		text_id = "hud_int_armory_hack",
+		action_text_id = "hud_action_hack_test",
+		start_active = true,
+		interact_distance = 150,
+		timer = 1.5
+	}
+	self.pex_armory_rfid = {
+		text_id = "hud_int_armory_rfid",
+		action_text_id = "hud_action_rfid_test",
+		start_active = true,
+		interact_distance = 150,
+		timer = 1.5
+	}
+	self.hand_over_uniform = {
+		text_id = "hud_int_hand_over_uniform",
+		action_text_id = "hud_action_give_uniform",
+		equipment_text_id = "hud_equipment_needs_a_uniform",
+		special_equipment = "police_uniform",
+		equipment_consume = true,
+		interact_distance = 200,
+		timer = 3,
+		start_active = true
+	}
+	self.pex_placment_breacher = {
+		text_id = "hud_hold_placing_the_breacher",
+		action_text_id = "hud_action_placing_breacher",
+		equipment_text_id = "hud_equipment_needs_breacher",
+		equipment_consume = true,
+		interact_distance = 300,
+		timer = 4,
+		start_active = true
+	}
+	self.pex_evidance_rfid = {
+		text_id = "hud_hold_use_evidance_tag",
+		action_text_id = "hud_action_using_evidance_tag",
+		equipment_text_id = "hud_equipment_evidance_find_a_tag",
+		equipment_consume = true,
+		interact_distance = 150,
+		timer = 1,
+		start_active = true
+	}
+	self.pex_restart_start_fire = {
+		text_id = "hud_int_restart_start_fire",
+		action_text_id = "hud_action_restart_start_fire",
+		timer = 4,
+		start_active = false,
+		interact_distance = 350
+	}
+	self.pex_hook_car = {
+		text_id = "hud_hold_hook_car",
+		action_text_id = "hud_action_hook_car",
+		timer = 3,
+		start_active = false,
+		interact_distance = 150
+	}
+	self.pex_open_door_one = {
+		icon = "interaction_open_door",
+		text_id = "debug_interact_open_door",
+		interact_distance = 100
+	}
+	self.pex_open_door_one_directional = deep_clone(self.pex_open_door_one)
+	self.pex_open_door_one_directional.axis = "x"
+	self.pex_medal = {
+		text_id = "hud_int_pku_medal",
+		action_text_id = "hud_action_pkuing_medal",
+		sound_event = "money_grab",
+		timer = 0,
+		start_active = true,
+		interact_distance = 125
+	}
+	self.pex_flammable_liquid = {
+		text_id = "hud_int_pku_flammable_liquid",
+		action_text_id = "hud_action_pkuing_flammable_liquid",
+		timer = 0,
+		start_active = true,
+		interact_distance = 150,
+		axis = "x"
+	}
+	self.ammo_bag_axis = deep_clone(self.ammo_bag)
+	self.ammo_bag_axis.axis = "y"
+	self.pex_get_unloaded_card = {
+		text_id = "hud_hold_take_unloaded_card",
+		action_text_id = "hud_action_taking_unloaded_card",
+		timer = 0,
+		start_active = true,
+		interact_distance = 150
+	}
+	self.pex_get_loaded_card = {
+		text_id = "hud_hold_take_loaded_card",
+		action_text_id = "hud_action_taking_loaded_card",
+		equipment_text_id = "hud_equipment_evidance_find_a_tag",
+		timer = 1,
+		start_active = true,
+		interact_distance = 150,
+		special_equipment = "pex_unloaded_card",
+		equipment_consume = true
+	}
+	self.pex_find_a_tag = {
+		text_id = "hud_hold_use_evidance_tag",
+		action_text_id = "hud_action_using_evidance_tag",
+		equipment_text_id = "hud_equipment_evidance_find_a_tag",
+		timer = 1,
+		start_active = true,
+		interact_distance = 150,
+		special_equipment = "pex_unloaded_card",
+		equipment_consume = true
+	}
+	self.pex_use_a_tag = deep_clone(self.pex_find_a_tag)
+	self.pex_use_a_tag.equipment_consume = false
+	self.pex_use_a_tag.special_equipment = "pex_loaded_card"
+	self.pex_use_a_tag_lvl_2 = deep_clone(self.pex_use_a_tag)
+	self.pex_use_a_tag_lvl_2.special_equipment = "pex_loaded_card_lvl_2"
+	self.pex_get_loaded_card_lvl_2 = deep_clone(self.pex_get_loaded_card)
+	self.pex_get_loaded_card_lvl_2.special_equipment = "pex_loaded_card"
+	self.pex_set_burnable_liquid = {
+		text_id = "hud_hold_set_burnable_liquid",
+		action_text_id = "hud_action_seting_burnable_liquid",
+		equipment_text_id = "hud_equipment_find_burnable_liquid",
+		equipment_consume = true,
+		timer = 1.5,
+		start_active = true,
+		interact_distance = 350,
+		special_equipment = "flammable_liquid",
+		equipment_consume = true,
+		axis = "z"
+	}
+	self.pex_burn = {
+		text_id = "hud_hold_pex_burn",
+		action_text_id = "hud_hold_pex_burning",
+		timer = 0,
+		start_active = true,
+		interact_distance = 350,
+		axis = "z"
+	}
+	self.pex_load_armory_accses = {
+		text_id = "hud_int_armory_rfid",
+		action_text_id = "hud_action_rfid_test",
+		timer = 1,
+		start_active = false,
+		interact_distance = 150
+	}
+	self.pex_door_hydraulic_opener = {
+		text_id = "hud_hold_pick_up_breaching_device",
+		action_text_id = "hud_action_picking_up_breaching_device",
+		timer = 3,
+		start_active = true,
+		blocked_hint = "carry_block",
+		axis = "x",
+		interact_distance = 250
+	}
+	self.pex_give_car_key = {
+		icon = "equipment_bank_manager_key",
+		text_id = "hud_press_pex_give_keys",
+		action_text_id = "hud_press_pex_giving_keys",
+		equipment_text_id = "hud_equipment_pex_need_keys",
+		special_equipment = "keychain",
+		sound_done = "tango_pick_up_key_mono",
+		equipment_consume = true,
+		interact_distance = 250
+	}
+	self.hold_turn_off_sprinklers = deep_clone(self.hold_activate_sprinklers)
+	self.hold_turn_off_sprinklers.text_id = "hud_int_hold_turn_off_sprinklers"
+	self.hold_turn_off_sprinklers.action_text_id = "hud_action_turn_off_sprinklers"
 end

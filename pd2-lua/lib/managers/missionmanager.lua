@@ -238,6 +238,7 @@ function MissionManager:init(...)
 		"pku_faberge_egg",
 		"pku_faberge_egg",
 		"pku_treasure",
+		"pku_police_uniform",
 		"player_criminal_death"
 	})
 

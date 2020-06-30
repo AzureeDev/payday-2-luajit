@@ -144,6 +144,10 @@ function WorldEditor:update(...)
 	for name, updator in pairs(self._tool_updators) do
 		updator(...)
 	end
+
+	if self._inventory_icon_creator then
+		self._inventory_icon_creator:update_debug(...)
+	end
 end
 
 function WorldEditor:add_tool_updator(name, updator)

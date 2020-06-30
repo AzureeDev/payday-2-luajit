@@ -6,6 +6,11 @@ HUDHitDirection.DAMAGE_TYPES = {
 	ARMOUR = 2,
 	VEHICLE = 3
 }
+HUDHitDirection.DAMAGE_TYPE_NAMES = {
+	"health",
+	"armor",
+	"vehicle"
+}
 HUDHitDirection.PANEL_SIZE = 300
 
 function HUDHitDirection:init(hud)
@@ -36,11 +41,11 @@ end
 function HUDHitDirection:_add_hit_indicator(damage_origin, damage_type, fixed_angle)
 	damage_type = damage_type or HUDHitDirection.DAMAGE_TYPES.HEALTH
 	local hit = self._hit_direction_panel:bitmap({
-		texture = "guis/textures/pd2/hitdirection",
 		blend_mode = "add",
 		alpha = 1,
 		visible = true,
 		rotation = 0,
+		texture = self:_get_indicator_texture(damage_type),
 		color = Color.white
 	})
 
@@ -57,16 +62,37 @@ function HUDHitDirection:_add_hit_indicator(damage_origin, damage_type, fixed_an
 	hit:animate(callback(self, self, "_animate"), data, callback(self, self, "_remove"))
 end
 
+function HUDHitDirection:_get_indicator_texture(damage_type)
+	if managers.user:get_setting("color_blind_hit_direction") then
+		if damage_type == HUDHitDirection.DAMAGE_TYPES.HEALTH then
+			return "guis/textures/pd2/hitdirection_bold"
+		elseif damage_type == HUDHitDirection.DAMAGE_TYPES.ARMOUR then
+			return "guis/textures/pd2/hitdirection"
+		end
+	end
+
+	return "guis/textures/pd2/hitdirection"
+end
+
 function HUDHitDirection:_get_indicator_color(damage_type, t)
+	if managers.user:get_setting("color_blind_hit_direction") then
+		local name = HUDHitDirection.DAMAGE_TYPE_NAMES[damage_type]
+		local color = tweak_data.hud_color_blind_assist[name]
+
+		if color then
+			return color
+		end
+	end
+
 	if damage_type == HUDHitDirection.DAMAGE_TYPES.HEALTH then
 		return Color(1, t, t)
 	elseif damage_type == HUDHitDirection.DAMAGE_TYPES.ARMOUR then
 		return Color(t, 0.8, 1)
 	elseif damage_type == HUDHitDirection.DAMAGE_TYPES.VEHICLE then
 		return Color(1, 0.8, t)
-	else
-		return Color(1, t, t)
 	end
+
+	return Color(1, t, t)
 end
 
 function HUDHitDirection:_animate(indicator, data, remove_func)

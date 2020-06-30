@@ -2779,33 +2779,35 @@ function CoreEditor:current_orientation(offset_move_vec, unit)
 
 		Application:draw_sphere(pos, r, 1, 0, 1)
 
-		local units = unit:find_units("intersect", "force_physics", "sphere", pos, r)
-		local closest_snap = nil
+		if false then
+			local units = unit:find_units("intersect", "force_physics", "sphere", pos, r)
+			local closest_snap = nil
 
-		for _, unit in ipairs(units) do
-			local aligns = unit:get_objects("snap*")
+			for _, unit in ipairs(units) do
+				local aligns = unit:get_objects("snap*")
 
-			if #aligns > 0 then
-				table.insert(aligns, unit:orientation_object())
-			end
-
-			for _, o in ipairs(aligns) do
-				local len = (o:position() - pos):length()
-
-				if len < r and (not closest_snap or len < (closest_snap:position() - pos):length()) then
-					closest_snap = o
+				if #aligns > 0 then
+					table.insert(aligns, unit:orientation_object())
 				end
 
-				Application:draw_rotation_size(o:position(), o:rotation(), 400)
-				Application:draw_sphere(o:position(), 50, 0, 1, 1)
+				for _, o in ipairs(aligns) do
+					local len = (o:position() - pos):length()
+
+					if len < r and (not closest_snap or len < (closest_snap:position() - pos):length()) then
+						closest_snap = o
+					end
+
+					Application:draw_rotation_size(o:position(), o:rotation(), 400)
+					Application:draw_sphere(o:position(), 50, 0, 1, 1)
+				end
+
+				Application:draw(unit, 1, 0, 0)
 			end
 
-			Application:draw(unit, 1, 0, 0)
-		end
-
-		if closest_snap then
-			current_pos = closest_snap:position()
-			current_rot = closest_snap:rotation() * unit:rotation():inverse()
+			if closest_snap then
+				current_pos = closest_snap:position()
+				current_rot = closest_snap:rotation() * unit:rotation():inverse()
+			end
 		end
 	end
 

@@ -6029,6 +6029,79 @@ function NarrativeTweakData:init(tweak_data)
 		2,
 		27
 	}
+	self.stages.pex = {
+		type = "d",
+		type_id = "heist_type_assault",
+		level_id = "pex",
+		mission_filter = {
+			1
+		}
+	}
+	self.jobs.pex = {
+		name_id = "heist_pex",
+		briefing_id = "heist_pex_crimenet",
+		contact = "locke",
+		region = "street",
+		jc = 30,
+		dlc = "pex",
+		chain = {
+			self.stages.pex
+		},
+		briefing_event = "Play_loc_pex_cbf_01",
+		debrief_event = nil,
+		crimenet_callouts = {
+			"Play_loc_pex_cnc_01"
+		},
+		crimenet_videos = {
+			"codex/locke1"
+		},
+		payout = {
+			50000,
+			125000,
+			250000,
+			550000,
+			700000,
+			700000,
+			700000
+		},
+		contract_cost = {
+			24000,
+			48000,
+			120000,
+			240000,
+			300000,
+			300000,
+			300000
+		},
+		contract_visuals = {}
+	}
+	self.jobs.pex.contract_visuals.min_mission_xp = {
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200
+	}
+	self.jobs.pex.contract_visuals.max_mission_xp = {
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200
+	}
+	self.jobs.pex.contract_visuals.preview_image = {
+		id = "pex",
+		folder = "pex"
+	}
+	self.jobs.pex.date_added = {
+		2020,
+		6,
+		24
+	}
 	self.stages.lbe_lobby_end = {
 		type = "d",
 		type_id = "heist_type_assault",
@@ -6819,7 +6892,8 @@ function NarrativeTweakData:init(tweak_data)
 		"bph",
 		"mex",
 		"mex_cooking",
-		"bex"
+		"bex",
+		"pex"
 	}
 	self.forced_jobs = {
 		firestarter = true,

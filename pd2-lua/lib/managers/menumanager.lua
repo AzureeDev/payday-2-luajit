@@ -1884,6 +1884,10 @@ function MenuCallbackHandler:is_vr()
 	return _G.IS_VR
 end
 
+function MenuCallbackHandler:is_not_vr()
+	return not _G.IS_VR
+end
+
 function MenuCallbackHandler:show_credits()
 	game_state_machine:change_state_by_name("menu_credits")
 end
@@ -2148,6 +2152,12 @@ function MenuCallbackHandler:toggle_aim_assist(item)
 	local on = item:value() == "on"
 
 	managers.user:set_setting("aim_assist", on)
+end
+
+function MenuCallbackHandler:toggle_color_blind_hit_direction(item)
+	local on = item:value() == "on"
+
+	managers.user:set_setting("color_blind_hit_direction", on)
 end
 
 function MenuCallbackHandler:toggle_sticky_aim(item)
@@ -10132,6 +10142,17 @@ function MenuOptionInitiator:modify_user_interface_options(node)
 
 	if toggle_hide_huds then
 		toggle_hide_huds:set_value(Global.hud_disabled and "on" or "off")
+	end
+
+	option_value = "off"
+	local color_blind_hit_direction_item = node:item("toggle_color_blind_hit_direction")
+
+	if color_blind_hit_direction_item then
+		if managers.user:get_setting("color_blind_hit_direction") then
+			option_value = "on"
+		end
+
+		color_blind_hit_direction_item:set_value(option_value)
 	end
 
 	return node

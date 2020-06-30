@@ -1097,7 +1097,7 @@ function CrewManagementGui:open_weapon_menu(params)
 	self:open_weapon_category_menu(unpack(params))
 end
 
-function CrewManagementGui:create_pages(new_node_data, params, identifier, selected_slot, rows, columns, max_pages)
+function CrewManagementGui:create_pages(new_node_data, params, identifier, selected_slot, rows, columns, max_pages, name_id)
 	local category = new_node_data.category
 	rows = rows or 3
 	columns = columns or 3
@@ -1120,7 +1120,7 @@ function CrewManagementGui:create_pages(new_node_data, params, identifier, selec
 			end
 		end
 
-		local name_id = managers.localization:to_upper_text("bm_menu_page", {
+		local name_localized = managers.localization:to_upper_text(name_id or "bm_menu_page", {
 			page = tostring(page)
 		})
 
@@ -1130,7 +1130,7 @@ function CrewManagementGui:create_pages(new_node_data, params, identifier, selec
 			name = category,
 			category = category,
 			start_i = start_i,
-			name_localized = name_id,
+			name_localized = name_localized,
 			on_create_func = callback(self, self, "populate_" .. category, params),
 			on_create_data = item_data,
 			identifier = BlackMarketGui.identifiers[identifier],
@@ -1492,15 +1492,22 @@ end
 function CrewManagementGui:open_suit_menu(henchman_index)
 	local loadout = managers.blackmarket:henchman_loadout(henchman_index)
 	local new_node_data = {
-		category = "player_styles"
+		category = "suits"
 	}
-	local selected_tab = self:create_pages(new_node_data, henchman_index, "player_style", loadout.player_style, 3, 3, 1)
+
+	self:create_pages(new_node_data, henchman_index, "player_style", loadout.player_style, 3, 3, 1, "bm_menu_player_styles")
+
 	new_node_data[1].mannequin_player_style = loadout.player_style
+
+	self:create_pages(new_node_data, henchman_index, "glove", loadout.glove_id, 3, 3, 1, "bm_menu_gloves")
+
+	new_node_data[2].mannequin_glove_id = loadout.glove_id
 	new_node_data.hide_detection_panel = true
 	new_node_data.character_id = managers.menu_scene:get_henchmen_character(henchman_index) or managers.blackmarket:preferred_henchmen(henchman_index)
 	new_node_data.custom_callback = {
 		trd_equip = callback(self, self, "select_player_style", henchman_index),
-		trd_customize = callback(self, self, "open_suit_customize_menu", henchman_index)
+		trd_customize = callback(self, self, "open_suit_customize_menu", henchman_index),
+		hnd_equip = callback(self, self, "select_glove", henchman_index)
 	}
 	new_node_data.skip_blur = true
 	new_node_data.use_bgs = true
@@ -1747,15 +1754,23 @@ function CrewManagementGui:populate_characters(henchman_index, data, gui)
 	end
 end
 
-function CrewManagementGui:populate_player_styles(henchman_index, data, gui)
-	local default_player_style = managers.blackmarket:get_default_player_style()
+function CrewManagementGui:populate_suits(henchman_index, data, gui)
 	local loadout = managers.blackmarket:henchman_loadout(henchman_index)
-	data.equipped_player_style = loadout.player_style or default_player_style
-	data.customize_equipped_only = true
 
-	gui:populate_player_styles(data)
+	if data.identifier == Idstring("player_style") then
+		data.equipped_player_style = loadout.player_style or managers.blackmarket:get_default_player_style()
+		data.customize_equipped_only = true
 
-	data.mannequin_player_style = nil
+		gui:populate_player_styles(data)
+
+		data.mannequin_player_style = nil
+	elseif data.identifier == Idstring("glove") then
+		data.equipped_glove_id = loadout.glove_id or managers.blackmarket:get_default_glove_id()
+
+		gui:populate_gloves(data)
+
+		data.mannequin_glove_id = nil
+	end
 end
 
 function CrewManagementGui:populate_suit_variations(henchman_index, data, gui)
@@ -1850,6 +1865,14 @@ function CrewManagementGui:select_suit_variation(index, data, gui)
 	loadout.suit_variation = data.name
 
 	managers.menu_scene:set_character_player_style(loadout.player_style, loadout.suit_variation)
+	gui:reload()
+end
+
+function CrewManagementGui:select_glove(index, data, gui)
+	local loadout = managers.blackmarket:henchman_loadout(index)
+	loadout.glove_id = data.name
+
+	managers.menu_scene:set_character_gloves(loadout.glove_id)
 	gui:reload()
 end
 

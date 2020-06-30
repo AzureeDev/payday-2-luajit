@@ -8,6 +8,7 @@ require("lib/tweak_data/blackmarket/ProjectilesTweakData")
 require("lib/tweak_data/blackmarket/MeleeWeaponsTweakData")
 require("lib/tweak_data/blackmarket/WeaponSkinsTweakData")
 require("lib/tweak_data/blackmarket/PlayerStyleTweakData")
+require("lib/tweak_data/blackmarket/GlovesTweakData")
 
 local is_nextgen_console = SystemInfo:platform() == Idstring("PS4") or SystemInfo:platform() == Idstring("XB1")
 
@@ -26,6 +27,7 @@ function BlackMarketTweakData:init(tweak_data)
 	self:_init_melee_weapons(tweak_data)
 	self:_init_weapon_skins(tweak_data)
 	self:_init_player_styles(tweak_data)
+	self:_init_gloves(tweak_data)
 	self:_init_weapon_mods(tweak_data)
 end
 

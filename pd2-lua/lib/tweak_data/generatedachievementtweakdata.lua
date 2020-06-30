@@ -8450,6 +8450,151 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.classic
 			}
 		},
+		pex_1 = {
+			icon_id = "C_Locke_H_BreakfastInTijuana_AllDiffs_D0",
+			ladder = "H_Breakfast",
+			sort_name = "C_Locke_H_BreakfastInTijuana_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_10 = {
+			additional_id = true,
+			sort_name = "C_Locke_H_BreakfastInTijuana_PaidInFull",
+			icon_id = "C_Locke_H_BreakfastInTijuana_PaidInFull",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_11 = {
+			need_unlock_icons = true,
+			icon_id = "C_Locke_H_BreakfastInTijuana_StolenValor",
+			sort_name = "C_Locke_H_BreakfastInTijuana_StolenValor",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.unlock.weapon_color,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_2 = {
+			icon_id = "C_Locke_H_BreakfastInTijuana_AllDiffs_D1",
+			ladder = "H_Breakfast",
+			sort_name = "C_Locke_H_BreakfastInTijuana_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_3 = {
+			icon_id = "C_Locke_H_BreakfastInTijuana_AllDiffs_D2",
+			ladder = "H_Breakfast",
+			sort_name = "C_Locke_H_BreakfastInTijuana_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_4 = {
+			icon_id = "C_Locke_H_BreakfastInTijuana_AllDiffs_D3",
+			ladder = "H_Breakfast",
+			sort_name = "C_Locke_H_BreakfastInTijuana_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_5 = {
+			icon_id = "C_Locke_H_BreakfastInTijuana_AllDiffs_D4",
+			ladder = "H_Breakfast",
+			sort_name = "C_Locke_H_BreakfastInTijuana_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_6 = {
+			icon_id = "C_Locke_H_BreakfastInTijuana_AllDiffs_D5",
+			ladder = "H_Breakfast",
+			sort_name = "C_Locke_H_BreakfastInTijuana_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_7 = {
+			icon_id = "C_Locke_H_BreakfastInTijuana_AllDiffs_D6",
+			ladder = "H_Breakfast",
+			sort_name = "C_Locke_H_BreakfastInTijuana_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_8 = {
+			icon_id = "C_Locke_H_BreakfastInTijuana_AllDiffs_OD_D6",
+			ladder = "H_Breakfast",
+			sort_name = "C_Locke_H_BreakfastInTijuana_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
+		pex_9 = {
+			need_unlock_icons = true,
+			icon_id = "C_Locke_H_BreakfastInTijuana_LowMurder",
+			sort_name = "C_Locke_H_BreakfastInTijuana_LowMurder",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.unlock.weapon_color,
+				tags.tactics.stealth,
+				tags.contracts.locke
+			}
+		},
 		rvd_1 = {
 			icon_id = "C_Bain_H_ReservoirDogs_AllDiffs_D0",
 			ladder = "H_Reservoir",
@@ -12378,13 +12523,16 @@ function init_auto_generated_achievement_data(tags)
 			}
 		},
 		trk_sh_0 = {
+			need_unlock_icons = true,
 			icon_id = "C_Classics_H_Slaughterhouse_AllDiffs_D0",
 			ladder = "H_Slaughterhouse",
 			sort_name = "C_Classics_H_Slaughterhouse_AllDiffs_D0",
 			additional_id = true,
+			unlock_id = true,
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.normal,
+				tags.unlock.outfit,
 				tags.tactics.loud,
 				tags.contracts.classic
 			}

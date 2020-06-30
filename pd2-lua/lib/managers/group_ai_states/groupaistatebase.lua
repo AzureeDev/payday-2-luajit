@@ -2936,12 +2936,16 @@ function GroupAIStateBase:set_unit_teamAI(unit, character_name, team_id, visual_
 
 	unit:movement():set_character_anim_variables()
 
+	local player_style = loadout and loadout.player_style or managers.blackmarket:get_default_player_style()
+	local suit_variation = loadout and loadout.suit_variation or "default"
+	local glove_id = loadout and loadout.glove_id or managers.blackmarket:get_default_glove_id()
 	local visual_state = {
 		armor_skin = "none",
 		armor_id = "level_1",
 		visual_seed = visual_seed,
-		player_style = loadout and loadout.player_style or managers.blackmarket:get_default_player_style(),
-		suit_variation = loadout and loadout.suit_variation or "default",
+		player_style = player_style,
+		suit_variation = suit_variation,
+		glove_id = glove_id,
 		mask_id = character.data.mask_id
 	}
 
@@ -2950,6 +2954,7 @@ function GroupAIStateBase:set_unit_teamAI(unit, character_name, team_id, visual_
 	local crim_data = character.data
 	crim_data.current_player_style = visual_state.player_style
 	crim_data.current_suit_variation = visual_state.suit_variation
+	crim_data.player_style_ready = true
 	local new_unit = tweak_data.blackmarket:get_player_style_value(visual_state.player_style, character_name, "third_unit")
 
 	if new_unit then
@@ -2961,8 +2966,30 @@ function GroupAIStateBase:set_unit_teamAI(unit, character_name, team_id, visual_
 		else
 			visual_state.player_style = managers.blackmarket:get_default_player_style()
 			visual_state.suit_variation = "default"
+			crim_data.player_style_ready = false
 
 			managers.dyn_resource:load(ids_unit, new_unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, callback(self, self, "on_suit_loaded_teamAI", character_name))
+		end
+	end
+
+	self:remove_gloves_teamAI(character_name)
+
+	local crim_data = character.data
+	crim_data.current_glove_id = visual_state.glove_id
+	crim_data.gloves_ready = true
+	local new_unit = tweak_data.blackmarket:get_glove_value(visual_state.glove_id, character_name, "unit", player_style, suit_variation)
+
+	if new_unit then
+		local new_unit_ids = Idstring(new_unit)
+		crim_data.glove_unit_ids = new_unit_ids
+
+		if managers.dyn_resource:is_resource_ready(ids_unit, new_unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, true) then
+			managers.dyn_resource:load(ids_unit, new_unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
+		else
+			visual_state.glove_id = managers.blackmarket:get_default_glove_id()
+			crim_data.gloves_ready = false
+
+			managers.dyn_resource:load(ids_unit, new_unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, callback(self, self, "on_gloves_loaded_teamAI", character_name))
 		end
 	end
 
@@ -2971,6 +2998,7 @@ end
 
 function GroupAIStateBase:sync_remove_one_teamAI(name, replace_with_player)
 	self:remove_suit_teamAI(name)
+	self:remove_gloves_teamAI(name)
 	managers.criminals:remove_character_by_name(name)
 
 	if replace_with_player then
@@ -2979,6 +3007,24 @@ function GroupAIStateBase:sync_remove_one_teamAI(name, replace_with_player)
 		managers.trade:remove_from_trade(name)
 
 		return true
+	end
+end
+
+function GroupAIStateBase:update_visual_state_teamAI(character_name)
+	local crim_data = managers.criminals:character_data_by_name(character_name)
+
+	if crim_data then
+		local should_update_visual_state = true
+		local visual_state = {}
+		should_update_visual_state = should_update_visual_state and crim_data.player_style_ready
+		visual_state.player_style = crim_data.current_player_style
+		visual_state.suit_variation = crim_data.current_suit_variation
+		should_update_visual_state = should_update_visual_state and crim_data.gloves_ready
+		visual_state.glove_id = crim_data.current_glove_id
+
+		if should_update_visual_state then
+			managers.criminals:update_character_visual_state(character_name, visual_state)
+		end
 	end
 end
 
@@ -2995,6 +3041,7 @@ function GroupAIStateBase:remove_suit_teamAI(character_name)
 		crim_data.player_style_unit_ids = nil
 		crim_data.current_player_style = nil
 		crim_data.current_suit_variation = nil
+		crim_data.player_style_ready = false
 	end
 end
 
@@ -3002,10 +3049,35 @@ function GroupAIStateBase:on_suit_loaded_teamAI(character_name)
 	local crim_data = managers.criminals:character_data_by_name(character_name)
 
 	if crim_data and crim_data.current_player_style then
-		managers.criminals:update_character_visual_state(character_name, {
-			player_style = crim_data.current_player_style,
-			suit_variation = crim_data.current_suit_variation
-		})
+		crim_data.player_style_ready = true
+
+		self:update_visual_state_teamAI(character_name)
+	end
+end
+
+function GroupAIStateBase:remove_gloves_teamAI(character_name)
+	local crim_data = managers.criminals:character_data_by_name(character_name)
+
+	if crim_data then
+		local unit_ids = crim_data.glove_unit_ids
+
+		if unit_ids then
+			managers.dyn_resource:unload(ids_unit, unit_ids, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
+		end
+
+		crim_data.glove_unit_ids = nil
+		crim_data.current_glove_id = nil
+		crim_data.gloves_ready = false
+	end
+end
+
+function GroupAIStateBase:on_gloves_loaded_teamAI(character_name)
+	local crim_data = managers.criminals:character_data_by_name(character_name)
+
+	if crim_data and crim_data.current_glove_id then
+		crim_data.gloves_ready = true
+
+		self:update_visual_state_teamAI(character_name)
 	end
 end
 

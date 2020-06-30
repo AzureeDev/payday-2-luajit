@@ -28,6 +28,7 @@ function MultiProfileManager:save_current()
 	profile.armor_skin = blm:equipped_armor_skin()
 	profile.player_style = blm:equipped_player_style()
 	profile.suit_variations = blm:get_suit_variations()
+	profile.glove_id = blm:equipped_glove_id()
 	profile.skillset = skt.selected_skill_switch
 	profile.perk_deck = Application:digest_value(skt.specializations.current_specialization, false)
 	profile.mask = blm:equipped_mask_slot()
@@ -68,6 +69,7 @@ function MultiProfileManager:load_current()
 	blm:set_equipped_armor_skin(profile.armor_skin)
 	blm:set_equipped_player_style(profile.player_style or blm:get_default_player_style())
 	blm:set_suit_variations(profile.suit_variations or {})
+	blm:set_equipped_glove_id(profile.glove_id or blm:get_default_glove_id())
 	blm:equip_mask(profile.mask)
 
 	for i = 1, CriminalsManager.MAX_NR_TEAM_AI do

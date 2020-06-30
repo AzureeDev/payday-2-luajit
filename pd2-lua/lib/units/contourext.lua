@@ -195,7 +195,7 @@ function ContourExt:apply_to_linked(func_name, ...)
 	end
 end
 
-function ContourExt:add(type, sync, multiplier, override_color)
+function ContourExt:add(type, sync, multiplier, override_color, add_as_child)
 	if Global.debug_contour_enabled then
 		return
 	end
@@ -212,6 +212,7 @@ function ContourExt:add(type, sync, multiplier, override_color)
 	end
 
 	self._contour_list = self._contour_list or {}
+	self._is_child_contour = add_as_child and true or false
 
 	if sync then
 		local u_id = self._unit:id()
@@ -611,6 +612,12 @@ function ContourExt:material_applied(material_was_swapped)
 end
 
 function ContourExt:_chk_update_state()
+	if self._is_child_contour then
+		self._unit:set_extension_update_enabled(idstr_contour, false)
+
+		return
+	end
+
 	local needs_update = nil
 
 	if self._contour_list and next(self._contour_list) then

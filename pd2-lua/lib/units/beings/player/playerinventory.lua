@@ -354,25 +354,8 @@ function PlayerInventory:_send_equipped_weapon()
 	end
 
 	local blueprint_string = self:equipped_unit():base()._blueprint and self:equipped_unit():base().blueprint_to_string and self:equipped_unit():base():blueprint_to_string() or ""
-	local cosmetics_string = ""
-	local cosmetics_id = self:equipped_unit():base().get_cosmetics_id and self:equipped_unit():base():get_cosmetics_id() or nil
-
-	if cosmetics_id then
-		local cosmetics_quality = self:equipped_unit():base().get_cosmetics_quality and self:equipped_unit():base():get_cosmetics_quality() or nil
-		local cosmetics_bonus = self:equipped_unit():base().get_cosmetics_bonus and self:equipped_unit():base():get_cosmetics_bonus() or nil
-		local entry = tostring(cosmetics_id)
-		local quality = tostring(tweak_data.economy:get_index_from_entry("qualities", cosmetics_quality) or 1)
-		local bonus = cosmetics_bonus and "1" or "0"
-		local cosmetics_color_index = self:equipped_unit():base().get_cosmetics_color_index and self:equipped_unit():base():get_cosmetics_color_index() or nil
-
-		if cosmetics_color_index then
-			bonus = tostring(cosmetics_color_index + 1)
-		end
-
-		cosmetics_string = entry .. "-" .. quality .. "-" .. bonus
-	else
-		cosmetics_string = "nil-1-0"
-	end
+	local cosmetics_data = self:equipped_unit():base().get_cosmetics and self:equipped_unit():base():get_cosmetics()
+	local cosmetics_string = managers.blackmarket:outfit_string_from_cosmetics(cosmetics_data)
 
 	self._unit:network():send("set_equipped_weapon", index, blueprint_string, cosmetics_string)
 end
@@ -569,27 +552,8 @@ function PlayerInventory:save(data)
 			data.gadget_color = gadget:color()
 		end
 
-		local cosmetics_string = ""
-		local cosmetics_id = self:equipped_unit():base().get_cosmetics_id and self:equipped_unit():base():get_cosmetics_id() or nil
-
-		if cosmetics_id then
-			local cosmetics_quality = self:equipped_unit():base().get_cosmetics_quality and self:equipped_unit():base():get_cosmetics_quality() or nil
-			local cosmetics_bonus = self:equipped_unit():base().get_cosmetics_bonus and self:equipped_unit():base():get_cosmetics_bonus() or nil
-			local entry = tostring(cosmetics_id)
-			local quality = tostring(tweak_data.economy:get_index_from_entry("qualities", cosmetics_quality) or 1)
-			local bonus = cosmetics_bonus and "1" or "0"
-			local cosmetics_color_index = self:equipped_unit():base().get_cosmetics_color_index and self:equipped_unit():base():get_cosmetics_color_index() or nil
-
-			if cosmetics_color_index then
-				bonus = tostring(cosmetics_color_index + 1)
-			end
-
-			cosmetics_string = entry .. "-" .. quality .. "-" .. bonus
-		else
-			cosmetics_string = "nil-1-0"
-		end
-
-		data.cosmetics_string = cosmetics_string
+		local cosmetics_data = self:equipped_unit():base().get_cosmetics and self:equipped_unit():base():get_cosmetics()
+		data.cosmetics_string = managers.blackmarket:outfit_string_from_cosmetics(cosmetics_data)
 	end
 
 	local function to_time_left(t)
@@ -628,18 +592,7 @@ function PlayerInventory:cosmetics_string_from_peer(peer, weapon_name)
 		local outfit = peer:blackmarket_outfit()
 		local cosmetics = outfit.primary.factory_id .. "_npc" == weapon_name and outfit.primary.cosmetics or outfit.secondary.factory_id .. "_npc" == weapon_name and outfit.secondary.cosmetics
 
-		if cosmetics then
-			local quality = tostring(tweak_data.economy:get_index_from_entry("qualities", cosmetics.quality) or 1)
-			local bonus = cosmetics.bonus and "1" or "0"
-
-			if cosmetics.color_index then
-				bonus = tostring(cosmetics.color_index + 1)
-			end
-
-			return cosmetics.id .. "-" .. quality .. "-" .. bonus
-		else
-			return "nil-1-0"
-		end
+		return managers.blackmarket:outfit_string_from_cosmetics(cosmetics)
 	end
 end
 

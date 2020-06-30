@@ -1154,9 +1154,16 @@ function GlobalSelectUnit:init(...)
 
 	horizontal_ctrlr_sizer:add(list_sizer, 3, 0, "EXPAND")
 
-	local layers_sizer = EWS:StaticBoxSizer(self._panel, "VERTICAL", "Type filter")
+	local layers_scrollable_window = EWS:ScrolledWindow(self._panel, "", "VSCROLL")
 
-	horizontal_ctrlr_sizer:add(layers_sizer, 1, 0, "EXPAND")
+	layers_scrollable_window:set_scroll_rate(Vector3(0, 5, 0))
+	layers_scrollable_window:set_virtual_size_hints(Vector3(0, 0, 0), Vector3(1, -1, -1))
+	layers_scrollable_window:set_virtual_size(Vector3(200, 2000, 0))
+	horizontal_ctrlr_sizer:add(layers_scrollable_window, 1, 0, "EXPAND")
+
+	local layers_sizer = EWS:StaticBoxSizer(layers_scrollable_window, "VERTICAL", "Type filter")
+
+	layers_scrollable_window:set_sizer(layers_sizer)
 
 	self._all_names = self:_all_unit_names()
 	self._names_as_ipairs = table.map_keys(self._all_names)
@@ -1200,14 +1207,16 @@ function GlobalSelectUnit:init(...)
 
 	for name, layer in pairs(layers) do
 		for _, type in ipairs(layer:unit_types()) do
-			table.insert(names_layers, type)
+			if not table.contains(names_layers, type) then
+				table.insert(names_layers, type)
+			end
 		end
 	end
 
 	table.sort(names_layers)
 
 	for _, name in ipairs(names_layers) do
-		local cb = EWS:CheckBox(self._panel, name, "")
+		local cb = EWS:CheckBox(layers_scrollable_window, name, "")
 
 		cb:set_value(true)
 
@@ -1222,19 +1231,19 @@ function GlobalSelectUnit:init(...)
 	end
 
 	local layer_buttons_sizer = EWS:BoxSizer("HORIZONTAL")
-	local all_btn = EWS:Button(self._panel, "All", "", "BU_EXACTFIT,NO_BORDER")
+	local all_btn = EWS:Button(layers_scrollable_window, "All", "", "BU_EXACTFIT,NO_BORDER")
 
 	layer_buttons_sizer:add(all_btn, 0, 2, "TOP,BOTTOM")
 	all_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "on_all_layers"), "")
 	all_btn:connect("EVT_KEY_DOWN", callback(self, self, "key_cancel"), "")
 
-	local none_btn = EWS:Button(self._panel, "None", "", "BU_EXACTFIT,NO_BORDER")
+	local none_btn = EWS:Button(layers_scrollable_window, "None", "", "BU_EXACTFIT,NO_BORDER")
 
 	layer_buttons_sizer:add(none_btn, 0, 2, "TOP,BOTTOM")
 	none_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "on_none_layers"), "")
 	none_btn:connect("EVT_KEY_DOWN", callback(self, self, "key_cancel"), "")
 
-	local invert_btn = EWS:Button(self._panel, "Invert", "", "BU_EXACTFIT,NO_BORDER")
+	local invert_btn = EWS:Button(layers_scrollable_window, "Invert", "", "BU_EXACTFIT,NO_BORDER")
 
 	layer_buttons_sizer:add(invert_btn, 0, 2, "TOP,BOTTOM")
 	invert_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "on_invert_layers"), "")

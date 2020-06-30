@@ -4809,7 +4809,8 @@ function UpgradesTweakData:init(tweak_data)
 				"x_c96",
 				"cs",
 				"brick",
-				"ostry"
+				"ostry",
+				"r700"
 			}
 		},
 		[24] = {
@@ -4893,7 +4894,9 @@ function UpgradesTweakData:init(tweak_data)
 			name_id = "lvl_30",
 			upgrades = {
 				"rep_upgrade3",
-				"shuno"
+				"shuno",
+				"holt",
+				"x_holt"
 			}
 		},
 		[31] = {
@@ -4923,7 +4926,8 @@ function UpgradesTweakData:init(tweak_data)
 				"wa2000",
 				"beardy",
 				"catch",
-				"elastic"
+				"elastic",
+				"m60"
 			}
 		},
 		[34] = {
@@ -5491,6 +5495,10 @@ function UpgradesTweakData:init(tweak_data)
 	self:_x_czech_weapon_definitions()
 	self:_stech_weapon_definitions()
 	self:_x_stech_weapon_definitions()
+	self:_holt_weapon_definitions()
+	self:_x_holt_weapon_definitions()
+	self:_m60_weapon_definitions()
+	self:_r700_weapon_definitions()
 	self:_melee_weapon_definitions()
 	self:_grenades_definitions()
 	self:_carry_definitions()
@@ -15506,6 +15514,42 @@ function UpgradesTweakData:_x_stech_weapon_definitions()
 		dlc = "afp",
 		factory_id = "wpn_fps_pis_x_stech",
 		weapon_id = "x_stech",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_holt_weapon_definitions()
+	self.definitions.holt = {
+		dlc = "atw",
+		factory_id = "wpn_fps_pis_holt",
+		weapon_id = "holt",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_holt_weapon_definitions()
+	self.definitions.x_holt = {
+		dlc = "atw",
+		factory_id = "wpn_fps_pis_x_holt",
+		weapon_id = "x_holt",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_m60_weapon_definitions()
+	self.definitions.m60 = {
+		dlc = "atw",
+		factory_id = "wpn_fps_lmg_m60",
+		weapon_id = "m60",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_r700_weapon_definitions()
+	self.definitions.r700 = {
+		dlc = "atw",
+		factory_id = "wpn_fps_snp_r700",
+		weapon_id = "r700",
 		category = "weapon"
 	}
 end

@@ -4869,6 +4869,47 @@ function AchievementsTweakData:init(tweak_data)
 			job = "bex",
 			difficulty = sm_wish_and_above
 		},
+		pex_1 = {
+			award = "pex_1",
+			job = "pex",
+			difficulty = normal_and_above
+		},
+		pex_2 = {
+			award = "pex_2",
+			job = "pex",
+			difficulty = hard_and_above
+		},
+		pex_3 = {
+			award = "pex_3",
+			job = "pex",
+			difficulty = veryhard_and_above
+		},
+		pex_4 = {
+			award = "pex_4",
+			job = "pex",
+			difficulty = overkill_and_above
+		},
+		pex_5 = {
+			award = "pex_5",
+			job = "pex",
+			difficulty = easywish_and_above
+		},
+		pex_6 = {
+			award = "pex_6",
+			job = "pex",
+			difficulty = deathwish_and_above
+		},
+		pex_7 = {
+			award = "pex_7",
+			job = "pex",
+			difficulty = sm_wish_and_above
+		},
+		pex_8 = {
+			award = "pex_8",
+			one_down = true,
+			job = "pex",
+			difficulty = sm_wish_and_above
+		},
 		uno_1 = {
 			award = "uno_1",
 			bag_loot_value = 400000,
@@ -7946,6 +7987,7 @@ function AchievementsTweakData:_init_visual(tweak_data)
 
 	table.insert(self.tags.unlock, "outfit")
 	table.insert(self.tags.unlock, "weapon_color")
+	table.insert(self.tags.unlock, "gloves")
 
 	local contacts = {}
 
@@ -8018,6 +8060,7 @@ function AchievementsTweakData:_init_visual(tweak_data)
 					"weapon_skins",
 					"masks",
 					"player_styles",
+					"gloves",
 					"melee_weapons",
 					"materials",
 					"textures"

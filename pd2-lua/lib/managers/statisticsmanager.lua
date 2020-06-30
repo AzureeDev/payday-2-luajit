@@ -487,7 +487,7 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 		return
 	end
 
-	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list = tweak_data.statistics:statistics_table()
+	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list, glove_list = tweak_data.statistics:statistics_table()
 	local stats = self:check_version()
 	self._global.play_time.minutes = math.ceil(self._global.play_time.minutes + session_time_minutes)
 	local current_time = math.floor(self._global.play_time.minutes / 60)
@@ -756,6 +756,15 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 
 		if table.contains(suit_list, suit_name) then
 			stats["suit_used_" .. suit_name] = {
+				value = 1,
+				type = "int"
+			}
+		end
+
+		local glove_id = managers.blackmarket:equipped_glove_id()
+
+		if table.contains(glove_list, glove_id) then
+			stats["gloves_used_" .. glove_id] = {
 				value = 1,
 				type = "int"
 			}
@@ -1041,7 +1050,7 @@ function StatisticsManager:gather_equipment_data()
 	end
 
 	local stats = {}
-	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list = tweak_data.statistics:statistics_table()
+	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list, glove_list = tweak_data.statistics:statistics_table()
 	local mask_name = managers.blackmarket:equipped_mask().mask_id
 	local mask_index = self:_table_contains(mask_list, mask_name)
 
@@ -1138,6 +1147,17 @@ function StatisticsManager:gather_equipment_data()
 			method = "set",
 			type = "int",
 			value = suit_index
+		}
+	end
+
+	local glove_id = managers.blackmarket:equipped_glove_id()
+	local glove_index = self:_table_contains(glove_list, glove_id)
+
+	if glove_index then
+		stats.equipped_glove_id = {
+			method = "set",
+			type = "int",
+			value = glove_index
 		}
 	end
 

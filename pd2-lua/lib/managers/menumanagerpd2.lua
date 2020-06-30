@@ -3205,7 +3205,7 @@ function MenuCallbackHandler:can_apply_weapon_color(node)
 
 	if crafted then
 		local crafted_cosmetics = crafted.cosmetics
-		weapon_color_data.any_changes = crafted_cosmetics.id ~= cosmetic_data.id or crafted_cosmetics.quality ~= cosmetic_data.quality or crafted_cosmetics.color_index ~= cosmetic_data.color_index
+		weapon_color_data.any_changes = crafted_cosmetics.id ~= cosmetic_data.id or crafted_cosmetics.quality ~= cosmetic_data.quality or crafted_cosmetics.color_index ~= cosmetic_data.color_index or (crafted_cosmetics.pattern_scale or tweak_data.blackmarket.weapon_color_pattern_scale_default) ~= cosmetic_data.pattern_scale
 	end
 
 	local cosmetic_color_item = node:item("cosmetic_color")
@@ -3228,7 +3228,7 @@ function MenuCallbackHandler:apply_weapon_color(item)
 	local cosmetic_data = weapon_color_data.cosmetic_data
 	weapon_color_data.any_changes = false
 
-	managers.blackmarket:on_equip_weapon_color(weapon_color_data.category, weapon_color_data.slot, cosmetic_data.id, cosmetic_data.color_index, cosmetic_data.quality, false)
+	managers.blackmarket:on_equip_weapon_color(weapon_color_data.category, weapon_color_data.slot, cosmetic_data, false)
 	managers.menu:back()
 end
 
@@ -3255,6 +3255,24 @@ function MenuCallbackHandler:should_show_weapon_color_buy(item)
 	end
 
 	return false
+end
+
+function MenuCallbackHandler:should_show_pattern_scale(item)
+	local weapon_color_data = get_weapon_color_data()
+
+	if not weapon_color_data then
+		return
+	end
+
+	local cosmetic_data = weapon_color_data.cosmetic_data
+	local color_tweak = tweak_data.blackmarket.weapon_skins[cosmetic_data.id]
+	local color_skin_data = color_tweak.color_skin_data
+
+	return not not color_skin_data.pattern_default
+end
+
+function MenuCallbackHandler:should_show_pattern_divider(item)
+	return not MenuCallbackHandler:should_show_pattern_scale(item)
 end
 
 function MenuCallbackHandler:buy_weapon_color_dlc(item)

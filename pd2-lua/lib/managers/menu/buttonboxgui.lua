@@ -42,6 +42,11 @@ function ButtonBoxGui:_setup_buttons_panel(info_area, button_list, focus_button,
 					name = button.id_name
 				})
 				button_text_config.text = utf8.to_upper(button.text or "")
+
+				if button_text_config.text == "" then
+					button_text_config.text = " "
+				end
+
 				local text = button_panel:text(button_text_config)
 				local _, _, w, h = text:text_rect()
 				max_w = math.max(max_w, w)

@@ -269,6 +269,12 @@ function GenericDLCManager:give_dlc_package()
 						add_to_inventory = false
 					end
 
+					if add_to_inventory and loot_drop.type_items == "gloves" then
+						managers.blackmarket:on_aquired_glove_id(loot_drop.item_entry)
+
+						add_to_inventory = false
+					end
+
 					if add_to_inventory then
 						for i = 1, loot_drop.amount or 1 do
 							local entry = tweak_data.blackmarket[loot_drop.type_items][loot_drop.item_entry]
@@ -334,6 +340,14 @@ function GenericDLCManager:give_missing_package()
 				if check_loot_drop and loot_drop.type_items == "suit_variations" then
 					if not managers.blackmarket:suit_variation_unlocked(loot_drop.item_entry[1], loot_drop.item_entry[2]) then
 						managers.blackmarket:on_aquired_suit_variation(loot_drop.item_entry[1], loot_drop.item_entry[2])
+					end
+
+					check_loot_drop = false
+				end
+
+				if check_loot_drop and loot_drop.type_items == "gloves" then
+					if not managers.blackmarket:glove_id_unlocked(loot_drop.item_entry) then
+						managers.blackmarket:on_aquired_glove_id(loot_drop.item_entry)
 					end
 
 					check_loot_drop = false
@@ -2101,6 +2115,9 @@ end
 
 function WINDLCManager:_init_promoted_dlc_list()
 	self._promoted_dlc_list = {
+		"pex",
+		"wcc",
+		"atw",
 		"bex",
 		"afp",
 		"wcs",

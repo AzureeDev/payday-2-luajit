@@ -942,6 +942,20 @@ function TeamAIDamage:arrested()
 	return self._arrested_timer
 end
 
+function TeamAIDamage:revive_instant()
+	if self._bleed_out or self._fatal then
+		self:_regenerated()
+		self._unit:interaction():set_active(false, false)
+		PlayerMovement.set_attention_settings(self._unit:brain(), {
+			"team_enemy_cbt"
+		}, "team_AI")
+		self._unit:network():send("from_server_unit_recovered")
+	end
+
+	managers.hud:set_mugshot_normal(self._unit:unit_data().mugshot_id)
+	self:pickup_dropped_bag()
+end
+
 function TeamAIDamage:revive(reviving_unit, silent)
 	if self._dead then
 		return
@@ -1004,6 +1018,10 @@ function TeamAIDamage:revive(reviving_unit, silent)
 		self._unit:sound():say("s05x_sin", true)
 	end
 
+	self:pickup_dropped_bag()
+end
+
+function TeamAIDamage:pickup_dropped_bag()
 	local dropped_bag = self._unit:movement():was_carrying_bag()
 
 	if dropped_bag and alive(dropped_bag.unit) then

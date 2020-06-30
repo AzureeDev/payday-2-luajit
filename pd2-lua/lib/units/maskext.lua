@@ -10,6 +10,9 @@ function MaskExt:init(unit)
 end
 
 function MaskExt:apply_blueprint(blueprint, async_clbk)
+	print("[MaskExt:apply_blueprint]", self._unit, inspect(blueprint), async_clbk)
+	Application:stack_dump()
+
 	if not blueprint then
 		return
 	end

@@ -5077,6 +5077,26 @@ function GuiTweakData:init(tweak_data)
 	}
 
 	table.insert(self.new_heists, {
+		name_id = "menu_nh_pex_bundle",
+		texture_path = "guis/textures/pd2/new_heists/pex_bundle",
+		url = "https://ovk.af/pexbundleslider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_pex",
+		texture_path = "guis/textures/pd2/new_heists/pex",
+		url = "https://ovk.af/pexheistslider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_atw",
+		texture_path = "guis/textures/pd2/new_heists/atw",
+		url = "https://ovk.af/pexwpslider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_wcc",
+		texture_path = "guis/textures/pd2/new_heists/wcc",
+		url = "https://ovk.af/pexwcp2slider"
+	})
+	table.insert(self.new_heists, {
 		name_id = "menu_nh_u1993",
 		texture_path = "guis/textures/pd2/new_heists/u1993",
 		url = "http://ovk.af/april2020"

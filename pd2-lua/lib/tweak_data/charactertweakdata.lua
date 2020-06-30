@@ -76,6 +76,7 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_boris(presets)
 	self:_init_escort(presets)
 	self:_init_escort_undercover(presets)
+	self:_init_escort_criminal(presets)
 	self:_init_russian(presets)
 	self:_init_german(presets)
 	self:_init_spanish(presets)
@@ -3056,10 +3057,10 @@ function CharacterTweakData:_init_civilian(presets)
 	self.robbers_safehouse.ignores_aggression = true
 	self.robbers_safehouse.ignores_contours = true
 	self.robbers_safehouse.use_ik = true
+end
 
-	function CharacterTweakData:_init_civilian_mariachi(presets)
-		self.civilian_mariachi = deep_clone(self.civilian)
-	end
+function CharacterTweakData:_init_civilian_mariachi(presets)
+	self.civilian_mariachi = deep_clone(self.civilian)
 end
 
 function CharacterTweakData:_init_melee_box(presets)
@@ -3211,6 +3212,21 @@ function CharacterTweakData:_init_escort_undercover(presets)
 	self.escort_chinese_prisoner.no_run_stop = false
 	self.escort_cfo = deep_clone(self.escort_undercover)
 	self.escort_cfo.move_speed = presets.move_speed.normal
+end
+
+function CharacterTweakData:_init_escort_criminal(presets)
+	self.escort_criminal = deep_clone(self.civilian)
+	self.escort_criminal.move_speed = presets.move_speed.civ_fast
+	self.escort_criminal.flee_type = "hide"
+	self.escort_criminal.access = "teamAI4"
+	self.escort_criminal.intimidateable = nil
+	self.escort_criminal.is_escort = true
+	self.escort_criminal.challenges = {
+		type = "civilians"
+	}
+	self.escort_criminal.calls_in = nil
+	self.escort_criminal.ignores_aggression = true
+	self.escort_criminal.ignores_attention_focus = true
 end
 
 function CharacterTweakData:_init_old_hoxton_mission(presets)
@@ -16851,6 +16867,23 @@ function CharacterTweakData:character_map()
 				"ene_mex_thug_outdoor_02",
 				"ene_mex_thug_outdoor_03",
 				"civ_male_italian"
+			}
+		},
+		pex = {
+			path = "units/pd2_dlc_pex/characters/",
+			list = {
+				"civ_male_prisoner_pex",
+				"civ_male_prisoner_pex_bloody",
+				"civ_male_janitor_pex_01",
+				"civ_male_janitor_pex_02",
+				"ene_male_office_cop_01",
+				"ene_male_office_cop_02",
+				"ene_male_office_cop_03",
+				"ene_male_office_cop_04",
+				"ene_female_office_cop_01",
+				"npc_male_vladbroinlaw_pex",
+				"npc_male_vladbroinlaw_pex_bloody",
+				"npc_male_vladbroinlaw_cop_pex"
 			}
 		},
 		bex = {

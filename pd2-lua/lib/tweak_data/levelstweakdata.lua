@@ -4,6 +4,7 @@ LevelsTweakData.LevelType = {
 	Russia = "russia",
 	Zombie = "zombie",
 	Murkywater = "murkywater",
+	Federales = "federales",
 	Federales = "federales"
 }
 
@@ -13,12 +14,14 @@ function LevelsTweakData:init()
 	local zombie = LevelsTweakData.LevelType.Zombie
 	local murkywater = LevelsTweakData.LevelType.Murkywater
 	local federales = LevelsTweakData.LevelType.Federales
+	local federales = LevelsTweakData.LevelType.Federales
 	self.ai_groups = {
 		default = america,
 		america = america,
 		russia = russia,
 		zombie = zombie,
 		murkywater = murkywater,
+		federales = federales,
 		federales = federales
 	}
 	self.framing_frame_1 = {
@@ -2069,6 +2072,83 @@ function LevelsTweakData:init()
 		ghost_bonus = 0.15,
 		load_screen = "guis/dlcs/bex/textures/loading/job_bex_01_df"
 	}
+	self.pex = {
+		name_id = "heist_pex_hl",
+		briefing_id = "heist_pex_briefing",
+		briefing_dialog = "Play_loc_pex_brf",
+		world_name = "narratives/locke/pex",
+		intro_event = "Play_loc_pex_intro",
+		outro_event = {
+			loud = "Play_loc_pex_end_loud",
+			stealth = "Play_loc_pex_end_stealth"
+		},
+		music = "heist",
+		package = "packages/job_pex",
+		cube = "cube_apply_heist_bank",
+		block_AIs = {
+			old_hoxton = true
+		},
+		ai_group_type = federales,
+		narrator = "locke",
+		ghost_bonus = 0.15,
+		teams = {
+			criminal1 = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					converted_enemy = true,
+					escort = true
+				}
+			},
+			law1 = {
+				foes = {
+					converted_enemy = true,
+					criminal1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			},
+			mobster1 = {
+				foes = {
+					converted_enemy = true,
+					law1 = true,
+					criminal1 = true
+				},
+				friends = {}
+			},
+			converted_enemy = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					criminal1 = true,
+					escort = true
+				}
+			},
+			neutral1 = {
+				foes = {},
+				friends = {}
+			},
+			hacked_turret = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			},
+			escort = {
+				foes = {},
+				friends = {
+					converted_enemy = true,
+					criminal1 = true
+				}
+			}
+		},
+		load_screen = "guis/dlcs/pex/textures/loading/job_pex_01_df"
+	}
 	self._level_index = {
 		"welcome_to_the_jungle_1",
 		"welcome_to_the_jungle_1_night",
@@ -2187,7 +2267,8 @@ function LevelsTweakData:init()
 		"bph",
 		"mex",
 		"mex_cooking",
-		"bex"
+		"bex",
+		"pex"
 	}
 
 	if SystemInfo:distribution() == Idstring("STEAM") then

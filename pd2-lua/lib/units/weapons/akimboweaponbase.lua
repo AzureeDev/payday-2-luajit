@@ -30,15 +30,8 @@ function AkimboWeaponBase:_create_second_gun(unit_name)
 
 	new_unit:base():set_factory_data(self._factory_id)
 
-	if self._cosmetics_id then
-		local cosmetics = {
-			id = self._cosmetics_id,
-			quality = self._cosmetics_quality,
-			bonus = self._cosmetics_bonus,
-			color_index = self._cosmetics_color_index
-		}
-
-		new_unit:base():set_cosmetics_data(cosmetics)
+	if self._cosmetics then
+		new_unit:base():set_cosmetics_data(self._cosmetics)
 	end
 
 	if self._blueprint then
@@ -601,15 +594,8 @@ end
 function EnemyAkimboWeaponBase:create_second_gun(unit_name)
 	local new_unit = World:spawn_unit(unit_name, Vector3(), Rotation())
 
-	if self._cosmetics_id then
-		local cosmetics = {
-			id = self._cosmetics_id,
-			quality = self._cosmetics_quality,
-			bonus = self._cosmetics_bonus,
-			color_index = self._cosmetics_color_index
-		}
-
-		new_unit:base():set_cosmetics_data(cosmetics)
+	if self._cosmetics then
+		new_unit:base():set_cosmetics_data(self._cosmetics)
 	end
 
 	self._second_gun = new_unit

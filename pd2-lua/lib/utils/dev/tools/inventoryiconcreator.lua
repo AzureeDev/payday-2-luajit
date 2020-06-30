@@ -12,30 +12,37 @@ end
 function InventoryIconCreator:_set_job_settings()
 	self._job_settings = {
 		weapon = {
-			pos = Vector3(4500, 0, 0),
+			distance = 4500,
 			rot = Rotation(90, 0, 0),
 			res = Vector3(3000, 1000, 0)
 		},
 		mask = {
-			pos = Vector3(4500, 0, 0),
+			distance = 4500,
 			rot = Rotation(90, 0, 0),
 			res = Vector3(1000, 1000, 0)
 		},
 		melee = {
-			pos = Vector3(5500, 0, 0),
+			distance = 5500,
 			rot = Rotation(90, 0, 0),
 			res = Vector3(2500, 1000, 0)
 		},
 		throwable = {
-			pos = Vector3(4500, 0, 0),
+			distance = 4500,
 			rot = Rotation(90, 0, 0),
 			res = Vector3(2500, 1000, 0)
 		},
 		character = {
+			distance = 4500,
 			fov = 5,
-			pos = Vector3(4500, 0, 0),
 			rot = Rotation(90, 0, 0),
 			res = Vector3(1500, 3000, 0)
+		},
+		gloves = {
+			distance = 4500,
+			fov = 0.6,
+			rot = Rotation(90, 0, 0),
+			res = Vector3(1000, 1000, 0),
+			offset = Vector3(0, 0, 0)
 		}
 	}
 end
@@ -173,7 +180,48 @@ function InventoryIconCreator:_create_player_style(player_style, material_variat
 	self._current_texture_name = player_style
 
 	self._character_unit:base():set_player_style(player_style, material_variation)
+	self._character_unit:base():add_clbk_listener("done", callback(self, self, "_player_style_done"))
 	self._character_unit:set_visible(false)
+end
+
+function InventoryIconCreator:_create_gloves(glove_id, character_name, anim_pose)
+	self._wait_for_assemble = true
+
+	self:_create_character(character_name, anim_pose)
+
+	self._current_texture_name = glove_id
+
+	self._character_unit:base():set_glove_id(glove_id)
+	self._character_unit:base():add_clbk_listener("done", callback(self, self, "_gloves_done"))
+	self._character_unit:set_visible(false)
+end
+
+function InventoryIconCreator:_player_style_done()
+	if alive(self._character_unit) and self._character_unit:spawn_manager() then
+		self._character_unit:spawn_manager():remove_unit("char_gloves")
+		self._character_unit:spawn_manager():remove_unit("char_glove_adapter")
+	end
+end
+
+function InventoryIconCreator:_gloves_done()
+	call_on_next_update(function ()
+		if alive(self._character_unit) and self._character_unit:spawn_manager() then
+			self._character_unit:spawn_manager():remove_unit("char_mesh")
+			self._character_unit:spawn_manager():remove_unit("char_glove_adapter")
+
+			self._center_points = {
+				self._character_unit:position()
+			}
+			local left_hand = self._character_unit:get_object(Idstring("LeftHand"))
+			local right_hand = self._character_unit:get_object(Idstring("RightHand"))
+
+			if alive(left_hand) and right_hand then
+				-- Nothing
+			end
+		end
+
+		self:start_create()
+	end)
 end
 
 function InventoryIconCreator:_assemble_completed(parts, blueprint)
@@ -667,7 +715,61 @@ function InventoryIconCreator:_get_all_player_style()
 end
 
 function InventoryIconCreator:_get_all_suit_variations(player_style)
-	return managers.blackmarket:get_all_suit_variations(player_style)
+	local t = clone(managers.blackmarket:get_all_suit_variations(player_style))
+
+	return t
+end
+
+function InventoryIconCreator:start_all_gloves()
+	local confirm = EWS:message_box(Global.frame_panel, "Really, all of them?", "Icon creator", "YES_NO,ICON_QUESTION", Vector3(-1, -1, 0))
+
+	if confirm == "NO" then
+		return
+	end
+
+	local jobs = {}
+	local character_id = self._ctrlrs.gloves.character_id:get_value()
+	local anim_pose = self._ctrlrs.gloves.anim_pose:get_value()
+
+	for _, glove_id in ipairs(self:_get_all_gloves()) do
+		table.insert(jobs, {
+			glove_id = glove_id,
+			character_id = character_id,
+			anim_pose = anim_pose
+		})
+	end
+
+	self:start_jobs(jobs)
+end
+
+function InventoryIconCreator:start_one_gloves()
+	local glove_id = self._ctrlrs.gloves.glove_id:get_value()
+	local character_id = self._ctrlrs.gloves.character_id:get_value()
+	local anim_pose = self._ctrlrs.gloves.anim_pose:get_value()
+
+	self:start_jobs({
+		{
+			glove_id = glove_id,
+			character_id = character_id,
+			anim_pose = anim_pose
+		}
+	})
+end
+
+function InventoryIconCreator:preview_one_gloves()
+	local glove_id = self._ctrlrs.gloves.glove_id:get_value()
+	local character_id = self._ctrlrs.gloves.character_id:get_value()
+	local anim_pose = self._ctrlrs.gloves.anim_pose:get_value()
+
+	self:_create_gloves(glove_id, character_id, anim_pose)
+end
+
+function InventoryIconCreator:_get_all_gloves()
+	local t = clone(tweak_data.blackmarket.glove_list)
+
+	table.delete(t, "default")
+
+	return t
 end
 
 function InventoryIconCreator:_start_job()
@@ -684,11 +786,15 @@ function InventoryIconCreator:_start_job()
 		self:_create_throwable(job.throwable_id)
 	elseif job.player_style then
 		self:_create_player_style(job.player_style, job.material_variation, job.character_id, job.anim_pose)
+	elseif job.glove_id then
+		self:_create_gloves(job.glove_id, job.character_id, job.anim_pose)
 	elseif job.character_id then
 		self:_create_character(job.character_id, job.anim_pose)
 	end
 
-	self:start_create()
+	if not self._wait_for_assemble then
+		self:start_create()
+	end
 end
 
 function InventoryIconCreator:check_next_job()
@@ -715,7 +821,42 @@ function InventoryIconCreator:_update()
 	self:check_next_job()
 end
 
+function InventoryIconCreator:update_debug()
+	return
+
+	if self._has_job then
+		return
+	end
+
+	if not self._brush then
+		self._brush = Draw:brush(Color.green:with_alpha(0.3))
+	end
+
+	self._text_brush = nil
+
+	if not self._text_brush then
+		self._text_brush = Draw:brush(Color.red)
+
+		self._text_brush:set_font(Idstring("fonts/font_medium"), 1)
+	end
+
+	if self._camera_position then
+		self._brush:sphere(self._camera_position, 50, 2)
+		self._brush:cone(self._camera_position, self._camera_position + self._camera_rotation:y() * 100, self._camera_fov, 4)
+	end
+
+	if self._object_position then
+		self._brush:sphere(self._object_position, 3, 2)
+	end
+end
+
 function InventoryIconCreator:start_create()
+	self._wait_for_assemble = nil
+
+	if not self._has_job then
+		return
+	end
+
 	self._old_data = {
 		camera_position = managers.editor:camera_position(),
 		camera_rotation = managers.editor:camera_rotation(),
@@ -782,6 +923,8 @@ function InventoryIconCreator:_destroy_backdrop()
 end
 
 function InventoryIconCreator:_setup_camera()
+	self:_set_job_settings()
+
 	local job_setting = nil
 
 	if self._jobs[1].factory_id then
@@ -792,16 +935,42 @@ function InventoryIconCreator:_setup_camera()
 		job_setting = self._job_settings.melee
 	elseif self._jobs[1].throwable_id then
 		job_setting = self._job_settings.throwable
+	elseif self._jobs[1].glove_id then
+		job_setting = self._job_settings.gloves
 	elseif self._jobs[1].character_id then
 		job_setting = self._job_settings.character
 	end
 
 	if not self._custom_ctrlrs.use_camera_setting:get_value() then
-		local oobb = (self._weapon_unit or self._mask_unit or self._melee_unit or self._throwable_unit or self._character_unit):oobb()
-		local center = oobb:center()
+		local camera_position = Vector3(0, 0, 0)
 
-		managers.editor:set_camera(Vector3(job_setting.pos.x, center.y, center.z), job_setting.rot)
-		managers.editor:set_camera_fov(job_setting.fov or 1)
+		if self._center_points then
+			for _, pos in ipairs(self._center_points) do
+				mvector3.add(camera_position, pos)
+			end
+
+			mvector3.divide(camera_position, #self._center_points)
+
+			self._center_points = nil
+		else
+			local oobb = (self._weapon_unit or self._mask_unit or self._melee_unit or self._throwable_unit or self._gloves_unit or self._character_unit):oobb()
+
+			if oobb then
+				camera_position = oobb:center()
+			end
+		end
+
+		self._object_position = mvector3.copy(camera_position)
+
+		mvector3.add(camera_position, job_setting.offset or Vector3(0, 0, 0))
+		mvector3.set_x(camera_position, job_setting.distance)
+
+		self._camera_position = camera_position
+		self._camera_rotation = job_setting.rot
+		self._camera_fov = job_setting.fov or 1
+
+		managers.editor:set_camera(self._camera_position, self._camera_rotation)
+		managers.editor:set_camera_fov(self._camera_fov)
 	end
 
 	local w = job_setting.res.x
@@ -854,6 +1023,7 @@ function InventoryIconCreator:destroy_items()
 	self:destroy_throwable()
 	self:destroy_character()
 	self:destroy_player_style()
+	self:destroy_gloves()
 end
 
 function InventoryIconCreator:destroy_weapon()
@@ -910,6 +1080,19 @@ function InventoryIconCreator:destroy_player_style()
 	self:destroy_character()
 end
 
+function InventoryIconCreator:destroy_gloves()
+	self:destroy_character()
+
+	if not alive(self._gloves_unit) then
+		return
+	end
+
+	self._gloves_unit:set_slot(0)
+
+	self._gloves_unit = nil
+	self._gloves_object = nil
+end
+
 function InventoryIconCreator:show_ews()
 	if not self._main_frame then
 		self:create_ews()
@@ -955,7 +1138,8 @@ function InventoryIconCreator:create_ews()
 		melee = {},
 		throwable = {},
 		character = {},
-		player_style = {}
+		player_style = {},
+		gloves = {}
 	}
 
 	notebook:add_page(self:_create_weapons_page(notebook), "Weapons", true)
@@ -964,6 +1148,7 @@ function InventoryIconCreator:create_ews()
 	notebook:add_page(self:_create_throwable_page(notebook), "Throwable", false)
 	notebook:add_page(self:_create_character_page(notebook), "Character", false)
 	notebook:add_page(self:_create_player_style_page(notebook), "Outfit", false)
+	notebook:add_page(self:_create_gloves_page(notebook), "Gloves", false)
 	self._main_frame:set_sizer(main_box)
 	self._main_frame:set_visible(true)
 end
@@ -1775,7 +1960,7 @@ function InventoryIconCreator:_create_player_style_page(notebook)
 	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "player_style", player_styles)
 	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "material_variation", self._get_all_suit_variations(player_styles[1]))
 	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "character_id", self:_get_all_characters())
-	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "anim_pose", self:_get_all_anim_poses())
+	self:_add_player_style_ctrlr(panel, comboboxes_sizer, "anim_pose", self:_get_all_anim_poses(), "generic_stance")
 
 	return panel
 end
@@ -1828,7 +2013,7 @@ function InventoryIconCreator:_update_player_style_combobox_text(params)
 		if material_variation_ctrlr then
 			material_variation_ctrlr:clear()
 
-			local suit_variations = self._get_all_suit_variations(value)
+			local suit_variations = self:_get_all_suit_variations(value)
 
 			for _, option in ipairs(suit_variations) do
 				material_variation_ctrlr:append(option)
@@ -1843,6 +2028,95 @@ function InventoryIconCreator:_update_player_style_combobox_text(params)
 		local player_style_ctrlr = self._ctrlrs.player_style.player_style
 		local player_style = player_style_ctrlr and player_style_ctrlr:get_value() or "none"
 		local name_id = tweak_data.blackmarket:get_suit_variation_value(player_style, value, character_id, "name_id")
+		text = name_id and managers.localization:text(name_id) or "N/A"
+	else
+		return self:_update_character_combobox_text(params)
+	end
+
+	params.text_ctrlr:set_value(text)
+
+	if not params.no_layout then
+		params.text_ctrlr:parent():layout()
+	end
+end
+
+function InventoryIconCreator:_create_gloves_page(notebook)
+	local panel = EWS:Panel(notebook, "", "TAB_TRAVERSAL")
+	local panel_sizer = EWS:BoxSizer("VERTICAL")
+
+	panel:set_sizer(panel_sizer)
+
+	local btn_sizer = EWS:StaticBoxSizer(panel, "HORIZONTAL", "")
+
+	panel_sizer:add(btn_sizer, 0, 0, "EXPAND")
+
+	local _btn = EWS:Button(panel, "All", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "start_all_gloves"), false)
+
+	local _btn = EWS:Button(panel, "Selected", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "start_one_gloves"), false)
+
+	local _btn = EWS:Button(panel, "Preview", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 1, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "preview_one_gloves"), false)
+
+	local comboboxes_sizer = EWS:StaticBoxSizer(panel, "VERTICAL", "")
+
+	panel_sizer:add(comboboxes_sizer, 0, 0, "EXPAND")
+	self:_add_gloves_ctrlr(panel, comboboxes_sizer, "glove_id", self:_get_all_gloves())
+	self:_add_gloves_ctrlr(panel, comboboxes_sizer, "character_id", self:_get_all_characters())
+	self:_add_gloves_ctrlr(panel, comboboxes_sizer, "anim_pose", self:_get_all_anim_poses(), "gloves")
+
+	return panel
+end
+
+function InventoryIconCreator:_add_gloves_ctrlr(panel, sizer, name, options, value)
+	local combobox_params = {
+		sizer_proportions = 1,
+		name_proportions = 1,
+		tooltip = "",
+		sorted = false,
+		ctrlr_proportions = 2,
+		name = string.pretty(name, true) .. ":",
+		panel = panel,
+		sizer = sizer,
+		options = options,
+		value = value or options[1]
+	}
+	local ctrlr = CoreEws.combobox(combobox_params)
+	self._ctrlrs.gloves[name] = ctrlr
+	local text_ctrlr = EWS:StaticText(panel, "", 0, "ALIGN_RIGHT")
+
+	sizer:add(text_ctrlr, 0, 0, "ALIGN_RIGHT")
+	self:_update_gloves_combobox_text({
+		no_layout = true,
+		name = name,
+		ctrlr = ctrlr,
+		text_ctrlr = text_ctrlr
+	})
+	ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_update_gloves_combobox_text"), {
+		name = name,
+		ctrlr = ctrlr,
+		text_ctrlr = text_ctrlr
+	})
+
+	return ctrlr
+end
+
+function InventoryIconCreator:_update_gloves_combobox_text(params)
+	local name = params.name
+	local value = params.ctrlr:get_value()
+	local text = nil
+
+	if name == "glove_id" then
+		local character_ctrlr = self._ctrlrs.gloves.character_id
+		local character_id = character_ctrlr and character_ctrlr:get_value() or "dallas"
+		local name_id = tweak_data.blackmarket:get_glove_value(value, character_id, "name_id", "none", "default")
 		text = name_id and managers.localization:text(name_id) or "N/A"
 	else
 		return self:_update_character_combobox_text(params)

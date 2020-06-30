@@ -354,8 +354,10 @@ function IngameWaitingForRespawnState:_upd_watch(t, dt)
 
 			mvec3_set(self._vec_target, target_pos)
 
-			local oobb = vehicle_unit:oobb()
-			local up = oobb:z() * 2.5
+			local spectate_object = vehicle_unit:vehicle_driving() and vehicle_unit:vehicle_driving().spectate_object and vehicle_unit:get_object(Idstring(vehicle_unit:vehicle_driving().spectate_object)) or vehicle_unit
+			local oobb = spectate_object:oobb()
+			local z_offset = vehicle_unit:vehicle_driving() and vehicle_unit:vehicle_driving().spectate_offset or 2.5
+			local up = oobb:z() * z_offset
 
 			mvec3_add(self._vec_target, up)
 		else

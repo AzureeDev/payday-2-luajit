@@ -45,6 +45,10 @@ function TweakData:_init_pd2()
 		font_size = 28,
 		small_font_size = 24
 	}
+	self.hud_color_blind_assist = {
+		health = Color("FF7F00"),
+		armor = Color("00AAFF")
+	}
 	self.hud_icons.bag_icon = {
 		texture = "guis/textures/pd2/hud_tabs",
 		texture_rect = {

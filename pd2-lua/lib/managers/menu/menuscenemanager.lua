@@ -1418,7 +1418,7 @@ function MenuSceneManager:_set_character_equipment()
 
 	local mask_id, mask_blueprint = nil
 	local armor_id = "level_1"
-	local armor_skin_id, player_style, suit_variation = nil
+	local armor_skin_id, player_style, suit_variation, glove_id = nil
 	local rank = 0
 	local secondary, primary, deployable = nil
 
@@ -1433,6 +1433,7 @@ function MenuSceneManager:_set_character_equipment()
 
 		player_style = loadout.player_style
 		suit_variation = loadout.suit_variation
+		glove_id = loadout.glove_id
 		local crafted_primary = managers.blackmarket:get_crafted_category_slot("primaries", loadout.primary_slot)
 
 		if crafted_primary then
@@ -1446,6 +1447,7 @@ function MenuSceneManager:_set_character_equipment()
 		armor_skin_id = managers.blackmarket:equipped_armor_skin()
 		player_style = managers.blackmarket:equipped_player_style()
 		suit_variation = managers.blackmarket:get_suit_variation()
+		glove_id = managers.blackmarket:equipped_glove_id()
 		rank = managers.experience:current_rank()
 		secondary = managers.blackmarket:equipped_secondary()
 		primary = managers.blackmarket:equipped_primary()
@@ -1459,6 +1461,7 @@ function MenuSceneManager:_set_character_equipment()
 	self:set_character_armor(armor_id, unit)
 	self:set_character_armor_skin(armor_skin_id, unit)
 	self:set_character_player_style(player_style, suit_variation, unit)
+	self:set_character_gloves(glove_id, unit)
 
 	local ignore_infamy_card = self._scene_templates and self._scene_templates[self._current_scene_template] and self._scene_templates[self._current_scene_template].remove_infamy_card and true or false
 	local ignore_weapons = self._scene_templates and self._scene_templates[self._current_scene_template] and self._scene_templates[self._current_scene_template].remove_weapons and true or false
@@ -1671,6 +1674,7 @@ function MenuSceneManager:set_henchmen_loadout(index, character, loadout)
 	end
 
 	self:set_character_player_style(loadout.player_style, loadout.suit_variation, unit)
+	self:set_character_gloves(loadout.glove_id, unit)
 	self:_select_henchmen_pose(unit, weapon_id, index)
 
 	local pos, rot = self:get_henchmen_positioning(index)
@@ -1822,6 +1826,7 @@ function MenuSceneManager:set_lobby_character_out_fit(i, outfit_string, rank)
 	self:set_character_deployable(outfit.deployable, unit, i)
 	self:set_character_armor_skin(outfit.armor_skin or managers.blackmarket:equipped_armor_skin(), unit)
 	self:set_character_player_style(outfit.player_style or managers.blackmarket:equipped_player_style(), outfit.suit_variation or managers.blackmarket:get_suit_variation(), unit)
+	self:set_character_gloves(outfit.glove_id or managers.blackmarket:equipped_glove_id(), unit)
 	self:_delete_character_weapon(unit, "all")
 
 	local prio_item = self:_get_lobby_character_prio_item(rank, outfit)
@@ -2124,6 +2129,16 @@ function MenuSceneManager:set_character_player_style(player_style, material_vari
 			end
 		end)
 	end
+end
+
+function MenuSceneManager:set_character_gloves(glove_id, unit)
+	unit = unit or self._character_unit
+
+	if not alive(unit) or not unit:base() then
+		return
+	end
+
+	unit:base():set_glove_id(glove_id)
 end
 
 function MenuSceneManager:set_character_card(peer_id, rank, unit)
@@ -2460,6 +2475,7 @@ function MenuSceneManager:on_set_preferred_character()
 
 	self:set_character_armor_skin(managers.blackmarket:equipped_armor_skin(), self._character_unit)
 	self:set_character_player_style(managers.blackmarket:equipped_player_style(), managers.blackmarket:get_suit_variation(), self._character_unit)
+	self:set_character_gloves(managers.blackmarket:equipped_glove_id(), self._character_unit)
 
 	local mask_data = self._mask_units[self._character_unit:key()]
 
@@ -3705,11 +3721,11 @@ function MenuSceneManager:mouse_moved(o, x, y)
 			local treshhold = math.sin(45)
 
 			if yaw_cos <= -treshhold or yaw_cos >= treshhold then
-				self._item_pitch = math.clamp(self._item_pitch + diff * yaw_cos, -30, 30)
+				self._item_pitch = math.clamp(self._item_pitch + diff * yaw_cos, -50, 50)
 			end
 
 			if yaw_sin <= -treshhold or yaw_sin >= treshhold then
-				self._item_roll = math.clamp(self._item_roll - diff * yaw_sin, -30, 30)
+				self._item_roll = math.clamp(self._item_roll - diff * yaw_sin, -50, 50)
 			end
 
 			mrotation.set_yaw_pitch_roll(self._item_rot_temp, self._item_yaw, self._item_pitch, self._item_roll)
@@ -4138,6 +4154,7 @@ function MenuSceneManager:load_safe_result_content(result, ready_clbk)
 
 		self:set_character_armor(armors[#armors], unit)
 		self:set_character_player_style("none", "default", unit)
+		self:set_character_gloves(managers.blackmarket:get_default_glove_id(), unit)
 		managers.menu_scene:preview_character_skin(result.entry, self._economy_character, {
 			done = callback(self, self, "_set_safe_result_ready_flag", "armor_ready")
 		})
@@ -4352,6 +4369,16 @@ end
 
 function MenuSceneManager:get_suit_variation(unit)
 	return (unit or self._character_unit):base():suit_variation()
+end
+
+function MenuSceneManager:preview_gloves(glove_id, unit, clbks)
+	unit = unit or self._character_unit
+
+	self:set_character_gloves(glove_id, unit)
+end
+
+function MenuSceneManager:get_glove_id(unit)
+	return (unit or self._character_unit):base():glove_id()
 end
 
 function MenuSceneManager:get_character_name(unit)

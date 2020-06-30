@@ -38,7 +38,7 @@ function ManageSpawnedUnits:spawn_unit(unit_id, align_obj_name, unit)
 
 	if contour_ext and spawned_contour_ext then
 		for _, contour in ipairs(contour_ext:contour_list()) do
-			spawned_contour_ext:add(contour.type, nil, nil, contour.color)
+			spawned_contour_ext:add(contour.type, nil, nil, contour.color, true)
 		end
 	end
 

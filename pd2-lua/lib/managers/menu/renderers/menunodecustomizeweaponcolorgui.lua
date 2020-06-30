@@ -36,6 +36,7 @@ function MenuCustomizeWeaponColorInitiator:setup_node(node, node_data)
 	local weapon_color_id = crafted.cosmetics.id or node_data.name
 	local weapon_color_quality = crafted.cosmetics.quality or node_data.cosmetic_quality
 	local weapon_color_index = crafted.cosmetics.color_index or node_data.cosmetic_index
+	local weapon_pattern_scale = crafted.cosmetics.pattern_scale or node_data.pattern_scale or tweak_data.blackmarket.weapon_color_pattern_scale_default
 	weapon_color_data.category = node_data.category
 	weapon_color_data.slot = node_data.slot
 	weapon_color_data.cosmetic_data = clone(crafted.cosmetics)
@@ -152,6 +153,27 @@ function MenuCustomizeWeaponColorInitiator:setup_node(node, node_data)
 		})
 
 		quality_item:set_value(weapon_color_quality)
+		self:create_divider(node, "no_pattern_scale", nil, 21, nil, "should_show_pattern_divider")
+
+		local pattern_scales = {}
+
+		for index, data in ipairs(tweak_data.blackmarket.weapon_color_pattern_scales) do
+			table.insert(pattern_scales, {
+				_meta = "option",
+				value = index,
+				text_id = data.name_id,
+				index = index
+			})
+		end
+
+		local pattern_scale_item = self:create_multichoice(node, pattern_scales, {
+			visible_callback = "should_show_pattern_scale",
+			name = "pattern_scale",
+			callback = "refresh_node",
+			text_id = "menu_weapon_color_pattern_scale"
+		})
+
+		pattern_scale_item:set_value(weapon_pattern_scale)
 	end
 
 	self:create_divider(node, "end", nil, 8)
@@ -173,7 +195,7 @@ function MenuCustomizeWeaponColorInitiator:setup_node(node, node_data)
 		visible_callback = "should_show_weapon_color_buy",
 		name = "buy_dlc",
 		callback = "buy_weapon_color_dlc",
-		text_id = "menu_dlc_buy",
+		text_id = "menu_dlc_buy_weapon_color",
 		align = "right"
 	}
 	new_item = node:create_item({}, buy_dlc_params)
@@ -218,6 +240,9 @@ function MenuCustomizeWeaponColorInitiator:refresh_node(node)
 	cosmetic_data.id = color_id
 	cosmetic_data.color_index = color_index
 	cosmetic_data.quality = color_quality
+	local cosmetic_pattern_scale_item = node:item("pattern_scale")
+	local color_pattern_scale = cosmetic_pattern_scale_item:value()
+	cosmetic_data.pattern_scale = color_tweak_data.color_skin_data and color_tweak_data.color_skin_data.pattern_default and color_pattern_scale or nil
 	local weapon_unit_data = managers.menu_scene and managers.menu_scene:get_item_unit_data()
 	local weapon_unit = weapon_unit_data and weapon_unit_data.unit
 

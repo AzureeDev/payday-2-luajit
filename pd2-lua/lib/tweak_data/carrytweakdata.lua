@@ -87,7 +87,8 @@ function CarryTweakData:init(tweak_data)
 		vault_loot_coins = tweak_data:get_value("money_manager", "small_loot", "vault_loot_coins"),
 		vault_loot_ring = tweak_data:get_value("money_manager", "small_loot", "vault_loot_ring"),
 		vault_loot_jewels = tweak_data:get_value("money_manager", "small_loot", "vault_loot_jewels"),
-		vault_loot_macka = tweak_data:get_value("money_manager", "small_loot", "vault_loot_macka")
+		vault_loot_macka = tweak_data:get_value("money_manager", "small_loot", "vault_loot_macka"),
+		federali_medal = tweak_data:get_value("money_manager", "small_loot", "federali_medal")
 	}
 	self.gold = {
 		type = "heavy",
@@ -997,6 +998,12 @@ function CarryTweakData:init(tweak_data)
 		AI_carry = {
 			SO_category = "enemies"
 		}
+	}
+	self.hydraulic_opener = {
+		type = "heavy",
+		name_id = "hud_carry_hydraulic_opener",
+		unit = "units/payday2/pickups/gen_pku_toolbag/gen_pku_toolbag",
+		visual_unit_name = "units/payday2/characters/npc_acc_tools_bag_1/npc_acc_tools_bag_1"
 	}
 end
 

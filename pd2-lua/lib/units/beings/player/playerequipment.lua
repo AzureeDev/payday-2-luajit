@@ -430,9 +430,12 @@ function PlayerEquipment:use_sentry_gun(selected_index, unit_idstring_index)
 
 		local ammo_level = managers.player:upgrade_value("sentry_gun", "extra_ammo_multiplier", 1)
 		local armor_multiplier = 1 + managers.player:upgrade_value("sentry_gun", "armor_multiplier", 1) - 1 + managers.player:upgrade_value("sentry_gun", "armor_multiplier2", 1) - 1
+		local can_switch_fire_mode = managers.player:has_category_upgrade("sentry_gun", "ap_bullets")
+		local equipment_name = managers.player:equipment_in_slot(selected_index)
+		local fire_mode_index = can_switch_fire_mode and managers.player:get_equipment_setting(equipment_name, "fire_mode") or 1
 
 		if Network:is_client() then
-			managers.network:session():send_to_host("place_sentry_gun", pos, rot, selected_index, self._unit, unit_idstring_index, ammo_level)
+			managers.network:session():send_to_host("place_sentry_gun", pos, rot, selected_index, self._unit, unit_idstring_index, ammo_level, fire_mode_index)
 
 			self._sentrygun_placement_requested = true
 
@@ -446,8 +449,9 @@ function PlayerEquipment:use_sentry_gun(selected_index, unit_idstring_index)
 
 				local fire_rate_reduction = managers.player:upgrade_value("sentry_gun", "fire_rate_reduction", 1)
 
-				managers.network:session():send_to_peers_synched("from_server_sentry_gun_place_result", managers.network:session():local_peer():id(), selected_index, sentry_gun_unit, rot_level, spread_level, shield, ammo_level)
+				managers.network:session():send_to_peers_synched("from_server_sentry_gun_place_result", managers.network:session():local_peer():id(), selected_index, sentry_gun_unit, rot_level, spread_level, shield, ammo_level, fire_mode_index)
 				sentry_gun_unit:event_listener():call("on_setup", true)
+				sentry_gun_unit:base():post_setup(fire_mode_index)
 			else
 				return false
 			end

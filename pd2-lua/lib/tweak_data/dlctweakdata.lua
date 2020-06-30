@@ -8070,4 +8070,90 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
+	self.wcc_starter_pack = {
+		free = true,
+		content = {}
+	}
+	self.wcc_starter_pack.content.loot_global_value = "normal"
+	self.wcc_starter_pack.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_free_01",
+			amount = 1
+		}
+	}
+	self.pd2_clan_wcc = {
+		content = {},
+		dlc = "has_pd2_clan"
+	}
+	self.pd2_clan_wcc.content.loot_global_value = "pd2_clan"
+	self.pd2_clan_wcc.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_free_02",
+			amount = 1
+		}
+	}
+	self.ach_wcc_pex_9 = {
+		content = {},
+		dlc = "has_achievement",
+		achievement_id = "pex_9"
+	}
+	self.ach_wcc_pex_9.content.loot_global_value = "normal"
+	self.ach_wcc_pex_9.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_achievement_01",
+			amount = 1
+		}
+	}
+	self.ach_wcc_pex_11 = {
+		content = {},
+		dlc = "has_achievement",
+		achievement_id = "pex_11"
+	}
+	self.ach_wcc_pex_11.content.loot_global_value = "normal"
+	self.ach_wcc_pex_11.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_achievement_02",
+			amount = 1
+		}
+	}
+	self.ach_hnd_dah_1 = {
+		dlc = "has_achievement",
+		achievement_id = "dah_1",
+		content = {}
+	}
+	self.ach_hnd_dah_1.content.loot_global_value = "normal"
+	self.ach_hnd_dah_1.content.loot_drops = {
+		{
+			type_items = "gloves",
+			item_entry = "sneak"
+		}
+	}
+	self.ach_hnd_mex_9 = {
+		dlc = "has_achievement",
+		achievement_id = "mex_9",
+		content = {}
+	}
+	self.ach_hnd_mex_9.content.loot_global_value = "normal"
+	self.ach_hnd_mex_9.content.loot_drops = {
+		{
+			type_items = "gloves",
+			item_entry = "murky"
+		}
+	}
+	self.ach_hnd_bex_1 = {
+		dlc = "has_achievement",
+		achievement_id = "bex_1",
+		content = {}
+	}
+	self.ach_hnd_bex_1.content.loot_global_value = "bex"
+	self.ach_hnd_bex_1.content.loot_drops = {
+		{
+			type_items = "gloves",
+			item_entry = "mariatchi"
+		}
+	}
 end

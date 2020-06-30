@@ -276,23 +276,27 @@ function ChatGui:init(ws)
 	self._enabled = true
 
 	if MenuCallbackHandler:is_win32() then
+		self._num_new_messages = 0
+		self._chat_button_show_string = managers.localization:to_upper_text("menu_cn_chat_show", {
+			BTN_BACK = managers.localization:btn_macro("toggle_chat")
+		})
+		self._chat_button_hide_string = managers.localization:to_upper_text("menu_cn_chat_hide", {
+			BTN_BACK = managers.localization:btn_macro("toggle_chat")
+		})
 		local chat_button_panel = self._hud_panel:panel({
 			name = "chat_button_panel"
 		})
 		local chat_button = chat_button_panel:text({
+			text = "",
 			name = "chat_button",
 			blend_mode = "add",
 			layer = 40,
-			text = managers.localization:to_upper_text("menu_cn_chat_show", {
-				BTN_BACK = managers.localization:btn_macro("toggle_chat")
-			}),
 			font_size = tweak_data.menu.pd2_small_font_size,
 			font = tweak_data.menu.pd2_small_font,
 			color = tweak_data.screen_colors.button_stage_3
 		})
-		local _, _, w, h = chat_button:text_rect()
 
-		chat_button:set_size(w, h)
+		self:update_chat_button()
 		chat_button:set_right(chat_button_panel:w() / 2)
 		chat_button:set_bottom(chat_button_panel:h() - 11)
 
@@ -347,27 +351,59 @@ function ChatGui:stop_hud_blur()
 	self._hud_blur:set_alpha(0)
 end
 
+function ChatGui:update_chat_button()
+	local chat_button_panel = self._hud_panel:child("chat_button_panel")
+	local chat_button = chat_button_panel:child("chat_button")
+	local show_chat_string = not self._crimenet_chat_state
+	local new_messages = self._num_new_messages
+	local chat_string = show_chat_string and self._chat_button_show_string or self._chat_button_hide_string
+
+	if new_messages and new_messages > 0 then
+		chat_button:set_text(chat_string .. " (" .. tostring(new_messages) .. ")")
+	else
+		chat_button:set_text(chat_string)
+	end
+
+	local x, y, w, h = chat_button:text_rect()
+
+	chat_button:set_size(math.ceil(w), math.ceil(h))
+end
+
 function ChatGui:start_notify_new_message()
-	if MenuCallbackHandler:is_win32() and not self._crimenet_chat_state and not self._notifying_new_msg then
-		self._notifying_new_msg = true
+	if MenuCallbackHandler:is_win32() then
+		if not self._crimenet_chat_state and not self._notifying_new_msg then
+			self._notifying_new_msg = true
 
-		local function func(o)
-			over(0.1, function (p)
-				o:set_alpha(math.lerp(0, 0.6, p))
-			end)
-
-			while true do
-				over(2, function (p)
-					o:set_alpha(math.abs(math.cos(p * 360)) * 0.4 + 0.2)
+			local function func(o)
+				over(0.1, function (p)
+					o:set_alpha(math.lerp(0, 0.6, p))
 				end)
+
+				while true do
+					over(2, function (p)
+						o:set_alpha(math.abs(math.cos(p * 360)) * 0.4 + 0.2)
+					end)
+				end
 			end
+
+			local chat_button_panel = self._hud_panel:child("chat_button_panel")
+			local new_msg_flash = chat_button_panel:child("new_msg_flash")
+
+			new_msg_flash:stop()
+			new_msg_flash:animate(func)
 		end
 
-		local chat_button_panel = self._hud_panel:child("chat_button_panel")
-		local new_msg_flash = chat_button_panel:child("new_msg_flash")
+		if not self._crimenet_chat_state then
+			self._num_new_messages = self._num_new_messages + 1
 
-		new_msg_flash:stop()
-		new_msg_flash:animate(func)
+			self:update_chat_button()
+
+			local chat_button_panel = self._hud_panel:child("chat_button_panel")
+			local chat_button = chat_button_panel:child("chat_button")
+
+			managers.menu_component:set_preplanning_drawboard(chat_button:right() + 15, chat_button:top())
+			managers.menu_component:post_event("chat_ping")
+		end
 	end
 end
 
@@ -379,6 +415,10 @@ function ChatGui:stop_notify_new_message()
 
 		new_msg_flash:stop()
 		new_msg_flash:set_alpha(0)
+
+		self._num_new_messages = 0
+
+		self:update_chat_button()
 	end
 end
 
@@ -426,7 +466,7 @@ ChatGui.PRESETS = {
 		chat_blur = true,
 		left = 0,
 		is_crimenet_chat = true,
-		chat_bg_alpha = 0.25,
+		chat_bg_alpha = 0.75,
 		bottom = 0,
 		layer = tweak_data.gui.CRIMENET_CHAT_LAYER
 	},
@@ -434,12 +474,24 @@ ChatGui.PRESETS = {
 		chat_blur = true,
 		left = 10,
 		is_crimenet_chat = true,
-		chat_bg_alpha = 0.25,
+		chat_bg_alpha = 0.75,
 		chat_button_align = "left",
+		bottom = 0,
+		layer = tweak_data.gui.CRIMENET_CHAT_LAYER
+	},
+	inventory = {
+		chat_button_y_offset = 25,
+		left = 0,
+		is_crimenet_chat = true,
+		chat_bg_alpha = 0.75,
+		chat_button_align = "left",
+		chat_blur = true,
 		bottom = 0,
 		layer = tweak_data.gui.CRIMENET_CHAT_LAYER
 	}
 }
+ChatGui.PRESETS.weapon_color_customize = deep_clone(ChatGui.PRESETS.inventory)
+ChatGui.PRESETS.weapon_color_customize.chat_button_y_offset = 0
 
 function ChatGui:set_params(params)
 	if type(params) == "string" then
@@ -476,6 +528,18 @@ function ChatGui:set_params(params)
 		self._chat_button_align = params.chat_button_align
 	end
 
+	self._chat_button_y_offset = nil
+
+	if params.chat_button_y_offset then
+		self._chat_button_y_offset = params.chat_button_y_offset
+	end
+
+	self._chat_button_x_offset = nil
+
+	if params.chat_button_x_offset then
+		self._chat_button_x_offset = params.chat_button_x_offset
+	end
+
 	if params.is_crimenet_chat then
 		self:enable_crimenet_chat()
 	else
@@ -501,8 +565,17 @@ function ChatGui:disable_crimenet_chat()
 		local chat_button_panel = self._hud_panel:child("chat_button_panel")
 
 		chat_button_panel:hide()
-		self._panel:child("output_panel"):stop()
-		self._panel:child("output_panel"):animate(callback(self, self, "_animate_fade_output"))
+
+		local output_panel = self._panel:child("output_panel")
+		local output_alpha = output_panel:alpha()
+		local has_new_messages = self._num_new_messages > 0
+
+		self:_show_crimenet_chat()
+
+		if output_alpha < 1 and not has_new_messages then
+			output_panel:stop()
+			output_panel:set_alpha(0)
+		end
 	end
 end
 
@@ -580,16 +653,13 @@ function ChatGui:_show_crimenet_chat()
 	local chat_blur = self._panel:child("chat_blur")
 	local hud_blur = self._hud_blur
 	local output_bg = self._panel:child("output_panel"):child("output_bg")
+	self._crimenet_chat_state = true
+
+	self:stop_notify_new_message()
+	self:update_chat_button()
+
 	local chat_button_panel = self._hud_panel:child("chat_button_panel")
 	local chat_button = chat_button_panel:child("chat_button")
-
-	chat_button:set_text(managers.localization:to_upper_text("menu_cn_chat_hide", {
-		BTN_BACK = managers.localization:btn_macro("toggle_chat")
-	}))
-
-	local _, _, w, h = chat_button:text_rect()
-
-	chat_button:set_size(w, h)
 
 	if self._chat_button_align == "left" then
 		chat_button:set_left(self._panel:left())
@@ -599,7 +669,8 @@ function ChatGui:_show_crimenet_chat()
 		chat_button:set_right(chat_button_panel:w() / 2)
 	end
 
-	chat_button:set_bottom(chat_button_panel:h() - 11)
+	chat_button:set_bottom(chat_button_panel:h())
+	chat_button:move(self._chat_button_x_offset or 0, -(self._chat_button_y_offset or 11))
 	managers.menu_component:set_preplanning_drawboard(chat_button:right() + 15, chat_button:top())
 	managers.menu_component:hide_preplanning_drawboard()
 
@@ -613,10 +684,6 @@ function ChatGui:_show_crimenet_chat()
 	self:set_output_alpha(1)
 	self._panel:child("output_panel"):stop()
 	self._panel:child("output_panel"):animate(callback(self, self, "_animate_fade_output"))
-	self:stop_notify_new_message()
-
-	self._crimenet_chat_state = true
-
 	self._panel:set_bottom(self._hud_panel:child("chat_button_panel"):child("chat_button"):top())
 end
 
@@ -628,16 +695,12 @@ function ChatGui:_hide_crimenet_chat()
 
 	self:_loose_focus()
 
+	self._crimenet_chat_state = false
+
+	self:update_chat_button()
+
 	local chat_button_panel = self._hud_panel:child("chat_button_panel")
 	local chat_button = chat_button_panel:child("chat_button")
-
-	chat_button:set_text(managers.localization:to_upper_text("menu_cn_chat_show", {
-		BTN_BACK = managers.localization:btn_macro("toggle_chat")
-	}))
-
-	local _, _, w, h = chat_button:text_rect()
-
-	chat_button:set_size(w, h)
 
 	if self._chat_button_align == "left" then
 		chat_button:set_left(self._panel:left())
@@ -647,7 +710,8 @@ function ChatGui:_hide_crimenet_chat()
 		chat_button:set_right(chat_button_panel:w() / 2)
 	end
 
-	chat_button:set_bottom(chat_button_panel:h() - 11)
+	chat_button:set_bottom(chat_button_panel:h())
+	chat_button:move(self._chat_button_x_offset or 0, -(self._chat_button_y_offset or 11))
 	managers.menu_component:set_preplanning_drawboard(chat_button:right() + 15, chat_button:top())
 
 	local blur_object = chat_button_panel:child("chat_button_blur")
@@ -657,9 +721,6 @@ function ChatGui:_hide_crimenet_chat()
 	local new_msg_flash = chat_button_panel:child("new_msg_flash")
 
 	new_msg_flash:set_center(chat_button:center())
-
-	self._crimenet_chat_state = false
-
 	self._panel:set_top(self._hud_panel:h())
 end
 

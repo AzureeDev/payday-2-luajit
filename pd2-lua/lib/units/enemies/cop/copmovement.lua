@@ -294,6 +294,7 @@ action_variants.escort_cfo = action_variants.civilian
 action_variants.escort_ralph = action_variants.civilian
 action_variants.escort_undercover = clone(action_variants.civilian)
 action_variants.escort_undercover.walk = EscortWithSuitcaseActionWalk
+action_variants.escort_criminal = action_variants.civilian
 action_variants.team_ai = clone(security_variant)
 action_variants.team_ai.walk = CriminalActionWalk
 action_variants.german = action_variants.team_ai
@@ -1914,8 +1915,6 @@ function CopMovement:_equip_item(item_type, align_place, droppable)
 		return
 	end
 
-	self._spawneditems[item_type] = true
-
 	print("[CopMovement]Spawning: " .. item_type)
 
 	local item_unit = World:spawn_unit(item_name, align_obj:position(), align_obj:rotation())
@@ -1932,6 +1931,8 @@ function CopMovement:_equip_item(item_type, align_place, droppable)
 
 		table.insert(self._droppable_gadgets, item_unit)
 	end
+
+	self._spawneditems[item_type] = item_unit:key()
 end
 
 function CopMovement:anim_clbk_drop_held_items()
@@ -1967,6 +1968,12 @@ function CopMovement:drop_held_items()
 				end
 			end
 
+			local spawned_type = table.get_key(self._spawneditems, drop_item_unit:key())
+
+			if spawned_type then
+				self._spawneditems[spawned_type] = nil
+			end
+
 			drop_item_unit:unlink()
 			drop_item_unit:set_slot(0)
 		else
@@ -2000,6 +2007,7 @@ function CopMovement:_destroy_gadgets()
 
 	self._equipped_gadgets = nil
 	self._droppable_gadgets = nil
+	self._spawneditems = {}
 end
 
 function CopMovement:anim_clbk_enemy_spawn_melee_item()

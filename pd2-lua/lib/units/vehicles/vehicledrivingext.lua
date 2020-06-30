@@ -825,6 +825,10 @@ function VehicleDrivingExt:get_object_placement(player)
 	local seat = self:find_seat_for_player(player)
 
 	if seat then
+		if self._use_object_placement then
+			return seat.object:position(), seat.object:rotation()
+		end
+
 		local obj_pos = self._vehicle:object_position(seat.object)
 		local obj_rot = self._vehicle:object_rotation(seat.object)
 

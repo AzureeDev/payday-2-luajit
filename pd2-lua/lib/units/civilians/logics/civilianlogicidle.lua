@@ -387,7 +387,7 @@ function CivilianLogicIdle._upd_detection(data)
 				return
 			end
 		end
-	else
+	elseif not data.char_tweak.ignores_attention_focus then
 		CopLogicIdle._chk_focus_on_attention_object(data, my_data)
 	end
 

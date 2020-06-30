@@ -2,6 +2,10 @@ function GenericDLCManager:has_afp()
 	return self:is_dlc_unlocked("afp")
 end
 
+function GenericDLCManager:has_atw()
+	return self:is_dlc_unlocked("atw")
+end
+
 function GenericDLCManager:has_bex()
 	return self:is_dlc_unlocked("bex")
 end
@@ -16,6 +20,10 @@ end
 
 function GenericDLCManager:has_ghx()
 	return self:is_dlc_unlocked("ghx")
+end
+
+function GenericDLCManager:has_hnd()
+	return self:is_dlc_unlocked("hnd")
 end
 
 function GenericDLCManager:has_maw()
@@ -36,6 +44,10 @@ end
 
 function GenericDLCManager:has_mwm()
 	return self:is_dlc_unlocked("mwm")
+end
+
+function GenericDLCManager:has_pex()
+	return self:is_dlc_unlocked("pex")
 end
 
 function GenericDLCManager:has_scm()
@@ -94,6 +106,18 @@ function GenericDLCManager:has_trd()
 	return self:is_dlc_unlocked("trd")
 end
 
+function GenericDLCManager:has_wcc()
+	return self:is_dlc_unlocked("wcc")
+end
+
+function GenericDLCManager:has_wcc_s01()
+	return self:is_dlc_unlocked("wcc_s01")
+end
+
+function GenericDLCManager:has_wcc_s02()
+	return self:is_dlc_unlocked("wcc_s02")
+end
+
 function GenericDLCManager:has_wcs()
 	return self:is_dlc_unlocked("wcs")
 end
@@ -107,6 +131,11 @@ function WINDLCManager:init_generated()
 		app_id = "1255151",
 		no_install = true,
 		webpage = "ovk.af/bexwpyb"
+	}
+	Global.dlc_manager.all_dlc_data.atw = {
+		app_id = "1351060",
+		no_install = true,
+		webpage = "https://ovk.af/pexwpyb"
 	}
 	Global.dlc_manager.all_dlc_data.bex = {
 		app_id = "1252200",
@@ -122,6 +151,10 @@ function WINDLCManager:init_generated()
 		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.ghx = {
+		app_id = "218620",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.hnd = {
 		app_id = "218620",
 		no_install = true
 	}
@@ -147,6 +180,11 @@ function WINDLCManager:init_generated()
 		app_id = "1184412",
 		no_install = true,
 		webpage = "https://ovk.af/ingame2CartelOptics"
+	}
+	Global.dlc_manager.all_dlc_data.pex = {
+		app_id = "1347750",
+		no_install = true,
+		webpage = "https://ovk.af/pexheistyb"
 	}
 	Global.dlc_manager.all_dlc_data.scm = {
 		app_id = "218620",
@@ -204,6 +242,20 @@ function WINDLCManager:init_generated()
 		app_id = "1184410",
 		no_install = true,
 		webpage = "https://ovk.af/ingame2TailorPack"
+	}
+	Global.dlc_manager.all_dlc_data.wcc = {
+		app_id = "1347751",
+		no_install = true,
+		webpage = "https://ovk.af/pexwcp2yb"
+	}
+	Global.dlc_manager.all_dlc_data.wcc_s01 = {
+		app_id = "1349280",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.wcc_s02 = {
+		app_id = "1349281",
+		no_install = true,
+		webpage = "https://ovk.af/pexlcyb"
 	}
 	Global.dlc_manager.all_dlc_data.wcs = {
 		app_id = "1255152",

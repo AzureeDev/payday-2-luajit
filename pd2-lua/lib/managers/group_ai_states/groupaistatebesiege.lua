@@ -1927,6 +1927,10 @@ function GroupAIStateBesiege:_draw_enemy_activity(t)
 			text_str = text_str .. ":" .. l_data.spawned_in_phase
 		end
 
+		if l_data.unit:anim_state_machine() then
+			text_str = text_str .. ":animation( " .. l_data.unit:anim_state_machine():segment_state(Idstring("base")):s() .. " )"
+		end
+
 		if logic_name_text then
 			logic_name_text:set_text(text_str)
 		else

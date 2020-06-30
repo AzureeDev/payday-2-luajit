@@ -125,26 +125,7 @@ function HuskPlayerInventory:add_unit_by_factory_name(factory_name, equip, insta
 		blueprint = managers.weapon_factory:get_default_blueprint_by_factory_id(factory_name)
 	end
 
-	local cosmetics = nil
-	local cosmetics_data = string.split(cosmetics_string, "-")
-	local weapon_skin_id = cosmetics_data[1] or "nil"
-	local quality_index_s = cosmetics_data[2] or "1"
-	local bonus_id_s = cosmetics_data[3] or "0"
-
-	if weapon_skin_id ~= "nil" then
-		local quality = tweak_data.economy:get_entry_from_index("qualities", tonumber(quality_index_s))
-		local bonus = bonus_id_s == "1" and true or false
-		cosmetics = {
-			id = weapon_skin_id,
-			quality = quality,
-			bonus = bonus
-		}
-		local color_index = tonumber(bonus_id_s) - 1
-
-		if color_index > 0 then
-			cosmetics.color_index = color_index
-		end
-	end
+	local cosmetics = managers.blackmarket:cosmetics_from_outfit_string(cosmetics_string)
 
 	self:add_unit_by_factory_blueprint(factory_name, equip, instant, blueprint, cosmetics)
 end

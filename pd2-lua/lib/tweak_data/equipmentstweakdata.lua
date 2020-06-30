@@ -717,4 +717,39 @@ function EquipmentsTweakData:init()
 		icon = "equipment_tape",
 		text_id = "hud_equipment_take_tape"
 	}
+	self.specials.police_uniform = {
+		sync_possession = true,
+		icon = "equipment_policebadge",
+		text_id = "hud_police_uniform"
+	}
+	self.specials.wanker_keys = {
+		sync_possession = true,
+		icon = "equipment_generic_key",
+		text_id = "hud_int_equipment_c_keys"
+	}
+	self.specials.pex_cutter = {
+		sync_possession = true,
+		icon = "equipment_boltcutter",
+		text_id = "debug_equipment_pex_cutter"
+	}
+	self.specials.flammable_liquid = {
+		sync_possession = true,
+		icon = "equipment_flammable",
+		text_id = "hud_equipment_flammable_liquid"
+	}
+	self.specials.pex_unloaded_card = {
+		sync_possession = true,
+		icon = "equipment_rfid_tag_02",
+		text_id = "hud_equipment_unloaded_card"
+	}
+	self.specials.pex_loaded_card = {
+		sync_possession = true,
+		icon = "equipment_rfid_tag_01",
+		text_id = "hud_equipment_loaded_card"
+	}
+	self.specials.pex_loaded_card_lvl_2 = {
+		sync_possession = true,
+		icon = "equipment_rfid_tag_01",
+		text_id = "hud_equipment_loaded_card_lvl_2"
+	}
 end

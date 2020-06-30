@@ -889,12 +889,18 @@ function MoneyManager:on_buy_weapon_slot(slot)
 	self:_deduct_from_total(amount, TelemetryConst.economy_origin.buy_weapon_slot)
 end
 
-function MoneyManager:get_mask_part_price_modified(category, id, global_value, mask_id)
-	local mask_part_price = self:get_mask_part_price(category, id, global_value, mask_id)
+function MoneyManager:get_mask_crafting_multipliers()
 	local crafting_multiplier = managers.player:upgrade_value("player", "passive_crafting_mask_multiplier", 1)
 	crafting_multiplier = crafting_multiplier * managers.player:upgrade_value("player", "crafting_mask_multiplier", 1)
 	crafting_multiplier = crafting_multiplier * managers.player:upgrade_value("player", "buy_cost_multiplier", 1)
 	crafting_multiplier = crafting_multiplier * managers.player:upgrade_value("player", "crime_net_deal", 1)
+
+	return crafting_multiplier
+end
+
+function MoneyManager:get_mask_part_price_modified(category, id, global_value, mask_id)
+	local mask_part_price = self:get_mask_part_price(category, id, global_value, mask_id)
+	local crafting_multiplier = self:get_mask_crafting_multipliers()
 	local total_price = mask_part_price * crafting_multiplier
 
 	return math.round(total_price)
@@ -902,24 +908,34 @@ end
 
 function MoneyManager:get_mask_crafting_price_modified(mask_id, global_value, blueprint, default_blueprint)
 	local mask_price = self:get_mask_crafting_price(mask_id, global_value, blueprint, default_blueprint)
-	local crafting_multiplier = managers.player:upgrade_value("player", "passive_crafting_mask_multiplier", 1)
-	crafting_multiplier = crafting_multiplier * managers.player:upgrade_value("player", "crafting_mask_multiplier", 1)
-	crafting_multiplier = crafting_multiplier * managers.player:upgrade_value("player", "buy_cost_multiplier", 1)
-	crafting_multiplier = crafting_multiplier * managers.player:upgrade_value("player", "crime_net_deal", 1)
+	local crafting_multiplier = self:get_mask_crafting_multipliers()
 	local total_price = mask_price * crafting_multiplier
 
 	return math.round(total_price)
 end
 
+function MoneyManager:get_mask_base_value_modified(mask_id, global_value)
+	local base_value = self:get_mask_base_value(mask_id, global_value)
+	local crafting_multiplier = self:get_mask_crafting_multipliers()
+	local total_value = base_value * crafting_multiplier
+
+	return math.round(total_value)
+end
+
 function MoneyManager:get_mask_part_price(category, id, global_value, mask_id)
+	local cached_part_id = self:get_cached_mask_part_id(category, id, global_value, mask_id)
+	self._cached_mask_part_prices = self._cached_mask_part_prices or {}
+
+	if self._cached_mask_part_prices[cached_part_id] then
+		return self._cached_mask_part_prices[cached_part_id]
+	end
+
 	local mask_default_blueprint = mask_id and managers.blackmarket:get_mask_default_blueprint(mask_id)
 
 	if mask_default_blueprint and mask_default_blueprint[category] and mask_default_blueprint[category].id == id then
 		return 0
 	end
 
-	local part_pc = tweak_data.blackmarket[category] and self:_get_pc_entry(tweak_data.blackmarket[category][id]) or 0
-	local star_value = part_pc == 0 and part_pc or math.ceil(part_pc / 10)
 	local part_name_converter = {
 		colors = "color",
 		materials = "material",
@@ -928,9 +944,11 @@ function MoneyManager:get_mask_part_price(category, id, global_value, mask_id)
 	local gv_tweak_data = tweak_data.lootdrop.global_values[global_value or "normal"]
 	local gv_multiplier = gv_tweak_data and gv_tweak_data.value_multiplier or 1
 	local value = tweak_data.blackmarket[category] and tweak_data.blackmarket[category][id] and tweak_data.blackmarket[category][id].value or 1
-	local pv = value > 0 and self:get_tweak_value("money_manager", "masks", part_name_converter[category] .. "_value", value) or 0
+	local part_value = value > 0 and self:get_tweak_value("money_manager", "masks", part_name_converter[category] .. "_value", value) or 0
+	local price = math.round(part_value * gv_multiplier)
+	self._cached_mask_part_prices[cached_part_id] = price
 
-	return math.round(pv * gv_multiplier)
+	return price
 end
 
 function MoneyManager:get_mask_crafting_price(mask_id, global_value, blueprint, default_blueprint)
@@ -941,45 +959,49 @@ function MoneyManager:get_mask_crafting_price(mask_id, global_value, blueprint, 
 		normal = 0
 	}
 	default_blueprint = default_blueprint or managers.blackmarket:get_mask_default_blueprint(mask_id) or {}
+	blueprint = blueprint or default_blueprint
 	local pc_value = tweak_data.blackmarket.masks and tweak_data.blackmarket.masks[mask_id] and tweak_data.blackmarket.masks[mask_id].value or 1
+	local mask_gv = global_value or "normal"
+	local base_value = self:get_mask_base_value(mask_id, global_value)
+	bonus_global_values[mask_gv] = (bonus_global_values[mask_gv] or 0) + 1
+
+	local function get_part_price(category, data)
+		if not data then
+			return 0
+		end
+
+		local id = data.id
+		local gv = data.global_value
+
+		if not default_blueprint[category] or default_blueprint[category].id ~= id then
+			return self:get_mask_part_price(category, id, gv or "normal", mask_id)
+		end
+
+		return 0
+	end
+
+	local pattern_price = get_part_price("textures", blueprint.pattern)
+	local material_price = get_part_price("materials", blueprint.material)
+	local color_price = get_part_price("colors", blueprint.color)
+	local parts_value = pattern_price + material_price + color_price
+
+	return math.round(base_value + parts_value), bonus_global_values
+end
+
+function MoneyManager:get_mask_base_value(mask_id, global_value)
+	local pc_value = tweak_data.blackmarket.masks[mask_id] and tweak_data.blackmarket.masks[mask_id].value or 1
 	local mask_gv = global_value or "normal"
 	local base_value = nil
 
 	if pc_value > 0 then
-		local star_value = pc_value and math.ceil(pc_value) or 1
 		local gv_tweak_data = tweak_data.lootdrop.global_values[mask_gv]
 		local global_value_multiplier = gv_tweak_data and gv_tweak_data.value_multiplier or 1
-		base_value = self:get_tweak_value("money_manager", "masks", "mask_value", star_value) * global_value_multiplier
+		base_value = self:get_tweak_value("money_manager", "masks", "mask_value", pc_value) * global_value_multiplier
 	else
 		base_value = 0
 	end
 
-	local parts_value = 0
-	local part_name_converter = {
-		pattern = "textures",
-		color = "colors",
-		material = "materials"
-	}
-	bonus_global_values[mask_gv] = (bonus_global_values[mask_gv] or 0) + 1
-	blueprint = blueprint or default_blueprint
-
-	for id, data in pairs(blueprint) do
-		if not default_blueprint[id] or data.id ~= default_blueprint[id].id then
-			local part_pc = tweak_data.blackmarket[part_name_converter[id]] and self:_get_pc_entry(tweak_data.blackmarket[part_name_converter[id]][data.id]) or 1
-			local star_value = tweak_data.blackmarket[part_name_converter[id]] and tweak_data.blackmarket[part_name_converter[id]][data.id] and tweak_data.blackmarket[part_name_converter[id]][data.id].value or 1
-
-			if star_value > 0 then
-				local gv = data.global_value or "normal"
-				local gv_tweak_data = tweak_data.lootdrop.global_values[gv]
-				local gv_multiplier = gv_tweak_data and gv_tweak_data.value_multiplier or 1
-				bonus_global_values[gv] = (bonus_global_values[gv] or 0) + 1
-				local pv = star_value > 0 and self:get_tweak_value("money_manager", "masks", id .. "_value", star_value) or 0
-				parts_value = parts_value + pv * gv_multiplier
-			end
-		end
-	end
-
-	return math.round(base_value + parts_value), bonus_global_values
+	return base_value
 end
 
 function MoneyManager:get_mask_sell_value(mask_id, global_value, blueprint)
@@ -1037,6 +1059,10 @@ function MoneyManager:on_loot_drop_cash(value_id)
 	self:_add_to_total(amount, {
 		no_offshore = true
 	}, TelemetryConst.economy_origin.loot_drop_cash)
+end
+
+function MoneyManager:get_cached_mask_part_id(category, id, global_value, mask_id)
+	return Idstring(string.format("%s%s%s%s", category, id, global_value, mask_id)):key()
 end
 
 function MoneyManager:get_tweak_value(...)

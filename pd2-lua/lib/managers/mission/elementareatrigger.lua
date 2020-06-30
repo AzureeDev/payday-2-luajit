@@ -239,7 +239,8 @@ function ElementAreaTrigger:project_instigators()
 					"uno_gold",
 					"roman_armor",
 					"faberge_egg",
-					"treasure"
+					"treasure",
+					"hydraulic_opener"
 				}
 
 				if table.contains(carry_list, carry_id) then

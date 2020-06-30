@@ -1382,6 +1382,12 @@ function NetworkPeer:suit_variation()
 	return managers.blackmarket:unpack_outfit_from_string(outfit_string).suit_variation
 end
 
+function NetworkPeer:glove_id()
+	local outfit_string = self:profile("outfit_string")
+
+	return managers.blackmarket:unpack_outfit_from_string(outfit_string).glove_id
+end
+
 function NetworkPeer:has_blackmarket_outfit()
 	local outfit_string = self:profile("outfit_string")
 
@@ -1641,6 +1647,14 @@ function NetworkPeer:_reload_outfit()
 		}
 	end
 
+	local glove_u_name = tweak_data.blackmarket:get_glove_value(complete_outfit.glove_id, self._character, "unit", complete_outfit.player_style, complete_outfit.suit_variation)
+
+	if glove_u_name then
+		new_outfit_assets.unit.gloves_w = {
+			name = Idstring(glove_u_name)
+		}
+	end
+
 	self._outfit_assets = new_outfit_assets
 
 	for asset_id, asset_data in pairs(new_outfit_assets.unit) do
@@ -1673,6 +1687,10 @@ function NetworkPeer:_reload_outfit()
 			if character.visual_state.player_style ~= complete_outfit.player_style then
 				default_while_loading_state.player_style = "none"
 				default_while_loading_state.suit_variation = "default"
+			end
+
+			if character.visual_state.glove_id ~= complete_outfit.glove_id then
+				default_while_loading_state.glove_id = managers.blackmarket:get_default_glove_id()
 			end
 
 			if table.size(default_while_loading_state) > 0 then
@@ -2037,6 +2055,7 @@ function NetworkPeer:update_character_visual_state(visual_state)
 		visual_state.visual_seed = visual_state.visual_seed or self._visual_seed
 		visual_state.player_style = visual_state.player_style or outfit_loaded and complete_outfit.player_style
 		visual_state.suit_variation = visual_state.suit_variation or outfit_loaded and complete_outfit.suit_variation
+		visual_state.glove_id = visual_state.glove_id or outfit_loaded and complete_outfit.glove_id
 		visual_state.mask_id = visual_state.mask_id or complete_outfit.mask.mask_id
 		visual_state.armor_id = visual_state.armor_id or self._equipped_armor_id
 		visual_state.armor_skin = visual_state.armor_skin or complete_outfit.armor_skin

@@ -2333,7 +2333,8 @@ BlackMarketGui.identifiers = {
 	inventory_tradable = Idstring("inventory_tradable"),
 	armor_skins = Idstring("armor_skins"),
 	player_style = Idstring("player_style"),
-	suit_variation = Idstring("suit_variation")
+	suit_variation = Idstring("suit_variation"),
+	glove = Idstring("glove")
 }
 
 function BlackMarketGui:init(ws, fullscreen_ws, node)
@@ -3345,6 +3346,19 @@ function BlackMarketGui:_setup(is_start_page, component_data)
 				pc_btn = "menu_preview_item",
 				callback = callback(self, self, "preview_suit_variation_callback")
 			},
+			hnd_equip = {
+				btn = "BTN_A",
+				prio = 1,
+				name = "bm_menu_btn_equip_gloves",
+				callback = callback(self, self, "equip_gloves_callback")
+			},
+			hnd_preview = {
+				btn = "BTN_STICK_R",
+				name = "bm_menu_btn_preview_gloves",
+				prio = 3,
+				pc_btn = "menu_preview_item",
+				callback = callback(self, self, "preview_gloves_callback")
+			},
 			m_equip = {
 				btn = "BTN_A",
 				prio = 1,
@@ -3539,6 +3553,20 @@ function BlackMarketGui:_setup(is_start_page, component_data)
 				pc_btn = "menu_remove_item",
 				callback = callback(self, self, "lo_unequip_deployable_callback")
 			},
+			lo_d_sentry_ap_rounds = {
+				btn = "BTN_Y",
+				name = "bm_menu_btn_sentry_ap_rounds",
+				prio = 3,
+				pc_btn = "menu_modify_item",
+				callback = callback(self, self, "set_sentry_ap_rounds_callback")
+			},
+			lo_d_sentry_default_rounds = {
+				btn = "BTN_Y",
+				name = "bm_menu_btn_sentry_default_rounds",
+				prio = 3,
+				pc_btn = "menu_modify_item",
+				callback = callback(self, self, "set_sentry_default_rounds_callback")
+			},
 			lo_mw_equip = {
 				btn = "BTN_A",
 				prio = 1,
@@ -3696,6 +3724,10 @@ function BlackMarketGui:_setup(is_start_page, component_data)
 			BlackMarketGui.blur_panel(self._weapon_info_panel)
 			BlackMarketGui.blur_panel(self._detection_panel)
 			BlackMarketGui.blur_panel(self._btn_panel)
+
+			if alive(self._extra_options_panel) then
+				BlackMarketGui.blur_panel(self._extra_options_panel)
+			end
 		end
 
 		local scale = 0.75
@@ -6722,6 +6754,36 @@ function BlackMarketGui:update_info_text()
 		else
 			updated_texts[4].resource_color = desc_colors
 		end
+	elseif identifier == self.identifiers.glove then
+		local glove_id = slot_data.name
+		local glove_tweak = tweak_data.blackmarket.gloves[glove_id]
+		updated_texts[1].text = slot_data.name_localized
+
+		if not slot_data.unlocked then
+			updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
+			updated_texts[2].resource_color = tweak_data.screen_colors.important_1
+			updated_texts[3].text = slot_data.dlc_locked and managers.localization:to_upper_text(slot_data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
+		end
+
+		local desc_id = glove_tweak.desc_id
+		local desc_colors = {}
+		updated_texts[4].text = desc_id and managers.localization:text(desc_id) or ""
+
+		if slot_data.global_value and slot_data.global_value ~= "normal" then
+			local gvalue_tweak = tweak_data.lootdrop.global_values[slot_data.global_value]
+
+			if gvalue_tweak.desc_id then
+				updated_texts[4].text = updated_texts[4].text .. "\n##" .. managers.localization:to_upper_text(gvalue_tweak.desc_id) .. "##"
+
+				table.insert(desc_colors, gvalue_tweak.color)
+			end
+		end
+
+		if #desc_colors == 1 then
+			updated_texts[4].resource_color = desc_colors[1]
+		else
+			updated_texts[4].resource_color = desc_colors
+		end
 	elseif identifier == self.identifiers.mask then
 		local price = slot_data.price
 		price = price or (type(slot_data.unlocked) == "number" or managers.money:get_mask_slot_sell_value(slot_data.slot)) and managers.money:get_mask_sell_value(slot_data.name, slot_data.global_value)
@@ -9253,7 +9315,13 @@ function BlackMarketGui:input_focus()
 		return
 	end
 
-	if managers.menu:is_pc_controller() and (managers.menu:active_menu().renderer:active_node_gui().name == "blackmarket_outfit_node" or managers.menu:active_menu().renderer:active_node_gui().name == "blackmarket_outfit_customize_node") then
+	local active_node = managers.menu:active_menu().renderer:active_node_gui().name
+	local nodes = {
+		"blackmarket_outfit_node",
+		"blackmarket_outfit_customize_node"
+	}
+
+	if managers.menu:is_pc_controller() and table.contains(nodes, active_node) then
 		if managers.menu_scene and managers.menu_scene:input_focus() then
 			return false
 		end
@@ -10246,6 +10314,8 @@ function BlackMarketGui:populate_deployables(data)
 	end
 
 	local guis_catalog = "guis/"
+	local is_sentry_gun = false
+	local can_switch_fire_mode = managers.player:has_category_upgrade("sentry_gun", "ap_bullets")
 	local index = 0
 	local second_deployable = managers.player:has_category_upgrade("player", "second_deployable")
 
@@ -10282,6 +10352,7 @@ function BlackMarketGui:populate_deployables(data)
 			end
 		end
 
+		is_sentry_gun = new_data.name == "sentry_gun" or new_data.name == "sentry_gun_silent"
 		new_data.slot = slot
 		new_data.equipped = slot ~= 0
 
@@ -10318,6 +10389,28 @@ function BlackMarketGui:populate_deployables(data)
 
 		if new_data.equipped then
 			table.insert(new_data, "lo_d_unequip")
+		end
+
+		if new_data.unlocked and is_sentry_gun and can_switch_fire_mode then
+			local is_ap_rounds = managers.player:get_equipment_setting(new_data.name, "fire_mode") == 2
+
+			if is_ap_rounds then
+				table.insert(new_data, "lo_d_sentry_default_rounds")
+			else
+				table.insert(new_data, "lo_d_sentry_ap_rounds")
+			end
+
+			local texture = managers.player:get_equipment_setting(new_data.name, "fire_mode") == 2 and "guis/textures/pd2/blackmarket/inv_mod_singlefire" or "guis/textures/pd2/blackmarket/inv_mod_autofire"
+			new_data.mini_icons = new_data.mini_icons or {}
+
+			table.insert(new_data.mini_icons, {
+				top = 5,
+				h = 16,
+				layer = 1,
+				w = 16,
+				right = 5,
+				texture = texture
+			})
 		end
 
 		data[i] = new_data
@@ -11184,6 +11277,110 @@ function BlackMarketGui:preview_suit_variation_callback(data)
 	local material_variation = data.name
 
 	self:_preview_player_style(player_style, material_variation, callback(self, self, "reload"))
+end
+
+function BlackMarketGui:populate_gloves(data)
+	for i = 1, #data do
+		data[i] = nil
+	end
+
+	local sort_data = {}
+	local tweak, global_value_tweak = nil
+
+	for i, glove_id in ipairs(tweak_data.blackmarket.glove_list) do
+		tweak = tweak_data.blackmarket.gloves[glove_id]
+		global_value_tweak = tweak_data.lootdrop.global_values[tweak.global_value]
+
+		if Global.blackmarket_manager.gloves[glove_id] and (not global_value_tweak or not global_value_tweak.hide_unavailable or not not managers.dlc:is_global_value_unlocked(tweak.global_value)) then
+			table.insert(sort_data, glove_id)
+		end
+	end
+
+	local achievement_locked_content = managers.dlc:achievement_locked_content().gloves or {}
+	local mannequin_glove = data.mannequin_glove_id or managers.menu_scene and managers.menu_scene:get_glove_id() or "none"
+	local default_glove_id = managers.blackmarket:get_default_glove_id()
+	local new_data, allow_preview, glove_id, glove_data, guis_catalog, bundle_folder, customize_alpha = nil
+	local equipped_glove_id = data.equipped_glove_id or managers.blackmarket:equipped_glove_id()
+	local max_items = self:calc_max_items(#sort_data, data.override_slots)
+
+	for i = 1, max_items do
+		new_data = {
+			comparision_data = nil,
+			category = "gloves",
+			slot = i
+		}
+		glove_id = sort_data[i]
+
+		if glove_id then
+			allow_preview = true
+			glove_data = tweak_data.blackmarket.gloves[glove_id]
+			guis_catalog = "guis/"
+			bundle_folder = glove_data.texture_bundle_folder
+
+			if bundle_folder then
+				guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
+			end
+
+			new_data.name = glove_id
+			new_data.name_localized = managers.localization:text(glove_data.name_id)
+			new_data.global_value = glove_data.global_value or "normal"
+			new_data.unlocked = managers.blackmarket:glove_id_unlocked(glove_id)
+			new_data.equipped = equipped_glove_id == glove_id
+
+			if glove_id ~= default_glove_id then
+				new_data.bitmap_texture = guis_catalog .. "textures/pd2/blackmarket/icons/gloves/" .. glove_id
+			else
+				new_data.button_text = managers.localization:to_upper_text("menu_default")
+			end
+
+			local is_dlc_locked = not managers.dlc:is_global_value_unlocked(new_data.global_value)
+
+			if is_dlc_locked then
+				new_data.unlocked = false
+				new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_dlc")
+				new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value] and tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
+			elseif not new_data.unlocked then
+				local glove_achievement_lock_id = achievement_locked_content[glove_id]
+				local dlc_tweak = glove_achievement_lock_id and tweak_data.dlc[glove_achievement_lock_id]
+				local achievement_info = managers.achievment:get_info(dlc_tweak and dlc_tweak.achievement_id)
+
+				if achievement_info and not achievement_info.awarded then
+					local achievement_visual = tweak_data.achievement.visual[dlc_tweak.achievement_id]
+					new_data.lock_texture = "guis/textures/pd2/lock_achievement"
+					new_data.dlc_locked = achievement_visual and achievement_visual.desc_id or "achievement_" .. tostring(achievement) .. "_desc"
+				end
+			end
+
+			if new_data.unlocked and not new_data.equipped then
+				table.insert(new_data, "hnd_equip")
+			end
+
+			if allow_preview and mannequin_glove ~= glove_id then
+				table.insert(new_data, "hnd_preview")
+			end
+		else
+			new_data.name = "empty"
+			new_data.name_localized = ""
+			new_data.unlocked = true
+			new_data.equipped = false
+		end
+
+		table.insert(data, new_data)
+	end
+end
+
+function BlackMarketGui:equip_gloves_callback(data)
+	managers.blackmarket:set_equipped_glove_id(data.name)
+	managers.blackmarket:release_preloaded_category("gloves")
+	self:reload()
+end
+
+function BlackMarketGui:_preview_gloves(glove_id, done_clbk)
+	managers.blackmarket:view_gloves(glove_id, done_clbk)
+end
+
+function BlackMarketGui:preview_gloves_callback(data)
+	self:_preview_gloves(data.name, callback(self, self, "reload"))
 end
 
 function BlackMarketGui:populate_masks_new(data)
@@ -12154,6 +12351,12 @@ local function make_cosmetic_data(data, cosmetic_id, unlocked, quality, bonus, e
 			table.insert(new_data, "wm_clear_mod_preview")
 		end
 
+		local lock_icon = nil
+
+		if managers.dlc:is_content_achievement_locked("weapon_skins", new_data.name) or managers.dlc:is_content_achievement_milestone_locked("weapon_skins", new_data.name) then
+			lock_icon = "guis/textures/pd2/lock_achievement"
+		end
+
 		new_data.mini_icons = new_data.mini_icons or {}
 
 		table.insert(new_data.mini_icons, {
@@ -12164,7 +12367,7 @@ local function make_cosmetic_data(data, cosmetic_id, unlocked, quality, bonus, e
 			blend_mode = "normal",
 			bottom = 1,
 			right = 1,
-			texture = my_cd.is_a_unlockable and "guis/textures/pd2/skilltree/padlock" or "guis/textures/pd2/lock_dlc",
+			texture = lock_icon or my_cd.is_a_unlockable and "guis/textures/pd2/skilltree/padlock" or "guis/textures/pd2/lock_dlc",
 			color = tweak_data.screen_colors.important_1
 		})
 	end
@@ -12187,6 +12390,7 @@ function BlackMarketGui:populate_weapon_cosmetics(data)
 	local equipped = false
 	local quality = "good"
 	local color_index = 1
+	local pattern_scale = tweak_data.blackmarket.weapon_color_pattern_scale_default
 	local color_texture = nil
 	local equipped_cosmetic_id = crafted and crafted.cosmetics and crafted.cosmetics.id
 	local equipped_tweak = cosmetics_data[equipped_cosmetic_id]
@@ -12196,6 +12400,7 @@ function BlackMarketGui:populate_weapon_cosmetics(data)
 		cosmetic_data = equipped_tweak
 		quality = crafted.cosmetics.quality
 		color_index = crafted.cosmetics.color_index
+		pattern_scale = crafted.cosmetics.pattern_scale
 		equipped = true
 		local dlc = cosmetic_data.dlc or managers.dlc:global_value_to_dlc(cosmetic_data.global_value)
 		local global_value = cosmetic_data.global_value or managers.dlc:dlc_to_global_value(dlc)
@@ -12219,6 +12424,7 @@ function BlackMarketGui:populate_weapon_cosmetics(data)
 	new_data.is_a_color_skin = true
 	new_data.bitmap_texture = color_texture
 	new_data.cosmetic_color_index = color_index
+	new_data.cosmetic_pattern_scale = pattern_scale
 	new_data.mid_text_no_change_alpha = true
 	new_data.mid_text = {
 		selected_text = new_data.name_localized,
@@ -14103,6 +14309,8 @@ function MenuCallbackHandler:reset_character_outfit()
 		managers.blackmarket:release_preloaded_category("armor_skin")
 		managers.menu_scene:set_character_player_style(loadout.player_style, loadout.suit_variation)
 		managers.blackmarket:release_preloaded_category("player_style")
+		managers.menu_scene:set_character_gloves(loadout.glove_id)
+		managers.blackmarket:release_preloaded_category("gloves")
 
 		return
 	end
@@ -14112,6 +14320,8 @@ function MenuCallbackHandler:reset_character_outfit()
 	managers.blackmarket:release_preloaded_category("armor_skin")
 	managers.menu_scene:set_character_player_style(managers.blackmarket:equipped_player_style(), managers.blackmarket:get_suit_variation())
 	managers.blackmarket:release_preloaded_category("player_style")
+	managers.menu_scene:set_character_gloves(managers.blackmarket:equipped_glove_id())
+	managers.blackmarket:release_preloaded_category("gloves")
 end
 
 function BlackMarketGui:equip_mask_callback(data)
@@ -14137,7 +14347,8 @@ function BlackMarketGui:_open_preview_weapon_cosmetics_node()
 			id = self._slot_data.cosmetic_id,
 			quality = self._slot_data.cosmetic_quality,
 			bonus = self._slot_data.cosmetic_bonus,
-			color_index = self._slot_data.cosmetic_color_index
+			color_index = self._slot_data.cosmetic_color_index,
+			pattern_scale = self._slot_data.cosmetic_pattern_scale
 		}
 	})
 	managers.menu_component:hide_blackmarket_gui()
@@ -14278,7 +14489,8 @@ function BlackMarketGui:preview_weapon_cosmetics_callback(data)
 	managers.blackmarket:view_weapon_platform_with_cosmetics(data.weapon_id, {
 		id = data.cosmetic_id,
 		quality = data.cosmetic_quality,
-		color_index = data.cosmetic_color_index
+		color_index = data.cosmetic_color_index,
+		pattern_scale = data.cosmetic_pattern_scale
 	}, callback(self, self, "_open_preview_weapon_cosmetics_node"))
 end
 
@@ -14286,7 +14498,8 @@ function BlackMarketGui:preview_cosmetic_on_weapon_callback(data)
 	managers.blackmarket:view_weapon_with_cosmetics(data.category, data.slot, {
 		id = data.cosmetic_id,
 		quality = data.cosmetic_quality,
-		color_index = data.cosmetic_color_index
+		color_index = data.cosmetic_color_index,
+		pattern_scale = data.cosmetic_pattern_scale
 	}, callback(self, self, "_update_crafting_node"), nil, BlackMarketGui.get_crafting_custom_data())
 	self:reload()
 end
@@ -14368,8 +14581,16 @@ function BlackMarketGui:_equip_weapon_color_callback(data)
 		instance_id = data.equip_weapon_cosmetics.instance_id
 	end
 
+	local cosmetics_data = {
+		id = instance_id,
+		quality = data.cosmetic_quality or "mint",
+		bonus = data.cosmetics_bonus,
+		color_index = data.cosmetic_color_index,
+		pattern_scale = data.cosmetic_pattern_scale
+	}
+
 	managers.menu_component:post_event("item_buy")
-	managers.blackmarket:on_equip_weapon_color(data.category, data.slot, instance_id, data.cosmetic_color_index, data.cosmetic_quality or "mint", true)
+	managers.blackmarket:on_equip_weapon_color(data.category, data.slot, cosmetics_data, true)
 	self:reload()
 end
 
@@ -14507,9 +14728,14 @@ function BlackMarketGui:remove_mask_callback(data)
 		skip_money = value == 0,
 		mods_readded = {}
 	}
+	local part_name_converter = {
+		pattern = "textures",
+		color = "colors",
+		material = "materials"
+	}
 
 	for category, part in pairs(blueprint) do
-		local converted_category = category == "color" and "colors" or category == "material" and "materials" or category == "pattern" and "textures" or category
+		local converted_category = part_name_converter[category] or category
 		local default = managers.blackmarket:customize_mask_category_default(converted_category, true) or {}
 
 		if default.id ~= part.id and part.id ~= "no_color_no_material" and managers.money:get_mask_part_price(converted_category, part.id, part.global_value) == 0 then
@@ -14540,9 +14766,14 @@ function BlackMarketGui:sell_mask_callback(data)
 		skip_money = value == 0,
 		mods_readded = {}
 	}
+	local part_name_converter = {
+		pattern = "textures",
+		color = "colors",
+		material = "materials"
+	}
 
 	for category, part in pairs(blueprint) do
-		local converted_category = category == "color" and "colors" or category == "material" and "materials" or category == "pattern" and "textures" or category
+		local converted_category = part_name_converter[category] or category
 		local default = managers.blackmarket:customize_mask_category_default(converted_category, true) or {}
 
 		if default.id ~= part.id and part.id ~= "no_color_no_material" and managers.money:get_mask_part_price(converted_category, part.id, part.global_value) == 0 then
@@ -15221,15 +15452,19 @@ function BlackMarketGui:mask_mods_callback(data)
 			if not listed_items[items[i].id] and td.texture or td.colors or td.color then
 				table.insert(mods, items[i])
 
-				mods[#mods].pc = td.pc or td.pcs and td.pcs[1] or 10
+				mods[#mods].pc = td.value or 0
 				mods[#mods].colors = td.colors
 			end
 		end
 
 		local sort_td = tweak_data.blackmarket[category]
-		local x_pc, y_pc = nil
+		local x_pc, y_pc, x_sn, y_sn = nil
 
 		table.sort(mods, function (x, y)
+			if x.default ~= y.default then
+				return x.default
+			end
+
 			if x.colors and y.colors then
 				for i = 1, 2 do
 					local x_color = x.colors[i]
@@ -15270,12 +15505,21 @@ function BlackMarketGui:mask_mods_callback(data)
 				end
 			end
 
-			x_pc = x.pc or x.pcs and x.pcs[1] or 1001
-			y_pc = y.pc or y.pcs and y.pcs[1] or 1001
-			x_pc = x_pc + (x.global_value and tweak_data.lootdrop.global_values[x.global_value].sort_number or 0)
-			y_pc = y_pc + (y.global_value and tweak_data.lootdrop.global_values[y.global_value].sort_number or 0)
+			x_pc = x.pc or 0
+			y_pc = y.pc or 0
 
-			return x_pc < y_pc
+			if x_pc ~= y_pc then
+				return x_pc < y_pc
+			end
+
+			x_sn = x.global_value and tweak_data.lootdrop.global_values[x.global_value].sort_number or 0
+			y_sn = y.global_value and tweak_data.lootdrop.global_values[y.global_value].sort_number or 0
+
+			if x_sn ~= y_sn then
+				return x_sn < y_sn
+			end
+
+			return x.id < y.id
 		end)
 
 		local max_x = 6
@@ -16029,6 +16273,18 @@ function BlackMarketGui:lo_unequip_deployable_callback(data)
 		managers.blackmarket:equip_deployable(secondary_data)
 	end
 
+	self:reload()
+end
+
+function BlackMarketGui:set_sentry_ap_rounds_callback(data)
+	managers.player:set_equipment_setting(data.name, "fire_mode", 2)
+	managers.menu_component:post_event("menu_enter")
+	self:reload()
+end
+
+function BlackMarketGui:set_sentry_default_rounds_callback(data)
+	managers.player:set_equipment_setting(data.name, "fire_mode", 1)
+	managers.menu_component:post_event("menu_enter")
 	self:reload()
 end
 

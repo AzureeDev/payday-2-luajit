@@ -81,6 +81,73 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.atw_bundle = {
+		dlc = "has_atw",
+		content = {}
+	}
+	self.atw_bundle.content.loot_global_value = "atw"
+	self.atw_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_holt_g_bling",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_holt_g_ergo",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_holt_m_extended",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_m14_body_ruger",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_lmg_m60_b_short",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_lmg_m60_fg_tactical",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_lmg_m60_fg_tropical",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_lmg_m60_fg_keymod",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_r700_b_short",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_r700_b_medium",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_r700_s_tactical",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_r700_s_military",
+			amount = 1
+		}
+	}
 	self.bex_bundle = {
 		dlc = "has_bex",
 		content = {}
@@ -95,6 +162,11 @@ function DLCTweakData:init_generated()
 	self.ess_bundle.content.loot_drops = {
 		{
 			type_items = "player_styles",
+			item_entry = "esport",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
 			item_entry = "esport",
 			amount = 1
 		}
@@ -120,6 +192,18 @@ function DLCTweakData:init_generated()
 		{
 			type_items = "masks",
 			item_entry = "ghx",
+			amount = 1
+		}
+	}
+	self.hnd_bundle = {
+		free = true,
+		content = {}
+	}
+	self.hnd_bundle.content.loot_global_value = "normal"
+	self.hnd_bundle.content.loot_drops = {
+		{
+			type_items = "gloves",
+			item_entry = "heist_default",
 			amount = 1
 		}
 	}
@@ -160,6 +244,26 @@ function DLCTweakData:init_generated()
 			type_items = "player_styles",
 			item_entry = "desperado",
 			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "punk",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "desperado",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "bonemittens",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "rainbow_mittens",
+			amount = 0
 		}
 	}
 	self.mex_bundle = {
@@ -237,6 +341,12 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.pex_bundle = {
+		dlc = "has_pex",
+		content = {}
+	}
+	self.pex_bundle.content.loot_global_value = "pex"
+	self.pex_bundle.content.loot_drops = {}
 	self.scm_bundle = {
 		free = true,
 		content = {}
@@ -387,6 +497,152 @@ function DLCTweakData:init_generated()
 		{
 			type_items = "player_styles",
 			item_entry = "peacoat",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "saints",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "heist_clown",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "heat",
+			amount = 1
+		}
+	}
+	self.wcc_bundle = {
+		dlc = "has_wcc",
+		content = {}
+	}
+	self.wcc_bundle.content.loot_global_value = "wcc"
+	self.wcc_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_01",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_02",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_03",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_04",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_05",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_06",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_07",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_08",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_09",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_10",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_11",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_12",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_13",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_14",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_15",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_16",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_17",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_18",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_19",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_20",
+			amount = 1
+		}
+	}
+	self.wcc_s01_bundle = {
+		dlc = "has_wcc_s01",
+		content = {}
+	}
+	self.wcc_s01_bundle.content.loot_global_value = "wcc_s01"
+	self.wcc_s01_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_social_01",
+			amount = 1
+		}
+	}
+	self.wcc_s02_bundle = {
+		dlc = "has_wcc_s02",
+		content = {}
+	}
+	self.wcc_s02_bundle.content.loot_global_value = "wcc_s02"
+	self.wcc_s02_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_camo_social_02",
 			amount = 1
 		}
 	}

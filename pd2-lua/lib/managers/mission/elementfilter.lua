@@ -52,6 +52,18 @@ function ElementFilter:_check_platform()
 		return true
 	end
 
+	if self._values.platform_pc_only and platform == win32 then
+		return true
+	end
+
+	if self._values.platform_xb1_only and platform == xb1 then
+		return true
+	end
+
+	if self._values.platform_ps4_only and platform == ps4 then
+		return true
+	end
+
 	return false
 end
 

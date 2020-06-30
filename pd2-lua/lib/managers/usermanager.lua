@@ -140,6 +140,7 @@ function GenericUserManager:setup_setting_map()
 	self:setup_setting(88, "crimenet_filter_one_down", false)
 	self:setup_setting(89, "crimenet_filter_weekly_skirmish", false)
 	self:setup_setting(90, "crimenet_filter_skirmish_wave", 99)
+	self:setup_setting(91, "color_blind_hit_direction", false)
 	self:setup_setting(200, "use_telemetry", false)
 	self:setup_setting(300, "adaptive_quality", true)
 	self:setup_setting(301, "window_zoom", true)
@@ -204,7 +205,6 @@ end
 function GenericUserManager:reset_video_setting_map()
 	local settings = {
 		"subtitle",
-		"hit_indicator",
 		"objective_reminder",
 		"brightness",
 		"effect_quality",
@@ -267,6 +267,8 @@ end
 
 function GenericUserManager:reset_user_interface_setting_map()
 	local settings = {
+		"hit_indicator",
+		"color_blind_hit_direction",
 		"loading_screen_show_hints",
 		"show_vr_descs",
 		"throwable_contour",

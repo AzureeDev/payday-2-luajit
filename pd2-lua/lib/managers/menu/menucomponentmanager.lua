@@ -114,6 +114,10 @@ function MenuComponentManager:init()
 			create = callback(self, self, "_create_preplanning_chats_gui"),
 			close = callback(self, self, "hide_preplanning_chat_gui")
 		},
+		inventory_chats = {
+			create = callback(self, self, "_create_inventory_chats_gui"),
+			close = callback(self, self, "hide_inventory_chat_gui")
+		},
 		contract = {
 			create = callback(self, self, "_create_contract_gui"),
 			close = callback(self, self, "_disable_contract_gui")
@@ -2340,6 +2344,7 @@ function MenuComponentManager:_create_chat_gui()
 		self._preplanning_chat_gui_active = false
 		self._lobby_chat_gui_active = false
 		self._crimenet_chat_gui_active = false
+		self._inventory_chat_gui_active = false
 
 		if self._game_chat_gui then
 			self:show_game_chat_gui()
@@ -2358,6 +2363,7 @@ function MenuComponentManager:_create_lobby_chat_gui()
 		self._preplanning_chat_gui_active = false
 		self._lobby_chat_gui_active = true
 		self._crimenet_chat_gui_active = false
+		self._inventory_chat_gui_active = false
 
 		if self._game_chat_gui then
 			self:show_game_chat_gui()
@@ -2376,6 +2382,7 @@ function MenuComponentManager:_create_crimenet_chats_gui()
 		self._preplanning_chat_gui_active = false
 		self._crimenet_chat_gui_active = true
 		self._lobby_chat_gui_active = false
+		self._inventory_chat_gui_active = false
 
 		if self._game_chat_gui then
 			self:show_game_chat_gui()
@@ -2394,6 +2401,7 @@ function MenuComponentManager:_create_preplanning_chats_gui()
 		self._preplanning_chat_gui_active = true
 		self._crimenet_chat_gui_active = false
 		self._lobby_chat_gui_active = false
+		self._inventory_chat_gui_active = false
 
 		if self._game_chat_gui then
 			self:show_game_chat_gui()
@@ -2402,6 +2410,31 @@ function MenuComponentManager:_create_preplanning_chats_gui()
 		end
 
 		self._game_chat_gui:set_params(self._saved_game_chat_params or "preplanning")
+
+		self._saved_game_chat_params = nil
+	end
+end
+
+function MenuComponentManager:_create_inventory_chats_gui(node)
+	if SystemInfo:platform() == Idstring("WIN32") and MenuCallbackHandler:is_multiplayer() and managers.network:session() then
+		self._preplanning_chat_gui_active = false
+		self._crimenet_chat_gui_active = false
+		self._lobby_chat_gui_active = false
+		self._inventory_chat_gui_active = true
+
+		if self._game_chat_gui then
+			self:show_game_chat_gui()
+		else
+			self:add_game_chat()
+		end
+
+		local params_name = self._saved_game_chat_params or "inventory"
+
+		if node and node:parameters().name == "blackmarket_customize_weapon_color" then
+			params_name = self._saved_game_chat_params or "weapon_color_customize"
+		end
+
+		self._game_chat_gui:set_params(params_name)
 
 		self._saved_game_chat_params = nil
 	end
@@ -2489,6 +2522,12 @@ function MenuComponentManager:hide_preplanning_chat_gui()
 	end
 end
 
+function MenuComponentManager:hide_inventory_chat_gui()
+	if self._game_chat_gui and self._inventory_chat_gui_active then
+		self._game_chat_gui:hide()
+	end
+end
+
 function MenuComponentManager:hide_game_chat_gui()
 	if self._game_chat_gui then
 		self._game_chat_gui:hide()
@@ -2506,7 +2545,7 @@ function MenuComponentManager:input_focut_game_chat_gui()
 end
 
 function MenuComponentManager:_disable_chat_gui()
-	if self._game_chat_gui and not self._lobby_chat_gui_active and not self._crimenet_chat_gui_active and not self._preplanning_chat_gui_active then
+	if self._game_chat_gui and not self._lobby_chat_gui_active and not self._crimenet_chat_gui_active and not self._preplanning_chat_gui_active and not self._inventory_chat_gui_active then
 		self._game_chat_gui:set_enabled(false)
 	end
 end
@@ -2528,6 +2567,7 @@ function MenuComponentManager:close_chat_gui()
 	self._lobby_chat_gui_active = nil
 	self._crimenet_chat_gui_active = nil
 	self._preplanning_chat_gui_active = nil
+	self._inventory_chat_gui_active = nil
 end
 
 function MenuComponentManager:set_crimenet_chat_gui(state)

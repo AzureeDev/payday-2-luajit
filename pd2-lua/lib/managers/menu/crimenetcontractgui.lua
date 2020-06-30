@@ -522,7 +522,7 @@ function CrimeNetContractGui:init(ws, fullscreen_ws, node)
 		x = max_x
 	})
 
-	risk_text:set_top(math.round(risk_title:bottom() + 4))
+	risk_text:set_top(math.round(risk_title:bottom()))
 	risk_text:set_h(risk_stats_panel:bottom() - risk_text:top())
 	risk_text:hide()
 
@@ -2169,6 +2169,10 @@ function CrimeNetContractGui:set_difficulty_id(difficulty_id)
 	risk_text:set_text(managers.localization:to_upper_text(menu_risk_id) .. " " .. managers.localization:to_upper_text("menu_stat_job_completed", {
 		stat = tostring(stat)
 	}) .. " ")
+
+	local _, _, _, h = risk_text:text_rect()
+
+	risk_text:set_h(h)
 	self:set_potential_rewards(self._potential_show_max)
 end
 

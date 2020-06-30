@@ -1689,7 +1689,7 @@ function UnitNetworkHandler:picked_up_sentry_gun_response(sentry_uid, ammo, max_
 	SentryGunBase.on_picked_up(sentry_type, ammo_ratio, sentry_uid)
 end
 
-function UnitNetworkHandler:place_sentry_gun(pos, rot, equipment_selection_index, user_unit, unit_idstring_index, ammo_level, rpc)
+function UnitNetworkHandler:place_sentry_gun(pos, rot, equipment_selection_index, user_unit, unit_idstring_index, ammo_level, fire_mode_index, rpc)
 	local peer = self._verify_sender(rpc)
 
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not peer then
@@ -1698,6 +1698,8 @@ function UnitNetworkHandler:place_sentry_gun(pos, rot, equipment_selection_index
 		return
 	end
 
+	local can_switch_fire_mode = PlayerSkill.has_skill("sentry_gun", "ap_bullets", user_unit)
+	fire_mode_index = can_switch_fire_mode and fire_mode_index or 1
 	local unit, spread_level, rot_level = SentryGunBase.spawn(user_unit, pos, rot, peer:id(), true, unit_idstring_index)
 
 	if unit then
@@ -1705,11 +1707,13 @@ function UnitNetworkHandler:place_sentry_gun(pos, rot, equipment_selection_index
 
 		local has_shield = unit:base():has_shield()
 
-		managers.network:session():send_to_peers_synched("from_server_sentry_gun_place_result", peer:id(), equipment_selection_index or 0, unit, rot_level, spread_level, has_shield, ammo_level)
+		managers.network:session():send_to_peers_synched("from_server_sentry_gun_place_result", peer:id(), equipment_selection_index or 0, unit, rot_level, spread_level, has_shield, ammo_level, fire_mode_index)
+		unit:event_listener():call("on_setup", false)
+		unit:base():post_setup(fire_mode_index)
 	end
 end
 
-function UnitNetworkHandler:from_server_sentry_gun_place_result(owner_peer_id, equipment_selection_index, sentry_gun_unit, rot_level, spread_level, shield, ammo_level, rpc)
+function UnitNetworkHandler:from_server_sentry_gun_place_result(owner_peer_id, equipment_selection_index, sentry_gun_unit, rot_level, spread_level, shield, ammo_level, fire_mode_index, rpc)
 	local local_peer = managers.network:session():local_peer()
 
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(rpc) or not alive(sentry_gun_unit) or not managers.network:session():peer(owner_peer_id) then
@@ -1749,7 +1753,7 @@ function UnitNetworkHandler:from_server_sentry_gun_place_result(owner_peer_id, e
 
 	sentry_gun_unit:weapon():setup_virtual_ammo(ammo_mul)
 	sentry_gun_unit:event_listener():call("on_setup", sentry_gun_unit:base():is_owner())
-	sentry_gun_unit:base():post_setup()
+	sentry_gun_unit:base():post_setup(fire_mode_index)
 end
 
 function UnitNetworkHandler:sync_sentrygun_dynamic(unit)

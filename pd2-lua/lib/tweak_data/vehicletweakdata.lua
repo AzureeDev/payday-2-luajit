@@ -11,6 +11,7 @@ function VehicleTweakData:init(tweak_data)
 	self:_init_data_blackhawk_1()
 	self:_init_data_bike_1()
 	self:_init_data_bike_2()
+	self:_init_data_wanker()
 end
 
 function VehicleTweakData:_init_data_falcogini()
@@ -630,5 +631,80 @@ function VehicleTweakData:_init_data_bike_2()
 				yaw = 30
 			}
 		}
+	}
+end
+
+function VehicleTweakData:_init_data_wanker()
+	self.wanker = {
+		name = nil,
+		hud_label_offset = 150,
+		animations = {
+			passenger_back_right = "drive_wanker_back_right",
+			vehicle_id = "wanker",
+			passenger_back_left = "drive_wanker_back_left",
+			passenger_front = "drive_wanker_passanger",
+			driver = "drive_wanker_driver"
+		},
+		sound = {
+			broken_engine = "heli_silence",
+			bump = "heli_silence",
+			lateral_slip_treshold = 0.35,
+			bump_rtpc = "heli_silence",
+			bump_treshold = 8,
+			slip_stop = "heli_silence",
+			slip = "heli_silence",
+			hit_rtpc = "heli_silence",
+			engine_start = "heli_silence",
+			engine_rpm_rtpc = "heli_silence",
+			longitudal_slip_treshold = 0.8,
+			engine_speed_rtpc = "heli_silence",
+			door_close = "heli_silence",
+			engine_sound_event = "heli_silence",
+			hit = "heli_silence"
+		},
+		seats = {
+			driver = {
+				allow_shooting = false,
+				name = "driver",
+				has_shooting_mode = false,
+				driving = false
+			},
+			passenger_front = {
+				allow_shooting = false,
+				name = "passenger_front",
+				has_shooting_mode = false,
+				driving = false
+			},
+			passenger_back_left = {
+				allow_shooting = false,
+				name = "passenger_back_left",
+				has_shooting_mode = false,
+				driving = false
+			},
+			passenger_back_right = {
+				allow_shooting = false,
+				name = "passenger_back_right",
+				has_shooting_mode = false,
+				driving = false
+			}
+		},
+		loot_points = {
+			loot_left = {
+				name = "loot_left"
+			},
+			loot_right = {
+				name = "loot_right"
+			}
+		},
+		damage = {
+			max_health = 9e+27
+		},
+		max_speed = 160,
+		max_rpm = 8000,
+		loot_drop_point = "v_repair_engine",
+		max_loot_bags = 4,
+		interact_distance = 350,
+		driver_camera_offset = Vector3(0, 0, 0),
+		fov = 75
 	}
 end

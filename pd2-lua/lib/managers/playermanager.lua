@@ -540,6 +540,7 @@ function PlayerManager:_setup()
 		Global.player_manager.cooldown_upgrades.cooldown = {}
 		Global.player_manager.weapons = {}
 		Global.player_manager.equipment = {}
+		Global.player_manager.equipment_settings = {}
 		Global.player_manager.grenades = {}
 		Global.player_manager.synced_upgrades = {}
 		Global.player_manager.kit = {
@@ -2405,7 +2406,7 @@ function PlayerManager:stamina_addend()
 	return addend
 end
 
-function PlayerManager:critical_hit_chance()
+function PlayerManager:critical_hit_chance(detection_risk)
 	local multiplier = 0
 	multiplier = multiplier + self:upgrade_value("player", "critical_hit_chance", 0)
 	multiplier = multiplier + self:upgrade_value("weapon", "critical_hit_chance", 0)
@@ -2414,7 +2415,7 @@ function PlayerManager:critical_hit_chance()
 	multiplier = multiplier + managers.player:temporary_upgrade_value("temporary", "unseen_strike", 1) - 1
 	multiplier = multiplier + self._crit_mul - 1
 	local detection_risk_add_crit_chance = managers.player:upgrade_value("player", "detection_risk_add_crit_chance")
-	multiplier = multiplier + self:get_value_from_risk_upgrade(detection_risk_add_crit_chance)
+	multiplier = multiplier + self:get_value_from_risk_upgrade(detection_risk_add_crit_chance, detection_risk)
 
 	return multiplier
 end
@@ -2992,8 +2993,6 @@ function PlayerManager:remove_synced_carry(peer)
 end
 
 function PlayerManager:get_my_carry_data()
-	print("[PlayerManager:get_my_carry_data]")
-
 	if not managers.network:session() then
 		return true
 	end
@@ -4904,7 +4903,8 @@ end
 function PlayerManager:save(data)
 	local state = {
 		kit = self._global.kit,
-		viewed_content_updates = self._global.viewed_content_updates
+		viewed_content_updates = self._global.viewed_content_updates,
+		equipment_settings = self._global.equipment_settings
 	}
 	data.PlayerManager = state
 end
@@ -4917,6 +4917,7 @@ function PlayerManager:load(data)
 	if state then
 		self._global.kit = state.kit or self._global.kit
 		self._global.viewed_content_updates = state.viewed_content_updates or self._global.viewed_content_updates
+		self._global.equipment_settings = state.equipment_settings or self._global.equipment_settings
 
 		managers.savefile:add_load_done_callback(callback(self, self, "_verify_loaded_data"))
 	end
@@ -5001,6 +5002,24 @@ end
 
 function PlayerManager:on_peer_synch_request(peer)
 	self:player_unit():network():synch_to_peer(peer)
+end
+
+function PlayerManager:get_equipment_setting(equipment, key)
+	return self._global.equipment_settings[equipment] and self._global.equipment_settings[equipment][key]
+end
+
+function PlayerManager:set_equipment_setting(equipment, key, value)
+	self._global.equipment_settings[equipment] = self._global.equipment_settings[equipment] or {}
+	self._global.equipment_settings[equipment][key] = value
+end
+
+function PlayerManager:remove_equipment_setting(equipment, key)
+	self._global.equipment_settings[equipment] = self._global.equipment_settings[equipment] or {}
+	self._global.equipment_settings[equipment][key] = nil
+
+	if table.size(self._global.equipment_settings[equipment]) == 0 then
+		self._global.equipment_settings[equipment] = nil
+	end
 end
 
 function PlayerManager:update_husk_bipod_to_peer(peer)

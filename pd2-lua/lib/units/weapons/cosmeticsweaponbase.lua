@@ -29,11 +29,14 @@ function NewRaycastWeaponBase:change_cosmetics(cosmetics, async_clbk)
 end
 
 function NewRaycastWeaponBase:set_cosmetics_data(cosmetics)
+	self._cosmetics = cosmetics
+
 	if not cosmetics then
 		self._cosmetics_id = nil
 		self._cosmetics_quality = nil
 		self._cosmetics_bonus = nil
 		self._cosmetics_color_index = nil
+		self._cosmetics_pattern_scale = nil
 		self._cosmetics_data = nil
 
 		return
@@ -44,6 +47,7 @@ function NewRaycastWeaponBase:set_cosmetics_data(cosmetics)
 	self._cosmetics_bonus = cosmetics and cosmetics.bonus
 	self._cosmetics_data = self._cosmetics_id and tweak_data.blackmarket.weapon_skins[self._cosmetics_id]
 	self._cosmetics_color_index = cosmetics and cosmetics.color_index
+	self._cosmetics_pattern_scale = cosmetics and cosmetics.pattern_scale or tweak_data.blackmarket.weapon_color_pattern_scale_default
 
 	if self._cosmetics_color_index and self._cosmetics_data and self._cosmetics_data.color_skin_data then
 		local color_skin_data = self._cosmetics_data.color_skin_data
@@ -54,6 +58,7 @@ function NewRaycastWeaponBase:set_cosmetics_data(cosmetics)
 			self._cosmetics_quality = nil
 			self._cosmetics_bonus = nil
 			self._cosmetics_color_index = nil
+			self._cosmetics_pattern_scale = nil
 			self._cosmetics_data = nil
 
 			return
@@ -85,6 +90,10 @@ function NewRaycastWeaponBase:get_cosmetics_color_index()
 	return self._cosmetics_color_index
 end
 
+function NewRaycastWeaponBase:get_cosmetics_pattern_scale()
+	return self._cosmetics_pattern_scale
+end
+
 function NewRaycastWeaponBase:get_cosmetics_bonus()
 	return self._cosmetics_bonus
 end
@@ -95,6 +104,10 @@ end
 
 function NewRaycastWeaponBase:get_cosmetics_id()
 	return self._cosmetics_id
+end
+
+function NewRaycastWeaponBase:get_cosmetics()
+	return self._cosmetics
 end
 
 function NewRaycastWeaponBase:get_cosmetics_data()
@@ -216,10 +229,13 @@ function NewRaycastWeaponBase:_apply_cosmetics(async_clbk)
 	local textures = {}
 	local texture_key, p_type, value = nil
 	local wear_tear_value = self._cosmetics_quality and tweak_data.economy.qualities[self._cosmetics_quality] and tweak_data.economy.qualities[self._cosmetics_quality].wear_tear_value or 1
+	local pattern_scale_value = self._cosmetics_pattern_scale and tweak_data.blackmarket.weapon_color_pattern_scales[self._cosmetics_pattern_scale] and tweak_data.blackmarket.weapon_color_pattern_scales[self._cosmetics_pattern_scale].value or 1
+	local pattern_tweak_value = Vector3(pattern_scale_value, 0, 1)
 
 	for part_id, materials in pairs(self._materials) do
 		for _, material in pairs(materials) do
 			material:set_variable(Idstring("wear_tear_value"), wear_tear_value)
+			material:set_variable(Idstring("pattern_tweak"), pattern_tweak_value)
 
 			p_type = managers.weapon_factory:get_type_from_part_id(part_id)
 
@@ -227,6 +243,13 @@ function NewRaycastWeaponBase:_apply_cosmetics(async_clbk)
 				value = self:get_cosmetic_value("weapons", self._name_id, "parts", part_id, material:name():key(), key) or self:get_cosmetic_value("weapons", self._name_id, "types", p_type, key) or self:get_cosmetic_value("weapons", self._name_id, key) or self:get_cosmetic_value("parts", part_id, material:name():key(), key) or self:get_cosmetic_value("types", p_type, key) or self:get_cosmetic_value(key)
 
 				if value then
+					if variable == "pattern_tweak" then
+						mvector3.set(mvec1, value)
+						mvector3.set_x(mvec1, mvector3.x(value) * pattern_scale_value)
+
+						value = mvec1
+					end
+
 					material:set_variable(Idstring(variable), value)
 				end
 			end
@@ -404,9 +427,11 @@ function NewRaycastWeaponBase:spawn_magazine_unit(pos, rot, hide_bullets)
 	local texture_key, p_type, value = nil
 	local cosmetics_quality = self._cosmetics_quality
 	local wear_tear_value = cosmetics_quality and tweak_data.economy.qualities[cosmetics_quality] and tweak_data.economy.qualities[cosmetics_quality].wear_tear_value or 1
+	local uv_scale_value = self._cosmetics_pattern_scale and tweak_data.blackmarket.weapon_color_pattern_scales[self._cosmetics_pattern_scale] and tweak_data.blackmarket.weapon_color_pattern_scales[self._cosmetics_pattern_scale].uv_scale or Vector3(1, 1, 1)
 
 	for _, material in pairs(materials) do
 		material:set_variable(Idstring("wear_tear_value"), wear_tear_value)
+		material:set_variable(Idstring("uv_scale"), uv_scale_value)
 
 		p_type = managers.weapon_factory:get_type_from_part_id(mag_id)
 
