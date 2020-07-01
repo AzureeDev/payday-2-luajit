@@ -24513,7 +24513,7 @@ function WeaponTweakData:_init_m60(weapon_data)
 	self.m60.CLIP_AMMO_MAX = 200
 	self.m60.NR_CLIPS_MAX = 2
 	self.m60.AMMO_MAX = self.m60.CLIP_AMMO_MAX * self.m60.NR_CLIPS_MAX
-	self.m60.AMMO_PICKUP = self:_pickup_chance(self.m60.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
+	self.m60.AMMO_PICKUP = self:_pickup_chance(self.m60.AMMO_MAX, PICKUP.OTHER)
 	self.m60.FIRE_MODE = "auto"
 	self.m60.fire_mode_data = {
 		fire_rate = 0.109

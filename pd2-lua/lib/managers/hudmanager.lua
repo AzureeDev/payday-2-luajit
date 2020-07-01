@@ -1415,9 +1415,19 @@ function HUDManager:update_name_label_by_peer(peer)
 end
 
 function HUDManager:update_vehicle_label_by_id(label_id, num_players)
+	if not label_id then
+		return
+	end
+
 	for _, data in pairs(self._hud.name_labels) do
 		if data.id == label_id then
 			local name = data.character_name
+
+			if not name then
+				data.text:set_text("")
+
+				return
+			end
 
 			if num_players > 0 then
 				name = "(" .. num_players .. ") " .. name
