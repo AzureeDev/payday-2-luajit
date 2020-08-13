@@ -948,7 +948,7 @@ function LevelsTweakData:init()
 		outro_event = {
 			"Play_pln_ko1_end_01"
 		},
-		music = "no_music",
+		music = "ghost",
 		music_ext_start = "suspense_1",
 		package = "packages/kosugi",
 		cube = "cube_apply_heist_bank",
@@ -1311,7 +1311,7 @@ function LevelsTweakData:init()
 			"Play_rb14_drk_outro_01",
 			"Play_rb14_drk_outro_02"
 		},
-		music = "no_music",
+		music = "ghost",
 		music_ext_start = "suspense_1",
 		package = "packages/job_dark",
 		cube = "cube_apply_heist_bank",
@@ -1594,7 +1594,7 @@ function LevelsTweakData:init()
 		intro_event = "Play_pln_fish_intro",
 		outro_event = "Play_pln_fish_end",
 		failure_music = "Play_fish_jazz_game_over",
-		music = "no_music",
+		music = "ghost",
 		music_ext_start = "suspense_1",
 		package = "packages/lvl_fish",
 		cube = "cube_apply_heist_bank",
@@ -1753,7 +1753,7 @@ function LevelsTweakData:init()
 		world_name = "narratives/locke/tag",
 		intro_event = "Play_loc_tag_intro",
 		outro_event = "Play_loc_tag_end",
-		music = "no_music",
+		music = "ghost",
 		cube = "cube_apply_heist_bank",
 		music_ext_start = "suspense_1",
 		max_bags = 20,
@@ -1806,6 +1806,8 @@ function LevelsTweakData:init()
 			"Play_loc_sah_end_loud"
 		},
 		cube = "cube_apply_heist_bank",
+		music = "heist",
+		music_ext = "music_tag",
 		music_ext_start = "suspense_1",
 		max_bags = 40,
 		ghost_bonus = 0.1,
@@ -1842,7 +1844,7 @@ function LevelsTweakData:init()
 			"Play_loc_skm_end_fail"
 		},
 		cube = "cube_apply_heist_bank",
-		music_ext = "heist",
+		music = "heist",
 		ai_group_type = america,
 		group_ai_state = "skirmish",
 		wave_count = 9,
@@ -2146,8 +2148,7 @@ function LevelsTweakData:init()
 					criminal1 = true
 				}
 			}
-		},
-		load_screen = "guis/dlcs/pex/textures/loading/job_pex_01_df"
+		}
 	}
 	self._level_index = {
 		"welcome_to_the_jungle_1",
@@ -2357,15 +2358,32 @@ function LevelsTweakData:get_localized_level_name_from_level_id(level_id)
 	end
 end
 
+function LevelsTweakData:get_music_style(level_id)
+	return self:get_music_style_from_level_data(tweak_data.levels[level_id])
+end
+
+function LevelsTweakData:get_music_style_from_level_data(level_data)
+	local music_id = level_data and level_data.music or "default"
+
+	if music_id == "no_music" then
+		return "no_music"
+	end
+
+	if music_id == "ghost" then
+		return level_data.music_ext_start and "ghost" or "no_ghost"
+	end
+
+	return "heist"
+end
+
 function LevelsTweakData:get_music_switches()
 	if not Global.level_data then
 		return nil
 	end
 
 	local level_data = Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
-	local music_id = level_data and level_data.music or "default"
 
-	if music_id == "no_music" then
+	if self:get_music_style_from_level_data(level_data) ~= "heist" then
 		return nil
 	end
 
@@ -2418,11 +2436,12 @@ end
 
 function LevelsTweakData:get_music_event(stage)
 	local level_data = Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
-	local music_id = level_data and level_data.music or "default"
 
-	if music_id == "no_music" then
+	if self:get_music_style_from_level_data(level_data) ~= "heist" then
 		return nil
 	end
+
+	local music_id = level_data and level_data.music or "default"
 
 	return tweak_data.music[music_id][stage]
 end
@@ -2442,7 +2461,7 @@ function LevelsTweakData:get_music_event_ext_ghost()
 
 	local level_data = Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
 
-	if not level_data or not level_data.music_ext_start then
+	if self:get_music_style_from_level_data(level_data) ~= "ghost" then
 		return nil, nil
 	end
 

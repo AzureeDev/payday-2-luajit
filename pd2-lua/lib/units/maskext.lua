@@ -34,10 +34,19 @@ function MaskExt:apply_blueprint(blueprint, async_clbk)
 	local tint_color_b = mvec2
 	local pattern_id = blueprint.pattern.id
 	local material_id = blueprint.material.id
-	local color_data = tweak_data.blackmarket.colors[blueprint.color.id]
+	local color_a_data = tweak_data.blackmarket.mask_colors[blueprint.color_a.id]
+	local color_b_data = tweak_data.blackmarket.mask_colors[blueprint.color_b.id]
 
-	mvector3.set_static(tint_color_a, color_data.colors[1]:unpack())
-	mvector3.set_static(tint_color_b, color_data.colors[2]:unpack())
+	if not color_a_data then
+		Application:error("Missing color_a id", blueprint.color_a.id)
+	end
+
+	if not color_b_data then
+		Application:error("Missing color_b id", blueprint.color_b.id)
+	end
+
+	mvector3.set_static(tint_color_a, color_a_data.color:unpack())
+	mvector3.set_static(tint_color_b, color_b_data.color:unpack())
 
 	local old_pattern = self._textures.pattern and self._textures.pattern.name
 	local pattern = Idstring(tweak_data.blackmarket.textures[pattern_id].texture)

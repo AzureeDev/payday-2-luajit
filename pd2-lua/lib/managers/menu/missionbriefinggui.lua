@@ -657,6 +657,12 @@ function AssetsItem:deselect()
 	AssetsItem.super.deselect(self)
 end
 
+function AssetsItem:update(t, dt)
+	if not managers.preplanning:has_current_level_preplanning() and not managers.menu:is_pc_controller() and managers.menu:get_controller():get_input_pressed("buy_all_assets") then
+		self:open_assets_buy_all()
+	end
+end
+
 function AssetsItem:get_asset_id(i)
 	return self._assets_names[i][4]
 end
@@ -856,7 +862,7 @@ function AssetsItem:create_assets(assets_names, max_assets)
 			local lock = self._panel:bitmap({
 				layer = 3,
 				name = "asset_lock_" .. tostring(i),
-				texture = assets_names[i][5] and "guis/textures/pd2/blackmarket/money_lock" or "guis/textures/pd2/skilltree/padlock",
+				texture = managers.assets:get_asset_can_unlock_by_id(self._assets_names[i][4]) and "guis/textures/pd2/blackmarket/money_lock" or "guis/textures/pd2/skilltree/padlock",
 				color = tweak_data.screen_colors.item_stage_1
 			})
 
@@ -911,6 +917,8 @@ function AssetsItem:create_assets(assets_names, max_assets)
 
 		if managers.preplanning:has_current_level_preplanning() then
 			table.insert(legends, 1, "menu_legend_open_preplanning")
+		else
+			table.insert(legends, 1, "menu_legend_buy_all_assets")
 		end
 
 		local t_text = ""
@@ -956,6 +964,25 @@ function AssetsItem:create_assets(assets_names, max_assets)
 	end
 
 	self:post_init()
+
+	self._is_buy_all_dialog_open = false
+
+	if not managers.preplanning:has_current_level_preplanning() and managers.menu:is_pc_controller() then
+		self.buy_all_button = self._panel:text({
+			name = "buy_all_btn",
+			align = "right",
+			blend_mode = "add",
+			visible = true,
+			text = managers.localization:to_upper_text("menu_asset_buy_all_button"),
+			h = tweak_data.menu.pd2_medium_font_size * 0.95,
+			font_size = tweak_data.menu.pd2_medium_font_size * 0.9,
+			font = tweak_data.menu.pd2_medium_font,
+			color = tweak_data.screen_colors.button_stage_3
+		})
+
+		self.buy_all_button:set_top(10)
+		self.buy_all_button:set_right(self._panel:w() - 5)
+	end
 end
 
 function AssetsItem:unlock_asset_by_id(id)
@@ -1095,7 +1122,7 @@ function AssetsItem:select_asset(i, instant)
 	if self._asset_locked[i] then
 		local can_client_unlock = managers.assets.ALLOW_CLIENTS_UNLOCK == true or type(managers.assets.ALLOW_CLIENTS_UNLOCK) == "string" and managers.player:has_team_category_upgrade("player", managers.assets.ALLOW_CLIENTS_UNLOCK)
 		local is_server = Network:is_server() or can_client_unlock
-		local can_unlock = self._assets_names[i][5]
+		local can_unlock = managers.assets:get_asset_can_unlock_by_id(self._assets_names[i][4])
 		text_string = self._assets_names[i][6] and text_string or managers.localization:text("bm_menu_mystery_asset")
 
 		if is_server and can_unlock then
@@ -1252,6 +1279,20 @@ function AssetsItem:mouse_moved(x, y)
 		end
 	end
 
+	if alive(self.buy_all_button) and self.buy_all_button:inside(x, y) then
+		if not self.buy_all_button_highlighted then
+			self.buy_all_button_highlighted = true
+
+			self.buy_all_button:set_color(tweak_data.screen_colors.button_stage_2)
+			managers.menu_component:post_event("highlight")
+			self:check_deselect_item()
+		end
+	elseif self.buy_all_button_highlighted then
+		self.buy_all_button_highlighted = false
+
+		self.buy_all_button:set_color(tweak_data.screen_colors.button_stage_3)
+	end
+
 	local selected, highlighted = AssetsItem.super.mouse_moved(self, x, y)
 
 	if not self._panel:inside(x, y) or not selected then
@@ -1317,6 +1358,12 @@ function AssetsItem:mouse_pressed(button, x, y)
 		return
 	end
 
+	if alive(self.buy_all_button) and self.buy_all_button:inside(x, y) then
+		self:open_assets_buy_all()
+
+		return
+	end
+
 	if self._asset_selected and alive(self._panel:child("bg_rect_" .. tostring(self._asset_selected))) and self._panel:child("bg_rect_" .. tostring(self._asset_selected)):inside(x, y) then
 		return self:_return_asset_info(self._asset_selected)
 	end
@@ -1330,6 +1377,32 @@ function AssetsItem:open_preplanning()
 		managers.menu:open_node("preplanning")
 		managers.menu_component:on_ready_pressed_mission_briefing_gui(false)
 	end
+end
+
+function AssetsItem:open_assets_buy_all()
+	if self._is_buy_all_dialog_open then
+		return
+	end
+
+	self._is_buy_all_dialog_open = true
+	local params = {
+		locked_asset_ids = managers.assets:get_locked_asset_ids(false),
+		yes_func = callback(self, self, "_buy_all_assets_callback"),
+		no_func = function ()
+			self._is_buy_all_dialog_open = false
+		end,
+		ok_func = function ()
+			self._is_buy_all_dialog_open = false
+		end
+	}
+
+	managers.menu:show_confirm_mission_asset_buy_all(params)
+end
+
+function AssetsItem:_buy_all_assets_callback()
+	self._is_buy_all_dialog_open = false
+
+	managers.assets:unlock_all_availible_assets()
 end
 
 function AssetsItem:move(x, y)
@@ -1412,7 +1485,7 @@ function AssetsItem:_return_asset_info(i)
 	local asset_cost = nil
 
 	if self._asset_locked[i] then
-		local can_unlock = self._assets_names[i][5] and managers.money:can_afford_mission_asset(self._assets_names[i][4])
+		local can_unlock = managers.assets:get_asset_can_unlock_by_id(self._assets_names[i][4]) and managers.money:can_afford_mission_asset(self._assets_names[i][4])
 		local can_client_unlock = managers.assets.ALLOW_CLIENTS_UNLOCK == true or type(managers.assets.ALLOW_CLIENTS_UNLOCK) == "string" and managers.player:has_team_category_upgrade("player", managers.assets.ALLOW_CLIENTS_UNLOCK)
 
 		if (Network:is_server() or can_client_unlock) and can_unlock then
@@ -3603,13 +3676,15 @@ function MissionBriefingGui:init(saferect_ws, fullrect_ws, node)
 		index = index + 1
 	end
 
-	if tweak_data.levels[Global.level_data.level_id].music ~= "no_music" then
+	local music_type = tweak_data.levels:get_music_style(Global.level_data.level_id)
+
+	if music_type == "heist" then
 		self._jukebox_item = JukeboxItem:new(self._panel, utf8.to_upper(managers.localization:text("menu_jukebox")), index)
 
 		table.insert(self._items, self._jukebox_item)
 
 		index = index + 1
-	elseif tweak_data.levels[Global.level_data.level_id].music_ext_start then
+	elseif music_type == "ghost" then
 		self._jukebox_item = JukeboxGhostItem:new(self._panel, utf8.to_upper(managers.localization:text("menu_jukebox")), index)
 
 		table.insert(self._items, self._jukebox_item)

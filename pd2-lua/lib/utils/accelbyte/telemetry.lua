@@ -142,6 +142,16 @@ local function on_geolocation_retrieved(success, response_body)
 	end
 end
 
+local function on_oldest_achievement_date_retrieved(oldest_achievement_date)
+	print(log_name, "Got oldest achievement date")
+
+	Global.telemetry._oldest_achievement_date = oldest_achievement_date
+
+	if Global.telemetry._login_screen_passed == true then
+		Telemetry:on_login()
+	end
+end
+
 local function on_playtime_updated(error_code, status_code, response_body)
 	if error_code == connection_errors.no_conn_error then
 		if status_code == 200 then
@@ -183,6 +193,16 @@ local function get_total_playtime()
 		headers.Authorization = "Bearer " .. Global.telemetry._bearer_token
 
 		Steam:http_request(base_url .. endpoint, on_total_playtime_retrieved, headers)
+	end
+end
+
+local function get_oldest_achievement_date()
+	if get_platform_name() ~= "WIN32" then
+		return
+	end
+
+	if not Global.telemetry._oldest_achievement_date then
+		managers.achievment:request_oldest_achievement_date(on_oldest_achievement_date_retrieved)
 	end
 end
 
@@ -309,7 +329,8 @@ function Telemetry:init()
 			_login_screen_passed = false,
 			_bearer_token = nil,
 			_login_inprogress = false,
-			_login_retries = 0
+			_login_retries = 0,
+			_oldest_achievement_date = nil
 		}
 
 		print(log_name, "Telemetry initiated")
@@ -341,7 +362,6 @@ function Telemetry:update(t, dt)
 	end
 
 	if self._global._logged_in and send_period < self._dt then
-		self:send_on_player_heartbeat()
 		send_telemetry(self._global._telemetries_to_send_arr)
 		clear_table(self._global._telemetries_to_send_arr)
 
@@ -361,6 +381,7 @@ function Telemetry:enable(is_enable)
 	if is_enable then
 		get_geolocation()
 		get_total_playtime()
+		get_oldest_achievement_date()
 	end
 end
 
@@ -444,7 +465,7 @@ function Telemetry:on_login()
 		return
 	end
 
-	if not Global.telemetry._logged_in and Global.telemetry._geolocation and Global.telemetry._total_playtime ~= nil and Global.telemetry._login_retries < login_retry_limit then
+	if not Global.telemetry._logged_in and Global.telemetry._geolocation and Global.telemetry._total_playtime ~= nil and Global.telemetry._oldest_achievement_date ~= nil and Global.telemetry._login_retries < login_retry_limit then
 		self:send_on_player_logged_in()
 	end
 end
@@ -476,7 +497,8 @@ function Telemetry:send_on_player_logged_in()
 		TotalHeistTime = managers.statistics:get_play_time(),
 		TotalPlayTime = total_playtime_hours,
 		TitleID = Global.dlc_manager.all_dlc_data.full_game.app_id,
-		Location = self._global._geolocation
+		Location = self._global._geolocation,
+		["Oldest Achievement"] = self._global._oldest_achievement_date
 	}
 	local installed_dlc_list = {}
 
@@ -561,13 +583,15 @@ function Telemetry:on_start_heist()
 		self._heist_id = Utility:generate_uuid()
 	end
 
-	self._heist_name = ""
+	self._heist_name = "invalid heist name"
+	self._map_name = "invalid map name"
 
 	if managers.job:current_level_data() then
 		self._heist_name = managers.job:current_level_data().name_id
+		self._map_name = managers.job:current_level_data().world_name
 	end
 
-	self._heist_type = ""
+	self._heist_type = "invalid heist type"
 
 	if managers.job:current_stage_data() then
 		self._heist_type = managers.job:current_stage_data().type_id
@@ -658,7 +682,7 @@ function Telemetry:send_on_player_heist_start()
 	end
 
 	local telemetry_payload = {
-		MapName = self._heist_name,
+		MapName = self._map_name,
 		HeistName = self._heist_name,
 		HeistID = self._heist_id,
 		HeistType = self._heist_type,
@@ -690,7 +714,7 @@ function Telemetry:send_on_player_heist_end()
 	end
 
 	local telemetry_payload = {
-		MapName = self._heist_name,
+		MapName = self._map_name,
 		HeistName = self._heist_name,
 		HeistID = self._heist_id,
 		HeistEndReason = self._end_reason,
@@ -760,7 +784,7 @@ function Telemetry:send_on_player_heartbeat()
 		return
 	end
 
-	local map_name = ""
+	local map_name = "invalid map name"
 
 	if managers.menu:active_menu() then
 		map_name = managers.menu:active_menu().id
@@ -804,12 +828,16 @@ function Telemetry:send_on_player_tutorial(id)
 		elseif managers.job:current_job_id() == "short2" then
 			tutorial_name = "GetTheCoke"
 		end
+	else
+		return
 	end
 
 	local step = ""
 
 	if managers.job:current_level_id() then
 		step = string.sub(managers.job:current_level_id(), 8)
+	else
+		return
 	end
 
 	local telemetry_payload = {

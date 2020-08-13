@@ -19,13 +19,24 @@ function GenericDialog:init(manager, data, is_title_outside)
 		end
 	end
 
-	self._ws = self._data.ws or manager:_get_ws()
-	self._panel_script = _G[self.PANEL_SCRIPT_CLASS]:new(self._ws, self._data.title or "", self._data.text or "", self._data, {
+	local text_config = {
 		no_close_legend = true,
-		type = self._data.type or "system_menu",
+		no_scroll_legend = true,
+		title_font = data.title_font,
+		title_font_size = data.title_font_size,
+		font = data.font,
+		font_size = data.font_size,
+		w = data.w or 420,
+		h = data.h or 400,
 		use_indicator = data.indicator or data.no_buttons,
-		is_title_outside = is_title_outside
-	})
+		is_title_outside = is_title_outside,
+		use_text_formating = data.use_text_formating,
+		text_formating_color = data.text_formating_color,
+		text_formating_color_table = data.text_formating_color_table,
+		text_blend_mode = data.text_blend_mode
+	}
+	self._ws = self._data.ws or manager:_get_ws()
+	self._panel_script = _G[self.PANEL_SCRIPT_CLASS]:new(self._ws, self._data.title or "", self._data.text or "", self._data, text_config)
 
 	self._panel_script:add_background()
 	self._panel_script:set_layer(_G.tweak_data.gui.DIALOG_LAYER)

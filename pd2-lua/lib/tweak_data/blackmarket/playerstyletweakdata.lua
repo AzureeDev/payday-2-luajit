@@ -1555,6 +1555,45 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		sequence = "set_ehtan"
 	}
 	self.player_styles.slaughterhouse.characters.ecp_male = slaughterhouse_characters_male_fat
+	self.player_styles.continental = {
+		name_id = "bm_suit_contintental",
+		desc_id = "bm_suit_contintental_desc",
+		global_value = "anv",
+		texture_bundle_folder = "anv",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_anv/characters/anv_acc_continental/anv_acc_fps_continental/anv_acc_fps_continental",
+		characters = {}
+	}
+	local continental_characters_male = {
+		third_unit = "units/pd2_dlc_anv/characters/anv_acc_continental/anv_acc_continental_male_average/anv_acc_continental_male_average"
+	}
+
+	set_characters_data("continental", characters_male, continental_characters_male)
+
+	local continental_characters_male_big = {
+		third_unit = "units/pd2_dlc_anv/characters/anv_acc_continental/anv_acc_continental_male_big/anv_acc_continental_male_big"
+	}
+
+	set_characters_data("continental", characters_male_big, continental_characters_male_big)
+
+	local continental_characters_female = {
+		third_unit = "units/pd2_dlc_anv/characters/anv_acc_continental/anv_acc_continental_female_average/anv_acc_continental_female_average"
+	}
+
+	set_characters_data("continental", characters_female, continental_characters_female)
+
+	local continental_characters_female_big = {
+		third_unit = "units/pd2_dlc_anv/characters/anv_acc_continental/anv_acc_continental_female_big/anv_acc_continental_female_big"
+	}
+
+	set_characters_data("continental", characters_female_big, continental_characters_female_big)
+
+	local continental_characters_male_fat = {
+		third_unit = "units/pd2_dlc_anv/characters/anv_acc_continental/anv_acc_continental_male_fat/anv_acc_continental_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.continental.characters.ecp_male = continental_characters_male_fat
 end
 
 function BlackMarketTweakData:get_player_style_value(player_style, character_name, key)
@@ -1757,6 +1796,8 @@ function BlackMarketTweakData:build_player_style_list(tweak_data)
 		y_gv = y_td.global_value or y_td.dlc or "normal"
 		x_sn = x_gv and tweak_data.lootdrop.global_values[x_gv].sort_number or 0
 		y_sn = y_gv and tweak_data.lootdrop.global_values[y_gv].sort_number or 0
+		x_sn = x_sn + (x_td.sort_number or 0)
+		y_sn = y_sn + (y_td.sort_number or 0)
 
 		if x_sn ~= y_sn then
 			return x_sn < y_sn

@@ -25,9 +25,48 @@ function PrePlanningManager:init()
 	self._players_votes = {}
 	self._finished_preplan = nil
 	self._disabled_types = {}
+
+	if not Global.preplanning_manager then
+		Global.preplanning_manager = {
+			rebuy_assets = {}
+		}
+	end
+
+	self._rebuy_assets = Global.preplanning_manager.rebuy_assets
+	self._rebuy_assets.reminder_active = true
 end
 
 function PrePlanningManager:post_init()
+end
+
+function PrePlanningManager:on_preplanning_open()
+	if self:get_can_rebuy_assets() and self._rebuy_assets.reminder_active then
+		self._rebuy_assets.reminder_active = false
+
+		self:open_rebuy_menu()
+	end
+end
+
+function PrePlanningManager:open_rebuy_menu()
+	if not self:get_can_rebuy_assets() then
+		return
+	end
+
+	local params = {
+		yes_func = callback(self, self, "reserve_rebuy_mission_elements"),
+		rebuy_assets = self._rebuy_assets.assets,
+		votes = self._rebuy_assets.votes
+	}
+
+	managers.menu:show_confirm_preplanning_rebuy(params)
+end
+
+function PrePlanningManager:get_can_rebuy_assets()
+	return self._rebuy_assets and self._rebuy_assets.assets and #self._rebuy_assets.assets ~= 0 and self._rebuy_assets.level_id == managers.job:current_level_id()
+end
+
+function PrePlanningManager:reset_rebuy_assets()
+	Global.preplanning_manager.rebuy_assets = {}
 end
 
 function PrePlanningManager:register_element(element)
@@ -143,6 +182,22 @@ end
 
 function PrePlanningManager:server_vote_on_plan(type, id, peer_id)
 	self:_server_vote_on_plan(type, id, peer_id)
+end
+
+function PrePlanningManager:mass_vote_on_plan(type, id)
+	local peer_id = managers.network:session():local_peer():id()
+
+	if Network:is_server() then
+		self:server_mass_vote_on_plan(type, id)
+	else
+		managers.network:session():send_to_host("reserve_preplanning", type, id, 3)
+	end
+end
+
+function PrePlanningManager:server_mass_vote_on_plan(type, id)
+	for _, peer in pairs(managers.network:session():all_peers()) do
+		self:_server_vote_on_plan(type, id, peer:id())
+	end
 end
 
 function PrePlanningManager:_server_vote_on_plan(type, id, peer_id)
@@ -374,8 +429,18 @@ function PrePlanningManager:can_reserve_mission_element(type, peer_id)
 	local type_total_pass = not type_total or type_total_count < type_total
 	local category_player_pass = not category_max_per_player or category_player_count < category_max_per_player
 	local category_total_pass = not category_total or category_total_count < category_total
+	local dlc_pass = true
+	local upgrade_pass = true
 
-	return type_player_pass and type_total_pass and category_player_pass and category_total_pass, 4
+	if type_data.dlc_lock then
+		dlc_pass = managers.dlc:is_dlc_unlocked(type_data.dlc_lock)
+	end
+
+	if type_data.upgrade_lock then
+		upgrade_pass = managers.player:has_category_upgrade(type_data.upgrade_lock.category, type_data.upgrade_lock.upgrade)
+	end
+
+	return type_player_pass and type_total_pass and category_player_pass and category_total_pass and dlc_pass and upgrade_pass, 4
 end
 
 function PrePlanningManager:reserve_mission_element(type, id)
@@ -473,6 +538,27 @@ function PrePlanningManager:client_reserve_mission_element(type, id, peer_id)
 	end
 end
 
+function PrePlanningManager:reserve_rebuy_mission_elements()
+	if not self._rebuy_assets then
+		return
+	end
+
+	for _, asset in ipairs(self._rebuy_assets.assets) do
+		local td = self:get_tweak_data_by_type(asset.type)
+		local can_unlock = self:can_reserve_mission_element(asset.type)
+
+		if can_unlock then
+			self:reserve_mission_element(asset.type, asset.id)
+		end
+	end
+
+	for _, plan in ipairs(self._rebuy_assets.votes) do
+		if self:can_vote_on_plan(plan.type, managers.network:session():local_peer():id()) then
+			self:mass_vote_on_plan(plan.type, plan.id)
+		end
+	end
+end
+
 function PrePlanningManager:on_multi_profile_changed()
 	local upgrade_lock, upgrade_unlocked, type, index, type_data = nil
 	local peer_id = managers.network:session():local_peer():id()
@@ -503,7 +589,7 @@ function PrePlanningManager:get_reserved_mission_element_data(id)
 	return self._reserved_mission_elements[id] and self._reserved_mission_elements[id].pack
 end
 
-function PrePlanningManager:_get_type_cost(type)
+function PrePlanningManager:get_type_cost(type)
 	return managers.money:get_preplanning_type_cost(type)
 end
 
@@ -513,7 +599,7 @@ function PrePlanningManager:get_reserved_local_cost()
 
 	for id, data in pairs(self._reserved_mission_elements) do
 		if data.peer_id == peer_id then
-			total_cost = total_cost + self:_get_type_cost(data.pack[1])
+			total_cost = total_cost + self:get_type_cost(data.pack[1])
 		end
 	end
 
@@ -580,6 +666,39 @@ function PrePlanningManager:on_execute_preplanning()
 				end
 			end
 		end
+
+		if self._reserved_mission_elements then
+			Global.preplanning_manager.rebuy_assets.assets = {}
+
+			for id, asset in pairs(self._reserved_mission_elements) do
+				local asset_type = asset.pack[1]
+				local index = asset.pack[2]
+
+				table.insert(Global.preplanning_manager.rebuy_assets.assets, {
+					id = id,
+					type = asset_type,
+					index = index
+				})
+			end
+		end
+
+		local winners = self:get_current_majority_votes()
+
+		if winners then
+			Global.preplanning_manager.rebuy_assets.votes = {}
+
+			for _, data in pairs(winners) do
+				local type, index = unpack(data)
+
+				table.insert(Global.preplanning_manager.rebuy_assets.votes, {
+					index = index,
+					id = self:get_mission_element_id(type, index),
+					type = type
+				})
+			end
+		end
+
+		Global.preplanning_manager.rebuy_assets.level_id = managers.job:current_level_id()
 	end
 
 	self._reserved_mission_elements = {}
@@ -934,6 +1053,10 @@ function PrePlanningManager:get_element_name(element)
 	return managers.localization:text("menu_" .. tostring(element:editor_name()))
 end
 
+function PrePlanningManager:get_element_name_by_type_index(type, index)
+	return managers.localization:text("menu_" .. self._mission_elements_by_type[type][index]:editor_name())
+end
+
 function PrePlanningManager:get_type_name(type)
 	local type_data = tweak_data:get_raw_value("preplanning", "types", type)
 
@@ -953,7 +1076,28 @@ function PrePlanningManager:get_type_desc(type)
 	local text_string = desc_id and managers.localization:text(desc_id) or "MISSING NAME_ID: " .. type
 	local cost_money = managers.money:get_preplanning_type_cost(type)
 	local cost_budget = self:get_type_budget_cost(type)
-	text_string = text_string .. "\n"
+	text_string = text_string .. "\n\n"
+
+	if cost_money == 0 and cost_budget == 0 then
+		text_string = text_string .. managers.localization:text("menu_pp_free_of_charge")
+	else
+		text_string = text_string .. managers.localization:text("menu_pp_tooltip_costs", {
+			money = managers.experience:cash_string(cost_money),
+			budget = cost_budget
+		})
+	end
+
+	return text_string
+end
+
+function PrePlanningManager:get_type_cost_text(type)
+	local type_data = tweak_data:get_raw_value("preplanning", "types", type)
+
+	debug_assert(type_data, "[PrePlanningManager:get_type_desc] Type do not exist in tweak data!", "type", type)
+
+	local text_string = ""
+	local cost_money = managers.money:get_preplanning_type_cost(type)
+	local cost_budget = self:get_type_budget_cost(type)
 
 	if cost_money == 0 and cost_budget == 0 then
 		text_string = text_string .. managers.localization:text("menu_pp_free_of_charge")
@@ -973,6 +1117,10 @@ end
 
 function PrePlanningManager:get_category_by_type(type)
 	return tweak_data:get_raw_value("preplanning", "types", type, "category")
+end
+
+function PrePlanningManager:get_tweak_data_by_type(type)
+	return tweak_data:get_raw_value("preplanning", "types", type)
 end
 
 function PrePlanningManager:get_category_name(category)

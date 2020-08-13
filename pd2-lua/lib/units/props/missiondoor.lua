@@ -91,6 +91,23 @@ function MissionDoor.set_mission_door_device_powered(unit, powered, enabled_inte
 	unit:timer_gui():set_powered(powered, enabled_interaction)
 end
 
+function MissionDoor:set_jammed(jammed)
+	self._jammed = jammed
+	local drills = self._devices.drill
+
+	if drills then
+		for _, unit_data in ipairs(drills.units) do
+			if unit_data.placed and alive(unit_data.unit) then
+				unit_data.unit:timer_gui():set_jammed(jammed)
+
+				if managers.network:session() then
+					managers.network:session():send_to_peers_synched("set_mission_door_device_powered", unit_data.unit, jammed, false)
+				end
+			end
+		end
+	end
+end
+
 function MissionDoor:set_powered(powered)
 	self._powered = powered
 	local drills = self._devices.drill

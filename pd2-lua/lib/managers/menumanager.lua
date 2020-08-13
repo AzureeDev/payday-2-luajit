@@ -3886,6 +3886,7 @@ function MenuCallbackHandler:_dialog_end_game_yes()
 		managers.groupai:state():set_AI_enabled(false)
 	end
 
+	managers.preplanning:reset_rebuy_assets()
 	managers.menu:post_event("menu_exit")
 	managers.menu:close_menu("menu_pause")
 	setup:load_start_menu()
@@ -3921,6 +3922,7 @@ function MenuCallbackHandler:abort_mission()
 	local function yes_func()
 		if game_state_machine:current_state_name() ~= "disconnected" then
 			self:load_start_menu_lobby()
+			managers.preplanning:reset_rebuy_assets()
 		end
 	end
 
@@ -6638,14 +6640,14 @@ function MenuJukeboxHeistTracks:_have_music(job_id)
 	if job_tweak.job_wrapper then
 		for _, wrapped_job in ipairs(job_tweak.job_wrapper) do
 			for _, level_data in ipairs(tweak_data.narrative.jobs[wrapped_job].chain) do
-				if tweak_data.levels[level_data.level_id].music ~= "no_music" then
+				if tweak_data.levels:get_music_style(level_data.level_id) == "heist" then
 					return true
 				end
 			end
 		end
 	else
 		for _, level_data in ipairs(job_tweak.chain) do
-			if level_data.level_id and tweak_data.levels[level_data.level_id].music ~= "no_music" then
+			if tweak_data.levels:get_music_style(level_data.level_id) == "heist" then
 				return true
 			end
 		end
@@ -7034,14 +7036,14 @@ function MenuJukeboxGhostTracks:_have_music_ext(job_id)
 	if job_tweak.job_wrapper then
 		for _, wrapped_job in ipairs(job_tweak.job_wrapper) do
 			for _, level_data in ipairs(tweak_data.narrative.jobs[wrapped_job].chain) do
-				if tweak_data.levels[level_data.level_id].music_ext_start then
+				if tweak_data.levels:get_music_style(level_data.level_id) == "ghost" then
 					return true
 				end
 			end
 		end
 	else
 		for _, level_data in ipairs(job_tweak.chain) do
-			if level_data.level_id and tweak_data.levels[level_data.level_id].music_ext_start then
+			if tweak_data.levels:get_music_style(level_data.level_id) == "ghost" then
 				return true
 			end
 		end
@@ -7234,6 +7236,20 @@ function MenuPrePlanningInitiator:create_info_items(node, params, selected_item)
 	}
 
 	self:create_item(node, params)
+
+	if managers.preplanning:get_can_rebuy_assets() then
+		params.name = "preplanning_rebuy"
+		params.callback = "open_preplanning_rebuy"
+		params.text_id = managers.localization:text("menu_item_preplanning_rebuy")
+		params.tooltip = {
+			texture = tweak_data.preplanning.gui.custom_icons_path,
+			texture_rect = tweak_data.preplanning:get_custom_texture_rect(45),
+			name = params.text_id,
+			desc = managers.localization:text("menu_item_preplanning_rebuy_desc")
+		}
+
+		self:create_item(node, params)
+	end
 
 	return node, selected_item
 end
@@ -8000,6 +8016,10 @@ end
 
 function MenuCallbackHandler:clear_preplanning_type_filter()
 	managers.menu_component:set_preplanning_type_filter(false)
+end
+
+function MenuCallbackHandler:open_preplanning_rebuy(item)
+	managers.preplanning:open_rebuy_menu()
 end
 
 function MenuCallbackHandler:open_preplanning_help(item)

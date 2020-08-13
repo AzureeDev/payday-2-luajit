@@ -81,6 +81,28 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.anv_bundle = {
+		free = true,
+		content = {}
+	}
+	self.anv_bundle.content.loot_global_value = "anv"
+	self.anv_bundle.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "continental",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "continental",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_anv_01",
+			amount = 1
+		}
+	}
 	self.atw_bundle = {
 		dlc = "has_atw",
 		content = {}

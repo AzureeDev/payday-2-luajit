@@ -2012,6 +2012,242 @@ function MenuManager:show_confirm_mission_asset_buy(params)
 	managers.system_menu:show(dialog_data)
 end
 
+function MenuManager:show_confirm_preplanning_rebuy(params)
+	local dialog_data = {
+		title = "Rebuy Assets",
+		text = "",
+		text_formating_color_table = {},
+		use_text_formating = true,
+		w = 600
+	}
+	local red = tweak_data.screen_colors.important_1
+	local grey = tweak_data.screen_color_grey
+	local total_money_cost = 0
+	local total_favor_cost = 0
+
+	for _, plan in pairs(params.votes) do
+		local category_text = utf8.to_upper(managers.preplanning:get_category_name_by_type(plan.type))
+		local location_text = managers.preplanning:get_element_name_by_type_index(plan.type, plan.index)
+		local name_text = managers.preplanning:get_type_name(plan.type)
+		local cost_text = managers.preplanning:get_type_cost_text(plan.type)
+		dialog_data.text = dialog_data.text .. category_text .. "\n"
+		dialog_data.text = dialog_data.text .. "  -" .. name_text
+
+		if not string.match(location_text, "ERROR") then
+			dialog_data.text = dialog_data.text .. " - " .. location_text
+		end
+
+		dialog_data.text = dialog_data.text .. " (" .. cost_text .. ") \n \n"
+		total_money_cost = total_money_cost + managers.preplanning:get_type_cost(plan.type)
+		total_favor_cost = total_favor_cost + managers.preplanning:get_type_budget_cost(plan.type)
+	end
+
+	local category_list = {}
+
+	for _, asset in ipairs(params.rebuy_assets) do
+		local cat_name = utf8.to_upper(managers.preplanning:get_category_name_by_type(asset.type))
+		local create_new_category = true
+
+		for _, category in ipairs(category_list) do
+			if cat_name == category.category then
+				table.insert(category.assets, {
+					type = asset.type,
+					id = asset.id,
+					index = asset.index
+				})
+
+				create_new_category = false
+			end
+		end
+
+		if create_new_category then
+			table.insert(category_list, {
+				category = cat_name,
+				assets = {
+					{
+						type = asset.type,
+						id = asset.id,
+						index = asset.index
+					}
+				}
+			})
+		end
+	end
+
+	for _, category in ipairs(category_list) do
+		dialog_data.text = dialog_data.text .. category.category .. " \n"
+
+		for _, asset in ipairs(category.assets) do
+			local money_cost = managers.preplanning:get_type_cost(asset.type)
+			local favor_cost = managers.preplanning:get_type_budget_cost(asset.type)
+			local td = managers.preplanning:get_tweak_data_by_type(asset.type)
+			local name_text = managers.preplanning:get_type_name(asset.type)
+			local cost_text = managers.preplanning:get_type_cost_text(asset.type)
+			local location_text = managers.preplanning:get_element_name_by_type_index(asset.type, asset.index)
+			local can_unlock = true
+
+			if td.dlc_lock then
+				can_unlock = can_unlock and managers.dlc:is_dlc_unlocked(td.dlc_lock)
+			end
+
+			if td.upgrade_lock then
+				can_unlock = can_unlock and managers.player:has_category_upgrade(td.upgrade_lock.category, td.upgrade_lock.upgrade)
+			end
+
+			if not can_unlock then
+				table.insert(dialog_data.text_formating_color_table, grey)
+
+				dialog_data.text = dialog_data.text .. "##"
+			else
+				total_money_cost = total_money_cost + money_cost
+				total_favor_cost = total_favor_cost + favor_cost
+			end
+
+			dialog_data.text = dialog_data.text .. "   -" .. name_text
+
+			if not string.match("ERROR", location_text) then
+				dialog_data.text = dialog_data.text .. " - " .. location_text
+			end
+
+			dialog_data.text = dialog_data.text .. " (" .. cost_text .. ")"
+
+			if td.upgrade_lock and not can_unlock then
+				dialog_data.text = dialog_data.text .. "##"
+
+				table.insert(dialog_data.text_formating_color_table, red)
+
+				dialog_data.text = dialog_data.text .. " " .. managers.localization:text("menu_asset_buy_all_req_skill")
+			elseif td.dlc_lock and not can_unlock then
+				dialog_data.text = dialog_data.text .. "##"
+
+				table.insert(dialog_data.text_formating_color_table, red)
+
+				dialog_data.text = dialog_data.text .. " " .. managers.localization:text("menu_asset_buy_all_req_dlc", {
+					dlc = managers.localization:text(self:get_dlc_by_id(td.dlc_lock).name_id)
+				})
+			end
+
+			dialog_data.text = dialog_data.text .. "\n"
+		end
+	end
+
+	dialog_data.text = dialog_data.text .. "\n"
+
+	if total_money_cost < managers.money:total() then
+		dialog_data.text = dialog_data.text .. managers.localization:text("dialog_preplanning_rebuy_assets", {
+			price = managers.experience:cash_string(total_money_cost),
+			favor = total_favor_cost
+		})
+		local yes_button = {
+			text = managers.localization:text("dialog_yes"),
+			callback_func = params.yes_func
+		}
+		local no_button = {
+			cancel_button = true,
+			text = managers.localization:text("dialog_no")
+		}
+		dialog_data.focus_button = 2
+		dialog_data.button_list = {
+			yes_button,
+			no_button
+		}
+	else
+		dialog_data.text = dialog_data.text .. "##" .. managers.localization:text("bm_menu_not_enough_cash") .. "##"
+
+		table.insert(dialog_data.text_formating_color_table, red)
+
+		local ok_button = {
+			text = managers.localization:text("dialog_ok"),
+			cancel_button = true
+		}
+		dialog_data.focus_button = 1
+		dialog_data.button_list = {
+			ok_button
+		}
+	end
+
+	managers.system_menu:show(dialog_data)
+end
+
+function MenuManager:show_confirm_mission_asset_buy_all(params)
+	local dialog_data = {
+		title = managers.localization:to_upper_text("menu_asset_buy_all"),
+		text = "",
+		text_formating_color_table = {},
+		use_text_formating = true
+	}
+	local total_cost = 0
+
+	for _, asset_id in ipairs(params.locked_asset_ids) do
+		local td = managers.assets:get_asset_tweak_data_by_id(asset_id)
+		local cost = managers.money:get_mission_asset_cost_by_id(asset_id)
+		local can_unlock = managers.assets:get_asset_can_unlock_by_id(asset_id)
+
+		if not can_unlock then
+			dialog_data.text = dialog_data.text .. "##"
+
+			table.insert(dialog_data.text_formating_color_table, tweak_data.screen_colors.achievement_grey)
+			table.insert(dialog_data.text_formating_color_table, tweak_data.screen_colors.important_1)
+		end
+
+		dialog_data.text = dialog_data.text .. "-" .. managers.localization:text(td.name_id) .. " (" .. managers.experience:cash_string(cost) .. ")"
+
+		if td.upgrade_lock and not can_unlock then
+			dialog_data.text = dialog_data.text .. "##  " .. managers.localization:text("menu_asset_buy_all_req_skill") .. "\n"
+		elseif td.dlc_lock and not can_unlock then
+			dialog_data.text = dialog_data.text .. "##  " .. managers.localization:text("menu_asset_buy_all_req_dlc", {
+				dlc = managers.localization:text(self:get_dlc_by_id(td.dlc_lock).name_id)
+			}) .. "\n"
+		else
+			total_cost = total_cost + cost
+			dialog_data.text = dialog_data.text .. "\n"
+		end
+	end
+
+	if total_cost ~= 0 then
+		dialog_data.text = dialog_data.text .. "\n" .. managers.localization:text("menu_asset_buy_all_desc", {
+			price = managers.experience:cash_string(total_cost)
+		})
+		local yes_button = {
+			text = managers.localization:text("dialog_yes"),
+			callback_func = params.yes_func
+		}
+		local no_button = {
+			text = managers.localization:text("dialog_no"),
+			callback_func = params.no_func,
+			cancel_button = true
+		}
+		dialog_data.focus_button = 2
+		dialog_data.button_list = {
+			yes_button,
+			no_button
+		}
+	else
+		dialog_data.text = dialog_data.text .. "\n" .. managers.localization:text("menu_asset_buy_all_fail")
+		local ok_button = {
+			text = managers.localization:text("dialog_ok"),
+			callback_func = params.ok_func,
+			cancel_button = true
+		}
+		dialog_data.focus_button = 1
+		dialog_data.button_list = {
+			ok_button
+		}
+	end
+
+	managers.system_menu:show(dialog_data)
+end
+
+function MenuManager:get_dlc_by_id(dlc_id)
+	for _, dlc in ipairs(tweak_data.gui.content_updates.item_list) do
+		if dlc.id == dlc_id then
+			return dlc
+		end
+	end
+
+	return "Failed to get DLC"
+end
+
 function MenuManager:show_confirm_buy_premium_contract(params)
 	local dialog_data = {
 		title = managers.localization:text("dialog_premium_buy_title"),

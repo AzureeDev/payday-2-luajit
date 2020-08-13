@@ -264,6 +264,11 @@ function MissionEndState:at_enter(old_state, params)
 	end
 
 	managers.music:on_mission_end()
+
+	if self._success then
+		managers.preplanning:reset_rebuy_assets()
+	end
+
 	Telemetry:on_end_heist(self._type, total_exp_gained)
 end
 
@@ -1518,6 +1523,24 @@ function MissionEndState:chk_complete_heist_achievements()
 						valid_mask_count = valid_mask_count + 1
 					else
 						all_masks_valid = false
+					end
+				end
+
+				for _, char in pairs(managers.criminals._characters) do
+					if not char.data.ai then
+						if true then
+							-- Nothing
+						end
+					else
+						local current_mask = char.data.mask_id
+
+						if table.contains(available_masks, current_mask) then
+							table.delete(available_masks, current_mask)
+
+							valid_mask_count = valid_mask_count + 1
+						else
+							all_masks_valid = false
+						end
 					end
 				end
 

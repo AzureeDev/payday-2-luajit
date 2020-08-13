@@ -246,7 +246,10 @@ function NetworkPeer:_verify_outfit_data()
 	local mask_blueprint_lookup = {
 		color = "colors",
 		pattern = "textures",
-		material = "materials"
+		material = "materials",
+		color_a = "mask_colors",
+		color_b = "mask_colors",
+		color = nil
 	}
 
 	for item_type, item in pairs(outfit) do

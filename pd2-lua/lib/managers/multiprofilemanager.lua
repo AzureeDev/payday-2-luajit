@@ -90,7 +90,7 @@ function MultiProfileManager:load_current()
 		mcm:close_inventory_gui()
 		mcm:create_inventory_gui(node)
 	elseif mcm._mission_briefing_gui then
-		managers.assets:reload_locks()
+		managers.assets:on_profile_switch()
 		managers.preplanning:on_multi_profile_changed()
 
 		local node = mcm._mission_briefing_gui._node

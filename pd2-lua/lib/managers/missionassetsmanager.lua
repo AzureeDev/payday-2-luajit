@@ -155,8 +155,6 @@ function MissionAssetsManager:_setup_mission_assets()
 			return x.show
 		elseif x.unlocked ~= y.unlocked then
 			return x.unlocked
-		elseif x.can_unlock ~= y.can_unlock then
-			return x.can_unlock
 		end
 
 		if x.no_mystery ~= y.no_mystery then
@@ -184,7 +182,6 @@ function MissionAssetsManager:init_finalize()
 	end
 
 	self:create_asset_textures()
-	self:_check_triggers("asset")
 end
 
 function MissionAssetsManager:clear()
@@ -199,30 +196,50 @@ function MissionAssetsManager:reset()
 	self:_setup()
 
 	self._triggers = old_triggers
-
-	self:_check_triggers("asset")
 end
 
 function MissionAssetsManager:on_simulation_ended()
 	self:reset()
 end
 
-function MissionAssetsManager:reload_locks()
-	managers.money:refund_mission_assets()
+function MissionAssetsManager:on_profile_switch()
+	local assets_to_update = {}
+	self._locally_unlocked_assets = self._locally_unlocked_assets or {}
 
-	local unlocked = self:get_unlocked_asset_ids()
-
-	self:reset()
-	self:create_asset_textures()
-
-	for _, id in ipairs(unlocked) do
-		if self:get_asset_can_unlock_by_id(id) then
-			self:unlock_asset(id, false)
+	for _, id in pairs(self._locally_unlocked_assets) do
+		if self._tweak_data[id].upgrade_lock and not self:get_asset_can_unlock_by_id(id) then
+			table.insert(assets_to_update, id)
 		end
 	end
 
-	if WalletGuiObject then
-		WalletGuiObject.refresh()
+	if #assets_to_update ~= 0 then
+		local string_table = self:_make_string_index_table(assets_to_update)
+
+		if Network:is_server() then
+			self:server_recheck_assets(string_table)
+		else
+			managers.network:session():send_to_host("server_recheck_assets", string_table)
+		end
+	end
+end
+
+function MissionAssetsManager:on_peer_removed(peer_id)
+	local asset_ids_to_relock = {}
+
+	for _, asset in ipairs(self._global.assets) do
+		local td = self:get_asset_tweak_data_by_id(asset.id)
+
+		if asset.unlocked and td.upgrade_lock and asset.peer_id and asset.peer_id == peer_id then
+			table.insert(asset_ids_to_relock, asset.id)
+
+			asset.peer_id = ""
+		end
+	end
+
+	if #asset_ids_to_relock ~= 0 then
+		local string_table = self:_make_string_index_table(asset_ids_to_relock)
+
+		self:server_recheck_assets(string_table)
 	end
 end
 
@@ -234,7 +251,7 @@ function MissionAssetsManager:add_trigger(id, type, asset_id, callback)
 	}
 end
 
-function MissionAssetsManager:_check_triggers(type)
+function MissionAssetsManager:check_triggers(type)
 	if not self._triggers[type] then
 		return
 	end
@@ -303,6 +320,12 @@ function MissionAssetsManager:unlock_asset(asset_id, is_show_chat_message)
 end
 
 function MissionAssetsManager:_on_asset_unlocked(asset_id)
+	self._locally_unlocked_assets = self._locally_unlocked_assets or {}
+
+	if not table.contains(self._locally_unlocked_assets, asset_id) then
+		table.insert(self._locally_unlocked_assets, asset_id)
+	end
+
 	self._awarded_assets = self._awarded_assets or {}
 
 	if not table.contains(self._awarded_assets, asset_id) then
@@ -320,20 +343,16 @@ function MissionAssetsManager:_on_asset_unlocked(asset_id)
 	end
 end
 
-function MissionAssetsManager:get_money_spent()
-	return self._money_spent
-end
-
 function MissionAssetsManager:server_unlock_asset(asset_id, is_show_chat_message, peer)
 	if not self:is_unlock_asset_allowed() then
 		return
 	end
 
 	peer = peer or managers.network:session():local_peer()
+	self:_get_asset_by_id(asset_id).peer_id = peer:id()
 
 	managers.network:session():send_to_peers_synched("sync_unlock_asset", asset_id, is_show_chat_message, peer:id())
 	self:sync_unlock_asset(asset_id, is_show_chat_message, peer)
-	self:_check_triggers("asset")
 end
 
 function MissionAssetsManager:sync_unlock_asset(asset_id, is_show_chat_message, peer)
@@ -368,45 +387,57 @@ function MissionAssetsManager:sync_unlock_asset(asset_id, is_show_chat_message, 
 	end
 end
 
-function MissionAssetsManager:get_every_asset_ids()
-	local asset_ids = {}
-
-	for id, asset in pairs(tweak_data.assets) do
-		table.insert(asset_ids, id)
+function MissionAssetsManager:server_recheck_assets(string_table)
+	if string_table == "" then
+		return
 	end
 
-	return asset_ids
-end
+	local asset_ids = self:_read_string_index_table(string_table)
 
-function MissionAssetsManager:get_all_asset_ids(only_visible)
-	local asset_ids = {}
+	for _, id in ipairs(asset_ids) do
+		local td = self:get_asset_tweak_data_by_id(id)
 
-	for _, asset in ipairs(self._global.assets) do
-		local is_visible = not only_visible or asset.show
-		local is_local_only = asset.local_only and self:is_asset_unlockable(asset.id)
-
-		if is_visible or is_local_only then
-			table.insert(asset_ids, asset.id)
+		if not td.upgrade_lock then
+			return
 		end
 	end
 
-	return asset_ids
+	managers.network:session():send_to_peers_synched("sync_relock_assets", string_table)
+	self:sync_relock_assets(string_table)
 end
 
-function MissionAssetsManager:get_unlocked_asset_ids(only_can_unlock)
-	local asset_ids = {}
+function MissionAssetsManager:sync_relock_assets(string_table)
+	local asset_ids = self:_read_string_index_table(string_table)
 
-	for _, asset in ipairs(self._global.assets) do
-		if asset.unlocked and (not only_can_unlock or asset.can_unlock) then
-			table.insert(asset_ids, asset.id)
+	if #asset_ids ~= 0 then
+		for _, id in ipairs(asset_ids) do
+			local asset = self:_get_asset_by_id(id)
+			asset.unlocked = false
+			self._locally_unlocked_assets = self._locally_unlocked_assets or {}
+
+			for i, asset_id in pairs(self._locally_unlocked_assets) do
+				if asset_id == id then
+					self._locally_unlocked_assets[i] = nil
+
+					managers.money:refund_mission_asset(id)
+
+					if WalletGuiObject then
+						WalletGuiObject.refresh()
+					end
+				end
+			end
+		end
+
+		self:reload_textures()
+	end
+end
+
+function MissionAssetsManager:unlock_all_availible_assets()
+	for _, asset in pairs(self._global.assets) do
+		if asset.show and not asset.unlocked and self:get_asset_can_unlock_by_id(asset.id) then
+			self:unlock_asset(asset.id, true)
 		end
 	end
-
-	return asset_ids
-end
-
-function MissionAssetsManager:get_default_asset_id()
-	return "none"
 end
 
 function MissionAssetsManager:_get_asset_by_id(id)
@@ -417,7 +448,7 @@ function MissionAssetsManager:_get_asset_by_id(id)
 	end
 end
 
-function MissionAssetsManager:is_asset_unlockable(id)
+function MissionAssetsManager:_is_asset_unlockable(id)
 	local asset_tweak_data = self:get_asset_tweak_data_by_id(id)
 
 	if not asset_tweak_data then
@@ -454,21 +485,72 @@ function MissionAssetsManager:get_asset_can_unlock_by_id(id)
 		return false
 	end
 
-	if self.ALLOW_CLIENTS_UNLOCK and is_client then
+	if asset then
 		local asset_tweak_data = self._tweak_data[id]
 
-		if asset_tweak_data.server_lock and asset and asset.can_unlock then
+		if self.ALLOW_CLIENTS_UNLOCK and is_client and asset_tweak_data.server_lock and asset and asset.can_unlock then
 			return true
 		end
 
 		if asset_tweak_data and asset_tweak_data.no_mystery and asset_tweak_data.money_lock then
-			return self:is_asset_unlockable(id)
+			return self:_is_asset_unlockable(id)
 		end
-	elseif asset and asset.can_unlock then
-		return true
 	end
 
 	return false
+end
+
+function MissionAssetsManager:get_every_asset_ids()
+	local asset_ids = {}
+
+	for id, asset in pairs(tweak_data.assets) do
+		table.insert(asset_ids, id)
+	end
+
+	return asset_ids
+end
+
+function MissionAssetsManager:get_all_asset_ids(only_visible)
+	local asset_ids = {}
+
+	for _, asset in ipairs(self._global.assets) do
+		local is_visible = not only_visible or asset.show
+		local is_local_only = asset.local_only and self:_is_asset_unlockable(asset.id)
+
+		if is_visible or is_local_only then
+			table.insert(asset_ids, asset.id)
+		end
+	end
+
+	return asset_ids
+end
+
+function MissionAssetsManager:get_unlocked_asset_ids(only_can_unlock)
+	local asset_ids = {}
+
+	for _, asset in ipairs(self._global.assets) do
+		if asset.unlocked and (not only_can_unlock or asset.can_unlock) then
+			table.insert(asset_ids, asset.id)
+		end
+	end
+
+	return asset_ids
+end
+
+function MissionAssetsManager:get_locked_asset_ids(only_can_unlock)
+	local asset_ids = {}
+
+	for _, asset in ipairs(self._global.assets) do
+		if asset.show and not asset.unlocked and (not only_can_unlock or self:_is_asset_unlockable(asset.id)) then
+			table.insert(asset_ids, asset.id)
+		end
+	end
+
+	return asset_ids
+end
+
+function MissionAssetsManager:get_default_asset_id()
+	return "none"
 end
 
 function MissionAssetsManager:get_asset_visible_by_id(id)
@@ -531,6 +613,10 @@ function MissionAssetsManager:is_unlock_asset_allowed()
 	local check_is_dropin = game_state_machine and game_state_machine:current_state() and game_state_machine:current_state().check_is_dropin and game_state_machine:current_state():check_is_dropin()
 
 	return not check_is_dropin
+end
+
+function MissionAssetsManager:get_money_spent()
+	return self._money_spent
 end
 
 function MissionAssetsManager:sync_save(data)
@@ -636,4 +722,39 @@ function MissionAssetsManager:is_all_textures_loaded()
 	end
 
 	return table.size(self._asset_textures_in_loading) == 0 and table.size(self._asset_textures_loaded) ~= 0
+end
+
+function MissionAssetsManager:reload_textures()
+	self._requested_textures = {}
+	self._asset_textures_in_loading = {}
+	self._asset_textures_loaded = {}
+
+	self:create_asset_textures()
+end
+
+function MissionAssetsManager:_make_string_index_table(asset_id_table)
+	local string_table = ""
+
+	for _, asset_id in ipairs(asset_id_table) do
+		for i, g_asset in ipairs(self._global.assets) do
+			if g_asset.id == asset_id then
+				string_table = string_table .. tostring(i) .. ","
+
+				break
+			end
+		end
+	end
+
+	return string_table
+end
+
+function MissionAssetsManager:_read_string_index_table(string_table)
+	local asset_id_table = {}
+	local table_with_strings = string.split(string_table, ",")
+
+	for _, s in ipairs(table_with_strings) do
+		table.insert(asset_id_table, self._global.assets[tonumber(s)].id)
+	end
+
+	return asset_id_table
 end

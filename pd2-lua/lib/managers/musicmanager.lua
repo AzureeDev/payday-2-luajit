@@ -262,6 +262,16 @@ function MusicManager:jukebox_ghost_specific()
 	return "heist"
 end
 
+function MusicManager:_heist_sah_track_fix()
+	for _, data in ipairs(tweak_data.music.track_ghost_list) do
+		if Global.music_manager.track_attachment.heist_sah == data.track then
+			Global.music_manager.track_attachment.heist_sah = "track_61"
+
+			return
+		end
+	end
+end
+
 function MusicManager:save_settings(data)
 	local state = {
 		custom_playlist = Global.music_manager.custom_playlist,
@@ -284,6 +294,7 @@ function MusicManager:load_settings(data)
 		Global.music_manager.unlocked_tracks = state.unlocked_tracks or {}
 
 		self:_set_default_values()
+		self:_heist_sah_track_fix()
 	end
 
 	if managers.network and not self._added_overlay_listeners then
@@ -339,17 +350,18 @@ end
 
 function MusicManager:current_track_string()
 	local level_data = Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
+	local music_style = tweak_data.levels:get_music_style_from_level_data(level_data)
 
-	if level_data and level_data.music_ext_start then
-		return utf8.to_upper(managers.localization:text("menu_jukebox_screen_" .. Global.music_manager.current_music_ext))
-	end
-
-	if level_data and level_data.music == "no_music" then
-		return utf8.to_upper(managers.localization:text("menu_jukebox_track_" .. Global.level_data.level_id))
-	end
-
-	if Global.music_manager.current_track then
-		return utf8.to_upper(managers.localization:text("menu_jukebox_" .. Global.music_manager.current_track))
+	if music_style == "heist" then
+		if Global.music_manager.current_track then
+			return managers.localization:to_upper_text("menu_jukebox_" .. Global.music_manager.current_track)
+		end
+	elseif music_style == "ghost" then
+		if Global.music_manager.current_music_ext then
+			return managers.localization:to_upper_text("menu_jukebox_screen_" .. Global.music_manager.current_music_ext)
+		end
+	elseif Global.level_data.level_id then
+		return managers.localization:to_upper_text("menu_jukebox_track_" .. Global.level_data.level_id)
 	end
 
 	return ""
@@ -587,7 +599,7 @@ function MusicManager:jukebox_default_tracks()
 		heist_nmh = "track_63",
 		heist_vit = "track_64_lcv",
 		heist_welcome_to_the_jungle1 = "track_04",
-		heist_sah = "music_tag",
+		heist_sah = "track_61",
 		heist_firestarter3 = "track_02",
 		heist_spa = "all",
 		heist_bex = "track_68",

@@ -851,7 +851,7 @@ function CrimeSpreeManager:generate_cosmetic_drops(amount)
 	local final_rewards = {}
 
 	for i, reward in ipairs(tweak_data.crime_spree.cosmetic_rewards) do
-		local unlocked = nil
+		local unlocked = false
 
 		if reward.type == "armor" then
 			unlocked = managers.blackmarket:armor_skin_unlocked(reward.id)
@@ -864,6 +864,14 @@ function CrimeSpreeManager:generate_cosmetic_drops(amount)
 						break
 					end
 				end
+			end
+		elseif reward.type == "weapon_skins" then
+			local td = tweak_data.blackmarket.weapon_skins[reward.id]
+
+			if td.is_a_color_skin then
+				local dlc = td.dlc or managers.dlc:global_value_to_dlc(td.global_value)
+				local global_value = td.global_value or managers.dlc:dlc_to_global_value(dlc)
+				unlocked = global_value and managers.blackmarket:has_item(global_value, "weapon_skins", reward.id)
 			end
 		end
 
@@ -892,6 +900,15 @@ function CrimeSpreeManager:generate_cosmetic_drops(amount)
 
 		if reward.type == "armor" then
 			managers.blackmarket:on_aquired_armor_skin(reward.id)
+		elseif reward.type == "weapon_skins" then
+			local td = tweak_data.blackmarket.weapon_skins[reward.id]
+
+			if td.is_a_color_skin then
+				local dlc = td.dlc or managers.dlc:global_value_to_dlc(td.global_value)
+				local global_value = td.global_value or managers.dlc:dlc_to_global_value(dlc)
+
+				managers.blackmarket:add_to_inventory(global_value, reward.type, reward.id)
+			end
 		end
 
 		table.insert(final_rewards, reward)

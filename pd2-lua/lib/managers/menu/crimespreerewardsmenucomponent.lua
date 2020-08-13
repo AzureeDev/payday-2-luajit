@@ -1149,7 +1149,8 @@ function CrimeSpreeRewardsMenuComponent:_update_cosmetic_drops()
 	local t = 0
 	local card_types = {
 		continental_coins = "upcard_coins",
-		armor = "upcard_cosmetic"
+		armor = "upcard_cosmetic",
+		weapon_skins = "upcard_cosmetic"
 	}
 
 	for i, reward in ipairs(cosmetic_rewards) do
@@ -1196,6 +1197,28 @@ function CrimeSpreeRewardsMenuComponent:_update_cosmetic_drops()
 			local rtd = tweak_data.economy.rarities[td.rarity]
 			rarity_name = managers.localization:to_upper_text(rtd.name_id)
 			rarity_color = rtd.color or tweak_data.screen_colors.text
+		elseif reward.type == "weapon_skins" then
+			local td = tweak_data.blackmarket.weapon_skins[reward.id]
+
+			if td.is_a_color_skin then
+				local dlc = td.dlc or managers.dlc:global_value_to_dlc(td.global_value)
+				local global_value = td.global_value or managers.dlc:dlc_to_global_value(dlc)
+				local global_value_tweak = tweak_data.lootdrop.global_values[global_value]
+				local guis_catalog = "guis/"
+				local bundle_folder = td.texture_bundle_folder
+
+				if bundle_folder then
+					guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
+				end
+
+				item_name = managers.localization:to_upper_text(td.name_id)
+				texture = guis_catalog .. "textures/pd2/blackmarket/icons/weapon_color/" .. reward.id
+
+				if global_value_tweak then
+					rarity_name = managers.localization:to_upper_text(global_value_tweak.name_id)
+					rarity_color = global_value_tweak.color
+				end
+			end
 		elseif reward.type == "continental_coins" then
 			texture = "guis/dlcs/chill/textures/pd2/safehouse/continental_coins_drop"
 			item_name = managers.experience:cash_string(reward.amount, "") .. " " .. managers.localization:to_upper_text("menu_cs_coins")
@@ -1501,6 +1524,19 @@ function CrimeSpreeRewardsMenuComponent:_update_rewards_list()
 			add_reward_text(managers.localization:text("menu_cs_reward_armor_skin", {
 				skin = name
 			}), col)
+		elseif reward.type == "weapon_skins" then
+			local td = tweak_data.blackmarket.weapon_skins[reward.id]
+
+			if td.is_a_color_skin then
+				local name = managers.localization:text(td.name_id)
+				local dlc = td.dlc or managers.dlc:global_value_to_dlc(td.global_value)
+				local global_value = td.global_value or managers.dlc:dlc_to_global_value(dlc)
+				local color = tweak_data.lootdrop.global_values[global_value] and tweak_data.lootdrop.global_values[global_value].color or tweak_data.screen_colors.text
+
+				add_reward_text(managers.localization:text("menu_cs_reward_weapon_color", {
+					skin = name
+				}), color)
+			end
 		elseif reward.type == "continental_coins" then
 			add_reward_text(managers.experience:cash_string(reward.amount, "") .. " " .. managers.localization:to_upper_text("menu_cs_coins"))
 		end

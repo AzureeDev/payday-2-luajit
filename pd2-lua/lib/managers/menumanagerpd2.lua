@@ -3362,6 +3362,10 @@ function MenuCallbackHandler:get_weapon_color_disabled_icon(item_option)
 		if managers.dlc:is_content_skirmish_locked("weapon_skins", id) then
 			return "guis/textures/pd2/skilltree/padlock"
 		end
+
+		if managers.dlc:is_content_crimespree_locked("weapon_skins", id) then
+			return "guis/textures/pd2/skilltree/padlock"
+		end
 	end
 
 	return "guis/textures/pd2/skilltree/padlock"

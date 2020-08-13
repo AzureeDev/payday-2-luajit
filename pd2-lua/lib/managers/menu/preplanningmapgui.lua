@@ -3050,6 +3050,8 @@ function PrePlanningMapGui:set_active_node(node)
 					self:set_map_position(px, py, location_group, false)
 				end
 			end
+
+			managers.preplanning:on_preplanning_open()
 		end
 
 		if not managers.menu:is_pc_controller() then

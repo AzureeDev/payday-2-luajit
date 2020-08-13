@@ -27,6 +27,7 @@ function GenericDLCManager:setup()
 	self:_modify_locked_content()
 	self:_create_achievement_locked_content_table()
 	self:_create_skirmish_locked_content_table()
+	self:_create_crimespree_locked_content_table()
 end
 
 function GenericDLCManager:_create_achievement_locked_content_table()
@@ -85,6 +86,17 @@ function GenericDLCManager:_create_skirmish_locked_content_table()
 				table.insert(self._skirmish_locked_content[category][entry], "a_" .. tostring(id))
 			end
 		end
+	end
+end
+
+function GenericDLCManager:_create_crimespree_locked_content_table()
+	self._crimespree_locked_content = {}
+
+	for index, reward in ipairs(tweak_data.crime_spree.cosmetic_rewards) do
+		self._crimespree_locked_content[reward.type] = self._crimespree_locked_content[reward.type] or {}
+		self._crimespree_locked_content[reward.type][reward.id] = self._crimespree_locked_content[reward.type][reward.id] or {}
+
+		table.insert(self._crimespree_locked_content[reward.type][reward.id], "cs_" .. tostring(index))
 	end
 end
 
@@ -205,6 +217,14 @@ end
 
 function GenericDLCManager:is_content_skirmish_locked(category, entry)
 	return self._skirmish_locked_content and self._skirmish_locked_content[category] and self._skirmish_locked_content[category][entry] and true or false
+end
+
+function GenericDLCManager:crimespree_locked_content()
+	return self._crimespree_locked_content
+end
+
+function GenericDLCManager:is_content_crimespree_locked(category, entry)
+	return self._crimespree_locked_content and self._crimespree_locked_content[category] and self._crimespree_locked_content[category][entry] and true or false
 end
 
 function GenericDLCManager:dlc_locked_content()

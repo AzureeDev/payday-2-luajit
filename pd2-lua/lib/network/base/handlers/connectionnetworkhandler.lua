@@ -983,6 +983,8 @@ function ConnectionNetworkHandler:reserve_preplanning(type, id, state, sender)
 		managers.preplanning:server_unreserve_mission_element(id, peer:id())
 	elseif state == 2 then
 		managers.preplanning:server_vote_on_plan(type, id, peer:id())
+	elseif state == 3 then
+		managers.preplanning:server_mass_vote_on_plan(type, id)
 	end
 end
 

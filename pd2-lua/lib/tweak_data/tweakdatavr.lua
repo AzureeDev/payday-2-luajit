@@ -639,6 +639,9 @@ function TweakDataVR:init(tweak_data)
 			msr = {
 				position = Vector3(-0.2, -1, 0)
 			},
+			r700 = {
+				position = Vector3(-0.2, -1, 0)
+			},
 			winchester1874 = {
 				position = Vector3(-0.2, -1, 0)
 			},
@@ -684,6 +687,9 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-0.5, 1, 2.8)
 			},
 			m249 = {
+				position = Vector3(-0.5, 1, 1)
+			},
+			m60 = {
 				position = Vector3(-0.5, 1, 1)
 			},
 			rpk = {
@@ -1204,6 +1210,10 @@ function TweakDataVR:init(tweak_data)
 			position = Vector3(5, 5, 5),
 			rotation = Rotation(33, 35, 50)
 		},
+		r700 = {
+			position = Vector3(0, 3, 5),
+			rotation = Rotation(88, 100, 28)
+		},
 		r93 = {
 			position = Vector3(2, 5, 5),
 			rotation = Rotation(75, 45, 60)
@@ -1232,6 +1242,9 @@ function TweakDataVR:init(tweak_data)
 			position = Vector3(12, 0, 0)
 		},
 		m249 = {
+			position = Vector3(12, 0, 0)
+		},
+		m60 = {
 			position = Vector3(12, 0, 0)
 		},
 		rpk = {
@@ -1438,6 +1451,16 @@ function TweakDataVR:init(tweak_data)
 					}
 				}
 			},
+			m60 = {
+				points = {
+					{
+						position = Vector3(0, 30, 2)
+					},
+					{
+						position = Vector3(-13, 15, 0)
+					}
+				}
+			},
 			mg42 = {
 				points = {
 					{
@@ -1494,6 +1517,10 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-1, 30, 2)
 			},
 			model70 = {
+				grip = "idle_wpn",
+				position = Vector3(-1, 35, 0)
+			},
+			r700 = {
 				grip = "idle_wpn",
 				position = Vector3(-1, 35, 0)
 			},
@@ -7704,6 +7731,49 @@ function TweakDataVR:init(tweak_data)
 				}
 			}
 		},
+		m60 = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_m60_box_out"
+				},
+				{
+					time = 0.01,
+					pos = Vector3(-2, 0, -2)
+				},
+				{
+					time = 0.03,
+					pos = Vector3(-2, 0, -2)
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, 0, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_m60_box_in",
+					visible = true,
+					pos = Vector3(0, 0, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(-2, 0, -2)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(-2, 0, -2)
+				},
+				{
+					time = 0.6,
+					sound = "wp_m60_lever_release",
+					pos = Vector3()
+				}
+			}
+		},
 		rpk = {
 			start = {
 				{
@@ -8075,6 +8145,42 @@ function TweakDataVR:init(tweak_data)
 				{
 					time = 0.6,
 					sound = "wp_m70_pull_lever_01",
+					pos = Vector3()
+				}
+			}
+		},
+		r700 = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_r700_mag_out_01"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, 5, -20),
+					rot = Rotation(0, 30, 0)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_r700_mag_in_01",
+					visible = true,
+					pos = Vector3(0, 0, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, 0, -4.5)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, 0, -4)
+				},
+				{
+					time = 0.6,
+					sound = "wp_r700_pull_lever_01",
 					pos = Vector3()
 				}
 			}

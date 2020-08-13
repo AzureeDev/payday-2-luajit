@@ -15,6 +15,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 300,
 		category = "dlc"
 	}
+	self.global_values.anv = {
+		name_id = "bm_global_value_anv",
+		desc_id = "menu_l_global_value_anv",
+		unlock_id = "bm_global_value_anv_unlock",
+		color = tweak_data.screen_colors.event_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = -5,
+		category = "global_event"
+	}
 	self.global_values.atw = {
 		name_id = "bm_global_value_atw",
 		desc_id = "menu_l_global_value_atw",

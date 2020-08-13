@@ -17,6 +17,7 @@ function AchievmentManager:init()
 
 	if SystemInfo:platform() == Idstring("WIN32") then
 		if SystemInfo:distribution() == Idstring("STEAM") then
+			self.oldest_achievement_callback_handler = CoreEvent.CallbackEventHandler:new()
 			AchievmentManager.do_award = AchievmentManager.award_steam
 
 			if not Global.achievment_manager then
@@ -216,19 +217,32 @@ end
 function AchievmentManager.fetch_achievments(error_str)
 	print("[AchievmentManager.fetch_achievments]", error_str)
 
+	local oldest_achievement_date = nil
+
 	if error_str == "success" then
+		local unlock_time = nil
+
 		for id, ach in pairs(managers.achievment.achievments) do
 			if managers.achievment.handler:has_achievement(ach.id) then
 				ach.awarded = true
+				unlock_time = managers.achievment.handler:achievement_unlock_time(ach.id)
+
+				if unlock_time >= 0 then
+					oldest_achievement_date = math.min(oldest_achievement_date or unlock_time, unlock_time)
+				end
 
 				managers.achievment:track(id, false)
 
-				ach.unlock_time = managers.achievment.handler:achievement_unlock_time(ach.id)
+				ach.unlock_time = unlock_time
 			end
 		end
 	end
 
 	managers.network.account:achievements_fetched()
+
+	managers.achievment.oldest_achievement_date = oldest_achievement_date or -1
+
+	managers.achievment.oldest_achievement_callback_handler:dispatch(managers.achievment.oldest_achievement_date)
 end
 
 function AchievmentManager:_load_done()
@@ -272,6 +286,20 @@ function AchievmentManager:on_user_signout()
 		for id, ach in pairs(managers.achievment.achievments) do
 			ach.awarded = false
 		end
+	end
+end
+
+function AchievmentManager:request_oldest_achievement_date(request_clbk)
+	if self.oldest_achievement_date then
+		if request_clbk then
+			request_clbk(self.oldest_achievement_date)
+		else
+			return self.oldest_achievement_date
+		end
+	elseif request_clbk then
+		self.oldest_achievement_callback_handler:add(request_clbk)
+	else
+		return -1
 	end
 end
 

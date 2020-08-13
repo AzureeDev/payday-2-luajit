@@ -67,6 +67,8 @@ function IngameWaitingForPlayersState:_start()
 		managers.preplanning:execute_reserved_mission_elements()
 	end
 
+	managers.assets:check_triggers("asset")
+
 	local variant = managers.groupai:state():blackscreen_variant() or 0
 
 	self:sync_start(variant)

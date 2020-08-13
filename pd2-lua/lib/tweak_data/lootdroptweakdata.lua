@@ -165,6 +165,7 @@ function LootDropTweakData:init(tweak_data)
 			masks = masks,
 			xp = xp
 		}
+		self.WEIGHTED_TYPE_CHANCE[i].mask_colors = self.WEIGHTED_TYPE_CHANCE[i].colors
 	end
 
 	self.DEFAULT_WEIGHT = 1

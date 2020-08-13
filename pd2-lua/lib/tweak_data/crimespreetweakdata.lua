@@ -915,6 +915,14 @@ function CrimeSpreeTweakData:init_rewards(tweak_data)
 		{
 			id = "drm_somber_woodland",
 			type = "armor"
+		},
+		{
+			id = "color_anv_04",
+			type = "weapon_skins"
+		},
+		{
+			id = "color_anv_05",
+			type = "weapon_skins"
 		}
 	}
 end

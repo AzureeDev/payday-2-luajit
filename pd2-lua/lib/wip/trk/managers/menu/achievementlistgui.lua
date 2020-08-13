@@ -1,1 +1,0 @@
-AchievementListGui = AchievementListGui or class()

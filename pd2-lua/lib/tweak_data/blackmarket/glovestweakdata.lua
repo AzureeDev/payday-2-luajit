@@ -54,6 +54,8 @@ function BlackMarketTweakData:build_glove_list(tweak_data)
 		y_gv = y_td.global_value or y_td.dlc or "normal"
 		x_sn = x_gv and tweak_data.lootdrop.global_values[x_gv].sort_number or 0
 		y_sn = y_gv and tweak_data.lootdrop.global_values[y_gv].sort_number or 0
+		x_sn = x_sn + (x_td.sort_number or 0)
+		y_sn = y_sn + (y_td.sort_number or 0)
 
 		if x_sn ~= y_sn then
 			return x_sn < y_sn
@@ -131,7 +133,8 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		esport = "esport",
 		miami = "heist_default",
 		murky_suit = "murky",
-		tux = "heist_default"
+		tux = "heist_default",
+		continental = "continental"
 	}
 	self.gloves.default = {
 		name_id = "bm_gloves_default",
@@ -143,6 +146,7 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		name_id = "bm_gloves_heistwrinkled",
 		desc_id = "bm_gloves_heistwrinkled_desc",
 		texture_bundle_folder = "hnd",
+		sort_number = -1000,
 		unit = "units/pd2_dlc_hnd/characters/hnd_glv_heistwrinkled/hnd_glv_heistwrinkled",
 		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_heistwrinkled/hnd_glv_heistwrinkled_third"
 	}
@@ -230,5 +234,13 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		global_value = "ess",
 		unit = "units/pd2_dlc_hnd/characters/hnd_glv_esport/hnd_glv_esport",
 		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_esport/hnd_glv_esport_third"
+	}
+	self.gloves.continental = {
+		name_id = "bm_gloves_continental",
+		desc_id = "bm_gloves_continental_desc",
+		texture_bundle_folder = "anv",
+		global_value = "anv",
+		unit = "units/pd2_dlc_anv/characters/anv_glv_continental/anv_glv_continental",
+		third_material = "units/pd2_dlc_anv/characters/anv_glv_continental/anv_glv_continental_third"
 	}
 end

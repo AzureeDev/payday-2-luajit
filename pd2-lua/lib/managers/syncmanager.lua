@@ -99,7 +99,7 @@ function SyncManager:handle_synced_weapon_blueprint(unit_id, data_string)
 end
 
 function SyncManager:add_synced_mask_blueprint(unit_id, mask_id, blueprint)
-	local blueprint_string = string.format("%s %s %s %s", tostring(mask_id), tostring(blueprint.color.id), tostring(blueprint.pattern.id), tostring(blueprint.material.id))
+	local blueprint_string = string.format("%s %s_%s %s %s", tostring(mask_id), tostring(blueprint.color_a.id), tostring(blueprint.color_b.id), tostring(blueprint.pattern.id), tostring(blueprint.material.id))
 
 	self:add_synced_outfit_unit(unit_id, "mask", blueprint_string)
 	print("[SyncManager] added synced mask: ", unit_id, blueprint_string)
@@ -118,9 +118,13 @@ end
 function SyncManager:_get_mask_id_and_blueprint(data_string)
 	local data = string.split(data_string or "", " ")
 	local mask_id = data[1]
+	local color_data = string.split(data[2] or "", "_")
 	local blueprint = {
-		color = {
-			id = data[2] or "nothing"
+		color_a = {
+			id = color_data[1] or "nothing"
+		},
+		color_b = {
+			id = color_data[2] or "nothing"
 		},
 		pattern = {
 			id = data[3] or "no_color_no_material"

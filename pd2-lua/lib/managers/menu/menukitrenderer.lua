@@ -192,6 +192,7 @@ function MenuKitRenderer:remove_player_slot_by_peer_id(peer, reason)
 	local peer_id = peer:id()
 
 	managers.preplanning:on_peer_removed(peer_id)
+	managers.assets:on_peer_removed(peer_id)
 end
 
 function MenuKitRenderer:close(...)

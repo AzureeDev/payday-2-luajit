@@ -202,16 +202,19 @@ function MenuCustomizeWeaponColorInitiator:setup_node(node, node_data)
 
 	node:add_item(new_item)
 
-	local back_params = {
-		last_item = "true",
-		name = "back",
-		text_id = "menu_back",
-		align = "right",
-		previous_node = "true"
-	}
-	new_item = node:create_item({}, back_params)
+	if managers.menu:is_pc_controller() then
+		local back_params = {
+			last_item = "true",
+			name = "back",
+			text_id = "menu_back",
+			align = "right",
+			previous_node = "true"
+		}
+		new_item = node:create_item({}, back_params)
 
-	node:add_item(new_item)
+		node:add_item(new_item)
+	end
+
 	node:set_default_item_name("cosmetic_color")
 	managers.blackmarket:view_weapon_with_cosmetics(weapon_color_data.category, weapon_color_data.slot, weapon_color_data.cosmetic_data, nil, nil, BlackMarketGui.get_crafting_custom_data())
 
@@ -803,6 +806,8 @@ function MenuNodeCustomizeWeaponColorGui:update_color_info(node)
 			unlock_id = achievement_visual and achievement_visual.desc_id or "achievement_" .. tostring(achievement) .. "_desc" or "bm_menu_dlc_locked"
 		elseif managers.dlc:is_content_skirmish_locked("weapon_skins", color_id) then
 			unlock_id = "bm_menu_skirmish_content_reward"
+		elseif managers.dlc:is_content_crimespree_locked("weapon_skins", color_id) then
+			unlock_id = "bm_menu_crimespree_content_reward"
 		else
 			unlock_id = "bm_menu_dlc_locked"
 		end

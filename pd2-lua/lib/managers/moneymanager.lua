@@ -756,12 +756,12 @@ function MoneyManager:on_buy_mission_asset(asset_id)
 	return amount
 end
 
-function MoneyManager:refund_mission_assets()
-	local amount = managers.assets:get_money_spent()
+function MoneyManager:refund_mission_asset(asset_id)
+	local amount = self:get_mission_asset_cost_by_id(asset_id)
 
 	self:_add_to_total(amount, {
 		no_offshore = true
-	}, TelemetryConst.economy_origin.refund_mission_assets)
+	}, TelemetryConst.economy_origin.refund_mission_asset)
 end
 
 function MoneyManager:can_afford_spend_skillpoint(tree, tier, points)
@@ -941,8 +941,17 @@ function MoneyManager:get_mask_part_price(category, id, global_value, mask_id)
 		materials = "material",
 		textures = "pattern"
 	}
+	part_name_converter.color_a = part_name_converter.colors
+	part_name_converter.color_b = part_name_converter.colors
+	part_name_converter.mask_colors = part_name_converter.colors
+	part_name_converter.colors = nil
 	local gv_tweak_data = tweak_data.lootdrop.global_values[global_value or "normal"]
 	local gv_multiplier = gv_tweak_data and gv_tweak_data.value_multiplier or 1
+
+	if category == "mask_colors" then
+		gv_multiplier = gv_multiplier * 0.5
+	end
+
 	local value = tweak_data.blackmarket[category] and tweak_data.blackmarket[category][id] and tweak_data.blackmarket[category][id].value or 1
 	local part_value = value > 0 and self:get_tweak_value("money_manager", "masks", part_name_converter[category] .. "_value", value) or 0
 	local price = math.round(part_value * gv_multiplier)
@@ -982,8 +991,14 @@ function MoneyManager:get_mask_crafting_price(mask_id, global_value, blueprint, 
 
 	local pattern_price = get_part_price("textures", blueprint.pattern)
 	local material_price = get_part_price("materials", blueprint.material)
-	local color_price = get_part_price("colors", blueprint.color)
-	local parts_value = pattern_price + material_price + color_price
+	local color_a_price = get_part_price("mask_colors", blueprint.color_a)
+	local color_b_price = get_part_price("mask_colors", blueprint.color_b)
+
+	if blueprint.color_a and blueprint.color_b and blueprint.color_a.id == blueprint.color_b.id then
+		color_b_price = 0
+	end
+
+	local parts_value = pattern_price + material_price + color_a_price + color_b_price
 
 	return math.round(base_value + parts_value), bonus_global_values
 end

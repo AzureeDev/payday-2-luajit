@@ -45279,7 +45279,7 @@ function WeaponFactoryTweakData:_init_m60()
 	}
 	self.parts.wpn_fps_lmg_m60_carry_standard = {
 		a_obj = "a_carry",
-		type = "upper_reciever",
+		type = "extra",
 		name_id = "bm_wp_m60_carry_standard",
 		unit = "units/pd2_dlc_atw/weapons/wpn_fps_lmg_m60_pts/wpn_fps_lmg_m60_carry_standard",
 		stats = {
