@@ -22,12 +22,11 @@ function GenericDialog:init(manager, data, is_title_outside)
 	local text_config = {
 		no_close_legend = true,
 		no_scroll_legend = true,
+		type = self._data.type or "system_menu",
 		title_font = data.title_font,
 		title_font_size = data.title_font_size,
 		font = data.font,
 		font_size = data.font_size,
-		w = data.w or 420,
-		h = data.h or 400,
 		use_indicator = data.indicator or data.no_buttons,
 		is_title_outside = is_title_outside,
 		use_text_formating = data.use_text_formating,
