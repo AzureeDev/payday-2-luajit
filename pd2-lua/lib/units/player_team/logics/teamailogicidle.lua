@@ -5,6 +5,8 @@ local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local tmp_vec3 = Vector3()
 TeamAILogicIdle = TeamAILogicIdle or class(TeamAILogicBase)
+TeamAILogicIdle._get_all_paths = CopLogicIdle._get_all_paths
+TeamAILogicIdle._set_verified_paths = CopLogicIdle._set_verified_paths
 
 function TeamAILogicIdle.enter(data, new_logic_name, enter_params)
 	TeamAILogicBase.enter(data, new_logic_name, enter_params)

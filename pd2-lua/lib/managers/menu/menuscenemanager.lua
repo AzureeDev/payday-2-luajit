@@ -434,7 +434,7 @@ function MenuSceneManager:_set_up_templates()
 		can_change_fov = true,
 		use_item_grab = true,
 		camera_pos = offset:rotate_with(Rotation(90)) + Vector3(0, 0, 202),
-		target_pos = target_pos + Vector3(0, -5, 200),
+		target_pos = target_pos + Vector3(0, 0, 200),
 		character_pos = c_ref:position() + Vector3(0, 500, 0)
 	}
 	local l_pos = self._scene_templates.blackmarket_mask.camera_pos
@@ -460,6 +460,47 @@ function MenuSceneManager:_set_up_templates()
 			color = Vector3(1, 1, 1) * 0.8,
 			position = Vector3(160, -130, 220)
 		})
+	}
+	self._scene_templates.infamy_preview = {
+		fov = 40,
+		can_change_fov = false,
+		use_item_grab = true,
+		camera_pos = offset:rotate_with(Rotation(90)) + Vector3(0, 0, 202),
+		target_pos = target_pos + Vector3(0, 0, 200),
+		character_pos = Vector3(-75, 10, 100),
+		hide_armor = true,
+		hide_mask = true,
+		hide_weapons = true,
+		disable_rotate = true,
+		character_visible = true,
+		use_character_grab2 = false,
+		use_character_pan = false,
+		lights = {
+			self:_create_light({
+				far_range = 250,
+				specular_multiplier = 55,
+				color = Vector3(0.2, 0.5, 1) * 4.3,
+				position = Vector3(0, -200, 280)
+			}),
+			self:_create_light({
+				far_range = 370,
+				specular_multiplier = 55,
+				color = Vector3(1, 0.7, 0.5) * 2.3,
+				position = Vector3(200, 60, 280)
+			}),
+			self:_create_light({
+				far_range = 270,
+				specular_multiplier = 0,
+				color = Vector3(1, 1, 1) * 0.8,
+				position = Vector3(160, -130, 220)
+			}),
+			self:_create_light({
+				far_range = 270,
+				specular_multiplier = 155,
+				color = Vector3(0.86, 0.67, 0.41) * 2,
+				position = Vector3(160, 0, 220)
+			})
+		}
 	}
 	self._scene_templates.character_customization = {
 		use_character_grab = true,
@@ -1467,7 +1508,7 @@ function MenuSceneManager:_set_character_equipment()
 	local ignore_weapons = self._scene_templates and self._scene_templates[self._current_scene_template] and self._scene_templates[self._current_scene_template].remove_weapons and true or false
 
 	if rank > 0 and not ignore_infamy_card then
-		self:set_character_equipped_card(unit, rank - 1)
+		self:set_character_equipped_card(unit, rank)
 	elseif secondary and not ignore_weapons then
 		self:set_character_equipped_weapon(unit, secondary.factory_id, secondary.blueprint, "secondary", secondary.cosmetics)
 	else
@@ -2147,10 +2188,8 @@ function MenuSceneManager:set_character_card(peer_id, rank, unit)
 
 		unit:anim_state_machine():set_parameter(state, "husk_card" .. peer_id, 1)
 
-		local card = rank - 1
-		local card_unit = World:spawn_unit(Idstring("units/menu/menu_scene/infamy_card"), Vector3(0, 0, 0), Rotation(0, 0, 0))
+		local card_unit = self:_spawn_infamy_card_unit(Vector3(0, 0, 0), Rotation(0, 0, 0), rank)
 
-		card_unit:damage():run_sequence_simple("enable_card_" .. (card < 10 and "0" or "") .. tostring(math.min(card, 24)))
 		unit:link(Idstring("a_weapon_left_front"), card_unit, card_unit:orientation_object():name())
 		self:_delete_character_weapon(unit, "secondary")
 
@@ -2350,11 +2389,10 @@ function MenuSceneManager:clbk_weapon_assembly_complete(params)
 	self:_chk_character_visibility(owner)
 end
 
-function MenuSceneManager:set_character_equipped_card(unit, card)
+function MenuSceneManager:set_character_equipped_card(unit, rank)
 	unit = unit or self._character_unit
-	local card_unit = World:spawn_unit(Idstring("units/menu/menu_scene/infamy_card"), Vector3(0, 0, 0), Rotation(0, 0, 0))
+	local card_unit = self:_spawn_infamy_card_unit(Vector3(0, 0, 0), Rotation(0, 0, 0), rank)
 
-	card_unit:damage():run_sequence_simple("enable_card_" .. (card < 10 and "0" or "") .. tostring(math.min(card, 24)))
 	unit:link(Idstring("a_weapon_left_front"), card_unit, card_unit:orientation_object():name())
 	self:_delete_character_weapon(unit, "secondary")
 
@@ -2956,7 +2994,7 @@ function MenuSceneManager:remove_item()
 end
 
 function MenuSceneManager:spawn_infamy_card(rank)
-	self:add_one_frame_delayed_clbk(callback(self, self, "_spawn_infamy_card", rank - 1))
+	self:add_one_frame_delayed_clbk(callback(self, self, "_spawn_infamy_card", rank))
 end
 
 function MenuSceneManager:infamy_card_shown()
@@ -2971,7 +3009,7 @@ function MenuSceneManager:destroy_infamy_card()
 	self:remove_item()
 end
 
-function MenuSceneManager:_spawn_infamy_card(card)
+function MenuSceneManager:_spawn_infamy_card(rank)
 	self._item_pos = Vector3(0, 0, 0)
 	self._item_yaw = 0
 	self._item_pitch = 0
@@ -2983,9 +3021,8 @@ function MenuSceneManager:_spawn_infamy_card(card)
 	self._disable_rotate = true
 	self._disable_dragging = true
 	self._infamy_card_shown = true
-	local unit = World:spawn_unit(Idstring("units/menu/menu_scene/infamy_card"), self._item_pos, self._item_rot)
+	local unit = self:_spawn_infamy_card_unit(self._item_pos, self._item_rot, rank)
 
-	unit:damage():run_sequence_simple("enable_card_" .. (card < 10 and "0" or "") .. tostring(math.min(card, 24)))
 	unit:damage():run_sequence_simple("card_flip_01")
 
 	local anim_time = 2.666 + unit:anim_length(Idstring("card"))
@@ -2994,8 +3031,30 @@ function MenuSceneManager:_spawn_infamy_card(card)
 	self:_set_item_unit(unit)
 end
 
+function MenuSceneManager:_spawn_infamy_card_unit(pos, rot, rank)
+	local unit = World:spawn_unit(Idstring("units/menu/menu_scene/infamy_card"), pos, rot)
+
+	if rank then
+		unit:digital_gui():show_rank(rank)
+	end
+
+	return unit
+end
+
 function MenuSceneManager:_infamy_enable_dragging()
 	self._disable_dragging = nil
+end
+
+function MenuSceneManager:refresh_infamy_cards(override_data)
+	for _, unit in pairs(self._card_units) do
+		if alive(unit) and unit:digital_gui() then
+			unit:digital_gui():refresh_gui(override_data)
+		end
+	end
+
+	if self._item_unit and alive(self._item_unit.unit) and self._item_unit.unit:digital_gui() and self._item_unit.unit:digital_gui().refresh_gui then
+		self._item_unit.unit:digital_gui():refresh_gui(override_data)
+	end
 end
 
 function MenuSceneManager:spawn_grenade(grenade_id)
@@ -3211,6 +3270,11 @@ function MenuSceneManager:_set_item_unit(unit, oobb_object, max_mod, type, secon
 	self._current_weapon_id = nil
 	local scene_template = custom_data and custom_data.scene_template and self._scene_templates[custom_data.scene_template] or type == "mask" and self._scene_templates.blackmarket_mask or self._scene_templates.blackmarket_item
 	self._item_pos = custom_data and custom_data.item_pos or Vector3(0, 0, 200)
+
+	if custom_data and custom_data.item_offset then
+		self._item_pos = self._item_pos + custom_data.item_offset
+	end
+
 	local item_yaw = self._item_yaw
 	local item_pitch = self._item_pitch
 	local item_roll = self._item_roll
@@ -3260,9 +3324,13 @@ function MenuSceneManager:get_item_unit()
 	return self._item_unit and self._item_unit.unit
 end
 
-function MenuSceneManager:_spawn_item(unit_name, oobb_object, max_mod, type, mask_id)
+function MenuSceneManager:_spawn_item(unit_name, oobb_object, max_mod, type, mask_id, custom_data)
 	self._current_weapon_id = nil
-	self._item_pos = Vector3(0, 0, 0)
+	self._item_pos = Vector3(0, 0, 200)
+
+	if custom_data and custom_data.item_offset then
+		mvector3.add(self._item_pos, custom_data.item_offset)
+	end
 
 	mrotation.set_zero(self._item_rot_mod)
 
@@ -3280,9 +3348,10 @@ function MenuSceneManager:_spawn_item(unit_name, oobb_object, max_mod, type, mas
 		unit = World:spawn_unit(Idstring(unit_name), self._item_pos, self._item_rot)
 	end
 
-	self:_set_item_unit(unit, oobb_object, max_mod, type, nil, {
-		id = mask_id
-	})
+	custom_data = custom_data or {}
+	custom_data.id = mask_id
+
+	self:_set_item_unit(unit, oobb_object, max_mod, type, nil, custom_data)
 end
 
 function MenuSceneManager:_set_weapon_upgrades(weapon_id)
@@ -3349,21 +3418,25 @@ function MenuSceneManager:view_weapon_upgrade(weapon_id, visual_upgrade)
 	end
 end
 
-function MenuSceneManager:spawn_mask(mask_id, blueprint)
+function MenuSceneManager:spawn_mask(mask_id, blueprint, offset)
 	local mask_unit_name_str = managers.blackmarket:mask_unit_name_by_mask_id(mask_id)
 	local mask_unit_name = Idstring(mask_unit_name_str)
+	local mask_tweak = tweak_data.blackmarket.masks[mask_id]
+	local oobb_object = mask_tweak and mask_tweak.preview_oobb_object
 
 	self:remove_item()
 
 	local backstrap_unit_name = Idstring("units/payday2/masks/msk_fps_back_straps/msk_fps_back_straps")
 	self._item_unit = {
 		mask_loaded = false,
-		unit = false,
 		backstrap_loaded = false,
+		unit = false,
 		name = mask_unit_name,
 		backstrap_unit_name = backstrap_unit_name,
 		mask_id = mask_id,
-		blueprint = blueprint
+		blueprint = blueprint,
+		item_offset = offset,
+		oobb_object = oobb_object
 	}
 
 	managers.dyn_resource:load(ids_unit, mask_unit_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, callback(self, self, "clbk_mask_item_unit_loaded"))
@@ -3396,7 +3469,9 @@ function MenuSceneManager:clbk_mask_item_unit_loaded(status, asset_type, asset_n
 	local item = self._item_unit
 	self._item_unit = nil
 
-	self:_spawn_item(item.name, nil, nil, "mask", item.mask_id)
+	self:_spawn_item(item.name, item.oobb_object, nil, "mask", item.mask_id, {
+		item_offset = item.item_offset
+	})
 
 	local new_unit = self._item_unit.unit
 	self._item_unit = item
@@ -3430,6 +3505,10 @@ function MenuSceneManager:clbk_mask_item_unit_assembled()
 	self._item_unit.unit:set_enabled(true)
 	self._item_unit.unit:set_moving()
 	self:add_one_frame_delayed_clbk(function ()
+		if not self._item_unit or not alive(self._item_unit.unit) then
+			return
+		end
+
 		self._item_unit.unit:set_visible(true)
 
 		for _, linked_unit in ipairs(self._item_unit.unit:children()) do
@@ -3465,6 +3544,129 @@ function MenuSceneManager:spawn_armor(armor_id)
 	end
 
 	self:_spawn_item("units/menu/menu_character/menu_character_test", nil)
+end
+
+function MenuSceneManager:setup_infamy_menu()
+	self:add_one_frame_delayed_clbk(function ()
+		self._character_unit:set_position(Vector3(500, 0, -500))
+
+		self._outfit_state = self._character_unit:play_redirect(Idstring("idle_menu"))
+
+		self:remove_item()
+	end)
+end
+
+function MenuSceneManager:spawn_infamy_outfit_preview(outfit_id, material_variation)
+	self:add_one_frame_delayed_clbk(function ()
+		self:set_character_player_style(outfit_id, material_variation, self._character_unit)
+		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "cvc_var1", 1)
+		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "husk2", 0)
+
+		self._character_yaw = -45
+
+		self._character_unit:set_rotation(Rotation(self._character_yaw))
+		self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_outfit_done"))
+
+		self._infamy_item_spawned = true
+		self._use_character_grab2 = true
+		self._use_character_pan = true
+	end)
+end
+
+function MenuSceneManager:remove_outfit(...)
+	mvector3.set_z(self._character_values.pos_target, mvector3.z(self._character_values.pos_current))
+	self._character_unit:set_position(Vector3(500, 0, -500))
+
+	self._infamy_item_spawned = false
+	self._use_character_grab2 = false
+	self._use_character_pan = false
+end
+
+function MenuSceneManager:spawn_outfit_done()
+	if self._infamy_item_spawned then
+		self._character_unit:spawn_manager():remove_unit("char_gloves")
+		self._character_unit:spawn_manager():remove_unit("char_glove_adapter")
+		self._character_unit:anim_state_machine():set_speed(self._outfit_state, 0)
+		self._character_unit:set_visible(false)
+		self._character_unit:set_position(Vector3(-75, 10, 100))
+	end
+end
+
+function MenuSceneManager:spawn_infamy_gloves_preview(glove_id)
+	self:add_one_frame_delayed_clbk(function ()
+		self:set_character_player_style("default", nil, self._character_unit)
+		self:set_character_gloves(glove_id, self._character_unit)
+
+		self._character_yaw = -90
+
+		self._character_unit:set_rotation(Rotation(self._character_yaw))
+		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "cvc_var1", 0)
+		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "husk2", 1)
+		self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_gloves_done"))
+
+		self._infamy_item_spawned = true
+		self._use_character_grab2 = false
+		self._use_item_grab = false
+	end)
+end
+
+function MenuSceneManager:remove_gloves()
+	self._character_unit:set_position(Vector3(500, 0, -500))
+
+	self._infamy_item_spawned = false
+	self._use_character_grab2 = false
+	self._use_item_grab = true
+end
+
+function MenuSceneManager:spawn_gloves_done()
+	if self._infamy_item_spawned then
+		self._character_unit:spawn_manager():remove_unit("char_glove_adapter")
+		self._character_unit:anim_state_machine():set_speed(self._outfit_state, 0)
+		self._character_unit:set_visible(false)
+		self._character_unit:set_position(Vector3(100, 2, 93))
+	end
+end
+
+function MenuSceneManager:spawn_infamy_card_preview(card_sqeuence_name, show_front)
+	self:add_one_frame_delayed_clbk(function ()
+		self._item_pos = Vector3(0, 0, 0)
+
+		mrotation.set_zero(self._item_rot)
+
+		self._item_yaw = show_front and 180 or 0
+		self._item_pitch = 0
+		self._item_roll = 0
+
+		mrotation.set_zero(self._item_rot_mod)
+
+		self._use_item_grab = show_front
+		local unit = World:spawn_unit(Idstring("units/menu/menu_scene/infamy_card"), self._item_pos, self._item_rot)
+
+		if card_sqeuence_name then
+			unit:damage():run_sequence_simple(card_sqeuence_name)
+		end
+
+		self:_set_item_unit(unit, nil, nil, nil, nil, {
+			item_offset = Vector3(0, 0, 4)
+		})
+	end)
+end
+
+function MenuSceneManager:spawn_infamy_weapon_preview(color_id)
+	self:add_one_frame_delayed_clbk(function ()
+		self._use_item_grab = true
+
+		managers.menu_scene:spawn_item_weapon("wpn_fps_pis_g22c", nil, {
+			instance_id = "color_tan_khaki",
+			quality = "mint",
+			color_index = 10,
+			pattern_scale = 1,
+			id = color_id
+		}, nil, {
+			item_yaw = 220,
+			item_pos = Vector3(0, 0, 205)
+		})
+	end)
 end
 
 function MenuSceneManager:character_screen_position(peer_id)

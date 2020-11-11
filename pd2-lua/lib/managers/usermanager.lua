@@ -141,6 +141,8 @@ function GenericUserManager:setup_setting_map()
 	self:setup_setting(89, "crimenet_filter_weekly_skirmish", false)
 	self:setup_setting(90, "crimenet_filter_skirmish_wave", 99)
 	self:setup_setting(91, "color_blind_hit_direction", false)
+	self:setup_setting(92, "infamy_roman_rank", true)
+	self:setup_setting(93, "infamy_roman_card", true)
 	self:setup_setting(200, "use_telemetry", false)
 	self:setup_setting(300, "adaptive_quality", true)
 	self:setup_setting(301, "window_zoom", true)
@@ -272,7 +274,9 @@ function GenericUserManager:reset_user_interface_setting_map()
 		"loading_screen_show_hints",
 		"show_vr_descs",
 		"throwable_contour",
-		"ammo_contour"
+		"ammo_contour",
+		"infamy_roman_rank",
+		"infamy_roman_card"
 	}
 
 	for _, name in pairs(settings) do

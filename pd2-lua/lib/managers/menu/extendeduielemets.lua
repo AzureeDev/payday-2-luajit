@@ -136,7 +136,13 @@ function ScrollableList:init(parent, scroll_config, canvas_config)
 		ignore_down_indicator = true,
 		layer = parent:layer()
 	})
-	self._scroll = ScrollablePanelExt:new(parent, nil, scroll_config)
+
+	if scroll_config.horizontal then
+		self._scroll = HorizontalScrollablePanel:new(parent, nil, scroll_config)
+	else
+		self._scroll = ScrollablePanelExt:new(parent, nil, scroll_config)
+	end
+
 	scroll_config.use_given = true
 	local add_as_input = scroll_config.input
 	scroll_config.input = nil
@@ -147,10 +153,16 @@ function ScrollableList:init(parent, scroll_config, canvas_config)
 	canvas_config = canvas_config or {}
 	local add_canvas = canvas_config.input or add_as_input
 	canvas_config.input = nil
-	canvas_config.fixed_w = self._scroll._scroll_bar:left() - scrollbar_padding
+
+	if not scroll_config.horizontal then
+		canvas_config.fixed_w = self._scroll._scroll_bar:left() - scrollbar_padding
+	else
+		canvas_config.fixed_h = self._scroll._scroll_bar:top() - scrollbar_padding
+	end
+
 	self._canvas = ScrollGrowPanel:new(self._scroll, canvas_config)
 
-	self._scroll:set_canvas_size(canvas_config.w or canvas_config.fixed_w, canvas_config.h or 0)
+	self._scroll:set_canvas_size(canvas_config.w or canvas_config.fixed_w, canvas_config.h or canvas_config.fixed_h or 0)
 
 	if add_canvas then
 		self:add_input_component(self._canvas)
@@ -517,6 +529,91 @@ function ScrollItemList:filter_items(filter_function, mod_start, keep_selection)
 		self:select_index(1)
 	elseif self._selected_item and w_y then
 		self:scroll_to_show_item_at_world(self._selected_item, w_y)
+	end
+end
+
+HorizontalScrollItemList = HorizontalScrollItemList or class(ScrollItemList)
+
+function HorizontalScrollItemList:init(parent, scroll_config, canvas_config)
+	HorizontalScrollItemList.super.init(self, parent, scroll_config, canvas_config)
+end
+
+function HorizontalScrollItemList:add_item(item, force_visible)
+	if force_visible ~= nil then
+		item:set_visible(force_visible)
+	end
+
+	if item:visible() then
+		self._canvas:placer():add_right(item)
+		table.insert(self._current_items, item)
+	end
+
+	table.insert(self._all_items, item)
+
+	return item
+end
+
+function HorizontalScrollItemList:add_lines_and_static_down_indicator()
+	local box = BoxGuiObject:new(self:scroll_item():scroll_panel(), {
+		layer = 5,
+		h = self:canvas():h(),
+		sides = {
+			2,
+			2,
+			1,
+			1
+		}
+	})
+end
+
+function HorizontalScrollItemList:scroll_to_show(left_or_item, right)
+	local left = nil
+
+	if type(left_or_item) == "table" and left_or_item.left and left_or_item.right then
+		left = left_or_item:left()
+		right = left_or_item:right()
+	else
+		left = left_or_item
+		right = right or left_or_item
+	end
+
+	local cur = -self._canvas:x()
+
+	if left then
+		if left < cur then
+			self._scroll:scroll_to(left)
+		elseif right > cur + self._scroll:scroll_panel():w() then
+			self._scroll:scroll_to(right - self._scroll:scroll_panel():w())
+		end
+	end
+end
+
+function HorizontalScrollItemList:scroll_to_show_item_at_world(item, world_x)
+	self._scroll:perform_scroll(world_x - item:world_x(), 1)
+end
+
+function HorizontalScrollItemList:sort_items(sort_function, mod_placer, keep_selection)
+	table.sort(self._current_items, sort_function)
+	table.sort(self._all_items, sort_function)
+
+	local placer = self._canvas:placer()
+
+	placer:clear()
+
+	if mod_placer then
+		mod_placer(placer)
+	end
+
+	local w_x = self._selected_item and self._selected_item:world_x()
+
+	for _, item in ipairs(self._current_items) do
+		placer:add_right(item)
+	end
+
+	if not keep_selection and self._selected_item then
+		self:select_index(1)
+	elseif self._selected_item and w_x then
+		self:scroll_to_show_item_at_world(self._selected_item, w_x)
 	end
 end
 

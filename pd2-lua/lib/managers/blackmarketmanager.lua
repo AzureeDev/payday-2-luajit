@@ -6285,7 +6285,9 @@ function BlackMarketManager:start_customize_mask(slot)
 		self._customize_mask.materials = default_material
 	end
 
-	self:view_mask(slot)
+	local offset = Vector3(0, 5, 0)
+
+	self:view_mask(slot, offset)
 end
 
 function BlackMarketManager:select_customize_mask(category, id, global_value)
@@ -6321,7 +6323,6 @@ end
 
 function BlackMarketManager:customize_mask_category_default(category, include_color)
 	local is_a_color_category = category == "color_a" or category == "color_b" or category == "mask_colors"
-	local is_a_color_category = category == "colors"
 
 	if is_a_color_category and not include_color then
 		return
@@ -6978,7 +6979,7 @@ function BlackMarketManager:view_mask_with_mask_id(mask_id)
 	managers.menu_scene:spawn_mask(mask_id)
 end
 
-function BlackMarketManager:view_mask(slot)
+function BlackMarketManager:view_mask(slot, offset)
 	local category = "masks"
 
 	if not self._global.crafted_items[category] or not self._global.crafted_items[category][slot] then
@@ -6991,7 +6992,7 @@ function BlackMarketManager:view_mask(slot)
 	local mask_id = data.mask_id
 	local blueprint = data.blueprint
 
-	managers.menu_scene:spawn_mask(mask_id, blueprint)
+	managers.menu_scene:spawn_mask(mask_id, blueprint, offset)
 end
 
 function BlackMarketManager:view_mask_with_blueprint(slot, blueprint)
@@ -7768,6 +7769,22 @@ function BlackMarketManager:_on_reset_unlock_aquired_weapons()
 			weapons[weapon_id].unlocked = true
 		end
 	end
+
+	local melee_weapons = Global.blackmarket_manager.melee_weapons
+
+	for melee_weapon_id, data in pairs(Global.player_manager.melee_weapons) do
+		if melee_weapons[melee_weapon_id] then
+			melee_weapons[melee_weapon_id].unlocked = true
+		end
+	end
+
+	local grenades = Global.blackmarket_manager.grenades
+
+	for grenade_id, data in pairs(Global.player_manager.grenades) do
+		if grenades[grenade_id] then
+			grenades[grenade_id].unlocked = true
+		end
+	end
 end
 
 function BlackMarketManager:reset()
@@ -8275,7 +8292,7 @@ function BlackMarketManager:_load_done()
 		local rank = managers.experience:current_rank()
 
 		if rank > 0 then
-			managers.menu_scene:set_character_equipped_card(nil, rank - 1)
+			managers.menu_scene:set_character_equipped_card(nil, rank)
 		else
 			local secondary = self:equipped_secondary()
 

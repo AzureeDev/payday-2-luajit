@@ -28,6 +28,7 @@ function GenericDLCManager:setup()
 	self:_create_achievement_locked_content_table()
 	self:_create_skirmish_locked_content_table()
 	self:_create_crimespree_locked_content_table()
+	self:_create_infamy_locked_content_table()
 end
 
 function GenericDLCManager:_create_achievement_locked_content_table()
@@ -100,6 +101,20 @@ function GenericDLCManager:_create_crimespree_locked_content_table()
 	end
 end
 
+function GenericDLCManager:_create_infamy_locked_content_table()
+	self._infamy_locked_content = {}
+
+	for rank, item in pairs(tweak_data.infamy.tree) do
+		for _, reward in ipairs(tweak_data.infamy.items[item].upgrades) do
+			local gv, category, entry_id = unpack(reward)
+			self._infamy_locked_content[category] = self._infamy_locked_content[category] or {}
+			self._infamy_locked_content[category][entry_id] = self._infamy_locked_content[category][entry_id] or {}
+
+			table.insert(self._infamy_locked_content[category][entry_id], "inf_" .. tostring(rank))
+		end
+	end
+end
+
 function GenericDLCManager:_modify_locked_content()
 	if SystemInfo:platform() == Idstring("WIN32") then
 		return
@@ -163,9 +178,7 @@ function GenericDLCManager:is_content_achievement_locked(category, entry)
 		local dlc_tweak = tweak_data.dlc[achievement_dlc_id]
 		local achievement = dlc_tweak and dlc_tweak.achievement_id
 
-		if achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
-			return true
-		end
+		return not achievement or not managers.achievment:get_info(achievement) or not managers.achievment:get_info(achievement).awarded
 	end
 
 	return false
@@ -211,6 +224,10 @@ function GenericDLCManager:is_weapon_mod_achievement_milestone_locked(weapon_mod
 	return self._achievement_milestone_locked_content.weapon_mods and self._achievement_milestone_locked_content.weapon_mods[weapon_mod_id]
 end
 
+function GenericDLCManager:get_achievement_from_locked_content(category, id)
+	return self._achievement_locked_content[category] and self._achievement_locked_content[category][id] or self._achievement_milestone_locked_content[category] and self._achievement_milestone_locked_content[category][id]
+end
+
 function GenericDLCManager:skirmish_locked_content()
 	return self._skirmish_locked_content
 end
@@ -225,6 +242,14 @@ end
 
 function GenericDLCManager:is_content_crimespree_locked(category, entry)
 	return self._crimespree_locked_content and self._crimespree_locked_content[category] and self._crimespree_locked_content[category][entry] and true or false
+end
+
+function GenericDLCManager:infamy_locked_content()
+	return self._infamy_locked_content
+end
+
+function GenericDLCManager:is_content_infamy_locked(category, entry)
+	return self._infamy_locked_content and self._infamy_locked_content[category] and self._infamy_locked_content[category][entry] and true or false
 end
 
 function GenericDLCManager:dlc_locked_content()
@@ -2135,6 +2160,10 @@ end
 
 function WINDLCManager:_init_promoted_dlc_list()
 	self._promoted_dlc_list = {
+		"fex",
+		"mxw",
+		"pgo",
+		"ocp",
 		"pex",
 		"wcc",
 		"atw",
@@ -2149,7 +2178,6 @@ function WINDLCManager:_init_promoted_dlc_list()
 		"grv",
 		"spa",
 		"friend",
-		"chico",
 		"tango",
 		"pim",
 		"born",

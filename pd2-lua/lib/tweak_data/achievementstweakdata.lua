@@ -207,7 +207,10 @@ function AchievementsTweakData:init(tweak_data)
 		"ignominy_22",
 		"ignominy_23",
 		"ignominy_24",
-		"ignominy_25"
+		"ignominy_25",
+		[50] = "ignominy_50",
+		[75] = "ignominy_75",
+		[100] = "ignominy_100"
 	}
 	self.final_rule = {
 		heist = "nightclub",
@@ -251,11 +254,6 @@ function AchievementsTweakData:init(tweak_data)
 	self.cavity = {
 		award = "bulldog_4",
 		melee_type = "toothbrush"
-	}
-	self.double_trouble = {
-		award = "ovk_9",
-		converted_cops = 4,
-		difficulty = overkill_and_above
 	}
 	self.never_let_you_go = {
 		weapon_id = "m134",
@@ -305,6 +303,13 @@ function AchievementsTweakData:init(tweak_data)
 		carry_id = "goat",
 		award = "peta_4",
 		count = 1
+	}
+	self.convert_enemies = {
+		double_trouble = {
+			award = "ovk_9",
+			count = 4,
+			difficulty = overkill_and_above
+		}
 	}
 	self.weapons_owned = {
 		gage4_2 = {
@@ -1170,9 +1175,9 @@ function AchievementsTweakData:init(tweak_data)
 		},
 		bph_9 = {
 			melee_id = "toothbrush",
+			job = "bph",
 			result = "death",
 			stat = "bph_9_stat",
-			is_dropin = false,
 			difficulty = overkill_and_above
 		},
 		bex_9 = {
@@ -4908,6 +4913,47 @@ function AchievementsTweakData:init(tweak_data)
 			award = "pex_8",
 			one_down = true,
 			job = "pex",
+			difficulty = sm_wish_and_above
+		},
+		fex_1 = {
+			award = "fex_1",
+			job = "fex",
+			difficulty = normal_and_above
+		},
+		fex_2 = {
+			award = "fex_2",
+			job = "fex",
+			difficulty = hard_and_above
+		},
+		fex_3 = {
+			award = "fex_3",
+			job = "fex",
+			difficulty = veryhard_and_above
+		},
+		fex_4 = {
+			award = "fex_4",
+			job = "fex",
+			difficulty = overkill_and_above
+		},
+		fex_5 = {
+			award = "fex_5",
+			job = "fex",
+			difficulty = easywish_and_above
+		},
+		fex_6 = {
+			award = "fex_6",
+			job = "fex",
+			difficulty = deathwish_and_above
+		},
+		fex_7 = {
+			award = "fex_7",
+			job = "fex",
+			difficulty = sm_wish_and_above
+		},
+		fex_8 = {
+			award = "fex_8",
+			one_down = true,
+			job = "fex",
 			difficulty = sm_wish_and_above
 		},
 		uno_1 = {

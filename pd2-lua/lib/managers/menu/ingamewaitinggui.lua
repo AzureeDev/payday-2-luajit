@@ -465,7 +465,16 @@ function IngameWaitingGui:set_panel_for(peer_id)
 		self._detection_value:set_color(tweak_data.screen_colors.text)
 	end
 
-	self._name_text:set_text(self._peer:name() .. "  " .. (self._peer:rank() > 0 and managers.experience:rank_string(self._peer:rank()) .. "-" or "") .. (self._peer:level() or "") .. "")
+	local peer_name_string = self._peer:name()
+	local color_range_offset = utf8.len(peer_name_string) + 2
+	local experience, color_ranges = managers.experience:gui_string(self._peer:level(), self._peer:rank(), color_range_offset)
+
+	self._name_text:set_text(self._peer:name() .. " (" .. experience .. ")")
+
+	for _, color_range in ipairs(color_ranges or {}) do
+		self._name_text:set_range_color(color_range.start, color_range.stop, color_range.color)
+	end
+
 	self._name_text:set_visible(true)
 
 	self._loadout_panel = self._content_panel:panel()

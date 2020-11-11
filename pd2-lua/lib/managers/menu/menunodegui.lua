@@ -689,6 +689,7 @@ function MenuNodeGui:_create_menu_item(row_item)
 		if row_item.item:parameters().icon then
 			row_item.icon = self.item_panel:bitmap({
 				texture = row_item.item:parameters().icon,
+				texture_rect = row_item.item:parameters().icon_rect,
 				rotation = row_item.item:parameters().icon_rotation or 360,
 				visible = row_item.item:icon_visible(),
 				layer = self.layers.items + 1
@@ -978,7 +979,21 @@ function MenuNodeGui:_align_friend(row_item)
 	row_item.gui_panel:set_height(h)
 
 	if row_item.icon then
-		row_item.icon:set_left(row_item.gui_panel:right())
+		local left = row_item.gui_panel:left()
+		local right = row_item.gui_panel:right()
+
+		if row_item.gui_panel.set_text then
+			local x, y, w, h = row_item.gui_panel:text_rect()
+			left = x
+			right = x + w
+		end
+
+		if row_item.item:parameters().icon_align == "left" then
+			row_item.icon:set_right(left)
+		else
+			row_item.icon:set_left(right)
+		end
+
 		row_item.icon:set_center_y(row_item.gui_panel:center_y())
 		row_item.icon:set_color(row_item.gui_panel:color())
 	end
@@ -1220,7 +1235,9 @@ function MenuNodeGui:_text_item_part(row_item, panel, align_x, text_align)
 
 	if color_ranges then
 		for _, color_range in ipairs(color_ranges) do
-			new_text:set_range_color(color_range.start, color_range.stop, color_range.color)
+			if color_range then
+				new_text:set_range_color(color_range.start, color_range.stop, color_range.color)
+			end
 		end
 	end
 
@@ -1451,7 +1468,21 @@ function MenuNodeGui:_highlight_row_item(row_item, mouse_over)
 			MenuNodeGui.super._highlight_row_item(self, row_item)
 
 			if row_item.icon then
-				row_item.icon:set_left(row_item.gui_panel:right())
+				local left = row_item.gui_panel:left()
+				local right = row_item.gui_panel:right()
+
+				if row_item.gui_panel.set_text then
+					local x, y, w, h = row_item.gui_panel:text_rect()
+					left = x
+					right = x + w
+				end
+
+				if row_item.item:parameters().icon_align == "left" then
+					row_item.icon:set_right(left)
+				else
+					row_item.icon:set_left(right)
+				end
+
 				row_item.icon:set_center_y(row_item.gui_panel:center_y())
 				row_item.icon:set_color(row_item.gui_panel:color())
 			end
@@ -1612,7 +1643,21 @@ function MenuNodeGui:_fade_row_item(row_item)
 			MenuNodeGui.super._fade_row_item(self, row_item)
 
 			if row_item.icon then
-				row_item.icon:set_left(row_item.gui_panel:right())
+				local left = row_item.gui_panel:left()
+				local right = row_item.gui_panel:right()
+
+				if row_item.gui_panel.set_text then
+					local x, y, w, h = row_item.gui_panel:text_rect()
+					left = x
+					right = x + w
+				end
+
+				if row_item.item:parameters().icon_align == "left" then
+					row_item.icon:set_right(left)
+				else
+					row_item.icon:set_left(right)
+				end
+
 				row_item.icon:set_center_y(row_item.gui_panel:center_y())
 				row_item.icon:set_color(row_item.gui_panel:color())
 			end
@@ -1650,7 +1695,21 @@ function MenuNodeGui:_align_normal(row_item)
 	row_item.gui_panel:set_w(safe_rect.width - row_item.gui_panel:left())
 
 	if row_item.icon then
-		row_item.icon:set_left(row_item.gui_panel:right())
+		local left = row_item.gui_panel:left()
+		local right = row_item.gui_panel:right()
+
+		if row_item.gui_panel.set_text then
+			local x, y, w, h = row_item.gui_panel:text_rect()
+			left = x
+			right = x + w
+		end
+
+		if row_item.item:parameters().icon_align == "left" then
+			row_item.icon:set_right(left)
+		else
+			row_item.icon:set_left(right)
+		end
+
 		row_item.icon:set_center_y(row_item.gui_panel:center_y())
 		row_item.icon:set_color(row_item.gui_panel:color())
 	end
@@ -1683,7 +1742,21 @@ function MenuNodeGui:_align_chat(row_item)
 	row_item.chat_output:set_right(row_item.gui_panel:w())
 
 	if row_item.icon then
-		row_item.icon:set_left(row_item.gui_panel:right())
+		local left = row_item.gui_panel:left()
+		local right = row_item.gui_panel:right()
+
+		if row_item.gui_panel.set_text then
+			local x, y, w, h = row_item.gui_panel:text_rect()
+			left = x
+			right = x + w
+		end
+
+		if row_item.item:parameters().icon_align == "left" then
+			row_item.icon:set_right(left)
+		else
+			row_item.icon:set_left(right)
+		end
+
 		row_item.icon:set_center_y(row_item.gui_panel:center_y())
 		row_item.icon:set_color(row_item.gui_panel:color())
 	end

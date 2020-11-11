@@ -286,7 +286,7 @@ function PlayerManager:damage_absorption()
 		total = total + Application:digest_value(absorption, false)
 	end
 
-	total = total + self:get_best_cocaine_damage_absorption()
+	total = total + self:get_best_cocaine_damage_absorption(managers.network:session():local_peer():id())
 	total = managers.modifiers:modify_value("PlayerManager:GetDamageAbsorption", total)
 
 	return total
@@ -541,6 +541,7 @@ function PlayerManager:_setup()
 		Global.player_manager.weapons = {}
 		Global.player_manager.equipment = {}
 		Global.player_manager.equipment_settings = {}
+		Global.player_manager.melee_weapons = {}
 		Global.player_manager.grenades = {}
 		Global.player_manager.synced_upgrades = {}
 		Global.player_manager.kit = {
@@ -1127,12 +1128,22 @@ function PlayerManager:unaquire_weapon(upgrade, id)
 end
 
 function PlayerManager:aquire_melee_weapon(upgrade, id)
+	if not self._global.melee_weapons or self._global.melee_weapons[id] then
+		return
+	end
+
+	self._global.melee_weapons[id] = upgrade
 end
 
 function PlayerManager:unaquire_melee_weapon(upgrade, id)
 end
 
 function PlayerManager:aquire_grenade(upgrade, id)
+	if not self._global.grenades or self._global.grenades[id] then
+		return
+	end
+
+	self._global.grenades[id] = upgrade
 end
 
 function PlayerManager:unaquire_grenade(upgrade, id)
@@ -2089,7 +2100,7 @@ function PlayerManager:get_infamy_exp_multiplier()
 
 	if managers.experience:current_rank() > 0 then
 		for infamy, item in pairs(tweak_data.infamy.items) do
-			if managers.infamy:owned(infamy) and item.upgrades and item.upgrades.infamous_xp then
+			if managers.infamy:owned(infamy) and item.upgrades and item.upgrades.infamous_xp and tweak_data.infamy:get_infamy_item_rank_requirement(infamy) <= managers.experience:current_rank() then
 				multiplier = multiplier + math.abs(item.upgrades.infamous_xp - 1)
 			end
 		end

@@ -42,12 +42,12 @@ function ConnectionNetworkHandler:discover_host_reply(sender_name, level_id, lev
 	managers.network:on_discover_host_reply(sender, sender_name, level_name, my_ip, state, difficulty)
 end
 
-function ConnectionNetworkHandler:request_join(peer_name, preferred_character, dlcs, xuid, peer_level, peer_rank, gameversion, join_attempt_identifier, auth_ticket, sender)
+function ConnectionNetworkHandler:request_join(peer_name, preferred_character, dlcs, xuid, peer_level, peer_rank, peer_stinger_index, gameversion, join_attempt_identifier, auth_ticket, sender)
 	if not self._verify_in_server_session() then
 		return
 	end
 
-	managers.network:session():on_join_request_received(peer_name, preferred_character, dlcs, xuid, peer_level, peer_rank, gameversion, join_attempt_identifier, auth_ticket, sender)
+	managers.network:session():on_join_request_received(peer_name, preferred_character, dlcs, xuid, peer_level, peer_rank, peer_stinger_index, gameversion, join_attempt_identifier, auth_ticket, sender)
 end
 
 function ConnectionNetworkHandler:join_request_reply(reply_id, my_peer_id, my_character, level_index, difficulty_index, one_down, state, server_character, user_id, mission, job_id_index, job_stage, alternative_job_stage, interupt_job_stage_level_index, xuid, auth_ticket, sender)
@@ -404,7 +404,7 @@ function ConnectionNetworkHandler:lobby_sync_update_difficulty(difficulty)
 	end
 end
 
-function ConnectionNetworkHandler:lobby_info(level, rank, character, mask_set, sender)
+function ConnectionNetworkHandler:lobby_info(level, rank, stinger_index, character, mask_set, sender)
 	local peer = self._verify_sender(sender)
 
 	print("ConnectionNetworkHandler:lobby_info", peer and peer:id(), level, rank)
@@ -413,6 +413,7 @@ function ConnectionNetworkHandler:lobby_info(level, rank, character, mask_set, s
 	if peer then
 		peer:set_level(level)
 		peer:set_rank(rank)
+		peer:set_join_stinger_index(stinger_index)
 
 		local lobby_menu = managers.menu:get_menu("lobby_menu")
 
@@ -1092,8 +1093,8 @@ function ConnectionNetworkHandler:sync_set_super_syndrome(peer_id, active)
 	managers.groupai:state():set_super_syndrome(peer_id, active)
 end
 
-function ConnectionNetworkHandler:peer_joined_sound(infamous)
-	managers.menu:post_event(infamous and "infamous_player_join_stinger" or "player_join")
+function ConnectionNetworkHandler:peer_joined_sound(stinger_index)
+	managers.menu:play_join_stinger_by_index(stinger_index)
 end
 
 function ConnectionNetworkHandler:client_used_weapon(weapon_id)

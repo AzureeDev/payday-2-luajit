@@ -120,12 +120,16 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		scrub = "heist_default",
 		jumpsuit = "heat",
 		hiphop = "bonemittens",
-		slaughterhouse = "heist_default",
+		gunslinger = "heist_default",
+		gentleman = "heist_default",
 		xmas_tuxedo = "heist_default",
 		winter_suit = "sneak",
 		hippie = "rainbow_mittens",
+		slaughterhouse = "heist_default",
+		t800 = "heist_default",
 		desperado = "desperado",
 		punk = "punk",
+		cartelboss = "heist_default",
 		raincoat = "heist_default",
 		mariachi = "mariatchi",
 		poolrepair = "heist_default",
@@ -235,6 +239,70 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		unit = "units/pd2_dlc_hnd/characters/hnd_glv_esport/hnd_glv_esport",
 		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_esport/hnd_glv_esport_third"
 	}
+	self.gloves.kids = {
+		name_id = "bm_gloves_kidswool",
+		desc_id = "bm_gloves_kidswool_desc",
+		texture_bundle_folder = "gpo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_hnd/characters/hnd_glv_kidswool/hnd_glv_kidswool",
+		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_kidswool/hnd_glv_kidswool_third"
+	}
+	self.gloves.driver = {
+		name_id = "bm_gloves_driverleather",
+		desc_id = "bm_gloves_driverleather_desc",
+		texture_bundle_folder = "gpo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_hnd/characters/hnd_glv_driverleather/hnd_glv_driverleather",
+		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_driverleather/hnd_glv_driverleather_third"
+	}
+	self.gloves.fancy = {
+		name_id = "bm_gloves_fancycloth",
+		desc_id = "bm_gloves_fancycloth_desc",
+		texture_bundle_folder = "gpo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_hnd/characters/hnd_glv_fancycloth/hnd_glv_fancycloth",
+		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_fancycloth/hnd_glv_fancycloth_third"
+	}
+	self.gloves.tactical = {
+		name_id = "bm_gloves_tactical",
+		desc_id = "bm_gloves_tactical_desc",
+		texture_bundle_folder = "gpo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_hnd/characters/hnd_glv_tactical/hnd_glv_tactical",
+		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_tactical/hnd_glv_tactical_third"
+	}
+	self.gloves.biker = {
+		name_id = "bm_gloves_biker",
+		desc_id = "bm_gloves_biker_desc",
+		texture_bundle_folder = "gpo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_hnd/characters/hnd_glv_biker/hnd_glv_biker",
+		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_biker/hnd_glv_biker_third"
+	}
+	self.gloves.biker_red = {
+		name_id = "bm_gloves_biker_red",
+		desc_id = "bm_gloves_biker_red_desc",
+		texture_bundle_folder = "gpo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_hnd/characters/hnd_glv_biker/hnd_glv_biker_red",
+		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_biker/hnd_glv_biker_red_third"
+	}
+	self.gloves.biker_orange = {
+		name_id = "bm_gloves_biker_orange",
+		desc_id = "bm_gloves_biker_orange_desc",
+		texture_bundle_folder = "gpo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_hnd/characters/hnd_glv_biker/hnd_glv_biker_orange",
+		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_biker/hnd_glv_biker_orange_third"
+	}
+	self.gloves.biker_blue = {
+		name_id = "bm_gloves_biker_blue",
+		desc_id = "bm_gloves_biker_blue_desc",
+		texture_bundle_folder = "gpo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_hnd/characters/hnd_glv_biker/hnd_glv_biker_blue",
+		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_biker/hnd_glv_biker_blue_third"
+	}
 	self.gloves.continental = {
 		name_id = "bm_gloves_continental",
 		desc_id = "bm_gloves_continental_desc",
@@ -242,5 +310,72 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		global_value = "anv",
 		unit = "units/pd2_dlc_anv/characters/anv_glv_continental/anv_glv_continental",
 		third_material = "units/pd2_dlc_anv/characters/anv_glv_continental/anv_glv_continental_third"
+	}
+	self.gloves.sportsbike = {
+		name_id = "bm_gloves_sportsbike",
+		desc_id = "bm_gloves_sportsbike_desc",
+		texture_bundle_folder = "pgo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_pgo/characters/pgo_glv_sportsbike/pgo_glv_sportsbike",
+		third_material = "units/pd2_dlc_pgo/characters/pgo_glv_sportsbike/pgo_glv_sportsbike_third"
+	}
+	self.gloves.hockey = {
+		name_id = "bm_gloves_hockey",
+		desc_id = "bm_gloves_hockey_desc",
+		texture_bundle_folder = "pgo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_pgo/characters/pgo_glv_hockey/pgo_glv_hockey",
+		third_material = "units/pd2_dlc_pgo/characters/pgo_glv_hockey/pgo_glv_hockey_third"
+	}
+	self.gloves.bananabike = {
+		name_id = "bm_gloves_bananabike",
+		desc_id = "bm_gloves_bananabike_desc",
+		texture_bundle_folder = "pgo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_pgo/characters/pgo_glv_bananabike/pgo_glv_bananabike",
+		third_material = "units/pd2_dlc_pgo/characters/pgo_glv_bananabike/pgo_glv_bananabike_third"
+	}
+	self.gloves.chopper = {
+		name_id = "bm_gloves_chopper",
+		desc_id = "bm_gloves_chopper_desc",
+		texture_bundle_folder = "pgo",
+		global_value = "pgo",
+		unit = "units/pd2_dlc_pgo/characters/pgo_glv_chopper/pgo_glv_chopper",
+		third_material = "units/pd2_dlc_pgo/characters/pgo_glv_chopper/pgo_glv_chopper_third"
+	}
+	self.gloves.neoncity = {
+		name_id = "bm_gloves_neoncity",
+		desc_id = "bm_gloves_neoncity_desc",
+		texture_bundle_folder = "inf",
+		global_value = "inf",
+		sort_number = 2,
+		unit = "units/pd2_dlc_inf3/characters/glv_neoncity/glv_neoncity",
+		third_material = "units/pd2_dlc_inf3/characters/glv_neoncity/glv_neoncity_third"
+	}
+	self.gloves.molten = {
+		name_id = "bm_gloves_molten",
+		desc_id = "bm_gloves_molten_desc",
+		texture_bundle_folder = "inf",
+		global_value = "inf",
+		sort_number = 4,
+		unit = "units/pd2_dlc_inf3/characters/glv_molten/glv_molten",
+		third_material = "units/pd2_dlc_inf3/characters/glv_molten/glv_molten_third"
+	}
+	self.gloves.cosmos = {
+		name_id = "bm_gloves_cosmos",
+		desc_id = "bm_gloves_cosmos_desc",
+		texture_bundle_folder = "inf",
+		global_value = "inf",
+		sort_number = 3,
+		unit = "units/pd2_dlc_inf3/characters/glv_cosmos/glv_cosmos",
+		third_material = "units/pd2_dlc_inf3/characters/glv_cosmos/glv_cosmos_third"
+	}
+	self.gloves.tiger = {
+		name_id = "bm_gloves_tiger",
+		desc_id = "bm_gloves_tiger_desc",
+		texture_bundle_folder = "inf",
+		global_value = "inf",
+		unit = "units/pd2_dlc_inf3/characters/glv_tiger/glv_tiger",
+		third_material = "units/pd2_dlc_inf3/characters/glv_tiger/glv_tiger_third"
 	}
 end

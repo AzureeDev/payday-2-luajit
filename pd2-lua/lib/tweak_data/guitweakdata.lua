@@ -5073,9 +5073,24 @@ function GuiTweakData:init(tweak_data)
 		"bonus"
 	}
 	self.new_heists = {
-		limit = 7
+		limit = 3
 	}
 
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_fex_bundle",
+		texture_path = "guis/textures/pd2/new_heists/fex_bundle",
+		url = "https://ovk.af/FEXBundleSlider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_inf",
+		texture_path = "guis/textures/pd2/new_heists/inf",
+		url = "https://ovk.af/FEXUpdateSlider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_legacy",
+		texture_path = "guis/textures/pd2/new_heists/legacy",
+		url = "https://ovk.af/ingameLegacy"
+	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_anv",
 		texture_path = "guis/textures/pd2/new_heists/anv",
@@ -5135,11 +5150,6 @@ function GuiTweakData:init(tweak_data)
 		name_id = "menu_nh_combo",
 		texture_path = "guis/textures/pd2/new_heists/combo",
 		url = "https://ovk.af/ingameBCBundle"
-	})
-	table.insert(self.new_heists, {
-		name_id = "menu_nh_legacy",
-		texture_path = "guis/textures/pd2/new_heists/legacy",
-		url = "https://ovk.af/ingameLegacy"
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_xmn_2019",

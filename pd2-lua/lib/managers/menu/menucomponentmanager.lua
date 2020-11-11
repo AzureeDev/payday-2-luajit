@@ -4,7 +4,7 @@ require("lib/utils/gui/BlurSheet")
 require("lib/managers/menu/MenuGuiComponent")
 require("lib/managers/menu/MenuGuiComponentGeneric")
 require("lib/managers/menu/SkillTreeGui")
-require("lib/managers/menu/InfamyTreeGui")
+require("lib/managers/menu/InfamyTreeGuiNew")
 require("lib/managers/menu/BlackMarketGui")
 require("lib/managers/menu/InventoryList")
 require("lib/managers/menu/MissionBriefingGui")
@@ -774,8 +774,8 @@ function MenuComponentManager:input_focus()
 		end
 	end
 
-	if self._infamytree_gui and self._infamytree_gui:input_focus() then
-		return 1
+	if self._infamytree_gui then
+		return self._infamytree_gui:input_focus()
 	end
 
 	if self:is_preplanning_enabled() then
@@ -1310,6 +1310,10 @@ function MenuComponentManager:special_btn_pressed(...)
 		return true
 	end
 
+	if self._infamytree_gui and self._infamytree_gui:special_btn_pressed(...) then
+		return true
+	end
+
 	local used, values = self:run_return_on_all_live_components("special_btn_pressed", ...)
 
 	if used then
@@ -1675,6 +1679,10 @@ end
 
 function MenuComponentManager:mouse_released(o, button, x, y)
 	if self._game_chat_gui and self._game_chat_gui:mouse_released(o, button, x, y) then
+		return true
+	end
+
+	if self._infamytree_gui and self._infamytree_gui:mouse_released(o, button, x, y) then
 		return true
 	end
 

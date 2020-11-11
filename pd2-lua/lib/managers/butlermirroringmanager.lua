@@ -312,19 +312,22 @@ function ButlerMirroringManager:_on_achievement(id)
 		kosugi_4 = "Play_btl_ach_09",
 		frog_1 = "Play_btl_ach_10",
 		trk_b_0 = "Play_btl_contract_bain_all",
-		deer_7 = "Play_btl_ach_04",
+		ignominy_75 = "Play_btl_inf_lvl_75",
 		short_fuse = "Play_btl_ach_13",
-		trk_cb_0 = "Play_btl_contract_butcher_all",
-		trk_d_0 = "Play_btl_contract_dentist_all",
+		ignominy_100 = "Play_btl_inf_lvl_100",
+		ignominy_50 = "Play_btl_inf_lvl_50",
 		gage3_9 = "Play_btl_ach_05",
-		trk_e_0 = "Play_btl_contract_elephant_all",
-		trk_l_0 = "Play_btl_contract_locke_all",
+		deer_7 = "Play_btl_ach_04",
+		trk_cb_0 = "Play_btl_contract_butcher_all",
 		death_29 = "Play_btl_ach_11",
 		death_30 = "Play_btl_ach_14",
 		sinus_1 = "Play_btl_ach_15",
 		halloween_nightmare_5 = "Play_btl_ach_12",
-		trk_v_0 = "Play_btl_contract_vlad_all",
+		trk_d_0 = "Play_btl_contract_dentist_all",
 		gage2_8 = "Play_btl_ach_06",
+		trk_e_0 = "Play_btl_contract_elephant_all",
+		trk_l_0 = "Play_btl_contract_locke_all",
+		trk_v_0 = "Play_btl_contract_vlad_all",
 		farm_6 = "Play_btl_ach_01",
 		gorilla_1 = "Play_btl_ach_03",
 		gage2_10 = "Play_btl_ach_07",
@@ -355,7 +358,7 @@ function ButlerMirroringManager:_on_achievement(id)
 			sound_events = {
 				sound_event
 			},
-			priority = priorities.achievement
+			priority = priorities.achievement + 0.1
 		})
 	else
 		local total = managers.achievment:total_amount()
@@ -386,7 +389,7 @@ function ButlerMirroringManager:_on_achievement(id)
 				sound_events = {
 					"Play_btl_ach_new_01"
 				},
-				priority = priorities.achievement + 0.1
+				priority = priorities.achievement
 			})
 		end
 	end

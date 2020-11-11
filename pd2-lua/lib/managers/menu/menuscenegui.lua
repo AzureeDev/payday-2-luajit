@@ -41,13 +41,14 @@ function MenuSceneGui:update(t, dt)
 		if self._shown_infamy_text_t <= t then
 			self._shown_infamy_text_t = nil
 			local current_rank = managers.experience:current_rank()
+			local infamous_string = managers.localization:to_upper_text(current_rank == 0 and "menu_infamy_rank_reached" or "menu_infamy_rank_increased", {
+				infamy_rank = tostring(current_rank + 1)
+			})
 			self._infamy_increased_text = self._panel:text({
 				vertical = "top",
 				align = "center",
 				layer = 1,
-				text = managers.localization:to_upper_text(current_rank == 0 and "menu_infamy_rank_reached" or "menu_infamy_rank_increased", {
-					infamy_rank = tostring(current_rank + 1)
-				}),
+				text = infamous_string,
 				font = tweak_data.menu.pd2_large_font,
 				font_size = tweak_data.menu.pd2_large_font_size
 			})

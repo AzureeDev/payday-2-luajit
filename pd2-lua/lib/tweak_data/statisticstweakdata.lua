@@ -211,6 +211,7 @@ function StatisticsTweakData:statistics_table()
 		"bolivian_indoors_mex",
 		"security_mex",
 		"civilian_mariachi",
+		"security_mex_no_pager",
 		"swat_turret"
 	}
 	local armor_list = {

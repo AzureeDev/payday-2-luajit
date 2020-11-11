@@ -416,6 +416,9 @@ function TweakDataVR:init(tweak_data)
 			chinchilla = {
 				position = Vector3(-0.5, 2, 2)
 			},
+			model3 = {
+				position = Vector3(-0.5, 2, 2)
+			},
 			breech = {
 				position = Vector3(-0.5, 1, 1)
 			},
@@ -435,6 +438,9 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-0.5, 2.5, 1)
 			},
 			x_chinchilla = {
+				position = Vector3(-0.5, 2, 2)
+			},
+			x_model3 = {
 				position = Vector3(-0.5, 2, 2)
 			},
 			x_shrew = {
@@ -605,6 +611,10 @@ function TweakDataVR:init(tweak_data)
 				grip = "weapon_2_grip",
 				position = Vector3(-0.5, 2, -1)
 			},
+			m1897 = {
+				grip = "weapon_2_grip",
+				position = Vector3(-0.5, 2, -1)
+			},
 			spas12 = {
 				position = Vector3(-0.1, 2, 2)
 			},
@@ -643,6 +653,9 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-0.2, -1, 0)
 			},
 			winchester1874 = {
+				position = Vector3(-0.2, -1, 0)
+			},
+			sbl = {
 				position = Vector3(-0.2, -1, 0)
 			},
 			wa2000 = {
@@ -830,6 +843,10 @@ function TweakDataVR:init(tweak_data)
 			position = Vector3(3, 2, 2),
 			rotation = Rotation(-45, 12, -20)
 		},
+		model3 = {
+			position = Vector3(3, 2, 2),
+			rotation = Rotation(-45, 12, -20)
+		},
 		peacemaker = {
 			position = Vector3(3, 2, 2),
 			rotation = Rotation(-45, 12, -20)
@@ -848,6 +865,10 @@ function TweakDataVR:init(tweak_data)
 			position = Vector3(0, 18, 0)
 		},
 		x_chinchilla = {
+			position = Vector3(3, 2, 2),
+			rotation = Rotation(-45, 12, -20)
+		},
+		x_model3 = {
 			position = Vector3(3, 2, 2),
 			rotation = Rotation(-45, 12, -20)
 		},
@@ -913,6 +934,10 @@ function TweakDataVR:init(tweak_data)
 			rotation = Rotation(-223, -129, 70)
 		},
 		m37 = {
+			position = Vector3(3, 0, 0),
+			rotation = Rotation(-223, -129, 70)
+		},
+		m1897 = {
 			position = Vector3(3, 0, 0),
 			rotation = Rotation(-223, -129, 70)
 		},
@@ -1355,6 +1380,16 @@ function TweakDataVR:init(tweak_data)
 			magazine = {
 				"g_speedloader"
 			}
+		},
+		model3 = {
+			magazine = {
+				"g_speedloader"
+			}
+		},
+		x_model3 = {
+			magazine = {
+				"g_speedloader"
+			}
 		}
 	}
 	self.weapon_assist = {
@@ -1391,6 +1426,10 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-2, 25, 0)
 			},
 			m37 = {
+				grip = "idle_wpn",
+				position = Vector3(-2, 40, 0)
+			},
+			m1897 = {
 				grip = "idle_wpn",
 				position = Vector3(-2, 40, 0)
 			},
@@ -1505,6 +1544,10 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(0, 40, 0)
 			},
 			winchester1874 = {
+				grip = "idle_wpn",
+				position = Vector3(-1, 35, 0)
+			},
+			sbl = {
 				grip = "idle_wpn",
 				position = Vector3(-1, 35, 0)
 			},
@@ -2576,6 +2619,62 @@ function TweakDataVR:init(tweak_data)
 				{
 					time = 0.5,
 					sound = "wp_chinchilla_cylinder_in",
+					anims = {
+						{
+							anim_group = "reload",
+							from = 2.7
+						}
+					}
+				}
+			}
+		},
+		model3 = {
+			custom_mag_unit = "units/pd2_dlc_vr/units/wpn_pis_speedloader_6x/wpn_pis_speedloader_6x",
+			start = {
+				{
+					time = 0,
+					sound = "wp_model3_cylinder_out",
+					anims = {
+						{
+							anim_group = "reload",
+							to = 0.5
+						}
+					}
+				},
+				{
+					time = 0.02,
+					sound = "wp_model3_eject_shells"
+				},
+				{
+					time = 0.25,
+					visible = false,
+					effect = {
+						object = "a_m",
+						name = "effects/payday2/particles/weapons/shells/shell_revolver_dump"
+					}
+				}
+			},
+			finish = {
+				{
+					visible = true,
+					time = 0,
+					sound = "wp_model3_insert"
+				},
+				{
+					time = 0,
+					sound = "wp_model3_insert",
+					visible = {
+						visible = false,
+						parts = {
+							magazine = {
+								"g_speedloader"
+							}
+						}
+					}
+				},
+				{
+					time = 0.5,
+					sound = "wp_model3_cylinder_in",
 					anims = {
 						{
 							anim_group = "reload",
@@ -3841,6 +3940,40 @@ function TweakDataVR:init(tweak_data)
 				{
 					time = 0.6,
 					sound = "wp_m37_reload_exit_push_handle"
+				}
+			}
+		},
+		m1897 = {
+			reload_part_type = "lower_reciever",
+			custom_mag_unit = "units/pd2_dlc_vr/units/wpn_vr_m_slug/wpn_vr_m_slug_6",
+			start = {
+				{
+					time = 0,
+					sound = "wp_m1897_reload_enter"
+				},
+				{
+					time = 0.03
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					anims = {
+						{
+							anim_group = "reload_exit",
+							to = 0.7,
+							from = 0.2,
+							part = "foregrip"
+						}
+					}
+				},
+				{
+					time = 0,
+					sound = "wp_m1897_insert_shell"
+				},
+				{
+					time = 0.6,
+					sound = "wp_m1897_reload_exit_push_handle"
 				}
 			}
 		},
@@ -6043,6 +6176,69 @@ function TweakDataVR:init(tweak_data)
 				}
 			}
 		},
+		x_model3 = {
+			custom_mag_unit = "units/pd2_dlc_vr/units/wpn_pis_speedloader_6x/wpn_pis_speedloader_6x",
+			start = {
+				{
+					time = 0,
+					sound = "wp_model3_cylinder_out",
+					anims = {
+						{
+							anim_group = "reload_right",
+							to = 0.5
+						},
+						{
+							anim_group = "reload_left",
+							to = 0.5
+						}
+					}
+				},
+				{
+					time = 0.02,
+					sound = "wp_model3_eject_shells"
+				},
+				{
+					time = 0.25,
+					visible = false,
+					effect = {
+						object = "a_m",
+						name = "effects/payday2/particles/weapons/shells/shell_revolver_dump"
+					}
+				}
+			},
+			finish = {
+				{
+					visible = true,
+					time = 0,
+					sound = "wp_model3_insert"
+				},
+				{
+					time = 0,
+					visible = {
+						visible = false,
+						parts = {
+							magazine = {
+								"g_speedloader"
+							}
+						}
+					}
+				},
+				{
+					time = 0.5,
+					sound = "wp_model3_cylinder_in",
+					anims = {
+						{
+							anim_group = "reload_right",
+							from = 3.45
+						},
+						{
+							anim_group = "reload_left",
+							from = 3.45
+						}
+					}
+				}
+			}
+		},
 		x_legacy = {
 			start = {
 				{
@@ -8057,6 +8253,27 @@ function TweakDataVR:init(tweak_data)
 			}
 		},
 		winchester1874 = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_m1873_lever_pull"
+				},
+				{
+					time = 0.03
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_m1873_bullet_in"
+				},
+				{
+					time = 0.5,
+					sound = "wp_m1873_lever_push"
+				}
+			}
+		},
+		sbl = {
 			start = {
 				{
 					time = 0,

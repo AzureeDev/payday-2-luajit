@@ -8,6 +8,8 @@ function LobbyCharacterData:init(panel, peer)
 		h = 128
 	})
 	local peer_id = peer:id()
+	local local_peer = managers.network:session() and managers.network:session():local_peer()
+	local rank = peer == local_peer and managers.experience:current_rank() or peer:rank()
 	local color_id = peer_id
 	local color = tweak_data.chat_colors[color_id] or tweak_data.chat_colors[#tweak_data.chat_colors]
 	local name_text = self._panel:text({
@@ -39,17 +41,18 @@ function LobbyCharacterData:init(panel, peer)
 	state_text:set_top(name_text:bottom())
 	state_text:set_center_x(name_text:center_x())
 
-	local texture = tweak_data.hud_icons:get_icon_data("infamy_icon")
+	local texture, texture_rect = managers.experience:rank_icon_data(rank)
 	local infamy_icon = self._panel:bitmap({
 		name = "infamy_icon",
-		h = 32,
+		h = 16,
 		w = 16,
 		texture = texture,
+		texture_rect = texture_rect,
 		color = color
 	})
 
 	infamy_icon:set_right(name_text:x())
-	infamy_icon:set_top(name_text:y())
+	infamy_icon:set_top(name_text:y() + 4)
 
 	self._name_text = name_text
 	self._state_text = state_text
@@ -118,11 +121,13 @@ function LobbyCharacterData:update_character()
 	local local_peer = managers.network:session() and managers.network:session():local_peer()
 	local name_text = peer:name()
 	local show_infamy = false
+	local experience, color_ranges = nil
 	local player_level = peer == local_peer and managers.experience:current_level() or peer:level()
 	local player_rank = peer == local_peer and managers.experience:current_rank() or peer:rank()
 
 	if player_level then
-		local experience = (player_rank > 0 and managers.experience:rank_string(player_rank) .. "-" or "") .. player_level
+		local color_range_offset = utf8.len(name_text) + 2
+		experience, color_ranges = managers.experience:gui_string(player_level, player_rank, color_range_offset)
 		name_text = name_text .. " (" .. experience .. ")"
 	end
 
@@ -130,6 +135,10 @@ function LobbyCharacterData:update_character()
 
 	self._name_text:set_text(name_text)
 	self._infamy_icon:set_visible(show_infamy)
+
+	for _, color_range in ipairs(color_ranges or {}) do
+		self._name_text:set_range_color(color_range.start, color_range.stop, color_range.color)
+	end
 
 	if managers.crime_spree:is_active() then
 		local level = managers.crime_spree:get_peer_spree_level(peer:id())
@@ -204,7 +213,7 @@ function LobbyCharacterData:sort_text_and_reposition()
 	end
 
 	self._infamy_icon:set_right(self._name_text:x())
-	self._infamy_icon:set_top(self._name_text:y())
+	self._infamy_icon:set_top(self._name_text:y() + 4)
 	self:update_position()
 end
 

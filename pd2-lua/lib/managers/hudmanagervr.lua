@@ -680,7 +680,9 @@ function HUDManagerVR:_add_name_label(data)
 		rank = data.unit:network():peer():rank()
 
 		if level then
-			local experience = (rank > 0 and managers.experience:rank_string(rank) .. "-" or "") .. level
+			local color_range_offset = utf8.len(data.name) + 2
+			local experience, color_ranges = managers.experience:gui_string(level, rank, color_range_offset)
+			data.name_color_ranges = color_ranges
 			data.name = data.name .. " (" .. experience .. ")"
 		end
 	end
@@ -773,18 +775,25 @@ function HUDManagerVR:_add_name_label(data)
 	})
 
 	if rank > 0 then
-		local infamy_icon = tweak_data.hud_icons:get_icon_data("infamy_icon")
+		local texture, texture_rect = managers.experience:rank_icon_data(rank)
 
 		panel:bitmap({
 			name = "infamy",
-			h = 32,
+			h = 16,
+			visible = false,
 			w = 16,
-			depth_mode = "disabled",
-			render_template = "OverlayText",
 			layer = 0,
-			texture = infamy_icon,
+			depth_mode = "disabled",
+			y = 4,
+			render_template = "OverlayText",
+			texture = texture,
+			texture_rect = texture_rect,
 			color = crim_color
 		})
+	end
+
+	for _, color_range in ipairs(data.name_color_ranges or {}) do
+		text:set_range_color(color_range.start, color_range.stop, color_range.color)
 	end
 
 	self:align_teammate_name_label(panel, interact)

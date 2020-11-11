@@ -246,6 +246,10 @@ function math.lerp(a, b, t)
 	return a * (1 - t) + b * t
 end
 
+function math.inverse_lerp(a, b, v)
+	return (v - a) / (b - a)
+end
+
 function math.string_to_rotation(v)
 	local r = math.string_to_vector(v)
 

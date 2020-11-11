@@ -5,6 +5,7 @@ LevelsTweakData.LevelType = {
 	Zombie = "zombie",
 	Murkywater = "murkywater",
 	Federales = "federales",
+	Federales = "federales",
 	Federales = "federales"
 }
 
@@ -15,12 +16,14 @@ function LevelsTweakData:init()
 	local murkywater = LevelsTweakData.LevelType.Murkywater
 	local federales = LevelsTweakData.LevelType.Federales
 	local federales = LevelsTweakData.LevelType.Federales
+	local federales = LevelsTweakData.LevelType.Federales
 	self.ai_groups = {
 		default = america,
 		america = america,
 		russia = russia,
 		zombie = zombie,
 		murkywater = murkywater,
+		federales = federales,
 		federales = federales,
 		federales = federales
 	}
@@ -2093,6 +2096,84 @@ function LevelsTweakData:init()
 		ai_group_type = federales,
 		narrator = "locke",
 		ghost_bonus = 0.15,
+		load_screen = "guis/dlcs/pex/textures/loading/job_pex_01_df",
+		teams = {
+			criminal1 = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					converted_enemy = true,
+					escort = true
+				}
+			},
+			law1 = {
+				foes = {
+					converted_enemy = true,
+					criminal1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			},
+			mobster1 = {
+				foes = {
+					converted_enemy = true,
+					law1 = true,
+					criminal1 = true
+				},
+				friends = {}
+			},
+			converted_enemy = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					criminal1 = true,
+					escort = true
+				}
+			},
+			neutral1 = {
+				foes = {},
+				friends = {}
+			},
+			hacked_turret = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			},
+			escort = {
+				foes = {},
+				friends = {
+					converted_enemy = true,
+					criminal1 = true
+				}
+			}
+		}
+	}
+	self.fex = {
+		name_id = "heist_fex_hl",
+		briefing_id = "heist_fex_briefing",
+		briefing_dialog = "Play_loc_fex_brf",
+		world_name = "narratives/vlad/fex",
+		intro_event = "Play_loc_fex_intro",
+		outro_event = {
+			loud = "Play_vld_fex_end",
+			stealth = "Play_vld_fex_end"
+		},
+		music = "heist",
+		package = "packages/job_fex",
+		cube = "cube_apply_heist_bank",
+		block_AIs = {
+			old_hoxton = true
+		},
+		ai_group_type = federales,
+		narrator = "locke",
+		ghost_bonus = 0.15,
+		load_screen = "guis/dlcs/fex/textures/loading/job_fex_01_df",
 		teams = {
 			criminal1 = {
 				foes = {
@@ -2269,7 +2350,8 @@ function LevelsTweakData:init()
 		"mex",
 		"mex_cooking",
 		"bex",
-		"pex"
+		"pex",
+		"fex"
 	}
 
 	if SystemInfo:distribution() == Idstring("STEAM") then

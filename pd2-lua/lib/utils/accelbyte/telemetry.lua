@@ -498,7 +498,9 @@ function Telemetry:send_on_player_logged_in()
 		TotalPlayTime = total_playtime_hours,
 		TitleID = Global.dlc_manager.all_dlc_data.full_game.app_id,
 		Location = self._global._geolocation,
-		["Oldest Achievement"] = self._global._oldest_achievement_date
+		["Oldest Achievement"] = self._global._oldest_achievement_date,
+		PlayerLevel = managers.experience:current_level(),
+		InfamyLevel = managers.experience:current_rank()
 	}
 	local installed_dlc_list = {}
 

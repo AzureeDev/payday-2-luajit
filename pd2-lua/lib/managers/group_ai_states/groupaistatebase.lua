@@ -5018,23 +5018,45 @@ function GroupAIStateBase:remove_minion(minion_key, player_key)
 	managers.modifiers:run_func("OnMinionRemoved")
 end
 
-function GroupAIStateBase:_set_converted_police(u_key, unit, owner_unit)
-	self._converted_police[u_key] = unit
+function GroupAIStateBase:check_converted_achievements()
+	local converted_enemies = {}
 
-	if tweak_data.achievement.double_trouble then
-		local achievement_data = tweak_data.achievement.double_trouble
-		local living_converted_cops = 0
+	for key, unit in pairs(self._converted_police or {}) do
+		if alive(unit) and unit:character_damage() and unit:character_damage().dead and not unit:character_damage():dead() then
+			table.insert(converted_enemies, unit)
+		end
+	end
 
-		for key, unit in pairs(self._converted_police or {}) do
-			if alive(unit) and unit:character_damage() and unit:character_damage().dead and not unit:character_damage():dead() then
-				living_converted_cops = living_converted_cops + 1
+	local filtered_list = nil
+	local level_id = managers.job:has_active_job() and managers.job:current_level_id() or ""
+	local level_pass, count_pass, difficulty_pass, all_pass = nil
+
+	for id, achievement_data in pairs(tweak_data.achievement.convert_enemies) do
+		filtered_list = converted_enemies
+
+		if achievement_data.unit_filter_list then
+			local function filter_function(unit)
+				return table.contains(achievement_data.unit_filter_list, unit:name())
 			end
+
+			filtered_list = table.filter_list(converted_enemies, filter_function)
 		end
 
-		if table.contains(achievement_data.difficulty, Global.game_settings.difficulty) and achievement_data.converted_cops <= living_converted_cops then
+		level_pass = not achievement_data.level_id or level_id == achievement_data.level_id
+		count_pass = not achievement_data.count or achievement_data.count <= #filtered_list
+		difficulty_pass = not achievement_data.difficulty or table.contains(achievement_data.difficulty, Global.game_settings.difficulty)
+		all_pass = level_pass and count_pass and difficulty_pass
+
+		if all_pass then
 			managers.achievment:award(achievement_data.award)
 		end
 	end
+end
+
+function GroupAIStateBase:_set_converted_police(u_key, unit, owner_unit)
+	self._converted_police[u_key] = unit
+
+	self:check_converted_achievements()
 
 	if not unit then
 		self:check_gameover_conditions()
@@ -5317,9 +5339,10 @@ GroupAIStateBase.blame_triggers = {
 	bolivian_indoors_mex = "gan",
 	spooc = "cop",
 	security_mex = "cop",
-	civilian_mariachi = "civ",
+	security_mex_no_pager = "cop",
 	taser = "cop",
-	mobster_boss = "gan"
+	mobster_boss = "gan",
+	civilian_mariachi = "civ"
 }
 GroupAIStateBase.unique_triggers = {
 	glass_alarm = "gls_alarm",

@@ -910,8 +910,6 @@ function CriminalsManager:get_free_character_name()
 			return val.name == name
 		end)
 
-		print(inspect(data))
-
 		if data and not data.taken then
 			print("chosen", name)
 
@@ -923,8 +921,12 @@ function CriminalsManager:get_free_character_name()
 
 	for id, data in pairs(self._characters) do
 		local taken = data.taken
+		local level_blocked = self:is_character_as_AI_level_blocked(data.name)
+		local character_name = CriminalsManager.convert_old_to_new_character_workname(data.name)
+		local character_table = tweak_data.blackmarket.characters[character_name] or tweak_data.blackmarket.characters.locked[character_name]
+		local dlc_unlocked = not character_table or not character_table.dlc or managers.dlc:is_dlc_unlocked(character_table.dlc)
 
-		if not taken and not self:is_character_as_AI_level_blocked(data.name) then
+		if not taken and not level_blocked and dlc_unlocked then
 			table.insert(available, data.name)
 		end
 	end

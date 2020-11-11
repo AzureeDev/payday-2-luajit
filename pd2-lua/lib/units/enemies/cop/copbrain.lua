@@ -65,6 +65,7 @@ logic_variants.drug_lord_boss_stealth = security_variant
 logic_variants.spa_vip = security_variant
 logic_variants.bolivian_indoors_mex = security_variant
 logic_variants.security_mex = security_variant
+logic_variants.security_mex_no_pager = security_variant
 logic_variants.cop_scared = security_variant
 logic_variants.security_undominatable = security_variant
 logic_variants.mute_security_undominatable = security_variant

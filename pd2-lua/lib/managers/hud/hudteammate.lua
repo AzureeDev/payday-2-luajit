@@ -1328,8 +1328,16 @@ function HUDTeammate:set_waiting(waiting, peer)
 
 			local outfit = peer:profile().outfit
 			outfit = outfit or managers.blackmarket:unpack_outfit_from_string(peer:profile().outfit_string) or {}
+			local peer_name_string = " " .. peer:name()
+			local color_range_offset = utf8.len(peer_name_string) + 2
+			local experience, color_ranges = managers.experience:gui_string(peer:level(), peer:rank(), color_range_offset)
 
-			name:set_text(" " .. peer:name() .. "  " .. (peer:rank() > 0 and managers.experience:rank_string(peer:rank()) .. "-" or "") .. (peer:level() or "") .. "")
+			name:set_text(peer_name_string .. " (" .. experience .. ")")
+
+			for _, color_range in ipairs(color_ranges or {}) do
+				name:set_range_color(color_range.start, color_range.stop, color_range.color)
+			end
+
 			managers.hud:make_fine_text(name)
 			name_bg:set_w(name:w() + 4)
 			name_bg:set_h(name:h())

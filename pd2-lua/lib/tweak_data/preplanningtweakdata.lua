@@ -147,7 +147,7 @@ function PrePlanningTweakData:init(tweak_data)
 	self.categories.entry_plan_generic = {
 		name_id = "menu_pp_cat_entry_plan_generic",
 		desc_id = "menu_pp_cat_entry_plan_generic_desc",
-		plan = "entry_plan",
+		plan = "entry_plan_generic",
 		icon = 12,
 		total = 1,
 		prio = 1
@@ -1428,7 +1428,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "mission_equipment",
 		icon = 43,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 1,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 3
@@ -1439,7 +1439,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "mission_equipment",
 		icon = 63,
 		total = 2,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 1,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_roof_access"),
 		budget_cost = 3
@@ -1450,7 +1450,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "mission_equipment",
 		icon = 63,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 1,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_upper_floor_access"),
 		budget_cost = 2
@@ -1461,7 +1461,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "mission_equipment",
 		icon = 72,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 1,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_crowbar_single"),
 		budget_cost = 1
@@ -1472,7 +1472,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "hired_help",
 		icon = 103,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 1,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 6
@@ -1483,7 +1483,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "hired_help",
 		icon = 101,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 3,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 3
@@ -1494,7 +1494,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "hired_help",
 		icon = 102,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 3,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 3
@@ -1505,7 +1505,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "hired_help",
 		icon = 95,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 3,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 3
@@ -1516,7 +1516,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "hired_help",
 		icon = 104,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 3,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 3
@@ -1527,7 +1527,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "hired_help",
 		icon = 105,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 3,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 3
@@ -1538,7 +1538,7 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "hired_help",
 		icon = 24,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 3,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 3
@@ -1549,10 +1549,75 @@ function PrePlanningTweakData:init(tweak_data)
 		category = "hired_help",
 		icon = 111,
 		total = 1,
-		post_event = "gus_preplan_07",
+		post_event = "preplan_16",
 		prio = 3,
 		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_mex_keys"),
 		budget_cost = 3
+	}
+	self.types.fex_stealth_entry_with_thermite = {
+		name_id = "menu_pp_asset_fex_stealth_entry_with_thermite",
+		desc_id = "menu_pp_asset_fex_stealth_entry_with_thermite_desc",
+		plan = "entry_plan_generic",
+		pos_not_important = false,
+		category = "entry_plan_generic",
+		icon = 95,
+		total = 1,
+		cost = 0,
+		budget_cost = 0,
+		post_event = "preplan_07",
+		prio = 3
+	}
+	self.types.fex_stealth_entry_with_boat = {
+		name_id = "menu_pp_asset_fex_stealth_entry_with_boat",
+		desc_id = "menu_pp_asset_fex_stealth_entry_with_boat_desc",
+		plan = "entry_plan_generic",
+		pos_not_important = false,
+		category = "entry_plan_generic",
+		icon = 95,
+		total = 1,
+		cost = 0,
+		budget_cost = 6,
+		post_event = "preplan_07",
+		prio = 3
+	}
+	self.types.fex_loud_escape_with_car = {
+		name_id = "menu_pp_asset_fex_loud_escape_with_car",
+		desc_id = "menu_pp_asset_fex_loud_escape_with_car_desc",
+		plan = "escape_plan",
+		pos_not_important = false,
+		category = "escape_plan",
+		icon = 54,
+		total = 1,
+		cost = 0,
+		budget_cost = 0,
+		post_event = "preplan_16",
+		prio = 3
+	}
+	self.types.fex_loud_escape_with_heli = {
+		name_id = "menu_pp_asset_fex_loud_escape_with_heli",
+		desc_id = "menu_pp_asset_fex_loud_escape_with_heli_desc",
+		plan = "escape_plan",
+		pos_not_important = false,
+		category = "escape_plan",
+		icon = 54,
+		total = 1,
+		cost = 0,
+		budget_cost = 6,
+		post_event = "preplan_16",
+		prio = 3
+	}
+	self.types.fex_stealth_semi_open_garage_door = {
+		name_id = "menu_pp_asset_fex_stealth_semi_open_garage_door",
+		desc_id = "menu_pp_asset_fex_stealth_semi_open_garage_door_desc",
+		plan = "insider_help",
+		pos_not_important = false,
+		category = "insider_help",
+		icon = 111,
+		total = 1,
+		cost = 0,
+		budget_cost = 2,
+		post_event = "preplan_16",
+		prio = 1
 	}
 end
 
@@ -3165,6 +3230,47 @@ function PrePlanningTweakData:_create_locations(tweak_data)
 		post_event_prefix = "loc",
 		total_budget = 10,
 		default_plans = {},
+		start_location = {
+			group = "a",
+			zoom = 1,
+			x = 512,
+			y = 512
+		}
+	}
+	self.locations.fex = {
+		{
+			texture = "guis/dlcs/fex/textures/pd2/pre_planning/fex_01",
+			x2 = 6000,
+			rotation = 0,
+			map_size = 1,
+			map_x = -0.55,
+			map_y = 0,
+			name_id = "menu_pp_fex_bpr_loc_a",
+			x1 = -0 - 6000,
+			y1 = -0 - 6000,
+			y2 = -0 + 6000,
+			custom_points = {}
+		},
+		{
+			texture = "guis/dlcs/fex/textures/pd2/pre_planning/fex_02",
+			x2 = 6000,
+			rotation = 0,
+			map_size = 1,
+			map_x = 0.55,
+			map_y = 0,
+			name_id = "menu_pp_fex_bpr_loc_b",
+			x1 = -0 - 6000,
+			y1 = -0 - 6000,
+			y2 = -0 + 6000,
+			custom_points = {}
+		},
+		mission_briefing_texture = "guis/dlcs/fex/textures/pd2/pre_planning/fex_preview",
+		post_event_prefix = "loc",
+		total_budget = 10,
+		default_plans = {
+			escape_plan = "fex_loud_escape_with_car",
+			entry_plan_generic = "fex_stealth_entry_with_thermite"
+		},
 		start_location = {
 			group = "a",
 			zoom = 1,

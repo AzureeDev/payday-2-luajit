@@ -60,15 +60,22 @@ function MenuNodeSkillSwitchGui:_create_menu_item(row_item)
 		local distribution_after_text = false
 
 		if unlocked then
-			local points = managers.skilltree:points(gd)
-			distribution_text = distribution_text .. managers.localization:to_upper_text(points > 0 and "menu_st_points_unspent_skill_switch" or "menu_st_points_all_spent_skill_switch", {
-				points = string.format("%.3d", points)
-			})
-
-			if managers.skilltree:get_selected_skill_switch() == skill_switch then
-				status_text = managers.localization:to_upper_text("menu_st_active_skill_switch")
+			if managers.skilltree:is_skill_switch_suspended(gd) then
+				distribution_text = distribution_text .. managers.localization:to_upper_text("menu_st_suspended_points_skill_switch", {
+					Points = managers.skilltree:total_points_spent(gd)
+				})
+				status_text = managers.localization:to_upper_text("menu_st_unsuspend_skill_switch")
 			else
-				status_text = managers.localization:to_upper_text("menu_st_make_active_skill_switch")
+				local points = managers.skilltree:points(gd)
+				distribution_text = distribution_text .. managers.localization:to_upper_text(points > 0 and "menu_st_points_unspent_skill_switch" or "menu_st_points_all_spent_skill_switch", {
+					points = string.format("%.3d", points)
+				})
+
+				if managers.skilltree:get_selected_skill_switch() == skill_switch then
+					status_text = managers.localization:to_upper_text("menu_st_active_skill_switch")
+				else
+					status_text = managers.localization:to_upper_text("menu_st_make_active_skill_switch")
+				end
 			end
 		elseif can_unlock then
 			distribution_text = self:get_unlock_cost_text(skill_switch, true)

@@ -242,6 +242,13 @@ function CharacterTweakData:_init_security(presets)
 	self.security_mex.radio_prefix = "mex_"
 
 	table.insert(self._enemy_list, "security_mex")
+
+	self.security_mex_no_pager = deep_clone(self.security)
+	self.security_mex_no_pager.speech_prefix_p1 = "m"
+	self.security_mex_no_pager.radio_prefix = "mex_"
+	self.security_mex_no_pager.has_alarm_pager = false
+
+	table.insert(self._enemy_list, "security_mex_no_pager")
 end
 
 function CharacterTweakData:_init_gensec(presets)
@@ -16082,6 +16089,10 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 		self.security_mex.headshot_dmg_mul = self.security_mex.headshot_dmg_mul * hs_mul
 	end
 
+	if self.security_mex_no_pager.headshot_dmg_mul then
+		self.security_mex_no_pager.headshot_dmg_mul = self.security_mex_no_pager.headshot_dmg_mul * hs_mul
+	end
+
 	if self.cop.headshot_dmg_mul then
 		self.cop.headshot_dmg_mul = self.cop.headshot_dmg_mul * hs_mul
 	end
@@ -16209,6 +16220,7 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	table.insert(all_units, "bolivian_indoors")
 	table.insert(all_units, "bolivian_indoors_mex")
 	table.insert(all_units, "security_mex")
+	table.insert(all_units, "security_mex_no_pager")
 
 	for _, name in ipairs(all_units) do
 		local speed_table = self[name].SPEED_WALK
@@ -16218,6 +16230,7 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 
 	self.security.SPEED_RUN = self.security.SPEED_RUN * run_mul
 	self.security_mex.SPEED_RUN = self.security_mex.SPEED_RUN * run_mul
+	self.security_mex_no_pager.SPEED_RUN = self.security_mex_no_pager.SPEED_RUN * run_mul
 	self.cop.SPEED_RUN = self.cop.SPEED_RUN * run_mul
 	self.fbi.SPEED_RUN = self.fbi.SPEED_RUN * run_mul
 	self.swat.SPEED_RUN = self.swat.SPEED_RUN * run_mul
@@ -16248,6 +16261,7 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 	}
 
 	table.insert(all_units, "security_mex")
+	table.insert(all_units, "security_mex_no_pager")
 
 	for _, name in ipairs(all_units) do
 		self[name].weapon = self.presets.weapon[preset]
@@ -16928,6 +16942,29 @@ function CharacterTweakData:character_map()
 				"civ_male_mariachi_02",
 				"civ_male_mariachi_03",
 				"civ_male_mariachi_04"
+			}
+		},
+		fex = {
+			path = "units/pd2_dlc_fex/characters/",
+			list = {
+				"civ_female_masquerade_1",
+				"civ_female_masquerade_2",
+				"civ_female_masquerade_3",
+				"civ_female_masquerade_4",
+				"civ_male_masquerade_1",
+				"civ_male_masquerade_2",
+				"civ_male_masquerade_3",
+				"civ_male_masquerade_4",
+				"ene_guard_dog_mask",
+				"ene_guard_dog_mask_no_pager",
+				"ene_guard_jaguar_mask",
+				"ene_guard_jaguar_mask_no_pager",
+				"ene_guard_owl_mask",
+				"ene_guard_owl_mask_no_pager",
+				"ene_guard_serpent_mask",
+				"ene_guard_serpent_mask_no_pager",
+				"ene_thug_outdoor_fex",
+				"ene_secret_service_fex"
 			}
 		}
 	}

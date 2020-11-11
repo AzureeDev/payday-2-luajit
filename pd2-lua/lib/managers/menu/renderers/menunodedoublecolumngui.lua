@@ -70,7 +70,21 @@ function MenuNodeDoubleColumnGui:_set_item_positions()
 			row_item.item:on_item_position(row_item, self)
 
 			if alive(row_item.icon) then
-				row_item.icon:set_left(row_item.gui_panel:right())
+				local left = row_item.gui_panel:left()
+				local right = row_item.gui_panel:right()
+
+				if row_item.gui_panel.set_text then
+					local x, y, w, h = row_item.gui_panel:text_rect()
+					left = x
+					right = x + w
+				end
+
+				if row_item.item:parameters().icon_align == "left" then
+					row_item.icon:set_right(left)
+				else
+					row_item.icon:set_left(right)
+				end
+
 				row_item.icon:set_center_y(row_item.gui_panel:center_y())
 				row_item.icon:set_color(row_item.gui_panel:color())
 			end
@@ -112,7 +126,21 @@ function MenuNodeDoubleColumnGui:_set_item_positions()
 			row_item.item:on_item_position(row_item, self)
 
 			if alive(row_item.icon) then
-				row_item.icon:set_left(row_item.gui_panel:right())
+				local left = row_item.gui_panel:left()
+				local right = row_item.gui_panel:right()
+
+				if row_item.gui_panel.set_text then
+					local x, y, w, h = row_item.gui_panel:text_rect()
+					left = x
+					right = x + w
+				end
+
+				if row_item.item:parameters().icon_align == "left" then
+					row_item.icon:set_right(left)
+				else
+					row_item.icon:set_left(right)
+				end
+
 				row_item.icon:set_center_y(row_item.gui_panel:center_y())
 				row_item.icon:set_color(row_item.gui_panel:color())
 			end

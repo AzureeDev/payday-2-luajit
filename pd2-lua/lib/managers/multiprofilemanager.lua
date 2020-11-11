@@ -40,12 +40,15 @@ function MultiProfileManager:save_current()
 		profile.preferred_henchmen[i] = blm:preferred_henchmen(i)
 	end
 
+	profile.join_stinger = managers.infamy:selected_join_stinger()
 	self._global._profiles[self._global._current_profile] = profile
 
 	print("[MultiProfileManager:save_current] done")
 end
 
 function MultiProfileManager:load_current()
+	Global.block_update_outfit_information = true
+	Global.block_publish_equipped_to_steam = true
 	local profile = self:current_profile()
 	local blm = managers.blackmarket
 	local skt = managers.skilltree
@@ -82,6 +85,8 @@ function MultiProfileManager:load_current()
 		end
 	end
 
+	managers.infamy:select_join_stinger(profile.join_stinger)
+
 	local mcm = managers.menu_component
 
 	if mcm._player_inventory_gui then
@@ -97,6 +102,15 @@ function MultiProfileManager:load_current()
 
 		mcm:close_mission_briefing_gui()
 		mcm:create_mission_briefing_gui(node)
+	end
+
+	Global.block_update_outfit_information = nil
+	Global.block_publish_equipped_to_steam = nil
+
+	MenuCallbackHandler:_update_outfit_information()
+
+	if SystemInfo:distribution() == Idstring("STEAM") then
+		managers.statistics:publish_equipped_to_steam()
 	end
 end
 
@@ -238,10 +252,16 @@ function MultiProfileManager:reset()
 
 		self:save_current()
 
-		self:current_profile().name = name
+		self:current_profile().name = nil
 	end
 
 	self._global._current_profile = current_profile
+end
+
+function MultiProfileManager:infamy_reset()
+	for idx, profile in pairs(self._global._profiles) do
+		profile.skillset = 1
+	end
 end
 
 function MultiProfileManager:_check_amount()

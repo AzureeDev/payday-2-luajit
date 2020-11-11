@@ -625,11 +625,7 @@ function WeaponDescription._get_mods_stats(name, base_stats, equipped_mods, bonu
 								debug_pause("weapon is missing reload stat", name)
 							end
 
-							local chosen_index = part_data.stats.reload or 0
-							chosen_index = math.clamp(base_stats[stat.name].index + chosen_index, 1, #tweak_stats[stat.name])
-							local mult = 1 / tweak_data.weapon.stats[stat.name][chosen_index]
-							mods_stats[stat.name].value = base_stats[stat.name].value * mult
-							mods_stats[stat.name].index = chosen_index
+							mods_stats[stat.name].index = mods_stats[stat.name].index + (part_data.stats[stat.name] or 0)
 						else
 							mods_stats[stat.name].index = mods_stats[stat.name].index + (part_data.stats[stat.name] or 0)
 						end
@@ -644,74 +640,78 @@ function WeaponDescription._get_mods_stats(name, base_stats, equipped_mods, bonu
 			stat_name = stat.name
 
 			if mods_stats[stat.name].index and tweak_stats[stat_name] then
-				if stat.name == "concealment" then
-					index = base_stats[stat.name].index + mods_stats[stat.name].index
+				if stat_name == "reload" then
+					local chosen_index = base_stats[stat_name].index + mods_stats[stat_name].index
+					local mult = 1 / tweak_stats[stat_name][chosen_index]
+					mods_stats[stat_name].value = base_stats[stat_name].value * mult
+					mods_stats[stat.name].value = mods_stats[stat.name].value - base_stats[stat.name].value
 				else
-					index = math.clamp(base_stats[stat.name].index + mods_stats[stat.name].index, 1, #tweak_stats[stat_name])
-				end
-
-				if stat.name ~= "reload" then
-					mods_stats[stat.name].value = stat.index and index or tweak_stats[stat_name][index] * tweak_data.gui.stats_present_multiplier
-				end
-
-				local offset = math.min(tweak_stats[stat_name][1], tweak_stats[stat_name][#tweak_stats[stat_name]]) * tweak_data.gui.stats_present_multiplier
-
-				if stat.offset then
-					mods_stats[stat.name].value = mods_stats[stat.name].value - offset
-				end
-
-				if stat.revert then
-					local max_stat = math.max(tweak_stats[stat_name][1], tweak_stats[stat_name][#tweak_stats[stat_name]]) * tweak_data.gui.stats_present_multiplier
-
-					if stat.offset then
-						max_stat = max_stat - offset
+					if stat_name == "concealment" then
+						index = base_stats[stat.name].index + mods_stats[stat.name].index
+					else
+						index = math.clamp(base_stats[stat.name].index + mods_stats[stat.name].index, 1, #tweak_stats[stat_name])
 					end
 
-					mods_stats[stat.name].value = max_stat - mods_stats[stat.name].value
-				end
+					mods_stats[stat.name].value = stat.index and index or tweak_stats[stat_name][index] * tweak_data.gui.stats_present_multiplier
+					local offset = math.min(tweak_stats[stat_name][1], tweak_stats[stat_name][#tweak_stats[stat_name]]) * tweak_data.gui.stats_present_multiplier
 
-				if modifier_stats and modifier_stats[stat.name] then
-					local mod = modifier_stats[stat.name]
+					if stat.offset then
+						mods_stats[stat.name].value = mods_stats[stat.name].value - offset
+					end
 
-					if stat.revert and not stat.index then
-						local real_base_value = tweak_stats[stat_name][index]
-						local modded_value = real_base_value * mod
-						local offset = math.min(tweak_stats[stat_name][1], tweak_stats[stat_name][#tweak_stats[stat_name]])
-
-						if stat.offset then
-							modded_value = modded_value - offset
-						end
-
-						local max_stat = math.max(tweak_stats[stat_name][1], tweak_stats[stat_name][#tweak_stats[stat_name]])
+					if stat.revert then
+						local max_stat = math.max(tweak_stats[stat_name][1], tweak_stats[stat_name][#tweak_stats[stat_name]]) * tweak_data.gui.stats_present_multiplier
 
 						if stat.offset then
 							max_stat = max_stat - offset
 						end
 
-						local new_value = (max_stat - modded_value) * tweak_data.gui.stats_present_multiplier
+						mods_stats[stat.name].value = max_stat - mods_stats[stat.name].value
+					end
 
-						if mod ~= 0 and (tweak_stats[stat_name][1] < modded_value or modded_value < tweak_stats[stat_name][#tweak_stats[stat_name]]) then
-							new_value = (new_value + mods_stats[stat.name].value / mod) / 2
+					if modifier_stats and modifier_stats[stat.name] then
+						local mod = modifier_stats[stat.name]
+
+						if stat.revert and not stat.index then
+							local real_base_value = tweak_stats[stat_name][index]
+							local modded_value = real_base_value * mod
+							local offset = math.min(tweak_stats[stat_name][1], tweak_stats[stat_name][#tweak_stats[stat_name]])
+
+							if stat.offset then
+								modded_value = modded_value - offset
+							end
+
+							local max_stat = math.max(tweak_stats[stat_name][1], tweak_stats[stat_name][#tweak_stats[stat_name]])
+
+							if stat.offset then
+								max_stat = max_stat - offset
+							end
+
+							local new_value = (max_stat - modded_value) * tweak_data.gui.stats_present_multiplier
+
+							if mod ~= 0 and (tweak_stats[stat_name][1] < modded_value or modded_value < tweak_stats[stat_name][#tweak_stats[stat_name]]) then
+								new_value = (new_value + mods_stats[stat.name].value / mod) / 2
+							end
+
+							mods_stats[stat.name].value = new_value
+						else
+							mods_stats[stat.name].value = mods_stats[stat.name].value * mod
+						end
+					end
+
+					if stat.percent then
+						local max_stat = stat.index and #tweak_stats[stat.name] or math.max(tweak_stats[stat.name][1], tweak_stats[stat.name][#tweak_stats[stat.name]]) * tweak_data.gui.stats_present_multiplier
+
+						if stat.offset then
+							max_stat = max_stat - offset
 						end
 
-						mods_stats[stat.name].value = new_value
-					else
-						mods_stats[stat.name].value = mods_stats[stat.name].value * mod
-					end
-				end
-
-				if stat.percent then
-					local max_stat = stat.index and #tweak_stats[stat.name] or math.max(tweak_stats[stat.name][1], tweak_stats[stat.name][#tweak_stats[stat.name]]) * tweak_data.gui.stats_present_multiplier
-
-					if stat.offset then
-						max_stat = max_stat - offset
+						local ratio = mods_stats[stat.name].value / max_stat
+						mods_stats[stat.name].value = ratio * 100
 					end
 
-					local ratio = mods_stats[stat.name].value / max_stat
-					mods_stats[stat.name].value = ratio * 100
+					mods_stats[stat.name].value = mods_stats[stat.name].value - base_stats[stat.name].value
 				end
-
-				mods_stats[stat.name].value = mods_stats[stat.name].value - base_stats[stat.name].value
 			end
 		end
 	end

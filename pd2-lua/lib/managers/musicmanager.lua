@@ -551,7 +551,7 @@ end
 function MusicManager:jukebox_default_tracks()
 	local default_options = {
 		heist_friend = "all",
-		heist_nail = "track_36",
+		heist_fex = "track_71",
 		heist_dinner = "track_35",
 		heist_election_day2 = "track_05",
 		heist_arm_fac = "all",
@@ -608,9 +608,10 @@ function MusicManager:jukebox_default_tracks()
 		heist_kenaz_full = "all",
 		heist_framing_frame3 = "track_03",
 		heist_alex3 = "track_02",
+		heist_nail = "track_36",
 		heist_dark = "music_dark",
-		heist_tag = "music_tag",
 		heistfinish = "music_loot_drop",
+		heist_tag = "music_tag",
 		heist_gallery = "track_05",
 		heist_mallcrasher = "track_03",
 		heist_cage = "track_26",

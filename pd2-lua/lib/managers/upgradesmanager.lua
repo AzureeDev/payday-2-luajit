@@ -588,6 +588,8 @@ function UpgradesManager:get_value(upgrade_id, ...)
 		end
 
 		return is_default_weapon, grenade_level
+	elseif upgrade.category == "rep_upgrade" then
+		return upgrade.value
 	end
 
 	print("no value for", upgrade_id, upgrade.category)

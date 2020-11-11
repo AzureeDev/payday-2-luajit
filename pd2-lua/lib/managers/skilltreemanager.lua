@@ -601,7 +601,15 @@ function SkillTreeManager:_aquire_points(points, selected_only)
 		end
 	else
 		for skill_switch, data in ipairs(self._global.skill_switches) do
-			data.points = Application:digest_value(self:points(data) + points, true)
+			if self:max_points_for_current_level() >= self:total_points_spent(data) then
+				local points_to_set = self:points(data) + points
+
+				if self:max_points_for_current_level() < self:total_points_spent(data) + points_to_set then
+					points_to_set = self:max_points_for_current_level() - self:total_points_spent(data)
+				end
+
+				data.points = Application:digest_value(points_to_set, true)
+			end
 		end
 
 		if self._global.skill_switches[self._global.selected_skill_switch] then
@@ -896,6 +904,10 @@ function SkillTreeManager:switch_skills(selected_skill_switch)
 		return
 	end
 
+	if self:is_skill_switch_suspended(self._global.skill_switches[selected_skill_switch]) then
+		return
+	end
+
 	local function unaquire_skill(skill_id)
 		local progress_data = self._global.skills[skill_id]
 		local skill_data = tweak_data.skilltree.skills[skill_id]
@@ -1150,20 +1162,17 @@ function SkillTreeManager:reset_skilltrees()
 end
 
 function SkillTreeManager:infamy_reset()
-	local skill_switches_unlocks, skill_switches_specializations = nil
+	local skill_switches = nil
 
 	if self._global.skill_switches then
-		skill_switches_unlocks = {}
-		skill_switches_specializations = {}
+		skill_switches = {}
 
 		for i, data in ipairs(self._global.skill_switches) do
-			skill_switches_unlocks[i] = data.unlocked
-			skill_switches_specializations[i] = data.specialization
+			skill_switches[i] = data
 		end
 	end
 
 	local saved_specialization = self._global.specializations
-	local saved_selected_skill_switch = self._global.selected_skill_switch
 	Global.skilltree_manager = nil
 
 	self:_setup()
@@ -1171,13 +1180,13 @@ function SkillTreeManager:infamy_reset()
 	self._global.specializations = saved_specialization
 
 	if self._global.skill_switches then
-		for i = 1, #self._global.skill_switches do
-			self._global.skill_switches[i].unlocked = skill_switches_unlocks[i]
-			self._global.skill_switches[i].specialization = skill_switches_specializations[i] or 1
+		for i = 2, #self._global.skill_switches do
+			self._global.skill_switches[i] = skill_switches[i] or 1
+			self._global.skill_switches[i].points = Application:digest_value(0, true)
 		end
 	end
 
-	self:switch_skills(saved_selected_skill_switch)
+	self:switch_skills(1)
 
 	local current_specialization = self:digest_value(self._global.specializations.current_specialization, false, 1)
 	local tree_data = self._global.specializations[current_specialization]
@@ -1506,24 +1515,12 @@ function SkillTreeManager:_verify_loaded_data(points_aquired_during_load)
 	for i = 1, #self._global.skill_switches do
 		if self._global.skill_switches[i] and Application:digest_value(self._global.skill_switches[i].points or 0, false) < 0 then
 			local switch_data = self._global.skill_switches[i]
-			switch_data.points = Application:digest_value(assumed_points, true)
-			switch_data.trees = {}
 
-			for tree, data in pairs(tweak_data.skilltree.trees) do
-				switch_data.trees[tree] = {
-					unlocked = true,
-					points_spent = Application:digest_value(0, true)
-				}
+			if self._global.skill_switches[self._global.selected_skill_switch] and self._global.skill_switches[self._global.selected_skill_switch] == switch_data then
+				self._global.selected_skill_switch = 1
 			end
 
-			switch_data.skills = {}
-
-			for skill_id, data in pairs(tweak_data.skilltree.skills) do
-				switch_data.skills[skill_id] = {
-					unlocked = 0,
-					total = #data
-				}
-			end
+			switch_data.points = Application:digest_value(0, true)
 		end
 	end
 
@@ -2068,4 +2065,34 @@ function SkillTreeManager:reset()
 	if SystemInfo:distribution() == Idstring("STEAM") then
 		managers.statistics:publish_skills_to_steam()
 	end
+end
+
+function SkillTreeManager:max_points_for_current_level()
+	local rep_upgrade_points = 0
+
+	for _, rep_upgrade in ipairs(managers.upgrades:aquired_by_category("rep_upgrade")) do
+		rep_upgrade_points = rep_upgrade_points + managers.upgrades:get_value(rep_upgrade)
+	end
+
+	return managers.experience:current_level() + rep_upgrade_points
+end
+
+function SkillTreeManager:is_skill_switch_suspended(switch_data)
+	return self:max_points_for_current_level() < self:total_points_spent(switch_data)
+end
+
+function SkillTreeManager:unsuspend_skill_switch(switch_data)
+	if self._global.skill_switches[switch_data] == self._global.selected_skill_switch then
+		return
+	end
+
+	for _, skill in pairs(self._global.skill_switches[switch_data].skills) do
+		skill.unlocked = 0
+	end
+
+	for _, tree in ipairs(self._global.skill_switches[switch_data].trees) do
+		tree.points_spent = Application:digest_value(0, true)
+	end
+
+	self._global.skill_switches[switch_data].points = Application:digest_value(self:max_points_for_current_level(), true)
 end

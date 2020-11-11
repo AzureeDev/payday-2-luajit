@@ -15,6 +15,7 @@ function CrimeSpreeTweakData:init(tweak_data)
 	self.randomization_cost = 6
 	self.randomization_multiplier = 2
 	self.catchup_bonus = 0.035
+	self.catchup_min_level = 100
 	self.winning_streak = 0.005
 	self.winning_streak_reset_on_failure = false
 	self.continue_cost = {

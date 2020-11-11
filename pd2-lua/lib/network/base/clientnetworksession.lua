@@ -25,6 +25,7 @@ function ClientNetworkSession:request_join_host(host_rpc, result_cb)
 	local xuid = (SystemInfo:platform() == Idstring("X360") or SystemInfo:platform() == Idstring("XB1")) and managers.network.account:player_id() or ""
 	local lvl = managers.experience:current_level()
 	local rank = managers.experience:current_rank()
+	local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
 	local gameversion = managers.network.matchmake.GAMEVERSION or -1
 	local join_req_id = self:_get_join_attempt_identifier()
 	self._join_request_params = {
@@ -36,6 +37,7 @@ function ClientNetworkSession:request_join_host(host_rpc, result_cb)
 			xuid,
 			lvl,
 			rank,
+			join_stinger_index,
 			gameversion,
 			join_req_id,
 			ticket

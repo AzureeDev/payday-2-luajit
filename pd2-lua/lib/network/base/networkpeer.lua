@@ -52,6 +52,7 @@ function NetworkPeer:init(name, rpc, id, loading, synced, in_lobby, character, u
 
 	self._level = nil
 	self._rank = 0
+	self._stinger_index = 0
 	self._in_lobby = in_lobby
 	self._loading = loading
 	self._synced = synced
@@ -276,13 +277,19 @@ function NetworkPeer:_verify_outfit_data()
 				return self:_verify_cheated_outfit("weapon", item.factory_id, VoteManager.REASON.invalid_weapon)
 			end
 
+			local cosmetics_id = outfit[item_type].cosmetics and outfit[item_type].cosmetics.id
+			local cosmetics_tweak = tweak_data.blackmarket.weapon_skins[cosmetics_id]
 			local blueprint = managers.weapon_factory:get_default_blueprint_by_factory_id(item.factory_id)
-			local skin_blueprint = outfit[item_type].cosmetics and tweak_data.blackmarket.weapon_skins[outfit[item_type].cosmetics.id].default_blueprint or {}
+			local skin_blueprint = cosmetics_tweak and cosmetics_tweak.default_blueprint or {}
 
 			for _, mod_item in pairs(item.blueprint) do
 				if not table.contains(blueprint, mod_item) and not table.contains(skin_blueprint, mod_item) and not self:_verify_content("weapon_mods", mod_item) then
 					return self:_verify_cheated_outfit("weapon_mods", mod_item, VoteManager.REASON.invalid_weapon)
 				end
+			end
+
+			if cosmetics_tweak and cosmetics_tweak.is_a_color_skin and not self:_verify_item_data(cosmetics_tweak) then
+				return self:_verify_cheated_outfit("weapon_colors", cosmetics_id, VoteManager.REASON.invalid_weapon_color)
 			end
 		elseif item_type == "melee_weapon" and not self:_verify_content("melee_weapons", item) then
 			return self:_verify_cheated_outfit("melee_weapons", item, VoteManager.REASON.invalid_weapon)
@@ -337,6 +344,10 @@ function NetworkPeer:_verify_content(item_type, item_id)
 		return true
 	end
 
+	return self:_verify_item_data(item_data)
+end
+
+function NetworkPeer:_verify_item_data(item_data)
 	local dlc_list = {}
 
 	table.insert(dlc_list, item_data.dlc or managers.dlc and managers.dlc:global_value_to_dlc(item_data.global_value))
@@ -603,6 +614,7 @@ function NetworkPeer:load(data)
 	self._join_attempt_identifier = data.join_attempt_identifier
 	self._muted = data.muted
 	self._rank = data.rank
+	self._stinger_index = data.stinger_index
 	self._streaming_status = data.streaming_status
 	self._ticket_wait_response = data.wait_ticket_response
 	self._outfit_assets = data.outfit_assets
@@ -661,6 +673,7 @@ function NetworkPeer:save(data)
 	data.join_attempt_identifier = self._join_attempt_identifier
 	data.muted = self._muted
 	data.rank = self._rank
+	data.stinger_index = self._stinger_index
 	data.streaming_status = self._streaming_status
 	data.wait_ticket_response = self._ticket_wait_response
 	data.other_peer_outfits_loaded = self._other_peer_outfits_loaded
@@ -1272,6 +1285,14 @@ function NetworkPeer:rank()
 	return self._rank
 end
 
+function NetworkPeer:set_join_stinger_index(stinger_index)
+	self._stinger_index = stinger_index
+end
+
+function NetworkPeer:join_stinger_index()
+	return self._stinger_index
+end
+
 function NetworkPeer:set_profile(level, rank)
 	self._profile.level = level
 	self._profile.rank = rank
@@ -1823,6 +1844,7 @@ function NetworkPeer:sync_lobby_data(peer)
 
 	local level = managers.experience:current_level()
 	local rank = managers.experience:current_rank()
+	local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
 	local character = self:character()
 	local mask_set = "remove"
 	local progress = managers.upgrades:progress()
@@ -1830,7 +1852,7 @@ function NetworkPeer:sync_lobby_data(peer)
 	local menu_state_index = tweak_data:menu_sync_state_to_index(menu_state)
 
 	cat_print("multiplayer_base", "NetworkPeer:sync_lobby_data to", peer:id(), " : ", self:id(), level)
-	peer:send_after_load("lobby_info", level, rank, character, mask_set)
+	peer:send_after_load("lobby_info", level, rank, join_stinger_index, character, mask_set)
 	peer:send_after_load("sync_profile", level, rank)
 	managers.network:session():check_send_outfit()
 

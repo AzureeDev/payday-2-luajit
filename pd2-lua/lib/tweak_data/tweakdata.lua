@@ -23,7 +23,7 @@ require("lib/tweak_data/GuiTweakData")
 require("lib/tweak_data/MoneyTweakData")
 require("lib/tweak_data/AssetsTweakData")
 require("lib/tweak_data/DLCTweakData")
-require("lib/tweak_data/InfamyTweakData")
+require("lib/tweak_data/InfamyNewTweakData")
 require("lib/tweak_data/GageAssignmentTweakData")
 require("lib/tweak_data/PrePlanningTweakData")
 require("lib/tweak_data/InteractionTweakData")
@@ -1796,6 +1796,9 @@ Play the full version soon to get your full PAYDAY!]],
 			track = "track_70"
 		},
 		{
+			track = "track_71"
+		},
+		{
 			track = "track_pth_01",
 			lock = "payday"
 		},
@@ -2737,6 +2740,7 @@ function TweakData:init_screen_colors()
 		competitive_color = Color(255, 41, 204, 122) / 255,
 		event_color = Color(255, 255, 145, 0) / 255,
 		infamous_color = Color(1, 0.1, 1),
+		infamy_color = Color("C864C8"),
 		mutators_color = Color(255, 211, 133, 255) / 255,
 		mutators_color_text = Color(255, 211, 133, 255) / 255,
 		crime_spree_risk = Color(255, 255, 255, 0) / 255,

@@ -1952,16 +1952,16 @@ function IntimitateInteractionExt:sync_interacted(peer, player, status, skip_ali
 	end
 
 	if self.tweak_data == "corpse_alarm_pager" then
+		if status == 1 then
+			status = "started"
+		elseif status == 2 then
+			status = "interrupted"
+		elseif status == 3 then
+			status = "complete"
+		end
+
 		if Network:is_server() then
 			self._interacting_unit_destroy_listener_key = "IntimitateInteractionExt_" .. tostring(self._unit:key())
-
-			if status == 1 then
-				status = "started"
-			elseif status == 2 then
-				status = "interrupted"
-			elseif status == 3 then
-				status = "complete"
-			end
 
 			if status == "started" then
 				local husk_unit = _get_unit()

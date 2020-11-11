@@ -2132,14 +2132,26 @@ function UnitNetworkHandler:dangerzone_set_level(level)
 	managers.player:player_unit():character_damage():set_danger_level(level)
 end
 
-function UnitNetworkHandler:sync_player_movement_state(unit, state, down_time, unit_id_str)
+function UnitNetworkHandler:sync_player_movement_state(unit, state, down_time, unit_id_str, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
-	self:_chk_unit_too_early(unit, unit_id_str, "sync_player_movement_state", 1, unit, state, down_time, unit_id_str)
+	local peer = self._verify_sender(sender)
+
+	if not peer then
+		return
+	end
+
+	self:_chk_unit_too_early(unit, unit_id_str, "sync_player_movement_state", 1, unit, state, down_time, unit_id_str, sender)
 
 	if not alive(unit) then
+		return
+	end
+
+	if not peer:is_host() and (not alive(peer:unit()) or peer:unit():key() ~= unit:key()) then
+		Application:error("[UnitNetworkHandler:sync_player_movement_state] Client is trying to change someone else movement state", peer:id(), unit:key())
+
 		return
 	end
 

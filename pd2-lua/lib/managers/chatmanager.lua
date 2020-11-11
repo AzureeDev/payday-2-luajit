@@ -57,8 +57,10 @@ function ChatManager:receive_message_by_peer(channel_id, peer, message)
 
 	local color_id = peer:id()
 	local color = tweak_data.chat_colors[color_id] or tweak_data.chat_colors[#tweak_data.chat_colors]
+	local rank = peer:level() == nil and managers.experience:current_rank() or peer:rank()
+	local icon = managers.experience:rank_icon(rank)
 
-	self:_receive_message(channel_id, peer:name(), message, tweak_data.chat_colors[color_id] or tweak_data.chat_colors[#tweak_data.chat_colors], (peer:level() == nil and managers.experience:current_rank() > 0 or peer:rank() > 0) and "infamy_icon")
+	self:_receive_message(channel_id, peer:name(), message, tweak_data.chat_colors[color_id] or tweak_data.chat_colors[#tweak_data.chat_colors], icon)
 end
 
 function ChatManager:receive_message_by_name(channel_id, name, message)

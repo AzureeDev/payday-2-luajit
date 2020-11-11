@@ -226,6 +226,14 @@ function MenuManager:post_event(event)
 	local event = self._sound_source:post_event(event)
 end
 
+function MenuManager:play_join_stinger_by_index(index)
+	local sound_switch = string.format("infamy_stinger_%02d", index)
+
+	self._sound_source:set_switch("infamy_stinger", sound_switch)
+
+	return self._sound_source:post_event("infamy_stinger_player_join")
+end
+
 function MenuManager:_cb_matchmake_found_game(game_id, created)
 	print("_cb_matchmake_found_game", game_id, created)
 end
@@ -1791,7 +1799,9 @@ function MenuCallbackHandler:is_normal_job()
 end
 
 function MenuCallbackHandler:is_not_max_rank()
-	return managers.experience:current_rank() < #tweak_data.infamy.ranks
+	local max_rank = tweak_data.infamy.ranks
+
+	return managers.experience:current_rank() < max_rank
 end
 
 function MenuCallbackHandler:can_become_infamous()
@@ -2158,6 +2168,26 @@ function MenuCallbackHandler:toggle_color_blind_hit_direction(item)
 	local on = item:value() == "on"
 
 	managers.user:set_setting("color_blind_hit_direction", on)
+end
+
+function MenuCallbackHandler:toggle_infamy_roman_rank(item)
+	local on = item:value() == "on"
+
+	managers.user:set_setting("infamy_roman_rank", on)
+
+	if managers.menu_component then
+		managers.menu_component:refresh_player_profile_gui()
+	end
+end
+
+function MenuCallbackHandler:toggle_infamy_roman_card(item)
+	local on = item:value() == "on"
+
+	managers.user:set_setting("infamy_roman_card", on)
+
+	if managers.menu_scene then
+		managers.menu_scene:refresh_infamy_cards()
+	end
 end
 
 function MenuCallbackHandler:toggle_sticky_aim(item)
@@ -2950,7 +2980,9 @@ end
 function MenuCallbackHandler:_increase_infamous(yes_clbk)
 	managers.menu_scene:destroy_infamy_card()
 
-	if managers.experience:current_level() < 100 or managers.experience:current_rank() >= #tweak_data.infamy.ranks then
+	local max_rank = tweak_data.infamy.ranks
+
+	if managers.experience:current_level() < 100 or max_rank <= managers.experience:current_rank() then
 		return
 	end
 
@@ -2959,7 +2991,7 @@ function MenuCallbackHandler:_increase_infamous(yes_clbk)
 	managers.experience:reset()
 	managers.experience:set_current_rank(rank)
 
-	local offshore_cost = Application:digest_value(tweak_data.infamy.ranks[rank], false)
+	local offshore_cost = managers.money:get_infamous_cost(rank)
 
 	if offshore_cost > 0 then
 		managers.money:deduct_from_total(managers.money:total(), TelemetryConst.economy_origin.increase_infamous)
@@ -2967,6 +2999,7 @@ function MenuCallbackHandler:_increase_infamous(yes_clbk)
 	end
 
 	managers.skilltree:infamy_reset()
+	managers.multi_profile:infamy_reset()
 	managers.blackmarket:reset_equipped()
 
 	if managers.menu_component then
@@ -2998,7 +3031,8 @@ function MenuCallbackHandler:become_infamous(params)
 		return
 	end
 
-	local infamous_cost = Application:digest_value(tweak_data.infamy.ranks[managers.experience:current_rank() + 1], false)
+	local rank = managers.experience:current_rank() + 1
+	local infamous_cost = managers.money:get_infamous_cost(rank)
 	local yes_clbk = params and params.yes_clbk or false
 	local no_clbk = params and params.no_clbk
 	local params = {
@@ -3008,14 +3042,12 @@ function MenuCallbackHandler:become_infamous(params)
 
 	if infamous_cost <= managers.money:offshore() and managers.experience:current_level() >= 100 then
 		function params.yes_func()
-			local rank = managers.experience:current_rank() + 1
-
 			managers.menu:open_node("blackmarket_preview_node", {
 				{
 					back_callback = callback(MenuCallbackHandler, MenuCallbackHandler, "_increase_infamous", yes_clbk)
 				}
 			})
-			managers.menu:post_event("infamous_stinger_level_" .. (rank < 10 and "0" or "") .. tostring(rank))
+			managers.menu:post_event("infamous_stinger_generic")
 			managers.menu_scene:spawn_infamy_card(rank)
 		end
 	end
@@ -4375,13 +4407,18 @@ function KickPlayer:modify_node(node, up)
 
 	if managers.network:session() then
 		for _, peer in pairs(managers.network:session():peers()) do
+			local name = peer:name()
+			local color_range_offset = utf8.len(name) + 2
+			local experience, color_ranges = managers.experience:gui_string(level, rank, color_range_offset)
+			experience = " (" .. experience .. ")"
 			local params = {
 				localize = false,
 				localize_help = false,
 				callback = "kick_player",
 				to_upper = false,
-				name = peer:name(),
-				text_id = peer:name() .. " (" .. (peer:rank() > 0 and managers.experience:rank_string(peer:rank()) .. "-" or "") .. (peer:level() or "") .. ")",
+				name = name,
+				text_id = name .. experience,
+				color_ranges = color_ranges,
 				rpc = peer:rpc(),
 				peer = peer,
 				help_id = peer:is_host() and managers.localization:text("menu_vote_kick_is_host") or managers.vote:option_vote_kick() and managers.vote:help_text() or ""
@@ -4412,12 +4449,17 @@ function MutePlayer:modify_node(node, up)
 
 	if managers.network:session() then
 		for _, peer in pairs(managers.network:session():peers()) do
+			local name = peer:name()
+			local color_range_offset = utf8.len(name) + 2
+			local experience, color_ranges = managers.experience:gui_string(level, rank, color_range_offset)
+			experience = " (" .. experience .. ")"
 			local params = {
 				callback = "mute_player",
 				localize = "false",
 				to_upper = false,
-				name = peer:name(),
-				text_id = peer:name() .. " (" .. (peer:rank() > 0 and managers.experience:rank_string(peer:rank()) .. "-" or "") .. (peer:level() or "") .. ")",
+				name = name,
+				text_id = name .. experience,
+				color_ranges = color_ranges,
 				rpc = peer:rpc(),
 				peer = peer
 			}
@@ -10158,6 +10200,28 @@ function MenuOptionInitiator:modify_user_interface_options(node)
 		objective_reminder_item:set_value(option_value)
 	end
 
+	option_value = "off"
+	local infamy_roman_rank_item = node:item("toggle_infamy_roman_rank")
+
+	if infamy_roman_rank_item then
+		if managers.user:get_setting("infamy_roman_rank") then
+			option_value = "on"
+		end
+
+		infamy_roman_rank_item:set_value(option_value)
+	end
+
+	option_value = "off"
+	local infamy_roman_card_item = node:item("toggle_infamy_roman_card")
+
+	if infamy_roman_card_item then
+		if managers.user:get_setting("infamy_roman_card") then
+			option_value = "on"
+		end
+
+		infamy_roman_card_item:set_value(option_value)
+	end
+
 	local toggle_hide_huds = node:item("toggle_hide_huds") or node:item("toggle_hide_huds_xb1") or node:item("toggle_hide_huds_ps4")
 
 	if toggle_hide_huds then
@@ -10233,9 +10297,14 @@ function SkillSwitchInitiator:modify_node(node, data)
 		hightlight_color, row_item_color, callback = nil
 		local unlocked = data.unlocked
 		local can_unlock = managers.skilltree:can_unlock_skill_switch(skill_switch)
+		local is_suspended = managers.skilltree:is_skill_switch_suspended(managers.skilltree._global.skill_switches[skill_switch])
 
 		if unlocked then
-			if managers.skilltree:get_selected_skill_switch() == skill_switch then
+			if is_suspended then
+				hightlight_color = tweak_data.screen_colors.important_1
+				row_item_color = tweak_data.screen_colors.important_2
+				callback = "unsuspend_skill_switch_dialog"
+			elseif managers.skilltree:get_selected_skill_switch() == skill_switch then
 				hightlight_color = tweak_data.screen_colors.text
 				row_item_color = tweak_data.screen_colors.text
 				callback = "menu_back"
@@ -10374,6 +10443,37 @@ end
 
 function MenuCallbackHandler:set_active_skill_switch(item)
 	managers.skilltree:switch_skills(item:parameters().name)
+	self:refresh_node()
+end
+
+function MenuCallbackHandler:unsuspend_skill_switch_dialog(item)
+	local dialog_data = {
+		title = managers.localization:text("dialog_unsuspend_title"),
+		text = managers.localization:text("dialog_unsuspend", {
+			Name = managers.skilltree:get_skill_switch_name(item:parameters().name, true)
+		})
+	}
+	local yes_button = {
+		text = managers.localization:text("dialog_yes"),
+		callback_func = callback(self, self, "unsuspend_skill_switch_dialog_yes", item:parameters().name)
+	}
+	local no_button = {
+		text = managers.localization:text("dialog_no"),
+		callback_func = function ()
+			self:refresh_node()
+		end,
+		cancel_button = true
+	}
+	dialog_data.button_list = {
+		yes_button,
+		no_button
+	}
+
+	managers.system_menu:show(dialog_data)
+end
+
+function MenuCallbackHandler:unsuspend_skill_switch_dialog_yes(skill_switch)
+	managers.skilltree:unsuspend_skill_switch(skill_switch)
 	self:refresh_node()
 end
 

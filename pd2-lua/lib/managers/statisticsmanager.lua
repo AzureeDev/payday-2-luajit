@@ -477,7 +477,7 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 		return
 	end
 
-	local max_ranks = 25
+	local max_ranks = tweak_data.infamy.ranks
 	local max_specializations = tweak_data.statistics:statistics_specializations()
 	local session_time_seconds = self:get_session_time_seconds()
 	local session_time_minutes = session_time_seconds / 60
@@ -546,20 +546,34 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 	}
 	local current_rank = managers.experience:current_rank()
 	local current_rank_range = max_ranks < current_rank and max_ranks or current_rank
+	local rank_steps = {}
 
-	for i = 0, max_ranks do
-		stats["player_rank_" .. i] = {
-			value = 0,
-			method = "set",
-			type = "int"
-		}
+	for i = 0, 100 do
+		table.insert(rank_steps, i)
 	end
 
-	stats["player_rank_" .. current_rank_range] = {
-		value = 1,
-		method = "set",
-		type = "int"
-	}
+	for i = 150, max_ranks, 50 do
+		table.insert(rank_steps, i)
+	end
+
+	local rank_found = false
+
+	for _, rank in ipairs(rank_steps) do
+		if not rank_found and rank <= current_rank_range then
+			stats["player_rank_" .. tostring(rank)] = {
+				value = 1,
+				method = "set",
+				type = "int"
+			}
+			rank_found = true
+		else
+			stats["player_rank_" .. tostring(rank)] = {
+				value = 0,
+				method = "set",
+				type = "int"
+			}
+		end
+	end
 
 	for i = 1, max_specializations do
 		local specialization = managers.skilltree:get_specialization_value(i)
@@ -788,6 +802,15 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 			}
 		end
 
+		local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
+
+		if join_stinger_index > 0 and join_stinger_index <= tweak_data.infamy.join_stingers then
+			stats["join_stinger_used_" .. tostring(join_stinger_index)] = {
+				value = 1,
+				type = "int"
+			}
+		end
+
 		stats["difficulty_" .. Global.game_settings.difficulty] = {
 			value = 1,
 			type = "int"
@@ -964,6 +987,29 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 		end
 	end
 
+	local roman_rank_setting = managers.user:get_setting("infamy_roman_rank")
+	stats.setting_roman_rank_on = {
+		method = "set",
+		type = "int",
+		value = roman_rank_setting and 1 or 0
+	}
+	stats.setting_roman_rank_off = {
+		method = "set",
+		type = "int",
+		value = roman_rank_setting and 0 or 1
+	}
+	local roman_card_setting = managers.user:get_setting("infamy_roman_card")
+	stats.setting_roman_card_on = {
+		method = "set",
+		type = "int",
+		value = roman_card_setting and 1 or 0
+	}
+	stats.setting_roman_card_off = {
+		method = "set",
+		type = "int",
+		value = roman_card_setting and 0 or 1
+	}
+
 	managers.network.account:publish_statistics(stats)
 end
 
@@ -972,7 +1018,7 @@ function StatisticsManager:publish_level_to_steam()
 		return
 	end
 
-	local max_ranks = 25
+	local max_ranks = tweak_data.infamy.ranks
 	local stats = {}
 	local current_level = managers.experience:current_level()
 	stats.player_level = {
@@ -997,20 +1043,34 @@ function StatisticsManager:publish_level_to_steam()
 	}
 	local current_rank = managers.experience:current_rank()
 	local current_rank_range = max_ranks < current_rank and max_ranks or current_rank
+	local rank_steps = {}
 
-	for i = 0, max_ranks do
-		stats["player_rank_" .. i] = {
-			value = 0,
-			method = "set",
-			type = "int"
-		}
+	for i = 0, 100 do
+		table.insert(rank_steps, i)
 	end
 
-	stats["player_rank_" .. current_rank_range] = {
-		value = 1,
-		method = "set",
-		type = "int"
-	}
+	for i = 150, max_ranks, 50 do
+		table.insert(rank_steps, i)
+	end
+
+	local rank_found = false
+
+	for _, rank in ipairs(rank_steps) do
+		if not rank_found and rank <= current_rank_range then
+			stats["player_rank_" .. tostring(rank)] = {
+				value = 1,
+				method = "set",
+				type = "int"
+			}
+			rank_found = true
+		else
+			stats["player_rank_" .. tostring(rank)] = {
+				value = 0,
+				method = "set",
+				type = "int"
+			}
+		end
+	end
 
 	managers.network.account:publish_statistics(stats)
 end
@@ -1161,10 +1221,24 @@ function StatisticsManager:gather_equipment_data()
 		}
 	end
 
+	local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
+
+	if join_stinger_index > 0 and join_stinger_index <= tweak_data.infamy.join_stingers then
+		stats.equipped_join_stinger = {
+			method = "set",
+			type = "int",
+			value = join_stinger_index
+		}
+	end
+
 	return stats
 end
 
 function StatisticsManager:publish_equipped_to_steam()
+	if Global.block_publish_equipped_to_steam then
+		return
+	end
+
 	local stats = self:gather_equipment_data()
 
 	if not stats then

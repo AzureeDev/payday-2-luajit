@@ -109,6 +109,7 @@ function MenuSceneManagerVR:_set_up_templates()
 	local cloned_templates = {
 		"blackmarket",
 		"blackmarket_mask",
+		"infamy_preview",
 		"blackmarket_item",
 		"character_customization",
 		"play_online",
@@ -149,6 +150,7 @@ function MenuSceneManagerVR:_set_up_templates()
 	local item_templates = {
 		"blackmarket_item",
 		"blackmarket_mask",
+		"infamy_preview",
 		"blackmarket_crafting",
 		"blackmarket_weapon_color"
 	}

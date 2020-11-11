@@ -4848,7 +4848,11 @@ function UpgradesTweakData:init(tweak_data)
 				"packrat",
 				"lemming",
 				"chinchilla",
-				"x_chinchilla"
+				"x_chinchilla",
+				"model3",
+				"sbl",
+				"m1897",
+				"x_model3"
 			}
 		},
 		[27] = {
@@ -5440,6 +5444,10 @@ function UpgradesTweakData:init(tweak_data)
 	self:_lemming_weapon_definitions()
 	self:_chinchilla_weapon_definitions()
 	self:_x_chinchilla_weapon_definitions()
+	self:_sbl_weapon_definitions()
+	self:_m1897_weapon_definitions()
+	self:_model3_weapon_definitions()
+	self:_x_model3_weapon_definitions()
 	self:_shepheard_weapon_definitions()
 	self:_x_shepheard_weapon_definitions()
 	self:_breech_weapon_definitions()
@@ -15050,6 +15058,42 @@ function UpgradesTweakData:_x_chinchilla_weapon_definitions()
 		dlc = "max",
 		factory_id = "wpn_fps_pis_x_chinchilla",
 		weapon_id = "x_chinchilla",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_sbl_weapon_definitions()
+	self.definitions.sbl = {
+		dlc = "mxw",
+		factory_id = "wpn_fps_snp_sbl",
+		weapon_id = "sbl",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_m1897_weapon_definitions()
+	self.definitions.m1897 = {
+		dlc = "mxw",
+		factory_id = "wpn_fps_shot_m1897",
+		weapon_id = "m1897",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_model3_weapon_definitions()
+	self.definitions.model3 = {
+		dlc = "mxw",
+		factory_id = "wpn_fps_pis_model3",
+		weapon_id = "model3",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_model3_weapon_definitions()
+	self.definitions.x_model3 = {
+		dlc = "mxw",
+		factory_id = "wpn_fps_pis_x_model3",
+		weapon_id = "x_model3",
 		category = "weapon"
 	}
 end

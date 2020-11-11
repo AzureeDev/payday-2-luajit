@@ -298,7 +298,7 @@ function RaycastWeaponBase:_fire_sound()
 		end
 	end
 
-	self:play_tweak_data_sound(self:fire_mode() == "auto" and "fire_auto" or "fire_single", "fire")
+	self:play_tweak_data_sound(self:fire_mode() == "auto" and not self:weapon_tweak_data().sounds.fire_single and "fire_auto" or "fire_single", "fire")
 end
 
 function RaycastWeaponBase:start_shooting_allowed()
@@ -314,6 +314,7 @@ function RaycastWeaponBase:start_shooting()
 
 	self._next_fire_allowed = math.max(self._next_fire_allowed, self._unit:timer():time())
 	self._shooting = true
+	self._bullets_fired = 0
 end
 
 function RaycastWeaponBase:stop_shooting()
@@ -321,6 +322,7 @@ function RaycastWeaponBase:stop_shooting()
 
 	self._shooting = nil
 	self._kills_without_releasing_trigger = nil
+	self._bullets_fired = nil
 end
 
 function RaycastWeaponBase:update_next_shooting_time()
@@ -363,6 +365,15 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		if managers.player:has_category_upgrade("temporary", "no_ammo_cost") then
 			managers.player:activate_temporary_upgrade("temporary", "no_ammo_cost")
 		end
+	end
+
+	if self._bullets_fired then
+		if self._bullets_fired == 1 and self:weapon_tweak_data().sounds.fire_single then
+			self:play_tweak_data_sound("stop_fire")
+			self:play_tweak_data_sound("fire_auto", "fire")
+		end
+
+		self._bullets_fired = self._bullets_fired + 1
 	end
 
 	local is_player = self._setup.user_unit == managers.player:player_unit()

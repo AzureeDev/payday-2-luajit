@@ -1316,6 +1316,10 @@ function MoneyManager:on_unlock_skill_switch(selected_skill_switch)
 	self:deduct_from_offshore(offshore_cost)
 end
 
+function MoneyManager:get_infamous_cost(rank)
+	return Application:digest_value(tweak_data.infamy.offshore_cost[rank] or tweak_data.infamy.offshore_cost[#tweak_data.infamy.offshore_cost], false)
+end
+
 function MoneyManager:total()
 	return Application:digest_value(self._global.total, false)
 end

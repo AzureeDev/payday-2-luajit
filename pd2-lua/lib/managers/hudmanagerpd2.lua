@@ -1263,7 +1263,7 @@ function HUDManager:align_teammate_name_label(panel, interact)
 		panel:set_w(panel:w() + infamy:w())
 		text:set_size(panel:size())
 		infamy:set_x(double_radius + 4)
-		infamy:set_top(text:top())
+		infamy:set_top(text:top() + 4)
 		text:set_x(double_radius + 4 + infamy:w())
 	end
 
@@ -1293,7 +1293,9 @@ function HUDManager:_add_name_label(data)
 		rank = data.unit:network():peer():rank()
 
 		if level then
-			local experience = (rank > 0 and managers.experience:rank_string(rank) .. "-" or "") .. level
+			local color_range_offset = utf8.len(data.name) + 2
+			local experience, color_ranges = managers.experience:gui_string(level, rank, color_range_offset)
+			data.name_color_ranges = color_ranges
 			data.name = data.name .. " (" .. experience .. ")"
 		end
 	end
@@ -1372,16 +1374,21 @@ function HUDManager:_add_name_label(data)
 	})
 
 	if rank > 0 then
-		local infamy_icon = tweak_data.hud_icons:get_icon_data("infamy_icon")
+		local texture, texture_rect = managers.experience:rank_icon_data(rank)
 
 		panel:bitmap({
 			name = "infamy",
-			h = 32,
-			w = 16,
+			h = 16,
 			layer = 0,
-			texture = infamy_icon,
+			w = 16,
+			texture = texture,
+			texture_rect = texture_rect,
 			color = crim_color
 		})
+	end
+
+	for _, color_range in ipairs(data.name_color_ranges or {}) do
+		text:set_range_color(color_range.start, color_range.stop, color_range.color)
 	end
 
 	self:align_teammate_name_label(panel, interact)

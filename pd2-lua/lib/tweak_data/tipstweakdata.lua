@@ -1785,3 +1785,29 @@ function TipsTweakData:get_a_tip()
 		text = managers.localization:text(text_id)
 	}
 end
+
+function TipsTweakData:get_all_tips()
+	local all_tips = {}
+
+	for _, tip in ipairs(self.tips) do
+		local image_exists = DB:has(Idstring("texture"), "guis/textures/loading/hints/" .. tip.image)
+
+		if not image_exists then
+			Application:error("Warning: missing loading hint image: " .. tip.image)
+
+			return nil
+		end
+
+		local title_id = "loading_" .. tip.category .. "_title"
+		local text_id = "loading_" .. tip.category .. "_" .. tip.cat_index
+
+		table.insert(all_tips, {
+			image = tip.image,
+			index = tip.cat_index,
+			title_id = title_id,
+			text_id = text_id
+		})
+	end
+
+	return all_tips
+end

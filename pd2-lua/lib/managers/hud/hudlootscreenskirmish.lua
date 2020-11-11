@@ -179,7 +179,6 @@ end
 
 function HUDLootScreenSkirmish:create_peers()
 	local max_peers = tweak_data.max_players
-	local infamy_icon = tweak_data.hud_icons:get_icon_data("infamy_icon")
 	local peer_panel_width = (self._panel:w() - PADDING * (max_peers - 1)) / max_peers
 	local peer_panel_height = self._panel:h() - PANEL_HEIGHT_SUB
 	self._peer_data = {}
@@ -214,11 +213,10 @@ function HUDLootScreenSkirmish:create_peers()
 		}))
 		player_infamy = peer_panel:bitmap({
 			visible = false,
-			h = 32,
+			h = 16,
 			w = 16,
 			x = player_text:x(),
-			y = player_text:y(),
-			texture = infamy_icon,
+			y = player_text:y() + 4,
 			color = peer_color
 		})
 		cards_panel = placer:add_row(GrowPanel:new(peer_panel, {
@@ -304,14 +302,28 @@ function HUDLootScreenSkirmish:make_cards(peer, amount)
 	local player_rank = is_local_peer and managers.experience:current_rank() or peer and peer:rank() or 0
 
 	if player_level then
-		local rank_string = (player_rank > 0 and managers.experience:rank_string(player_rank) .. "-" or "") .. player_level
+		local color_range_offset = utf8.len(peer_name_string) + 2
+		local rank_string, color_ranges = managers.experience:gui_string(player_level, player_rank, color_range_offset)
 
 		data.player_text:set_text(peer_name_string .. " (" .. rank_string .. ")")
+
+		for _, color_range in ipairs(color_ranges or {}) do
+			data.player_text:set_range_color(color_range.start, color_range.stop, color_range.color)
+		end
+
+		local infamy_texture, infamy_texture_rect = managers.experience:rank_icon_data(player_rank)
+
+		if infamy_texture then
+			local x, y, w, h = unpack(infamy_texture_rect)
+
+			data.player_infamy:set_image(infamy_texture, x, y, w, h)
+		end
+
 		data.player_infamy:set_visible(player_rank > 0)
 		data.player_text:set_x(player_rank > 0 and data.player_infamy:right() or data.player_infamy:left())
 	else
 		data.player_text:set_text(peer_name_string)
-		data.player_infamy:child("peer_infamy"):set_visible(false)
+		data.player_infamy:set_visible(false)
 		data.player_text:set_x(data.player_infamy:left())
 	end
 

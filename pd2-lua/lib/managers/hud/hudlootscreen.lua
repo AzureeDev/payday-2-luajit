@@ -111,16 +111,23 @@ function HUDLootScreen:init(hud, workspace, saved_lootdrop, saved_selected, save
 	local panel = self._peers_panel:child("peer" .. tostring(local_peer_id))
 	local peer_info_panel = panel:child("peer_info")
 	local peer_name = peer_info_panel:child("peer_name")
-	local experience = (managers.experience:current_rank() > 0 and managers.experience:rank_string(managers.experience:current_rank()) .. "-" or "") .. managers.experience:current_level()
+	local peer_name_string = tostring(managers.network.account:username() or managers.blackmarket:get_preferred_character_real_name())
+	local color_range_offset = utf8.len(peer_name_string) + 2
+	local experience, color_ranges = managers.experience:gui_string(managers.experience:current_level(), managers.experience:current_rank(), color_range_offset)
 
-	peer_name:set_text(tostring(managers.network.account:username() or managers.blackmarket:get_preferred_character_real_name()) .. " (" .. experience .. ")")
+	peer_name:set_text(peer_name_string .. " (" .. experience .. ")")
+
+	for _, color_range in ipairs(color_ranges or {}) do
+		peer_name:set_range_color(color_range.start, color_range.stop, color_range.color)
+	end
+
 	self:make_fine_text(peer_name)
 	peer_name:set_right(peer_info_panel:w())
 
 	if managers.experience:current_rank() > 0 then
 		peer_info_panel:child("peer_infamy"):set_visible(true)
 		peer_info_panel:child("peer_infamy"):set_right(peer_name:x())
-		peer_info_panel:child("peer_infamy"):set_top(peer_name:y())
+		peer_info_panel:child("peer_infamy"):set_top(peer_name:y() + 4)
 	else
 		peer_info_panel:child("peer_infamy"):set_visible(false)
 	end
@@ -172,13 +179,12 @@ function HUDLootScreen:create_peer(peers_panel, peer_id)
 		h = medium_font_size,
 		color = color
 	})
-	local infamy_icon = tweak_data.hud_icons:get_icon_data("infamy_icon")
 	local peer_infamy = peer_info_panel:bitmap({
-		name = "peer_infamy",
-		h = 32,
 		visible = false,
+		name = "peer_infamy",
+		h = 16,
+		y = 4,
 		w = 16,
-		texture = infamy_icon,
 		color = color
 	})
 
@@ -589,13 +595,16 @@ function HUDLootScreen:make_cards(peer, max_pc, left_card, right_card)
 	local max_quality = peer_info_panel:child("max_quality")
 
 	if player_level then
-		local experience = (player_rank > 0 and managers.experience:rank_string(player_rank) .. "-" or "") .. player_level
+		local color_range_offset = utf8.len(peer_name_string) + 2
+		local experience, color_ranges = managers.experience:gui_string(player_level, player_rank, color_range_offset)
 
 		peer_name:set_text(peer_name_string .. " (" .. experience .. ")")
-		peer_info_panel:child("peer_infamy"):set_visible(player_rank > 0)
+
+		for _, color_range in ipairs(color_ranges or {}) do
+			peer_name:set_range_color(color_range.start, color_range.stop, color_range.color)
+		end
 	else
 		peer_name:set_text(peer_name_string)
-		peer_info_panel:child("peer_infamy"):set_visible(false)
 	end
 
 	max_quality:set_text(managers.localization:to_upper_text("menu_l_max_quality", {
@@ -607,8 +616,22 @@ function HUDLootScreen:make_cards(peer, max_pc, left_card, right_card)
 	max_quality:set_right(peer_info_panel:w())
 
 	if player_level then
-		peer_info_panel:child("peer_infamy"):set_right(peer_name:x())
-		peer_info_panel:child("peer_infamy"):set_top(peer_name:y())
+		local peer_infamy = peer_info_panel:child("peer_infamy")
+		local infamy_texture, infamy_texture_rect = managers.experience:rank_icon_data(player_rank)
+
+		if infamy_texture then
+			local x, y, w, h = unpack(infamy_texture_rect)
+
+			peer_infamy:set_image(infamy_texture, x, y, w, h)
+		end
+
+		peer_infamy:set_visible(player_rank > 0)
+		peer_infamy:set_right(peer_name:x())
+		peer_infamy:set_top(peer_name:y() + 4)
+	else
+		local peer_infamy = peer_info_panel:child("peer_infamy")
+
+		peer_infamy:set_visible(false)
 	end
 
 	peer_info_panel:show()

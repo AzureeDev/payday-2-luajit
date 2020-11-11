@@ -18,6 +18,10 @@ function GenericDLCManager:has_ess()
 	return self:is_dlc_unlocked("ess")
 end
 
+function GenericDLCManager:has_fex()
+	return self:is_dlc_unlocked("fex")
+end
+
 function GenericDLCManager:has_flm()
 	return self:is_dlc_unlocked("flm")
 end
@@ -26,8 +30,16 @@ function GenericDLCManager:has_ghx()
 	return self:is_dlc_unlocked("ghx")
 end
 
+function GenericDLCManager:has_gpo()
+	return self:is_dlc_unlocked("gpo")
+end
+
 function GenericDLCManager:has_hnd()
 	return self:is_dlc_unlocked("hnd")
+end
+
+function GenericDLCManager:has_inf()
+	return self:is_dlc_unlocked("inf")
 end
 
 function GenericDLCManager:has_maw()
@@ -50,8 +62,20 @@ function GenericDLCManager:has_mwm()
 	return self:is_dlc_unlocked("mwm")
 end
 
+function GenericDLCManager:has_mxw()
+	return self:is_dlc_unlocked("mxw")
+end
+
+function GenericDLCManager:has_ocp()
+	return self:is_dlc_unlocked("ocp")
+end
+
 function GenericDLCManager:has_pex()
 	return self:is_dlc_unlocked("pex")
+end
+
+function GenericDLCManager:has_pgo()
+	return self:is_dlc_unlocked("pgo")
 end
 
 function GenericDLCManager:has_scm()
@@ -154,6 +178,11 @@ function WINDLCManager:init_generated()
 		app_id = "1303240",
 		no_install = true
 	}
+	Global.dlc_manager.all_dlc_data.fex = {
+		app_id = "1449450",
+		no_install = true,
+		webpage = "https://ovk.af/FEXBMHYB"
+	}
 	Global.dlc_manager.all_dlc_data.flm = {
 		app_id = "218620",
 		no_install = true
@@ -162,7 +191,15 @@ function WINDLCManager:init_generated()
 		app_id = "218620",
 		no_install = true
 	}
+	Global.dlc_manager.all_dlc_data.gpo = {
+		app_id = "1449440",
+		no_install = true
+	}
 	Global.dlc_manager.all_dlc_data.hnd = {
+		app_id = "218620",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.inf = {
 		app_id = "218620",
 		no_install = true
 	}
@@ -189,10 +226,25 @@ function WINDLCManager:init_generated()
 		no_install = true,
 		webpage = "https://ovk.af/ingame2CartelOptics"
 	}
+	Global.dlc_manager.all_dlc_data.mxw = {
+		app_id = "1449441",
+		no_install = true,
+		webpage = "https://ovk.af/FEXGWPYB"
+	}
+	Global.dlc_manager.all_dlc_data.ocp = {
+		app_id = "1449442",
+		no_install = true,
+		webpage = "https://ovk.af/FEXWCP3YB"
+	}
 	Global.dlc_manager.all_dlc_data.pex = {
 		app_id = "1347750",
 		no_install = true,
 		webpage = "https://ovk.af/pexheistyb"
+	}
+	Global.dlc_manager.all_dlc_data.pgo = {
+		app_id = "1449440",
+		no_install = true,
+		webpage = "https://ovk.af/FEXTP3YB"
 	}
 	Global.dlc_manager.all_dlc_data.scm = {
 		app_id = "218620",

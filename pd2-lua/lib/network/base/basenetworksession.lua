@@ -1646,12 +1646,6 @@ function BaseNetworkSession:on_drop_in_pause_request_received(peer_id, nickname,
 					print("DROP-IN PAUSE")
 					Application:set_pause(true)
 					SoundDevice:set_rtpc("ingame_sound", 0)
-
-					local peer = self:peer(peer_id)
-
-					if is_playing and peer and peer:rank() > 0 then
-						managers.hud:post_event("infamous_player_join_stinger")
-					end
 				end
 
 				if Network:is_client() then

@@ -277,7 +277,9 @@ function ExperienceManager:_check_achievements()
 
 	if self._global.rank then
 		for i = 1, Application:digest_value(self._global.rank, false) do
-			managers.achievment:award(tweak_data.achievement.infamous[i])
+			if tweak_data.achievement.infamous[i] then
+				managers.achievment:award(tweak_data.achievement.infamous[i])
+			end
 		end
 	end
 end
@@ -311,7 +313,9 @@ function ExperienceManager:_set_current_level(value)
 end
 
 function ExperienceManager:set_current_rank(value)
-	if value < #tweak_data.infamy.ranks + 1 then
+	local max_rank = tweak_data.infamy.ranks
+
+	if value <= max_rank then
 		managers.infamy:aquire_point()
 
 		self._global.rank = Application:digest_value(value, true)
@@ -321,7 +325,15 @@ function ExperienceManager:set_current_rank(value)
 	end
 end
 
-function ExperienceManager:rank_string(rank)
+function ExperienceManager:rank_string(rank, use_roman_numerals)
+	if use_roman_numerals == nil then
+		use_roman_numerals = managers.user:get_setting("infamy_roman_rank")
+	end
+
+	if not use_roman_numerals then
+		return tostring(rank)
+	end
+
 	local numbers = {
 		1,
 		5,
@@ -363,6 +375,46 @@ function ExperienceManager:rank_string(rank)
 	end
 
 	return roman
+end
+
+function ExperienceManager:rank_icon(rank)
+	if rank and rank > 0 then
+		local index = math.floor((rank - 1) / tweak_data.infamy.icon_rank_step) + 1
+
+		return (tweak_data.infamy.infamy_icons[index] or tweak_data.infamy.infamy_icons[1]).hud_icon
+	end
+end
+
+function ExperienceManager:rank_icon_color(rank)
+	if rank and rank > 0 then
+		local index = math.floor((rank - 1) / tweak_data.infamy.icon_rank_step) + 1
+
+		return (tweak_data.infamy.infamy_icons[index] or tweak_data.infamy.infamy_icons[1]).color
+	end
+end
+
+function ExperienceManager:gui_string(level, rank, offset)
+	offset = offset or 0
+	local rank_string = rank > 0 and "[" .. self:rank_string(rank) .. "]" or ""
+	local gui_string = tostring(level) .. rank_string
+	local rank_color_range = {
+		start = utf8.len(gui_string) - utf8.len(rank_string) + offset,
+		stop = utf8.len(gui_string) + offset,
+		color = tweak_data.screen_colors.infamy_color
+	}
+
+	return gui_string, {
+		rank_color_range
+	}
+end
+
+function ExperienceManager:rank_icon_data(rank)
+	return tweak_data.hud_icons:get_icon_or(self:rank_icon(rank), "guis/textures/pd2/infamous_symbol", {
+		32,
+		4,
+		16,
+		16
+	})
 end
 
 function ExperienceManager:level_to_stars()
@@ -837,6 +889,10 @@ function ExperienceManager:reset()
 
 	self:_setup()
 	self:update_progress()
+
+	for level = 0, self:current_level() do
+		managers.upgrades:aquire_from_level_tree(level, true)
+	end
 end
 
 function ExperienceManager:update_progress()

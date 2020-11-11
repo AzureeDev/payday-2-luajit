@@ -84,6 +84,12 @@ function MenuItemMultiChoice:_show_options(callback_handler)
 end
 
 function MenuItemMultiChoice:add_option(option)
+	local visible_callback = option:parameters().visible_callback
+
+	if visible_callback then
+		option.visible_callback_names = string.split(visible_callback, " ")
+	end
+
 	table.insert(self._all_options, option)
 	table.insert(self._options, option)
 end

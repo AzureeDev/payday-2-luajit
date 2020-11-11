@@ -1356,13 +1356,36 @@ end
 function MenuManager:show_infamytree_reseted()
 	local dialog_data = {
 		title = managers.localization:text("dialog_infamy_reseted_title"),
-		text = managers.localization:text("dialog_infamytree_reseted")
+		text = managers.localization:text("dialog_infamysystem_reset")
 	}
 	local ok_button = {
 		text = managers.localization:text("dialog_ok")
 	}
 	dialog_data.button_list = {
 		ok_button
+	}
+
+	managers.system_menu:show(dialog_data)
+end
+
+function MenuManager:show_confirm_infamy_unlock(params)
+	local dialog_data = {
+		title = managers.localization:text("menu_infamy_confirm_title"),
+		text = managers.localization:text("menu_infamy_confirm_description"),
+		focus_button = 1
+	}
+	local yes_button = {
+		text = managers.localization:text("dialog_yes"),
+		callback_func = params.yes_func
+	}
+	local no_button = {
+		text = managers.localization:text("dialog_no"),
+		callback_func = params.no_func,
+		cancel_button = true
+	}
+	dialog_data.button_list = {
+		yes_button,
+		no_button
 	}
 
 	managers.system_menu:show(dialog_data)
@@ -2014,7 +2037,7 @@ end
 
 function MenuManager:show_confirm_preplanning_rebuy(params)
 	local dialog_data = {
-		title = "Rebuy Assets",
+		title = managers.localization:text("menu_item_preplanning_rebuy"),
 		text = "",
 		text_formating_color_table = {},
 		use_text_formating = true,
@@ -2665,7 +2688,7 @@ function MenuManager:show_confirm_become_infamous(params)
 			text = managers.localization:text("dialog_yes"),
 			callback_func = params.yes_func
 		}
-		dialog_data.text = managers.localization:text(managers.experience:current_rank() < 5 and "menu_dialog_become_infamous" or "menu_dialog_become_infamous_above_5", {
+		dialog_data.text = managers.localization:text(managers.experience:current_rank() < 5 and "menu_dialog_become_infamous_3" or "menu_dialog_become_infamous_3_above_5", {
 			level = 100,
 			cash = params.cost
 		})
@@ -2746,9 +2769,10 @@ function MenuManager:show_infamous_message(can_become_infamous)
 			become_infamous_menu_item = managers.localization:to_upper_text("menu_become_infamous")
 		})
 	else
+		local infamous_cost = managers.money:get_infamous_cost(managers.experience:current_rank() + 1)
 		dialog_data.text = managers.localization:text("dialog_infamous_info_desc", {
 			level = 100,
-			cash = managers.experience:cash_string(Application:digest_value(tweak_data.infamy.ranks[managers.experience:current_rank() + 1], false))
+			cash = managers.experience:cash_string(infamous_cost)
 		})
 	end
 

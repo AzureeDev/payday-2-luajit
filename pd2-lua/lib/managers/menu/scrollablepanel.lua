@@ -493,3 +493,409 @@ end
 function ScrollablePanel:mouse_released(button, x, y)
 	return self:release_scroll_bar()
 end
+
+HorizontalScrollablePanel = HorizontalScrollablePanel or class(ScrollablePanel)
+local PANEL_PADDING = 10
+local FADEOUT_SPEED = 5
+local SCROLL_SPEED = 28
+HorizontalScrollablePanel.SCROLL_SPEED = SCROLL_SPEED
+
+function HorizontalScrollablePanel:init(parent_panel, name, data)
+	data = data or {}
+	self._alphas = {}
+	self._x_padding = data.x_padding ~= nil and data.x_padding or data.padding ~= nil and data.padding or PANEL_PADDING
+	self._y_padding = data.y_padding ~= nil and data.y_padding or data.padding ~= nil and data.padding or PANEL_PADDING
+	self._scrollbar_y_padding = data.scrollbar_y_padding
+	self._update = data.update ~= nil and data.update or self._default_update
+	self._force_scroll_indicators = data.force_scroll_indicators
+	local layer = data.layer ~= nil and data.layer or 50
+	data.name = data.name or name and name .. "Base"
+	self._panel = parent_panel:panel(data)
+	self._scroll_panel = self._panel:panel({
+		name = name and name .. "Scroll",
+		x = self:x_padding(),
+		y = self:y_padding(),
+		w = self._panel:w() - self:x_padding() * 2,
+		h = self._panel:h() - self:y_padding() * 2
+	})
+	self._canvas = self._scroll_panel:panel({
+		name = name and name .. "Canvas",
+		w = self._scroll_panel:w(),
+		h = self._scroll_panel:h()
+	})
+
+	if data.ignore_left_indicator == nil or not data.ignore_left_indicator then
+		local scroll_left_indicator_shade = self:panel():panel({
+			halign = "left",
+			name = "scroll_left_indicator_shade",
+			alpha = 0,
+			valign = "top",
+			layer = layer,
+			x = self:x_padding(),
+			y = self:y_padding(),
+			h = self:canvas():h()
+		})
+
+		BoxGuiObject:new(scroll_left_indicator_shade, {
+			sides = {
+				0,
+				0,
+				2,
+				0
+			}
+		}):set_aligns("scale", "scale")
+	end
+
+	if data.ignore_right_indicator == nil or not data.ignore_right_indicator then
+		local scroll_right_indicator_shade = self:panel():panel({
+			valign = "top",
+			name = "scroll_right_indicator_shade",
+			halign = "right",
+			alpha = 0,
+			layer = layer,
+			x = self:x_padding(),
+			y = self:y_padding(),
+			h = self:canvas():h(),
+			w = self:panel():w() - self:x_padding() * 2
+		})
+
+		BoxGuiObject:new(scroll_right_indicator_shade, {
+			sides = {
+				0,
+				0,
+				0,
+				2
+			}
+		}):set_aligns("scale", "scale")
+	end
+
+	local texture, rect = tweak_data.hud_icons:get_icon_data("scrollbar_arrow")
+	local rect_offset = 0
+	local scroll_left_indicator_arrow = self:panel():bitmap({
+		name = "scroll_left_indicator_arrow",
+		valign = "top",
+		alpha = 0,
+		halign = "left",
+		rotation = 270,
+		texture = texture,
+		texture_rect = rect,
+		layer = layer,
+		color = Color.white
+	})
+
+	scroll_left_indicator_arrow:set_left(self:scrollbar_x_padding())
+	scroll_left_indicator_arrow:set_top(self:panel():h() - self:scrollbar_y_padding() + rect_offset)
+
+	local scroll_right_indicator_arrow = self:panel():bitmap({
+		name = "scroll_right_indicator_arrow",
+		valign = "top",
+		alpha = 0,
+		halign = "right",
+		rotation = 90,
+		texture = texture,
+		texture_rect = rect,
+		layer = layer,
+		color = Color.white
+	})
+
+	scroll_right_indicator_arrow:set_right(self:panel():w() - self:scrollbar_x_padding())
+	scroll_right_indicator_arrow:set_top(self:panel():h() - self:scrollbar_y_padding() + rect_offset)
+
+	if data.down_scrollbar then
+		scroll_left_indicator_arrow:set_bottom(2)
+		scroll_right_indicator_arrow:set_bottom(2)
+	end
+
+	local bar_w = scroll_right_indicator_arrow:left() - scroll_left_indicator_arrow:right()
+	self._scroll_bar = self:panel():panel({
+		valign = "top",
+		name = "scroll_bar",
+		h = 4,
+		layer = layer - 1,
+		w = bar_w
+	})
+	self._scroll_bar_box_class = BoxGuiObject:new(self._scroll_bar, {
+		sides = {
+			0,
+			0,
+			2,
+			2
+		}
+	})
+
+	self._scroll_bar_box_class:set_aligns("scale", "scale")
+	self._scroll_bar:set_h(data.scroll_h or 8)
+	self._scroll_bar:set_right(scroll_right_indicator_arrow:left())
+	self._scroll_bar:set_center_y(scroll_right_indicator_arrow:center_y())
+
+	self._bar_minimum_size = data.bar_minimum_size or 5
+	self._thread = self._panel:animate(function (o, self)
+		while true do
+			local dt = coroutine.yield()
+
+			self:_update(dt)
+		end
+	end, self)
+end
+
+function HorizontalScrollablePanel:scrollbar_x_padding()
+	local x_padding = self:x_padding()
+
+	if self._scrollbar_x_padding then
+		return x_padding + self._scrollbar_x_padding
+	end
+
+	return x_padding + 6
+end
+
+function HorizontalScrollablePanel:scrollbar_y_padding()
+	if self._y_padding == 0 then
+		return PANEL_PADDING
+	else
+		return self._y_padding
+	end
+end
+
+function HorizontalScrollablePanel:set_size(w, h)
+	self:panel():set_size(w, h)
+	self:scroll_panel():set_size(w - self:x_padding() * 2, h - self:y_padding() * 2)
+
+	local scroll_left_indicator_arrow = self:panel():child("scroll_left_indicator_arrow")
+
+	scroll_left_indicator_arrow:set_left(self:scrollbar_y_padding())
+	scroll_left_indicator_arrow:set_top(self:panel():h() - self:scrollbar_y_padding())
+
+	local scroll_right_indicator_arrow = self:panel():child("scroll_right_indicator_arrow")
+
+	scroll_right_indicator_arrow:set_right(self:panel():w() - self:scrollbar_x_padding())
+	scroll_right_indicator_arrow:set_top(self:panel():h() - self:scrollbar_y_padding())
+	self._scroll_bar:set_right(scroll_right_indicator_arrow:left())
+	self._scroll_bar:set_center_y(scroll_right_indicator_arrow:center_y())
+end
+
+function HorizontalScrollablePanel:canvas_max_width()
+	return self:scroll_panel():h()
+end
+
+function HorizontalScrollablePanel:canvas_scroll_width()
+	return self:scroll_panel():h() - self:y_padding() - 5
+end
+
+function HorizontalScrollablePanel:canvas_scroll_height()
+	return self:scroll_panel():w()
+end
+
+function HorizontalScrollablePanel:update_canvas_size()
+	local orig_h = self:canvas():h()
+	local max_w = 0
+
+	for i, panel in ipairs(self:canvas():children()) do
+		local w = panel:x() + panel:w()
+
+		if max_w < w then
+			max_w = w
+		end
+	end
+
+	local show_scrollbar = self:canvas_scroll_width() < max_w
+	local max_h = show_scrollbar and self:canvas_scroll_height() or self:canvas_scroll_height()
+
+	self:canvas():grow(max_h - self:canvas():h(), max_w - self:canvas():w())
+
+	if self._on_canvas_updated then
+		self._on_canvas_updated(max_h)
+	end
+
+	max_w = 0
+
+	for i, panel in ipairs(self:canvas():children()) do
+		local w = panel:x() + panel:w()
+
+		if max_w < w then
+			max_w = w
+		end
+	end
+
+	if max_w <= self:scroll_panel():w() then
+		max_w = self:scroll_panel():w()
+	end
+
+	self:set_canvas_size(nil, max_w)
+end
+
+function HorizontalScrollablePanel:set_canvas_size(w, h)
+	if h == nil then
+		h = self:canvas():h()
+	end
+
+	if w == nil then
+		w = self:canvas():w()
+	end
+
+	if w <= self:scroll_panel():w() then
+		w = self:scroll_panel():w()
+
+		self:canvas():set_x(0)
+	end
+
+	self:canvas():set_size(w, h)
+
+	local show_scrollbar = math.floor(self:scroll_panel():w()) < math.floor(w)
+
+	if not show_scrollbar then
+		self._scroll_bar:set_alpha(0)
+		self._scroll_bar:set_visible(false)
+		self._scroll_bar_box_class:hide()
+		self:set_element_alpha_target("scroll_left_indicator_arrow", 0, 100)
+		self:set_element_alpha_target("scroll_right_indicator_arrow", 0, 100)
+		self:set_element_alpha_target("scroll_left_indicator_shade", 0, 100)
+		self:set_element_alpha_target("scroll_right_indicator_shade", 0, 100)
+	else
+		self._scroll_bar:set_alpha(1)
+		self._scroll_bar:set_visible(true)
+		self._scroll_bar_box_class:show()
+		self:_set_scroll_indicator()
+		self:_check_scroll_indicator_states()
+	end
+end
+
+function HorizontalScrollablePanel:is_scrollable()
+	return self:scroll_panel():w() < self:canvas():w()
+end
+
+function HorizontalScrollablePanel:perform_scroll(speed, direction)
+	if self:canvas():w() <= self:scroll_panel():w() then
+		return
+	end
+
+	local scroll_amount = speed * direction
+	local max_w = self:canvas():w() - self:scroll_panel():w()
+	max_w = max_w * -1
+	local new_x = math.clamp(self:canvas():x() + scroll_amount, max_w, 0)
+
+	self:canvas():set_x(new_x)
+	self:_set_scroll_indicator()
+	self:_check_scroll_indicator_states()
+end
+
+function HorizontalScrollablePanel:scroll_to(x)
+	if self:canvas():w() <= self:scroll_panel():w() then
+		return
+	end
+
+	local scroll_amount = -x
+	local max_w = self:canvas():w() - self:scroll_panel():w()
+	max_w = max_w * -1
+	local new_x = math.clamp(scroll_amount, max_w, 0)
+
+	self:canvas():set_x(new_x)
+	self:_set_scroll_indicator()
+	self:_check_scroll_indicator_states()
+end
+
+function HorizontalScrollablePanel:scroll_with_bar(target_x, current_x)
+	local arrow_size = self:panel():child("scroll_left_indicator_arrow"):size()
+	local scroll_panel = self:scroll_panel()
+	local canvas = self:canvas()
+
+	if target_x < current_x then
+		if target_x < scroll_panel:world_right() - arrow_size then
+			local mul = (scroll_panel:w() - arrow_size * 2) / canvas:w()
+
+			self:perform_scroll((current_x - target_x) / mul, 1)
+		end
+
+		current_x = target_x
+	elseif current_x < target_x then
+		if target_x > scroll_panel:world_x() + arrow_size then
+			local mul = (scroll_panel:w() - arrow_size * 2) / canvas:w()
+
+			self:perform_scroll((target_x - current_x) / mul, -1)
+		end
+
+		current_x = target_x
+	end
+end
+
+function HorizontalScrollablePanel:release_scroll_bar()
+	self._pressing_arrow_left = false
+	self._pressing_arrow_right = false
+
+	if self._grabbed_scroll_bar then
+		self._grabbed_scroll_bar = false
+
+		return true
+	end
+end
+
+function HorizontalScrollablePanel:_set_scroll_indicator()
+	local bar_w = self:panel():child("scroll_right_indicator_arrow"):left() - self:panel():child("scroll_left_indicator_arrow"):right()
+
+	if self:canvas():w() ~= 0 then
+		self._scroll_bar:set_w(math.max(bar_w * self:scroll_panel():w() / self:canvas():w(), self._bar_minimum_size))
+	end
+end
+
+function HorizontalScrollablePanel:_check_scroll_indicator_states()
+	local left_alpha = math.floor(self:canvas():right()) < 0 and 1 or 0
+	local right_alpha = math.floor(self:scroll_panel():w()) < math.floor(self:canvas():left()) and 1 or 0
+	left_alpha = 1
+	right_alpha = 1
+
+	self:set_element_alpha_target("scroll_left_indicator_arrow", left_alpha, FADEOUT_SPEED)
+	self:set_element_alpha_target("scroll_right_indicator_arrow", right_alpha, FADEOUT_SPEED)
+
+	if self:x_padding() > 0 or self._force_scroll_indicators then
+		self:set_element_alpha_target("scroll_left_indicator_shade", left_alpha, FADEOUT_SPEED)
+		self:set_element_alpha_target("scroll_right_indicator_shade", right_alpha, FADEOUT_SPEED)
+	end
+
+	local left_arrow = self:panel():child("scroll_left_indicator_arrow")
+	local right_arrow = self:panel():child("scroll_right_indicator_arrow")
+	local canvas_w = self:canvas():w() ~= 0 and self:canvas():w() or 1
+	local at = self:canvas():left() / (self:scroll_panel():w() - canvas_w)
+	local max = right_arrow:left() - left_arrow:right() - self._scroll_bar:w()
+
+	self._scroll_bar:set_left(left_arrow:right() + max * at)
+end
+
+function HorizontalScrollablePanel:mouse_moved(button, x, y)
+	if self._grabbed_scroll_bar then
+		self:scroll_with_bar(x, self._current_x)
+
+		self._current_x = x
+
+		return true, "grab"
+	elseif alive(self._scroll_bar) and self._scroll_bar:visible() and self._scroll_bar:inside(x, y) then
+		return true, "hand"
+	elseif self:panel():child("scroll_left_indicator_arrow"):inside(x, y) then
+		if self._pressing_arrow_left then
+			self:perform_scroll(SCROLL_SPEED * 0.1, 1)
+		end
+
+		return true, self:panel():child("scroll_left_indicator_arrow"):alpha() > 0 and "link" or "arrow"
+	elseif self:panel():child("scroll_right_indicator_arrow"):inside(x, y) then
+		if self._pressing_arrow_right then
+			self:perform_scroll(SCROLL_SPEED * 0.1, -1)
+		end
+
+		return true, self:panel():child("scroll_right_indicator_arrow"):alpha() > 0 and "link" or "arrow"
+	end
+end
+
+function HorizontalScrollablePanel:mouse_pressed(button, x, y)
+	if alive(self._scroll_bar) and self._scroll_bar:visible() and self._scroll_bar:inside(x, y) then
+		self._grabbed_scroll_bar = true
+		self._current_x = x
+
+		return true
+	elseif self:panel():child("scroll_left_indicator_arrow"):inside(x, y) then
+		self._pressing_arrow_left = true
+
+		return true
+	elseif self:panel():child("scroll_right_indicator_arrow"):inside(x, y) then
+		self._pressing_arrow_right = true
+
+		return true
+	end
+end

@@ -5,6 +5,7 @@ local IS_WIN_32 = SystemInfo:platform() == Idstring("WIN32")
 local NOT_WIN_32 = not IS_WIN_32
 local TOP_ADJUSTMENT = NOT_WIN_32 and 50 or 55
 local BOT_ADJUSTMENT = NOT_WIN_32 and 40 or 60
+local join_stinger_binding = "menu_respec_tree_all"
 
 local function _animate(objects, scale, anim_time)
 	local anims = {}
@@ -19,6 +20,11 @@ local function _animate(objects, scale, anim_time)
 				sf = object.gui.font_scale and object.gui:font_scale() or scale,
 				ef = scale
 			}
+
+			if object.font_scale then
+				data.sf = data.sf
+				data.ef = data.ef * object.font_scale
+			end
 
 			table.insert(anims, {
 				object = object,
@@ -1530,6 +1536,22 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 
 	self._multi_profile_item = MultiProfileItemGui:new(self._ws, self._panel)
 
+	if #managers.infamy:get_unlocked_join_stingers() > 0 then
+		local selected_join_stinger = managers.infamy:selected_join_stinger()
+		self._select_join_stinger_button = self:create_text_button({
+			right = column_one_box_panel:left() - 5,
+			bottom = column_one_box_panel:bottom() - 0,
+			font = tweak_data.menu.pd2_small_font,
+			font_size = tweak_data.menu.pd2_small_font_size,
+			text = managers.localization:to_upper_text("menu_join_stinger_title", {
+				button = managers.localization:btn_macro(join_stinger_binding),
+				join_stinger = managers.localization:text("menu_" .. tostring(selected_join_stinger) .. "_name")
+			}),
+			clbk = callback(self, self, "select_join_stinger"),
+			binding = join_stinger_binding
+		})
+	end
+
 	self:_round_everything()
 	self:_update_selected_box(true)
 	self:update_detection()
@@ -1547,6 +1569,99 @@ function PlayerInventoryGui:init(ws, fullscreen_ws, node)
 	if outfit_player_style then
 		outfit_player_style.links = self._boxes_by_name.armor.links
 	end
+end
+
+function PlayerInventoryGui:select_join_stinger()
+	local dialog_data = {
+		title = managers.localization:to_upper_text("menu_join_stinger_choice"),
+		text = managers.localization:text("menu_join_stinger_choice_help")
+	}
+	local selected_join_stinger = managers.infamy:selected_join_stinger()
+	local unlocked_join_stingers = managers.infamy:get_unlocked_join_stingers()
+
+	if #unlocked_join_stingers < tweak_data.infamy.join_stingers then
+		dialog_data.text = dialog_data.text .. "\n" .. managers.localization:to_upper_text("menu_join_stinger_rewards_left")
+	end
+
+	dialog_data.button_list = {}
+	local focus_button = 1
+
+	for focus_index, stinger_name in ipairs(managers.infamy:get_unlocked_join_stingers()) do
+		local item_id = string.format("infamy_stinger_%03d", stinger_name)
+		local text_string = managers.localization:text(tweak_data.infamy.items[item_id].name_id)
+
+		if stinger_name == selected_join_stinger then
+			text_string = utf8.char(187) .. text_string
+			focus_button = focus_index
+		end
+
+		table.insert(dialog_data.button_list, {
+			text = text_string,
+			callback_func = function ()
+				managers.infamy:select_join_stinger(stinger_name)
+			end,
+			focus_callback_func = function ()
+				if self._join_stinger_post_event then
+					self._join_stinger_post_event:stop()
+
+					self._join_stinger_post_event = nil
+				end
+
+				self._join_stinger_post_event = managers.menu:play_join_stinger_by_index(stinger_name)
+			end
+		})
+	end
+
+	local divider = {
+		no_text = true,
+		no_selection = true
+	}
+
+	table.insert(dialog_data.button_list, divider)
+
+	local no_button = {
+		text = managers.localization:text("dialog_cancel"),
+		focus_callback_func = function ()
+		end,
+		cancel_button = true
+	}
+
+	table.insert(dialog_data.button_list, no_button)
+
+	dialog_data.image_blend_mode = "normal"
+	dialog_data.text_blend_mode = "add"
+	dialog_data.use_text_formating = true
+	dialog_data.focus_button = focus_button
+	dialog_data.w = 256
+	dialog_data.h = 532
+	dialog_data.title_font = tweak_data.menu.pd2_medium_font
+	dialog_data.title_font_size = tweak_data.menu.pd2_medium_font_size
+	dialog_data.font = tweak_data.menu.pd2_small_font
+	dialog_data.font_size = tweak_data.menu.pd2_small_font_size
+	dialog_data.text_formating_color = Color.white
+	dialog_data.text_formating_color_table = {}
+	dialog_data.clamp_to_screen = true
+
+	managers.system_menu:show_buttons(dialog_data)
+	managers.system_menu:add_dialog_closed_callback(function ()
+		if self._join_stinger_post_event then
+			self._join_stinger_post_event:stop()
+
+			self._join_stinger_post_event = nil
+		end
+
+		if alive(self._panel) then
+			local selected_join_stinger = managers.infamy:selected_join_stinger()
+			local selected_text = managers.localization:text("menu_" .. tostring(selected_join_stinger) .. "_name")
+			local params = {
+				text = managers.localization:to_upper_text("menu_join_stinger_title", {
+					button = managers.localization:btn_macro(join_stinger_binding),
+					join_stinger = selected_text
+				})
+			}
+			self._select_join_stinger_button = self:refresh_text_button(self._select_join_stinger_button, params)
+		end
+	end)
 end
 
 function PlayerInventoryGui:_update_legends(name)
@@ -2807,11 +2922,9 @@ function PlayerInventoryGui:_update_info_infamy(name)
 		table.insert(color_ranges, color_range)
 	end
 
-	text_string = text_string .. "\n" .. managers.localization:to_upper_text("st_menu_infamy_available_points", {
-		points = managers.infamy:points()
-	}) .. "\n" .. managers.localization:to_upper_text("menu_infamy_total_xp", {
+	text_string = text_string .. "\n" .. managers.localization:to_upper_text("menu_infamy_total_xp", {
 		xpboost = string.format("%0.1f", (managers.player:get_infamy_exp_multiplier() - 1) * 100)
-	}) .. "\n\n" .. managers.localization:text("menu_infamytree_help")
+	}) .. "\n\n" .. managers.localization:text("menu_infamy_help")
 
 	self:set_info_text(text_string, color_ranges)
 end
@@ -3535,12 +3648,14 @@ function PlayerInventoryGui:_update_mod_boxes()
 	local infamy_box = self._boxes_by_name.infamy
 	local w, h = infamy_box.panel:size()
 	local player_rank = managers.experience:current_rank()
+	local card_texture_w = 29
+	local card_texture_h = 43
+	local card_size_mul = 1.5
 	local _, infamy_card_box = self:create_box({
 		keep_texture_size = true,
 		name = "infamy_card",
 		alpha = 1,
 		image = "guis/textures/pd2/inv_infamycard_bg",
-		image_size_mul = 1.3,
 		can_select = false,
 		layer = 2,
 		clbks = false,
@@ -3552,28 +3667,34 @@ function PlayerInventoryGui:_update_mod_boxes()
 		texture_rect = {
 			0,
 			0,
-			29,
-			43
+			card_texture_w,
+			card_texture_h
 		},
+		image_size_mul = card_size_mul,
 		select_anim = select_anim,
 		unselect_anim = unselect_anim
 	})
-	local tx, ty, tw, th = infamy_card_box.image_object.gui:world_shape()
-	local _, infamy_rank_box = self:create_box({
+	local card_gui = infamy_card_box.image_object.gui
+	local number_w = card_texture_w * card_size_mul - 10
+	local number_h = card_texture_h * card_size_mul - 10
+	local number_x = card_gui:world_center_x() - number_w / 2
+	local number_y = card_gui:world_center_y() - number_h / 2
+	local ap, infamy_rank_box = self:create_box({
 		text_vertical = "center",
 		name = "infamy_card_number",
 		alpha = 1,
+		can_select = false,
 		layer = 3,
+		border_padding = 0,
 		clbks = false,
 		animate_text = true,
 		use_borders = false,
 		text_align = "center",
-		can_select = false,
 		text_blend_mode = "normal",
-		x = tx,
-		y = ty,
-		w = tw,
-		h = th,
+		x = number_x,
+		y = number_y,
+		w = number_w,
+		h = number_h,
 		text = managers.experience:rank_string(player_rank),
 		text_color = Color.black,
 		select_anim = select_anim,
@@ -3644,8 +3765,8 @@ function PlayerInventoryGui:create_box(params)
 		local font = params.font or tweak_data.menu.pd2_small_font
 		local font_size = params.font_size or tweak_data.menu.pd2_small_font_size
 		local gui_object = panel:text({
+			name = "text",
 			layer = 2,
-			name = unselected_text,
 			text = unselected_text,
 			font = font,
 			font_size = font_size,
@@ -3661,7 +3782,9 @@ function PlayerInventoryGui:create_box(params)
 
 		if w < needed_width then
 			if shrink_text then
-				gui_object:set_font_size(font_size * w / needed_width)
+				local scaled_font_size = math.floor(font_size * w / needed_width)
+
+				gui_object:set_font_size(scaled_font_size)
 				make_fine_text(gui_object)
 			elseif adept_width then
 				panel:set_w(needed_width)
@@ -3694,6 +3817,7 @@ function PlayerInventoryGui:create_box(params)
 
 		text_object = {
 			gui = gui_object,
+			font_scale = gui_object:font_scale(),
 			selected_text = text,
 			unselected_text = unselected_text,
 			selected_color = selected_color,
@@ -4950,18 +5074,7 @@ function PlayerInventoryGui:next_character()
 end
 
 function PlayerInventoryGui:open_infamy_menu()
-	local function clbk()
-		managers.menu:open_node("infamytree")
-	end
-
-	if MenuCallbackHandler:can_become_infamous() and Application:digest_value(tweak_data.infamy.ranks[managers.experience:current_rank() + 1], false) <= managers.money:offshore() then
-		MenuCallbackHandler:become_infamous({
-			yes_clbk = clbk,
-			no_clbk = clbk
-		})
-	else
-		clbk()
-	end
+	managers.menu:open_node("infamytree")
 end
 
 function PlayerInventoryGui:open_crew_menu()
@@ -5352,6 +5465,13 @@ function PlayerInventoryGui:special_btn_pressed(button)
 	elseif button == Idstring("menu_change_profile_left") and managers.multi_profile:has_previous() then
 		managers.multi_profile:previous_profile()
 	end
+
+	for _, text_button in ipairs(self._text_buttons) do
+		if alive(text_button.panel) and text_button.panel:visible() and text_button.binding == button then
+			text_button:clbk()
+			managers.menu_component:post_event("menu_enter")
+		end
+	end
 end
 
 function PlayerInventoryGui:confirm_pressed()
@@ -5569,6 +5689,7 @@ function PlayerInventoryGui:create_text_button(params)
 	end
 
 	local clbk = params.clbk
+	local binding = params.binding and (type(params.binding) == "string" and Idstring(params.binding) or params.binding)
 	local layer = params.layer or 1
 	local hide_blur = params.hide_blur
 	local disabled = params.disabled
@@ -5636,8 +5757,38 @@ function PlayerInventoryGui:create_text_button(params)
 		panel = button_panel,
 		text = gui_text,
 		blur = gui_blur,
-		clbk = clbk
+		binding = binding,
+		clbk = clbk,
+		params = params
 	})
+
+	return button_panel
+end
+
+function PlayerInventoryGui:refresh_text_button(button_panel, params)
+	local refresh_button, refresh_index = nil
+
+	for index, button in ipairs(self._text_buttons) do
+		if button.panel == button_panel then
+			refresh_button = button
+			refresh_index = index
+
+			break
+		end
+	end
+
+	if refresh_button then
+		table.remove(self._text_buttons, refresh_index)
+		self._panel:remove(refresh_button.panel)
+
+		local new_params = clone(refresh_button.params)
+
+		for key, value in pairs(params) do
+			new_params[key] = value
+		end
+
+		return self:create_text_button(new_params)
+	end
 
 	return button_panel
 end

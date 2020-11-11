@@ -596,7 +596,9 @@ function InfamyTreeGui:_setup()
 	self:_select_item(start_item)
 
 	if MenuCallbackHandler:can_become_infamous() or managers.experience:current_rank() == 0 then
-		managers.menu:show_infamous_message(MenuCallbackHandler:can_become_infamous() and Application:digest_value(tweak_data.infamy.ranks[managers.experience:current_rank() + 1], false) <= managers.money:offshore())
+		local infamous_cost = managers.money:get_infamous_cost(managers.experience:current_rank() + 1)
+
+		managers.menu:show_infamous_message(MenuCallbackHandler:can_become_infamous() and infamous_cost <= managers.money:offshore())
 	end
 
 	managers.features:announce_feature("infamy_2_0")

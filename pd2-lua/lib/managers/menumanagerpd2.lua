@@ -452,6 +452,10 @@ function MenuCallbackHandler:equip_mask(item)
 end
 
 function MenuCallbackHandler:_update_outfit_information()
+	if Global.block_update_outfit_information then
+		return
+	end
+
 	local outfit_string = managers.blackmarket:outfit_string()
 
 	if self:is_steam() then
@@ -930,13 +934,18 @@ function FbiFilesInitiator:modify_node(node, up)
 
 	if managers.network:session() then
 		local peer = managers.network:session():local_peer()
+		local name = peer:name()
+		local color_range_offset = utf8.len(name) + 2
+		local experience, color_ranges = managers.experience:gui_string(level, rank, color_range_offset)
+		experience = " (" .. experience .. ")"
 		local params = {
-			localize_help = false,
 			localize = false,
-			to_upper = false,
+			localize_help = false,
 			callback = "on_visit_fbi_files_suspect",
+			to_upper = false,
 			name = peer:user_id(),
-			text_id = peer:name() .. " (" .. (managers.experience:current_rank() > 0 and managers.experience:rank_string(managers.experience:current_rank()) .. "-" or "") .. (managers.experience:current_level() or "") .. ")",
+			text_id = name .. experience,
+			color_ranges = color_ranges,
 			rpc = peer:rpc(),
 			peer = peer
 		}
@@ -945,13 +954,18 @@ function FbiFilesInitiator:modify_node(node, up)
 		node:add_item(new_item)
 
 		for _, peer in pairs(managers.network:session():peers()) do
+			local name = peer:name()
+			local color_range_offset = utf8.len(name) + 2
+			local experience, color_ranges = managers.experience:gui_string(level, rank, color_range_offset)
+			experience = " (" .. experience .. ")"
 			local params = {
-				localize_help = false,
 				localize = false,
-				to_upper = false,
+				localize_help = false,
 				callback = "on_visit_fbi_files_suspect",
+				to_upper = false,
 				name = peer:user_id(),
-				text_id = peer:name() .. " (" .. (peer:rank() > 0 and managers.experience:rank_string(peer:rank()) .. "-" or "") .. (peer:level() or "") .. ")",
+				text_id = name .. experience,
+				color_ranges = color_ranges,
 				rpc = peer:rpc(),
 				peer = peer
 			}
@@ -977,21 +991,39 @@ function PlayerListInitiator:get_peer_name(peer)
 		return "No peer"
 	end
 
+	local name = peer:name()
+	local level, rank = nil
+
 	if peer == managers.network:session():local_peer() then
-		return peer:name() .. " (" .. (managers.experience:current_rank() > 0 and managers.experience:rank_string(managers.experience:current_rank()) .. "-" or "") .. (managers.experience:current_level() or "") .. ")"
+		level = managers.experience:current_level() or ""
+		rank = managers.experience:current_rank() or ""
 	else
-		return peer:name() .. " (" .. (peer:rank() > 0 and managers.experience:rank_string(peer:rank()) .. "-" or "") .. (peer:level() or "") .. ")"
+		level = peer:level() or ""
+		rank = peer:rank() or ""
 	end
+
+	local color_range_offset = utf8.len(name) + 2
+	local experience, color_ranges = managers.experience:gui_string(level, rank, color_range_offset)
+	name = name .. " (" .. experience .. ")"
+
+	return name, color_ranges
 end
 
 function PlayerListInitiator:add_peer_item(node, peer)
+	local rank = managers.network:session():local_peer() and managers.experience:current_rank() or peer:rank()
+	local texture, texture_rect = managers.experience:rank_icon_data(rank)
+	local text_id, color_ranges = self:get_peer_name(peer)
 	local params = {
-		localize_help = false,
+		icon_align = "left",
 		localize = false,
-		to_upper = false,
+		localize_help = false,
 		callback = "on_player_list_inspect_peer",
+		to_upper = false,
 		name = peer:user_id(),
-		text_id = self:get_peer_name(peer),
+		text_id = text_id,
+		color_ranges = color_ranges,
+		icon = texture,
+		icon_rect = texture_rect,
 		rpc = peer:rpc(),
 		peer = peer
 	}
@@ -1050,11 +1082,13 @@ function InspectPlayerInitiator:modify_node(node, inspect_peer)
 	end
 
 	local is_local_peer = inspect_peer == managers.network:session():local_peer()
+	local text_id, color_ranges = PlayerListInitiator.get_peer_name(self, inspect_peer)
 	local params = {
 		name = "peer_name",
 		localize = false,
 		no_text = false,
-		text_id = PlayerListInitiator.get_peer_name(self, inspect_peer),
+		text_id = text_id,
+		color_ranges = color_ranges,
 		color = tweak_data.screen_colors.text
 	}
 	local data_node = {
@@ -3365,6 +3399,10 @@ function MenuCallbackHandler:get_weapon_color_disabled_icon(item_option)
 
 		if managers.dlc:is_content_crimespree_locked("weapon_skins", id) then
 			return "guis/textures/pd2/skilltree/padlock"
+		end
+
+		if managers.dlc:is_content_infamy_locked("weapon_skins", id) then
+			return "guis/textures/pd2/lock_infamy"
 		end
 	end
 

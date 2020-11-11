@@ -48,7 +48,7 @@ function PrePlanningManager:on_preplanning_open()
 end
 
 function PrePlanningManager:open_rebuy_menu()
-	if not self:get_can_rebuy_assets() then
+	if not self:get_can_rebuy_assets() or not self:can_edit_preplan() then
 		return
 	end
 
@@ -429,18 +429,8 @@ function PrePlanningManager:can_reserve_mission_element(type, peer_id)
 	local type_total_pass = not type_total or type_total_count < type_total
 	local category_player_pass = not category_max_per_player or category_player_count < category_max_per_player
 	local category_total_pass = not category_total or category_total_count < category_total
-	local dlc_pass = true
-	local upgrade_pass = true
 
-	if type_data.dlc_lock then
-		dlc_pass = managers.dlc:is_dlc_unlocked(type_data.dlc_lock)
-	end
-
-	if type_data.upgrade_lock then
-		upgrade_pass = managers.player:has_category_upgrade(type_data.upgrade_lock.category, type_data.upgrade_lock.upgrade)
-	end
-
-	return type_player_pass and type_total_pass and category_player_pass and category_total_pass and dlc_pass and upgrade_pass, 4
+	return type_player_pass and type_total_pass and category_player_pass and category_total_pass, 4
 end
 
 function PrePlanningManager:reserve_mission_element(type, id)
@@ -546,6 +536,14 @@ function PrePlanningManager:reserve_rebuy_mission_elements()
 	for _, asset in ipairs(self._rebuy_assets.assets) do
 		local td = self:get_tweak_data_by_type(asset.type)
 		local can_unlock = self:can_reserve_mission_element(asset.type)
+
+		if td.dlc_lock then
+			can_unlock = can_unlock and managers.dlc:is_dlc_unlocked(td.dlc_lock)
+		end
+
+		if td.upgrade_lock then
+			can_unlock = can_unlock and managers.player:has_category_upgrade(td.upgrade_lock.category, td.upgrade_lock.upgrade)
+		end
 
 		if can_unlock then
 			self:reserve_mission_element(asset.type, asset.id)

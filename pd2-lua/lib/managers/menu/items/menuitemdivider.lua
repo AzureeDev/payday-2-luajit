@@ -25,6 +25,15 @@ function MenuItemDivider:setup_gui(node, row_item)
 		row_item.text:set_size(tw, th)
 
 		h = th
+		local color_ranges = row_item.color_ranges
+
+		if color_ranges then
+			for _, color_range in ipairs(color_ranges) do
+				if color_range then
+					row_item.text:set_range_color(color_range.start, color_range.stop, color_range.color)
+				end
+			end
+		end
 	end
 
 	row_item.gui_panel:set_left(node:_mid_align())

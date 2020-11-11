@@ -1213,7 +1213,7 @@ function CrimeSpreeManager:on_mission_completed(mission_id)
 			self:set_peer_spree_level(1, server_level + spree_add)
 		end
 
-		if not self:_is_host() and self:spree_level() < self:server_spree_level() then
+		if not self:_is_host() and self:spree_level() < self:server_spree_level() and tweak_data.crime_spree.catchup_min_level <= managers.experience:current_level() then
 			local diff = self:server_spree_level() - self:spree_level()
 			self._catchup_bonus = math.floor(diff * tweak_data.crime_spree.catchup_bonus)
 			spree_add = spree_add + self._catchup_bonus

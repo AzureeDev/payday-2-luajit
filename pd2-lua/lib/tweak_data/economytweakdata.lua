@@ -2,7 +2,7 @@ require("lib/tweak_data/GeneratedMarketLinkTweakData")
 
 EconomyTweakData = EconomyTweakData or class()
 
-function EconomyTweakData:init()
+function EconomyTweakData:init(tweak_data)
 	self.safes = {}
 	self.drills = {}
 	self.gameplay = {}
@@ -1969,6 +1969,86 @@ function EconomyTweakData:init()
 	}
 
 	self:_init_armor_skins()
+	self:_init_rarity_contents(tweak_data)
+end
+
+function EconomyTweakData:_add_content(data, content, tweaks)
+	for category, items in pairs(content.contains) do
+		for _, entry in pairs(items) do
+			if category == "contents" then
+				local rarity = self.contents[entry].rarity
+				data[rarity] = data[rarity] or {}
+				data[rarity] = entry
+			else
+				local item_data = tweaks[category][entry]
+				local rarity = content.rarity or item_data.rarity or "common"
+				data[rarity] = data[rarity] or {}
+				data[rarity][category] = data[rarity][category] or {}
+
+				table.insert(data[rarity][category], entry)
+			end
+		end
+	end
+end
+
+function EconomyTweakData:_init_rarity_contents(tweak_data)
+	local weapon_skin_tweak = tweak_data.blackmarket.weapon_skins
+	local armor_skin_tweak = self.armor_skins
+	local tweaks = {
+		weapon_skins = tweak_data.blackmarket.weapon_skins,
+		armor_skins = self.armor_skins
+	}
+	local contents = {}
+
+	for safe_id, safe_data in pairs(self.safes) do
+		if not safe_data.promo then
+			local content = self.contents[safe_data.content]
+			contents[safe_id] = {}
+
+			self:_add_content(contents[safe_id], content, tweaks)
+		end
+	end
+
+	local ids = {}
+
+	for safe_id, data in pairs(contents) do
+		self.safes[safe_id].rarity_contents = {}
+
+		for rarity, contains in pairs(data) do
+			local content_id = nil
+
+			if type(contains) == "table" then
+				local rarity_index = self.rarities[rarity].index
+				local def_id = 20000 + rarity_index * 1000 + self.contents[safe_id].def_id % 10000
+				content_id = safe_id .. "_" .. rarity
+				self.contents[content_id] = {
+					def_id = def_id,
+					rarity = rarity,
+					contains = clone(contains)
+				}
+			else
+				content_id = contains
+			end
+
+			self.safes[safe_id].rarity_contents[rarity] = content_id
+			ids[rarity] = ids[rarity] or {}
+
+			table.insert(ids[rarity], content_id)
+		end
+	end
+
+	for rarity, items in pairs(ids) do
+		local rarity_index = self.rarities[rarity].index
+		local rarity_id = "rarity_" .. rarity
+		local def_id = 20000 + rarity_index
+		self.contents[rarity_id] = {
+			0,
+			def_id = def_id,
+			contains = {
+				contents = clone(items)
+			}
+		}
+	end
 end
 
 function EconomyTweakData:get_entry_from_index(category, index)

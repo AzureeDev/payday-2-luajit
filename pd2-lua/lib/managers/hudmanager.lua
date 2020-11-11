@@ -1402,11 +1402,18 @@ function HUDManager:update_name_label_by_peer(peer)
 			local name = data.character_name
 
 			if peer:level() then
-				local experience = (peer:rank() > 0 and managers.experience:rank_string(peer:rank()) .. "-" or "") .. peer:level()
+				local color_range_offset = utf8.len(name) + 2
+				local experience, color_ranges = managers.experience:gui_string(peer:level(), peer:rank(), color_range_offset)
+				data.name_color_ranges = color_ranges
 				name = name .. " (" .. experience .. ")"
 			end
 
 			data.text:set_text(name)
+
+			for _, color_range in ipairs(data.name_color_ranges or {}) do
+				data.text:set_range_color(color_range.start, color_range.stop, color_range.color)
+			end
+
 			self:align_teammate_name_label(data.panel, data.interact)
 
 			break

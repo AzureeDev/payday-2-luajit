@@ -115,13 +115,15 @@ function MenuLobbyRenderer:open(...)
 	if is_server then
 		local level = managers.experience:current_level()
 		local rank = managers.experience:current_rank()
+		local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
 
 		self:_set_player_slot(1, {
 			character = "random",
 			name = server_peer:name(),
 			peer_id = server_peer:id(),
 			level = level,
-			rank = rank
+			rank = rank,
+			join_stinger_index = join_stinger_index
 		})
 	end
 
@@ -320,6 +322,7 @@ function MenuLobbyRenderer:on_request_lobby_slot_reply()
 	local local_peer_id = local_peer:id()
 	local level = managers.experience:current_level()
 	local rank = managers.experience:current_rank()
+	local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
 	local character = local_peer:character()
 	local progress = managers.upgrades:progress()
 	local mask_set = "remove"
@@ -329,10 +332,11 @@ function MenuLobbyRenderer:on_request_lobby_slot_reply()
 		peer_id = local_peer_id,
 		level = level,
 		rank = rank,
+		join_stinger_index = join_stinger_index,
 		character = character,
 		progress = progress
 	})
-	managers.network:session():send_to_peers_loaded("lobby_info", level, rank, character, mask_set)
+	managers.network:session():send_to_peers_loaded("lobby_info", level, rank, join_stinger_index, character, mask_set)
 	managers.network:session():send_to_peers_loaded("sync_profile", level, rank)
 	managers.network:session():check_send_outfit()
 end

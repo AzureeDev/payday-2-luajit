@@ -1259,6 +1259,8 @@ function CoreMissionElement:append_elements_sorted()
 	CoreEWS.update_combobox_options(self._elements_params, self:_combobox_names_names(self._on_executed_units))
 
 	if #self._hed.on_executed < 1 then
+		self:_set_on_execute_ctrlrs_enabled(false)
+
 		return
 	end
 

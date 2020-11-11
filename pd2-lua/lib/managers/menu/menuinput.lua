@@ -891,7 +891,8 @@ function MenuInput:_give_special_buttons()
 			"next_page",
 			"previous_page",
 			"menu_update",
-			"continue"
+			"continue",
+			"menu_go_infamous"
 		}
 
 		for _, button in ipairs(special_btns) do

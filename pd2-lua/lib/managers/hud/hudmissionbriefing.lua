@@ -41,7 +41,6 @@ function HUDMissionBriefing:init(hud, workspace)
 
 	if not self._singleplayer then
 		local voice_icon, voice_texture_rect = tweak_data.hud_icons:get_icon_data("mugshot_talk")
-		local infamy_icon, infamy_rect = tweak_data.hud_icons:get_icon_data("infamy_icon")
 
 		for i = 1, tweak_data.max_players do
 			local color_id = i
@@ -80,6 +79,7 @@ function HUDMissionBriefing:init(hud, workspace)
 				w = 256,
 				align = "left",
 				blend_mode = "add",
+				rotation = 360,
 				layer = 1,
 				text = managers.localization:text("menu_lobby_player_slot_available") .. "  ",
 				font = text_font,
@@ -102,12 +102,12 @@ function HUDMissionBriefing:init(hud, workspace)
 				color = tweak_data.screen_colors.text:with_alpha(0.5)
 			})
 			local infamy = slot_panel:bitmap({
+				w = 16,
 				name = "infamy",
-				layer = 2,
+				h = 16,
 				visible = false,
 				y = 1,
-				texture = infamy_icon,
-				texture_rect = infamy_rect,
+				layer = 2,
 				color = color
 			})
 			local detection = slot_panel:panel({
@@ -703,11 +703,19 @@ function HUDMissionBriefing:set_player_slot(nr, params)
 	slot:child("criminal"):set_text(managers.localization:to_upper_text("menu_" .. tostring(params.character)))
 
 	local name_len = utf8.len(slot:child("name"):text())
-	local experience = (params.rank > 0 and managers.experience:rank_string(params.rank) .. "-" or "") .. tostring(params.level)
+	local color_range_offset = name_len + 2
+	local experience, color_ranges = managers.experience:gui_string(params.level, params.rank, color_range_offset)
 
 	slot:child("name"):set_text(slot:child("name"):text() .. " (" .. experience .. ")  ")
 
+	for _, color_range in ipairs(color_ranges or {}) do
+		slot:child("name"):set_range_color(color_range.start, color_range.stop, color_range.color)
+	end
+
 	if params.rank > 0 then
+		local texture, texture_rect = managers.experience:rank_icon_data(params.rank)
+
+		slot:child("infamy"):set_image(texture, unpack(texture_rect))
 		slot:child("infamy"):set_visible(true)
 		slot:child("name"):set_x(slot:child("infamy"):right())
 	else

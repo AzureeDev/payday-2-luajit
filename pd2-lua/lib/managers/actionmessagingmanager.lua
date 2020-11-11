@@ -67,6 +67,13 @@ end
 
 function ActionMessagingManager:_show_message(id, instigator)
 	local msg_data = self:message(id)
+
+	if not msg_data then
+		debug_pause_unit(instigator, "ActionMessagingManager:_show_message: Missing action message with id", id)
+
+		return
+	end
+
 	local title = instigator:base():nick_name()
 	local icon = nil
 	local msg = ""

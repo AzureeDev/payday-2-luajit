@@ -11140,14 +11140,26 @@ function BlackMarketGui:populate_player_styles(data)
 				new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_dlc")
 				new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value] and tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
 			elseif not new_data.unlocked then
-				local achievement = player_style_data.locks and player_style_data.locks.achievement
-
-				if achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
+				if managers.dlc:is_content_achievement_locked(data.category, new_data.name) or managers.dlc:is_content_achievement_milestone_locked(data.category, new_data.name) then
+					local ach_dlc_id = managers.dlc:get_achievement_from_locked_content(data.category, new_data.name)
+					local dlc_tweak = tweak_data.dlc[ach_dlc_id]
+					local achievement = dlc_tweak and dlc_tweak.achievement_id
 					local achievement_visual = tweak_data.achievement.visual[achievement]
 					new_data.lock_texture = "guis/textures/pd2/lock_achievement"
 					new_data.dlc_locked = achievement_visual and achievement_visual.desc_id or "achievement_" .. tostring(achievement) .. "_desc"
+				elseif managers.dlc:is_content_infamy_locked(data.category, new_data.name) then
+					new_data.lock_texture = "guis/textures/pd2/lock_infamy"
+					new_data.dlc_locked = "menu_infamy_lock_info"
 				else
-					new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
+					local achievement = player_style_data.locks and player_style_data.locks.achievement
+
+					if achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
+						local achievement_visual = tweak_data.achievement.visual[achievement]
+						new_data.lock_texture = "guis/textures/pd2/lock_achievement"
+						new_data.dlc_locked = achievement_visual and achievement_visual.desc_id or "achievement_" .. tostring(achievement) .. "_desc"
+					else
+						new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
+					end
 				end
 			end
 
@@ -11246,6 +11258,9 @@ function BlackMarketGui:populate_suit_variations(data)
 				new_data.unlocked = false
 				new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_dlc")
 				new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value] and tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
+			elseif managers.dlc:is_content_infamy_locked("player_styles", player_style) and not new_data.unlocked then
+				new_data.lock_texture = "guis/textures/pd2/lock_infamy"
+				new_data.dlc_locked = "menu_infamy_lock_info"
 			elseif not new_data.unlocked then
 				local achievement = suit_variation_data and suit_variation_data.locks and suit_variation_data.locks.achievement
 
@@ -11411,6 +11426,9 @@ function BlackMarketGui:populate_gloves(data)
 				new_data.unlocked = false
 				new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_dlc")
 				new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value] and tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
+			elseif managers.dlc:is_content_infamy_locked(data.category, new_data.name) and not new_data.unlocked then
+				new_data.lock_texture = "guis/textures/pd2/lock_infamy"
+				new_data.dlc_locked = "menu_infamy_lock_info"
 			elseif not new_data.unlocked then
 				local glove_achievement_lock_id = achievement_locked_content[glove_id]
 				local dlc_tweak = glove_achievement_lock_id and tweak_data.dlc[glove_achievement_lock_id]
@@ -11423,8 +11441,13 @@ function BlackMarketGui:populate_gloves(data)
 				end
 			end
 
-			if new_data.unlocked and not new_data.equipped then
-				table.insert(new_data, "hnd_equip")
+			if new_data.unlocked then
+				if not new_data.equipped then
+					table.insert(new_data, "hnd_equip")
+				end
+			else
+				new_data.bitmap_locked_blend_mode = "normal"
+				new_data.bitmap_locked_alpha = 0.4
 			end
 
 			if allow_preview and mannequin_glove ~= glove_id then
@@ -11499,12 +11522,29 @@ function BlackMarketGui:populate_masks_new(data)
 			new_data.stream = false
 			new_data.holding = currently_holding and hold_crafted_item.slot == index
 			new_data.item_id = crafted.item_id
-			local is_locked = tweak_data.lootdrop.global_values[new_data.global_value] and tweak_data.lootdrop.global_values[new_data.global_value].dlc and not managers.dlc:is_dlc_unlocked(new_data.global_value)
-			local locked_parts = {}
-			local mask_is_locked = is_locked
-			local locked_global_value = nil
+			local dlc = tweak_data.blackmarket.masks[new_data.name].dlc or managers.dlc:global_value_to_dlc(new_data.global_value)
 
-			if not is_locked then
+			if dlc and not managers.dlc:is_dlc_unlocked(dlc) then
+				new_data.unlocked = false
+				new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_incompatible")
+				local dlc_global_value = managers.dlc:dlc_to_global_value(dlc)
+				new_data.dlc_locked = dlc_global_value and tweak_data.lootdrop.global_values[dlc_global_value] and tweak_data.lootdrop.global_values[dlc_global_value].unlock_id or "bm_menu_dlc_locked"
+			elseif not managers.dlc:is_content_achievement_locked(data.category, new_data.name) then
+				if managers.dlc:is_content_achievement_milestone_locked(data.category, new_data.name) then
+					-- Nothing
+				elseif managers.dlc:is_content_skirmish_locked(data.category, new_data.name) then
+					-- Nothing
+				elseif managers.dlc:is_content_crimespree_locked(data.category, new_data.name) then
+					-- Nothing
+				elseif managers.dlc:is_content_infamy_locked(data.category, new_data.name) then
+					-- Nothing
+				end
+			end
+
+			local locked_global_value = nil
+			local locked_parts = {}
+
+			if new_data.unlocked then
 				local name_converter = {
 					pattern = "textures",
 					color = "colors",
@@ -11515,27 +11555,20 @@ function BlackMarketGui:populate_masks_new(data)
 				for type, part in pairs(crafted.blueprint) do
 					if default_blueprint[type] ~= part.id and default_blueprint[name_converter[type]] ~= part.id and tweak_data.lootdrop.global_values[part.global_value] and tweak_data.lootdrop.global_values[part.global_value].dlc and not managers.dlc:is_dlc_unlocked(part.global_value) then
 						locked_parts[type] = part.global_value
-						is_locked = true
 						locked_global_value = part.global_value or locked_global_value
+						new_data.unlocked = false
 					end
 				end
 			else
 				locked_global_value = new_data.global_value
 			end
 
-			if is_locked then
-				new_data.unlocked = false
+			if not new_data.unlocked then
+				local t, gv = next(locked_parts)
 
-				if mask_is_locked then
+				if gv then
 					new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_incompatible")
-					new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value] and tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
-				elseif table.size(locked_parts) > 0 then
-					local t, gv = next(locked_parts)
-
-					if gv then
-						new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_incompatible")
-						new_data.dlc_locked = tweak_data.lootdrop.global_values[gv] and tweak_data.lootdrop.global_values[gv].unlock_id or "bm_menu_dlc_locked"
-					end
+					new_data.dlc_locked = tweak_data.lootdrop.global_values[gv] and tweak_data.lootdrop.global_values[gv].unlock_id or "bm_menu_dlc_locked"
 				end
 			end
 
@@ -11622,10 +11655,10 @@ function BlackMarketGui:populate_masks_new(data)
 
 					table.insert(new_data.mini_icons, {
 						layer = 2,
-						h = 32,
-						w = 32,
-						bottom = -5,
-						right = 2,
+						h = 24,
+						w = 24,
+						bottom = -4,
+						right = 6,
 						texture = texture,
 						color = tweak_data.screen_colors.important_1
 					})
@@ -11665,11 +11698,11 @@ function BlackMarketGui:populate_masks_new(data)
 
 							table.insert(new_data.mini_icons, {
 								layer = 2,
-								h = 24,
-								w = 24,
 								texture = texture,
-								right = right + (w - 32) / 2,
-								bottom = bottom + (h - 24) / 2,
+								w = w - 8,
+								h = w - 8,
+								right = right + 4,
+								bottom = bottom + 4,
 								color = tweak_data.screen_colors.important_1
 							})
 						end
@@ -11699,11 +11732,11 @@ function BlackMarketGui:populate_masks_new(data)
 
 					table.insert(new_data.mini_icons, {
 						layer = 2,
-						h = 24,
-						w = 24,
 						texture = texture,
-						right = right + (w - 32) / 2,
-						bottom = bottom + (h - 32) / 2,
+						w = w - 8,
+						h = w - 8,
+						right = right + 4,
+						bottom = bottom + 4,
 						color = tweak_data.screen_colors.important_1
 					})
 				end
@@ -13177,10 +13210,13 @@ function BlackMarketGui:populate_buy_mask(data)
 			Application:debug("BlackMarketGui:populate_buy_mask( data ) Missing global value on mask", new_data.name)
 		end
 
-		if tweak_data.lootdrop.global_values[new_data.global_value] and tweak_data.lootdrop.global_values[new_data.global_value].dlc and not managers.dlc:is_dlc_unlocked(new_data.global_value) then
+		local dlc = tweak_data.blackmarket.masks[new_data.name].dlc or managers.dlc:global_value_to_dlc(new_data.global_value)
+
+		if dlc and not managers.dlc:is_dlc_unlocked(dlc) then
 			new_data.unlocked = -math.abs(new_data.unlocked)
 			new_data.lock_texture = self:get_lock_icon(new_data)
-			new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
+			local dlc_global_value = managers.dlc:dlc_to_global_value(dlc)
+			new_data.dlc_locked = dlc_global_value and tweak_data.lootdrop.global_values[dlc_global_value] and tweak_data.lootdrop.global_values[dlc_global_value].unlock_id or "bm_menu_dlc_locked"
 		elseif managers.dlc:is_content_achievement_locked(data.category, new_data.name) or managers.dlc:is_content_achievement_milestone_locked(data.category, new_data.name) then
 			new_data.unlocked = -math.abs(new_data.unlocked)
 			new_data.lock_texture = "guis/textures/pd2/lock_achievement"

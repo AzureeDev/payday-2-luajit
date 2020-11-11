@@ -33,6 +33,7 @@ ContractBrokerGui.tabs = {
 	}
 }
 ContractBrokerGui.MAX_SEARCH_LENGTH = 20
+ContractBrokerGui.RELEASE_WINDOW = 7
 
 function ContractBrokerGui:init(ws, fullscreen_ws, node)
 	self._fullscreen_ws = managers.gui_data:create_fullscreen_16_9_workspace()
@@ -50,12 +51,19 @@ function ContractBrokerGui:init(ws, fullscreen_ws, node)
 	self._hide_filters = component_data.hide_filters or false
 	self._panel_align = component_data.align or "center"
 	self.tabs = component_data.tabs or self.tabs
+
+	if component_data.job_filter then
+		self._job_filter = callback(self, self, component_data.job_filter)
+	end
+
 	self._enabled = true
 	self._current_filter = Global.contract_broker and Global.contract_broker.filter or 1
 	self._highlighted_filter = Global.contract_broker and Global.contract_broker.filter or 1
 	self._current_tab = Global.contract_broker and Global.contract_broker.tab or 1
 	self._highlighted_tab = Global.contract_broker and Global.contract_broker.tab or 1
 	self._current_selection = 0
+	self._job_data = {}
+	self._contact_data = {}
 	self._active_filters = {}
 	self._buttons = {}
 	self._tab_buttons = {}
@@ -106,6 +114,7 @@ function ContractBrokerGui:enabled()
 end
 
 function ContractBrokerGui:setup()
+	self:_create_job_data()
 	self:_create_background()
 
 	if not self._hide_title then
@@ -150,6 +159,55 @@ function ContractBrokerGui:_setup_change_search()
 	self:_setup_filters()
 	self:_setup_jobs()
 	self:refresh()
+end
+
+function ContractBrokerGui:_create_job_data()
+	local jobs = {}
+	local contacts = {}
+	local max_jc = managers.job:get_max_jc_for_player()
+	local current_date_value = {
+		tonumber(os.date("%Y")),
+		tonumber(os.date("%m")),
+		tonumber(os.date("%d"))
+	}
+	current_date_value = current_date_value[1] * 30 * 12 + current_date_value[2] * 30 + current_date_value[3]
+	local job_tweak, dlc, date_value, contact, contact_tweak, include_job = nil
+
+	for index, job_id in ipairs(tweak_data.narrative:get_jobs_index()) do
+		job_tweak = tweak_data.narrative:job_data(job_id)
+		contact = job_tweak.contact
+		contact_tweak = tweak_data.narrative.contacts[contact]
+
+		if self._job_filter then
+			include_job = self._job_filter(contact)
+		else
+			include_job = not tweak_data.narrative:is_wrapped_to_job(job_id)
+			include_job = include_job and contact_tweak and not contact_tweak.hidden
+		end
+
+		if include_job then
+			dlc = not job_tweak.dlc or managers.dlc:is_dlc_unlocked(job_tweak.dlc)
+			dlc = dlc and not tweak_data.narrative:is_job_locked(job_id)
+			date_value = job_tweak.date_added and job_tweak.date_added[1] * 30 * 12 + job_tweak.date_added[2] * 30 + job_tweak.date_added[3] - current_date_value or false
+
+			table.insert(jobs, {
+				job_id = job_id,
+				job_tweak = job_tweak,
+				contact = contact,
+				contact_tweak = contact_tweak,
+				enabled = dlc and max_jc >= (job_tweak.jc or 0) + (job_tweak.professional and 10 or 0),
+				date_value = date_value,
+				is_new = date_value ~= false and date_value >= -self.RELEASE_WINDOW
+			})
+
+			contacts[contact] = contacts[contact] or {}
+
+			table.insert(contacts[contact], jobs[#jobs])
+		end
+	end
+
+	self._job_data = jobs
+	self._contact_data = contacts
 end
 
 function ContractBrokerGui:_create_background()
@@ -578,9 +636,11 @@ function ContractBrokerGui:_setup_filters()
 end
 
 function ContractBrokerGui:_add_filter_button(text_id, y, params)
-	local text = self._panels.filters:text({
-		vertical = "top",
-		align = "right",
+	local filter_button_panel = self._panels.filters:panel({
+		h = tweak_data.menu.pd2_small_font_size + (params and params.extra_h or 0)
+	})
+	local text = filter_button_panel:text({
+		name = "text",
 		alpha = 1,
 		layer = 2,
 		text = managers.localization:to_upper_text(text_id),
@@ -590,17 +650,50 @@ function ContractBrokerGui:_add_filter_button(text_id, y, params)
 	})
 
 	make_fine_text(text)
-	text:set_w(self._panels.filters:w())
-	text:set_h(tweak_data.menu.pd2_small_font_size + (params and params.extra_h or 0))
-	text:set_y(y)
-	text:set_right(self._panels.filters:w() - 4)
+	text:set_right(filter_button_panel:w() - 4)
+	text:set_h(filter_button_panel:h())
+
+	local check_new_job_data = params and params.check_new_job_data or {}
+
+	if check_new_job_data.filter_key and check_new_job_data.filter_func then
+		local filter_key = check_new_job_data.filter_key
+		local filter_func = check_new_job_data.filter_func
+		local filter_param = check_new_job_data.filter_param
+		local filtered_jobs = self:filter_job_data(filter_key, filter_func, filter_param)
+		local is_new = false
+
+		for _, job_data in ipairs(filtered_jobs) do
+			if job_data.is_new then
+				is_new = true
+			end
+		end
+
+		if is_new then
+			local new_name = filter_button_panel:text({
+				name = "new_name",
+				visible = true,
+				alpha = 1,
+				layer = 1,
+				text = managers.localization:to_upper_text("menu_new"),
+				font = tweak_data.menu.pd2_small_font,
+				font_size = tweak_data.menu.pd2_small_font_size,
+				color = Color(255, 105, 254, 59) / 255
+			})
+
+			make_fine_text(new_name)
+			new_name:set_right(text:left() - 5)
+			new_name:set_h(filter_button_panel:h())
+		end
+	end
+
+	filter_button_panel:set_righttop(self._panels.filters:w() - 4, y)
 	table.insert(self._buttons, {
 		type = "filter",
 		element = text
 	})
-	table.insert(self._filter_buttons, text)
+	table.insert(self._filter_buttons, filter_button_panel)
 
-	return text
+	return filter_button_panel
 end
 
 function ContractBrokerGui:_setup_filter_none()
@@ -634,9 +727,16 @@ function ContractBrokerGui:_setup_filter_contact()
 	end)
 
 	local last_y = 0
+	local check_new_job_data = {
+		filter_key = "contact",
+		filter_func = ContractBrokerGui.perform_filter_contact
+	}
 
-	for _, contact in ipairs(filters) do
-		local text = self:_add_filter_button(contact.data.name_id, last_y)
+	for filter_index, contact in ipairs(filters) do
+		check_new_job_data.filter_param = contact
+		local text = self:_add_filter_button(contact.data.name_id, last_y, {
+			check_new_job_data = check_new_job_data
+		})
 		last_y = text:bottom() + 1
 	end
 
@@ -659,10 +759,16 @@ function ContractBrokerGui:_setup_filter_time()
 		}
 	}
 	local last_y = 0
+	local check_new_job_data = {
+		filter_key = "job_id",
+		filter_func = ContractBrokerGui.perform_filter_time
+	}
 
-	for _, filter in ipairs(times) do
+	for index, filter in ipairs(times) do
+		check_new_job_data.filter_param = index
 		local text = self:_add_filter_button(filter[1], last_y, {
-			extra_h = 4
+			extra_h = 4,
+			check_new_job_data = check_new_job_data
 		})
 		last_y = text:bottom() + 1
 	end
@@ -684,9 +790,16 @@ function ContractBrokerGui:_setup_filter_tactic()
 		}
 	}
 	local last_y = 0
+	local check_new_job_data = {
+		filter_key = "job",
+		filter_func = ContractBrokerGui.perform_filter_tactic
+	}
 
-	for _, filter in ipairs(tactics) do
-		local text = self:_add_filter_button(filter[1], last_y)
+	for index, filter in ipairs(tactics) do
+		check_new_job_data.filter_param = index
+		local text = self:_add_filter_button(filter[1], last_y, {
+			check_new_job_data = check_new_job_data
+		})
 		last_y = text:bottom() + 1
 	end
 
@@ -721,8 +834,6 @@ function ContractBrokerGui:_setup_filter_favourite()
 end
 
 function ContractBrokerGui:_setup_filter_skirmish()
-	self._contact_filter = callback(self, self, "perform_filter_skirmish")
-
 	self:_add_filter_button("menu_skirmish_selected", 0)
 	self:add_filter("contact", ContractBrokerGui.perform_filter_skirmish)
 	self:set_sorting_function(ContractBrokerGui.perform_standard_sort)
@@ -732,23 +843,27 @@ function ContractBrokerGui:perform_filter_skirmish(value)
 	return value == "skirmish"
 end
 
-function ContractBrokerGui:perform_filter_contact(value)
-	return value == (self._contact_filter_list[self._current_filter] or self._contact_filter_list[1] or {}).id
+function ContractBrokerGui:perform_filter_contact(value, optional_contact_filter)
+	local contact_filter = optional_contact_filter or self._contact_filter_list[self._current_filter] or self._contact_filter_list[1] or {}
+
+	return value == contact_filter.id
 end
 
-function ContractBrokerGui:perform_filter_time(value)
+function ContractBrokerGui:perform_filter_time(value, optional_current_filter)
+	local current_filter = optional_current_filter or self._current_filter or 1
 	local job_tweak = tweak_data.narrative:job_data(value)
 
 	if job_tweak.job_wrapper then
 		job_tweak = tweak_data.narrative.jobs[job_tweak.job_wrapper[1]]
 
-		return (job_tweak and job_tweak.chain and table.size(job_tweak.chain) or 1) == self._current_filter
+		return (job_tweak and job_tweak.chain and table.size(job_tweak.chain) or 1) == current_filter
 	else
-		return table.size(job_tweak.chain) == self._current_filter
+		return table.size(job_tweak.chain) == current_filter
 	end
 end
 
-function ContractBrokerGui:perform_filter_tactic(job_tweak, wrapped_tweak)
+function ContractBrokerGui:perform_filter_tactic(job_tweak, wrapped_tweak, optional_current_filter)
+	local current_filter = optional_current_filter or self._current_filter or 1
 	local allow = false
 	local chain = wrapped_tweak and wrapped_tweak.chain or job_tweak.chain
 
@@ -756,11 +871,11 @@ function ContractBrokerGui:perform_filter_tactic(job_tweak, wrapped_tweak)
 		local level_data = tweak_data.levels[data.level_id]
 
 		if level_data then
-			if self._current_filter == 1 then
+			if current_filter == 1 then
 				allow = allow or level_data.ghost_bonus == nil
-			elseif self._current_filter == 2 then
+			elseif current_filter == 2 then
 				allow = allow or level_data.ghost_required or level_data.ghost_required_visual
-			elseif self._current_filter == 3 then
+			elseif current_filter == 3 then
 				allow = allow or level_data.ghost_bonus ~= nil
 			end
 		end
@@ -769,33 +884,33 @@ function ContractBrokerGui:perform_filter_tactic(job_tweak, wrapped_tweak)
 	return allow
 end
 
-function ContractBrokerGui:perform_filter_favourites(value)
-	return self._favourite_jobs[value] == true
+function ContractBrokerGui:perform_filter_favourites(value, optional_favorite_jobs)
+	local favourite_jobs = optional_favorite_jobs or self._favourite_jobs
+
+	return favourite_jobs[value] == true
 end
 
-function ContractBrokerGui:perform_filter_search(job_tweak)
-	if self._search and alive(self._search.text) then
-		local search_text = string.lower(self._search.text:text())
+function ContractBrokerGui:perform_filter_search(job_tweak, optional_search_text)
+	local search_text = optional_search_text or self._search and alive(self._search.text) and string.lower(self._search.text:text())
 
-		if #search_text > 0 then
-			local job_name = string.lower(managers.localization:text(job_tweak.name_id or "no name_id"))
+	if search_text and #search_text > 0 then
+		local job_name = string.lower(managers.localization:text(job_tweak.name_id or "no name_id"))
 
-			if string.find(job_name, search_text, nil, true) then
+		if string.find(job_name, search_text, nil, true) then
+			return true
+		end
+
+		local contact_tweak = tweak_data.narrative.contacts[job_tweak.contact]
+
+		if contact_tweak then
+			local contact_name = string.lower(managers.localization:text(contact_tweak.name_id or "no name_id"))
+
+			if string.find(contact_name, search_text, nil, true) then
 				return true
 			end
-
-			local contact_tweak = tweak_data.narrative.contacts[job_tweak.contact]
-
-			if contact_tweak then
-				local contact_name = string.lower(managers.localization:text(contact_tweak.name_id or "no name_id"))
-
-				if string.find(contact_name, search_text, nil, true) then
-					return true
-				end
-			end
-
-			return false
 		end
+
+		return false
 	end
 
 	return true
@@ -849,8 +964,50 @@ function ContractBrokerGui.perform_most_played_sort(x, y)
 	end
 end
 
+function ContractBrokerGui:filter_job_data(key, filter, optional_filter_param)
+	local jobs = {}
+
+	if not key or not filter then
+		return jobs
+	end
+
+	local job_tweak, wrapped_tweak, filter_pass = nil
+
+	for _, job_data in ipairs(self._job_data) do
+		filter_pass = true
+		job_tweak = job_data.job_tweak
+
+		if key == "search" then
+			if not filter(self, job_tweak, optional_filter_param) then
+				filter_pass = false
+			end
+		elseif key == "job" then
+			wrapped_tweak = job_tweak.job_wrapper and tweak_data.narrative.jobs[job_tweak.job_wrapper[1]]
+
+			if not filter(self, job_tweak, wrapped_tweak, optional_filter_param) then
+				filter_pass = false
+			end
+		elseif key == "job_id" then
+			if not filter(self, job_data.job_id, optional_filter_param) then
+				filter_pass = false
+			end
+		elseif job_tweak[key] then
+			if not filter(self, job_tweak[key], optional_filter_param) then
+				filter_pass = false
+			end
+		else
+			filter_pass = false
+		end
+
+		if filter_pass then
+			table.insert(jobs, job_data)
+		end
+	end
+
+	return jobs
+end
+
 function ContractBrokerGui:clear_filters()
-	self._contact_filter = nil
 	self._active_filters = {}
 	self._current_filter = 1
 end
@@ -868,14 +1025,6 @@ function ContractBrokerGui:set_sorting_function(sort_func)
 end
 
 function ContractBrokerGui:_setup_jobs()
-	local date_value = {
-		tonumber(os.date("%Y")),
-		tonumber(os.date("%m")),
-		tonumber(os.date("%d"))
-	}
-	date_value = date_value[1] * 30 * 12 + date_value[2] * 30 + date_value[3]
-	local release_window = 7
-
 	if alive(self._jobs_spacer) then
 		self._panels.canvas:remove(self._jobs_spacer)
 	end
@@ -889,25 +1038,12 @@ function ContractBrokerGui:_setup_jobs()
 	self._panels.scroll:scroll_to(0)
 
 	local jobs = {}
-	local max_jc = managers.job:get_max_jc_for_player()
+	local job_tweak, wrapped_tweak, filter_pass = nil
 
-	for index, job_id in ipairs(tweak_data.narrative:get_jobs_index()) do
-		local job_tweak = tweak_data.narrative:job_data(job_id)
-		local wrapped_tweak = nil
-
-		if job_tweak.job_wrapper then
-			wrapped_tweak = tweak_data.narrative.jobs[job_tweak.job_wrapper[1]]
-		end
-
-		local filter_pass = true
-		local contact_pass = true
-		local contact = job_tweak.contact
-		local contact_tweak = tweak_data.narrative.contacts[contact]
-
-		if contact then
-			contact_pass = true
-			contact_pass = (not self._contact_filter or self._contact_filter(contact)) and (not contact_tweak or not contact_tweak.hidden)
-		end
+	for index, job_data in ipairs(self._job_data) do
+		filter_pass = true
+		job_tweak = job_data.job_tweak
+		wrapped_tweak = job_tweak.job_wrapper and tweak_data.narrative.jobs[job_tweak.job_wrapper[1]]
 
 		if self._search_filter_visible and self._current_filter == #self._filter_buttons then
 			if not self:perform_filter_search(job_tweak) then
@@ -928,7 +1064,7 @@ function ContractBrokerGui:_setup_jobs()
 						break
 					end
 				elseif key == "job_id" then
-					if not pass_func(self, job_id) then
+					if not pass_func(self, job_data.job_id) then
 						filter_pass = false
 
 						break
@@ -947,18 +1083,8 @@ function ContractBrokerGui:_setup_jobs()
 			end
 		end
 
-		if filter_pass and contact_pass and not tweak_data.narrative:is_wrapped_to_job(job_id) then
-			local dlc = job_tweak.dlc
-			dlc = not dlc or managers.dlc:is_dlc_unlocked(dlc)
-			dlc = dlc and not tweak_data.narrative:is_job_locked(job_id)
-			local date_value = job_tweak.date_added and job_tweak.date_added[1] * 30 * 12 + job_tweak.date_added[2] * 30 + job_tweak.date_added[3] - date_value or false
-
-			table.insert(jobs, {
-				job_id = job_id,
-				enabled = dlc and max_jc >= (job_tweak.jc or 0) + (job_tweak.professional and 10 or 0),
-				date_value = date_value,
-				is_new = date_value ~= false and date_value >= -release_window
-			})
+		if filter_pass then
+			table.insert(jobs, job_data)
 		end
 	end
 
@@ -999,7 +1125,11 @@ function ContractBrokerGui:refresh()
 		self._filter_selection_bg:set_visible(false)
 	end
 
-	for idx, btn in ipairs(self._filter_buttons) do
+	local btn = nil
+
+	for idx, panel in ipairs(self._filter_buttons) do
+		btn = panel:child("text")
+
 		if idx == self._current_filter then
 			btn:set_color(tweak_data.screen_colors.button_stage_2)
 			btn:set_blend_mode("add")
@@ -1072,14 +1202,18 @@ function ContractBrokerGui:mouse_moved(button, x, y)
 			self._filter_selection_bg:set_visible(false)
 		end
 
-		for idx, btn in ipairs(self._filter_buttons) do
-			if not used and self._current_filter ~= idx and btn:inside(x, y) then
+		local btn = nil
+
+		for idx, panel in ipairs(self._filter_buttons) do
+			btn = panel:child("text")
+
+			if not used and self._current_filter ~= idx and panel:inside(x, y) then
 				pointer = "link"
 				used = true
 
 				btn:set_color(tweak_data.screen_colors.button_stage_2)
 				btn:set_blend_mode("add")
-				self._filter_selection_bg:set_y(btn:y())
+				self._filter_selection_bg:set_y(panel:y())
 
 				if self._highlighted_filter ~= idx then
 					self._highlighted_filter = idx

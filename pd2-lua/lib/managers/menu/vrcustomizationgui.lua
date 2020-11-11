@@ -1899,8 +1899,10 @@ function VRBeltCustomization:set_back_button_enabled(hand_id, enabled)
 		player._hand_state_machine:enter_hand_state(hand_id, hand_id == player:primary_hand_index() and "laser" or "empty")
 	end
 
-	managers.menu:active_menu().input:focus(false)
-	managers.menu:active_menu().input:focus(true)
+	if managers.menu:active_menu() then
+		managers.menu:active_menu().input:focus(false)
+		managers.menu:active_menu().input:focus(true)
+	end
 
 	self._back_button_enabled = enabled
 end

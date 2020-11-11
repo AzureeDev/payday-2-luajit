@@ -808,6 +808,8 @@ function MenuNodeCustomizeWeaponColorGui:update_color_info(node)
 			unlock_id = "bm_menu_skirmish_content_reward"
 		elseif managers.dlc:is_content_crimespree_locked("weapon_skins", color_id) then
 			unlock_id = "bm_menu_crimespree_content_reward"
+		elseif managers.dlc:is_content_infamy_locked("weapon_skins", color_id) then
+			unlock_id = "menu_infamy_lock_info"
 		else
 			unlock_id = "bm_menu_dlc_locked"
 		end

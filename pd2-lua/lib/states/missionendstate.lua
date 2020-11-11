@@ -1025,7 +1025,7 @@ function MissionEndState:chk_complete_heist_achievements()
 				is_host_pass = not achievement_data.is_host or Network:is_server() or Global.game_settings.single_player
 				converted_cops_pass = not achievement_data.converted_cops or achievement_data.converted_cops <= managers.groupai:state():get_amount_enemies_converted_to_criminals()
 				total_accuracy_pass = not achievement_data.total_accuracy or achievement_data.total_accuracy <= managers.statistics:session_hit_accuracy()
-				preplan_pass = not achievement_data.no_preplan or not managers.preplanning:get_finished_preplan() or #managers.preplanning:get_finished_preplan()[2] == 0
+				preplan_pass = not achievement_data.no_preplan or managers.preplanning:has_current_level_preplanning() and Global.preplanning_manager.rebuy_assets and Global.preplanning_manager.rebuy_assets.assets and #Global.preplanning_manager.rebuy_assets.assets == 0
 				max_players_pass = not achievement_data.max_players or managers.network:session():amount_of_players() <= achievement_data.max_players
 				bots_pass = not achievement_data.no_bots or managers.criminals:nr_AI_criminals() == 0
 				mask_pass = mask_pass and (not achievement_data.masks or table.contains(achievement_data.masks, managers.blackmarket:equipped_mask().mask_id))
