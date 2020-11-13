@@ -546,19 +546,14 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 	}
 	local current_rank = managers.experience:current_rank()
 	local current_rank_range = max_ranks < current_rank and max_ranks or current_rank
-	local rank_steps = {}
-
-	for i = 0, 100 do
-		table.insert(rank_steps, i)
-	end
-
-	for i = 150, max_ranks, 50 do
-		table.insert(rank_steps, i)
-	end
-
+	stats.player_rank = {
+		method = "set",
+		type = "int",
+		value = current_rank_range
+	}
 	local rank_found = false
 
-	for _, rank in ipairs(rank_steps) do
+	for _, rank in ipairs(tweak_data.infamy.statistics_rank_steps) do
 		if not rank_found and rank <= current_rank_range then
 			stats["player_rank_" .. tostring(rank)] = {
 				value = 1,
@@ -1043,19 +1038,14 @@ function StatisticsManager:publish_level_to_steam()
 	}
 	local current_rank = managers.experience:current_rank()
 	local current_rank_range = max_ranks < current_rank and max_ranks or current_rank
-	local rank_steps = {}
-
-	for i = 0, 100 do
-		table.insert(rank_steps, i)
-	end
-
-	for i = 150, max_ranks, 50 do
-		table.insert(rank_steps, i)
-	end
-
+	stats.player_rank = {
+		method = "set",
+		type = "int",
+		value = current_rank_range
+	}
 	local rank_found = false
 
-	for _, rank in ipairs(rank_steps) do
+	for _, rank in ipairs(tweak_data.infamy.statistics_rank_steps) do
 		if not rank_found and rank <= current_rank_range then
 			stats["player_rank_" .. tostring(rank)] = {
 				value = 1,

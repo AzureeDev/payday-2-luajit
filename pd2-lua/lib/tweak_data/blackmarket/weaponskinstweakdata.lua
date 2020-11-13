@@ -38565,6 +38565,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38581,6 +38582,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38597,6 +38599,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38613,6 +38616,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38629,6 +38633,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38645,6 +38650,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38661,6 +38667,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38677,6 +38684,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38693,6 +38701,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38709,6 +38718,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38725,6 +38735,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38741,6 +38752,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38757,6 +38769,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38773,6 +38786,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		texture_bundle_folder = "ocp",
 		dlc = "ocp",
 		sort_number = 0,
+		pattern_scale = 0,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -38988,6 +39002,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		dlc = "inf",
 		sort_number = 7,
 		global_value_category = "collectable",
+		pattern_scale = 1,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -39005,6 +39020,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		dlc = "inf",
 		sort_number = 8,
 		global_value_category = "collectable",
+		pattern_scale = 1,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -39022,6 +39038,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		dlc = "inf",
 		sort_number = 9,
 		global_value_category = "collectable",
+		pattern_scale = 1,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -39090,6 +39107,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		dlc = "inf",
 		sort_number = 13,
 		global_value_category = "collectable",
+		pattern_scale = 1,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
@@ -39107,6 +39125,7 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		dlc = "inf",
 		sort_number = 14,
 		global_value_category = "collectable",
+		pattern_scale = 1,
 		color = Color("FF0000")
 	}, {
 		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),

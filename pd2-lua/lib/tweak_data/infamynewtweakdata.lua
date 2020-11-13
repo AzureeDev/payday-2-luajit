@@ -17,6 +17,16 @@ function InfamyTweakData:init()
 		cost_new
 	}
 	self.card_sequences = {}
+	self.statistics_rank_steps = {}
+
+	for i = 0, 100 do
+		table.insert(self.statistics_rank_steps, 1, i)
+	end
+
+	for i = 150, self.ranks, 50 do
+		table.insert(self.statistics_rank_steps, 1, i)
+	end
+
 	self.join_stingers = 17
 	self.icon_rank_step = 100
 	self.infamy_icons = {

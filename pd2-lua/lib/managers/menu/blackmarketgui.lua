@@ -16906,10 +16906,12 @@ end
 function BlackMarketGui:get_safe_for_economy_item(id)
 	local function find_safe_name(id)
 		for safe_id, safe_data in pairs(tweak_data.economy.contents) do
-			for category, tbl in pairs(safe_data.contains) do
-				for _, item_id in ipairs(tbl) do
-					if id == item_id then
-						return safe_id
+			if safe_data and not safe_data.rarity then
+				for category, tbl in pairs(safe_data.contains) do
+					for _, item_id in ipairs(tbl) do
+						if id == item_id then
+							return safe_id
+						end
 					end
 				end
 			end

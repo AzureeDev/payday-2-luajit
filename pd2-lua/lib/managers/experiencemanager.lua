@@ -336,42 +336,46 @@ function ExperienceManager:rank_string(rank, use_roman_numerals)
 
 	local numbers = {
 		1,
+		4,
 		5,
+		9,
 		10,
+		40,
 		50,
+		90,
 		100,
+		400,
 		500,
+		900,
 		1000
 	}
 	local chars = {
 		"I",
+		"IV",
 		"V",
+		"IX",
 		"X",
+		"XL",
 		"L",
+		"XC",
 		"C",
+		"CD",
 		"D",
+		"CM",
 		"M"
 	}
 	local roman = ""
+	local index = #chars
 
-	for i = #numbers, 1, -1 do
-		local num = numbers[i]
+	while rank > 0 do
+		local div = rank / numbers[index]
+		rank = rank % numbers[index]
 
-		while rank - num >= 0 and rank > 0 do
-			roman = roman .. chars[i]
-			rank = rank - num
+		for i = 1, div do
+			roman = roman .. chars[index]
 		end
 
-		for j = 1, i - 1 do
-			local num2 = numbers[j]
-
-			if rank - (num - num2) >= 0 and rank < num and rank > 0 and num - num2 ~= num2 then
-				roman = roman .. chars[j] .. chars[i]
-				rank = rank - (num - num2)
-
-				break
-			end
-		end
+		index = index - 1
 	end
 
 	return roman

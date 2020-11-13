@@ -2006,7 +2006,7 @@ function InteractionTweakData:init(tweak_data)
 		}
 	}
 	self.gen_pku_thermite = {
-		text_id = "hud_int_take_thermite",
+		text_id = "hud_int_take_thermite_paste",
 		special_equipment_block = "thermite"
 	}
 	self.gen_pku_thermite_paste = {

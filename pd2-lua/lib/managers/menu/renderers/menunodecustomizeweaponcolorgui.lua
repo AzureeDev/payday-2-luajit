@@ -243,9 +243,18 @@ function MenuCustomizeWeaponColorInitiator:refresh_node(node)
 	cosmetic_data.id = color_id
 	cosmetic_data.color_index = color_index
 	cosmetic_data.quality = color_quality
-	local cosmetic_pattern_scale_item = node:item("pattern_scale")
-	local color_pattern_scale = cosmetic_pattern_scale_item:value()
-	cosmetic_data.pattern_scale = color_tweak_data.color_skin_data and color_tweak_data.color_skin_data.pattern_default and color_pattern_scale or nil
+	local pattern_scale = color_tweak_data.pattern_scale
+
+	if pattern_scale then
+		cosmetic_data.pattern_scale = tonumber(pattern_scale) > 0 and pattern_scale or nil
+	elseif MenuCallbackHandler:should_show_pattern_scale() then
+		local cosmetic_pattern_scale_item = node:item("pattern_scale")
+		local color_pattern_scale = cosmetic_pattern_scale_item:value()
+		cosmetic_data.pattern_scale = color_tweak_data.color_skin_data and color_tweak_data.color_skin_data.pattern_default and color_pattern_scale or nil
+	else
+		cosmetic_data.pattern_scale = nil
+	end
+
 	local weapon_unit_data = managers.menu_scene and managers.menu_scene:get_item_unit_data()
 	local weapon_unit = weapon_unit_data and weapon_unit_data.unit
 

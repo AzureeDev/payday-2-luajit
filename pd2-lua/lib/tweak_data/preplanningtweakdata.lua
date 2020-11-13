@@ -1610,6 +1610,10 @@ function PrePlanningTweakData:init(tweak_data)
 		name_id = "menu_pp_asset_fex_stealth_semi_open_garage_door",
 		desc_id = "menu_pp_asset_fex_stealth_semi_open_garage_door_desc",
 		plan = "insider_help",
+		upgrade_lock = {
+			upgrade = "additional_assets",
+			category = "player"
+		},
 		pos_not_important = false,
 		category = "insider_help",
 		icon = 111,
