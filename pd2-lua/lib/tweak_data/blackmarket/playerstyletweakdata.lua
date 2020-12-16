@@ -1818,6 +1818,98 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		sequence = "set_ehtan"
 	}
 	self.player_styles.t800.characters.ecp_male = t800_characters_male_fat
+	self.player_styles.candycane = {
+		name_id = "bm_suit_candycane",
+		desc_id = "bm_suit_candycane_desc",
+		global_value = "xm20",
+		texture_bundle_folder = "xm20",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_xm20/characters/xm20_acc_candycane/xm20_acc_fps_candycane_male/xm20_acc_fps_candycane_male",
+		material_variations = {}
+	}
+	self.player_styles.candycane.material_variations.default = {
+		name_id = "bm_suit_var_candycane_default",
+		global_value = "xm20",
+		desc_id = "bm_suit_var_candycane_default_desc"
+	}
+	local candycane_characters_male_average = {
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_candycane/xm20_acc_candycane_male_average/xm20_acc_candycane_male_average"
+	}
+
+	set_characters_data("candycane", characters_male, candycane_characters_male_average)
+
+	local candycane_characters_male_big = {
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_candycane/xm20_acc_candycane_male_average/xm20_acc_candycane_male_average"
+	}
+
+	set_characters_data("candycane", characters_male_big, candycane_characters_male_big)
+
+	local candycane_characters_male_fat = {
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_candycane/xm20_acc_candycane_male_average/xm20_acc_candycane_male_average",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.candycane.characters.ecp_male = candycane_characters_male_fat
+	local candycane_characters_female_average = {
+		unit = "units/pd2_dlc_xm20/characters/xm20_acc_candycane/xm20_acc_fps_candycane_male/xm20_acc_fps_candycane_male",
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_candycane/xm20_acc_candycane_female_average/xm20_acc_candycane_female_average"
+	}
+
+	set_characters_data("candycane", characters_female, candycane_characters_female_average)
+
+	local candycane_characters_female_fat = {
+		unit = "units/pd2_dlc_xm20/characters/xm20_acc_candycane/xm20_acc_fps_candycane_male/xm20_acc_fps_candycane_male",
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_candycane/xm20_acc_candycane_female_average/xm20_acc_candycane_female_average"
+	}
+
+	set_characters_data("candycane", characters_female_big, candycane_characters_female_fat)
+
+	self.player_styles.badsanta = {
+		name_id = "bm_suit_badsanta",
+		desc_id = "bm_suit_badsanta_desc",
+		global_value = "xm20",
+		texture_bundle_folder = "xm20",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_xm20/characters/xm20_acc_badsanta/xm20_acc_fps_badsanta_male/xm20_acc_fps_badsanta_male",
+		material_variations = {}
+	}
+	self.player_styles.badsanta.material_variations.default = {
+		name_id = "bm_suit_var_badsanta_default",
+		global_value = "xm20",
+		desc_id = "bm_suit_var_badsanta_default_desc"
+	}
+	local badsanta_characters_male_average = {
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_badsanta/xm20_acc_badsanta_male_average/xm20_acc_badsanta_male_average"
+	}
+
+	set_characters_data("badsanta", characters_male, badsanta_characters_male_average)
+
+	local badsanta_characters_male_big = {
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_badsanta/xm20_acc_badsanta_male_average/xm20_acc_badsanta_male_average"
+	}
+
+	set_characters_data("badsanta", characters_male_big, badsanta_characters_male_big)
+
+	local badsanta_characters_male_fat = {
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_badsanta/xm20_acc_badsanta_male_average/xm20_acc_badsanta_male_average",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.badsanta.characters.ecp_male = badsanta_characters_male_fat
+	local badsanta_characters_female_average = {
+		unit = "units/pd2_dlc_xm20/characters/xm20_acc_badsanta/xm20_acc_fps_badsanta_male/xm20_acc_fps_badsanta_male",
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_badsanta/xm20_acc_badsanta_female_average/xm20_acc_badsanta_female_average"
+	}
+
+	set_characters_data("badsanta", characters_female, badsanta_characters_female_average)
+
+	local badsanta_characters_female_fat = {
+		unit = "units/pd2_dlc_xm20/characters/xm20_acc_badsanta/xm20_acc_fps_badsanta_male/xm20_acc_fps_badsanta_male",
+		third_unit = "units/pd2_dlc_xm20/characters/xm20_acc_badsanta/xm20_acc_badsanta_female_average/xm20_acc_badsanta_female_average"
+	}
+
+	set_characters_data("badsanta", characters_female_big, badsanta_characters_female_fat)
+
 	self.player_styles.cartelboss = {
 		name_id = "bm_suit_cartelboss",
 		desc_id = "bm_suit_cartelboss_desc",

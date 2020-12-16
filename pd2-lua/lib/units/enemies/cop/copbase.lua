@@ -83,14 +83,32 @@ function CopBase:enable_leg_arm_hitbox()
 end
 
 function CopBase:_chk_spawn_gear()
-	local tweak = tweak_data.narrative.jobs[managers.job:current_real_job_id()]
+	local tweak = managers.job:current_level_data()
 
-	if self._tweak_table == "spooc" and tweak and tweak.is_christmas_heist then
-		local align_obj_name = Idstring("Head")
-		local align_obj = self._unit:get_object(align_obj_name)
-		self._headwear_unit = World:spawn_unit(Idstring("units/payday2/characters/ene_acc_spook_santa_hat/ene_acc_spook_santa_hat"), Vector3(), Rotation())
+	if tweak and tweak.is_christmas_heist then
+		if self._tweak_table == "spooc" then
+			self._headwear_unit = safe_spawn_unit("units/payday2/characters/ene_acc_spook_santa_hat/ene_acc_spook_santa_hat", Vector3(), Rotation())
+		elseif self._tweak_table == "tank_medic" or self._tweak_table == "tank_mini" then
+			self._headwear_unit = safe_spawn_unit("units/pd2_dlc_xm20/characters/ene_acc_dozer_zeal_santa_hat/ene_acc_dozer_zeal_santa_hat", Vector3(), Rotation())
+		elseif self._tweak_table == "tank" then
+			local region = tweak_data.levels:get_ai_group_type()
+			local difficulty_index = tweak_data:difficulty_to_index(Global and Global.game_settings and Global.game_settings.difficulty or "overkill")
 
-		self._unit:link(align_obj_name, self._headwear_unit, self._headwear_unit:orientation_object():name())
+			if region == "russia" or region == "federales" then
+				self._headwear_unit = safe_spawn_unit("units/pd2_dlc_xm20/characters/ene_acc_dozer_akan_santa_hat/ene_acc_dozer_akan_santa_hat", Vector3(), Rotation())
+			elseif difficulty_index == 8 then
+				self._headwear_unit = safe_spawn_unit("units/pd2_dlc_xm20/characters/ene_acc_dozer_zeal_santa_hat/ene_acc_dozer_zeal_santa_hat", Vector3(), Rotation())
+			else
+				self._headwear_unit = safe_spawn_unit("units/pd2_dlc_xm20/characters/ene_acc_dozer_santa_hat/ene_acc_dozer_santa_hat", Vector3(), Rotation())
+			end
+		end
+
+		if self._headwear_unit then
+			local align_obj_name = Idstring("Head")
+			local align_obj = self._unit:get_object(align_obj_name)
+
+			self._unit:link(align_obj_name, self._headwear_unit, self._headwear_unit:orientation_object():name())
+		end
 	end
 end
 
@@ -304,6 +322,8 @@ end
 function CopBase:pre_destroy(unit)
 	if alive(self._headwear_unit) then
 		self._headwear_unit:set_slot(0)
+
+		self._headwear_unit = nil
 	end
 
 	unit:brain():pre_destroy(unit)

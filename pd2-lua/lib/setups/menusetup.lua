@@ -147,14 +147,6 @@ function MenuSetup:init_game()
 				elseif arg == "-checkpoint_index" then
 					checkpoint_index = tonumber(arg_list[i + 1])
 					i = i + 1
-				elseif arg == "-level" then
-					level = arg_list[i + 1]
-					Global.exe_argument_level = level
-					i = i + 1
-				elseif arg == "-difficulty" then
-					difficulty = arg_list[i + 1]
-					Global.exe_argument_difficulty = difficulty
-					i = i + 1
 				elseif arg == "-class" then
 					level_class_name = arg_list[i + 1]
 					i = i + 1

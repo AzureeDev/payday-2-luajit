@@ -2095,6 +2095,18 @@ function PlayerManager:body_armor_value(category, override_value, default)
 	return self:upgrade_value_by_level("player", "body_armor", category, {})[override_value or armor_data.upgrade_level] or default or 0
 end
 
+function PlayerManager:get_limited_exp_multiplier(job_id, level_id)
+	local job_data = tweak_data.narrative:job_data(job_id) or {}
+	local level_data = level_id and tweak_data.levels[level_id] or {}
+	local multiplier = tweak_data:get_value("experience_manager", "limited_bonus_multiplier") or 1
+
+	if level_data.is_christmas_heist then
+		multiplier = multiplier + (tweak_data:get_value("experience_manager", "limited_xmas_bonus_multiplier") or 1) - 1
+	end
+
+	return multiplier
+end
+
 function PlayerManager:get_infamy_exp_multiplier()
 	local multiplier = 1
 

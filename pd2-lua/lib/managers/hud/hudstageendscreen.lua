@@ -2481,7 +2481,7 @@ function HUDStageEndScreen:stage_experience_init(t, dt)
 			title = managers.localization:to_upper_text("menu_es_gage_assignment_bonus")
 		},
 		bonus_extra = {
-			color = tweak_data.screen_colors.button_stage_2,
+			color = tweak_data.screen_colors.event_color,
 			title = managers.localization:to_upper_text("menu_es_extra_bonus")
 		},
 		bonus_ghost = {

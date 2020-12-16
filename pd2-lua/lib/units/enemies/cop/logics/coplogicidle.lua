@@ -764,6 +764,25 @@ function CopLogicIdle._chk_stare_into_wall_1(data)
 	end
 end
 
+function CopLogicIdle._chk_valid_stare_path(data)
+	local my_data = data.internal_data
+	local stare_path = my_data.stare_path
+
+	if not stare_path then
+		return false
+	end
+
+	for i, nav_point in ipairs(stare_path) do
+		if not nav_point.x and not alive(nav_point) then
+			debug_pause_unit(data.unit, "dead nav_link", data.unit)
+
+			return false
+		end
+	end
+
+	return true
+end
+
 function CopLogicIdle._chk_stare_into_wall_2(data)
 	local my_data = data.internal_data
 	local slotmask = data.visibility_slotmask
@@ -771,7 +790,7 @@ function CopLogicIdle._chk_stare_into_wall_2(data)
 	local stare_path = my_data.stare_path
 	local f_nav_point_pos = CopLogicIdle._nav_point_pos
 
-	if not stare_path then
+	if not CopLogicIdle._chk_valid_stare_path(data) then
 		return
 	end
 

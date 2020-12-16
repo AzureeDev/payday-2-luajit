@@ -4829,13 +4829,13 @@ function PlayerStandard:set_night_vision_state(state)
 
 		managers.viewport:create_global_environment_modifier(ambient_color_key, true, light_modifier)
 
-		self._night_vision_saved_default_color_grading = managers.environment_controller:default_color_grading()
+		self._state_data.night_vision_saved_default_color_grading = managers.environment_controller:default_color_grading()
 		effect = night_vision.effect
 	else
 		managers.viewport:destroy_global_environment_modifier(ambient_color_key)
 
-		effect = self._night_vision_saved_default_color_grading
-		self._night_vision_saved_default_color_grading = nil
+		effect = self._state_data.night_vision_saved_default_color_grading
+		self._state_data.night_vision_saved_default_color_grading = nil
 	end
 
 	self._unit:sound():play(state and "night_vision_on" or "night_vision_off", nil, false)

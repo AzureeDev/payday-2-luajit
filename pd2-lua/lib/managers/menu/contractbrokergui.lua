@@ -643,7 +643,7 @@ function ContractBrokerGui:_add_filter_button(text_id, y, params)
 		name = "text",
 		alpha = 1,
 		layer = 2,
-		text = managers.localization:to_upper_text(text_id),
+		text = managers.localization:to_upper_text(text_id, params and params.text_macros),
 		font = tweak_data.menu.pd2_small_font,
 		font_size = tweak_data.menu.pd2_small_font_size,
 		color = tweak_data.screen_colors.button_stage_3
@@ -787,6 +787,12 @@ function ContractBrokerGui:_setup_filter_tactic()
 		},
 		{
 			"menu_filter_tactic_stealthable"
+		},
+		{
+			"menu_filter_tactic_holiday",
+			{
+				event_icon = managers.localization:get_default_macro("BTN_XMAS")
+			}
 		}
 	}
 	local last_y = 0
@@ -798,7 +804,8 @@ function ContractBrokerGui:_setup_filter_tactic()
 	for index, filter in ipairs(tactics) do
 		check_new_job_data.filter_param = index
 		local text = self:_add_filter_button(filter[1], last_y, {
-			check_new_job_data = check_new_job_data
+			check_new_job_data = check_new_job_data,
+			text_macros = filter[2]
 		})
 		last_y = text:bottom() + 1
 	end
@@ -877,6 +884,8 @@ function ContractBrokerGui:perform_filter_tactic(job_tweak, wrapped_tweak, optio
 				allow = allow or level_data.ghost_required or level_data.ghost_required_visual
 			elseif current_filter == 3 then
 				allow = allow or level_data.ghost_bonus ~= nil
+			elseif current_filter == 4 then
+				allow = allow or level_data.is_christmas_heist ~= nil
 			end
 		end
 	end

@@ -6587,4 +6587,10 @@ function InteractionTweakData:init(tweak_data)
 		timer = 1,
 		interact_distance = 200
 	}
+	self.xm20_int_mask = {
+		text_id = "hud_int_hold_xm20_mask",
+		action_text_id = "hud_action_xm20_mask",
+		timer = 1,
+		interact_distance = 200
+	}
 end

@@ -2313,7 +2313,7 @@ function GuiTweakData:init(tweak_data)
 	}
 	local padding = 10
 	local panel_width = 900
-	local panel_height = 580
+	local panel_height = 600
 	local text_width = 500
 	local contact_width = panel_width - text_width - 3 * padding
 	self.crime_net.contract_gui = {
@@ -5073,9 +5073,14 @@ function GuiTweakData:init(tweak_data)
 		"bonus"
 	}
 	self.new_heists = {
-		limit = 3
+		limit = 4
 	}
 
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_xm20",
+		texture_path = "guis/textures/pd2/new_heists/xm20",
+		url = "https://ovk.af/xmas2020"
+	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_fex_bundle",
 		texture_path = "guis/textures/pd2/new_heists/fex_bundle",

@@ -589,7 +589,7 @@ function Telemetry:on_start_heist()
 	self._map_name = "invalid map name"
 
 	if managers.job:current_level_data() then
-		self._heist_name = managers.job:current_level_data().name_id
+		self._heist_name = managers.job:current_job_variant() or managers.job:current_level_data().name_id
 		self._map_name = managers.job:current_level_data().world_name
 	end
 

@@ -3306,7 +3306,7 @@ end
 
 function AccessPD2StashInteractionExt:interact(player)
 	AccessPD2StashInteractionExt.super.super.interact(self, player)
-	Steam:overlay_activate("url", "http://pd2stash.com/")
+	Steam:overlay_activate("url", "https://fbi.overkillsoftware.com/?skinbrowser=show")
 
 	return true
 end

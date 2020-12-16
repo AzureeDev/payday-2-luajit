@@ -256,10 +256,31 @@ end
 
 function MissionManager:set_saved_job_value(key, value)
 	Global.mission_manager.saved_job_values[key] = value
+
+	self:on_set_saved_job_value(key, value)
 end
 
 function MissionManager:get_saved_job_value(key)
 	return Global.mission_manager.saved_job_values[key]
+end
+
+function MissionManager:on_set_saved_job_value(key, value)
+	local christmas_presents_values = {
+		present_bex = false,
+		present_pex = false,
+		present_mex = false,
+		present_fex = false
+	}
+
+	for name, state in pairs(christmas_presents_values) do
+		if Global.mission_manager.saved_job_values[name] ~= nil then
+			christmas_presents_values[name] = true
+		end
+	end
+
+	if christmas_presents_values.present_mex and christmas_presents_values.present_bex and christmas_presents_values.present_pex and christmas_presents_values.present_fex then
+		managers.achievment:award("xm20_1")
+	end
 end
 
 function MissionManager:on_reset_profile()

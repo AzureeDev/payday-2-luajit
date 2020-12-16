@@ -2042,10 +2042,9 @@ function EconomyTweakData:_init_rarity_contents(tweak_data)
 		local rarity_id = "rarity_" .. rarity
 		local def_id = 20000 + rarity_index
 		self.contents[rarity_id] = {
-			0,
 			def_id = def_id,
 			contains = {
-				contents = clone(items)
+				contents = table.list_union(items)
 			}
 		}
 	end

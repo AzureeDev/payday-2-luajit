@@ -311,6 +311,7 @@ function GameSetup:load_packages()
 	end
 
 	local level_package = nil
+	local event_packages = {}
 
 	if not Global.level_data or not Global.level_data.level_id then
 		if not Application:editor() then
@@ -319,6 +320,10 @@ function GameSetup:load_packages()
 	else
 		local lvl_tweak_data = Global.level_data and Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
 		level_package = lvl_tweak_data and lvl_tweak_data.package
+
+		if lvl_tweak_data and lvl_tweak_data.is_christmas_heist then
+			table.insert(event_packages, "packages/event_xmas")
+		end
 	end
 
 	if level_package then
@@ -334,6 +339,14 @@ function GameSetup:load_packages()
 			self._loaded_level_package = level_package
 
 			PackageManager:load(level_package)
+		end
+	end
+
+	self._loaded_event_packages = event_packages
+
+	for _, package in ipairs(event_packages) do
+		if not PackageManager:loaded(package) then
+			PackageManager:load(package)
 		end
 	end
 
@@ -426,6 +439,14 @@ function GameSetup:gather_packages_to_unload()
 
 		self._loaded_level_package = nil
 	end
+
+	for _, package in ipairs(self._loaded_event_packages or {}) do
+		if PackageManager:loaded(package) then
+			table.insert(self._packages_to_unload, package)
+		end
+	end
+
+	self._loaded_event_packages = nil
 
 	if PackageManager:loaded(self._loaded_contact_package) then
 		table.insert(self._packages_to_unload, self._loaded_contact_package)

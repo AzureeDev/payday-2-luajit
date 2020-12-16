@@ -1198,7 +1198,13 @@ function InspectPlayerInitiator:refresh_node(node)
 end
 
 function MenuCallbackHandler:inspect_mod(item)
-	Steam:overlay_activate("url", "http://paydaymods.com/mods/" .. item:parameters().mod_id or "")
+	local mod_name = item:parameters().mod_id
+
+	if mod_name then
+		Steam:overlay_activate("url", "https://modworkshop.net/find/mod?q=" .. mod_name .. "&tags=&gid=1")
+	else
+		Steam:overlay_activate("url", "https://modworkshop.net")
+	end
 end
 
 function MenuCallbackHandler:kick_ban_player(item)

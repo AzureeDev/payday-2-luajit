@@ -260,6 +260,10 @@ function GenericDLCManager:weapon_color_achievement_locked_content(weapon_color)
 	return self._achievement_locked_content.weapon_skins and self._achievement_locked_content.weapon_skins[weapon_color]
 end
 
+function GenericDLCManager:weapon_color_achievement_milestone_locked_content(weapon_color)
+	return self._achievement_milestone_locked_content.weapon_skins and self._achievement_milestone_locked_content.weapon_skins[weapon_color]
+end
+
 function GenericDLCManager:on_tweak_data_reloaded()
 	self:setup()
 end

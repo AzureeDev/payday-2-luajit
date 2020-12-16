@@ -6683,6 +6683,11 @@ function DLCTweakData:init(tweak_data)
 		{
 			type_items = "armor_skins",
 			item_entry = "tam"
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_immortal_python",
+			amount = 1
 		}
 	}
 
@@ -8202,6 +8207,18 @@ function DLCTweakData:init(tweak_data)
 			type_items = "masks",
 			item_entry = "buluc",
 			amount = 1
+		}
+	}
+	self.ach_mask_xm20_1 = {
+		dlc = "has_achievement",
+		achievement_id = "xm20_1",
+		content = {}
+	}
+	self.ach_mask_xm20_1.content.loot_global_value = "infamous"
+	self.ach_mask_xm20_1.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "mega_max"
 		}
 	}
 end

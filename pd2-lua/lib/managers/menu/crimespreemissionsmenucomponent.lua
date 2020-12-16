@@ -353,6 +353,17 @@ function CrimeSpreeMissionButton:init(idx, parent, mission_data)
 		color = Color.black
 	})
 	local texture, rect = tweak_data.hud_icons:get_icon_data(mission_data.icon)
+
+	if not texture or not DB:has(Idstring("texture"), texture) then
+		texture = "guis/dlcs/cee/textures/pd2/crime_spree/missions_atlas"
+		rect = {
+			0,
+			0,
+			280,
+			140
+		}
+	end
+
 	self._mission_image = self._image_panel:bitmap({
 		blend_mode = "add",
 		name = "mission_image",
@@ -662,6 +673,16 @@ function CrimeSpreeMissionButton:update_info_text(mission_data)
 	self._info_text:set_range_color(len, len + utf8.len(inc_text), tweak_data.screen_colors.crime_spree_risk)
 
 	local texture, rect = tweak_data.hud_icons:get_icon_data(mission_data.icon)
+
+	if not texture or not DB:has(Idstring("texture"), texture) then
+		texture = "guis/dlcs/cee/textures/pd2/crime_spree/missions_atlas"
+		rect = {
+			0,
+			0,
+			280,
+			140
+		}
+	end
 
 	self._mission_image:set_image(texture)
 

@@ -879,7 +879,8 @@ function Layer:prepare_replace(names, rules)
 						continent = continent,
 						position = unit:position(),
 						rotation = unit:rotation(),
-						groups = unit:unit_data().editor_groups
+						groups = unit:unit_data().editor_groups,
+						prefered_id = unit:unit_data().unit_id
 					}
 
 					if unit == self._selected_unit then
@@ -912,7 +913,8 @@ function Layer:recreate_units(name, data)
 		local continent = params.continent
 		local pos = params.position
 		local rot = params.rotation
-		local new_unit = self:do_spawn_unit(unit_name, pos, rot)
+		local prefered_id = params.prefered_id
+		local new_unit = self:do_spawn_unit(unit_name, pos, rot, nil, nil, prefered_id)
 
 		if continent and new_unit:unit_data().continent ~= continent then
 			managers.editor:change_continent_for_unit(new_unit, continent)
@@ -1227,6 +1229,10 @@ function Layer:set_select_group(unit)
 			end
 		elseif not self._selecting_many_units then
 			self:clear_selected_units()
+		end
+
+		if #self._selected_units == 0 then
+			managers.editor:output_warning("Could not select a group, press \"L\" to exit group mode")
 		end
 
 		return true

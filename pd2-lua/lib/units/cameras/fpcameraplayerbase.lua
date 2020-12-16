@@ -1592,6 +1592,7 @@ function FPCameraPlayerBase:spawn_mask()
 		local mtr_hair_effect_id_string = Idstring("mtr_hair_effect")
 		local mtr_bloom_glow_id_string = Idstring("mtr_bloom_glow")
 		local mtr_opacity = Idstring("mtr_opacity")
+		local mtr_feathers = Idstring("mtr_feathers")
 		local glow_id_strings = {}
 
 		for i = 1, 5 do
@@ -1610,6 +1611,8 @@ function FPCameraPlayerBase:spawn_mask()
 			elseif material:name() == mtr_hair_solid_id_string then
 				-- Nothing
 			elseif material:name() == mtr_opacity then
+				-- Nothing
+			elseif material:name() == mtr_feathers then
 				-- Nothing
 			elseif material:name() == mtr_hair_effect_id_string then
 				-- Nothing

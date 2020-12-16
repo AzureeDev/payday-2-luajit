@@ -1029,6 +1029,68 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.xm20_bundle = {
+		free = true,
+		content = {}
+	}
+	self.xm20_bundle.content.loot_global_value = "xm20"
+	self.xm20_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_xm20_01",
+			amount = 1
+		},
+		{
+			type_items = "player_styles",
+			item_entry = "candycane",
+			amount = 1
+		},
+		{
+			type_items = "player_styles",
+			item_entry = "badsanta",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "xm20_dog",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "xm20_jaguar",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "xm20_owl",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "xm20_serpent",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "msq_01",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "msq_02",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "msq_03",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "msq_04",
+			amount = 1
+		}
+	}
 	self.xmn_bundle = {
 		free = true,
 		content = {}

@@ -7291,6 +7291,130 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "fex",
 		texture_bundle_folder = "fex"
 	}
+	self.masks.xm20_dog = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_dog/msk_xm20_dog",
+		name_id = "bm_msk_xm20_dog",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "xm20",
+		texture_bundle_folder = "xm20"
+	}
+	self.masks.xm20_jaguar = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_jaguar/msk_xm20_jaguar",
+		name_id = "bm_msk_xm20_jaguar",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "xm20",
+		texture_bundle_folder = "xm20"
+	}
+	self.masks.xm20_owl = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_owl/msk_xm20_owl",
+		name_id = "bm_msk_xm20_owl",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "xm20",
+		texture_bundle_folder = "xm20",
+		offsets = {
+			bonnie = {
+				Vector3(0, 0, 0.554498),
+				Rotation(-0, -0, -0)
+			}
+		}
+	}
+	self.masks.xm20_serpent = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_serpent/msk_xm20_serpent",
+		name_id = "bm_msk_xm20_serpent",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "xm20",
+		texture_bundle_folder = "xm20",
+		offsets = {
+			wolf = {
+				Vector3(0, 0, 0.316006),
+				Rotation(-0, -0, -0)
+			}
+		}
+	}
+	self.masks.msq_01 = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_msq_01/msk_xm20_msq_01",
+		name_id = "bm_msk_xm20_msq_01",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "xm20",
+		texture_bundle_folder = "xm20"
+	}
+	self.masks.msq_02 = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_msq_02/msk_xm20_msq_02",
+		name_id = "bm_msk_xm20_msq_02",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "xm20",
+		texture_bundle_folder = "xm20"
+	}
+	self.masks.msq_03 = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_msq_03/msk_xm20_msq_03",
+		name_id = "bm_msk_xm20_msq_03",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "xm20",
+		texture_bundle_folder = "xm20"
+	}
+	self.masks.msq_04 = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_msq_04/msk_xm20_msq_04",
+		name_id = "bm_msk_xm20_msq_04",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "xm20",
+		texture_bundle_folder = "xm20"
+	}
+	self.masks.mega_max = {
+		unit = "units/pd2_dlc_xm20/masks/msk_xm20_mega_max/msk_xm20_mega_max",
+		name_id = "bm_msk_xm20_mega_max",
+		pcs = {},
+		value = 0,
+		global_value = "infamous",
+		texture_bundle_folder = "xm20"
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.masks) do

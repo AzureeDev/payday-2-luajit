@@ -1153,6 +1153,16 @@ function MenuSceneManager:_setup_bg()
 	self._menu_logo = World:spawn_unit(Idstring("units/menu/menu_scene/menu_logo"), Vector3(0, 10, 0), Rotation(yaw, 0, 0))
 
 	self:set_character(managers.blackmarket:get_preferred_character())
+
+	local a = self._bg_unit:get_object(Idstring("a_reference"))
+	self._xmas_tree = World:spawn_unit(Idstring("units/pd2_dlc2/props/com_props_christmas_tree/com_prop_christmas_tree"), a:position() + Vector3(-150, 250, -50), Rotation(-45 + (math.random(2) - 1) * 180, 0, 0))
+	self._snow_pile = World:spawn_unit(Idstring("units/pd2_dlc_cane/props/cne_prop_snow_pile_01/cne_prop_snow_pile_01"), a:position() + Vector3(-35, 275, -75), Rotation(305, 0, 0))
+	local e_money = self._bg_unit:effect_spawner(Idstring("e_money"))
+
+	if e_money then
+		e_money:set_enabled(false)
+	end
+
 	self:_setup_lobby_characters()
 	self:_setup_henchmen_characters()
 end
@@ -1903,28 +1913,38 @@ function MenuSceneManager:set_lobby_character_out_fit(i, outfit_string, rank)
 end
 
 function MenuSceneManager:_get_lobby_character_prio_item(rank, outfit)
-	local infamous = rank and rank > 0
-	local primary_rarity, secondary_rarity = nil
+	local selector = WeightedSelector:new()
+	local weapons = {
+		"primary",
+		"secondary"
+	}
 
-	if outfit.primary.cosmetics and outfit.primary.cosmetics.id and outfit.primary.cosmetics.id ~= "nil" then
-		local rarity = tweak_data.blackmarket.weapon_skins[outfit.primary.cosmetics.id] and tweak_data.blackmarket.weapon_skins[outfit.primary.cosmetics.id].rarity
-		primary_rarity = tweak_data.economy.rarities[rarity].index
+	for _, id in ipairs(weapons) do
+		local weight = 1
+		local cosmetics_data = outfit[id].cosmetics
+
+		if cosmetics_data and cosmetics_data.id and cosmetics_data.id ~= "nil" then
+			local cosmetics_tweak = tweak_data.blackmarket.weapon_skins[cosmetics_data.id]
+
+			if cosmetics_tweak then
+				if cosmetics_tweak.is_a_color_skin and rank and rank > 0 then
+					weight = rank
+				else
+					local rarity = cosmetics_tweak.rarity
+					local rarity_index = tweak_data.economy.rarities[rarity].index
+					weight = 10 * rarity_index * rarity_index
+				end
+			end
+		end
+
+		selector:add(id, weight)
 	end
 
-	if outfit.secondary.cosmetics and outfit.secondary.cosmetics.id and outfit.secondary.cosmetics.id ~= "nil" then
-		local rarity = tweak_data.blackmarket.weapon_skins[outfit.secondary.cosmetics.id] and tweak_data.blackmarket.weapon_skins[outfit.secondary.cosmetics.id].rarity
-		secondary_rarity = tweak_data.economy.rarities[rarity].index
+	if rank and rank > 0 then
+		selector:add("rank", rank)
 	end
 
-	if primary_rarity and secondary_rarity then
-		return secondary_rarity <= primary_rarity and "primary" or "secondary"
-	elseif primary_rarity then
-		return "primary"
-	elseif secondary_rarity then
-		return "secondary"
-	end
-
-	return infamous and "rank" or "primary"
+	return selector:select() or "primary"
 end
 
 function MenuSceneManager:_select_lobby_character_pose(peer_id, unit, weapon_info)

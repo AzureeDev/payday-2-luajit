@@ -1535,9 +1535,9 @@ function BlackMarketManager:outfit_string_from_list(outfit)
 	s = s .. " " .. outfit.mask.blueprint.pattern.id
 	s = s .. " " .. outfit.mask.blueprint.material.id
 	s = s .. " " .. outfit.armor .. "-" .. outfit.armor_current .. "-" .. outfit.armor_current_state
-	s = s .. "-" .. outfit.armor_skin
-	s = s .. "-" .. outfit.player_style .. "-" .. outfit.suit_variation
-	s = s .. "-" .. outfit.glove_id
+	s = s .. "-" .. tostring(outfit.armor_skin)
+	s = s .. "-" .. tostring(outfit.player_style) .. "-" .. tostring(outfit.suit_variation)
+	s = s .. "-" .. tostring(outfit.glove_id)
 	s = s .. " " .. outfit.character
 	local primary_string = managers.weapon_factory:blueprint_to_string(outfit.primary.factory_id, outfit.primary.blueprint)
 	primary_string = string.gsub(primary_string, " ", "_")
@@ -8271,6 +8271,7 @@ function BlackMarketManager:_load_done()
 	self:_verfify_equipped()
 	self:aquire_default_weapons()
 	self:aquire_default_masks()
+	self:_convert_tam_to_weapon_color()
 
 	if managers.menu_scene then
 		managers.menu_scene:set_character(self:get_preferred_character())
@@ -8318,6 +8319,33 @@ function BlackMarketManager:_load_done()
 
 	if managers.menu_component then
 		managers.menu_component:reload_blackmarket_gui()
+	end
+end
+
+function BlackMarketManager:is_weapon_skin_tam(skin_id)
+	local skin_tweak = tweak_data.blackmarket.weapon_skins[skin_id]
+
+	return skin_tweak.global_value == "tam" and not skin_tweak.is_a_color_skin and string.match(skin_id, "tam")
+end
+
+function BlackMarketManager:_convert_tam_to_weapon_color()
+	local weapon_types = {
+		"primaries",
+		"secondaries"
+	}
+
+	for _, category in ipairs(weapon_types) do
+		for slot, data in pairs(Global.blackmarket_manager.crafted_items[category]) do
+			if data.cosmetics and data.cosmetics.id and self:is_weapon_skin_tam(data.cosmetics.id) then
+				data.cosmetics = {
+					instance_id = "color_immortal_python",
+					quality = "mint",
+					id = "color_immortal_python",
+					color_index = 10,
+					pattern_scale = tweak_data.blackmarket.weapon_color_pattern_scale_default
+				}
+			end
+		end
 	end
 end
 

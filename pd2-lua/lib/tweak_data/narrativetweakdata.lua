@@ -1134,6 +1134,7 @@ function NarrativeTweakData:init(tweak_data)
 		12000,
 		12000
 	}
+	self.jobs.branchbank.variant_name = "heist_branchbank_hl_random"
 	self.jobs.branchbank_prof = deep_clone(self.jobs.branchbank)
 	self.jobs.branchbank_prof.jc = 30
 	self.jobs.branchbank_prof.region = "professional"
@@ -1225,6 +1226,7 @@ function NarrativeTweakData:init(tweak_data)
 		12000,
 		12000
 	}
+	self.jobs.branchbank_deposit.variant_name = "heist_branchbank_hl_deposit"
 	self.stages.branchbank_cash = {
 		briefing_id = "heist_branchbank_cash_briefing",
 		briefing_dialog = "Play_pln_branchbank_cash_stage1_brief",
@@ -1295,6 +1297,7 @@ function NarrativeTweakData:init(tweak_data)
 		12000,
 		12000
 	}
+	self.jobs.branchbank_cash.variant_name = "heist_branchbank_hl_cash"
 	self.stages.branchbank_gold = {
 		briefing_id = "heist_branchbank_gold_briefing",
 		briefing_dialog = "Play_pln_branchbank_gold_stage1_brief",
@@ -1365,6 +1368,7 @@ function NarrativeTweakData:init(tweak_data)
 		12000,
 		12000
 	}
+	self.jobs.branchbank_gold.variant_name = "heist_branchbank_hl_gold"
 	self.jobs.branchbank_gold_prof = deep_clone(self.jobs.branchbank_gold)
 	self.jobs.branchbank_gold_prof.jc = 30
 	self.jobs.branchbank_gold_prof.region = "professional"
@@ -2692,7 +2696,6 @@ function NarrativeTweakData:init(tweak_data)
 		2408000,
 		2408000
 	}
-	self.jobs.pines.is_christmas_heist = true
 	self.stages.mus = {
 		type = "d",
 		type_id = "heist_type_assault",
@@ -3713,7 +3716,6 @@ function NarrativeTweakData:init(tweak_data)
 			80000,
 			80000
 		},
-		is_christmas_heist = true,
 		contract_visuals = {}
 	}
 	self.jobs.cane.contract_visuals.min_mission_xp = {
@@ -4467,7 +4469,6 @@ function NarrativeTweakData:init(tweak_data)
 			1400000,
 			1400000
 		},
-		is_christmas_heist = true,
 		contract_visuals = {}
 	}
 	self.jobs.moon.contract_visuals.min_mission_xp = {

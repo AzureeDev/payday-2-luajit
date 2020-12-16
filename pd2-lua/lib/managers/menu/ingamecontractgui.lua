@@ -7,7 +7,7 @@ function IngameContractGui:init(ws, node)
 		h = math.round(ws:panel():h() * 1)
 	})
 
-	self._panel:set_y(CoreMenuRenderer.Renderer.border_height + tweak_data.menu.pd2_large_font_size - 5)
+	self._panel:set_y(math.max(tweak_data.menu.pd2_medium_font_size, CoreMenuRenderer.Renderer.border_height))
 	self._panel:grow(0, -(self._panel:y() + tweak_data.menu.pd2_medium_font_size))
 
 	self._node = node
@@ -70,6 +70,7 @@ function IngameContractGui:init(ws, node)
 	briefing_description:set_top(briefing_title:bottom())
 
 	local is_job_ghostable = managers.job:is_job_ghostable(managers.job:current_job_id())
+	local ghostable_text = nil
 
 	if is_job_ghostable then
 		local min_ghost_bonus, max_ghost_bonus = managers.job:get_job_ghost_bonus(managers.job:current_job_id())
@@ -90,7 +91,7 @@ function IngameContractGui:init(ws, node)
 		end
 
 		local ghost_bonus_string = min_ghost_bonus == max_ghost_bonus and min_string or min_string .. "-" .. max_string
-		local ghostable_text = text_panel:text({
+		ghostable_text = text_panel:text({
 			blend_mode = "add",
 			vertical = "top",
 			wrap = true,
@@ -119,7 +120,7 @@ function IngameContractGui:init(ws, node)
 	})
 
 	managers.hud:make_fine_text(modifiers_text)
-	modifiers_text:set_bottom(text_panel:h() * 0.5)
+	modifiers_text:set_bottom(text_panel:h() * 0.5 - tweak_data.menu.pd2_small_font_size)
 
 	local next_top = modifiers_text:bottom()
 	local one_down_warning_text = nil
@@ -232,6 +233,35 @@ function IngameContractGui:init(ws, node)
 		pro_warning_text:set_left(10)
 
 		next_top = pro_warning_text:bottom()
+	end
+
+	local is_christmas_job = managers.job:is_christmas_job(managers.job:current_job_id())
+
+	if is_christmas_job then
+		local holiday_potential_bonus = managers.job:get_job_christmas_bonus(managers.job:current_job_id())
+		local holiday_bonus_percentage = math.round(holiday_potential_bonus * 100)
+
+		if holiday_bonus_percentage ~= 0 then
+			local holiday_string = tostring(holiday_bonus_percentage)
+			local holiday_text = text_panel:text({
+				vertical = "top",
+				wrap = true,
+				align = "left",
+				wrap_word = true,
+				text = managers.localization:to_upper_text("holiday_warning_text", {
+					event_icon = managers.localization:get_default_macro("BTN_XMAS"),
+					bonus = holiday_string
+				}),
+				font_size = tweak_data.menu.pd2_small_font_size,
+				font = tweak_data.menu.pd2_small_font,
+				color = tweak_data.screen_colors.event_color
+			})
+
+			holiday_text:set_position(10, next_top)
+			managers.hud:make_fine_text(holiday_text)
+
+			next_top = holiday_text:bottom()
+		end
 	end
 
 	next_top = next_top + 5

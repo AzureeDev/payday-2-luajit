@@ -115,7 +115,7 @@ function MenuLobbyRenderer:open(...)
 	if is_server then
 		local level = managers.experience:current_level()
 		local rank = managers.experience:current_rank()
-		local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
+		local join_stinger_index = managers.infamy:selected_join_stinger_index()
 
 		self:_set_player_slot(1, {
 			character = "random",
@@ -322,7 +322,7 @@ function MenuLobbyRenderer:on_request_lobby_slot_reply()
 	local local_peer_id = local_peer:id()
 	local level = managers.experience:current_level()
 	local rank = managers.experience:current_rank()
-	local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
+	local join_stinger_index = managers.infamy:selected_join_stinger_index()
 	local character = local_peer:character()
 	local progress = managers.upgrades:progress()
 	local mask_set = "remove"

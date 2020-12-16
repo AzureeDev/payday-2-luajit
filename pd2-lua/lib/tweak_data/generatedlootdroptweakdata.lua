@@ -465,7 +465,7 @@ function LootDropTweakData:init_generated(tweak_data)
 	}
 	self.global_values.tam = {
 		name_id = "bm_global_value_tam",
-		desc_id = "menu_l_global_value_infamous",
+		desc_id = "menu_l_global_value_tam",
 		unlock_id = "bm_global_value_tam_unlock",
 		color = tweak_data.screen_colors.infamous_color,
 		dlc = true,
@@ -605,6 +605,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		track = true,
 		sort_number = 300,
 		category = "dlc"
+	}
+	self.global_values.xm20 = {
+		name_id = "bm_global_value_xm20",
+		desc_id = "menu_l_global_value_xm20",
+		unlock_id = "bm_global_value_xm20_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 300,
+		category = "normal"
 	}
 	self.global_values.xmn = {
 		name_id = "bm_global_value_xmn",

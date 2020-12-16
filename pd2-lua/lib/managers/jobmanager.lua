@@ -962,6 +962,60 @@ function JobManager:reset_job_heat()
 	self:_chk_fill_heat_containers()
 end
 
+function JobManager:is_christmas_job(job_id)
+	local job_data = tweak_data.narrative.jobs[job_id]
+
+	if not job_data then
+		return false
+	end
+
+	if tweak_data.narrative:has_job_wrapper(job_id) then
+		for i, wrapped_job_id in ipairs(tweak_data.narrative.jobs[job_id].job_wrapper) do
+			if self:is_christmas_job(wrapped_job_id) then
+				return true
+			end
+		end
+
+		return false
+	end
+
+	local chain = job_data.chain
+
+	if not chain then
+		return false
+	end
+
+	for _, level_data in ipairs(chain) do
+		if #level_data > 0 then
+			for _, alt_level_data in ipairs(level_data) do
+				if self:_is_level_christmas(tweak_data.levels[alt_level_data.level_id]) then
+					return true
+				end
+			end
+		elseif self:_is_level_christmas(tweak_data.levels[level_data.level_id]) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function JobManager:_is_level_christmas(level_data)
+	return level_data and level_data.is_christmas_heist
+end
+
+function JobManager:is_level_christmas(level_id)
+	return self:_is_level_christmas(tweak_data.levels[level_id])
+end
+
+function JobManager:get_job_christmas_bonus(job_id)
+	if self:is_christmas_job(job_id) then
+		return (tweak_data:get_value("experience_manager", "limited_xmas_bonus_multiplier") or 1) - 1
+	end
+
+	return 0
+end
+
 function JobManager:save(data)
 	local save_data = {
 		heat = deep_clone(Global.job_manager.heat),
@@ -1519,6 +1573,14 @@ end
 
 function JobManager:current_job_stars()
 	return math.ceil(tweak_data.narrative:job_data(self._global.current_job.job_id).jc / 10)
+end
+
+function JobManager:current_job_variant()
+	if not self._global.current_job then
+		return
+	end
+
+	return tweak_data.narrative:job_data(self._global.current_job.job_id).variant_name
 end
 
 function JobManager:current_difficulty_stars()

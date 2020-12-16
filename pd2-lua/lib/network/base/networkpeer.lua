@@ -1844,7 +1844,7 @@ function NetworkPeer:sync_lobby_data(peer)
 
 	local level = managers.experience:current_level()
 	local rank = managers.experience:current_rank()
-	local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
+	local join_stinger_index = managers.infamy:selected_join_stinger_index()
 	local character = self:character()
 	local mask_set = "remove"
 	local progress = managers.upgrades:progress()

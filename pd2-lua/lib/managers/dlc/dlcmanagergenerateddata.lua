@@ -150,6 +150,10 @@ function GenericDLCManager:has_wcs()
 	return self:is_dlc_unlocked("wcs")
 end
 
+function GenericDLCManager:has_xm20()
+	return self:is_dlc_unlocked("xm20")
+end
+
 function GenericDLCManager:has_xmn()
 	return self:is_dlc_unlocked("xmn")
 end
@@ -321,6 +325,10 @@ function WINDLCManager:init_generated()
 		app_id = "1255152",
 		no_install = true,
 		webpage = "ovk.af/bexwcp1yb"
+	}
+	Global.dlc_manager.all_dlc_data.xm20 = {
+		app_id = "218620",
+		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.xmn = {
 		app_id = "218620",

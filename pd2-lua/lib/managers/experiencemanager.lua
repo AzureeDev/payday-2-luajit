@@ -762,9 +762,6 @@ function ExperienceManager:get_xp_by_params(params)
 	bonus_xp = managers.player:get_infamy_exp_multiplier()
 	infamy_dissect = math.round(total_contract_xp * bonus_xp - total_contract_xp)
 	total_xp = total_xp + infamy_dissect
-	bonus_xp = tweak_data:get_value("experience_manager", "limited_bonus_multiplier") or 1
-	extra_bonus_dissect = math.round(total_contract_xp * bonus_xp - total_contract_xp)
-	total_xp = total_xp + extra_bonus_dissect
 
 	if success then
 		local num_players_bonus = num_winners and tweak_data:get_value("experience_manager", "alive_humans_multiplier", num_winners) or 1
@@ -780,6 +777,9 @@ function ExperienceManager:get_xp_by_params(params)
 	local heat_xp_mul = ignore_heat and 1 or math.max(managers.job:get_job_heat_multipliers(job_id), 0)
 	job_heat_dissect = math.round(total_xp * heat_xp_mul - total_xp)
 	total_xp = total_xp + job_heat_dissect
+	bonus_xp = managers.player:get_limited_exp_multiplier(job_id, level_id)
+	extra_bonus_dissect = math.round(total_xp * bonus_xp - total_xp)
+	total_xp = total_xp + extra_bonus_dissect
 	local bonus_mutators_dissect = total_xp * managers.mutators:get_experience_reduction() * -1
 	total_xp = total_xp + bonus_mutators_dissect
 	local dissection_table = {

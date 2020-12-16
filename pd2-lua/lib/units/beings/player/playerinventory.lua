@@ -664,7 +664,7 @@ end
 function PlayerInventory:set_mask_visibility(state)
 	self._mask_visibility = state
 
-	if self._unit == managers.player:player_unit() then
+	if self._unit == managers.player:player_unit() or not alive(self._unit) then
 		return
 	end
 
