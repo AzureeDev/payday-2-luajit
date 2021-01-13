@@ -1343,7 +1343,6 @@ Play the full version soon to get your full PAYDAY!]],
 		1.3
 	}
 	self.experience_manager.limited_bonus_multiplier = 1
-	self.experience_manager.limited_xmas_bonus_multiplier = 1.15
 	self.experience_manager.level_limit = {
 		low_cap_level = -1,
 		low_cap_multiplier = 0.75,

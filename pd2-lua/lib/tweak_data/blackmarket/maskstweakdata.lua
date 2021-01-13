@@ -7291,6 +7291,19 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "fex",
 		texture_bundle_folder = "fex"
 	}
+	self.masks.biden = {
+		unit = "units/pd2_dlc_ja21/masks/msk_ja21_biden/msk_ja21_biden",
+		name_id = "bm_msk_ja21_biden",
+		pcs = {
+			10,
+			20,
+			30,
+			40
+		},
+		value = 0,
+		global_value = "ja21",
+		texture_bundle_folder = "ja21"
+	}
 	self.masks.xm20_dog = {
 		unit = "units/pd2_dlc_xm20/masks/msk_xm20_dog/msk_xm20_dog",
 		name_id = "bm_msk_xm20_dog",

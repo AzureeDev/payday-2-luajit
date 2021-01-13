@@ -26800,7 +26800,8 @@ function WeaponFactoryTweakData:_init_sbl()
 		},
 		stats = {
 			value = 1,
-			concealment = 1
+			recoil = -1,
+			concealment = 2
 		},
 		forbids = {
 			"wpn_fps_upg_o_45iron",
@@ -29992,8 +29993,9 @@ function WeaponFactoryTweakData:_init_model70()
 		},
 		stats = {
 			zoom = 2,
+			recoil = -1,
 			value = 0,
-			concealment = 1
+			concealment = 2
 		},
 		forbids = {
 			"wpn_fps_upg_o_45iron",
@@ -35604,7 +35606,7 @@ function WeaponFactoryTweakData:_init_siltstone()
 		stats = {
 			value = 1,
 			recoil = -2,
-			concealment = 4
+			concealment = 3
 		}
 	}
 	self.parts.wpn_fps_snp_siltstone_fg_wood = {
@@ -35652,7 +35654,9 @@ function WeaponFactoryTweakData:_init_siltstone()
 			40
 		},
 		stats = {
-			value = 1
+			value = 1,
+			recoil = -1,
+			concealment = 2
 		},
 		forbids = {
 			"wpn_fps_upg_o_45iron",
@@ -35679,7 +35683,7 @@ function WeaponFactoryTweakData:_init_siltstone()
 		stats = {
 			value = 1,
 			recoil = -2,
-			concealment = 3
+			concealment = 2
 		}
 	}
 	self.parts.wpn_fps_snp_siltstone_s_wood = {

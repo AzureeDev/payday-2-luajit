@@ -150,6 +150,20 @@ function CrimeSpreeTweakData:init_missions(tweak_data)
 				icon = "csm_fwb",
 				add = debug_long_add,
 				level = tweak_data.narrative.stages.red2
+			},
+			{
+				stage_id = "pex",
+				id = "pex",
+				icon = "csm_pex",
+				add = debug_short_add,
+				level = tweak_data.narrative.stages.pex
+			},
+			{
+				stage_id = "tag",
+				id = "tag",
+				icon = "csm_tag",
+				add = debug_short_add,
+				level = tweak_data.narrative.stages.tag
 			}
 		},
 		{
@@ -285,6 +299,20 @@ function CrimeSpreeTweakData:init_missions(tweak_data)
 				id = "mia_2",
 				icon = "csm_miami_2",
 				level = tweak_data.narrative.stages.mia_2
+			},
+			{
+				stage_id = "bex",
+				id = "bex",
+				icon = "csm_bex",
+				add = debug_med_add,
+				level = tweak_data.narrative.stages.bex
+			},
+			{
+				stage_id = "sah",
+				id = "sah",
+				icon = "csm_sah",
+				add = debug_med_add,
+				level = tweak_data.narrative.stages.sah
 			}
 		},
 		{
@@ -392,6 +420,20 @@ function CrimeSpreeTweakData:init_missions(tweak_data)
 				id = "jolly",
 				icon = "csm_aftershock",
 				level = tweak_data.narrative.stages.jolly
+			},
+			{
+				stage_id = "mad",
+				id = "mad",
+				icon = "csm_mad",
+				add = debug_long_add,
+				level = tweak_data.narrative.stages.mad
+			},
+			{
+				stage_id = "arena",
+				add = 12,
+				id = "arena",
+				icon = "csm_arena",
+				level = tweak_data.narrative.stages.arena
 			}
 		}
 	}

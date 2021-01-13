@@ -1153,16 +1153,6 @@ function MenuSceneManager:_setup_bg()
 	self._menu_logo = World:spawn_unit(Idstring("units/menu/menu_scene/menu_logo"), Vector3(0, 10, 0), Rotation(yaw, 0, 0))
 
 	self:set_character(managers.blackmarket:get_preferred_character())
-
-	local a = self._bg_unit:get_object(Idstring("a_reference"))
-	self._xmas_tree = World:spawn_unit(Idstring("units/pd2_dlc2/props/com_props_christmas_tree/com_prop_christmas_tree"), a:position() + Vector3(-150, 250, -50), Rotation(-45 + (math.random(2) - 1) * 180, 0, 0))
-	self._snow_pile = World:spawn_unit(Idstring("units/pd2_dlc_cane/props/cne_prop_snow_pile_01/cne_prop_snow_pile_01"), a:position() + Vector3(-35, 275, -75), Rotation(305, 0, 0))
-	local e_money = self._bg_unit:effect_spawner(Idstring("e_money"))
-
-	if e_money then
-		e_money:set_enabled(false)
-	end
-
 	self:_setup_lobby_characters()
 	self:_setup_henchmen_characters()
 end

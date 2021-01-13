@@ -2100,10 +2100,6 @@ function PlayerManager:get_limited_exp_multiplier(job_id, level_id)
 	local level_data = level_id and tweak_data.levels[level_id] or {}
 	local multiplier = tweak_data:get_value("experience_manager", "limited_bonus_multiplier") or 1
 
-	if level_data.is_christmas_heist then
-		multiplier = multiplier + (tweak_data:get_value("experience_manager", "limited_xmas_bonus_multiplier") or 1) - 1
-	end
-
 	return multiplier
 end
 

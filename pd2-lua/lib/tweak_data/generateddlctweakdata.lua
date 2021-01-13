@@ -247,6 +247,18 @@ function DLCTweakData:init_generated()
 	}
 	self.inf_bundle.content.loot_global_value = "inf"
 	self.inf_bundle.content.loot_drops = {}
+	self.ja21_bundle = {
+		free = true,
+		content = {}
+	}
+	self.ja21_bundle.content.loot_global_value = "ja21"
+	self.ja21_bundle.content.loot_drops = {
+		{
+			type_items = "masks",
+			item_entry = "biden",
+			amount = 1
+		}
+	}
 	self.maw_bundle = {
 		free = true,
 		content = {}

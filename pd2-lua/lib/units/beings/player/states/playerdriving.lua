@@ -29,7 +29,7 @@ function PlayerDriving:enter(state_data, enter_data)
 		end
 	end
 
-	self._was_unarmed = enter_data.was_unarmed
+	self._was_unarmed = enter_data and enter_data.was_unarmed
 end
 
 function PlayerDriving:_enter(enter_data)

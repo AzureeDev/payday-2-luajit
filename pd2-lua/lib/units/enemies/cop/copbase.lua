@@ -88,19 +88,6 @@ function CopBase:_chk_spawn_gear()
 	if tweak and tweak.is_christmas_heist then
 		if self._tweak_table == "spooc" then
 			self._headwear_unit = safe_spawn_unit("units/payday2/characters/ene_acc_spook_santa_hat/ene_acc_spook_santa_hat", Vector3(), Rotation())
-		elseif self._tweak_table == "tank_medic" or self._tweak_table == "tank_mini" then
-			self._headwear_unit = safe_spawn_unit("units/pd2_dlc_xm20/characters/ene_acc_dozer_zeal_santa_hat/ene_acc_dozer_zeal_santa_hat", Vector3(), Rotation())
-		elseif self._tweak_table == "tank" then
-			local region = tweak_data.levels:get_ai_group_type()
-			local difficulty_index = tweak_data:difficulty_to_index(Global and Global.game_settings and Global.game_settings.difficulty or "overkill")
-
-			if region == "russia" or region == "federales" then
-				self._headwear_unit = safe_spawn_unit("units/pd2_dlc_xm20/characters/ene_acc_dozer_akan_santa_hat/ene_acc_dozer_akan_santa_hat", Vector3(), Rotation())
-			elseif difficulty_index == 8 then
-				self._headwear_unit = safe_spawn_unit("units/pd2_dlc_xm20/characters/ene_acc_dozer_zeal_santa_hat/ene_acc_dozer_zeal_santa_hat", Vector3(), Rotation())
-			else
-				self._headwear_unit = safe_spawn_unit("units/pd2_dlc_xm20/characters/ene_acc_dozer_santa_hat/ene_acc_dozer_santa_hat", Vector3(), Rotation())
-			end
 		end
 
 		if self._headwear_unit then

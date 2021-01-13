@@ -2991,6 +2991,60 @@ function HudIconsTweakData:init()
 			csm_h
 		}
 	}
+	self.csm_mad = {
+		texture = "guis/dlcs/ja21/textures/pd2/crime_spree/missions_atlas_03",
+		texture_rect = {
+			csm_w * 0,
+			csm_h * 0,
+			csm_w,
+			csm_h
+		}
+	}
+	self.csm_tag = {
+		texture = "guis/dlcs/ja21/textures/pd2/crime_spree/missions_atlas_03",
+		texture_rect = {
+			csm_w * 1,
+			csm_h * 0,
+			csm_w,
+			csm_h
+		}
+	}
+	self.csm_pex = {
+		texture = "guis/dlcs/ja21/textures/pd2/crime_spree/missions_atlas_03",
+		texture_rect = {
+			csm_w * 2,
+			csm_h * 0,
+			csm_w,
+			csm_h
+		}
+	}
+	self.csm_bex = {
+		texture = "guis/dlcs/ja21/textures/pd2/crime_spree/missions_atlas_03",
+		texture_rect = {
+			csm_w * 3,
+			csm_h * 0,
+			csm_w,
+			csm_h
+		}
+	}
+	self.csm_sah = {
+		texture = "guis/dlcs/ja21/textures/pd2/crime_spree/missions_atlas_03",
+		texture_rect = {
+			csm_w * 4,
+			csm_h * 0,
+			csm_w,
+			csm_h
+		}
+	}
+	self.csm_arena = {
+		texture = "guis/dlcs/ja21/textures/pd2/crime_spree/missions_atlas_03",
+		texture_rect = {
+			csm_w * 5,
+			csm_h * 0,
+			csm_w,
+			csm_h
+		}
+	}
 	local csb_size = 128
 	self.csb_reload = {
 		texture = "guis/dlcs/cee/textures/pd2/crime_spree/boosts_atlas",

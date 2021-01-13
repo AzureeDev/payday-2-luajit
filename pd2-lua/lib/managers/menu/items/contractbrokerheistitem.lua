@@ -278,25 +278,6 @@ function ContractBrokerHeistItem:init(parent_panel, job_data, idx)
 		last_icon = stealth
 	end
 
-	if self:is_holiday_event() then
-		local holiday = icons_panel:text({
-			layer = 1,
-			vertical = "top",
-			align = "right",
-			halign = "right",
-			valign = "top",
-			text = managers.localization:get_default_macro("BTN_XMAS"),
-			font = tweak_data.menu.pd2_medium_font,
-			font_size = tweak_data.menu.pd2_medium_font_size,
-			color = tweak_data.screen_colors.text
-		})
-
-		make_fine_text(holiday)
-		holiday:set_right(last_icon:left() - padding)
-
-		last_icon = holiday
-	end
-
 	self:refresh()
 end
 
@@ -398,10 +379,6 @@ function ContractBrokerHeistItem:is_stealthable()
 	end
 
 	return false
-end
-
-function ContractBrokerHeistItem:is_holiday_event()
-	return managers.job:is_christmas_job(self._job_data.job_id)
 end
 
 function ContractBrokerHeistItem:_job_num_days()

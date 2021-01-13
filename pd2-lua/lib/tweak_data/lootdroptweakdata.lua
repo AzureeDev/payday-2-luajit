@@ -1273,6 +1273,7 @@ function LootDropTweakData:init(tweak_data)
 		chance = 1,
 		value_multiplier = 1,
 		durability_multiplier = 1,
+		hide_unavailable = true,
 		drops = true,
 		track = true,
 		sort_number = 300,

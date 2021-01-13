@@ -320,10 +320,6 @@ function GameSetup:load_packages()
 	else
 		local lvl_tweak_data = Global.level_data and Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
 		level_package = lvl_tweak_data and lvl_tweak_data.package
-
-		if lvl_tweak_data and lvl_tweak_data.is_christmas_heist then
-			table.insert(event_packages, "packages/event_xmas")
-		end
 	end
 
 	if level_package then

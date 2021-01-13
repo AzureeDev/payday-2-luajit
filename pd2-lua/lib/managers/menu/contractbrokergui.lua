@@ -787,12 +787,6 @@ function ContractBrokerGui:_setup_filter_tactic()
 		},
 		{
 			"menu_filter_tactic_stealthable"
-		},
-		{
-			"menu_filter_tactic_holiday",
-			{
-				event_icon = managers.localization:get_default_macro("BTN_XMAS")
-			}
 		}
 	}
 	local last_y = 0
@@ -884,8 +878,6 @@ function ContractBrokerGui:perform_filter_tactic(job_tweak, wrapped_tweak, optio
 				allow = allow or level_data.ghost_required or level_data.ghost_required_visual
 			elseif current_filter == 3 then
 				allow = allow or level_data.ghost_bonus ~= nil
-			elseif current_filter == 4 then
-				allow = allow or level_data.is_christmas_heist ~= nil
 			end
 		end
 	end

@@ -1751,23 +1751,6 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 	})
 	mw = math.max(mw, self:make_fine_text(ghost_text))
 	next_y = ghost_text:bottom()
-	local holiday_icon = legend_panel:bitmap({
-		texture = "guis/textures/pd2/cn_mini_xmas",
-		x = 10,
-		y = next_y + 2,
-		color = tweak_data.screen_colors.event_color
-	})
-	local holiday_text = legend_panel:text({
-		blend_mode = "add",
-		font = tweak_data.menu.pd2_small_font,
-		font_size = tweak_data.menu.pd2_small_font_size,
-		x = host_text:left(),
-		y = next_y,
-		text = managers.localization:to_upper_text("menu_cn_legend_holiday"),
-		color = tweak_data.screen_colors.event_color
-	})
-	mw = math.max(mw, self:make_fine_text(holiday_text))
-	next_y = holiday_text:bottom()
 	local kick_none_icon = legend_panel:bitmap({
 		texture = "guis/textures/pd2/cn_kick_marker",
 		x = 10,
@@ -1960,23 +1943,6 @@ function CrimeNetGui:init(ws, fullscreeen_ws, node)
 				color = tweak_data.screen_colors.button_stage_2
 			})
 		end
-	end
-
-	local limited_bonus = (tweak_data:get_value("experience_manager", "limited_xmas_bonus_multiplier") or 1) - 1
-
-	if limited_bonus > 0 then
-		local limited_string = mul_to_procent_string(limited_bonus)
-		local limited_text = global_bonuses_panel:text({
-			blend_mode = "add",
-			align = "center",
-			font = tweak_data.menu.pd2_small_font,
-			font_size = tweak_data.menu.pd2_small_font_size,
-			text = managers.localization:to_upper_text("menu_cn_holiday_bonus", {
-				bonus = limited_string,
-				event_icon = managers.localization:get_default_macro("BTN_XMAS")
-			}),
-			color = tweak_data.screen_colors.event_color
-		})
 	end
 
 	if #global_bonuses_panel:children() > 1 then
@@ -3462,23 +3428,6 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 
 		ghost_icon:set_top(side_icons_top)
 		ghost_icon:set_right(next_icon_right)
-
-		next_icon_right = next_icon_right - 12
-	end
-
-	local christmas_icon = nil
-
-	if data.job_id and managers.job:is_christmas_job(data.job_id) then
-		christmas_icon = icon_panel:bitmap({
-			blend_mode = "add",
-			name = "christmas_icon",
-			texture = "guis/textures/pd2/cn_mini_xmas",
-			rotation = 360,
-			color = tweak_data.screen_colors.event_color
-		})
-
-		christmas_icon:set_top(side_icons_top)
-		christmas_icon:set_right(next_icon_right)
 
 		next_icon_right = next_icon_right - 12
 	end

@@ -8221,4 +8221,15 @@ function DLCTweakData:init(tweak_data)
 			item_entry = "mega_max"
 		}
 	}
+	self.xm20_free = {
+		free = true,
+		content = {}
+	}
+	self.xm20_free.content.loot_global_value = "xm20"
+	self.xm20_free.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_o_tf90"
+		}
+	}
 end
