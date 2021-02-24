@@ -1954,6 +1954,79 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		sequence = "set_ehtan"
 	}
 	self.player_styles.cartelboss.characters.ecp_male = cartelboss_characters_male_fat
+	self.player_styles.leather = {
+		name_id = "bm_suit_leather",
+		desc_id = "bm_suit_leather_desc",
+		texture_bundle_folder = "in31",
+		global_value = "in31",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_in31/characters/in31_acc_leather/in31_acc_fps_leather_male/in31_acc_fps_leather_male",
+		material_variations = {}
+	}
+	self.player_styles.leather.material_variations.default = {
+		name_id = "bm_suit_var_leather_default",
+		global_value = "in31",
+		desc_id = "bm_suit_var_leather_default_desc"
+	}
+	self.player_styles.leather.characters = {}
+	self.player_styles.leather.material_variations = {
+		default = {
+			name_id = "bm_suit_var_leather_default",
+			global_value = "in31",
+			desc_id = "bm_suit_var_leather_default_desc"
+		},
+		black = {
+			desc_id = "bm_suit_var_leather_black_desc",
+			global_value = "in31",
+			name_id = "bm_suit_var_leather_black",
+			third_material = "units/pd2_dlc_in31/characters/in31_acc_leather/shared_materials/in31_acc_leather_black",
+			material = "units/pd2_dlc_in31/characters/in31_acc_leather/shared_materials/in31_acc_fps_leather_black"
+		},
+		red = {
+			desc_id = "bm_suit_var_leather_red_desc",
+			global_value = "in31",
+			name_id = "bm_suit_var_leather_red",
+			third_material = "units/pd2_dlc_in31/characters/in31_acc_leather/shared_materials/in31_acc_leather_red",
+			material = "units/pd2_dlc_in31/characters/in31_acc_leather/shared_materials/in31_acc_fps_leather_red"
+		},
+		white = {
+			desc_id = "bm_suit_var_leather_white_desc",
+			global_value = "in31",
+			name_id = "bm_suit_var_leather_white",
+			third_material = "units/pd2_dlc_in31/characters/in31_acc_leather/shared_materials/in31_acc_leather_white",
+			material = "units/pd2_dlc_in31/characters/in31_acc_leather/shared_materials/in31_acc_fps_leather_white"
+		}
+	}
+	local leather_characters_male = {
+		third_unit = "units/pd2_dlc_in31/characters/in31_acc_leather/in31_acc_leather_male_average/in31_acc_leather_male_average"
+	}
+
+	set_characters_data("leather", characters_male, leather_characters_male)
+
+	local leather_characters_male_big = {
+		third_unit = "units/pd2_dlc_in31/characters/in31_acc_leather/in31_acc_leather_male_big/in31_acc_leather_male_big"
+	}
+
+	set_characters_data("leather", characters_male_big, leather_characters_male_big)
+
+	local leather_characters_female = {
+		third_unit = "units/pd2_dlc_in31/characters/in31_acc_leather/in31_acc_leather_female_average/in31_acc_leather_female_average"
+	}
+
+	set_characters_data("leather", characters_female, leather_characters_female)
+
+	local leather_characters_female_big = {
+		third_unit = "units/pd2_dlc_in31/characters/in31_acc_leather/in31_acc_leather_female_fat/in31_acc_leather_female_fat"
+	}
+
+	set_characters_data("leather", characters_female_big, leather_characters_female_big)
+
+	local leather_characters_male_fat = {
+		third_unit = "units/pd2_dlc_in31/characters/in31_acc_leather/in31_acc_leather_male_fat/in31_acc_leather_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.leather.characters.ecp_male = leather_characters_male_fat
 end
 
 function BlackMarketTweakData:get_player_style_value(player_style, character_name, key)

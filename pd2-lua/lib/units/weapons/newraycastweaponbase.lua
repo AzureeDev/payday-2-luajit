@@ -9,6 +9,7 @@ local mvec3_set_l = mvector3.set_length
 local mvec3_len = mvector3.length
 local math_clamp = math.clamp
 local math_lerp = math.lerp
+local math_map_range_clamped = math.map_range_clamped
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local ids_single = Idstring("single")

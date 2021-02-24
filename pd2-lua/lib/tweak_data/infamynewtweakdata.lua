@@ -27,7 +27,7 @@ function InfamyTweakData:init()
 		table.insert(self.statistics_rank_steps, 1, i)
 	end
 
-	self.join_stingers = 18
+	self.join_stingers = 26
 	self.free_join_stingers = {
 		0,
 		18
@@ -120,7 +120,23 @@ function InfamyTweakData:init()
 		"infamy_color_inf_15",
 		"infamy_color_inf_16",
 		"infamy_stinger_017",
-		"infamy_glovepack_neoncity"
+		"infamy_glovepack_neoncity",
+		"in31_suitpack_leather",
+		"in31_weapon_color_stinger_01",
+		"in31_glovepack_wool",
+		"in31_weapon_color_stinger_02",
+		"in31_suitpack_leather_black",
+		"in31_weapon_color_stinger_03",
+		"in31_maskpack_lastlaugh",
+		"in31_weapon_color_stinger_04",
+		"in31_suitpack_leather_red",
+		"in31_weapon_color_stinger_05",
+		"in31_maskpack_cyberpunk",
+		"in31_weapon_color_stinger_06",
+		"in31_suitpack_leather_white",
+		"in31_weapon_color_stinger_07",
+		"in31_glovepack_silver",
+		"in31_weapon_color_stinger_08"
 	}
 	self.cost = {
 		root = digest(0),
@@ -591,8 +607,26 @@ function InfamyTweakData:init()
 			join_stingers = {}
 		}
 	}
+	local single_pack_join_stingers = {
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10,
+		11,
+		12,
+		13,
+		14,
+		15,
+		16,
+		17
+	}
 
-	for index = 0, self.join_stingers do
+	for _, index in ipairs(single_pack_join_stingers) do
 		local item_id = string.format("infamy_stinger_%03d", index)
 		self.items[item_id] = deep_clone(generic_join_stinger_item)
 		self.items[item_id].name_id = "menu_" .. item_id .. "_name"
@@ -741,6 +775,172 @@ function InfamyTweakData:init()
 			"weapon_skins",
 			color_id
 		})
+	end
+
+	self.items.in31_maskpack_cyberpunk = {
+		name_id = "menu_in31_maskpack_cyberpunk_name",
+		desc_id = "menu_in31_maskpack_cyberpunk_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"masks",
+				"cyberpunk"
+			}
+		}
+	}
+	self.items.in31_maskpack_lastlaugh = {
+		name_id = "menu_in31_maskpack_lastlaugh_name",
+		desc_id = "menu_in31_maskpack_lastlaugh_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"masks",
+				"lastlaugh"
+			}
+		}
+	}
+	self.items.in31_glovepack_wool = {
+		name_id = "menu_infamy_name_glovepack_wool",
+		desc_id = "menu_infamy_gloves_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"gloves",
+				"wool"
+			}
+		}
+	}
+	self.items.in31_glovepack_silver = {
+		name_id = "menu_infamy_name_glovepack_silver",
+		desc_id = "menu_infamy_gloves_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"gloves",
+				"silver"
+			}
+		}
+	}
+	self.items.in31_suitpack_leather = {
+		name_id = "menu_infamy_name_suitpack_leather",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"leather",
+				"default"
+			}
+		}
+	}
+	self.items.in31_suitpack_leather_black = {
+		name_id = "menu_infamy_name_suitpack_leather_black",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"leather",
+				"black"
+			}
+		}
+	}
+	self.items.in31_suitpack_leather_red = {
+		name_id = "menu_infamy_name_suitpack_leather_red",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"leather",
+				"red"
+			}
+		}
+	}
+	self.items.in31_suitpack_leather_white = {
+		name_id = "menu_infamy_name_suitpack_leather_white",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"leather",
+				"white"
+			}
+		}
+	}
+	local in31_color_and_stinger_packs = {
+		{
+			join_stinger = 19,
+			weapon_color = "color_in31_06"
+		},
+		{
+			join_stinger = 20,
+			weapon_color = "color_in31_04"
+		},
+		{
+			join_stinger = 21,
+			weapon_color = "color_in31_05"
+		},
+		{
+			join_stinger = 22,
+			weapon_color = "color_in31_02"
+		},
+		{
+			join_stinger = 23,
+			weapon_color = "color_in31_01"
+		},
+		{
+			join_stinger = 24,
+			weapon_color = "color_in31_08"
+		},
+		{
+			join_stinger = 25,
+			weapon_color = "color_in31_03"
+		},
+		{
+			join_stinger = 26,
+			weapon_color = "color_in31_07"
+		}
+	}
+	local generic_in31_weapon_color_and_stinger_item = {
+		name_id = "menu_infamy_color_stinger_name",
+		desc_id = "menu_infamy_color_stinger_desc",
+		desc_params = {},
+		desc_param_ids = {},
+		icon_xy = {
+			2,
+			3
+		},
+		cost = self.cost.tier1,
+		upgrades = {
+			join_stingers = {}
+		}
+	}
+
+	for index, data in ipairs(in31_color_and_stinger_packs) do
+		local item_id = "in31_weapon_color_stinger_" .. string.format("%02d", index)
+		local color_id = data.weapon_color
+		local join_stinger = data.join_stinger
+		local join_stinger_id = string.format("infamy_stinger_%03d", data.join_stinger)
+		self.items[item_id] = deep_clone(generic_in31_weapon_color_and_stinger_item)
+		self.items[item_id].desc_param_ids.weapon_color = "bm_wskn_" .. color_id
+		self.items[item_id].desc_param_ids.join_stinger = "menu_" .. join_stinger_id .. "_name"
+
+		table.insert(self.items[item_id].upgrades, {
+			nil,
+			"weapon_skins",
+			color_id
+		})
+		table.insert(self.items[item_id].upgrades.join_stingers, join_stinger)
 	end
 
 	self.items.infamy_secret_9 = {

@@ -116,9 +116,7 @@ function PlayerManager:init()
 		"civilian",
 		"clean",
 		"mask_off",
-		"standard",
-		"jerry1",
-		"jerry2"
+		"standard"
 	}
 	self._current_sync_state = self._DEFAULT_STATE
 	local ids_player = Idstring("player")

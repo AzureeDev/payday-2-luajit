@@ -627,7 +627,11 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 
 	for _, hit in ipairs(ray_hits) do
 		damage = self:get_damage_falloff(damage, hit, user_unit)
-		hit_result = self._bullet_class:on_collision(hit, self._unit, user_unit, damage)
+		hit_result = nil
+
+		if damage > 0 then
+			hit_result = self._bullet_class:on_collision(hit, self._unit, user_unit, damage)
+		end
 
 		if hit_result and hit_result.type == "death" then
 			local unit_type = hit.unit:base() and hit.unit:base()._tweak_table

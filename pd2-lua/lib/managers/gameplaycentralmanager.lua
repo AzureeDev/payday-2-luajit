@@ -369,7 +369,7 @@ function GamePlayCentralManager:spawn_pickup(params)
 
 	local unit_name = tweak_data.pickups[params.name].unit
 
-	World:spawn_unit(unit_name, params.position, params.rotation)
+	safe_spawn_unit(unit_name, params.position, params.rotation)
 end
 
 function GamePlayCentralManager:_flush_bullet_hits()
@@ -602,10 +602,6 @@ end
 
 function GamePlayCentralManager:mission_disable_unit(unit)
 	if alive(unit) then
-		if unit:name() == Idstring("units/payday2/vehicles/air_vehicle_blackhawk/helicopter_cops_ref") then
-			print("[GamePlayCentralManager:mission_disable_unit]", unit)
-		end
-
 		self._mission_disabled_units[unit:unit_data().unit_id] = true
 
 		unit:set_enabled(false)
@@ -622,10 +618,6 @@ end
 
 function GamePlayCentralManager:mission_enable_unit(unit)
 	if alive(unit) then
-		if unit:name() == Idstring("units/payday2/vehicles/air_vehicle_blackhawk/helicopter_cops_ref") then
-			print("[GamePlayCentralManager:mission_enable_unit]", unit)
-		end
-
 		self._mission_disabled_units[unit:unit_data().unit_id] = nil
 
 		unit:set_enabled(true)
@@ -692,6 +684,7 @@ function GamePlayCentralManager:stop_the_game()
 	managers.statistics:stop_session()
 	managers.savefile:save_progress()
 	managers.groupai:state():set_AI_enabled(false)
+	managers.mission:pre_destroy()
 
 	if Network:multiplayer() and managers.network:session() then
 		local peer = managers.network:session():local_peer()

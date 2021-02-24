@@ -8232,4 +8232,16 @@ function DLCTweakData:init(tweak_data)
 			item_entry = "wpn_fps_upg_o_tf90"
 		}
 	}
+	self.faco_free = {
+		free = true,
+		content = {}
+	}
+	self.faco_free.content.loot_global_value = "normal"
+	self.faco_free.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_00",
+			amount = 1
+		}
+	}
 end

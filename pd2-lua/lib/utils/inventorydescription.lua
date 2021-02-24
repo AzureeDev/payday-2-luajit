@@ -641,10 +641,11 @@ function WeaponDescription._get_mods_stats(name, base_stats, equipped_mods, bonu
 
 			if mods_stats[stat.name].index and tweak_stats[stat_name] then
 				if stat_name == "reload" then
-					local chosen_index = base_stats[stat_name].index + mods_stats[stat_name].index
+					local chosen_index = math.clamp(base_stats[stat_name].index + mods_stats[stat_name].index, 1, #tweak_stats[stat_name])
+					local reload_time = managers.blackmarket:get_reload_time(name)
 					local mult = 1 / tweak_stats[stat_name][chosen_index]
-					mods_stats[stat_name].value = base_stats[stat_name].value * mult
-					mods_stats[stat.name].value = mods_stats[stat.name].value - base_stats[stat.name].value
+					local mod_value = reload_time * mult
+					mods_stats[stat.name].value = mod_value - base_stats[stat.name].value
 				else
 					if stat_name == "concealment" then
 						index = base_stats[stat.name].index + mods_stats[stat.name].index
@@ -931,8 +932,10 @@ function WeaponDescription._get_weapon_mod_stats(mod_name, weapon_name, base_sta
 				elseif stat.name == "reload" then
 					local chosen_index = part_data.stats.reload or 0
 					chosen_index = math.clamp(base_stats[stat.name].index + chosen_index, 1, #tweak_stats[stat.name])
+					local reload_time = managers.blackmarket:get_reload_time(weapon_name)
 					local mult = 1 / tweak_data.weapon.stats[stat.name][chosen_index]
-					mod[stat.name] = base_stats[stat.name].value * mult - base_stats[stat.name].value
+					local mod_value = reload_time * mult
+					mod[stat.name] = mod_value - base_stats[stat.name].value
 				else
 					local chosen_index = part_data.stats[stat.name] or 0
 

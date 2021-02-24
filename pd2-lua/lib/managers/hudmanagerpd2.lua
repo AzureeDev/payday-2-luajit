@@ -1155,28 +1155,28 @@ function HUDManager:_create_hit_confirm(hud)
 	self._hud_hit_confirm = HUDHitConfirm:new(hud)
 end
 
-function HUDManager:on_hit_confirmed()
+function HUDManager:on_hit_confirmed(damage_scale)
 	if not managers.user:get_setting("hit_indicator") then
 		return
 	end
 
-	self._hud_hit_confirm:on_hit_confirmed()
+	self._hud_hit_confirm:on_hit_confirmed(damage_scale)
 end
 
-function HUDManager:on_headshot_confirmed()
+function HUDManager:on_headshot_confirmed(damage_scale)
 	if not managers.user:get_setting("hit_indicator") then
 		return
 	end
 
-	self._hud_hit_confirm:on_headshot_confirmed()
+	self._hud_hit_confirm:on_headshot_confirmed(damage_scale)
 end
 
-function HUDManager:on_crit_confirmed()
+function HUDManager:on_crit_confirmed(damage_scale)
 	if not managers.user:get_setting("hit_indicator") then
 		return
 	end
 
-	self._hud_hit_confirm:on_crit_confirmed()
+	self._hud_hit_confirm:on_crit_confirmed(damage_scale)
 end
 
 function HUDManager:_create_hit_direction(hud)

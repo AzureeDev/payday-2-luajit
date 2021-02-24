@@ -18,6 +18,14 @@ function GenericDLCManager:has_ess()
 	return self:is_dlc_unlocked("ess")
 end
 
+function GenericDLCManager:has_faco()
+	return self:is_dlc_unlocked("faco")
+end
+
+function GenericDLCManager:has_fawp()
+	return self:is_dlc_unlocked("fawp")
+end
+
 function GenericDLCManager:has_fex()
 	return self:is_dlc_unlocked("fex")
 end
@@ -36,6 +44,10 @@ end
 
 function GenericDLCManager:has_hnd()
 	return self:is_dlc_unlocked("hnd")
+end
+
+function GenericDLCManager:has_in31()
+	return self:is_dlc_unlocked("in31")
 end
 
 function GenericDLCManager:has_inf()
@@ -186,6 +198,14 @@ function WINDLCManager:init_generated()
 		app_id = "1303240",
 		no_install = true
 	}
+	Global.dlc_manager.all_dlc_data.faco = {
+		app_id = "1555050",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.fawp = {
+		app_id = "1555050",
+		no_install = true
+	}
 	Global.dlc_manager.all_dlc_data.fex = {
 		app_id = "1449450",
 		no_install = true,
@@ -204,6 +224,10 @@ function WINDLCManager:init_generated()
 		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.hnd = {
+		app_id = "218620",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.in31 = {
 		app_id = "218620",
 		no_install = true
 	}

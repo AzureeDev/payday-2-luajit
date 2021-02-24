@@ -25,6 +25,7 @@ require("lib/managers/menu/nodes/MenuNodeTable")
 require("lib/managers/menu/nodes/MenuNodeServerList")
 require("lib/managers/menu/items/MenuItemCrimeSpreeItem")
 require("lib/utils/accelbyte/TelemetryConst")
+require("lib/utils/accelbyte/Telemetry")
 core:import("CoreEvent")
 
 MenuManager = MenuManager or class(CoreMenuManager.Manager)
@@ -211,10 +212,12 @@ function MenuManager:init_finalize()
 		managers.dlc:check_pdth(function (pdth, tester)
 			if pdth then
 				managers.statistics:publish_custom_stat_to_steam("pdth")
+				Telemetry:set_steam_stats_pdth_true()
 			end
 
 			if tester then
 				managers.statistics:publish_custom_stat_to_steam("tester")
+				Telemetry:set_steam_stats_overdrill_true()
 			end
 		end)
 	end
@@ -8595,9 +8598,10 @@ function MenuCrimeNetSpecialInitiator:create_job(node, contract)
 		local max_jc = managers.job:get_max_jc_for_player()
 		local job_tweak = tweak_data.narrative:job_data(id)
 		local jc_lock = math.clamp(job_tweak.jc, 0, 100)
-		local min_stars = #tweak_data.narrative.STARS
+		local stars_tweak = managers.experience:current_rank() > 0 and tweak_data.narrative.INFAMY_STARS or tweak_data.narrative.STARS
+		local min_stars = #stars_tweak
 
-		for i, d in ipairs(tweak_data.narrative.STARS) do
+		for i, d in ipairs(stars_tweak) do
 			if jc_lock <= d.jcs[1] then
 				min_stars = i
 

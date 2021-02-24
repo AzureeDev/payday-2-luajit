@@ -7428,6 +7428,25 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "infamous",
 		texture_bundle_folder = "xm20"
 	}
+	self.masks.cyberpunk = {
+		unit = "units/pd2_dlc_in31/characters/msk_cyberpunk/msk_cyberpunk",
+		name_id = "bm_msk_in31_cyberpunk_max",
+		pcs = {},
+		value = 0,
+		type = "helmet",
+		sort_number = 0,
+		preview_oobb_object = "g_helmet",
+		global_value = "in31",
+		texture_bundle_folder = "in31"
+	}
+	self.masks.lastlaugh = {
+		unit = "units/pd2_dlc_in31/characters/msk_lastlaugh/msk_lastlaugh",
+		name_id = "bm_msk_lastlaugh",
+		pcs = {},
+		value = 0,
+		global_value = "in31",
+		texture_bundle_folder = "in31"
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.masks) do

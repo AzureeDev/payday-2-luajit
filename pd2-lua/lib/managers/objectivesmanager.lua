@@ -1,3 +1,5 @@
+require("lib/utils/accelbyte/Telemetry")
+
 ObjectivesManager = ObjectivesManager or class()
 ObjectivesManager.PATH = "gamedata/objectives"
 ObjectivesManager.FILE_EXTENSION = "objective"
@@ -165,6 +167,7 @@ function ObjectivesManager:activate_objective(id, load_data, data)
 	end
 
 	Telemetry:send_on_player_tutorial(id)
+	Telemetry:on_start_objective(id)
 
 	local objective = self._objectives[id]
 
@@ -354,6 +357,7 @@ function ObjectivesManager:complete_objective(id, load_data)
 		objective.current_amount = 0
 	end
 
+	Telemetry:on_end_objective(id)
 	managers.hud:complete_objective({
 		id = id,
 		text = objective.text

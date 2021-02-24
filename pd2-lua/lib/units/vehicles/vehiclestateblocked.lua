@@ -9,6 +9,7 @@ function VehicleStateBlocked:enter(state_data, enter_data)
 	self._unit:interaction():set_override_timer_value(VehicleDrivingExt.TIME_ENTER)
 	self:adjust_interactions()
 	self._unit:vehicle_driving():set_input(0, 0, 1, 1, false, false, 2)
+	self:remove_name_hud()
 end
 
 function VehicleStateBlocked:adjust_interactions()
@@ -44,4 +45,8 @@ end
 
 function VehicleStateBlocked:is_vulnerable()
 	return false
+end
+
+function VehicleStateBlocked:exit()
+	self:create_name_hud()
 end

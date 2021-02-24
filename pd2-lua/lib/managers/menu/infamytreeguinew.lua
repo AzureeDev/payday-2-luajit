@@ -811,11 +811,19 @@ function InfamyTreeGui:update_detail_panels()
 	detail_title:set_top(margin)
 	detail_title:set_left(margin)
 
+	local desc_params = item.data.tier_data.desc_params and clone(item.data.tier_data.desc_params) or {}
+
+	if item.data.tier_data.desc_param_ids then
+		for key, id in pairs(item.data.tier_data.desc_param_ids) do
+			desc_params[key] = managers.localization:text(id)
+		end
+	end
+
 	local detail_desc = self.detail_panel_content:text({
 		wrap = true,
 		word_wrap = true,
 		layer = 5,
-		text = managers.localization:text(item.desc_id, item.data.tier_data.desc_params),
+		text = managers.localization:text(item.desc_id, desc_params),
 		font_size = FONT_SIZE,
 		font = FONT,
 		color = TEXT_COLOR
@@ -824,7 +832,6 @@ function InfamyTreeGui:update_detail_panels()
 	detail_desc:set_w(self.detail_panel_content:w() - margin * 2)
 	detail_desc:set_top(detail_title:bottom())
 	detail_desc:set_left(margin)
-	self.make_fine_text(detail_desc)
 	detail_desc:set_align("justified")
 	managers.menu_component:add_colors_to_text_object(detail_desc, tweak_data.screen_colors.resource)
 
@@ -1321,6 +1328,12 @@ function InfamyTreeGui:_update_description(name, unlocked)
 	if name then
 		local infamy_tweak = tweak_data.infamy.items[name]
 		local params = deep_clone(infamy_tweak.desc_params)
+
+		if infamy_tweak.desc_param_ids then
+			for key, id in pairs(infamy_tweak.desc_param_ids) do
+				params[key] = managers.localization:text(id)
+			end
+		end
 
 		if infamy_tweak.upgrades and infamy_tweak.upgrades.infamous_lootdrop then
 			local stars = managers.experience:level_to_stars()

@@ -1587,8 +1587,8 @@ function PlayerInventoryGui:select_join_stinger()
 	local focus_button = 1
 
 	for focus_index, stinger_name in ipairs(managers.infamy:get_unlocked_join_stingers()) do
-		local item_id = string.format("infamy_stinger_%03d", stinger_name)
-		local text_string = managers.localization:text(tweak_data.infamy.items[item_id].name_id)
+		local name_id = managers.infamy:get_join_stinger_name_id(stinger_name)
+		local text_string = managers.localization:text(name_id)
 
 		if stinger_name == selected_join_stinger then
 			text_string = utf8.char(187) .. text_string

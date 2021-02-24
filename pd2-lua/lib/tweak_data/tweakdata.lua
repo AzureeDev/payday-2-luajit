@@ -671,6 +671,7 @@ function TweakData:init()
 	self.hud_icons = HudIconsTweakData:new()
 	self.weapon = WeaponTweakData:new(self)
 	self.weapon_akimbo_mappings = self.weapon:get_akimbo_mappings()
+	self.weapon_npc_mappings = self.weapon:get_npc_mappings()
 	local weapon_tweak_meta = {
 		__index = function (table, key)
 			if key == "category" then

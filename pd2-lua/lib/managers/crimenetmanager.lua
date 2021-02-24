@@ -212,7 +212,8 @@ function CrimeNetManager:_setup()
 	local player_stars = math.clamp(math.ceil((plvl + 1) / 10), 1, 10)
 	local stars = player_stars
 	local jc = math.lerp(0, 100, stars / 10)
-	local jcs = tweak_data.narrative.STARS[stars].jcs
+	local prank = managers.experience:current_rank()
+	local jcs = tweak_data.narrative:get_jcs_from_stars(stars, prank > 0)
 	local no_jcs = #jcs
 	local chance_curve = tweak_data.narrative.STARS_CURVES[player_stars]
 	local start_chance = tweak_data.narrative.JC_CHANCE

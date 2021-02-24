@@ -4747,7 +4747,8 @@ function AchievementsTweakData:init(tweak_data)
 				"obama",
 				"washington",
 				"win_donald",
-				"win_donald_mega"
+				"win_donald_mega",
+				"biden"
 			},
 			difficulty = overkill_and_above
 		},

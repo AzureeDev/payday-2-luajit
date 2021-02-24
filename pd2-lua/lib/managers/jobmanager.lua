@@ -1607,18 +1607,7 @@ function JobManager:calculate_job_class(job_id, difficulty_id)
 end
 
 function JobManager:get_min_jc_for_player()
-	local data = tweak_data.narrative.STARS[math.clamp(managers.experience:level_to_stars(), 1, 10)]
-
-	if not data then
-		return
-	end
-
-	local jcs = data.jcs
-
-	if not jcs then
-		return
-	end
-
+	local jcs = tweak_data.narrative:get_jcs_from_stars(managers.experience:level_to_stars(), managers.experience:current_rank() > 0)
 	local min_jc = 100
 
 	for _, jc in ipairs(jcs) do
@@ -1629,18 +1618,7 @@ function JobManager:get_min_jc_for_player()
 end
 
 function JobManager:get_max_jc_for_player()
-	local data = tweak_data.narrative.STARS[math.clamp(managers.experience:level_to_stars(), 1, 10)]
-
-	if not data then
-		return
-	end
-
-	local jcs = data.jcs
-
-	if not jcs then
-		return
-	end
-
+	local jcs = tweak_data.narrative:get_jcs_from_stars(managers.experience:level_to_stars(), managers.experience:current_rank() > 0)
 	local max_jc = 0
 
 	for _, jc in ipairs(jcs) do

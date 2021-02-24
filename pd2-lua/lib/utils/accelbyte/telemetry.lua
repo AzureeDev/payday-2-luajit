@@ -330,7 +330,11 @@ function Telemetry:init()
 			_bearer_token = nil,
 			_login_inprogress = false,
 			_login_retries = 0,
-			_oldest_achievement_date = nil
+			_oldest_achievement_date = nil,
+			_steam_achievement_list = {},
+			_has_pdth = false,
+			_has_overdrill = false,
+			_objective_id = nil
 		}
 
 		print(log_name, "Telemetry initiated")
@@ -522,6 +526,10 @@ function Telemetry:send_on_player_logged_in()
 				print(log_name, "successfully logged in")
 
 				Global.telemetry._logged_in = true
+
+				self:send_on_player_steam_achievements()
+				self:send_on_player_steam_stats_overdrill()
+				self:send_on_player_hardware_survey()
 			else
 				print(log_name, "problem on login, http status: " .. status_code)
 			end
@@ -883,4 +891,142 @@ function Telemetry:send_on_player_change_loadout(loadout)
 	}
 
 	self:send("player_loadout", telemetry_payload)
+end
+
+function Telemetry:send_on_player_hardware_survey()
+	if get_platform_name() ~= "WIN32" or not self._global._logged_in then
+		return
+	end
+
+	local telemetry_payload = {
+		GameSessionGUID = self._global._session_uuid,
+		OS = Utility:get_os_acrhitecture(),
+		OSVersion = Utility:get_os_version(),
+		GPUName = Utility:get_gpu_brand(),
+		GPUType = Utility:get_gpu_model(),
+		GPUMemory = Utility:get_gpu_memory_gb(),
+		RAM = Utility:get_ram_gb(),
+		ProcessorType = Utility:get_cpu_vendor(),
+		Processor = Utility:get_cpu_freq_ghz(),
+		CPU = Utility:get_cpu_model(),
+		HardDriveSizeTotal = Utility:get_strg_capacity(),
+		HardDriveSizeAvailable = Utility:get_strg_freespace(),
+		HardDriveType = Utility:get_strg_type(),
+		VRHardware = _G.IS_VR
+	}
+
+	self:send("player_hardware_survey", telemetry_payload)
+end
+
+function Telemetry:on_start_objective(id)
+	if get_platform_name() ~= "WIN32" or not self._global._logged_in then
+		return
+	end
+
+	Global.telemetry._objective_start_time = os.time()
+	Global.telemetry._objective_id = id
+
+	self:send_on_player_heist_objective_start()
+end
+
+function Telemetry:on_end_objective(id)
+	if get_platform_name() ~= "WIN32" or not self._global._logged_in then
+		return
+	end
+
+	if id ~= Global.telemetry._objective_id then
+		Global.telemetry._objective_id = nil
+		Global.telemetry._objective_start_time = nil
+
+		return
+	end
+
+	self:send_on_player_heist_objective_end()
+
+	Global.telemetry._objective_id = nil
+	Global.telemetry._objective_start_time = nil
+end
+
+function Telemetry:send_on_player_heist_objective_start()
+	local telemetry_payload = {
+		MapName = self._map_name,
+		HeistName = self._heist_name,
+		HeistID = self._heist_id,
+		ObjectiveID = Global.telemetry._objective_id .. "_hl",
+		Difficulty = managers.job:current_difficulty_stars(),
+		ObjectiveState = "started"
+	}
+
+	self:send("player_heist_objective", telemetry_payload)
+end
+
+function Telemetry:send_on_player_heist_objective_end()
+	local job_plan = "any"
+
+	if managers.groupai then
+		if managers.groupai:state():whisper_mode() then
+			job_plan = "stealth"
+		else
+			job_plan = "loud"
+		end
+	end
+
+	local duration = os.time() - Global.telemetry._objective_start_time
+	local telemetry_payload = {
+		MapName = self._map_name,
+		HeistName = self._heist_name,
+		HeistID = self._heist_id,
+		ObjectiveID = Global.telemetry._objective_id .. "_hl",
+		Difficulty = managers.job:current_difficulty_stars(),
+		ObjectiveState = "completed",
+		ObjectiveTactic = job_plan,
+		ObjectiveDuration = duration
+	}
+
+	self:send("player_heist_objective", telemetry_payload)
+end
+
+function Telemetry:append_steam_achievement(achievements_str)
+	table.insert(self._global._steam_achievement_list, achievements_str)
+end
+
+function Telemetry:send_on_player_steam_achievements(achievements)
+	if get_platform_name() ~= "WIN32" or not self._global._logged_in then
+		return
+	end
+
+	local achievement_list = {}
+
+	for _, ach in ipairs(self._global._steam_achievement_list) do
+		table.insert(achievement_list, ach)
+	end
+
+	local telemetry_payload = {
+		Achievements = achievement_list
+	}
+
+	self:send("player_steam_achievements", telemetry_payload)
+
+	self._global._steam_achievement_list = {}
+end
+
+function Telemetry:set_steam_stats_overdrill_true()
+	self._global._has_overdrill = true
+end
+
+function Telemetry:set_steam_stats_pdth_true()
+	self._global._has_pdth = true
+end
+
+function Telemetry:send_on_player_steam_stats_overdrill()
+	if get_platform_name() ~= "WIN32" or not self._global._logged_in then
+		return
+	end
+
+	local telemetry_payload = {
+		Overdrill = self._global._has_overdrill,
+		PDTH = self._global._has_pdth
+	}
+
+	self:send("player_steam_stats_overdrill", telemetry_payload)
 end

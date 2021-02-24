@@ -31,6 +31,7 @@ function CoreAreaTriggerUnitElement:init(unit)
 	self._hed.use_disabled_shapes = false
 	self._hed.rules_element_ids = nil
 	self._hed.unit_ids = nil
+	self._hed.substitute_object = ""
 
 	table.insert(self._save_values, "interval")
 	table.insert(self._save_values, "trigger_on")
@@ -47,6 +48,7 @@ function CoreAreaTriggerUnitElement:init(unit)
 	table.insert(self._save_values, "use_disabled_shapes")
 	table.insert(self._save_values, "rules_element_ids")
 	table.insert(self._save_values, "unit_ids")
+	table.insert(self._save_values, "substitute_object")
 end
 
 function CoreAreaTriggerUnitElement:draw_links(t, dt, selected_unit, all_units)
@@ -366,6 +368,10 @@ function CoreAreaTriggerUnitElement:create_values_ctrlrs(panel, panel_sizer, dis
 			"doctor_bag",
 			"bodybags_bag"
 		}, "Select which units will trigger the area (equipment only)")
+	end
+
+	if not disable or not disable.substitute_object then
+		self:_build_value_string(panel, panel_sizer, "substitute_object", {}, "Named object's position will replace it's parent when checking against this trigger area")
 	end
 
 	self._use_disabled_shapes = self:_build_value_checkbox(panel, panel_sizer, "use_disabled_shapes")

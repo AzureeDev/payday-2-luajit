@@ -1371,6 +1371,31 @@ function CoreMissionElement:_on_gui_value_combobox_toolbar_select_dialog(params)
 	end
 end
 
+function CoreMissionElement:_build_value_string(panel, sizer, value_name, options, tooltip, custom_name)
+	local string_params = {
+		name = string.pretty(custom_name or value_name, true) .. ":",
+		panel = panel,
+		sizer = sizer,
+		value = self._hed[value_name],
+		tooltip = tooltip or "Set a string value",
+		name_proportions = options.name_proportions or 1,
+		ctrlr_proportions = options.ctrlr_proportions or 2,
+		sizer_proportions = options.sizer_proportions
+	}
+	local ctrlr = CoreEws.string_controller(string_params)
+
+	ctrlr:connect("EVT_COMMAND_TEXT_ENTER", callback(self, self, "set_element_data"), {
+		ctrlr = ctrlr,
+		value = value_name
+	})
+	ctrlr:connect("EVT_KILL_FOCUS", callback(self, self, "set_element_data"), {
+		ctrlr = ctrlr,
+		value = value_name
+	})
+
+	return ctrlr, string_params
+end
+
 function CoreMissionElement:_build_value_number(panel, sizer, value_name, options, tooltip, custom_name)
 	local number_params = {
 		name = string.pretty(custom_name or value_name, true) .. ":",

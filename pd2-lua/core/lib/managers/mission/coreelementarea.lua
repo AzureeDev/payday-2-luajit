@@ -288,7 +288,17 @@ function ElementAreaTrigger:_should_trigger(unit)
 		if unit:movement() then
 			inside = self:_is_inside(unit:movement():m_pos())
 		else
-			unit:m_position(tmp_vec1)
+			local object = nil
+
+			if self._values.substitute_object and self._values.substitute_object ~= "" then
+				object = unit:get_object(Idstring(self._values.substitute_object))
+			end
+
+			if object then
+				object:m_position(tmp_vec1)
+			else
+				unit:m_position(tmp_vec1)
+			end
 
 			inside = self:_is_inside(tmp_vec1)
 		end

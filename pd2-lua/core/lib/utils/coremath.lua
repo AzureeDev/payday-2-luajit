@@ -250,6 +250,14 @@ function math.inverse_lerp(a, b, v)
 	return (v - a) / (b - a)
 end
 
+function math.map_range(v, a, b, c, d)
+	return math.lerp(c, d, math.inverse_lerp(a, b, v))
+end
+
+function math.map_range_clamped(v, a, b, c, d)
+	return math.lerp(c, d, math.clamp(math.inverse_lerp(a, b, v), 0, 1))
+end
+
 function math.string_to_rotation(v)
 	local r = math.string_to_vector(v)
 

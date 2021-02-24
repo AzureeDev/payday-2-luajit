@@ -5,6 +5,7 @@ AchievmentManager.MAX_TRACKED = 4
 
 require("lib/managers/achievement/CAC_CustomAchievements")
 require("lib/utils/accelbyte/TelemetryConst")
+require("lib/utils/accelbyte/Telemetry")
 
 function AchievmentManager:init()
 	self.exp_awards = {
@@ -225,6 +226,9 @@ function AchievmentManager.fetch_achievments(error_str)
 		for id, ach in pairs(managers.achievment.achievments) do
 			if managers.achievment.handler:has_achievement(ach.id) then
 				ach.awarded = true
+
+				Telemetry:append_steam_achievement(ach.id)
+
 				unlock_time = managers.achievment.handler:achievement_unlock_time(ach.id)
 
 				if unlock_time >= 0 then

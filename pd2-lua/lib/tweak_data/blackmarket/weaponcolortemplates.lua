@@ -183,6 +183,12 @@ function WeaponColorTemplates._setup_akimbo_weapons(tweak_data, weapons)
 	end
 end
 
+function WeaponColorTemplates._setup_npc_weapons(tweak_data, weapons)
+	for weapon_id, npc_id in pairs(tweak_data.weapon_npc_mappings) do
+		weapons[npc_id] = weapons[weapon_id]
+	end
+end
+
 function WeaponColorTemplates._setup_color_skin_weapons(tweak_data)
 	local weapons = {}
 
@@ -1113,6 +1119,7 @@ function WeaponColorTemplates._setup_color_skin_weapons(tweak_data)
 	}
 
 	WeaponColorTemplates._setup_akimbo_weapons(tweak_data, weapons)
+	WeaponColorTemplates._setup_npc_weapons(tweak_data, weapons)
 
 	return weapons
 end

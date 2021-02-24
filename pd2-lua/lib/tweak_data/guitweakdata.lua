@@ -5073,13 +5073,33 @@ function GuiTweakData:init(tweak_data)
 		"bonus"
 	}
 	self.new_heists = {
-		limit = 4
+		limit = 5
 	}
 
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_faco",
+		texture_path = "guis/textures/pd2/new_heists/faco",
+		url = "https://ovk.af/JFSPSliderW"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_silkroad_collection",
+		texture_path = "guis/textures/pd2/new_heists/silkroad_collection",
+		url = "https://ovk.af/JFSPSlider"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_in31",
+		texture_path = "guis/textures/pd2/new_heists/in31",
+		url = "https://ovk.af/JFSPSliderT"
+	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_ja21",
 		texture_path = "guis/dlcs/ja21/textures/pd2/new_heists/ja21",
 		url = "https://ovk.af/pd2bidenmask"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_inf",
+		texture_path = "guis/textures/pd2/new_heists/inf",
+		url = "https://ovk.af/FEXUpdateSlider"
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_xm20",
@@ -5090,11 +5110,6 @@ function GuiTweakData:init(tweak_data)
 		name_id = "menu_nh_fex_bundle",
 		texture_path = "guis/textures/pd2/new_heists/fex_bundle",
 		url = "https://ovk.af/FEXBundleSlider"
-	})
-	table.insert(self.new_heists, {
-		name_id = "menu_nh_inf",
-		texture_path = "guis/textures/pd2/new_heists/inf",
-		url = "https://ovk.af/FEXUpdateSlider"
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_legacy",

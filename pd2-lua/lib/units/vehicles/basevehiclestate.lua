@@ -79,3 +79,19 @@ end
 function BaseVehicleState:stop_vehicle()
 	return false
 end
+
+function BaseVehicleState:create_name_hud()
+	local name_id = self._unit:vehicle_driving()._tweak_data.name_id
+
+	if name_id and self._unit:unit_data().name_label_id == nil then
+		local id = managers.hud:add_vehicle_name_label({
+			name = utf8.to_upper(managers.localization:text(name_id)),
+			unit = self._unit
+		})
+		self._unit:unit_data().name_label_id = id
+	end
+end
+
+function BaseVehicleState:remove_name_hud()
+	managers.hud:remove_hud_info_by_unit(self._unit)
+end

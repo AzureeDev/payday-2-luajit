@@ -4644,7 +4644,9 @@ function UpgradesTweakData:init(tweak_data)
 			upgrades = {
 				"new_raging_bull",
 				"b92fs",
-				"x_rage"
+				"x_rage",
+				"m1911",
+				"vityaz"
 			}
 		},
 		[7] = {
@@ -4676,7 +4678,8 @@ function UpgradesTweakData:init(tweak_data)
 				"body_armor3",
 				"cobray",
 				"boxcutter",
-				"x_cobray"
+				"x_cobray",
+				"m590"
 			}
 		},
 		[13] = {
@@ -4819,7 +4822,9 @@ function UpgradesTweakData:init(tweak_data)
 				"model24",
 				"l85a2",
 				"scalper",
-				"switchblade"
+				"switchblade",
+				"x_m1911",
+				"x_vityaz"
 			}
 		},
 		[25] = {
@@ -5450,6 +5455,11 @@ function UpgradesTweakData:init(tweak_data)
 	self:_x_model3_weapon_definitions()
 	self:_shepheard_weapon_definitions()
 	self:_x_shepheard_weapon_definitions()
+	self:_m590_weapon_definitions()
+	self:_vityaz_weapon_definitions()
+	self:_x_vityaz_weapon_definitions()
+	self:_m1911_weapon_definitions()
+	self:_x_m1911_weapon_definitions()
 	self:_breech_weapon_definitions()
 	self:_ching_weapon_definitions()
 	self:_erma_weapon_definitions()
@@ -15058,6 +15068,51 @@ function UpgradesTweakData:_x_chinchilla_weapon_definitions()
 		dlc = "max",
 		factory_id = "wpn_fps_pis_x_chinchilla",
 		weapon_id = "x_chinchilla",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_m590_weapon_definitions()
+	self.definitions.m590 = {
+		dlc = "fawp",
+		factory_id = "wpn_fps_sho_m590",
+		weapon_id = "m590",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_vityaz_weapon_definitions()
+	self.definitions.vityaz = {
+		dlc = "fawp",
+		factory_id = "wpn_fps_smg_vityaz",
+		weapon_id = "vityaz",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_vityaz_weapon_definitions()
+	self.definitions.x_vityaz = {
+		dlc = "fawp",
+		factory_id = "wpn_fps_smg_x_vityaz",
+		weapon_id = "x_vityaz",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_m1911_weapon_definitions()
+	self.definitions.m1911 = {
+		dlc = "fawp",
+		factory_id = "wpn_fps_pis_m1911",
+		weapon_id = "m1911",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_m1911_weapon_definitions()
+	self.definitions.x_m1911 = {
+		dlc = "fawp",
+		factory_id = "wpn_fps_pis_x_m1911",
+		weapon_id = "x_m1911",
 		category = "weapon"
 	}
 end

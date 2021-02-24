@@ -42,22 +42,22 @@ function HUDHitConfirm:init(hud)
 	self._crit_confirm:set_center(self._hud_panel:w() / 2, self._hud_panel:h() / 2)
 end
 
-function HUDHitConfirm:on_hit_confirmed()
+function HUDHitConfirm:on_hit_confirmed(damage_scale)
 	self._hit_confirm:stop()
-	self._hit_confirm:animate(callback(self, self, "_animate_show"), callback(self, self, "show_done"), 0.25)
+	self._hit_confirm:animate(callback(self, self, "_animate_show"), callback(self, self, "show_done"), 0.25, damage_scale)
 end
 
-function HUDHitConfirm:on_headshot_confirmed()
+function HUDHitConfirm:on_headshot_confirmed(damage_scale)
 	self._hit_confirm:stop()
-	self._hit_confirm:animate(callback(self, self, "_animate_show"), callback(self, self, "show_done"), 0.25)
+	self._hit_confirm:animate(callback(self, self, "_animate_show"), callback(self, self, "show_done"), 0.25, damage_scale)
 end
 
-function HUDHitConfirm:on_crit_confirmed()
+function HUDHitConfirm:on_crit_confirmed(damage_scale)
 	self._crit_confirm:stop()
-	self._crit_confirm:animate(callback(self, self, "_animate_show"), callback(self, self, "show_done"), 0.25)
+	self._crit_confirm:animate(callback(self, self, "_animate_show"), callback(self, self, "show_done"), 0.25, damage_scale)
 end
 
-function HUDHitConfirm:_animate_show(hint_confirm, done_cb, seconds)
+function HUDHitConfirm:_animate_show(hint_confirm, done_cb, seconds, damage_scale)
 	hint_confirm:set_visible(true)
 	hint_confirm:set_alpha(1)
 

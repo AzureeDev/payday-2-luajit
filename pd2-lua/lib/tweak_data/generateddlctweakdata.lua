@@ -193,6 +193,165 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.faco_bundle = {
+		dlc = "has_faco",
+		content = {}
+	}
+	self.faco_bundle.content.loot_global_value = "faco"
+	self.faco_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_01",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_02",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_03",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_04",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_05",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_06",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_07",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_08",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_09",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_10",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_11",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_12",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_13",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_14",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_15",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_16",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_17",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_18",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_19",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_faco_20",
+			amount = 1
+		}
+	}
+	self.fawp_bundle = {
+		dlc = "has_fawp",
+		content = {}
+	}
+	self.fawp_bundle.content.loot_global_value = "fawp"
+	self.fawp_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_m1911_m_extended",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_m1911_sl_match",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_m1911_sl_hardballer",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_m590_b_suppressor",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_m590_b_long",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_sho_m590_body_rail",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_smg_vityaz_b_supressed",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_smg_vityaz_b_long",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_smg_vityaz_s_short",
+			amount = 1
+		}
+	}
 	self.fex_bundle = {
 		dlc = "has_fex",
 		content = {}
@@ -241,6 +400,12 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.in31_bundle = {
+		free = true,
+		content = {}
+	}
+	self.in31_bundle.content.loot_global_value = "in31"
+	self.in31_bundle.content.loot_drops = {}
 	self.inf_bundle = {
 		free = true,
 		content = {}

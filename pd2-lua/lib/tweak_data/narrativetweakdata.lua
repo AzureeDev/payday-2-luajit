@@ -134,6 +134,148 @@ function NarrativeTweakData:init(tweak_data)
 			}
 		}
 	}
+	self.INFAMY_STARS = {
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		},
+		{
+			jcs = {
+				100,
+				90,
+				80,
+				70,
+				60,
+				50,
+				40,
+				30,
+				20,
+				10
+			}
+		}
+	}
 	self.STARS_CURVES = {
 		1.6,
 		1.5,
@@ -7177,6 +7319,16 @@ function NarrativeTweakData:test_contract_packages()
 			print("test_contract_packages", "2", job_id)
 		end
 	end
+end
+
+function NarrativeTweakData:get_jcs_from_stars(stars, infamy)
+	if type(stars) ~= "number" then
+		return {}
+	end
+
+	stars = math.clamp(stars, 1, 10)
+
+	return (infamy and self.INFAMY_STARS[stars] or self.STARS[stars] or {}).jcs or {}
 end
 
 function NarrativeTweakData:is_job_locked(job_id)

@@ -62,7 +62,40 @@ function PrePlanningManager:open_rebuy_menu()
 end
 
 function PrePlanningManager:get_can_rebuy_assets()
-	return self._rebuy_assets and self._rebuy_assets.assets and #self._rebuy_assets.assets ~= 0 and self._rebuy_assets.level_id == managers.job:current_level_id()
+	local job_id = managers.job:current_level_id()
+	local location_data = self:_current_location_data()
+	local can_rebuy = self._rebuy_assets and self._rebuy_assets.level_id == job_id
+
+	if can_rebuy then
+		local has_assets = self._rebuy_assets.assets and #self._rebuy_assets.assets ~= 0
+		local has_votes = false
+		local mission_element = nil
+
+		for plan, type in pairs(location_data.default_plans) do
+			mission_element = self:get_default_plan_mission_element(type)
+			local matches = false
+
+			if mission_element then
+				for _, vote in ipairs(self._rebuy_assets.votes) do
+					if mission_element._id == vote.id then
+						matches = true
+
+						break
+					end
+				end
+			end
+
+			if mission_element and not matches then
+				has_votes = true
+
+				break
+			end
+		end
+
+		return can_rebuy and has_assets or has_votes
+	end
+
+	return can_rebuy
 end
 
 function PrePlanningManager:reset_rebuy_assets()

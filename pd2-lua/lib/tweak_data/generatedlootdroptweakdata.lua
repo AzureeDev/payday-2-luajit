@@ -79,6 +79,38 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 250,
 		category = "global_event"
 	}
+	self.global_values.faco = {
+		name_id = "bm_global_value_faco",
+		desc_id = "menu_l_global_value_faco",
+		unlock_id = "bm_global_value_faco_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 505,
+		category = "dlc"
+	}
+	self.global_values.fawp = {
+		name_id = "bm_global_value_fawp",
+		desc_id = "menu_l_global_value_fawp",
+		unlock_id = "bm_global_value_fawp_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 505,
+		category = "dlc"
+	}
 	self.global_values.fex = {
 		name_id = "bm_global_value_fex",
 		desc_id = "menu_l_global_value_fex",
@@ -158,6 +190,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		track = true,
 		sort_number = 302,
 		category = "normal"
+	}
+	self.global_values.in31 = {
+		name_id = "bm_global_value_in31",
+		desc_id = "menu_l_global_value_in31",
+		unlock_id = "bm_global_value_in31_unlock",
+		color = tweak_data.screen_colors.infamous_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 505,
+		category = "infamous"
 	}
 	self.global_values.inf = {
 		name_id = "bm_global_value_inf",

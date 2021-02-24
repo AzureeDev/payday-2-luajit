@@ -134,6 +134,7 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		candycane = "heist_default",
 		raincoat = "heist_default",
 		mariachi = "mariatchi",
+		leather = "heist_default",
 		poolrepair = "heist_default",
 		jail_pd2_clan = "heist_default",
 		esport = "esport",
@@ -379,5 +380,23 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		global_value = "inf",
 		unit = "units/pd2_dlc_inf3/characters/glv_tiger/glv_tiger",
 		third_material = "units/pd2_dlc_inf3/characters/glv_tiger/glv_tiger_third"
+	}
+	self.gloves.wool = {
+		name_id = "bm_gloves_wool",
+		desc_id = "bm_gloves_wool_desc",
+		texture_bundle_folder = "in31",
+		global_value = "in31",
+		sort_number = 1,
+		unit = "units/pd2_dlc_in31/characters/glv_wool/glv_wool",
+		third_material = "units/pd2_dlc_in31/characters/glv_wool/glv_wool_third"
+	}
+	self.gloves.silver = {
+		name_id = "bm_gloves_silver",
+		desc_id = "bm_gloves_silver_desc",
+		texture_bundle_folder = "in31",
+		global_value = "in31",
+		sort_number = 2,
+		unit = "units/pd2_dlc_in31/characters/glv_silver/glv_silver",
+		third_material = "units/pd2_dlc_in31/characters/glv_silver/glv_silver_third"
 	}
 end

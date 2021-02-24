@@ -503,7 +503,7 @@ function WeaponFactoryManager:_get_forbidden_parts(factory_id, blueprint)
 		else
 			Application:error("[WeaponFactoryManager:_get_forbidden_parts] Part do not exist!", part_id, "factory_id", factory_id)
 
-			forbidden[forbidden_id] = part_id
+			forbidden[part_id] = part_id
 		end
 	end
 

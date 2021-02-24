@@ -481,6 +481,7 @@ function BlackMarketTweakData:_init_projectiles(tweak_data)
 		icon = "tag_team",
 		ability = "tag_team",
 		texture_bundle_folder = "ecp",
+		dlc = "ecp",
 		max_amount = 1,
 		base_cooldown = 60,
 		sounds = {

@@ -69,24 +69,35 @@ function InventoryIconCreator:_set_anim_poses()
 	end
 end
 
-function InventoryIconCreator:_create_weapon(factory_id, blueprint, weapon_skin)
+function InventoryIconCreator:_create_weapon(factory_id, blueprint, weapon_skin_or_cosmetics, assembled_clbk)
 	self:destroy_items()
 
-	self._current_texture_name = factory_id .. (weapon_skin and " " .. weapon_skin or "")
-	local cosmetics = weapon_skin and {
-		id = weapon_skin
-	} or nil
+	local cosmetics = {}
+
+	if type(weapon_skin_or_cosmetics) == "string" then
+		cosmetics.id = weapon_skin_or_cosmetics
+		cosmetics.quality = "mint"
+	else
+		cosmetics = weapon_skin_or_cosmetics
+	end
+
+	self._current_texture_name = factory_id .. (cosmetics and "_" .. cosmetics.id or "")
 	local unit_name = tweak_data.weapon.factory[factory_id].unit
 
 	managers.dyn_resource:load(Idstring("unit"), Idstring(unit_name), DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
 
 	local thisrot = self._item_rotation
 	local rot = Rotation(thisrot[1] + 180, thisrot[2], thisrot[3])
+	self._wait_for_assemble = true
+	self._ignore_first_assemble_complete = true
 	self._weapon_unit = World:spawn_unit(Idstring(unit_name), self._item_position, rot)
 
 	self._weapon_unit:base():set_factory_data(factory_id)
-	self._weapon_unit:base():set_cosmetics_data(cosmetics)
-	self._weapon_unit:base():assemble_from_blueprint(factory_id, blueprint, callback(self, self, "_assemble_completed"))
+	self._weapon_unit:base():assemble_from_blueprint(factory_id, blueprint, callback(self, self, "_assemble_completed", {
+		cosmetics = cosmetics or {},
+		clbk = assembled_clbk or function ()
+		end
+	}))
 	self._weapon_unit:set_moving(true)
 	self._weapon_unit:base():on_enabled()
 end
@@ -224,8 +235,19 @@ function InventoryIconCreator:_gloves_done()
 	end)
 end
 
-function InventoryIconCreator:_assemble_completed(parts, blueprint)
-	self._weapon_unit:set_moving(true)
+function InventoryIconCreator:_assemble_completed(data)
+	if self._ignore_first_assemble_complete then
+		self._ignore_first_assemble_complete = false
+
+		return
+	end
+
+	self._weapon_unit:base():change_cosmetics(data.cosmetics, function ()
+		self._weapon_unit:set_moving(true)
+		call_on_next_update(function ()
+			data.clbk(self._weapon_unit)
+		end)
+	end)
 end
 
 function InventoryIconCreator:start_jobs(jobs)
@@ -355,12 +377,13 @@ function InventoryIconCreator:start_one_weapon()
 	weapon_skin = weapon_skin ~= "none" and weapon_skin
 	local blueprint = weapon_skin and tweak_data.blackmarket.weapon_skins[weapon_skin].default_blueprint
 	blueprint = blueprint or self:_get_blueprint_from_ui()
+	local cosmetics = self:_make_current_weapon_cosmetics()
 
 	self:start_jobs({
 		{
 			factory_id = factory_id,
 			blueprint = blueprint,
-			weapon_skin = weapon_skin
+			weapon_skin = cosmetics
 		}
 	})
 end
@@ -371,15 +394,83 @@ function InventoryIconCreator:preview_one_weapon()
 	weapon_skin = weapon_skin ~= "none" and weapon_skin
 	local blueprint = weapon_skin and tweak_data.blackmarket.weapon_skins[weapon_skin].default_blueprint
 	blueprint = blueprint or self:_get_blueprint_from_ui()
+	local cosmetics = self:_make_current_weapon_cosmetics()
 
-	self:_create_weapon(factory_id, blueprint, weapon_skin)
+	self:_create_weapon(factory_id, blueprint, cosmetics)
+end
+
+function InventoryIconCreator:export_one_weapon()
+	local factory_id = self._ctrlrs.weapon.factory_id:get_value()
+	local weapon_skin = self._ctrlrs.weapon.weapon_skin:get_value()
+	weapon_skin = weapon_skin ~= "none" and weapon_skin
+	local blueprint = weapon_skin and tweak_data.blackmarket.weapon_skins[weapon_skin].default_blueprint
+	blueprint = blueprint or self:_get_blueprint_from_ui()
+	local cosmetics = self:_make_current_weapon_cosmetics()
+
+	self:_create_weapon(factory_id, blueprint, cosmetics, callback(self, self, "export_weapon_to_obj", factory_id .. (cosmetics and "_" .. cosmetics.id or "")))
+end
+
+function InventoryIconCreator:export_weapon_to_obj(id, unit)
+	local dump_units = {
+		unit
+	}
+
+	for pid, data in pairs(unit:base()._parts) do
+		table.insert(dump_units, data.unit)
+	end
+
+	managers.editor:dump_mesh(dump_units, id)
+end
+
+function InventoryIconCreator:_make_current_weapon_cosmetics()
+	local weapon_skin = self._ctrlrs.weapon.weapon_skin:get_value()
+	local weapon_color = self._ctrlrs.weapon.weapon_color:get_value()
+	local quality = self._ctrlrs.weapon.weapon_quality:get_value()
+	local color_index = self._ctrlrs.weapon.weapon_color_variation:get_value()
+	local pattern_scale = self._ctrlrs.weapon.weapon_pattern_scale:get_value()
+
+	if weapon_skin ~= "none" then
+		return self:_make_weapon_cosmetics(weapon_skin, quality)
+	elseif weapon_color ~= "none" then
+		return self:_make_weapon_cosmetics(weapon_color, quality, color_index, pattern_scale)
+	end
+
+	return nil
+end
+
+function InventoryIconCreator:_make_weapon_cosmetics(id, quality, color_index, pattern_scale)
+	local tweak = id ~= "none" and tweak_data.blackmarket.weapon_skins[id]
+
+	if not tweak then
+		return nil
+	end
+
+	local cosmetics = {
+		id = id,
+		quality = quality
+	}
+
+	if tweak.is_a_color_skin then
+		cosmetics.color_index = tonumber(color_index)
+		cosmetics.pattern_scale = tonumber(pattern_scale)
+	end
+
+	return cosmetics
 end
 
 function InventoryIconCreator:_get_blueprint_from_ui()
 	local blueprint = {}
+	local non_mod_types = {
+		"factory_id",
+		"weapon_skin",
+		"weapon_quality",
+		"weapon_color",
+		"weapon_color_variation",
+		"weapon_pattern_scale"
+	}
 
 	for type, ctrlr in pairs(self._ctrlrs.weapon) do
-		if type ~= "factory_id" and type ~= "weapon_skin" then
+		if not table.contains(non_mod_types, type) then
 			local part_id = ctrlr:get_value()
 
 			if part_id ~= self.OPTIONAL then
@@ -416,6 +507,65 @@ function InventoryIconCreator:_get_weapon_skins()
 		if match_weapon_id == weapon_id then
 			table.insert(t, name)
 		end
+	end
+
+	return t
+end
+
+function InventoryIconCreator:_get_weapon_colors()
+	local t = {}
+
+	for name, item_data in pairs(tweak_data.blackmarket.weapon_skins) do
+		if item_data.is_a_color_skin then
+			table.insert(t, name)
+		end
+	end
+
+	table.sort(t)
+	table.insert(t, 1, "none")
+
+	return t
+end
+
+function InventoryIconCreator:_get_weapon_color_variations()
+	local t = {}
+	local weapon_color_variation_template = tweak_data.blackmarket.weapon_color_templates.color_variation
+
+	for index = 1, #weapon_color_variation_template do
+		table.insert(t, index)
+	end
+
+	return t
+end
+
+function InventoryIconCreator:_get_weapon_qualities()
+	local qualities = {}
+
+	for id, data in pairs(tweak_data.economy.qualities) do
+		table.insert(qualities, {
+			id = id,
+			index = data.index
+		})
+	end
+
+	table.sort(qualities, function (x, y)
+		return y.index < x.index
+	end)
+
+	local t = {}
+
+	for index, data in ipairs(qualities) do
+		table.insert(t, data.id)
+	end
+
+	return t
+end
+
+function InventoryIconCreator:_get_weapon_pattern_scales()
+	local t = {}
+
+	for index, data in ipairs(tweak_data.blackmarket.weapon_color_pattern_scales) do
+		table.insert(t, index)
 	end
 
 	return t
@@ -777,7 +927,7 @@ function InventoryIconCreator:_start_job()
 	local job = self._jobs[self._current_job]
 
 	if job.factory_id then
-		self:_create_weapon(job.factory_id, job.blueprint, job.weapon_skin)
+		self:_create_weapon(job.factory_id, job.blueprint, job.weapon_skin, callback(self, self, "start_create"))
 	elseif job.mask_id then
 		self:_create_mask(job.mask_id, job.blueprint)
 	elseif job.melee_id then
@@ -1398,6 +1548,11 @@ function InventoryIconCreator:_create_weapons_page(notebook)
 	btn_sizer:add(_btn, 0, 5, "RIGHT,TOP,BOTTOM")
 	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "preview_one_weapon"), true)
 
+	local _btn = EWS:Button(panel, "Export", "", "BU_EXACTFIT,NO_BORDER")
+
+	btn_sizer:add(_btn, 0, 5, "RIGHT,TOP,BOTTOM")
+	_btn:connect("EVT_COMMAND_BUTTON_CLICKED", callback(self, self, "export_one_weapon"), false)
+
 	local _btn = EWS:Button(panel, "Selected (all skins)", "", "BU_EXACTFIT,NO_BORDER")
 
 	btn_sizer:add(_btn, 0, 5, "RIGHT,TOP,BOTTOM")
@@ -1423,9 +1578,25 @@ function InventoryIconCreator:_create_weapons_page(notebook)
 	})
 	weapon_ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_update_weapon_skins"), nil)
 
+	local weapon_qualities_ctrlr = self:_add_weapon_ctrlr(panel, comboboxes_sizer, "weapon_quality", self:_get_weapon_qualities())
+
+	weapon_qualities_ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_set_weapon_quality"), {})
+
 	local weapon_skins_ctrlr = self:_add_weapon_ctrlr(panel, comboboxes_sizer, "weapon_skin", self:_get_weapon_skins())
 
 	weapon_skins_ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_set_weapon_skin"), {})
+
+	local weapon_colors_ctrlr = self:_add_weapon_ctrlr(panel, comboboxes_sizer, "weapon_color", self:_get_weapon_colors())
+
+	weapon_colors_ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_set_weapon_color"), {})
+
+	local weapon_color_variations_ctrlr = self:_add_weapon_ctrlr(panel, comboboxes_sizer, "weapon_color_variation", self:_get_weapon_color_variations())
+
+	weapon_color_variations_ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_set_weapon_color_variation"), {})
+
+	local weapon_pattern_scales_ctrlr = self:_add_weapon_ctrlr(panel, comboboxes_sizer, "weapon_pattern_scale", self:_get_weapon_pattern_scales())
+
+	weapon_pattern_scales_ctrlr:connect("EVT_COMMAND_COMBOBOX_SELECTED", callback(self, self, "_set_weapon_pattern_scales"), {})
 	self:_add_weapon_mods({
 		panel = panel,
 		sizer = comboboxes_sizer
@@ -1454,7 +1625,11 @@ function InventoryIconCreator:_add_weapon_mods(params)
 	local blueprint = managers.weapon_factory:get_default_blueprint_by_factory_id(factory_id)
 	self._ctrlrs.weapon = {
 		factory_id = self._ctrlrs.weapon.factory_id,
-		weapon_skin = self._ctrlrs.weapon.weapon_skin
+		weapon_skin = self._ctrlrs.weapon.weapon_skin,
+		weapon_quality = self._ctrlrs.weapon.weapon_quality,
+		weapon_color = self._ctrlrs.weapon.weapon_color,
+		weapon_color_variation = self._ctrlrs.weapon.weapon_color_variation,
+		weapon_pattern_scale = self._ctrlrs.weapon.weapon_pattern_scale
 	}
 	local parts = managers.weapon_factory:get_parts_from_factory_id(factory_id)
 	local optional_types = tweak_data.weapon.factory[factory_id].optional_types or {}
@@ -1525,8 +1700,17 @@ function InventoryIconCreator:_update_weapon_combobox_text(param)
 
 	if name == "factory_id" then
 		text = managers.weapon_factory:get_weapon_name_by_factory_id(value)
-	elseif name == "weapon_skin" then
+	elseif name == "weapon_skin" or name == "weapon_color" then
 		local name_id = tweak_data.blackmarket.weapon_skins[value] and tweak_data.blackmarket.weapon_skins[value].name_id or "none"
+		text = managers.localization:text(name_id)
+	elseif name == "weapon_quality" then
+		local name_id = tweak_data.economy.qualities[value] and tweak_data.economy.qualities[value].name_id or "none"
+		text = managers.localization:text(name_id)
+	elseif name == "weapon_color_variation" then
+		local name_id = tweak_data.blackmarket:get_weapon_color_index_string(value) or "none"
+		text = managers.localization:text(name_id)
+	elseif name == "weapon_pattern_scale" then
+		local name_id = tweak_data.blackmarket.weapon_color_pattern_scales[tonumber(value)] and tweak_data.blackmarket.weapon_color_pattern_scales[tonumber(value)].name_id or "none"
 		text = managers.localization:text(name_id)
 	else
 		text = value == self.OPTIONAL and self.OPTIONAL or managers.weapon_factory:get_part_name_by_part_id(value)
@@ -1540,8 +1724,9 @@ function InventoryIconCreator:_update_weapon_combobox_text(param)
 end
 
 function InventoryIconCreator:_set_weapon_skin()
-	local factory_id = self._ctrlrs.weapon.factory_id:get_value()
-	local weapon_skin = self._ctrlrs.weapon.weapon_skin:get_value()
+	local weapon_color = self._ctrlrs.weapon.weapon_color
+
+	weapon_color:set_value("none")
 end
 
 function InventoryIconCreator:_update_weapon_skins()
@@ -1554,6 +1739,21 @@ function InventoryIconCreator:_update_weapon_skins()
 	end
 
 	weapon_skin:set_value("none")
+end
+
+function InventoryIconCreator:_set_weapon_color()
+	local weapon_skin = self._ctrlrs.weapon.weapon_skin
+
+	weapon_skin:set_value("none")
+end
+
+function InventoryIconCreator:_set_weapon_color_variation()
+end
+
+function InventoryIconCreator:_set_weapon_quality()
+end
+
+function InventoryIconCreator:_set_weapon_pattern_scales()
 end
 
 function InventoryIconCreator:_create_masks_page(notebook)

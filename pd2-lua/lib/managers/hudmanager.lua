@@ -1224,6 +1224,8 @@ end
 function HUDManager:remove_hud_info_by_unit(unit)
 	if unit:unit_data().name_label_id then
 		self:_remove_name_label(unit:unit_data().name_label_id)
+
+		unit:unit_data().name_label_id = nil
 	end
 end
 
