@@ -32491,9 +32491,16 @@ function WeaponFactoryTweakData:_init_m590()
 			wpn_upg_o_marksmansight_front = {
 				a_obj = "a_of_1"
 			},
-			wpn_fps_upg_o_rx30 = {
+			wpn_fps_upg_o_spot = {
 				a_obj = "a_of",
-				forbids = table.list_add(self.parts.wpn_fps_upg_o_rx30.forbids, {
+				forbids = table.list_add(self.parts.wpn_fps_upg_o_eotech.forbids, {
+					"wpn_upg_o_marksmansight_rear_vanilla",
+					"wpn_upg_o_marksmansight_front"
+				})
+			},
+			wpn_fps_upg_o_bmg = {
+				a_obj = "a_of",
+				forbids = table.list_add(self.parts.wpn_fps_upg_o_eotech.forbids, {
 					"wpn_upg_o_marksmansight_rear_vanilla",
 					"wpn_upg_o_marksmansight_front"
 				})
@@ -32616,6 +32623,9 @@ function WeaponFactoryTweakData:_init_m590()
 			wpn_fps_upg_o_fc1 = {
 				"wpn_fps_shot_r870_ris_special"
 			},
+			wpn_fps_upg_o_bmg = {
+				"wpn_fps_shot_r870_ris_special"
+			},
 			wpn_fps_upg_o_uh = {
 				"wpn_fps_shot_r870_ris_special"
 			},
@@ -32669,9 +32679,12 @@ function WeaponFactoryTweakData:_init_m590()
 			"wpn_fps_upg_m4_g_hgrip",
 			"wpn_fps_upg_m4_g_mgrip",
 			"wpn_fps_upg_g_m4_surgeon",
+			"wpn_fps_upg_o_bmg",
 			"wpn_fps_upg_o_uh",
 			"wpn_fps_upg_o_fc1",
-			"wpn_fps_upg_ns_duck"
+			"wpn_fps_upg_ns_duck",
+			"wpn_fps_upg_o_spot",
+			"wpn_fps_upg_o_tf90"
 		}
 	}
 	self.wpn_fps_sho_m590_npc = deep_clone(self.wpn_fps_sho_m590)
@@ -33000,9 +33013,12 @@ function WeaponFactoryTweakData:_init_vityaz()
 			"wpn_fps_upg_ak_g_hgrip",
 			"wpn_fps_upg_ak_g_pgrip",
 			"wpn_fps_upg_ak_g_wgrip",
+			"wpn_fps_upg_o_bmg",
 			"wpn_fps_upg_o_uh",
 			"wpn_fps_upg_o_fc1",
-			"wpn_fps_upg_ns_ass_smg_v6"
+			"wpn_fps_upg_ns_ass_smg_v6",
+			"wpn_fps_upg_o_spot",
+			"wpn_fps_upg_o_tf90"
 		}
 	}
 	self.wpn_fps_smg_vityaz_npc = deep_clone(self.wpn_fps_smg_vityaz)
@@ -33059,6 +33075,11 @@ function WeaponFactoryTweakData:_init_x_vityaz()
 			"wpn_fps_upg_fl_ass_laser",
 			"wpn_fps_upg_ass_ns_battle",
 			"wpn_fps_upg_fl_ass_utg",
+			"wpn_fps_upg_ak_g_rk3",
+			"wpn_fps_upg_ns_ass_pbs1",
+			"wpn_fps_upg_ak_g_hgrip",
+			"wpn_fps_upg_ak_g_pgrip",
+			"wpn_fps_upg_ak_g_wgrip",
 			"wpn_fps_upg_ns_ass_smg_v6"
 		}
 	}
@@ -45156,6 +45177,12 @@ function WeaponFactoryTweakData:_init_mwm()
 			},
 			wpn_fps_shot_r870 = {
 				translation = Vector3(0.015, 8, -3.25)
+			},
+			wpn_fps_sho_m590 = {
+				translation = Vector3(-0.19, 8, -4.5)
+			},
+			wpn_fps_smg_vityaz = {
+				translation = Vector3(0, 7, -3.5, 0.5)
 			},
 			wpn_fps_shot_serbu = {
 				translation = Vector3(0, 15, -3.25)
