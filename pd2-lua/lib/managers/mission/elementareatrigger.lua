@@ -240,7 +240,9 @@ function ElementAreaTrigger:project_instigators()
 					"roman_armor",
 					"faberge_egg",
 					"treasure",
-					"hydraulic_opener"
+					"hydraulic_opener",
+					"chas_artifact",
+					"chas_teaset"
 				}
 
 				if table.contains(carry_list, carry_id) then

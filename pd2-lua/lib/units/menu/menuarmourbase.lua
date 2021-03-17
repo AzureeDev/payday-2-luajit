@@ -40,6 +40,7 @@ function MenuArmourBase:init(unit, update_enabled)
 		texture = {},
 		state = {}
 	}
+	self._stored_clbk_listeners = {}
 	self._clbk_listeners = {}
 	self._clbks = {}
 end
@@ -145,9 +146,9 @@ function MenuArmourBase:request_cosmetics_update()
 end
 
 function MenuArmourBase:add_clbk_listener(clbk_name, func)
-	self._clbk_listeners[clbk_name] = self._clbk_listeners[clbk_name] or {}
+	self._stored_clbk_listeners[clbk_name] = self._stored_clbk_listeners[clbk_name] or {}
 
-	table.insert(self._clbk_listeners[clbk_name], func)
+	table.insert(self._stored_clbk_listeners[clbk_name], func)
 end
 
 function MenuArmourBase:execute_callbacks(clbk_name, ...)
@@ -229,6 +230,8 @@ function MenuArmourBase:_apply_cosmetics(clbks)
 	end
 
 	self._request_update = nil
+	self._clbk_listeners = self._stored_clbk_listeners
+	self._stored_clbk_listeners = {}
 	self._is_visuals_updated = false
 	self._clbks = clbks or {}
 	local units = {}
@@ -499,7 +502,7 @@ function MenuArmourBase:_chk_load_complete(cosmetics)
 	cosmetics.applied = true
 	self._applying_cosmetics = false
 
-	self:execute_callbacks("done")
+	self:execute_callbacks("done", cosmetics.state)
 
 	self._clbks = {}
 	self._clbk_listeners = {}

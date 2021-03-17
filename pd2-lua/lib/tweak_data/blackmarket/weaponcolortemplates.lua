@@ -1117,6 +1117,114 @@ function WeaponColorTemplates._setup_color_skin_weapons(tweak_data)
 			pattern_tweak = Vector3(0.348202, 0, 1)
 		}
 	}
+	weapons.m590.pattern_tweak = Vector3(1, 0, 0)
+	weapons.m590.parts = {
+		wpn_fps_sho_m590_g_standard = {
+			[Idstring("mtr_grip"):key()] = {
+				pattern_tweak = Vector3(1.73146, 0, 1)
+			}
+		},
+		wpn_fps_sho_m590_b_suppressor = {
+			[Idstring("mtr_supp"):key()] = {
+				pattern_tweak = Vector3(1.06368, 0, 1)
+			},
+			[Idstring("mtr_mag"):key()] = {
+				pattern_tweak = Vector3(1.58836, 0, 1)
+			}
+		},
+		wpn_fps_sho_m590_fg_standard = {
+			[Idstring("mtr_foregrip"):key()] = {
+				pattern_tweak = Vector3(1.68376, 0, 1)
+			}
+		},
+		wpn_fps_sho_m590_s_standard = {
+			[Idstring("mtr_adapter"):key()] = {
+				pattern_tweak = Vector3(1.44527, 0, 1)
+			},
+			[Idstring("mtr_stock"):key()] = {
+				pattern_tweak = Vector3(1.77916, 0, 1)
+			}
+		},
+		wpn_fps_sho_m590_b_long = {
+			[Idstring("mtr_mag"):key()] = {
+				pattern_tweak = Vector3(1.58836, 0, 1)
+			}
+		},
+		wpn_fps_sho_m590_body_rail = {
+			[Idstring("mtr_barrel"):key()] = {
+				pattern_tweak = Vector3(2.20844, 0, 1)
+			}
+		},
+		wpn_upg_o_marksmansight_rear_vanilla = {
+			[Idstring("rear"):key()] = {
+				pattern_tweak = Vector3(0.205106, 0, 1)
+			}
+		},
+		wpn_upg_o_marksmansight_front = {
+			[Idstring("front1"):key()] = {
+				pattern_tweak = Vector3(0.109709, 0, 1),
+				pattern_pos = Vector3(0, -0.00333866, 0)
+			}
+		}
+	}
+	weapons.m1911.pattern_tweak = Vector3(1, 0, 0)
+	weapons.m1911.parts = {
+		wpn_fps_pis_m1911_body_standard = {
+			[Idstring("mtr_mr07"):key()] = {
+				pattern_tweak = Vector3(0.968283, 0, 1),
+				pattern_pos = Vector3(-0.909611, -0.251371, 0)
+			}
+		},
+		wpn_fps_pis_m1911_m_extended = {
+			[Idstring("mtr_extendedmag"):key()] = {
+				pattern_tweak = Vector3(0.777489, 0, 1)
+			}
+		}
+	}
+	weapons.vityaz.pattern_tweak = Vector3(1, 0, 0)
+	weapons.vityaz.parts = {
+		wpn_fps_smg_vityaz_s_standard = {
+			[Idstring("mtr_stock"):key()] = {
+				pattern_tweak = Vector3(3.40091, 0, 1)
+			}
+		},
+		wpn_fps_smg_vityaz_b_supressed = {
+			[Idstring("mtr_supp"):key()] = {
+				pattern_tweak = Vector3(1.06368, 0, 1)
+			},
+			[Idstring("mtr_barrel"):key()] = {
+				pattern_tweak = Vector3(1.77916, 0, 1)
+			}
+		},
+		wpn_fps_smg_vityaz_body_standard = {
+			[Idstring("mtr_upper"):key()] = {
+				pattern_tweak = Vector3(1.63606, 0, 1)
+			},
+			[Idstring("mtr_rearsight"):key()] = {
+				pattern_tweak = Vector3(2.87622, 0, 1)
+			}
+		},
+		wpn_fps_smg_vityaz_bolt_standard = {
+			[Idstring("mtr_lower"):key()] = {
+				pattern_tweak = Vector3(0.72979, 0, 1)
+			}
+		},
+		wpn_fps_smg_vityaz_fg_standard = {
+			[Idstring("mtr_foregrip"):key()] = {
+				pattern_tweak = Vector3(1.87455, 0, 1)
+			}
+		},
+		wpn_fps_smg_vityaz_g_standard = {
+			[Idstring("mtr_grip"):key()] = {
+				pattern_tweak = Vector3(2.97162, 0, 1)
+			}
+		},
+		wpn_fps_smg_vityaz_m_standard = {
+			[Idstring("mtr_mag"):key()] = {
+				pattern_tweak = Vector3(1.68376, 0, 1)
+			}
+		}
+	}
 
 	WeaponColorTemplates._setup_akimbo_weapons(tweak_data, weapons)
 	WeaponColorTemplates._setup_npc_weapons(tweak_data, weapons)

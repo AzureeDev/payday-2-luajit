@@ -2048,6 +2048,17 @@ function GuiTweakData:init(tweak_data)
 				name_id = "menu_continental",
 				id = "continental_contact"
 			},
+			{
+				{
+					desc_id = "heist_contact_jiufeng_description",
+					post_event = "jfe_quote_set_a",
+					videos = {
+						"jiufeng1"
+					}
+				},
+				name_id = "heist_contact_jiufeng",
+				id = "jiufeng"
+			},
 			name_id = "menu_contacts",
 			id = "contacts"
 		},
@@ -5076,6 +5087,11 @@ function GuiTweakData:init(tweak_data)
 		limit = 5
 	}
 
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_chas",
+		texture_path = "guis/textures/pd2/new_heists/chas",
+		url = "https://ovk.af/CGDPWebS"
+	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_faco",
 		texture_path = "guis/textures/pd2/new_heists/faco",

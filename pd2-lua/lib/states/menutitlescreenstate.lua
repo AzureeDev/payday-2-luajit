@@ -134,7 +134,7 @@ function MenuTitlescreenState:at_enter()
 end
 
 function MenuTitlescreenState:get_video_volume()
-	return 1
+	return (managers.user:get_setting("sfx_volume") or 100) / 100
 end
 
 function MenuTitlescreenState:clbk_game_has_music_control(status)

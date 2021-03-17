@@ -366,6 +366,21 @@ function EquipmentsTweakData:init()
 			icon = "pd2_c4",
 			sync_possession = true
 		},
+		c4_stackable = {
+			quantity = 1,
+			action_message = "c4_obtained",
+			transfer_quantity = 10,
+			text_id = "hud_equipment_pickup_c4",
+			max_quantity = 10,
+			icon = "pd2_c4",
+			sync_possession = true
+		},
+		chas_keychain_forklift = {
+			sync_possession = true,
+			icon = "equipment_key_chain",
+			transfer_quantity = 1,
+			text_id = "hud_action_pickup_keychain_forklift"
+		},
 		organs = {
 			action_message = "organs_obtained",
 			icon = "equipment_thermite",

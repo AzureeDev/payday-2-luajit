@@ -397,6 +397,12 @@ function NarrativeTweakData:init(tweak_data)
 		package = "packages/contact_continental",
 		assets_gui = Idstring("guis/mission_briefing/preload_contact_continental")
 	}
+	self.contacts.jiufeng = {
+		name_id = "heist_contact_jiufeng",
+		description_id = "heist_contact_jiufeng_description",
+		package = "packages/contact_jiufeng",
+		assets_gui = Idstring("guis/dlcs/chas/guis/preload_contact_jiufeng")
+	}
 	self.contacts.skirmish = {
 		name_id = "heist_contact_skirmish",
 		description_id = "heist_contact_bain_description",
@@ -6318,6 +6324,79 @@ function NarrativeTweakData:init(tweak_data)
 		11,
 		11
 	}
+	self.stages.chas = {
+		type = "d",
+		type_id = "heist_type_assault",
+		level_id = "chas",
+		mission_filter = {
+			1
+		}
+	}
+	self.jobs.chas = {
+		name_id = "heist_chas",
+		briefing_id = "heist_chas_crimenet",
+		contact = "jiufeng",
+		region = "street",
+		jc = 30,
+		dlc = "chas",
+		chain = {
+			self.stages.chas
+		},
+		briefing_event = "Play_jfe_chas_cbf_01",
+		debrief_event = nil,
+		crimenet_callouts = {
+			"Play_jfe_chas_cnc_01"
+		},
+		crimenet_videos = {
+			"codex/jiufeng1"
+		},
+		payout = {
+			50000,
+			125000,
+			250000,
+			550000,
+			700000,
+			700000,
+			700000
+		},
+		contract_cost = {
+			24000,
+			48000,
+			120000,
+			240000,
+			300000,
+			300000,
+			300000
+		},
+		contract_visuals = {}
+	}
+	self.jobs.chas.contract_visuals.min_mission_xp = {
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200
+	}
+	self.jobs.chas.contract_visuals.max_mission_xp = {
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200
+	}
+	self.jobs.chas.contract_visuals.preview_image = {
+		id = "chas",
+		folder = "chas"
+	}
+	self.jobs.chas.date_added = {
+		2021,
+		3,
+		17
+	}
 	self.stages.lbe_lobby_end = {
 		type = "d",
 		type_id = "heist_type_assault",
@@ -7110,7 +7189,8 @@ function NarrativeTweakData:init(tweak_data)
 		"mex_cooking",
 		"bex",
 		"pex",
-		"fex"
+		"fex",
+		"chas"
 	}
 	self.forced_jobs = {
 		firestarter = true,

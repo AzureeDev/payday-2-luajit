@@ -250,6 +250,7 @@ action_variants.taser = security_variant
 action_variants.inside_man = security_variant
 action_variants.medic = clone(security_variant)
 action_variants.medic.heal = MedicActionHeal
+action_variants.triad = security_variant
 action_variants.biker_boss = security_variant
 action_variants.chavez_boss = security_variant
 action_variants.bolivian = security_variant

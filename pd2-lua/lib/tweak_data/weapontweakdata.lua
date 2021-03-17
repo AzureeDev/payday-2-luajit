@@ -1,18 +1,23 @@
 require("lib/tweak_data/WeaponFactoryTweakData")
+require("lib/tweak_data/WeaponFalloffTweakData")
 
 local PICKUP = {
-	SNIPER_HIGH_DAMAGE = 6,
+	AR_LOW_CAPACITY = 7,
 	SHOTGUN_HIGH_CAPACITY = 4,
-	AR_HIGH_CAPACITY = 2,
 	OTHER = 1,
+	LMG_CAPACITY = 9,
+	AR_MED_CAPACITY = 3,
+	SNIPER_HIGH_DAMAGE = 6,
+	AR_HIGH_CAPACITY = 2,
 	SNIPER_LOW_DAMAGE = 5,
-	AR_MED_CAPACITY = 3
+	AR_DMR_CAPACITY = 8
 }
 local SELECTION = {
 	SECONDARY = 1,
 	PRIMARY = 2,
 	UNDERBARREL = 3
 }
+local FALLOFF_TEMPLATE = WeaponFalloffTemplate.setup_weapon_falloff_templates()
 WeaponTweakData = WeaponTweakData or class()
 
 function WeaponTweakData:init(tweak_data)
@@ -5382,6 +5387,24 @@ function WeaponTweakData:_pickup_chance(max_ammo, selection_index)
 	elseif selection_index == PICKUP.AR_MED_CAPACITY then
 		low = 0.03
 		high = 0.055
+	elseif selection_index == PICKUP.AR_LOW_CAPACITY then
+		low = 0.03
+		high = 0.045
+	elseif selection_index == PICKUP.AR_DMR_CAPACITY then
+		low = 0.018
+		high = 0.04
+	elseif selection_index == PICKUP.PISTOL_HIGH_CAPACITY then
+		low = 0.025
+		high = 0.035
+	elseif selection_index == PICKUP.PISTOL_LOW_CAPACITY then
+		low = 0.025
+		high = 0.038
+	elseif selection_index == PICKUP.LMG_CAPACITY then
+		low = 0.025
+		high = 0.03
+	elseif selection_index == PICKUP.LMG_HIGH_CAPACITY then
+		low = 0.02
+		high = 0.024
 	elseif selection_index == PICKUP.SHOTGUN_HIGH_CAPACITY then
 		low = 0.05
 		high = 0.075
@@ -5627,6 +5650,7 @@ function WeaponTweakData:_init_new_m4(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.new_m4.DAMAGE = 1
+	self.new_m4.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.new_m4.CLIP_AMMO_MAX = 30
 	self.new_m4.NR_CLIPS_MAX = 5
 	self.new_m4.AMMO_MAX = self.new_m4.CLIP_AMMO_MAX * self.new_m4.NR_CLIPS_MAX
@@ -5720,10 +5744,10 @@ function WeaponTweakData:_init_glock_17(weapon_data)
 	self.glock_17.sounds.magazine_empty = "wp_pistol_slide_lock"
 	self.glock_17.FIRE_MODE = "single"
 	self.glock_17.fire_mode_data = {
-		fire_rate = 0.1
+		fire_rate = 0.11
 	}
 	self.glock_17.single = {
-		fire_rate = 0.1
+		fire_rate = 0.11
 	}
 	self.glock_17.timers = {
 		reload_not_empty = 1.47,
@@ -5741,10 +5765,11 @@ function WeaponTweakData:_init_glock_17(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.glock_17.DAMAGE = 1
+	self.glock_17.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_LOW
 	self.glock_17.CLIP_AMMO_MAX = 17
 	self.glock_17.NR_CLIPS_MAX = 9
 	self.glock_17.AMMO_MAX = self.glock_17.CLIP_AMMO_MAX * self.glock_17.NR_CLIPS_MAX
-	self.glock_17.AMMO_PICKUP = self:_pickup_chance(self.glock_17.AMMO_MAX, PICKUP.OTHER)
+	self.glock_17.AMMO_PICKUP = self:_pickup_chance(self.glock_17.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.glock_17.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -5795,7 +5820,7 @@ function WeaponTweakData:_init_glock_17(weapon_data)
 	self.glock_17.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 14,
 		spread_moving = 14,
@@ -5840,6 +5865,7 @@ function WeaponTweakData:_init_mp9(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.mp9.DAMAGE = 1
+	self.mp9.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
 	self.mp9.CLIP_AMMO_MAX = 30
 	self.mp9.NR_CLIPS_MAX = 7
 	self.mp9.AMMO_MAX = self.mp9.CLIP_AMMO_MAX * self.mp9.NR_CLIPS_MAX
@@ -5943,6 +5969,7 @@ function WeaponTweakData:_init_r870(weapon_data)
 	self.r870.damage_near = 2000
 	self.r870.damage_far = 3000
 	self.r870.rays = 12
+	self.r870.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_MEDIUM
 	self.r870.CLIP_AMMO_MAX = 6
 	self.r870.NR_CLIPS_MAX = 7
 	self.r870.AMMO_MAX = self.r870.CLIP_AMMO_MAX * self.r870.NR_CLIPS_MAX
@@ -6053,6 +6080,7 @@ function WeaponTweakData:_init_glock_18c(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.glock_18c.DAMAGE = 1
+	self.glock_18c.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_AUTO
 	self.glock_18c.CLIP_AMMO_MAX = 20
 	self.glock_18c.NR_CLIPS_MAX = 8
 	self.glock_18c.AMMO_MAX = self.glock_18c.CLIP_AMMO_MAX * self.glock_18c.NR_CLIPS_MAX
@@ -6167,6 +6195,7 @@ function WeaponTweakData:_init_amcar(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.amcar.DAMAGE = 1
+	self.amcar.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.amcar.CLIP_AMMO_MAX = 20
 	self.amcar.NR_CLIPS_MAX = 11
 	self.amcar.AMMO_MAX = self.amcar.CLIP_AMMO_MAX * self.amcar.NR_CLIPS_MAX
@@ -6270,10 +6299,11 @@ function WeaponTweakData:_init_m16(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.m16.DAMAGE = 1
+	self.m16.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_MEDIUM
 	self.m16.CLIP_AMMO_MAX = 30
 	self.m16.NR_CLIPS_MAX = 3
 	self.m16.AMMO_MAX = self.m16.CLIP_AMMO_MAX * self.m16.NR_CLIPS_MAX
-	self.m16.AMMO_PICKUP = self:_pickup_chance(self.m16.AMMO_MAX, PICKUP.AR_MED_CAPACITY)
+	self.m16.AMMO_PICKUP = self:_pickup_chance(self.m16.AMMO_MAX, PICKUP.AR_LOW_CAPACITY)
 	self.m16.FIRE_MODE = "auto"
 	self.m16.fire_mode_data = {
 		fire_rate = 0.07
@@ -6291,7 +6321,12 @@ function WeaponTweakData:_init_m16(weapon_data)
 		moving_steelsight = self.new_m4.spread.moving_steelsight
 	}
 	self.m16.kick = {
-		standing = self.new_m4.kick.standing
+		standing = {
+			0.4,
+			0.6,
+			-0.6,
+			0.6
+		}
 	}
 	self.m16.kick.crouching = self.m16.kick.standing
 	self.m16.kick.steelsight = self.m16.kick.standing
@@ -6373,6 +6408,7 @@ function WeaponTweakData:_init_olympic(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.olympic.DAMAGE = 1
+	self.olympic.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.olympic.CLIP_AMMO_MAX = 25
 	self.olympic.NR_CLIPS_MAX = 6
 	self.olympic.AMMO_MAX = self.olympic.CLIP_AMMO_MAX * self.olympic.NR_CLIPS_MAX
@@ -6475,6 +6511,7 @@ function WeaponTweakData:_init_ak74(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.ak74.DAMAGE = 1
+	self.ak74.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.ak74.CLIP_AMMO_MAX = 30
 	self.ak74.NR_CLIPS_MAX = 5
 	self.ak74.AMMO_MAX = self.ak74.CLIP_AMMO_MAX * self.ak74.NR_CLIPS_MAX
@@ -6578,10 +6615,11 @@ function WeaponTweakData:_init_akm(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.akm.DAMAGE = 1.25
+	self.akm.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_MEDIUM
 	self.akm.CLIP_AMMO_MAX = 30
 	self.akm.NR_CLIPS_MAX = 3
 	self.akm.AMMO_MAX = self.akm.CLIP_AMMO_MAX * self.akm.NR_CLIPS_MAX
-	self.akm.AMMO_PICKUP = self:_pickup_chance(self.akm.AMMO_MAX, PICKUP.OTHER)
+	self.akm.AMMO_PICKUP = self:_pickup_chance(self.akm.AMMO_MAX, PICKUP.AR_LOW_CAPACITY)
 	self.akm.FIRE_MODE = "auto"
 	self.akm.fire_mode_data = {
 		fire_rate = 0.107
@@ -6681,10 +6719,11 @@ function WeaponTweakData:_init_akm_gold(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.akm_gold.DAMAGE = 1.25
+	self.akm_gold.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_MEDIUM
 	self.akm_gold.CLIP_AMMO_MAX = 30
 	self.akm_gold.NR_CLIPS_MAX = 3
 	self.akm_gold.AMMO_MAX = self.akm_gold.CLIP_AMMO_MAX * self.akm_gold.NR_CLIPS_MAX
-	self.akm_gold.AMMO_PICKUP = self:_pickup_chance(self.akm_gold.AMMO_MAX, PICKUP.OTHER)
+	self.akm_gold.AMMO_PICKUP = self:_pickup_chance(self.akm_gold.AMMO_MAX, PICKUP.AR_LOW_CAPACITY)
 	self.akm_gold.FIRE_MODE = "auto"
 	self.akm_gold.fire_mode_data = {
 		fire_rate = 0.107
@@ -6785,6 +6824,7 @@ function WeaponTweakData:_init_akmsu(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.akmsu.DAMAGE = 1
+	self.akmsu.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_HIGH
 	self.akmsu.CLIP_AMMO_MAX = 30
 	self.akmsu.NR_CLIPS_MAX = 3
 	self.akmsu.AMMO_MAX = self.akmsu.CLIP_AMMO_MAX * self.akmsu.NR_CLIPS_MAX
@@ -6892,6 +6932,7 @@ function WeaponTweakData:_init_saiga(weapon_data)
 	self.saiga.damage_near = 2000
 	self.saiga.damage_far = 3000
 	self.saiga.rays = 12
+	self.saiga.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_LOW
 	self.saiga.CLIP_AMMO_MAX = 7
 	self.saiga.NR_CLIPS_MAX = 10
 	self.saiga.AMMO_MAX = self.saiga.CLIP_AMMO_MAX * self.saiga.NR_CLIPS_MAX
@@ -6992,6 +7033,7 @@ function WeaponTweakData:_init_ak5(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.ak5.DAMAGE = 1
+	self.ak5.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.ak5.CLIP_AMMO_MAX = 30
 	self.ak5.NR_CLIPS_MAX = 5
 	self.ak5.AMMO_MAX = self.ak5.CLIP_AMMO_MAX * self.ak5.NR_CLIPS_MAX
@@ -7093,6 +7135,7 @@ function WeaponTweakData:_init_aug(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.aug.DAMAGE = 1
+	self.aug.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.aug.CLIP_AMMO_MAX = 30
 	self.aug.NR_CLIPS_MAX = 5
 	self.aug.AMMO_MAX = self.aug.CLIP_AMMO_MAX * self.aug.NR_CLIPS_MAX
@@ -7193,6 +7236,7 @@ function WeaponTweakData:_init_g36(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.g36.DAMAGE = 1
+	self.g36.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.g36.CLIP_AMMO_MAX = 30
 	self.g36.NR_CLIPS_MAX = 8
 	self.g36.AMMO_MAX = self.g36.CLIP_AMMO_MAX * self.g36.NR_CLIPS_MAX
@@ -7291,6 +7335,7 @@ function WeaponTweakData:_init_p90(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.p90.DAMAGE = 1
+	self.p90.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.p90.CLIP_AMMO_MAX = 50
 	self.p90.NR_CLIPS_MAX = 3
 	self.p90.AMMO_MAX = self.p90.CLIP_AMMO_MAX * self.p90.NR_CLIPS_MAX
@@ -7389,10 +7434,11 @@ function WeaponTweakData:_init_new_m14(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.new_m14.DAMAGE = 2
+	self.new_m14.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_HIGH
 	self.new_m14.CLIP_AMMO_MAX = 10
 	self.new_m14.NR_CLIPS_MAX = 7
 	self.new_m14.AMMO_MAX = self.new_m14.CLIP_AMMO_MAX * self.new_m14.NR_CLIPS_MAX
-	self.new_m14.AMMO_PICKUP = self:_pickup_chance(self.new_m14.AMMO_MAX, PICKUP.AR_MED_CAPACITY)
+	self.new_m14.AMMO_PICKUP = self:_pickup_chance(self.new_m14.AMMO_MAX, PICKUP.AR_DMR_CAPACITY)
 	self.new_m14.FIRE_MODE = "single"
 	self.new_m14.fire_mode_data = {
 		fire_rate = 0.085
@@ -7473,10 +7519,10 @@ function WeaponTweakData:_init_deagle(weapon_data)
 	self.deagle.sounds.magazine_empty = "wp_pistol_slide_lock"
 	self.deagle.FIRE_MODE = "single"
 	self.deagle.fire_mode_data = {
-		fire_rate = 0.25
+		fire_rate = 0.15
 	}
 	self.deagle.single = {
-		fire_rate = 0.25
+		fire_rate = 0.15
 	}
 	self.deagle.timers = {
 		reload_not_empty = 1.85,
@@ -7493,10 +7539,11 @@ function WeaponTweakData:_init_deagle(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.deagle.DAMAGE = 2
+	self.deagle.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_HIGH
 	self.deagle.CLIP_AMMO_MAX = 10
-	self.deagle.NR_CLIPS_MAX = 5
+	self.deagle.NR_CLIPS_MAX = 6
 	self.deagle.AMMO_MAX = self.deagle.CLIP_AMMO_MAX * self.deagle.NR_CLIPS_MAX
-	self.deagle.AMMO_PICKUP = self:_pickup_chance(self.deagle.AMMO_MAX, PICKUP.OTHER)
+	self.deagle.AMMO_PICKUP = self:_pickup_chance(self.deagle.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.deagle.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -7585,6 +7632,7 @@ function WeaponTweakData:_init_new_mp5(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.new_mp5.DAMAGE = 1
+	self.new_mp5.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
 	self.new_mp5.CLIP_AMMO_MAX = 30
 	self.new_mp5.NR_CLIPS_MAX = 7
 	self.new_mp5.AMMO_MAX = self.new_mp5.CLIP_AMMO_MAX * self.new_mp5.NR_CLIPS_MAX
@@ -7669,10 +7717,10 @@ function WeaponTweakData:_init_colt_1911(weapon_data)
 	self.colt_1911.sounds.magazine_empty = "wp_pistol_slide_lock"
 	self.colt_1911.FIRE_MODE = "single"
 	self.colt_1911.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.colt_1911.single = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.colt_1911.timers = {
 		reload_not_empty = 1.47,
@@ -7690,10 +7738,11 @@ function WeaponTweakData:_init_colt_1911(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.colt_1911.DAMAGE = 1
+	self.colt_1911.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_MEDIUM
 	self.colt_1911.CLIP_AMMO_MAX = 10
 	self.colt_1911.NR_CLIPS_MAX = 9
 	self.colt_1911.AMMO_MAX = self.colt_1911.CLIP_AMMO_MAX * self.colt_1911.NR_CLIPS_MAX
-	self.colt_1911.AMMO_PICKUP = self:_pickup_chance(self.colt_1911.AMMO_MAX, PICKUP.OTHER)
+	self.colt_1911.AMMO_PICKUP = self:_pickup_chance(self.colt_1911.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.colt_1911.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -7738,7 +7787,7 @@ function WeaponTweakData:_init_colt_1911(weapon_data)
 	self.colt_1911.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -7783,6 +7832,7 @@ function WeaponTweakData:_init_mac10(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.mac10.DAMAGE = 1
+	self.mac10.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.mac10.CLIP_AMMO_MAX = 40
 	self.mac10.NR_CLIPS_MAX = 4
 	self.mac10.AMMO_MAX = self.mac10.CLIP_AMMO_MAX * self.mac10.NR_CLIPS_MAX
@@ -7886,6 +7936,7 @@ function WeaponTweakData:_init_serbu(weapon_data)
 	self.serbu.damage_near = 2000
 	self.serbu.damage_far = 3000
 	self.serbu.rays = 12
+	self.serbu.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_HIGH
 	self.serbu.CLIP_AMMO_MAX = 6
 	self.serbu.NR_CLIPS_MAX = 7
 	self.serbu.AMMO_MAX = self.serbu.CLIP_AMMO_MAX * self.serbu.NR_CLIPS_MAX
@@ -7987,6 +8038,7 @@ function WeaponTweakData:_init_huntsman(weapon_data)
 		align_place = "right_hand"
 	}
 	self.huntsman.DAMAGE = 6
+	self.huntsman.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_HIGH
 	self.huntsman.damage_near = 2000
 	self.huntsman.damage_far = 3000
 	self.huntsman.rays = 12
@@ -8096,16 +8148,17 @@ function WeaponTweakData:_init_b92fs(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.b92fs.DAMAGE = 1
+	self.b92fs.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_LOW
 	self.b92fs.CLIP_AMMO_MAX = 14
 	self.b92fs.NR_CLIPS_MAX = 11
 	self.b92fs.AMMO_MAX = self.b92fs.CLIP_AMMO_MAX * self.b92fs.NR_CLIPS_MAX
-	self.b92fs.AMMO_PICKUP = self:_pickup_chance(self.b92fs.AMMO_MAX, PICKUP.OTHER)
+	self.b92fs.AMMO_PICKUP = self:_pickup_chance(self.b92fs.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.b92fs.FIRE_MODE = "single"
 	self.b92fs.fire_mode_data = {
-		fire_rate = 0.125
+		fire_rate = 0.11
 	}
 	self.b92fs.single = {
-		fire_rate = 0.125
+		fire_rate = 0.11
 	}
 	self.b92fs.spread = {
 		standing = self.new_m4.spread.standing,
@@ -8151,7 +8204,7 @@ function WeaponTweakData:_init_b92fs(weapon_data)
 	self.b92fs.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 15,
 		spread_moving = 15,
@@ -8191,10 +8244,10 @@ function WeaponTweakData:_init_new_raging_bull(weapon_data)
 	}
 	self.new_raging_bull.FIRE_MODE = "single"
 	self.new_raging_bull.fire_mode_data = {
-		fire_rate = 0.125
+		fire_rate = 0.15
 	}
 	self.new_raging_bull.single = {
-		fire_rate = 0.125
+		fire_rate = 0.15
 	}
 	self.new_raging_bull.name_id = "bm_w_raging_bull"
 	self.new_raging_bull.desc_id = "bm_w_raging_bull_desc"
@@ -8205,10 +8258,11 @@ function WeaponTweakData:_init_new_raging_bull(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.new_raging_bull.DAMAGE = 2
+	self.new_raging_bull.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_VERYHIGH
 	self.new_raging_bull.CLIP_AMMO_MAX = 6
 	self.new_raging_bull.NR_CLIPS_MAX = 9
 	self.new_raging_bull.AMMO_MAX = self.new_raging_bull.CLIP_AMMO_MAX * self.new_raging_bull.NR_CLIPS_MAX
-	self.new_raging_bull.AMMO_PICKUP = self:_pickup_chance(self.new_raging_bull.AMMO_MAX, PICKUP.OTHER)
+	self.new_raging_bull.AMMO_PICKUP = self:_pickup_chance(self.new_raging_bull.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.new_raging_bull.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -8423,9 +8477,10 @@ function WeaponTweakData:_init_usp(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.usp.DAMAGE = 1
+	self.usp.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_MEDIUM
 	self.usp.FIRE_MODE = "single"
 	self.usp.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.usp.single = {
 		fire_rate = 0.166
@@ -8433,7 +8488,7 @@ function WeaponTweakData:_init_usp(weapon_data)
 	self.usp.CLIP_AMMO_MAX = 13
 	self.usp.NR_CLIPS_MAX = 7
 	self.usp.AMMO_MAX = self.usp.CLIP_AMMO_MAX * self.usp.NR_CLIPS_MAX
-	self.usp.AMMO_PICKUP = self:_pickup_chance(self.usp.AMMO_MAX, PICKUP.OTHER)
+	self.usp.AMMO_PICKUP = self:_pickup_chance(self.usp.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.usp.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -8483,7 +8538,7 @@ function WeaponTweakData:_init_usp(weapon_data)
 	self.usp.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -8527,17 +8582,18 @@ function WeaponTweakData:_init_g22c(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.g22c.DAMAGE = 1
+	self.g22c.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_MEDIUM
 	self.g22c.FIRE_MODE = "single"
 	self.g22c.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.g22c.single = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.g22c.CLIP_AMMO_MAX = 16
 	self.g22c.NR_CLIPS_MAX = 6
 	self.g22c.AMMO_MAX = self.g22c.CLIP_AMMO_MAX * self.g22c.NR_CLIPS_MAX
-	self.g22c.AMMO_PICKUP = self:_pickup_chance(self.g22c.AMMO_MAX, PICKUP.OTHER)
+	self.g22c.AMMO_PICKUP = self:_pickup_chance(self.g22c.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.g22c.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -8587,7 +8643,7 @@ function WeaponTweakData:_init_g22c(weapon_data)
 	self.g22c.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -8646,6 +8702,7 @@ function WeaponTweakData:_init_judge(weapon_data)
 	self.judge.damage_near = 2000
 	self.judge.damage_far = 3000
 	self.judge.rays = 12
+	self.judge.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_VERYHIGH
 	self.judge.CLIP_AMMO_MAX = 5
 	self.judge.NR_CLIPS_MAX = 7
 	self.judge.AMMO_MAX = self.judge.CLIP_AMMO_MAX * self.judge.NR_CLIPS_MAX
@@ -8745,6 +8802,7 @@ function WeaponTweakData:_init_m45(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.m45.DAMAGE = 1
+	self.m45.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_HIGH
 	self.m45.CLIP_AMMO_MAX = 40
 	self.m45.NR_CLIPS_MAX = 2
 	self.m45.AMMO_MAX = self.m45.CLIP_AMMO_MAX * self.m45.NR_CLIPS_MAX
@@ -8845,6 +8903,7 @@ function WeaponTweakData:_init_s552(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.s552.DAMAGE = 1
+	self.s552.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.s552.CLIP_AMMO_MAX = 30
 	self.s552.NR_CLIPS_MAX = 8
 	self.s552.AMMO_MAX = self.s552.CLIP_AMMO_MAX * self.s552.NR_CLIPS_MAX
@@ -8945,16 +9004,17 @@ function WeaponTweakData:_init_ppk(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.ppk.DAMAGE = 1
+	self.ppk.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_LOW
 	self.ppk.CLIP_AMMO_MAX = 14
 	self.ppk.NR_CLIPS_MAX = 11
 	self.ppk.AMMO_MAX = self.ppk.CLIP_AMMO_MAX * self.ppk.NR_CLIPS_MAX
-	self.ppk.AMMO_PICKUP = self:_pickup_chance(self.ppk.AMMO_MAX, PICKUP.OTHER)
+	self.ppk.AMMO_PICKUP = self:_pickup_chance(self.ppk.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.ppk.FIRE_MODE = "single"
 	self.ppk.fire_mode_data = {
-		fire_rate = 0.125
+		fire_rate = 0.11
 	}
 	self.ppk.single = {
-		fire_rate = 0.125
+		fire_rate = 0.11
 	}
 	self.ppk.spread = {
 		standing = self.new_m4.spread.standing,
@@ -9000,7 +9060,7 @@ function WeaponTweakData:_init_ppk(weapon_data)
 	self.ppk.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 12,
 		spread_moving = 12,
@@ -9047,6 +9107,7 @@ function WeaponTweakData:_init_mp7(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.mp7.DAMAGE = 1
+	self.mp7.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.mp7.CLIP_AMMO_MAX = 20
 	self.mp7.NR_CLIPS_MAX = 8
 	self.mp7.AMMO_MAX = self.mp7.CLIP_AMMO_MAX * self.mp7.NR_CLIPS_MAX
@@ -9149,10 +9210,11 @@ function WeaponTweakData:_init_scar(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.scar.DAMAGE = 1
-	self.scar.CLIP_AMMO_MAX = 20
-	self.scar.NR_CLIPS_MAX = 5
+	self.scar.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_MEDIUM
+	self.scar.CLIP_AMMO_MAX = 30
+	self.scar.NR_CLIPS_MAX = 3.333
 	self.scar.AMMO_MAX = self.scar.CLIP_AMMO_MAX * self.scar.NR_CLIPS_MAX
-	self.scar.AMMO_PICKUP = self:_pickup_chance(self.scar.AMMO_MAX, PICKUP.OTHER)
+	self.scar.AMMO_PICKUP = self:_pickup_chance(self.scar.AMMO_MAX, PICKUP.AR_LOW_CAPACITY)
 	self.scar.FIRE_MODE = "auto"
 	self.scar.fire_mode_data = {
 		fire_rate = 0.098
@@ -9249,16 +9311,17 @@ function WeaponTweakData:_init_p226(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.p226.DAMAGE = 1
+	self.p226.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_MEDIUM
 	self.p226.CLIP_AMMO_MAX = 12
 	self.p226.NR_CLIPS_MAX = 7
 	self.p226.AMMO_MAX = self.p226.CLIP_AMMO_MAX * self.p226.NR_CLIPS_MAX
-	self.p226.AMMO_PICKUP = self:_pickup_chance(self.p226.AMMO_MAX, PICKUP.OTHER)
+	self.p226.AMMO_PICKUP = self:_pickup_chance(self.p226.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.p226.FIRE_MODE = "single"
 	self.p226.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.p226.single = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.p226.spread = {
 		standing = self.new_m4.spread.standing,
@@ -9304,7 +9367,7 @@ function WeaponTweakData:_init_p226(weapon_data)
 	self.p226.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -9355,10 +9418,11 @@ function WeaponTweakData:_init_hk21(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.hk21.DAMAGE = 1
+	self.hk21.damage_falloff = FALLOFF_TEMPLATE.LMG_FALL_HIGH
 	self.hk21.CLIP_AMMO_MAX = 150
 	self.hk21.NR_CLIPS_MAX = 2
 	self.hk21.AMMO_MAX = self.hk21.CLIP_AMMO_MAX * self.hk21.NR_CLIPS_MAX
-	self.hk21.AMMO_PICKUP = self:_pickup_chance(self.hk21.AMMO_MAX, PICKUP.OTHER)
+	self.hk21.AMMO_PICKUP = self:_pickup_chance(self.hk21.AMMO_MAX, PICKUP.LMG_HIGH_CAPACITY)
 	self.hk21.FIRE_MODE = "auto"
 	self.hk21.fire_mode_data = {
 		fire_rate = 0.083
@@ -9378,10 +9442,10 @@ function WeaponTweakData:_init_hk21(weapon_data)
 	}
 	self.hk21.kick = {
 		standing = {
-			-0.2,
+			0.4,
 			0.8,
-			-0.8,
-			1
+			-0.6,
+			0.6
 		}
 	}
 	self.hk21.kick.crouching = self.hk21.kick.standing
@@ -9473,10 +9537,11 @@ function WeaponTweakData:_init_m249(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.m249.DAMAGE = 1
+	self.m249.damage_falloff = FALLOFF_TEMPLATE.LMG_FALL_MEDIUM
 	self.m249.CLIP_AMMO_MAX = 200
 	self.m249.NR_CLIPS_MAX = 2
 	self.m249.AMMO_MAX = self.m249.CLIP_AMMO_MAX * self.m249.NR_CLIPS_MAX
-	self.m249.AMMO_PICKUP = self:_pickup_chance(self.m249.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
+	self.m249.AMMO_PICKUP = self:_pickup_chance(self.m249.AMMO_MAX, PICKUP.LMG_CAPACITY)
 	self.m249.FIRE_MODE = "auto"
 	self.m249.fire_mode_data = {
 		fire_rate = 0.066
@@ -9591,10 +9656,11 @@ function WeaponTweakData:_init_rpk(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.rpk.DAMAGE = 1
+	self.rpk.damage_falloff = FALLOFF_TEMPLATE.LMG_FALL_HIGH
 	self.rpk.CLIP_AMMO_MAX = 100
 	self.rpk.NR_CLIPS_MAX = 3
 	self.rpk.AMMO_MAX = self.rpk.CLIP_AMMO_MAX * self.rpk.NR_CLIPS_MAX
-	self.rpk.AMMO_PICKUP = self:_pickup_chance(self.rpk.AMMO_MAX, PICKUP.OTHER)
+	self.rpk.AMMO_PICKUP = self:_pickup_chance(self.rpk.AMMO_MAX, PICKUP.LMG_HIGH_CAPACITY)
 	self.rpk.FIRE_MODE = "auto"
 	self.rpk.fire_mode_data = {
 		fire_rate = 0.08
@@ -9706,6 +9772,7 @@ function WeaponTweakData:_init_m95(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.m95.DAMAGE = 1
+	self.m95.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_VERYHIGH
 	self.m95.CLIP_AMMO_MAX = 5
 	self.m95.NR_CLIPS_MAX = 3
 	self.m95.AMMO_MAX = self.m95.CLIP_AMMO_MAX * self.m95.NR_CLIPS_MAX
@@ -9824,6 +9891,7 @@ function WeaponTweakData:_init_msr(weapon_data)
 		align_place = "left_hand"
 	}
 	self.msr.DAMAGE = 1
+	self.msr.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_MEDIUM
 	self.msr.CLIP_AMMO_MAX = 10
 	self.msr.NR_CLIPS_MAX = 4
 	self.msr.AMMO_MAX = self.msr.CLIP_AMMO_MAX * self.msr.NR_CLIPS_MAX
@@ -9940,6 +10008,7 @@ function WeaponTweakData:_init_r93(weapon_data)
 		align_place = "left_hand"
 	}
 	self.r93.DAMAGE = 1
+	self.r93.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_HIGH
 	self.r93.CLIP_AMMO_MAX = 6
 	self.r93.NR_CLIPS_MAX = 5
 	self.r93.AMMO_MAX = self.r93.CLIP_AMMO_MAX * self.r93.NR_CLIPS_MAX
@@ -10056,10 +10125,11 @@ function WeaponTweakData:_init_fal(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.fal.DAMAGE = 1
+	self.fal.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_MEDIUM
 	self.fal.CLIP_AMMO_MAX = 20
 	self.fal.NR_CLIPS_MAX = 5
 	self.fal.AMMO_MAX = self.fal.CLIP_AMMO_MAX * self.fal.NR_CLIPS_MAX
-	self.fal.AMMO_PICKUP = self:_pickup_chance(self.fal.AMMO_MAX, PICKUP.OTHER)
+	self.fal.AMMO_PICKUP = self:_pickup_chance(self.fal.AMMO_MAX, PICKUP.AR_LOW_CAPACITY)
 	self.fal.FIRE_MODE = "auto"
 	self.fal.fire_mode_data = {
 		fire_rate = 0.086
@@ -10153,6 +10223,7 @@ function WeaponTweakData:_init_benelli(weapon_data)
 		align_place = "right_hand"
 	}
 	self.benelli.DAMAGE = 6
+	self.benelli.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_LOW
 	self.benelli.damage_near = 2000
 	self.benelli.damage_far = 3000
 	self.benelli.rays = 12
@@ -10258,6 +10329,7 @@ function WeaponTweakData:_init_striker(weapon_data)
 		align_place = "left_hand"
 	}
 	self.striker.DAMAGE = 6
+	self.striker.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_MEDIUM
 	self.striker.damage_near = 2000
 	self.striker.damage_far = 3000
 	self.striker.rays = 12
@@ -10360,6 +10432,7 @@ function WeaponTweakData:_init_ksg(weapon_data)
 		align_place = "right_hand"
 	}
 	self.ksg.DAMAGE = 6
+	self.ksg.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_MEDIUM
 	self.ksg.damage_near = 2000
 	self.ksg.damage_far = 3000
 	self.ksg.rays = 12
@@ -10592,10 +10665,11 @@ function WeaponTweakData:_init_g3(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.g3.DAMAGE = 1
-	self.g3.CLIP_AMMO_MAX = 20
-	self.g3.NR_CLIPS_MAX = 5
+	self.g3.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_MEDIUM
+	self.g3.CLIP_AMMO_MAX = 30
+	self.g3.NR_CLIPS_MAX = 3.333
 	self.g3.AMMO_MAX = self.g3.CLIP_AMMO_MAX * self.g3.NR_CLIPS_MAX
-	self.g3.AMMO_PICKUP = self:_pickup_chance(self.g3.AMMO_MAX, PICKUP.OTHER)
+	self.g3.AMMO_PICKUP = self:_pickup_chance(self.g3.AMMO_MAX, PICKUP.AR_LOW_CAPACITY)
 	self.g3.FIRE_MODE = "auto"
 	self.g3.fire_mode_data = {
 		fire_rate = 0.092
@@ -10692,6 +10766,7 @@ function WeaponTweakData:_init_galil(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.galil.DAMAGE = 1
+	self.galil.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.galil.CLIP_AMMO_MAX = 30
 	self.galil.NR_CLIPS_MAX = 5
 	self.galil.AMMO_MAX = self.galil.CLIP_AMMO_MAX * self.galil.NR_CLIPS_MAX
@@ -10794,6 +10869,7 @@ function WeaponTweakData:_init_famas(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.famas.DAMAGE = 1
+	self.famas.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.famas.CLIP_AMMO_MAX = 30
 	self.famas.NR_CLIPS_MAX = 8
 	self.famas.AMMO_MAX = self.famas.CLIP_AMMO_MAX * self.famas.NR_CLIPS_MAX
@@ -10895,6 +10971,7 @@ function WeaponTweakData:_init_scorpion(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.scorpion.DAMAGE = 1
+	self.scorpion.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
 	self.scorpion.CLIP_AMMO_MAX = 20
 	self.scorpion.NR_CLIPS_MAX = 11
 	self.scorpion.AMMO_MAX = self.scorpion.CLIP_AMMO_MAX * self.scorpion.NR_CLIPS_MAX
@@ -10997,6 +11074,7 @@ function WeaponTweakData:_init_tec9(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.tec9.DAMAGE = 1
+	self.tec9.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
 	self.tec9.CLIP_AMMO_MAX = 20
 	self.tec9.NR_CLIPS_MAX = 11
 	self.tec9.AMMO_MAX = self.tec9.CLIP_AMMO_MAX * self.tec9.NR_CLIPS_MAX
@@ -11099,10 +11177,11 @@ function WeaponTweakData:_init_uzi(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.uzi.DAMAGE = 1
+	self.uzi.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
 	self.uzi.CLIP_AMMO_MAX = 40
 	self.uzi.NR_CLIPS_MAX = 5
 	self.uzi.AMMO_MAX = self.uzi.CLIP_AMMO_MAX * self.uzi.NR_CLIPS_MAX
-	self.uzi.AMMO_PICKUP = self:_pickup_chance(self.uzi.AMMO_MAX, PICKUP.AR_MED_CAPACITY)
+	self.uzi.AMMO_PICKUP = self:_pickup_chance(self.uzi.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
 	self.uzi.FIRE_MODE = "auto"
 	self.uzi.fire_mode_data = {
 		fire_rate = 0.086
@@ -11198,6 +11277,7 @@ function WeaponTweakData:_init_jowi(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.jowi.DAMAGE = 1
+	self.jowi.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_LOW
 	self.jowi.CLIP_AMMO_MAX = 20
 	self.jowi.NR_CLIPS_MAX = 8
 	self.jowi.AMMO_MAX = self.jowi.CLIP_AMMO_MAX * self.jowi.NR_CLIPS_MAX
@@ -11262,7 +11342,7 @@ function WeaponTweakData:_init_jowi(weapon_data)
 	self.jowi.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 14,
 		spread_moving = 14,
@@ -11306,6 +11386,7 @@ function WeaponTweakData:_init_x_1911(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_1911.DAMAGE = 1
+	self.x_1911.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_MEDIUM
 	self.x_1911.CLIP_AMMO_MAX = 20
 	self.x_1911.NR_CLIPS_MAX = 5
 	self.x_1911.AMMO_MAX = self.x_1911.CLIP_AMMO_MAX * self.x_1911.NR_CLIPS_MAX
@@ -11370,7 +11451,7 @@ function WeaponTweakData:_init_x_1911(weapon_data)
 	self.x_1911.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -11414,6 +11495,7 @@ function WeaponTweakData:_init_x_b92fs(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_b92fs.DAMAGE = 1
+	self.x_b92fs.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_LOW
 	self.x_b92fs.CLIP_AMMO_MAX = 28
 	self.x_b92fs.NR_CLIPS_MAX = 6
 	self.x_b92fs.AMMO_MAX = self.x_b92fs.CLIP_AMMO_MAX * self.x_b92fs.NR_CLIPS_MAX
@@ -11477,7 +11559,7 @@ function WeaponTweakData:_init_x_b92fs(weapon_data)
 	self.x_b92fs.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 14,
 		spread_moving = 14,
@@ -11521,6 +11603,7 @@ function WeaponTweakData:_init_x_deagle(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_deagle.DAMAGE = 1
+	self.x_deagle.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_HIGH
 	self.x_deagle.CLIP_AMMO_MAX = 20
 	self.x_deagle.NR_CLIPS_MAX = 3
 	self.x_deagle.AMMO_MAX = self.x_deagle.CLIP_AMMO_MAX * self.x_deagle.NR_CLIPS_MAX
@@ -11628,16 +11711,17 @@ function WeaponTweakData:_init_g26(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.g26.DAMAGE = 1
+	self.g26.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_LOW
 	self.g26.CLIP_AMMO_MAX = 10
 	self.g26.NR_CLIPS_MAX = 15
 	self.g26.AMMO_MAX = self.g26.CLIP_AMMO_MAX * self.g26.NR_CLIPS_MAX
-	self.g26.AMMO_PICKUP = self:_pickup_chance(self.g26.AMMO_MAX, PICKUP.OTHER)
+	self.g26.AMMO_PICKUP = self:_pickup_chance(self.g26.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.g26.FIRE_MODE = "single"
 	self.g26.fire_mode_data = {
-		fire_rate = 0.125
+		fire_rate = 0.11
 	}
 	self.g26.single = {
-		fire_rate = 0.125
+		fire_rate = 0.11
 	}
 	self.g26.spread = {
 		standing = self.new_m4.spread.standing,
@@ -11683,7 +11767,7 @@ function WeaponTweakData:_init_g26(weapon_data)
 	self.g26.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 14,
 		spread_moving = 14,
@@ -11725,6 +11809,7 @@ function WeaponTweakData:_init_spas12(weapon_data)
 		align_place = "right_hand"
 	}
 	self.spas12.DAMAGE = 6
+	self.spas12.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_LOW
 	self.spas12.damage_near = 2000
 	self.spas12.damage_far = 3000
 	self.spas12.rays = 12
@@ -11838,10 +11923,11 @@ function WeaponTweakData:_init_mg42(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.mg42.DAMAGE = 1
+	self.mg42.damage_falloff = FALLOFF_TEMPLATE.LMG_FALL_MEDIUM
 	self.mg42.CLIP_AMMO_MAX = 150
 	self.mg42.NR_CLIPS_MAX = 3
 	self.mg42.AMMO_MAX = self.mg42.CLIP_AMMO_MAX * self.mg42.NR_CLIPS_MAX
-	self.mg42.AMMO_PICKUP = self:_pickup_chance(self.mg42.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
+	self.mg42.AMMO_PICKUP = self:_pickup_chance(self.mg42.AMMO_MAX, PICKUP.LMG_CAPACITY)
 	self.mg42.FIRE_MODE = "auto"
 	self.mg42.fire_mode_data = {
 		fire_rate = 0.05
@@ -11950,16 +12036,17 @@ function WeaponTweakData:_init_c96(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.c96.DAMAGE = 1
+	self.c96.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_MEDIUM
 	self.c96.CLIP_AMMO_MAX = 10
 	self.c96.NR_CLIPS_MAX = 9
 	self.c96.AMMO_MAX = self.c96.CLIP_AMMO_MAX * self.c96.NR_CLIPS_MAX
-	self.c96.AMMO_PICKUP = self:_pickup_chance(self.c96.AMMO_MAX, PICKUP.OTHER)
+	self.c96.AMMO_PICKUP = self:_pickup_chance(self.c96.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.c96.FIRE_MODE = "single"
 	self.c96.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.c96.single = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.c96.spread = {
 		standing = self.new_m4.spread.standing,
@@ -12005,7 +12092,7 @@ function WeaponTweakData:_init_c96(weapon_data)
 	self.c96.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 21,
 		spread_moving = 12,
@@ -12052,6 +12139,7 @@ function WeaponTweakData:_init_sterling(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.sterling.DAMAGE = 1
+	self.sterling.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
 	self.sterling.CLIP_AMMO_MAX = 20
 	self.sterling.NR_CLIPS_MAX = 11
 	self.sterling.AMMO_MAX = self.sterling.CLIP_AMMO_MAX * self.sterling.NR_CLIPS_MAX
@@ -12157,6 +12245,7 @@ function WeaponTweakData:_init_mosin(weapon_data)
 		align_place = "left_hand"
 	}
 	self.mosin.DAMAGE = 1
+	self.mosin.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_HIGH
 	self.mosin.CLIP_AMMO_MAX = 5
 	self.mosin.NR_CLIPS_MAX = 5
 	self.mosin.AMMO_MAX = self.mosin.CLIP_AMMO_MAX * self.mosin.NR_CLIPS_MAX
@@ -12274,6 +12363,7 @@ function WeaponTweakData:_init_m1928(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.m1928.DAMAGE = 1
+	self.m1928.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.m1928.CLIP_AMMO_MAX = 50
 	self.m1928.NR_CLIPS_MAX = 3
 	self.m1928.AMMO_MAX = self.m1928.CLIP_AMMO_MAX * self.m1928.NR_CLIPS_MAX
@@ -12380,6 +12470,7 @@ function WeaponTweakData:_init_l85a2(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.l85a2.DAMAGE = 1
+	self.l85a2.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.l85a2.CLIP_AMMO_MAX = 30
 	self.l85a2.NR_CLIPS_MAX = 5
 	self.l85a2.AMMO_MAX = self.l85a2.CLIP_AMMO_MAX * self.l85a2.NR_CLIPS_MAX
@@ -12486,6 +12577,7 @@ function WeaponTweakData:_init_vhs(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.vhs.DAMAGE = 1
+	self.vhs.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.vhs.CLIP_AMMO_MAX = 30
 	self.vhs.NR_CLIPS_MAX = 5
 	self.vhs.AMMO_MAX = self.vhs.CLIP_AMMO_MAX * self.vhs.NR_CLIPS_MAX
@@ -12591,16 +12683,17 @@ function WeaponTweakData:_init_hs2000(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.hs2000.DAMAGE = 1
+	self.hs2000.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_MEDIUM
 	self.hs2000.CLIP_AMMO_MAX = 19
 	self.hs2000.NR_CLIPS_MAX = 5
 	self.hs2000.AMMO_MAX = self.hs2000.CLIP_AMMO_MAX * self.hs2000.NR_CLIPS_MAX
-	self.hs2000.AMMO_PICKUP = self:_pickup_chance(self.hs2000.AMMO_MAX, PICKUP.OTHER)
+	self.hs2000.AMMO_PICKUP = self:_pickup_chance(self.hs2000.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.hs2000.FIRE_MODE = "single"
 	self.hs2000.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.hs2000.single = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.hs2000.spread = {
 		standing = self.new_m4.spread.standing,
@@ -12646,7 +12739,7 @@ function WeaponTweakData:_init_hs2000(weapon_data)
 	self.hs2000.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -12920,6 +13013,7 @@ function WeaponTweakData:_init_cobray(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.cobray.DAMAGE = 1
+	self.cobray.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.cobray.CLIP_AMMO_MAX = 32
 	self.cobray.NR_CLIPS_MAX = 5
 	self.cobray.AMMO_MAX = self.cobray.CLIP_AMMO_MAX * self.cobray.NR_CLIPS_MAX
@@ -13030,6 +13124,7 @@ function WeaponTweakData:_init_b682(weapon_data)
 		align_place = "right_hand"
 	}
 	self.b682.DAMAGE = 6
+	self.b682.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_HIGH
 	self.b682.damage_near = 2000
 	self.b682.damage_far = 3000
 	self.b682.rays = 12
@@ -13141,6 +13236,7 @@ function WeaponTweakData:_init_x_g22c(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_g22c.DAMAGE = 1
+	self.x_g22c.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_MEDIUM
 	self.x_g22c.CLIP_AMMO_MAX = 32
 	self.x_g22c.NR_CLIPS_MAX = 3
 	self.x_g22c.AMMO_MAX = self.x_g22c.CLIP_AMMO_MAX * self.x_g22c.NR_CLIPS_MAX
@@ -13205,7 +13301,7 @@ function WeaponTweakData:_init_x_g22c(weapon_data)
 	self.x_g22c.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -13250,6 +13346,7 @@ function WeaponTweakData:_init_x_g17(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_g17.DAMAGE = 1
+	self.x_g17.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_LOW
 	self.x_g17.CLIP_AMMO_MAX = 34
 	self.x_g17.NR_CLIPS_MAX = 5
 	self.x_g17.AMMO_MAX = self.x_g17.CLIP_AMMO_MAX * self.x_g17.NR_CLIPS_MAX
@@ -13314,7 +13411,7 @@ function WeaponTweakData:_init_x_g17(weapon_data)
 	self.x_g17.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 14,
 		spread_moving = 14,
@@ -13359,6 +13456,7 @@ function WeaponTweakData:_init_x_usp(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_usp.DAMAGE = 1
+	self.x_usp.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_MEDIUM
 	self.x_usp.CLIP_AMMO_MAX = 26
 	self.x_usp.NR_CLIPS_MAX = 4
 	self.x_usp.AMMO_MAX = self.x_usp.CLIP_AMMO_MAX * self.x_usp.NR_CLIPS_MAX
@@ -13423,7 +13521,7 @@ function WeaponTweakData:_init_x_usp(weapon_data)
 	self.x_usp.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -13713,6 +13811,7 @@ function WeaponTweakData:_init_aa12(weapon_data)
 		align_place = "right_hand"
 	}
 	self.aa12.DAMAGE = 6
+	self.aa12.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_LOW
 	self.aa12.damage_near = 2000
 	self.aa12.damage_far = 3000
 	self.aa12.rays = 12
@@ -13815,14 +13914,14 @@ function WeaponTweakData:_init_peacemaker(weapon_data)
 	}
 	self.peacemaker.FIRE_MODE = "single"
 	self.peacemaker.fire_mode_data = {
-		fire_rate = 0.25
+		fire_rate = 0.15
 	}
 	self.peacemaker.CAN_TOGGLE_FIREMODE = false
 	self.peacemaker.single = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.peacemaker.auto = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.peacemaker.name_id = "bm_w_peacemaker"
 	self.peacemaker.desc_id = "bm_w_peacemaker_desc"
@@ -13835,10 +13934,11 @@ function WeaponTweakData:_init_peacemaker(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.peacemaker.DAMAGE = 6
+	self.peacemaker.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_VERYHIGH
 	self.peacemaker.CLIP_AMMO_MAX = 6
 	self.peacemaker.NR_CLIPS_MAX = 9
 	self.peacemaker.AMMO_MAX = self.peacemaker.CLIP_AMMO_MAX * self.peacemaker.NR_CLIPS_MAX
-	self.peacemaker.AMMO_PICKUP = self:_pickup_chance(self.peacemaker.AMMO_MAX, PICKUP.OTHER)
+	self.peacemaker.AMMO_PICKUP = self:_pickup_chance(self.peacemaker.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.peacemaker.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -13893,7 +13993,7 @@ function WeaponTweakData:_init_peacemaker(weapon_data)
 		recoil = 4,
 		value = 1,
 		extra_ammo = 51,
-		reload = 11,
+		reload = 16,
 		suppression = 5,
 		concealment = 26
 	}
@@ -13942,6 +14042,7 @@ function WeaponTweakData:_init_winchester1874(weapon_data)
 		align_place = "left_hand"
 	}
 	self.winchester1874.DAMAGE = 1
+	self.winchester1874.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_MEDIUM
 	self.winchester1874.CLIP_AMMO_MAX = 15
 	self.winchester1874.NR_CLIPS_MAX = 3
 	self.winchester1874.AMMO_MAX = self.winchester1874.CLIP_AMMO_MAX * self.winchester1874.NR_CLIPS_MAX
@@ -14061,6 +14162,7 @@ function WeaponTweakData:_init_sbl(weapon_data)
 		align_place = "left_hand"
 	}
 	self.sbl.DAMAGE = 1
+	self.sbl.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_LOW
 	self.sbl.CLIP_AMMO_MAX = 10
 	self.sbl.NR_CLIPS_MAX = 5
 	self.sbl.AMMO_MAX = self.sbl.CLIP_AMMO_MAX * self.sbl.NR_CLIPS_MAX
@@ -14285,10 +14387,10 @@ function WeaponTweakData:_init_mateba(weapon_data)
 	}
 	self.mateba.FIRE_MODE = "single"
 	self.mateba.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.mateba.single = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.mateba.name_id = "bm_w_mateba"
 	self.mateba.desc_id = "bm_w_mateba_desc"
@@ -14301,10 +14403,11 @@ function WeaponTweakData:_init_mateba(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.mateba.DAMAGE = 2
+	self.mateba.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_VERYHIGH
 	self.mateba.CLIP_AMMO_MAX = 6
 	self.mateba.NR_CLIPS_MAX = 9
 	self.mateba.AMMO_MAX = self.mateba.CLIP_AMMO_MAX * self.mateba.NR_CLIPS_MAX
-	self.mateba.AMMO_PICKUP = self:_pickup_chance(self.mateba.AMMO_MAX, PICKUP.OTHER)
+	self.mateba.AMMO_PICKUP = self:_pickup_chance(self.mateba.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.mateba.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -14394,8 +14497,9 @@ function WeaponTweakData:_init_asval(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.asval.DAMAGE = 1
-	self.asval.CLIP_AMMO_MAX = 20
-	self.asval.NR_CLIPS_MAX = 11
+	self.asval.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
+	self.asval.CLIP_AMMO_MAX = 30
+	self.asval.NR_CLIPS_MAX = 7.333
 	self.asval.AMMO_MAX = self.asval.CLIP_AMMO_MAX * self.asval.NR_CLIPS_MAX
 	self.asval.AMMO_PICKUP = self:_pickup_chance(self.asval.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
 	self.asval.FIRE_MODE = "auto"
@@ -14497,10 +14601,11 @@ function WeaponTweakData:_init_sub2000(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.sub2000.DAMAGE = 2
+	self.sub2000.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_HIGH
 	self.sub2000.CLIP_AMMO_MAX = 33
 	self.sub2000.NR_CLIPS_MAX = 2
 	self.sub2000.AMMO_MAX = self.sub2000.CLIP_AMMO_MAX * self.sub2000.NR_CLIPS_MAX
-	self.sub2000.AMMO_PICKUP = self:_pickup_chance(self.sub2000.AMMO_MAX, PICKUP.SNIPER_HIGH_DAMAGE)
+	self.sub2000.AMMO_PICKUP = self:_pickup_chance(self.sub2000.AMMO_MAX, PICKUP.AR_DMR_CAPACITY)
 	self.sub2000.FIRE_MODE = "single"
 	self.sub2000.fire_mode_data = {
 		fire_rate = 0.085
@@ -14600,6 +14705,7 @@ function WeaponTweakData:_init_wa2000(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.wa2000.DAMAGE = 1
+	self.wa2000.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_LOW
 	self.wa2000.CLIP_AMMO_MAX = 10
 	self.wa2000.NR_CLIPS_MAX = 4
 	self.wa2000.AMMO_MAX = self.wa2000.CLIP_AMMO_MAX * self.wa2000.NR_CLIPS_MAX
@@ -14622,10 +14728,10 @@ function WeaponTweakData:_init_wa2000(weapon_data)
 	}
 	self.wa2000.kick = {
 		standing = {
-			3,
-			4.8,
-			-0.3,
-			0.3
+			2,
+			2.5,
+			-0.2,
+			0.2
 		}
 	}
 	self.wa2000.kick.crouching = self.wa2000.kick.standing
@@ -14714,6 +14820,7 @@ function WeaponTweakData:_init_polymer(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.polymer.DAMAGE = 1
+	self.polymer.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.polymer.CLIP_AMMO_MAX = 30
 	self.polymer.NR_CLIPS_MAX = 5
 	self.polymer.AMMO_MAX = self.polymer.CLIP_AMMO_MAX * self.polymer.NR_CLIPS_MAX
@@ -14936,6 +15043,7 @@ function WeaponTweakData:_init_baka(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.baka.DAMAGE = 1
+	self.baka.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
 	self.baka.CLIP_AMMO_MAX = 32
 	self.baka.NR_CLIPS_MAX = 7
 	self.baka.AMMO_MAX = self.baka.CLIP_AMMO_MAX * self.baka.NR_CLIPS_MAX
@@ -15393,10 +15501,11 @@ function WeaponTweakData:_init_par(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.par.DAMAGE = 1
+	self.par.damage_falloff = FALLOFF_TEMPLATE.LMG_FALL_MEDIUM
 	self.par.CLIP_AMMO_MAX = 200
 	self.par.NR_CLIPS_MAX = 2
 	self.par.AMMO_MAX = self.par.CLIP_AMMO_MAX * self.par.NR_CLIPS_MAX
-	self.par.AMMO_PICKUP = self:_pickup_chance(self.par.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
+	self.par.AMMO_PICKUP = self:_pickup_chance(self.par.AMMO_MAX, PICKUP.LMG_CAPACITY)
 	self.par.FIRE_MODE = "auto"
 	self.par.fire_mode_data = {
 		fire_rate = 0.066
@@ -15419,7 +15528,7 @@ function WeaponTweakData:_init_par(weapon_data)
 			-0.2,
 			0.8,
 			-1,
-			1.4
+			1.7
 		}
 	}
 	self.par.kick.crouching = self.par.kick.standing
@@ -15505,16 +15614,17 @@ function WeaponTweakData:_init_sparrow(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.sparrow.DAMAGE = 1
+	self.sparrow.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_HIGH
 	self.sparrow.CLIP_AMMO_MAX = 12
 	self.sparrow.NR_CLIPS_MAX = 5
 	self.sparrow.AMMO_MAX = self.sparrow.CLIP_AMMO_MAX * self.sparrow.NR_CLIPS_MAX
-	self.sparrow.AMMO_PICKUP = self:_pickup_chance(self.sparrow.AMMO_MAX, PICKUP.OTHER)
+	self.sparrow.AMMO_PICKUP = self:_pickup_chance(self.sparrow.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.sparrow.FIRE_MODE = "single"
 	self.sparrow.fire_mode_data = {
-		fire_rate = 0.25
+		fire_rate = 0.15
 	}
 	self.sparrow.single = {
-		fire_rate = 0.25
+		fire_rate = 0.15
 	}
 	self.sparrow.spread = {
 		standing = self.new_m4.spread.standing,
@@ -15608,6 +15718,7 @@ function WeaponTweakData:_init_model70(weapon_data)
 		align_place = "right_hand"
 	}
 	self.model70.DAMAGE = 1
+	self.model70.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_HIGH
 	self.model70.CLIP_AMMO_MAX = 5
 	self.model70.NR_CLIPS_MAX = 6
 	self.model70.AMMO_MAX = self.model70.CLIP_AMMO_MAX * self.model70.NR_CLIPS_MAX
@@ -15728,6 +15839,7 @@ function WeaponTweakData:_init_m37(weapon_data)
 	self.m37.damage_near = 2000
 	self.m37.damage_far = 3000
 	self.m37.rays = 12
+	self.m37.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_VERYHIGH
 	self.m37.CLIP_AMMO_MAX = 7
 	self.m37.NR_CLIPS_MAX = 4
 	self.m37.AMMO_MAX = self.m37.CLIP_AMMO_MAX * self.m37.NR_CLIPS_MAX
@@ -15964,6 +16076,7 @@ function WeaponTweakData:_init_sr2(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.sr2.DAMAGE = 1
+	self.sr2.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.sr2.CLIP_AMMO_MAX = 32
 	self.sr2.NR_CLIPS_MAX = 5
 	self.sr2.AMMO_MAX = self.cobray.CLIP_AMMO_MAX * self.cobray.NR_CLIPS_MAX
@@ -16071,8 +16184,9 @@ function WeaponTweakData:_init_x_sr2(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_sr2.DAMAGE = 1
+	self.x_sr2.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_sr2.CLIP_AMMO_MAX = 64
-	self.x_sr2.NR_CLIPS_MAX = 3
+	self.x_sr2.NR_CLIPS_MAX = 3.5
 	self.x_sr2.AMMO_MAX = self.x_sr2.CLIP_AMMO_MAX * self.x_sr2.NR_CLIPS_MAX
 	self.x_sr2.AMMO_PICKUP = self:_pickup_chance(self.x_sr2.AMMO_MAX, PICKUP.OTHER)
 	self.x_sr2.FIRE_MODE = "auto"
@@ -16179,16 +16293,17 @@ function WeaponTweakData:_init_pl14(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.pl14.DAMAGE = 1
+	self.pl14.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_HIGH
 	self.pl14.CLIP_AMMO_MAX = 12
 	self.pl14.NR_CLIPS_MAX = 5
 	self.pl14.AMMO_MAX = self.pl14.CLIP_AMMO_MAX * self.pl14.NR_CLIPS_MAX
-	self.pl14.AMMO_PICKUP = self:_pickup_chance(self.pl14.AMMO_MAX, PICKUP.OTHER)
+	self.pl14.AMMO_PICKUP = self:_pickup_chance(self.pl14.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.pl14.FIRE_MODE = "single"
 	self.pl14.fire_mode_data = {
-		fire_rate = 0.25
+		fire_rate = 0.15
 	}
 	self.pl14.single = {
-		fire_rate = 0.25
+		fire_rate = 0.15
 	}
 	self.pl14.spread = {
 		standing = self.new_m4.spread.standing,
@@ -16279,10 +16394,11 @@ function WeaponTweakData:_init_m1911(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.m1911.DAMAGE = 1
+	self.m1911.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_HIGH
 	self.m1911.CLIP_AMMO_MAX = 12
 	self.m1911.NR_CLIPS_MAX = 5
 	self.m1911.AMMO_MAX = self.m1911.CLIP_AMMO_MAX * self.m1911.NR_CLIPS_MAX
-	self.m1911.AMMO_PICKUP = self:_pickup_chance(self.m1911.AMMO_MAX, PICKUP.OTHER)
+	self.m1911.AMMO_PICKUP = self:_pickup_chance(self.m1911.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.m1911.FIRE_MODE = "single"
 	self.m1911.fire_mode_data = {
 		fire_rate = 0.125
@@ -16390,6 +16506,7 @@ function WeaponTweakData:_init_x_m1911(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_m1911.DAMAGE = 1
+	self.x_m1911.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_HIGH
 	self.x_m1911.CLIP_AMMO_MAX = 24
 	self.x_m1911.NR_CLIPS_MAX = 3
 	self.x_m1911.AMMO_MAX = self.x_m1911.CLIP_AMMO_MAX * self.x_m1911.NR_CLIPS_MAX
@@ -16502,6 +16619,7 @@ function WeaponTweakData:_init_vityaz(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.vityaz.DAMAGE = 1
+	self.vityaz.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_MEDIUM
 	self.vityaz.CLIP_AMMO_MAX = 30
 	self.vityaz.NR_CLIPS_MAX = 5
 	self.vityaz.AMMO_MAX = self.vityaz.CLIP_AMMO_MAX * self.vityaz.NR_CLIPS_MAX
@@ -16618,6 +16736,7 @@ function WeaponTweakData:_init_x_vityaz(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_vityaz.DAMAGE = 1
+	self.x_vityaz.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_vityaz.CLIP_AMMO_MAX = 60
 	self.x_vityaz.NR_CLIPS_MAX = 4
 	self.x_vityaz.AMMO_MAX = self.x_vityaz.CLIP_AMMO_MAX * self.x_vityaz.NR_CLIPS_MAX
@@ -16720,6 +16839,7 @@ function WeaponTweakData:_init_m590(weapon_data)
 		align_place = "right_hand"
 	}
 	self.m590.DAMAGE = 6
+	self.m590.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_MEDIUM
 	self.m590.damage_near = 2000
 	self.m590.damage_far = 3000
 	self.m590.rays = 12
@@ -16835,6 +16955,7 @@ function WeaponTweakData:_init_x_mp5(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_mp5.DAMAGE = 1
+	self.x_mp5.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
 	self.x_mp5.CLIP_AMMO_MAX = 60
 	self.x_mp5.NR_CLIPS_MAX = 5
 	self.x_mp5.AMMO_MAX = self.x_mp5.CLIP_AMMO_MAX * self.x_mp5.NR_CLIPS_MAX
@@ -16943,8 +17064,9 @@ function WeaponTweakData:_init_x_akmsu(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_akmsu.DAMAGE = 1
+	self.x_akmsu.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_HIGH
 	self.x_akmsu.CLIP_AMMO_MAX = 60
-	self.x_akmsu.NR_CLIPS_MAX = 2
+	self.x_akmsu.NR_CLIPS_MAX = 3
 	self.x_akmsu.AMMO_MAX = self.x_akmsu.CLIP_AMMO_MAX * self.x_akmsu.NR_CLIPS_MAX
 	self.x_akmsu.AMMO_PICKUP = self:_pickup_chance(self.x_akmsu.AMMO_MAX, PICKUP.OTHER)
 	self.x_akmsu.FIRE_MODE = "auto"
@@ -17050,6 +17172,7 @@ function WeaponTweakData:_init_tecci(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.tecci.DAMAGE = 1
+	self.tecci.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.tecci.CLIP_AMMO_MAX = 100
 	self.tecci.NR_CLIPS_MAX = 2
 	self.tecci.AMMO_MAX = self.tecci.CLIP_AMMO_MAX * self.tecci.NR_CLIPS_MAX
@@ -17157,6 +17280,7 @@ function WeaponTweakData:_init_hajk(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.hajk.DAMAGE = 1
+	self.hajk.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_HIGH
 	self.hajk.CLIP_AMMO_MAX = 30
 	self.hajk.NR_CLIPS_MAX = 3
 	self.hajk.AMMO_MAX = self.hajk.CLIP_AMMO_MAX * self.hajk.NR_CLIPS_MAX
@@ -17264,6 +17388,7 @@ function WeaponTweakData:_init_boot(weapon_data)
 		align_place = "right_hand"
 	}
 	self.boot.DAMAGE = 6
+	self.boot.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_HIGH
 	self.boot.damage_near = 2000
 	self.boot.damage_far = 3000
 	self.boot.rays = 12
@@ -17376,16 +17501,17 @@ function WeaponTweakData:_init_packrat(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.packrat.DAMAGE = 1
+	self.packrat.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_MEDIUM
 	self.packrat.CLIP_AMMO_MAX = 15
 	self.packrat.NR_CLIPS_MAX = 6
 	self.packrat.AMMO_MAX = self.packrat.CLIP_AMMO_MAX * self.packrat.NR_CLIPS_MAX
-	self.packrat.AMMO_PICKUP = self:_pickup_chance(self.packrat.AMMO_MAX, PICKUP.OTHER)
+	self.packrat.AMMO_PICKUP = self:_pickup_chance(self.packrat.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.packrat.FIRE_MODE = "single"
 	self.packrat.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.packrat.single = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.packrat.spread = {
 		standing = self.new_m4.spread.standing,
@@ -17431,7 +17557,7 @@ function WeaponTweakData:_init_packrat(weapon_data)
 	self.packrat.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 66,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -17478,6 +17604,7 @@ function WeaponTweakData:_init_schakal(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.schakal.DAMAGE = 1
+	self.schakal.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_HIGH
 	self.schakal.CLIP_AMMO_MAX = 30
 	self.schakal.NR_CLIPS_MAX = 3
 	self.schakal.AMMO_MAX = self.schakal.CLIP_AMMO_MAX * self.schakal.NR_CLIPS_MAX
@@ -17588,6 +17715,7 @@ function WeaponTweakData:_init_desertfox(weapon_data)
 		align_place = "right_hand"
 	}
 	self.desertfox.DAMAGE = 1
+	self.desertfox.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_HIGH
 	self.desertfox.CLIP_AMMO_MAX = 5
 	self.desertfox.NR_CLIPS_MAX = 6
 	self.desertfox.AMMO_MAX = self.desertfox.CLIP_AMMO_MAX * self.desertfox.NR_CLIPS_MAX
@@ -17704,6 +17832,7 @@ function WeaponTweakData:_init_x_packrat(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_packrat.DAMAGE = 1
+	self.x_packrat.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_MEDIUM
 	self.x_packrat.CLIP_AMMO_MAX = 30
 	self.x_packrat.NR_CLIPS_MAX = 3
 	self.x_packrat.AMMO_MAX = self.x_packrat.CLIP_AMMO_MAX * self.x_packrat.NR_CLIPS_MAX
@@ -17768,7 +17897,7 @@ function WeaponTweakData:_init_x_packrat(weapon_data)
 	self.x_packrat.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 66,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -17813,6 +17942,7 @@ function WeaponTweakData:_init_rota(weapon_data)
 		align_place = "right_hand"
 	}
 	self.rota.DAMAGE = 6
+	self.rota.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_MEDIUM
 	self.rota.damage_near = 2000
 	self.rota.damage_far = 3000
 	self.rota.rays = 12
@@ -18036,10 +18166,11 @@ function WeaponTweakData:_init_contraband(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.contraband.DAMAGE = 1
+	self.contraband.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_HIGH
 	self.contraband.CLIP_AMMO_MAX = 20
-	self.contraband.NR_CLIPS_MAX = 2
+	self.contraband.NR_CLIPS_MAX = 3
 	self.contraband.AMMO_MAX = self.contraband.CLIP_AMMO_MAX * self.contraband.NR_CLIPS_MAX
-	self.contraband.AMMO_PICKUP = self:_pickup_chance(self.contraband.AMMO_MAX, PICKUP.SNIPER_HIGH_DAMAGE)
+	self.contraband.AMMO_PICKUP = self:_pickup_chance(self.contraband.AMMO_MAX, PICKUP.AR_DMR_CAPACITY)
 	self.contraband.FIRE_MODE = "single"
 	self.contraband.fire_mode_data = {
 		fire_rate = 0.098
@@ -18143,9 +18274,12 @@ function WeaponTweakData:_init_contraband(weapon_data)
 	self.contraband_m203.damage_far = 3000
 	self.contraband_m203.rays = 6
 	self.contraband_m203.CLIP_AMMO_MAX = 1
-	self.contraband_m203.NR_CLIPS_MAX = 3
+	self.contraband_m203.NR_CLIPS_MAX = 2
 	self.contraband_m203.AMMO_MAX = self.contraband_m203.CLIP_AMMO_MAX * self.contraband_m203.NR_CLIPS_MAX
-	self.contraband_m203.AMMO_PICKUP = self:_pickup_chance(20, PICKUP.OTHER)
+	self.contraband_m203.AMMO_PICKUP = {
+		0.05,
+		0.45
+	}
 	self.contraband_m203.FIRE_MODE = "single"
 	self.contraband_m203.fire_mode_data = {
 		fire_rate = 0.75
@@ -18376,17 +18510,18 @@ function WeaponTweakData:_init_tti(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.tti.DAMAGE = 1
+	self.tti.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_LOW
 	self.tti.CLIP_AMMO_MAX = 20
 	self.tti.NR_CLIPS_MAX = 2
 	self.tti.AMMO_MAX = self.tti.CLIP_AMMO_MAX * self.tti.NR_CLIPS_MAX
 	self.tti.AMMO_PICKUP = self:_pickup_chance(self.tti.AMMO_MAX, PICKUP.SNIPER_LOW_DAMAGE)
 	self.tti.FIRE_MODE = "single"
 	self.tti.fire_mode_data = {
-		fire_rate = 0.3
+		fire_rate = 0.4
 	}
 	self.tti.CAN_TOGGLE_FIREMODE = false
 	self.tti.single = {
-		fire_rate = 0.3
+		fire_rate = 0.4
 	}
 	self.tti.spread = {
 		standing = self.new_m4.spread.standing,
@@ -18398,8 +18533,8 @@ function WeaponTweakData:_init_tti(weapon_data)
 	}
 	self.tti.kick = {
 		standing = {
+			1.5,
 			2,
-			3,
 			-0.3,
 			0.3
 		}
@@ -18439,7 +18574,7 @@ function WeaponTweakData:_init_tti(weapon_data)
 	self.tti.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 200,
+		damage = 160,
 		alert_size = 8,
 		spread = 16,
 		spread_moving = 24,
@@ -18491,6 +18626,7 @@ function WeaponTweakData:_init_grv(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.siltstone.DAMAGE = 1
+	self.siltstone.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_LOW
 	self.siltstone.CLIP_AMMO_MAX = 10
 	self.siltstone.NR_CLIPS_MAX = 4
 	self.siltstone.AMMO_MAX = self.siltstone.CLIP_AMMO_MAX * self.siltstone.NR_CLIPS_MAX
@@ -18513,10 +18649,10 @@ function WeaponTweakData:_init_grv(weapon_data)
 	}
 	self.siltstone.kick = {
 		standing = {
+			1.5,
 			2,
-			3,
-			-0.3,
-			0.3
+			-0.4,
+			0.4
 		}
 	}
 	self.siltstone.kick.crouching = self.siltstone.kick.standing
@@ -18604,10 +18740,11 @@ function WeaponTweakData:_init_flint(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.flint.DAMAGE = 1
+	self.flint.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_MEDIUM
 	self.flint.CLIP_AMMO_MAX = 35
 	self.flint.NR_CLIPS_MAX = 3
 	self.flint.AMMO_MAX = self.flint.CLIP_AMMO_MAX * self.flint.NR_CLIPS_MAX
-	self.flint.AMMO_PICKUP = self:_pickup_chance(self.flint.AMMO_MAX, PICKUP.OTHER)
+	self.flint.AMMO_PICKUP = self:_pickup_chance(self.flint.AMMO_MAX, PICKUP.AR_LOW_CAPACITY)
 	self.flint.FIRE_MODE = "auto"
 	self.flint.fire_mode_data = {
 		fire_rate = 0.092
@@ -18707,6 +18844,7 @@ function WeaponTweakData:_init_coal(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.coal.DAMAGE = 1
+	self.coal.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_HIGH
 	self.coal.CLIP_AMMO_MAX = 64
 	self.coal.NR_CLIPS_MAX = 2
 	self.coal.AMMO_MAX = self.coal.CLIP_AMMO_MAX * self.coal.NR_CLIPS_MAX
@@ -18812,6 +18950,7 @@ function WeaponTweakData:_init_lemming(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.lemming.DAMAGE = 1
+	self.lemming.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_HIGH
 	self.lemming.CLIP_AMMO_MAX = 15
 	self.lemming.NR_CLIPS_MAX = 3
 	self.lemming.AMMO_MAX = self.lemming.CLIP_AMMO_MAX * self.lemming.NR_CLIPS_MAX
@@ -18911,10 +19050,10 @@ function WeaponTweakData:_init_chinchilla(weapon_data)
 	}
 	self.chinchilla.FIRE_MODE = "single"
 	self.chinchilla.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.chinchilla.single = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.chinchilla.name_id = "bm_w_chinchilla"
 	self.chinchilla.desc_id = "bm_w_chinchilla_desc"
@@ -18926,10 +19065,11 @@ function WeaponTweakData:_init_chinchilla(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.chinchilla.DAMAGE = 2
+	self.chinchilla.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_VERYHIGH
 	self.chinchilla.CLIP_AMMO_MAX = 6
 	self.chinchilla.NR_CLIPS_MAX = 9
 	self.chinchilla.AMMO_MAX = self.chinchilla.CLIP_AMMO_MAX * self.chinchilla.NR_CLIPS_MAX
-	self.chinchilla.AMMO_PICKUP = self:_pickup_chance(self.chinchilla.AMMO_MAX, PICKUP.OTHER)
+	self.chinchilla.AMMO_PICKUP = self:_pickup_chance(self.chinchilla.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.chinchilla.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -19022,6 +19162,7 @@ function WeaponTweakData:_init_x_chinchilla(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_chinchilla.DAMAGE = 1
+	self.x_chinchilla.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_VERYHIGH
 	self.x_chinchilla.CLIP_AMMO_MAX = 12
 	self.x_chinchilla.NR_CLIPS_MAX = 6
 	self.x_chinchilla.AMMO_MAX = self.x_chinchilla.CLIP_AMMO_MAX * self.x_chinchilla.NR_CLIPS_MAX
@@ -19125,10 +19266,10 @@ function WeaponTweakData:_init_model3(weapon_data)
 	}
 	self.model3.FIRE_MODE = "single"
 	self.model3.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.model3.single = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.model3.name_id = "bm_w_model3"
 	self.model3.desc_id = "bm_w_model3_desc"
@@ -19141,10 +19282,11 @@ function WeaponTweakData:_init_model3(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.model3.DAMAGE = 2
+	self.model3.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_HIGH
 	self.model3.CLIP_AMMO_MAX = 6
 	self.model3.NR_CLIPS_MAX = 11
 	self.model3.AMMO_MAX = self.model3.CLIP_AMMO_MAX * self.model3.NR_CLIPS_MAX
-	self.model3.AMMO_PICKUP = self:_pickup_chance(self.model3.AMMO_MAX, PICKUP.OTHER)
+	self.model3.AMMO_PICKUP = self:_pickup_chance(self.model3.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.model3.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -19243,6 +19385,7 @@ function WeaponTweakData:_init_x_model3(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_model3.DAMAGE = 1
+	self.x_model3.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_HIGH
 	self.x_model3.CLIP_AMMO_MAX = 12
 	self.x_model3.NR_CLIPS_MAX = 8
 	self.x_model3.AMMO_MAX = self.x_model3.CLIP_AMMO_MAX * self.x_model3.NR_CLIPS_MAX
@@ -19353,6 +19496,7 @@ function WeaponTweakData:_init_m1897(weapon_data)
 		align_place = "right_hand"
 	}
 	self.m1897.DAMAGE = 6
+	self.m1897.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_MEDIUM
 	self.m1897.damage_near = 2000
 	self.m1897.damage_far = 3000
 	self.m1897.rays = 12
@@ -19473,10 +19617,11 @@ function WeaponTweakData:_init_shepheard(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.shepheard.DAMAGE = 1
+	self.shepheard.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
 	self.shepheard.CLIP_AMMO_MAX = 20
 	self.shepheard.NR_CLIPS_MAX = 10
 	self.shepheard.AMMO_MAX = self.shepheard.CLIP_AMMO_MAX * self.shepheard.NR_CLIPS_MAX
-	self.shepheard.AMMO_PICKUP = self:_pickup_chance(self.shepheard.AMMO_MAX, PICKUP.OTHER)
+	self.shepheard.AMMO_PICKUP = self:_pickup_chance(self.shepheard.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
 	self.shepheard.FIRE_MODE = "auto"
 	self.shepheard.fire_mode_data = {
 		fire_rate = 0.08
@@ -19581,8 +19726,9 @@ function WeaponTweakData:_init_x_shepheard(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_shepheard.DAMAGE = 1
+	self.x_shepheard.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
 	self.x_shepheard.CLIP_AMMO_MAX = 40
-	self.x_shepheard.NR_CLIPS_MAX = 6
+	self.x_shepheard.NR_CLIPS_MAX = 7
 	self.x_shepheard.AMMO_MAX = self.x_shepheard.CLIP_AMMO_MAX * self.x_shepheard.NR_CLIPS_MAX
 	self.x_shepheard.AMMO_PICKUP = self:_pickup_chance(self.x_shepheard.AMMO_MAX, PICKUP.OTHER)
 	self.x_shepheard.FIRE_MODE = "auto"
@@ -19685,16 +19831,17 @@ function WeaponTweakData:_init_breech(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.breech.DAMAGE = 1
+	self.breech.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_VERYHIGH
 	self.breech.CLIP_AMMO_MAX = 8
 	self.breech.NR_CLIPS_MAX = 7
 	self.breech.AMMO_MAX = self.breech.CLIP_AMMO_MAX * self.breech.NR_CLIPS_MAX
-	self.breech.AMMO_PICKUP = self:_pickup_chance(self.breech.AMMO_MAX, PICKUP.OTHER)
+	self.breech.AMMO_PICKUP = self:_pickup_chance(self.breech.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
 	self.breech.FIRE_MODE = "single"
 	self.breech.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.breech.single = {
-		fire_rate = 0.166
+		fire_rate = 0.15
 	}
 	self.breech.spread = {
 		standing = self.new_m4.spread.standing,
@@ -19791,10 +19938,11 @@ function WeaponTweakData:_init_ching(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.ching.DAMAGE = 2
+	self.ching.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_HIGH
 	self.ching.CLIP_AMMO_MAX = 8
 	self.ching.NR_CLIPS_MAX = 9
 	self.ching.AMMO_MAX = self.ching.CLIP_AMMO_MAX * self.ching.NR_CLIPS_MAX
-	self.ching.AMMO_PICKUP = self:_pickup_chance(self.ching.AMMO_MAX, PICKUP.SNIPER_HIGH_DAMAGE)
+	self.ching.AMMO_PICKUP = self:_pickup_chance(self.ching.AMMO_MAX, PICKUP.AR_DMR_CAPACITY)
 	self.ching.FIRE_MODE = "single"
 	self.ching.fire_mode_data = {
 		fire_rate = 0.1
@@ -19895,6 +20043,7 @@ function WeaponTweakData:_init_erma(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.erma.DAMAGE = 1
+	self.erma.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_HIGH
 	self.erma.CLIP_AMMO_MAX = 40
 	self.erma.NR_CLIPS_MAX = 2
 	self.erma.AMMO_MAX = self.erma.CLIP_AMMO_MAX * self.erma.NR_CLIPS_MAX
@@ -20095,10 +20244,10 @@ function WeaponTweakData:_init_shrew(weapon_data)
 	self.shrew.sounds.magazine_empty = "wp_pistol_slide_lock"
 	self.shrew.FIRE_MODE = "single"
 	self.shrew.fire_mode_data = {
-		fire_rate = 0.125
+		fire_rate = 0.11
 	}
 	self.shrew.single = {
-		fire_rate = 0.125
+		fire_rate = 0.11
 	}
 	self.shrew.timers = {
 		reload_not_empty = 1.47,
@@ -20116,10 +20265,11 @@ function WeaponTweakData:_init_shrew(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.shrew.DAMAGE = 1
+	self.shrew.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_LOW
 	self.shrew.CLIP_AMMO_MAX = 17
 	self.shrew.NR_CLIPS_MAX = 9
 	self.shrew.AMMO_MAX = self.shrew.CLIP_AMMO_MAX * self.shrew.NR_CLIPS_MAX
-	self.shrew.AMMO_PICKUP = self:_pickup_chance(self.shrew.AMMO_MAX, 1)
+	self.shrew.AMMO_PICKUP = self:_pickup_chance(self.shrew.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.shrew.spread = {
 		standing = self.new_m4.spread.standing,
 		crouching = self.new_m4.spread.crouching,
@@ -20171,7 +20321,7 @@ function WeaponTweakData:_init_shrew(weapon_data)
 	self.shrew.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 17,
 		spread_moving = 14,
@@ -20215,6 +20365,7 @@ function WeaponTweakData:_init_x_shrew(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_shrew.DAMAGE = 1
+	self.x_shrew.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_LOW
 	self.x_shrew.CLIP_AMMO_MAX = 34
 	self.x_shrew.NR_CLIPS_MAX = 5
 	self.x_shrew.AMMO_MAX = self.x_shrew.CLIP_AMMO_MAX * self.x_shrew.NR_CLIPS_MAX
@@ -20280,7 +20431,7 @@ function WeaponTweakData:_init_x_shrew(weapon_data)
 	self.x_shrew.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 17,
 		spread_moving = 14,
@@ -20325,6 +20476,7 @@ function WeaponTweakData:_init_basset(weapon_data)
 		align_place = "right_hand"
 	}
 	self.basset.DAMAGE = 6
+	self.basset.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_LOW
 	self.basset.damage_near = 2000
 	self.basset.damage_far = 3000
 	self.basset.rays = 12
@@ -20443,6 +20595,7 @@ function WeaponTweakData:_init_x_basset(weapon_data)
 	self.x_basset.damage_far = 3000
 	self.x_basset.rays = 12
 	self.x_basset.fire_mode_data.fire_rate = 0.18
+	self.x_basset.damage_falloff = FALLOFF_TEMPLATE.AKI_SHOTGUN_FALL_LOW
 	self.x_basset.single = {
 		fire_rate = 0.18
 	}
@@ -20540,6 +20693,7 @@ function WeaponTweakData:_init_corgi(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.corgi.DAMAGE = 1
+	self.corgi.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.corgi.CLIP_AMMO_MAX = 30
 	self.corgi.NR_CLIPS_MAX = 5
 	self.corgi.AMMO_MAX = self.corgi.CLIP_AMMO_MAX * self.corgi.NR_CLIPS_MAX
@@ -20767,8 +20921,9 @@ function WeaponTweakData:_init_x_coal(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_coal.DAMAGE = 1
+	self.x_coal.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_HIGH
 	self.x_coal.CLIP_AMMO_MAX = 128
-	self.x_coal.NR_CLIPS_MAX = 1
+	self.x_coal.NR_CLIPS_MAX = 1.25
 	self.x_coal.AMMO_MAX = self.x_coal.CLIP_AMMO_MAX * self.x_coal.NR_CLIPS_MAX
 	self.x_coal.AMMO_PICKUP = self:_pickup_chance(self.x_coal.AMMO_MAX, PICKUP.OTHER)
 	self.x_coal.FIRE_MODE = "auto"
@@ -20875,8 +21030,9 @@ function WeaponTweakData:_init_x_baka(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_baka.DAMAGE = 1
+	self.x_baka.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
 	self.x_baka.CLIP_AMMO_MAX = 64
-	self.x_baka.NR_CLIPS_MAX = 4
+	self.x_baka.NR_CLIPS_MAX = 4.5
 	self.x_baka.AMMO_MAX = self.x_baka.CLIP_AMMO_MAX * self.x_baka.NR_CLIPS_MAX
 	self.x_baka.AMMO_PICKUP = self:_pickup_chance(self.x_baka.AMMO_MAX, PICKUP.OTHER)
 	self.x_baka.FIRE_MODE = "auto"
@@ -20983,8 +21139,9 @@ function WeaponTweakData:_init_x_cobray(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_cobray.DAMAGE = 1
+	self.x_cobray.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_cobray.CLIP_AMMO_MAX = 64
-	self.x_cobray.NR_CLIPS_MAX = 3
+	self.x_cobray.NR_CLIPS_MAX = 3.5
 	self.x_cobray.AMMO_MAX = self.x_cobray.CLIP_AMMO_MAX * self.x_cobray.NR_CLIPS_MAX
 	self.x_cobray.AMMO_PICKUP = self:_pickup_chance(self.x_cobray.AMMO_MAX, PICKUP.OTHER)
 	self.x_cobray.FIRE_MODE = "auto"
@@ -21092,6 +21249,7 @@ function WeaponTweakData:_init_x_erma(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_erma.DAMAGE = 1
+	self.x_erma.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_HIGH
 	self.x_erma.CLIP_AMMO_MAX = 80
 	self.x_erma.NR_CLIPS_MAX = 2
 	self.x_erma.AMMO_MAX = self.x_erma.CLIP_AMMO_MAX * self.x_erma.NR_CLIPS_MAX
@@ -21201,8 +21359,9 @@ function WeaponTweakData:_init_x_hajk(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_hajk.DAMAGE = 1
+	self.x_hajk.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_HIGH
 	self.x_hajk.CLIP_AMMO_MAX = 60
-	self.x_hajk.NR_CLIPS_MAX = 2
+	self.x_hajk.NR_CLIPS_MAX = 3
 	self.x_hajk.AMMO_MAX = self.x_hajk.CLIP_AMMO_MAX * self.x_hajk.NR_CLIPS_MAX
 	self.x_hajk.AMMO_PICKUP = self:_pickup_chance(self.x_hajk.AMMO_MAX, PICKUP.OTHER)
 	self.x_hajk.FIRE_MODE = "auto"
@@ -21310,8 +21469,9 @@ function WeaponTweakData:_init_x_m45(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_m45.DAMAGE = 1
+	self.x_m45.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_HIGH
 	self.x_m45.CLIP_AMMO_MAX = 80
-	self.x_m45.NR_CLIPS_MAX = 1
+	self.x_m45.NR_CLIPS_MAX = 2
 	self.x_m45.AMMO_MAX = self.x_m45.CLIP_AMMO_MAX * self.x_m45.NR_CLIPS_MAX
 	self.x_m45.AMMO_PICKUP = self:_pickup_chance(self.x_m45.AMMO_MAX, PICKUP.OTHER)
 	self.x_m45.FIRE_MODE = "auto"
@@ -21417,8 +21577,9 @@ function WeaponTweakData:_init_x_m1928(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_m1928.DAMAGE = 1
+	self.x_m1928.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_m1928.CLIP_AMMO_MAX = 100
-	self.x_m1928.NR_CLIPS_MAX = 2
+	self.x_m1928.NR_CLIPS_MAX = 2.3
 	self.x_m1928.AMMO_MAX = self.x_m1928.CLIP_AMMO_MAX * self.x_m1928.NR_CLIPS_MAX
 	self.x_m1928.AMMO_PICKUP = self:_pickup_chance(self.x_m1928.AMMO_MAX, PICKUP.OTHER)
 	self.x_m1928.FIRE_MODE = "auto"
@@ -21525,8 +21686,9 @@ function WeaponTweakData:_init_x_mac10(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_mac10.DAMAGE = 1
+	self.x_mac10.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_mac10.CLIP_AMMO_MAX = 80
-	self.x_mac10.NR_CLIPS_MAX = 2
+	self.x_mac10.NR_CLIPS_MAX = 3
 	self.x_mac10.AMMO_MAX = self.x_mac10.CLIP_AMMO_MAX * self.x_mac10.NR_CLIPS_MAX
 	self.x_mac10.AMMO_PICKUP = self:_pickup_chance(self.x_mac10.AMMO_MAX, PICKUP.OTHER)
 	self.x_mac10.FIRE_MODE = "auto"
@@ -21633,8 +21795,9 @@ function WeaponTweakData:_init_x_mp7(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_mp7.DAMAGE = 1
+	self.x_mp7.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_mp7.CLIP_AMMO_MAX = 40
-	self.x_mp7.NR_CLIPS_MAX = 5
+	self.x_mp7.NR_CLIPS_MAX = 6
 	self.x_mp7.AMMO_MAX = self.x_mp7.CLIP_AMMO_MAX * self.x_mp7.NR_CLIPS_MAX
 	self.x_mp7.AMMO_PICKUP = self:_pickup_chance(self.x_mp7.AMMO_MAX, PICKUP.OTHER)
 	self.x_mp7.FIRE_MODE = "auto"
@@ -21742,8 +21905,9 @@ function WeaponTweakData:_init_x_mp9(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_mp9.DAMAGE = 1
+	self.x_mp9.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
 	self.x_mp9.CLIP_AMMO_MAX = 60
-	self.x_mp9.NR_CLIPS_MAX = 4
+	self.x_mp9.NR_CLIPS_MAX = 5
 	self.x_mp9.AMMO_MAX = self.x_mp9.CLIP_AMMO_MAX * self.x_mp9.NR_CLIPS_MAX
 	self.x_mp9.AMMO_PICKUP = self:_pickup_chance(self.x_mp9.AMMO_MAX, PICKUP.OTHER)
 	self.x_mp9.FIRE_MODE = "auto"
@@ -21851,8 +22015,9 @@ function WeaponTweakData:_init_x_olympic(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_olympic.DAMAGE = 1
+	self.x_olympic.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_olympic.CLIP_AMMO_MAX = 50
-	self.x_olympic.NR_CLIPS_MAX = 4
+	self.x_olympic.NR_CLIPS_MAX = 4.5
 	self.x_olympic.AMMO_MAX = self.x_olympic.CLIP_AMMO_MAX * self.x_olympic.NR_CLIPS_MAX
 	self.x_olympic.AMMO_PICKUP = self:_pickup_chance(self.x_olympic.AMMO_MAX, PICKUP.OTHER)
 	self.x_olympic.FIRE_MODE = "auto"
@@ -21960,8 +22125,9 @@ function WeaponTweakData:_init_x_p90(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_p90.DAMAGE = 1
+	self.x_p90.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_p90.CLIP_AMMO_MAX = 100
-	self.x_p90.NR_CLIPS_MAX = 2
+	self.x_p90.NR_CLIPS_MAX = 2.5
 	self.x_p90.AMMO_MAX = self.x_p90.CLIP_AMMO_MAX * self.x_p90.NR_CLIPS_MAX
 	self.x_p90.AMMO_PICKUP = self:_pickup_chance(self.x_p90.AMMO_MAX, PICKUP.OTHER)
 	self.x_p90.FIRE_MODE = "auto"
@@ -22068,8 +22234,9 @@ function WeaponTweakData:_init_x_polymer(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_polymer.DAMAGE = 1
+	self.x_polymer.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_MEDIUM
 	self.x_polymer.CLIP_AMMO_MAX = 60
-	self.x_polymer.NR_CLIPS_MAX = 3
+	self.x_polymer.NR_CLIPS_MAX = 4
 	self.x_polymer.AMMO_MAX = self.x_polymer.CLIP_AMMO_MAX * self.x_polymer.NR_CLIPS_MAX
 	self.x_polymer.AMMO_PICKUP = self:_pickup_chance(self.x_polymer.AMMO_MAX, PICKUP.OTHER)
 	self.x_polymer.FIRE_MODE = "auto"
@@ -22176,8 +22343,9 @@ function WeaponTweakData:_init_x_schakal(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_schakal.DAMAGE = 1
+	self.x_schakal.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_HIGH
 	self.x_schakal.CLIP_AMMO_MAX = 60
-	self.x_schakal.NR_CLIPS_MAX = 2
+	self.x_schakal.NR_CLIPS_MAX = 3
 	self.x_schakal.AMMO_MAX = self.x_schakal.CLIP_AMMO_MAX * self.x_schakal.NR_CLIPS_MAX
 	self.x_schakal.AMMO_PICKUP = self:_pickup_chance(self.x_schakal.AMMO_MAX, PICKUP.OTHER)
 	self.x_schakal.FIRE_MODE = "auto"
@@ -22285,8 +22453,9 @@ function WeaponTweakData:_init_x_scorpion(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_scorpion.DAMAGE = 1
+	self.x_scorpion.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
 	self.x_scorpion.CLIP_AMMO_MAX = 40
-	self.x_scorpion.NR_CLIPS_MAX = 6
+	self.x_scorpion.NR_CLIPS_MAX = 7
 	self.x_scorpion.AMMO_MAX = self.x_scorpion.CLIP_AMMO_MAX * self.x_scorpion.NR_CLIPS_MAX
 	self.x_scorpion.AMMO_PICKUP = self:_pickup_chance(self.x_scorpion.AMMO_MAX, PICKUP.OTHER)
 	self.x_scorpion.FIRE_MODE = "auto"
@@ -22393,8 +22562,9 @@ function WeaponTweakData:_init_x_sterling(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_sterling.DAMAGE = 1
+	self.x_sterling.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
 	self.x_sterling.CLIP_AMMO_MAX = 40
-	self.x_sterling.NR_CLIPS_MAX = 6
+	self.x_sterling.NR_CLIPS_MAX = 7
 	self.x_sterling.AMMO_MAX = self.x_sterling.CLIP_AMMO_MAX * self.x_sterling.NR_CLIPS_MAX
 	self.x_sterling.AMMO_PICKUP = self:_pickup_chance(self.x_sterling.AMMO_MAX, PICKUP.OTHER)
 	self.x_sterling.FIRE_MODE = "auto"
@@ -22502,8 +22672,9 @@ function WeaponTweakData:_init_x_tec9(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_tec9.DAMAGE = 1
+	self.x_tec9.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
 	self.x_tec9.CLIP_AMMO_MAX = 40
-	self.x_tec9.NR_CLIPS_MAX = 6
+	self.x_tec9.NR_CLIPS_MAX = 7
 	self.x_tec9.AMMO_MAX = self.x_tec9.CLIP_AMMO_MAX * self.x_tec9.NR_CLIPS_MAX
 	self.x_tec9.AMMO_PICKUP = self:_pickup_chance(self.x_tec9.AMMO_MAX, PICKUP.OTHER)
 	self.x_tec9.FIRE_MODE = "auto"
@@ -22610,8 +22781,9 @@ function WeaponTweakData:_init_x_uzi(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_uzi.DAMAGE = 1
+	self.x_uzi.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
 	self.x_uzi.CLIP_AMMO_MAX = 80
-	self.x_uzi.NR_CLIPS_MAX = 3
+	self.x_uzi.NR_CLIPS_MAX = 3.5
 	self.x_uzi.AMMO_MAX = self.x_uzi.CLIP_AMMO_MAX * self.x_uzi.NR_CLIPS_MAX
 	self.x_uzi.AMMO_PICKUP = self:_pickup_chance(self.x_uzi.AMMO_MAX, PICKUP.OTHER)
 	self.x_uzi.FIRE_MODE = "auto"
@@ -22716,6 +22888,7 @@ function WeaponTweakData:_init_x_2006m(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_2006m.DAMAGE = 1
+	self.x_2006m.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_VERYHIGH
 	self.x_2006m.CLIP_AMMO_MAX = 12
 	self.x_2006m.NR_CLIPS_MAX = 5
 	self.x_2006m.AMMO_MAX = self.x_2006m.CLIP_AMMO_MAX * self.x_2006m.NR_CLIPS_MAX
@@ -22820,6 +22993,7 @@ function WeaponTweakData:_init_x_breech(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_breech.DAMAGE = 1
+	self.x_breech.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_VERYHIGH
 	self.x_breech.CLIP_AMMO_MAX = 16
 	self.x_breech.NR_CLIPS_MAX = 4
 	self.x_breech.AMMO_MAX = self.x_breech.CLIP_AMMO_MAX * self.x_breech.NR_CLIPS_MAX
@@ -22930,6 +23104,7 @@ function WeaponTweakData:_init_x_c96(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_c96.DAMAGE = 1
+	self.x_c96.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_MEDIUM
 	self.x_c96.CLIP_AMMO_MAX = 20
 	self.x_c96.NR_CLIPS_MAX = 5
 	self.x_c96.AMMO_MAX = self.x_c96.CLIP_AMMO_MAX * self.x_c96.NR_CLIPS_MAX
@@ -22994,7 +23169,7 @@ function WeaponTweakData:_init_x_c96(weapon_data)
 	self.x_c96.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 21,
 		spread_moving = 12,
@@ -23043,6 +23218,7 @@ function WeaponTweakData:_init_x_g18c(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_g18c.DAMAGE = 1
+	self.x_g18c.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_AUTO
 	self.x_g18c.CLIP_AMMO_MAX = 40
 	self.x_g18c.NR_CLIPS_MAX = 5
 	self.x_g18c.AMMO_MAX = self.x_g18c.CLIP_AMMO_MAX * self.x_g18c.NR_CLIPS_MAX
@@ -23153,6 +23329,7 @@ function WeaponTweakData:_init_x_hs2000(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_hs2000.DAMAGE = 1
+	self.x_hs2000.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_MEDIUM
 	self.x_hs2000.CLIP_AMMO_MAX = 38
 	self.x_hs2000.NR_CLIPS_MAX = 3
 	self.x_hs2000.AMMO_MAX = self.x_hs2000.CLIP_AMMO_MAX * self.x_hs2000.NR_CLIPS_MAX
@@ -23217,7 +23394,7 @@ function WeaponTweakData:_init_x_hs2000(weapon_data)
 	self.x_hs2000.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -23262,6 +23439,7 @@ function WeaponTweakData:_init_x_p226(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_p226.DAMAGE = 1
+	self.x_p226.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_MEDIUM
 	self.x_p226.CLIP_AMMO_MAX = 24
 	self.x_p226.NR_CLIPS_MAX = 4
 	self.x_p226.AMMO_MAX = self.x_p226.CLIP_AMMO_MAX * self.x_p226.NR_CLIPS_MAX
@@ -23326,7 +23504,7 @@ function WeaponTweakData:_init_x_p226(weapon_data)
 	self.x_p226.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 18,
 		spread_moving = 18,
@@ -23371,6 +23549,7 @@ function WeaponTweakData:_init_x_pl14(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_pl14.DAMAGE = 1
+	self.x_pl14.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_HIGH
 	self.x_pl14.CLIP_AMMO_MAX = 24
 	self.x_pl14.NR_CLIPS_MAX = 3
 	self.x_pl14.AMMO_MAX = self.x_pl14.CLIP_AMMO_MAX * self.x_pl14.NR_CLIPS_MAX
@@ -23480,6 +23659,7 @@ function WeaponTweakData:_init_x_ppk(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_ppk.DAMAGE = 1
+	self.x_ppk.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_LOW
 	self.x_ppk.CLIP_AMMO_MAX = 28
 	self.x_ppk.NR_CLIPS_MAX = 6
 	self.x_ppk.AMMO_MAX = self.x_ppk.CLIP_AMMO_MAX * self.x_ppk.NR_CLIPS_MAX
@@ -23544,7 +23724,7 @@ function WeaponTweakData:_init_x_ppk(weapon_data)
 	self.x_ppk.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 12,
 		spread_moving = 12,
@@ -23590,6 +23770,7 @@ function WeaponTweakData:_init_x_rage(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_rage.DAMAGE = 1
+	self.x_rage.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_VERYHIGH
 	self.x_rage.CLIP_AMMO_MAX = 12
 	self.x_rage.NR_CLIPS_MAX = 6
 	self.x_rage.AMMO_MAX = self.x_rage.CLIP_AMMO_MAX * self.x_rage.NR_CLIPS_MAX
@@ -23699,6 +23880,7 @@ function WeaponTweakData:_init_x_sparrow(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_sparrow.DAMAGE = 1
+	self.x_sparrow.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_HIGH
 	self.x_sparrow.CLIP_AMMO_MAX = 24
 	self.x_sparrow.NR_CLIPS_MAX = 3
 	self.x_sparrow.AMMO_MAX = self.x_sparrow.CLIP_AMMO_MAX * self.x_sparrow.NR_CLIPS_MAX
@@ -23807,6 +23989,7 @@ function WeaponTweakData:_init_x_judge(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_judge.DAMAGE = 4
+	self.x_judge.damage_falloff = FALLOFF_TEMPLATE.AKI_SHOTGUN_FALL_HIGH
 	self.x_judge.damage_near = 2000
 	self.x_judge.damage_far = 3000
 	self.x_judge.rays = 12
@@ -23917,6 +24100,7 @@ function WeaponTweakData:_init_x_rota(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_rota.DAMAGE = 4
+	self.x_rota.damage_falloff = FALLOFF_TEMPLATE.AKI_SHOTGUN_FALL_MEDIUM
 	self.x_rota.damage_near = 2000
 	self.x_rota.damage_far = 3000
 	self.x_rota.rays = 12
@@ -24249,6 +24433,7 @@ function WeaponTweakData:_init_komodo(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.komodo.DAMAGE = 1
+	self.komodo.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.komodo.CLIP_AMMO_MAX = 30
 	self.komodo.NR_CLIPS_MAX = 5
 	self.komodo.AMMO_MAX = self.komodo.CLIP_AMMO_MAX * self.komodo.NR_CLIPS_MAX
@@ -24270,10 +24455,20 @@ function WeaponTweakData:_init_komodo(weapon_data)
 		moving_steelsight = self.new_m4.spread.moving_steelsight
 	}
 	self.komodo.kick = {
-		standing = self.new_m4.kick.standing
+		standing = {
+			0.4,
+			0.6,
+			-0.6,
+			0.6
+		}
 	}
 	self.komodo.kick.crouching = self.komodo.kick.standing
-	self.komodo.kick.steelsight = self.komodo.kick.standing
+	self.komodo.kick.steelsight = {
+		0.4,
+		0.6,
+		-0.4,
+		0.4
+	}
 	self.komodo.crosshair = {
 		standing = {},
 		crouching = {},
@@ -24469,10 +24664,11 @@ function WeaponTweakData:_init_legacy(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.legacy.DAMAGE = 1
+	self.legacy.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_LOW
 	self.legacy.CLIP_AMMO_MAX = 13
 	self.legacy.NR_CLIPS_MAX = 12
 	self.legacy.AMMO_MAX = self.legacy.CLIP_AMMO_MAX * self.legacy.NR_CLIPS_MAX
-	self.legacy.AMMO_PICKUP = self:_pickup_chance(self.legacy.AMMO_MAX, PICKUP.OTHER)
+	self.legacy.AMMO_PICKUP = self:_pickup_chance(self.legacy.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.legacy.FIRE_MODE = "single"
 	self.legacy.fire_mode_data = {
 		fire_rate = 0.11
@@ -24524,7 +24720,7 @@ function WeaponTweakData:_init_legacy(weapon_data)
 	self.legacy.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 12,
 		spread_moving = 12,
@@ -24570,6 +24766,7 @@ function WeaponTweakData:_init_x_legacy(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_legacy.DAMAGE = 1
+	self.x_legacy.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_LOW
 	self.x_legacy.CLIP_AMMO_MAX = 26
 	self.x_legacy.NR_CLIPS_MAX = 6
 	self.x_legacy.AMMO_MAX = self.x_legacy.CLIP_AMMO_MAX * self.x_legacy.NR_CLIPS_MAX
@@ -24634,7 +24831,7 @@ function WeaponTweakData:_init_x_legacy(weapon_data)
 	self.x_legacy.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 37,
+		damage = 53,
 		alert_size = 7,
 		spread = 12,
 		spread_moving = 12,
@@ -24686,6 +24883,7 @@ function WeaponTweakData:_init_coach(weapon_data)
 	self.coach.damage_near = 2000
 	self.coach.damage_far = 3000
 	self.coach.rays = 12
+	self.coach.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_VERYHIGH
 	self.coach.CLIP_AMMO_MAX = 2
 	self.coach.NR_CLIPS_MAX = 22
 	self.coach.AMMO_MAX = self.coach.CLIP_AMMO_MAX * self.coach.NR_CLIPS_MAX
@@ -24800,6 +24998,7 @@ function WeaponTweakData:_init_beer(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.beer.DAMAGE = 1
+	self.beer.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_AUTO
 	self.beer.CLIP_AMMO_MAX = 15
 	self.beer.NR_CLIPS_MAX = 13
 	self.beer.AMMO_MAX = self.beer.CLIP_AMMO_MAX * self.beer.NR_CLIPS_MAX
@@ -24915,6 +25114,7 @@ function WeaponTweakData:_init_x_beer(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_beer.DAMAGE = 1
+	self.x_beer.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_AUTO
 	self.x_beer.CLIP_AMMO_MAX = 30
 	self.x_beer.NR_CLIPS_MAX = 7
 	self.x_beer.AMMO_MAX = self.x_beer.CLIP_AMMO_MAX * self.x_beer.NR_CLIPS_MAX
@@ -25028,6 +25228,7 @@ function WeaponTweakData:_init_czech(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.czech.DAMAGE = 1
+	self.czech.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_AUTO
 	self.czech.CLIP_AMMO_MAX = 15
 	self.czech.NR_CLIPS_MAX = 10
 	self.czech.AMMO_MAX = self.czech.CLIP_AMMO_MAX * self.czech.NR_CLIPS_MAX
@@ -25143,6 +25344,7 @@ function WeaponTweakData:_init_x_czech(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_czech.DAMAGE = 1
+	self.x_czech.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_AUTO
 	self.x_czech.CLIP_AMMO_MAX = 30
 	self.x_czech.NR_CLIPS_MAX = 6
 	self.x_czech.AMMO_MAX = self.x_czech.CLIP_AMMO_MAX * self.x_czech.NR_CLIPS_MAX
@@ -25256,6 +25458,7 @@ function WeaponTweakData:_init_stech(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.stech.DAMAGE = 1
+	self.stech.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_AUTO
 	self.stech.CLIP_AMMO_MAX = 20
 	self.stech.NR_CLIPS_MAX = 4
 	self.stech.AMMO_MAX = self.stech.CLIP_AMMO_MAX * self.stech.NR_CLIPS_MAX
@@ -25371,6 +25574,7 @@ function WeaponTweakData:_init_x_stech(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_stech.DAMAGE = 1
+	self.x_stech.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_AUTO
 	self.x_stech.CLIP_AMMO_MAX = 40
 	self.x_stech.NR_CLIPS_MAX = 3
 	self.x_stech.AMMO_MAX = self.x_stech.CLIP_AMMO_MAX * self.x_stech.NR_CLIPS_MAX
@@ -25481,16 +25685,17 @@ function WeaponTweakData:_init_holt(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.holt.DAMAGE = 1
+	self.holt.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_MEDIUM
 	self.holt.CLIP_AMMO_MAX = 15
 	self.holt.NR_CLIPS_MAX = 6
 	self.holt.AMMO_MAX = self.holt.CLIP_AMMO_MAX * self.holt.NR_CLIPS_MAX
-	self.holt.AMMO_PICKUP = self:_pickup_chance(self.holt.AMMO_MAX, PICKUP.OTHER)
+	self.holt.AMMO_PICKUP = self:_pickup_chance(self.holt.AMMO_MAX, PICKUP.PISTOL_HIGH_CAPACITY)
 	self.holt.FIRE_MODE = "single"
 	self.holt.fire_mode_data = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.holt.single = {
-		fire_rate = 0.166
+		fire_rate = 0.125
 	}
 	self.holt.spread = {
 		standing = self.new_m4.spread.standing,
@@ -25536,7 +25741,7 @@ function WeaponTweakData:_init_holt(weapon_data)
 	self.holt.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 16,
 		spread_moving = 16,
@@ -25582,6 +25787,7 @@ function WeaponTweakData:_init_x_holt(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_holt.DAMAGE = 1
+	self.x_holt.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_MEDIUM
 	self.x_holt.CLIP_AMMO_MAX = 30
 	self.x_holt.NR_CLIPS_MAX = 3
 	self.x_holt.AMMO_MAX = self.x_holt.CLIP_AMMO_MAX * self.x_holt.NR_CLIPS_MAX
@@ -25646,7 +25852,7 @@ function WeaponTweakData:_init_x_holt(weapon_data)
 	self.x_holt.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 65,
+		damage = 80,
 		alert_size = 7,
 		spread = 17,
 		spread_moving = 18,
@@ -25697,10 +25903,11 @@ function WeaponTweakData:_init_m60(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.m60.DAMAGE = 1
+	self.m60.damage_falloff = FALLOFF_TEMPLATE.LMG_FALL_HIGH
 	self.m60.CLIP_AMMO_MAX = 200
-	self.m60.NR_CLIPS_MAX = 2
+	self.m60.NR_CLIPS_MAX = 1.5
 	self.m60.AMMO_MAX = self.m60.CLIP_AMMO_MAX * self.m60.NR_CLIPS_MAX
-	self.m60.AMMO_PICKUP = self:_pickup_chance(self.m60.AMMO_MAX, PICKUP.OTHER)
+	self.m60.AMMO_PICKUP = self:_pickup_chance(self.m60.AMMO_MAX, PICKUP.LMG_HIGH_CAPACITY)
 	self.m60.FIRE_MODE = "auto"
 	self.m60.fire_mode_data = {
 		fire_rate = 0.109
@@ -25816,6 +26023,7 @@ function WeaponTweakData:_init_r700(weapon_data)
 		align_place = "right_hand"
 	}
 	self.r700.DAMAGE = 1
+	self.r700.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_MEDIUM
 	self.r700.CLIP_AMMO_MAX = 10
 	self.r700.NR_CLIPS_MAX = 4
 	self.r700.AMMO_MAX = self.r700.CLIP_AMMO_MAX * self.r700.NR_CLIPS_MAX

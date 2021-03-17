@@ -63,6 +63,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 300,
 		category = "dlc"
 	}
+	self.global_values.chas = {
+		name_id = "bm_global_value_chas",
+		desc_id = "menu_l_global_value_chas",
+		unlock_id = "bm_global_value_chas_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 506,
+		category = "dlc"
+	}
 	self.global_values.ess = {
 		name_id = "bm_global_value_ess",
 		desc_id = "menu_l_global_value_ess",
@@ -94,6 +110,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		track = true,
 		sort_number = 505,
 		category = "dlc"
+	}
+	self.global_values.fall = {
+		name_id = "bm_global_value_fall",
+		desc_id = "menu_l_global_value_fall",
+		unlock_id = "bm_global_value_fall_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 505,
+		category = "normal"
 	}
 	self.global_values.fawp = {
 		name_id = "bm_global_value_fawp",
@@ -237,6 +269,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		drops = true,
 		track = true,
 		sort_number = 300,
+		category = "normal"
+	}
+	self.global_values.mar21 = {
+		name_id = "bm_global_value_mar21",
+		desc_id = "menu_l_global_value_mar21",
+		unlock_id = "bm_global_value_mar21_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 261,
 		category = "normal"
 	}
 	self.global_values.maw = {
@@ -606,6 +654,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 300,
 		category = "dlc"
 	}
+	self.global_values.tstp = {
+		name_id = "bm_global_value_tstp",
+		desc_id = "menu_l_global_value_tstp",
+		unlock_id = "bm_global_value_tstp_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 506,
+		category = "dlc"
+	}
 	self.global_values.wcc = {
 		name_id = "bm_global_value_wcc",
 		desc_id = "menu_l_global_value_wcc",
@@ -683,7 +747,7 @@ function LootDropTweakData:init_generated(tweak_data)
 		durability_multiplier = 1,
 		drops = true,
 		track = true,
-		sort_number = 300,
+		sort_number = 260,
 		category = "normal"
 	}
 	self.global_values.xmn = {

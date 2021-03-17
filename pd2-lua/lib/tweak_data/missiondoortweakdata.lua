@@ -899,4 +899,21 @@ function MissionDoorTweakData:init()
 			unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
 		}
 	}
+	self.safe_chas = {
+		devices = {}
+	}
+	self.safe_chas.devices.drill = {
+		{
+			align = "a_drill",
+			timer = 90,
+			can_jam = false,
+			unit = Idstring("units/payday2/equipment/item_door_drill_small/item_door_drill_small")
+		}
+	}
+	self.safe_chas.devices.c4 = {
+		{
+			align = "a_shp_charge",
+			unit = Idstring("units/payday2/equipment/gen_equipment_shape_charge/gen_equipment_shape_charge")
+		}
+	}
 end

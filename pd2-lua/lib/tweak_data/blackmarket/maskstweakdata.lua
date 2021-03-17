@@ -7447,6 +7447,48 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "in31",
 		texture_bundle_folder = "in31"
 	}
+	self.masks.dragon01 = {
+		unit = "units/pd2_dlc_tstp/characters/tstp_msk_dragon01/msk_dragon01",
+		name_id = "bm_msk_tstp_dragon01",
+		pcs = {},
+		value = 0,
+		dlc = "tstp",
+		global_value = "tstp",
+		texture_bundle_folder = "tstp"
+	}
+	self.masks.dragon02 = {
+		unit = "units/pd2_dlc_tstp/characters/tstp_msk_dragon02/msk_dragon02",
+		name_id = "bm_msk_tstp_dragon02",
+		pcs = {},
+		value = 0,
+		dlc = "tstp",
+		global_value = "tstp",
+		texture_bundle_folder = "tstp"
+	}
+	self.masks.godess = {
+		unit = "units/pd2_dlc_tstp/characters/tstp_msk_godess/msk_godess",
+		name_id = "bm_msk_tstp_godess",
+		pcs = {},
+		value = 0,
+		dlc = "tstp",
+		global_value = "tstp",
+		texture_bundle_folder = "tstp"
+	}
+	self.masks.daemon = {
+		unit = "units/pd2_dlc_tstp/characters/tstp_msk_daemon/msk_daemon",
+		name_id = "bm_msk_tstp_daemon",
+		pcs = {},
+		value = 0,
+		dlc = "tstp",
+		global_value = "tstp",
+		texture_bundle_folder = "tstp",
+		offsets = {
+			wolf = {
+				Vector3(0, 0, 0.435252),
+				Rotation(-0, -0, -0)
+			}
+		}
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.masks) do

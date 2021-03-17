@@ -1883,6 +1883,7 @@ function PlayerDamage:on_downed()
 	self:_stop_concussion()
 	self:clear_armor_stored_health()
 	self:clear_delayed_damage()
+	self:remove_listener("IngameAccessCamera")
 	self._listener_holder:call("on_enter_bleedout")
 end
 

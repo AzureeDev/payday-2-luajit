@@ -4644,6 +4644,10 @@ function PlayerManager:server_drop_carry(carry_id, carry_multiplier, dye_initiat
 	managers.network:session():send_to_peers_synched("sync_carry_data", unit, carry_id, carry_multiplier, dye_initiated, has_dye_pack, dye_value_multiplier, position, dir, throw_distance_multiplier_upgrade_level, zipline_unit, peer and peer:id() or 0)
 	self:sync_carry_data(unit, carry_id, carry_multiplier, dye_initiated, has_dye_pack, dye_value_multiplier, position, dir, throw_distance_multiplier_upgrade_level, zipline_unit, peer and peer:id() or 0)
 
+	if unit:carry_data()._global_event then
+		managers.mission:call_global_event(unit:carry_data()._global_event)
+	end
+
 	return unit
 end
 

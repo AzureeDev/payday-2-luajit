@@ -5360,7 +5360,8 @@ GroupAIStateBase.blame_triggers = {
 	security_mex_no_pager = "cop",
 	taser = "cop",
 	mobster_boss = "gan",
-	civilian_mariachi = "civ"
+	civilian_mariachi = "civ",
+	triad = "gan"
 }
 GroupAIStateBase.unique_triggers = {
 	glass_alarm = "gls_alarm",

@@ -5070,8 +5070,8 @@ function WeaponFactoryTweakData:_init_ak74()
 					recoil = -9
 				},
 				custom_stats = {
-					ammo_pickup_max_mul = 0.15,
-					ammo_pickup_min_mul = 0.2
+					ammo_pickup_max_mul = 0.4,
+					ammo_pickup_min_mul = 0.45
 				}
 			}
 		},
@@ -9458,8 +9458,8 @@ function WeaponFactoryTweakData:_init_serbu()
 					armor_piercing_add = 1,
 					can_shoot_through_shield = true,
 					can_shoot_through_wall = true,
-					damage_far_mul = 1.15,
-					damage_near_mul = 2,
+					damage_far_mul = 2,
+					damage_near_mul = 10,
 					can_shoot_through_enemy = true,
 					rays = 1
 				}
@@ -10938,9 +10938,9 @@ function WeaponFactoryTweakData:_init_judge()
 			},
 			wpn_fps_upg_a_piercing = {
 				custom_stats = {
-					damage_near_mul = 2,
+					damage_near_mul = 3,
 					armor_piercing_add = 1,
-					damage_far_mul = 1.7
+					damage_far_mul = 1
 				}
 			},
 			wpn_fps_upg_a_explosive = {
@@ -14694,8 +14694,8 @@ function WeaponFactoryTweakData:_init_striker()
 					armor_piercing_add = 1,
 					can_shoot_through_shield = true,
 					can_shoot_through_wall = true,
-					damage_far_mul = 1.15,
-					damage_near_mul = 2,
+					damage_far_mul = 2,
+					damage_near_mul = 10,
 					can_shoot_through_enemy = true,
 					rays = 1
 				}
@@ -15482,8 +15482,8 @@ function WeaponFactoryTweakData:_init_g3()
 			value = 1
 		},
 		custom_stats = {
-			ammo_pickup_max_mul = 0.5,
-			ammo_pickup_min_mul = 0.5
+			ammo_pickup_max_mul = 0.7,
+			ammo_pickup_min_mul = 0.8
 		}
 	}
 	self.parts.wpn_fps_ass_g3_b_short = {
@@ -18383,8 +18383,8 @@ function WeaponFactoryTweakData:create_ammunition()
 			armor_piercing_add = 1,
 			can_shoot_through_shield = true,
 			can_shoot_through_wall = true,
-			damage_far_mul = 1.15,
-			damage_near_mul = 2,
+			damage_far_mul = 2,
+			damage_near_mul = 10,
 			can_shoot_through_enemy = true,
 			rays = 1
 		}
@@ -18458,7 +18458,7 @@ function WeaponFactoryTweakData:create_ammunition()
 			damage = -3
 		},
 		custom_stats = {
-			damage_near_mul = 1,
+			damage_near_mul = 3,
 			armor_piercing_add = 1,
 			damage_far_mul = 1
 		}
@@ -23913,8 +23913,8 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 			recoil = -10
 		},
 		custom_stats = {
-			ammo_pickup_max_mul = 0.15,
-			ammo_pickup_min_mul = 0.2
+			ammo_pickup_max_mul = 0.4,
+			ammo_pickup_min_mul = 0.45
 		},
 		forbids = {
 			"wpn_fps_ammo_type"
@@ -32308,7 +32308,8 @@ function WeaponFactoryTweakData:_init_m590()
 			"wpn_fps_upg_ns_sho_salvo_large",
 			"wpn_fps_upg_shot_ns_king",
 			"wpn_fps_upg_ns_shot_thick",
-			"wpn_fps_upg_ns_shot_shark"
+			"wpn_fps_upg_ns_shot_shark",
+			"wpn_fps_upg_a_dragons_breath"
 		}
 	}
 	self.parts.wpn_fps_sho_m590_b_long = {
@@ -43477,9 +43478,9 @@ function WeaponFactoryTweakData:_init_x_judge()
 			},
 			wpn_fps_upg_a_piercing = {
 				custom_stats = {
-					damage_near_mul = 2,
+					damage_near_mul = 3,
 					armor_piercing_add = 1,
-					damage_far_mul = 1.7
+					damage_far_mul = 1
 				}
 			},
 			wpn_fps_upg_a_explosive = {

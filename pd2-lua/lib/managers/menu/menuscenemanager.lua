@@ -3575,9 +3575,12 @@ function MenuSceneManager:spawn_infamy_outfit_preview(outfit_id, material_variat
 		self._character_yaw = -45
 
 		self._character_unit:set_rotation(Rotation(self._character_yaw))
-		self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_outfit_done"))
 
-		self._infamy_item_spawned = true
+		local asset_id = Idstring(tweak_data.blackmarket.player_styles[outfit_id].unit)
+
+		self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_outfit_done", asset_id))
+
+		self._infamy_item_spawned = asset_id
 		self._use_character_grab2 = true
 		self._use_character_pan = true
 	end)
@@ -3592,14 +3595,16 @@ function MenuSceneManager:remove_outfit(...)
 	self._use_character_pan = false
 end
 
-function MenuSceneManager:spawn_outfit_done()
-	if self._infamy_item_spawned then
-		self._character_unit:spawn_manager():remove_unit("char_gloves")
-		self._character_unit:spawn_manager():remove_unit("char_glove_adapter")
-		self._character_unit:anim_state_machine():set_speed(self._outfit_state, 0)
-		self._character_unit:set_visible(false)
-		self._character_unit:set_position(Vector3(-75, 10, 100))
-	end
+function MenuSceneManager:spawn_outfit_done(asset_id)
+	self:add_one_frame_delayed_clbk(function ()
+		if self._infamy_item_spawned and self._infamy_item_spawned == asset_id then
+			self._character_unit:spawn_manager():remove_unit("char_gloves")
+			self._character_unit:spawn_manager():remove_unit("char_glove_adapter")
+			self._character_unit:anim_state_machine():set_speed(self._outfit_state, 0)
+			self._character_unit:set_visible(false)
+			self._character_unit:set_position(Vector3(-75, 10, 100))
+		end
+	end)
 end
 
 function MenuSceneManager:spawn_infamy_gloves_preview(glove_id)
@@ -3612,9 +3617,12 @@ function MenuSceneManager:spawn_infamy_gloves_preview(glove_id)
 		self._character_unit:set_rotation(Rotation(self._character_yaw))
 		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "cvc_var1", 0)
 		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "husk2", 1)
-		self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_gloves_done"))
 
-		self._infamy_item_spawned = true
+		local asset_id = Idstring(tweak_data.blackmarket.gloves[glove_id].unit)
+
+		self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_gloves_done", asset_id))
+
+		self._infamy_item_spawned = asset_id
 		self._use_character_grab2 = false
 		self._use_item_grab = false
 	end)
@@ -3628,13 +3636,15 @@ function MenuSceneManager:remove_gloves()
 	self._use_item_grab = true
 end
 
-function MenuSceneManager:spawn_gloves_done()
-	if self._infamy_item_spawned then
-		self._character_unit:spawn_manager():remove_unit("char_glove_adapter")
-		self._character_unit:anim_state_machine():set_speed(self._outfit_state, 0)
-		self._character_unit:set_visible(false)
-		self._character_unit:set_position(Vector3(100, 2, 93))
-	end
+function MenuSceneManager:spawn_gloves_done(asset_id)
+	self:add_one_frame_delayed_clbk(function ()
+		if self._infamy_item_spawned and self._infamy_item_spawned == asset_id then
+			self._character_unit:spawn_manager():remove_unit("char_glove_adapter")
+			self._character_unit:anim_state_machine():set_speed(self._outfit_state, 0)
+			self._character_unit:set_visible(false)
+			self._character_unit:set_position(Vector3(100, 2, 93))
+		end
+	end)
 end
 
 function MenuSceneManager:spawn_infamy_card_preview(card_sqeuence_name, show_front)

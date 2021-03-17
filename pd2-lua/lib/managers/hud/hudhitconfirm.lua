@@ -61,6 +61,13 @@ function HUDHitConfirm:_animate_show(hint_confirm, done_cb, seconds, damage_scal
 	hint_confirm:set_visible(true)
 	hint_confirm:set_alpha(1)
 
+	if damage_scale then
+		local cx, cy = hint_confirm:center()
+
+		hint_confirm:set_size(hint_confirm:texture_width() * damage_scale, hint_confirm:texture_height() * damage_scale)
+		hint_confirm:set_center(cx, cy)
+	end
+
 	local t = seconds
 
 	while t > 0 do

@@ -56,6 +56,7 @@ logic_variants.city_swat = security_variant
 logic_variants.old_hoxton_mission = security_variant
 logic_variants.inside_man = security_variant
 logic_variants.medic = security_variant
+logic_variants.triad = security_variant
 logic_variants.biker_boss = security_variant
 logic_variants.chavez_boss = security_variant
 logic_variants.bolivian = security_variant

@@ -4957,6 +4957,47 @@ function AchievementsTweakData:init(tweak_data)
 			job = "fex",
 			difficulty = sm_wish_and_above
 		},
+		chas_1 = {
+			award = "chas_1",
+			job = "chas",
+			difficulty = normal_and_above
+		},
+		chas_2 = {
+			award = "chas_2",
+			job = "chas",
+			difficulty = hard_and_above
+		},
+		chas_3 = {
+			award = "chas_3",
+			job = "chas",
+			difficulty = veryhard_and_above
+		},
+		chas_4 = {
+			award = "chas_4",
+			job = "chas",
+			difficulty = overkill_and_above
+		},
+		chas_5 = {
+			award = "chas_5",
+			job = "chas",
+			difficulty = easywish_and_above
+		},
+		chas_6 = {
+			award = "chas_6",
+			job = "chas",
+			difficulty = deathwish_and_above
+		},
+		chas_7 = {
+			award = "chas_7",
+			job = "chas",
+			difficulty = sm_wish_and_above
+		},
+		chas_8 = {
+			award = "chas_8",
+			one_down = true,
+			job = "chas",
+			difficulty = sm_wish_and_above
+		},
 		uno_1 = {
 			award = "uno_1",
 			bag_loot_value = 400000,
@@ -6178,7 +6219,9 @@ function AchievementsTweakData:init(tweak_data)
 			"jolly",
 			"cane",
 			"peta",
-			"moon"
+			"moon",
+			"bex",
+			"fex"
 		},
 		hector = {
 			"watchdogs_wrapper",
@@ -6248,7 +6291,7 @@ function AchievementsTweakData:init(tweak_data)
 			"vit",
 			"mex",
 			"mex_cooking",
-			"bex"
+			"pex"
 		},
 		jimmy = {
 			"mad",
@@ -6263,6 +6306,9 @@ function AchievementsTweakData:init(tweak_data)
 		the_continental = {
 			"spa",
 			"fish"
+		},
+		jiufeng = {
+			"chas"
 		}
 	}
 	self.persistent_stat_unlocks = {
@@ -6696,32 +6742,62 @@ function AchievementsTweakData:init(tweak_data)
 	local jobs = {}
 	local job_data = nil
 	local available_jobs = {}
+	local misplaced_jobs = {}
+	local contact_exclude_list = {
+		"wip",
+		"tests",
+		"skirmish",
+		"escape",
+		"hoxton"
+	}
 
 	for _, job_id in ipairs(tweak_data.narrative:get_jobs_index()) do
-		if tweak_data.narrative:job_data(job_id).contact ~= "wip" and tweak_data.narrative:job_data(job_id).contact ~= "tests" then
+		local contact = tweak_data.narrative:job_data(job_id).contact
+
+		if not table.contains(contact_exclude_list, contact) then
 			jobs[job_id] = true
 			available_jobs[job_id] = tweak_data.narrative:job_data(job_id).contact
 		end
 	end
 
-	for _, list in pairs(self.job_list) do
-		for _, job_id in pairs(list) do
-			if tweak_data.narrative:has_job_wrapper(job_id) then
-				available_jobs[job_id] = nil
+	available_jobs.dream = nil
+	available_jobs.lucid = nil
 
-				for _, job_id in ipairs(tweak_data.narrative:job_data(job_id).job_wrapper) do
-					available_jobs[job_id] = nil
+	for contact, list in pairs(self.job_list) do
+		for _, job_id in pairs(list) do
+			local job_data = tweak_data.narrative:job_data(job_id)
+
+			if job_data then
+				if contact ~= job_data.contact then
+					misplaced_jobs[job_id] = {
+						wrong = contact,
+						correct = job_data.contact
+					}
 				end
-			elseif jobs[job_id] then
-				available_jobs[job_id] = nil
+
+				if tweak_data.narrative:has_job_wrapper(job_id) then
+					available_jobs[job_id] = nil
+
+					for _, job_id in ipairs(job_data.job_wrapper) do
+						available_jobs[job_id] = nil
+					end
+				elseif jobs[job_id] then
+					available_jobs[job_id] = nil
+				else
+					Application:error_no_stack("[TWEAKDATA:ACHIEVEMENTS] Job missing in narrative", job_id)
+				end
 			else
-				Application:debug("[TWEAKDATA:ACHIEVEMENTS] Job missing in narrative", job_id)
+				Application:error_no_stack("[TWEAKDATA:ACHIEVEMENTS] Job missing in narrative", job_id)
 			end
 		end
 	end
 
 	if table.size(available_jobs) > 0 then
-		Application:debug("[TWEAKDATA:ACHIEVEMENTS] Jobs not yet in achievement 'job_list':", inspect(available_jobs))
+		Application:error_no_stack("[TWEAKDATA:ACHIEVEMENTS] Jobs not yet in achievement 'job_list':", inspect(available_jobs))
+	end
+
+	if table.size(misplaced_jobs) > 0 then
+		Application:error_no_stack("[TWEAKDATA:ACHIEVEMENTS] Jobs misplaced in achievement 'job_list':", inspect(misplaced_jobs))
 	end
 
 	self.complete_heist_stats_achievements = {

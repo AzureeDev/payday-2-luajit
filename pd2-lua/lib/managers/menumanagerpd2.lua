@@ -3443,7 +3443,7 @@ function MenuCallbackHandler:sort_weapon_colors(x_option, y_option)
 	local x_gv = x_td.global_value or managers.dlc:dlc_to_global_value(x_td.dlc)
 	local y_gv = y_td.global_value or managers.dlc:dlc_to_global_value(y_td.dlc)
 	x_sn = (x_gv and tweak_data.lootdrop.global_values[x_gv].sort_number or 0) + (x_td.sort_number or 0)
-	y_sn = (x_gv and tweak_data.lootdrop.global_values[y_gv].sort_number or 0) + (y_td.sort_number or 0)
+	y_sn = (y_gv and tweak_data.lootdrop.global_values[y_gv].sort_number or 0) + (y_td.sort_number or 0)
 
 	if x_sn ~= y_sn then
 		return x_sn < y_sn

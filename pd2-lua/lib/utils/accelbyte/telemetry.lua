@@ -217,7 +217,7 @@ local function update_total_playtime(new_playtime)
 	Steam:http_request_put(base_url .. endpoint, on_playtime_updated, payload_content_type, "", 0, headers)
 end
 
-local function send_telemetry(telemetry_body)
+local function send_telemetry(telemetry_body, callback)
 	if get_platform_name() ~= "WIN32" or not Global.telemetry._logged_in then
 		return
 	end
@@ -226,6 +226,7 @@ local function send_telemetry(telemetry_body)
 		return
 	end
 
+	callback = callback or telemetry_callback
 	local telemetry_json = json.encode(telemetry_body)
 	local payload_size = string.len(telemetry_json)
 
@@ -236,7 +237,7 @@ local function send_telemetry(telemetry_body)
 		Global.telemetry._bearer_token = Global.telemetry._bearer_token or Utility:generate_token()
 		headers.Authorization = "Bearer " .. Global.telemetry._bearer_token
 
-		Steam:http_request_post(base_url .. telemetry_endpoint, telemetry_callback, payload_content_type, telemetry_json, payload_size, headers)
+		Steam:http_request_post(base_url .. telemetry_endpoint, callback, payload_content_type, telemetry_json, payload_size, headers)
 	else
 		error("error on JSON encoding, cannot send telemetry")
 	end
@@ -325,6 +326,7 @@ function Telemetry:init()
 			_mission_payout = 0,
 			_last_quickplay_room_id = 0,
 			_logged_in = false,
+			_times_logged_in = 0,
 			_total_playtime = nil,
 			_login_screen_passed = false,
 			_bearer_token = nil,
@@ -359,6 +361,7 @@ function Telemetry:update(t, dt)
 		end
 
 		if login_retry_limit <= Global.telemetry._login_retries then
+			print(log_name, "login attempts exceeded. disabling telemetry")
 			self:enable(false)
 		end
 
@@ -378,14 +381,27 @@ function Telemetry:enable(is_enable)
 		return
 	end
 
-	self:init()
+	if self._global._enabled ~= is_enable then
+		self:init()
 
-	self._global._enabled = is_enable
+		self._global._enabled = is_enable
 
-	if is_enable then
-		get_geolocation()
-		get_total_playtime()
-		get_oldest_achievement_date()
+		if is_enable then
+			get_geolocation()
+			get_total_playtime()
+			get_oldest_achievement_date()
+		else
+			local function logout_callback(error_code, status_code, response_body)
+				if error_code == connection_errors.no_conn_error and (status_code == 204 or status_code == 200) then
+					print(log_name, "successfully logged out")
+
+					Global.telemetry._logged_in = false
+				end
+			end
+
+			self:send_on_player_logged_out("optout")
+			self:send_batch_immediately(logout_callback)
+		end
 	end
 end
 
@@ -455,12 +471,12 @@ function Telemetry:send_telemetry_immediately(event_name, payload, event_namespa
 	end
 end
 
-function Telemetry:send_batch_immediately()
+function Telemetry:send_batch_immediately(callback)
 	if get_platform_name() ~= "WIN32" or not self._global._logged_in then
 		return
 	end
 
-	send_telemetry(self._global._telemetries_to_send_arr)
+	send_telemetry(self._global._telemetries_to_send_arr, callback)
 	clear_table(self._global._telemetries_to_send_arr)
 end
 
@@ -474,7 +490,7 @@ function Telemetry:on_login()
 	end
 end
 
-function Telemetry:send_on_player_logged_in()
+function Telemetry:send_on_player_logged_in(reason)
 	if get_platform_name() ~= "WIN32" or not self._global._enabled then
 		return
 	end
@@ -504,7 +520,8 @@ function Telemetry:send_on_player_logged_in()
 		Location = self._global._geolocation,
 		OldestAchievement = self._global._oldest_achievement_date,
 		PlayerLevel = managers.experience:current_level(),
-		InfamyLevel = managers.experience:current_rank()
+		InfamyLevel = managers.experience:current_rank(),
+		Reason = Global.telemetry._times_logged_in == 0 and "startup" or "optin"
 	}
 	local installed_dlc_list = {}
 
@@ -526,6 +543,7 @@ function Telemetry:send_on_player_logged_in()
 				print(log_name, "successfully logged in")
 
 				Global.telemetry._logged_in = true
+				Global.telemetry._times_logged_in = Global.telemetry._times_logged_in + 1
 
 				self:send_on_player_steam_achievements()
 				self:send_on_player_steam_stats_overdrill()
@@ -563,7 +581,7 @@ function Telemetry:send_on_player_economy_event(event_origin, currency, amount, 
 	self:send("player_economy", telemetry_payload)
 end
 
-function Telemetry:send_on_player_logged_out()
+function Telemetry:send_on_player_logged_out(reason)
 	if get_platform_name() ~= "WIN32" or not self._global._logged_in then
 		return
 	end
@@ -572,6 +590,7 @@ function Telemetry:send_on_player_logged_out()
 	local play_duration = os.time() - Global.telemetry._start_time
 	telemetry_payload.GameSessionGUID = self._global._session_uuid
 	telemetry_payload.TimePlayed = play_duration
+	telemetry_payload.Reason = reason
 
 	if Global.telemetry._total_playtime ~= -1 then
 		local total_playtime_minutes = math.floor(Global.telemetry._total_playtime + math.floor(play_duration / 60))

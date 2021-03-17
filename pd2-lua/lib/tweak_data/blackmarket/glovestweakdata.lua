@@ -54,8 +54,15 @@ function BlackMarketTweakData:build_glove_list(tweak_data)
 		y_gv = y_td.global_value or y_td.dlc or "normal"
 		x_sn = x_gv and tweak_data.lootdrop.global_values[x_gv].sort_number or 0
 		y_sn = y_gv and tweak_data.lootdrop.global_values[y_gv].sort_number or 0
-		x_sn = x_sn + (x_td.sort_number or 0)
-		y_sn = y_sn + (y_td.sort_number or 0)
+		x_sn = x_sn + (x_td.gv_sort_number or 0)
+		y_sn = y_sn + (y_td.gv_sort_number or 0)
+
+		if x_sn ~= y_sn then
+			return x_sn < y_sn
+		end
+
+		x_sn = x_td.sort_number or 0
+		y_sn = y_td.sort_number or 0
 
 		if x_sn ~= y_sn then
 			return x_sn < y_sn
@@ -114,14 +121,14 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		}
 	}
 	self.suit_default_gloves = {
-		sneak_suit = "sneak",
+		hitman = "heist_default",
 		peacoat = "saints",
 		clown = "heist_clown",
 		scrub = "heist_default",
 		jumpsuit = "heat",
 		hiphop = "bonemittens",
 		gunslinger = "heist_default",
-		gentleman = "heist_default",
+		thug = "heist_default",
 		xmas_tuxedo = "heist_default",
 		winter_suit = "sneak",
 		hippie = "rainbow_mittens",
@@ -135,11 +142,14 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		raincoat = "heist_default",
 		mariachi = "mariatchi",
 		leather = "heist_default",
+		gentleman = "heist_default",
 		poolrepair = "heist_default",
 		jail_pd2_clan = "heist_default",
+		traditional = "heist_default",
 		esport = "esport",
 		miami = "heist_default",
 		murky_suit = "murky",
+		sneak_suit = "sneak",
 		tux = "heist_default",
 		continental = "continental"
 	}
@@ -153,7 +163,7 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		name_id = "bm_gloves_heistwrinkled",
 		desc_id = "bm_gloves_heistwrinkled_desc",
 		texture_bundle_folder = "hnd",
-		sort_number = -1000,
+		gv_sort_number = -1000,
 		unit = "units/pd2_dlc_hnd/characters/hnd_glv_heistwrinkled/hnd_glv_heistwrinkled",
 		third_material = "units/pd2_dlc_hnd/characters/hnd_glv_heistwrinkled/hnd_glv_heistwrinkled_third"
 	}
@@ -398,5 +408,41 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		sort_number = 2,
 		unit = "units/pd2_dlc_in31/characters/glv_silver/glv_silver",
 		third_material = "units/pd2_dlc_in31/characters/glv_silver/glv_silver_third"
+	}
+	self.gloves.redstripe = {
+		name_id = "bm_gloves_tstp_redstripe",
+		desc_id = "bm_gloves_tstp_redstripe_desc",
+		texture_bundle_folder = "tstp",
+		global_value = "tstp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_tstp/characters/tstp_glv_redstripe/tstp_glv_redstripe",
+		third_material = "units/pd2_dlc_tstp/characters/tstp_glv_redstripe/tstp_glv_redstripe_third"
+	}
+	self.gloves.flame = {
+		name_id = "bm_gloves_tstp_flame",
+		desc_id = "bm_gloves_tstp_flame_desc",
+		texture_bundle_folder = "tstp",
+		global_value = "tstp",
+		sort_number = 2,
+		unit = "units/pd2_dlc_tstp/characters/tstp_glv_flame/tstp_glv_flame",
+		third_material = "units/pd2_dlc_tstp/characters/tstp_glv_flame/tstp_glv_flame_third"
+	}
+	self.gloves.reddragon = {
+		name_id = "bm_gloves_tstp_reddragon",
+		desc_id = "bm_gloves_tstp_reddragon_desc",
+		texture_bundle_folder = "tstp",
+		global_value = "tstp",
+		sort_number = 3,
+		unit = "units/pd2_dlc_tstp/characters/tstp_glv_reddragon/tstp_glv_reddragon",
+		third_material = "units/pd2_dlc_tstp/characters/tstp_glv_reddragon/tstp_glv_reddragon_third"
+	}
+	self.gloves.blackdragon = {
+		name_id = "bm_gloves_tstp_blackdragon",
+		desc_id = "bm_gloves_tstp_blackdragon_desc",
+		texture_bundle_folder = "tstp",
+		global_value = "tstp",
+		sort_number = 4,
+		unit = "units/pd2_dlc_tstp/characters/tstp_glv_blackdragon/tstp_glv_blackdragon",
+		third_material = "units/pd2_dlc_tstp/characters/tstp_glv_blackdragon/tstp_glv_blackdragon_third"
 	}
 end

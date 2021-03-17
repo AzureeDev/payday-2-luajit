@@ -176,6 +176,12 @@ function DLCTweakData:init_generated()
 	}
 	self.bex_bundle.content.loot_global_value = "bex"
 	self.bex_bundle.content.loot_drops = {}
+	self.chas_bundle = {
+		dlc = "has_chas",
+		content = {}
+	}
+	self.chas_bundle.content.loot_global_value = "chas"
+	self.chas_bundle.content.loot_drops = {}
 	self.ess_bundle = {
 		dlc = "has_ess",
 		content = {}
@@ -300,6 +306,12 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.fall_bundle = {
+		free = true,
+		content = {}
+	}
+	self.fall_bundle.content.loot_global_value = "fall"
+	self.fall_bundle.content.loot_drops = {}
 	self.fawp_bundle = {
 		dlc = "has_fawp",
 		content = {}
@@ -421,6 +433,23 @@ function DLCTweakData:init_generated()
 		{
 			type_items = "masks",
 			item_entry = "biden",
+			amount = 1
+		}
+	}
+	self.mar21_bundle = {
+		free = true,
+		content = {}
+	}
+	self.mar21_bundle.content.loot_global_value = "mar21"
+	self.mar21_bundle.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "thug",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_mar21_01",
 			amount = 1
 		}
 	}
@@ -965,6 +994,63 @@ function DLCTweakData:init_generated()
 		{
 			type_items = "gloves",
 			item_entry = "heat",
+			amount = 1
+		}
+	}
+	self.tstp_bundle = {
+		dlc = "has_tstp",
+		content = {}
+	}
+	self.tstp_bundle.content.loot_global_value = "tstp"
+	self.tstp_bundle.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "hitman",
+			amount = 1
+		},
+		{
+			type_items = "player_styles",
+			item_entry = "traditional",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "redstripe",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "flame",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "reddragon",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "blackdragon",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "dragon01",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "dragon02",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "godess",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "daemon",
 			amount = 1
 		}
 	}

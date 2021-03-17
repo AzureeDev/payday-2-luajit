@@ -1005,6 +1005,25 @@ function CarryTweakData:init(tweak_data)
 		unit = "units/payday2/pickups/gen_pku_toolbag/gen_pku_toolbag",
 		visual_unit_name = "units/payday2/characters/npc_acc_tools_bag_1/npc_acc_tools_bag_1"
 	}
+	self.chas_artifact = {
+		type = "heavy",
+		name_id = "hud_carry_dragon_statue",
+		bag_value = "artifact_statue",
+		unit = "units/payday2/pickups/gen_pku_cage_bag/gen_pku_cage_bag",
+		visual_unit_name = "units/payday2/characters/npc_acc_cage_bag_1/npc_acc_cage_bag_1",
+		AI_carry = {
+			SO_category = "enemies"
+		}
+	}
+	self.chas_teaset = {
+		type = "light",
+		name_id = "hud_carry_tea_set",
+		bag_value = "money",
+		visual_unit_name = "units/payday2/characters/npc_acc_loot_bag_1/npc_acc_loot_bag_1",
+		AI_carry = {
+			SO_category = "enemies"
+		}
+	}
 end
 
 function CarryTweakData:get_carry_ids()

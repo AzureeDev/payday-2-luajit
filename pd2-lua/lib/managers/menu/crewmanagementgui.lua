@@ -1498,10 +1498,12 @@ function CrewManagementGui:open_suit_menu(henchman_index)
 	self:create_pages(new_node_data, henchman_index, "player_style", loadout.player_style, 3, 3, 1, "bm_menu_player_styles")
 
 	new_node_data[1].mannequin_player_style = loadout.player_style
+	new_node_data.category = "gloves"
 
 	self:create_pages(new_node_data, henchman_index, "glove", loadout.glove_id, 3, 3, 1, "bm_menu_gloves")
 
 	new_node_data[2].mannequin_glove_id = loadout.glove_id
+	new_node_data.category = "suits"
 	new_node_data.hide_detection_panel = true
 	new_node_data.character_id = managers.menu_scene:get_henchmen_character(henchman_index) or managers.blackmarket:preferred_henchmen(henchman_index)
 	new_node_data.custom_callback = {
@@ -1756,21 +1758,21 @@ end
 
 function CrewManagementGui:populate_suits(henchman_index, data, gui)
 	local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+	data.equipped_player_style = loadout.player_style or managers.blackmarket:get_default_player_style()
+	data.customize_equipped_only = true
 
-	if data.identifier == Idstring("player_style") then
-		data.equipped_player_style = loadout.player_style or managers.blackmarket:get_default_player_style()
-		data.customize_equipped_only = true
+	gui:populate_player_styles(data)
 
-		gui:populate_player_styles(data)
+	data.mannequin_player_style = nil
+end
 
-		data.mannequin_player_style = nil
-	elseif data.identifier == Idstring("glove") then
-		data.equipped_glove_id = loadout.glove_id or managers.blackmarket:get_default_glove_id()
+function CrewManagementGui:populate_gloves(henchman_index, data, gui)
+	local loadout = managers.blackmarket:henchman_loadout(henchman_index)
+	data.equipped_glove_id = loadout.glove_id or managers.blackmarket:get_default_glove_id()
 
-		gui:populate_gloves(data)
+	gui:populate_gloves(data)
 
-		data.mannequin_glove_id = nil
-	end
+	data.mannequin_glove_id = nil
 end
 
 function CrewManagementGui:populate_suit_variations(henchman_index, data, gui)

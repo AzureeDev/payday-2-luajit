@@ -625,8 +625,7 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-0.5, 2, -1)
 			},
 			m590 = {
-				grip = "weapon_2_grip",
-				position = Vector3(-0.5, 2, -1)
+				position = Vector3(-0.5, 2, 1)
 			},
 			spas12 = {
 				position = Vector3(-0.1, 2, 2)
@@ -4061,29 +4060,15 @@ function TweakDataVR:init(tweak_data)
 				{
 					time = 0,
 					sound = "wp_m590_reload_enter"
-				},
-				{
-					time = 0.03
 				}
 			},
 			finish = {
 				{
 					time = 0,
-					anims = {
-						{
-							anim_group = "reload_exit",
-							to = 0.7,
-							from = 0.2,
-							part = "foregrip"
-						}
-					}
-				},
-				{
-					time = 0,
 					sound = "wp_m590_insert_shell"
 				},
 				{
-					time = 0.6,
+					time = 0.5,
 					sound = "wp_m590_reload_exit_push_handle"
 				}
 			}
@@ -9550,6 +9535,7 @@ function TweakDataVR:init(tweak_data)
 	}
 	self.driving.blackhawk_2 = deep_clone(self.driving.blackhawk_1)
 	self.driving.wanker = deep_clone(self.driving.blackhawk_1)
+	self.driving.forklift_3 = deep_clone(self.driving.forklift)
 	self.overlay_effects = {
 		fade_in_rotate_player = {
 			blend_mode = "normal",

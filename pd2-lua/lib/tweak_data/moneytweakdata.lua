@@ -560,6 +560,7 @@ function MoneyTweakData:init(tweak_data)
 	self.preplanning_asset_cost_kenaz_disable_metal_detectors = 0
 	self.preplanning_asset_cost_kenaz_celebrity_visit = 0
 	self.preplanning_asset_cost_kenaz_vault_gate_key = 0
+	self.preplanning_asset_cost_chas_tram = 5000
 	self.small_loot = {}
 
 	if difficulty_index <= 2 then

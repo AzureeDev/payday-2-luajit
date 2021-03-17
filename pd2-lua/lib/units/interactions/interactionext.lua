@@ -1711,6 +1711,14 @@ function IntimitateInteractionExt:unselect()
 	managers.hud:remove_interact()
 end
 
+function IntimitateInteractionExt:set_tweak_data(id)
+	if self.tweak_data ~= id and self.tweak_data == "corpse_alarm_pager" and self._unit == managers.interaction:active_unit() then
+		self:interact_interupt(managers.player:player_unit(), false)
+	end
+
+	IntimitateInteractionExt.super.set_tweak_data(self, id)
+end
+
 function IntimitateInteractionExt:interact(player)
 	if not self:can_interact(player) then
 		return

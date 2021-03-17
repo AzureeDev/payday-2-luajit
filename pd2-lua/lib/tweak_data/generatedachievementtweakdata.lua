@@ -34,6 +34,7 @@ function init_auto_generated_achievement_data(tags)
 			need_unlock_icons = true,
 			icon_id = "C_Vlad_H_Mallcrasher_OnePointEight",
 			sort_name = "C_Vlad_H_Mallcrasher_OnePointEight",
+			additional_id = true,
 			unlock_id = true,
 			tags = {
 				tags.progress.heisting,
@@ -7672,6 +7673,144 @@ function init_auto_generated_achievement_data(tags)
 				tags.inventory.weapon,
 				tags.inventory.equipment,
 				tags.contracts.locke
+			}
+		},
+		chas_1 = {
+			icon_id = "C_JiuFeng_H_DragonHeist_AllDiffs_D0",
+			ladder = "H_DragonHeist",
+			sort_name = "C_JiuFeng_H_DragonHeist_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_10 = {
+			sort_name = "C_JiuFeng_H_DragonHeist_AllTheGold",
+			icon_id = "C_JiuFeng_H_DragonHeist_AllTheGold",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_11 = {
+			sort_name = "C_JiuFeng_H_DragonHeist_Speed",
+			icon_id = "C_JiuFeng_H_DragonHeist_Speed",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_2 = {
+			icon_id = "C_JiuFeng_H_DragonHeist_AllDiffs_D1",
+			ladder = "H_DragonHeist",
+			sort_name = "C_JiuFeng_H_DragonHeist_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_3 = {
+			icon_id = "C_JiuFeng_H_DragonHeist_AllDiffs_D2",
+			ladder = "H_DragonHeist",
+			sort_name = "C_JiuFeng_H_DragonHeist_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_4 = {
+			icon_id = "C_JiuFeng_H_DragonHeist_AllDiffs_D3",
+			ladder = "H_DragonHeist",
+			sort_name = "C_JiuFeng_H_DragonHeist_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_5 = {
+			icon_id = "C_JiuFeng_H_DragonHeist_AllDiffs_D4",
+			ladder = "H_DragonHeist",
+			sort_name = "C_JiuFeng_H_DragonHeist_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_6 = {
+			icon_id = "C_JiuFeng_H_DragonHeist_AllDiffs_D5",
+			ladder = "H_DragonHeist",
+			sort_name = "C_JiuFeng_H_DragonHeist_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_7 = {
+			icon_id = "C_JiuFeng_H_DragonHeist_AllDiffs_D6",
+			ladder = "H_DragonHeist",
+			sort_name = "C_JiuFeng_H_DragonHeist_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_8 = {
+			icon_id = "C_JiuFeng_H_DragonHeist_AllDiffs_OD_D6",
+			ladder = "H_DragonHeist",
+			sort_name = "C_JiuFeng_H_DragonHeist_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		chas_9 = {
+			sort_name = "C_JiuFeng_H_DragonHeist_KeepBeathing",
+			icon_id = "C_JiuFeng_H_DragonHeist_KeepBeathing",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
 			}
 		},
 		ckr_1 = {

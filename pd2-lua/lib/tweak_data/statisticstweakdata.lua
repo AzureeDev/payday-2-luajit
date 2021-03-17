@@ -187,6 +187,7 @@ function StatisticsTweakData:statistics_table()
 		"hector_boss",
 		"hector_boss_no_armor",
 		"chavez_boss",
+		"triad",
 		"tank_green",
 		"tank_black",
 		"tank_skull",

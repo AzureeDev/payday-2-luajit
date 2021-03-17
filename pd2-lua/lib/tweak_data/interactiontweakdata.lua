@@ -2519,7 +2519,10 @@ function InteractionTweakData:init(tweak_data)
 		text_id = "hud_int_hold_disarm_bomb",
 		action_text_id = "hud_action_disarm_bomb",
 		start_active = false,
-		timer = 2.5
+		timer = 2.5,
+		sound_start = "bar_disarm_c4_loop_start",
+		sound_interupt = "bar_disarm_c4_loop_cancel",
+		sound_done = "bar_disarm_c4_loop_finished"
 	}
 	self.pku_take_mask = {
 		text_id = "hud_int_take_mask",
@@ -6586,6 +6589,105 @@ function InteractionTweakData:init(tweak_data)
 		action_text_id = "hud_action_take_fex_harddrive",
 		timer = 1,
 		interact_distance = 200
+	}
+	self.pickup_keycard_axis = deep_clone(self.pickup_keycard)
+	self.pickup_keycard_axis.axis = "x"
+	self.chas_search_code = {
+		text_id = "hud_int_hold_search_code",
+		action_text_id = "hud_action_search_code",
+		timer = 1,
+		interact_distance = 200
+	}
+	self.hold_unlock_forklift = {
+		text_id = "hud_int_hold_unlock_forklift",
+		action_text_id = "hud_unlocking_forklift",
+		timer = 1,
+		equipment_text_id = "hud_equipment_need_forklift_keys",
+		special_equipment = "chas_keychain_forklift",
+		equipment_consume = true
+	}
+	self.chas_light_switch = {
+		text_id = "hud_int_hold_flip_light",
+		action_text_id = "hud_action_light_switch",
+		timer = 0,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.chas_light_switch_off = {
+		text_id = "hud_int_hold_flip_light_off"
+	}
+	self.chas_light_switch.action_text_id = "hud_action_light_switch_off"
+	self.chas_light_switch_off.timer = 0
+	self.chas_light_switch_off.interact_distance = 200
+	self.chas_light_switch_off.axis = "y"
+	self.chas_prop_hack_box = {
+		text_id = "hud_int_hold_hack_box",
+		action_text_id = "hud_action_open_hack_box",
+		timer = 0,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.chas_pickup_keychain_forklift = {
+		icon = "equipment_bank_manager_key",
+		text_id = "hud_int_pickup_keychain_forklift",
+		action_text_id = "hud_action_pickup_keychain_forklift",
+		equipment_text_id = "hud_int_pickup_keychain_forklift",
+		special_equipment = "chas_keychain_forklift",
+		equipment_consume = true,
+		interact_distance = 100
+	}
+	self.chas_breach_shutter = {
+		text_id = "hud_int_hold_breach_shutter",
+		action_text_id = "hud_action_breach_shutter",
+		timer = 300,
+		interact_distance = 250
+	}
+	self.chas_pku_dragon_statue = {
+		text_id = "hud_int_hold_take_dragon_statue",
+		action_text_id = "hud_action_taking_dragon_statue",
+		timer = 3,
+		start_active = false,
+		sound_start = "bar_bag_money",
+		sound_interupt = "bar_bag_money_cancel",
+		sound_done = "bar_bag_money_finished",
+		blocked_hint = "carry_block"
+	}
+	self.chas_tea_set = {
+		text_id = "hud_int_take_tea_set",
+		action_text_id = "hud_action_take_tea_set",
+		interact_distance = 250,
+		timer = 3
+	}
+	self.c4_stackable = deep_clone(self.c4_mission_door)
+	self.c4_stackable.special_equipment = "c4_stackable"
+	self.c4_stackable.axis = "x"
+	self.chas_tea_set.start_active = false
+	self.chas_tea_set.sound_start = "bar_bag_money"
+	self.chas_tea_set.sound_interupt = "bar_bag_money_cancel"
+	self.chas_tea_set.sound_done = "bar_bag_money_finished"
+	self.chas_tea_set.blocked_hint = "carry_block"
+	self.money_wrap_single_chas = {
+		icon = "interaction_money_wrap",
+		text_id = "hud_int_take_tablets",
+		start_active = false,
+		interact_distance = 110,
+		requires_mask_off_upgrade = {
+			upgrade = "mask_off_pickup",
+			category = "player"
+		}
+	}
+	self.chas_pick_lock_easy_no_skill = {
+		contour = "interactable_icon",
+		icon = "equipment_bank_manager_key",
+		text_id = "hud_int_pick_lock",
+		start_active = true,
+		timer = 7,
+		axis = "y",
+		action_text_id = "hud_action_picking_lock",
+		interact_distance = 100,
+		sound_start = "bar_pick_lock",
+		sound_interupt = "bar_pick_lock_cancel",
+		sound_done = "bar_pick_lock_finished"
 	}
 	self.xm20_int_mask = {
 		text_id = "hud_int_hold_xm20_mask",

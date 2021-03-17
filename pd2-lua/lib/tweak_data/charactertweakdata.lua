@@ -108,6 +108,7 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_spa_vip_hurt(presets)
 	self:_init_captain(presets)
 	self:_init_civilian_mariachi(presets)
+	self:_init_triad(presets)
 
 	self._prefix_data = nil
 	self._prefix_data_p1 = nil
@@ -721,6 +722,14 @@ function CharacterTweakData:_init_biker(presets)
 	self.biker.calls_in = true
 
 	table.insert(self._enemy_list, "biker")
+end
+
+function CharacterTweakData:_init_triad(presets)
+	self.triad = deep_clone(self.gangster)
+	self.triad.access = "gangster"
+	self.triad.calls_in = true
+
+	table.insert(self._enemy_list, "triad")
 end
 
 function CharacterTweakData:_init_captain(presets)
@@ -16062,6 +16071,7 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self.gangster.HEALTH_INIT = self.gangster.HEALTH_INIT * hp_mul
 	self.biker.HEALTH_INIT = self.biker.HEALTH_INIT * hp_mul
 	self.tank.HEALTH_INIT = self.tank.HEALTH_INIT * hp_mul
+	self.triad.HEALTH_INIT = self.triad.HEALTH_INIT * hp_mul
 	self.tank_mini.HEALTH_INIT = self.tank_mini.HEALTH_INIT * hp_mul
 	self.tank_medic.HEALTH_INIT = self.tank_medic.HEALTH_INIT * hp_mul
 	self.spooc.HEALTH_INIT = self.spooc.HEALTH_INIT * hp_mul
@@ -16123,6 +16133,10 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 
 	if self.biker.headshot_dmg_mul then
 		self.biker.headshot_dmg_mul = self.biker.headshot_dmg_mul * hs_mul
+	end
+
+	if self.triad.headshot_dmg_mul then
+		self.triad.headshot_dmg_mul = self.triad.headshot_dmg_mul * hs_mul
 	end
 
 	if self.tank.headshot_dmg_mul then
@@ -16241,6 +16255,7 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	self.biker.SPEED_RUN = self.biker.SPEED_RUN * run_mul
 	self.tank.SPEED_RUN = self.tank.SPEED_RUN * run_mul
 	self.spooc.SPEED_RUN = self.spooc.SPEED_RUN * run_mul
+	self.triad.SPEED_RUN = self.triad.SPEED_RUN * run_mul
 	self.shadow_spooc.SPEED_RUN = self.spooc.SPEED_RUN * run_mul
 	self.shield.SPEED_RUN = self.shield.SPEED_RUN * run_mul
 	self.taser.SPEED_RUN = self.taser.SPEED_RUN * run_mul
@@ -16965,6 +16980,22 @@ function CharacterTweakData:character_map()
 				"ene_guard_serpent_mask_no_pager",
 				"ene_thug_outdoor_fex",
 				"ene_secret_service_fex"
+			}
+		},
+		chas = {
+			path = "units/pd2_dlc_chas/characters/",
+			list = {
+				"ene_male_triad_gang_1",
+				"ene_male_triad_gang_2",
+				"ene_male_triad_gang_3",
+				"ene_male_triad_gang_4",
+				"ene_male_triad_gang_5",
+				"civ_male_asian_casual_1",
+				"civ_male_asian_casual_2",
+				"civ_male_asian_casual_3",
+				"civ_female_asian_casual_1",
+				"civ_female_asian_storekeeper",
+				"civ_male_auctioneer_2"
 			}
 		}
 	}

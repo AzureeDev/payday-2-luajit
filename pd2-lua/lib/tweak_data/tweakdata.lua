@@ -1470,6 +1470,9 @@ Play the full version soon to get your full PAYDAY!]],
 		},
 		keycard_outlined_waypoint = {
 			unit = Idstring("units/pd2_dlc_red/pickups/gen_pku_keycard_outlined_waypoint/gen_pku_keycard_outlined_waypoint")
+		},
+		keychain = {
+			unit = Idstring("units/pd2_dlc_chas/pickups/chas_pku_keychain/chas_pku_keychain")
 		}
 	}
 	self.danger_zones = {
@@ -1798,6 +1801,9 @@ Play the full version soon to get your full PAYDAY!]],
 		},
 		{
 			track = "track_71"
+		},
+		{
+			track = "track_72"
 		},
 		{
 			track = "track_pth_01",

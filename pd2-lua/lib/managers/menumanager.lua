@@ -2020,7 +2020,7 @@ function MenuCallbackHandler:quit_game()
 end
 
 function MenuCallbackHandler:_dialog_quit_yes()
-	Telemetry:send_on_player_logged_out()
+	Telemetry:send_on_player_logged_out("quit")
 	Telemetry:send_batch_immediately()
 	self:_dialog_save_progress_backup_no()
 end
@@ -9776,6 +9776,10 @@ end
 function MenuOptionInitiator:modify_adv_options(node)
 	if node:item("toggle_workshop") then
 		node:item("toggle_workshop"):set_value(managers.user:get_setting("workshop") and "on" or "off")
+	end
+
+	if node:item("toggle_telemetry") then
+		node:item("toggle_telemetry"):set_value(managers.user:get_setting("use_telemetry") and "on" or "off")
 	end
 
 	return node

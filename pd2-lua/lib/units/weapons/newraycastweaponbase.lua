@@ -51,6 +51,26 @@ function NewRaycastWeaponBase:init(unit)
 
 	self._bloodthist_value_during_reload = 0
 	self._reload_objects = {}
+
+	self:_default_damage_falloff()
+end
+
+function NewRaycastWeaponBase:_default_damage_falloff()
+	local weapon_tweak = tweak_data.weapon[self._name_id]
+
+	if not weapon_tweak.damage_falloff then
+		local falloff_data = {
+			optimal_range = weapon_tweak.damage_near,
+			far_falloff = weapon_tweak.damage_far
+		}
+	end
+
+	self._optimal_distance = falloff_data.optimal_distance or 0
+	self._optimal_range = falloff_data.optimal_range or 0
+	self._near_falloff = falloff_data.near_falloff or 0
+	self._far_falloff = falloff_data.far_falloff or 0
+	self._near_mul = falloff_data.near_multiplier or 0
+	self._far_mul = falloff_data.far_multiplier or 0
 end
 
 function NewRaycastWeaponBase:set_stagger(value)
@@ -469,6 +489,7 @@ function NewRaycastWeaponBase:got_silencer()
 end
 
 function NewRaycastWeaponBase:_update_stats_values(disallow_replenish)
+	self:_default_damage_falloff()
 	self:_check_sound_switch()
 
 	self._silencer = managers.weapon_factory:has_perk("silencer", self._factory_id, self._blueprint)
@@ -498,6 +519,24 @@ function NewRaycastWeaponBase:_update_stats_values(disallow_replenish)
 			end
 		end
 	end
+
+	local damage_falloff = {
+		optimal_distance = self._optimal_distance,
+		optimal_range = self._optimal_range,
+		near_falloff = self._near_falloff,
+		far_falloff = self._far_falloff,
+		near_multiplier = self._near_multiplier,
+		far_multiplier = self._far_multiplier
+	}
+
+	managers.blackmarket:modify_damage_falloff(damage_falloff, custom_stats)
+
+	self._optimal_distance = damage_falloff.optimal_distance
+	self._optimal_range = damage_falloff.optimal_range
+	self._near_falloff = damage_falloff.near_falloff
+	self._far_falloff = damage_falloff.far_falloff
+	self._near_multiplier = damage_falloff.near_multiplier
+	self._far_multiplier = damage_falloff.far_multiplier
 
 	if self._ammo_data then
 		if self._ammo_data.can_shoot_through_shield ~= nil then
@@ -627,6 +666,71 @@ function NewRaycastWeaponBase:_update_stats_values(disallow_replenish)
 	local user_unit = self._setup and self._setup.user_unit
 	local current_state = alive(user_unit) and user_unit:movement() and user_unit:movement()._current_state
 	self._fire_rate_multiplier = managers.blackmarket:fire_rate_multiplier(self._name_id, self:weapon_tweak_data().categories, self._silencer, nil, current_state, self._blueprint)
+end
+
+function NewRaycastWeaponBase:get_damage_falloff(damage, col_ray, user_unit)
+	if self._optimal_distance + self._optimal_range == 0 then
+		return damage
+	end
+
+	local distance = col_ray.distance or mvector3.distance(col_ray.unit:position(), user_unit:position())
+	local near_dist = self._optimal_distance - self._near_falloff
+	local optimal_start = self._optimal_distance
+	local optimal_end = self._optimal_distance + self._optimal_range
+	local far_dist = optimal_end + self._far_falloff
+	local near_mul = self._near_mul
+	local optimal_mul = 1
+	local far_mul = self._far_mul
+	local primary_category = self:weapon_tweak_data().categories and self:weapon_tweak_data().categories[1]
+	local current_state = user_unit and user_unit:movement() and user_unit:movement()._current_state
+
+	if current_state and current_state:in_steelsight() then
+		local mul = managers.player:upgrade_value(primary_category, "steelsight_range_inc", 1)
+		optimal_end = optimal_end * mul
+		far_dist = far_dist * mul
+	end
+
+	local damage_mul = 1
+
+	if distance < self._optimal_distance then
+		if self._near_falloff > 0 then
+			damage_mul = math_map_range_clamped(distance, near_dist, optimal_start, near_mul, optimal_mul)
+		else
+			damage_mul = near_mul
+		end
+	elseif distance < optimal_end then
+		damage_mul = optimal_mul
+	elseif self._far_falloff > 0 then
+		damage_mul = math_map_range_clamped(distance, optimal_end, far_dist, optimal_mul, far_mul)
+	else
+		damage_mul = far_mul
+	end
+
+	return damage * damage_mul
+end
+
+function NewRaycastWeaponBase:is_weak_hit(distance, user_unit)
+	if not distance or not user_unit or self._optimal_distance + self._optimal_range == 0 then
+		return false
+	end
+
+	local near_distance = self._optimal_distance - self._near_falloff
+	local far_distance = self._optimal_distance + self._optimal_range + self._far_falloff
+	local primary_category = self:weapon_tweak_data().categories and self:weapon_tweak_data().categories[1]
+	local current_state = user_unit and user_unit:movement() and user_unit:movement()._current_state
+
+	if current_state and current_state:in_steelsight() then
+		local mul = managers.player:upgrade_value(primary_category, "steelsight_range_inc", 1)
+		far_distance = far_distance * mul
+	end
+
+	if distance < near_distance then
+		return self._near_mul < 1
+	elseif far_distance < distance then
+		return self._far_mul < 1
+	end
+
+	return false
 end
 
 function NewRaycastWeaponBase:get_add_head_shot_mul()
