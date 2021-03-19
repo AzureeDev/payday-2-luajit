@@ -2072,9 +2072,6 @@ function LevelsTweakData:init()
 		music = "heist",
 		package = "packages/job_bex",
 		cube = "cube_apply_heist_bank",
-		block_AIs = {
-			old_hoxton = true
-		},
 		ai_group_type = federales,
 		narrator = "locke",
 		ghost_bonus = 0.15,
@@ -2093,9 +2090,6 @@ function LevelsTweakData:init()
 		music = "heist",
 		package = "packages/job_pex",
 		cube = "cube_apply_heist_bank",
-		block_AIs = {
-			old_hoxton = true
-		},
 		ai_group_type = federales,
 		narrator = "locke",
 		ghost_bonus = 0.15,
@@ -2170,9 +2164,6 @@ function LevelsTweakData:init()
 		music = "heist",
 		package = "packages/job_fex",
 		cube = "cube_apply_heist_bank",
-		block_AIs = {
-			old_hoxton = true
-		},
 		ai_group_type = federales,
 		narrator = "locke",
 		ghost_bonus = 0.15,
@@ -2247,9 +2238,6 @@ function LevelsTweakData:init()
 		music = "heist",
 		package = "packages/job_chas",
 		cube = "cube_apply_heist_bank",
-		block_AIs = {
-			old_hoxton = true
-		},
 		ai_group_type = america,
 		narrator = "locke",
 		ghost_bonus = 0.15,

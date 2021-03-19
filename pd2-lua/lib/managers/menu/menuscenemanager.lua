@@ -3056,9 +3056,11 @@ function MenuSceneManager:_infamy_enable_dragging()
 end
 
 function MenuSceneManager:refresh_infamy_cards(override_data)
-	for _, unit in pairs(self._card_units) do
-		if alive(unit) and unit:digital_gui() then
-			unit:digital_gui():refresh_gui(override_data)
+	if self._card_units then
+		for _, unit in pairs(self._card_units) do
+			if alive(unit) and unit:digital_gui() then
+				unit:digital_gui():refresh_gui(override_data)
+			end
 		end
 	end
 

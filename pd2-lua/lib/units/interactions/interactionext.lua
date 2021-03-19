@@ -2561,7 +2561,10 @@ function SpecialEquipmentInteractionExt:interact(player)
 
 	managers.network:session():send_to_peers_synched("sync_interacted", self._unit, -2, self.tweak_data, 1)
 	self:sync_interacted(nil, player)
-	self:apply_item_pickup()
+
+	if Network:is_server() then
+		self:apply_item_pickup()
+	end
 
 	return true
 end

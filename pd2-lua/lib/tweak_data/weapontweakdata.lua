@@ -5368,6 +5368,24 @@ function WeaponTweakData:_pickup_chance(max_ammo, selection_index)
 		elseif selection_index == PICKUP.AR_MED_CAPACITY then
 			low = 0.03
 			high = 0.055
+		elseif selection_index == PICKUP.AR_LOW_CAPACITY then
+			low = 0.03
+			high = 0.045
+		elseif selection_index == PICKUP.AR_DMR_CAPACITY then
+			low = 0.018
+			high = 0.04
+		elseif selection_index == PICKUP.PISTOL_HIGH_CAPACITY then
+			low = 0.025
+			high = 0.035
+		elseif selection_index == PICKUP.PISTOL_LOW_CAPACITY then
+			low = 0.025
+			high = 0.038
+		elseif selection_index == PICKUP.LMG_CAPACITY then
+			low = 0.025
+			high = 0.03
+		elseif selection_index == PICKUP.LMG_HIGH_CAPACITY then
+			low = 0.02
+			high = 0.024
 		elseif selection_index == PICKUP.SHOTGUN_HIGH_CAPACITY then
 			low = 0.05
 			high = 0.075
