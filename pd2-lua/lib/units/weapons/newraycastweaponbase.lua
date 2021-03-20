@@ -57,14 +57,10 @@ end
 
 function NewRaycastWeaponBase:_default_damage_falloff()
 	local weapon_tweak = tweak_data.weapon[self._name_id]
-
-	if not weapon_tweak.damage_falloff then
-		local falloff_data = {
-			optimal_range = weapon_tweak.damage_near,
-			far_falloff = weapon_tweak.damage_far
-		}
-	end
-
+	local falloff_data = weapon_tweak.damage_falloff or {
+		optimal_range = weapon_tweak.damage_near,
+		far_falloff = weapon_tweak.damage_far
+	}
 	self._optimal_distance = falloff_data.optimal_distance or 0
 	self._optimal_range = falloff_data.optimal_range or 0
 	self._near_falloff = falloff_data.near_falloff or 0

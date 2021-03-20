@@ -306,18 +306,14 @@ RaidPromotionalMenuButton = RaidPromotionalMenuButton or class(PromotionalMenuBu
 
 function RaidPromotionalMenuButton:_setup_selection(parent_gui, panel, params, theme)
 	self._corner_rects = {}
-
-	if not theme.selection_outline_sides then
-		local config = {
-			sides = {
-				1,
-				1,
-				1,
-				1
-			}
+	local config = theme.selection_outline_sides or {
+		sides = {
+			1,
+			1,
+			1,
+			1
 		}
-	end
-
+	}
 	config.texture = "guis/textures/test_blur_df"
 	local unselected_outline = BoxGuiObject:new(self._panel:panel({
 		layer = 99

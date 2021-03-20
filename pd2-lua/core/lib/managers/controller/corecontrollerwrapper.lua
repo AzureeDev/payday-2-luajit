@@ -331,13 +331,10 @@ function ControllerWrapper:setup_connection(connection_name, connection, control
 				for _, delay_input_name in ipairs(delay_input_name_list) do
 					for _, input_name in ipairs(input_name_list) do
 						if delay_input_name == input_name then
-							if not delay_data then
-								delay_data = {
-									delay_time_map = {},
-									connection = connection
-								}
-							end
-
+							delay_data = delay_data or {
+								delay_time_map = {},
+								connection = connection
+							}
 							delay_data.delay_time_map[delay_connection_name] = false
 							self._delay_bool_map[delay_connection_name] = true
 							can_delay = true

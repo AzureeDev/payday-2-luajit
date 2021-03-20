@@ -378,12 +378,9 @@ function StoryMissionsManager:start_current(objective_id)
 end
 
 function StoryMissionsManager:start_mission(mission, objective_id)
-	if not self:_get_or_current(mission) then
-		local m = {
-			objectives_flat = {}
-		}
-	end
-
+	local m = self:_get_or_current(mission) or {
+		objectives_flat = {}
+	}
 	local o = nil
 
 	if not objective_id then

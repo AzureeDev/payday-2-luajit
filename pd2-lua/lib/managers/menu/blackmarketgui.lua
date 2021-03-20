@@ -133,13 +133,10 @@ function BlackMarketGuiTabItem:init(main_panel, data, node, size_data, hide_sele
 
 	self._data.on_create_func(self._data, parent)
 
-	if not data.override_slots then
-		local slots = {
-			size_data.items_per_row,
-			size_data.items_per_column
-		}
-	end
-
+	local slots = data.override_slots or {
+		size_data.items_per_row,
+		size_data.items_per_column
+	}
 	slots[1] = math.max(1, slots[1])
 	slots[2] = math.max(1, slots[2])
 	self.my_slots_dimensions = slots
@@ -13846,12 +13843,12 @@ end
 function BlackMarketGui:_start_page_data()
 	local data = {
 		topic_id = "menu_steam_inventory",
-		init_callback_name = "create_steam_inventory",
-		init_callback_params = data,
-		allow_tradable_reload = true,
-		create_steam_inventory_extra = true,
-		add_market_panel = true
+		init_callback_name = "create_steam_inventory"
 	}
+	data.init_callback_params = data
+	data.allow_tradable_reload = true
+	data.create_steam_inventory_extra = true
+	data.add_market_panel = true
 	managers.network.account.do_convert_drills = true
 
 	managers.network.account:inventory_load()

@@ -951,11 +951,9 @@ function AchievmentManager:_check_autounlock_complete_heist()
 
 	for achievement, achievement_data in pairs(tweak_data.achievement.complete_heist_achievements) do
 		if eligible_for_autounlock(achievement_data) then
-			if not achievement_data.jobs then
-				local jobs = {
-					achievement_data.job
-				}
-			end
+			local jobs = achievement_data.jobs or {
+				achievement_data.job
+			}
 
 			for i, job in pairs(jobs) do
 				for _, difficulty in ipairs(achievement_data.difficulty) do

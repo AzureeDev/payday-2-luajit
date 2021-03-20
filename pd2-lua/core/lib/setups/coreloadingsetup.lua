@@ -6,9 +6,9 @@ function class(...)
 	end
 
 	local class_table = {
-		super = super,
-		__index = class_table
+		super = super
 	}
+	class_table.__index = class_table
 
 	setmetatable(class_table, super)
 

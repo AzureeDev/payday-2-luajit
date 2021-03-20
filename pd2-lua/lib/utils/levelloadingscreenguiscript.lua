@@ -235,24 +235,20 @@ function LevelLoadingScreenGuiScript:_make_controller_hint(parent, coords)
 	local container = parent:panel()
 	local font = arg.load_level_data.coords_font or "fonts/font_medium_mf"
 	local font_size = arg.load_level_data.coords_font_size or 24
-
-	if not arg.load_level_data.controller_shapes then
-		local controller_shapes = {
-			{
-				position = {
-					cy = 0.5,
-					cx = 0.5
-				},
-				texture_rect = {
-					0,
-					0,
-					512,
-					256
-				}
+	local controller_shapes = arg.load_level_data.controller_shapes or {
+		{
+			position = {
+				cy = 0.5,
+				cx = 0.5
+			},
+			texture_rect = {
+				0,
+				0,
+				512,
+				256
 			}
 		}
-	end
-
+	}
 	local controllers = {}
 	local controller, position = nil
 

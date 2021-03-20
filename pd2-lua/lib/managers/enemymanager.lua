@@ -698,12 +698,9 @@ function EnemyManager:on_enemy_died(dead_unit, damage_info)
 
 	local u_key = dead_unit:key()
 	local enemy_data = self._enemy_data
-
-	if not enemy_data.unit_data[u_key] then
-		local u_data = {
-			unit = dead_unit
-		}
-	end
+	local u_data = enemy_data.unit_data[u_key] or {
+		unit = dead_unit
+	}
 
 	self:on_enemy_unregistered(dead_unit)
 

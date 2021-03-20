@@ -6438,14 +6438,10 @@ function BlackMarketManager:get_mask_default_blueprint(mask_id)
 
 		if color_tweak_data then
 			local global_value = get_global_value_func(color_tweak_data)
-
-			if color_tweak_data then
-				local color = {
-					id = color_id,
-					global_value = global_value
-				}
-			end
-
+			local color = color_tweak_data and {
+				id = color_id,
+				global_value = global_value
+			}
 			default_blueprint.color_a = color or default_blueprint.color_a
 			got_color_a = true
 		end
@@ -6455,14 +6451,10 @@ function BlackMarketManager:get_mask_default_blueprint(mask_id)
 
 		if color_tweak_data then
 			local global_value = get_global_value_func(color_tweak_data)
-
-			if color_tweak_data then
-				local color = {
-					id = color_id,
-					global_value = global_value
-				}
-			end
-
+			local color = color_tweak_data and {
+				id = color_id,
+				global_value = global_value
+			}
 			default_blueprint.color_b = color or default_blueprint.color_b
 			got_color_b = true
 		end
@@ -6473,14 +6465,10 @@ function BlackMarketManager:get_mask_default_blueprint(mask_id)
 
 		if texture_tweak_data then
 			local global_value = get_global_value_func(texture_tweak_data)
-
-			if texture_tweak_data then
-				local pattern = {
-					id = texture_id,
-					global_value = global_value
-				}
-			end
-
+			local pattern = texture_tweak_data and {
+				id = texture_id,
+				global_value = global_value
+			}
 			default_blueprint.pattern = pattern or default_blueprint.pattern
 			default_blueprint.textures = default_blueprint.pattern
 			got_pattern = true
@@ -6491,14 +6479,10 @@ function BlackMarketManager:get_mask_default_blueprint(mask_id)
 
 		if material_tweak_data then
 			local global_value = get_global_value_func(material_tweak_data)
-
-			if material_tweak_data then
-				local material = {
-					id = material_id,
-					global_value = global_value
-				}
-			end
-
+			local material = material_tweak_data and {
+				id = material_id,
+				global_value = global_value
+			}
 			default_blueprint.material = material or default_blueprint.material
 			default_blueprint.materials = default_blueprint.material
 			got_material = true

@@ -45,12 +45,7 @@ function PlayerDrivingVR:_setup_help_text(is_driver)
 
 	if is_driver then
 		local throttle = driving_tweak.throttle
-
-		if type(driving_tweak.steering_pos) ~= "table" or not driving_tweak.steering_pos then
-			local steering = {
-				driving_tweak.steering_pos
-			}
-		end
+		local steering = type(driving_tweak.steering_pos) == "table" and driving_tweak.steering_pos or driving_tweak.steering_pos
 
 		for key, offset in pairs(steering) do
 			local id = "steering"

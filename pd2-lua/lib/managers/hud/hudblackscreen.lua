@@ -372,24 +372,17 @@ function HUDBlackScreen:_create_stages()
 		badge:set_right(panel:w() - 8)
 		badge:set_bottom(panel:h() - 8)
 
-		if (not is_completed or not {
+		local gradient_points = is_completed and {
 			0,
 			(Color(120, 255, 120) / 255):with_alpha(0.25),
 			1,
 			(Color(120, 255, 120) / 255):with_alpha(0)
-		}) and (not is_current_stage or not {
+		} or is_current_stage and {
 			0,
 			(Color(230, 200, 150) / 255):with_alpha(0.5),
 			1,
 			(Color(230, 200, 150) / 255):with_alpha(0)
-		}) then
-			local gradient_points = {
-				0,
-				Color.black:with_alpha(0),
-				1,
-				Color.black:with_alpha(0)
-			}
-		end
+		} or Color.black:with_alpha(0)
 
 		panel:gradient({
 			orientation = "vertical",

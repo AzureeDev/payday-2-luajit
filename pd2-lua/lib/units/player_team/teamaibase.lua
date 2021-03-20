@@ -45,16 +45,14 @@ function TeamAIBase:set_loadout(loadout)
 	end
 
 	local function aquire(item)
-		if not tweak_data.upgrades.crew_skill_definitions[item] then
-			local definition = {
-				upgrades = item and {
-					{
-						category = "team",
-						upgrade = item
-					}
-				} or {}
-			}
-		end
+		local definition = tweak_data.upgrades.crew_skill_definitions[item] or {
+			upgrades = item and {
+				{
+					category = "team",
+					upgrade = item
+				}
+			} or {}
+		}
 
 		for _, v in pairs(definition.upgrades) do
 			managers.player:aquire_incremental_upgrade({
@@ -74,16 +72,14 @@ end
 function TeamAIBase:remove_upgrades()
 	if self._loadout then
 		local function unaquire(item)
-			if not tweak_data.upgrades.crew_skill_definitions[item] then
-				local definition = {
-					upgrades = item and {
-						{
-							category = "team",
-							upgrade = item
-						}
-					} or {}
-				}
-			end
+			local definition = tweak_data.upgrades.crew_skill_definitions[item] or {
+				upgrades = item and {
+					{
+						category = "team",
+						upgrade = item
+					}
+				} or {}
+			}
 
 			for _, v in pairs(definition.upgrades) do
 				managers.player:unaquire_incremental_upgrade({
