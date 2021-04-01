@@ -352,6 +352,75 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.dingdong.sounds.charge = "knife_charge"
 	self.melee_weapons.dingdong.melee_damage_delay = 0.2
 	self.melee_weapons.dingdong.stats.concealment = 26
+	self.melee_weapons.spoon = deep_clone(self.melee_weapons.kabar)
+	self.melee_weapons.spoon.name_id = "bm_melee_spoon"
+	self.melee_weapons.spoon.anim_global_param = "melee_baseballbat"
+	self.melee_weapons.spoon.type = "axe"
+	self.melee_weapons.spoon.dlc = "apfo"
+	self.melee_weapons.spoon.texture_bundle_folder = "apfo"
+	self.melee_weapons.spoon.align_objects = {
+		"a_weapon_right"
+	}
+	self.melee_weapons.spoon.unit = "units/pd2_dlc_apfo/weapons/wpn_fps_mel_spoon/wpn_fps_mel_spoon"
+	self.melee_weapons.spoon.third_unit = "units/pd2_dlc_apfo/weapons/wpn_fps_mel_spoon/wpn_third_mel_spoon"
+	self.melee_weapons.spoon.stats.weapon_type = "blunt"
+	self.melee_weapons.spoon.stats.min_damage = 4
+	self.melee_weapons.spoon.stats.max_damage = 25
+	self.melee_weapons.spoon.stats.min_damage_effect = 1
+	self.melee_weapons.spoon.stats.max_damage_effect = 1
+	self.melee_weapons.spoon.stats.charge_time = 2
+	self.melee_weapons.spoon.stats.range = 275
+	self.melee_weapons.spoon.stats.weapon_type = "blunt"
+	self.melee_weapons.spoon.sounds = {}
+	self.melee_weapons.spoon.repeat_expire_t = 1
+	self.melee_weapons.spoon.expire_t = 1.2
+	self.melee_weapons.spoon.sounds.equip = "spoon_equip"
+	self.melee_weapons.spoon.sounds.hit_air = "spoon_hit_air"
+	self.melee_weapons.spoon.sounds.hit_gen = "spoon_hit_gen"
+	self.melee_weapons.spoon.sounds.hit_body = "spoon_hit_body"
+	self.melee_weapons.spoon.sounds.charge = "spoon_charge"
+	self.melee_weapons.spoon.melee_damage_delay = 0.2
+	self.melee_weapons.spoon.stats.concealment = 26
+	self.melee_weapons.spoon_gold = deep_clone(self.melee_weapons.kabar)
+	self.melee_weapons.spoon_gold.name_id = "bm_melee_spoon_gold"
+	self.melee_weapons.spoon_gold.anim_global_param = "melee_baseballbat"
+	self.melee_weapons.spoon_gold.type = "axe"
+	self.melee_weapons.spoon_gold.dlc = "apfo"
+	self.melee_weapons.spoon_gold.locks = {
+		achievement_lock_id = "bm_menu_locked_spoon_gold",
+		achievement = "gsu_01"
+	}
+	self.melee_weapons.spoon_gold.texture_bundle_folder = "apfo"
+	self.melee_weapons.spoon_gold.fire_dot_data = {
+		dot_trigger_chance = "20",
+		dot_damage = "10",
+		dot_length = "3.1",
+		dot_trigger_max_distance = "3000",
+		dot_tick_period = "0.5"
+	}
+	self.melee_weapons.spoon_gold.align_objects = {
+		"a_weapon_right"
+	}
+	self.melee_weapons.spoon_gold.unit = "units/pd2_dlc_apfo/weapons/wpn_fps_mel_spoon/wpn_fps_mel_spoon_gold"
+	self.melee_weapons.spoon_gold.third_unit = "units/pd2_dlc_apfo/weapons/wpn_fps_mel_spoon/wpn_third_mel_spoon_gold"
+	self.melee_weapons.spoon_gold.stats.weapon_type = "blunt"
+	self.melee_weapons.spoon_gold.stats.min_damage = 7
+	self.melee_weapons.spoon_gold.stats.max_damage = 45
+	self.melee_weapons.spoon_gold.stats.min_damage_effect = 1
+	self.melee_weapons.spoon_gold.stats.max_damage_effect = 1
+	self.melee_weapons.spoon_gold.stats.charge_time = 2
+	self.melee_weapons.spoon_gold.stats.range = 275
+	self.melee_weapons.spoon_gold.stats.weapon_type = "blunt"
+	self.melee_weapons.spoon_gold.sounds = {}
+	self.melee_weapons.spoon_gold.repeat_expire_t = 1
+	self.melee_weapons.spoon_gold.expire_t = 1.2
+	self.melee_weapons.spoon_gold.sounds.equip = "spoon_equip"
+	self.melee_weapons.spoon_gold.sounds.hit_air = "spoon_hit_air"
+	self.melee_weapons.spoon_gold.sounds.hit_gen = "spoon_hit_gen"
+	self.melee_weapons.spoon_gold.sounds.hit_body = "spoon_hit_body"
+	self.melee_weapons.spoon_gold.sounds.charge = "spoon_charge"
+	self.melee_weapons.spoon_gold.melee_damage_delay = 0.2
+	self.melee_weapons.spoon_gold.stats.concealment = 27
 	self.melee_weapons.bayonet = deep_clone(self.melee_weapons.kabar)
 	self.melee_weapons.bayonet.name_id = "bm_melee_bayonet"
 	self.melee_weapons.bayonet.type = "knife"

@@ -752,6 +752,17 @@ function Telemetry:send_on_player_heist_end()
 		TotalCashEarned = Global.telemetry._mission_payout,
 		TotalExpEarned = self._total_exp_earned
 	}
+	local total_spoons = 0
+
+	if managers.blackmarket:equipped_melee_weapon() == "spoon" and Global.statistics_manager and Global.statistics_manager.session and Global.statistics_manager.session.killed_by_melee then
+		for name_id, kills in pairs(Global.statistics_manager.session.killed_by_melee) do
+			if not CopDamage.is_civilian(name_id) then
+				total_spoons = total_spoons + kills
+			end
+		end
+	end
+
+	telemetry_payload.TotalSpoons = total_spoons
 
 	self:send("player_heist_end", telemetry_payload)
 end

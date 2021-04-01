@@ -83,6 +83,7 @@ function SlotManager:init()
 	self._masks.player_ground_check = World:make_slot_mask(1, 11, 15, 39)
 	self._masks.enemy_shield_check = World:make_slot_mask(8)
 	self._masks.interaction_obstruction = self._masks.world_geometry + self._masks.vehicles
+	self._masks.contour_ray_check = self._masks.world_geometry + self._masks.vehicles
 	self._masks.sentry_gun = World:make_slot_mask(25, 26)
 	self._masks.editor_all = self._masks.editor_all + 36 + 38 + 39
 	self._masks.statics_layer = self._masks.statics_layer + 36 + 38 + 39

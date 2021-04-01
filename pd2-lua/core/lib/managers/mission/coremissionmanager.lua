@@ -613,7 +613,11 @@ function MissionScript:save(data)
 	for id, _ in pairs(self._save_states) do
 		state[id] = {}
 
-		self._elements[id]:save(state[id])
+		if self._elements[id] and self._elements[id].save then
+			self._elements[id]:save(state[id])
+		else
+			CoreDebug.debug_pause("[MissionScript] save: save_states contains non-existing mission element or missing save function.", id, self._elements[id])
+		end
 	end
 
 	data[self._name] = state

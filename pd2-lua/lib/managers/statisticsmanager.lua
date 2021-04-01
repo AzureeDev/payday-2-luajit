@@ -1,4 +1,5 @@
 require("lib/utils/accelbyte/Telemetry")
+require("lib/units/enemies/cop/CopDamage")
 
 StatisticsManager = StatisticsManager or class()
 StatisticsManager.special_unit_ids = {
@@ -829,14 +830,22 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 		end
 	end
 
-	for melee_name, melee_kill in pairs(session.killed_by_melee) do
-		if melee_kill > 0 and table.contains(melee_list, melee_name) then
-			stats["melee_kills_" .. melee_name] = {
-				type = "int",
-				value = melee_kill
-			}
+	local melee_kills_civilians = 0
+	local melee_kills_enemies = 0
+
+	for character_id, melee_kill in pairs(session.killed_by_melee) do
+		if CopDamage.is_civilian(character_id) then
+			melee_kills_civilians = melee_kills_civilians + melee_kill
+		else
+			melee_kills_enemies = melee_kills_enemies + melee_kill
 		end
 	end
+
+	local melee_name = managers.blackmarket:equipped_melee_weapon()
+	stats["melee_kills_" .. melee_name] = {
+		type = "int",
+		value = melee_kills_enemies
+	}
 
 	for grenade_name, grenade_kill in pairs(session.killed_by_grenade) do
 		if grenade_kill > 0 and table.contains(grenade_list, grenade_name) then

@@ -127,6 +127,14 @@ function UpgradesManager:verify_level_tree(level, loading)
 	end
 end
 
+function UpgradesManager:find_in_level_tree(id)
+	for level, tree_data in pairs(tweak_data.upgrades.level_tree) do
+		if table.contains(tree_data.upgrades, id) then
+			return level
+		end
+	end
+end
+
 function UpgradesManager:_next_tree()
 	local tree = nil
 

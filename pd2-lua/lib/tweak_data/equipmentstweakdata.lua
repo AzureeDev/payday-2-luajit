@@ -377,7 +377,7 @@ function EquipmentsTweakData:init()
 		},
 		chas_keychain_forklift = {
 			sync_possession = true,
-			icon = "equipment_key_chain",
+			icon = "equipment_chavez_key",
 			transfer_quantity = 1,
 			text_id = "hud_action_pickup_keychain_forklift"
 		},

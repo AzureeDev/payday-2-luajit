@@ -6,6 +6,10 @@ function GenericDLCManager:has_anv()
 	return self:is_dlc_unlocked("anv")
 end
 
+function GenericDLCManager:has_apfo()
+	return self:is_dlc_unlocked("apfo")
+end
+
 function GenericDLCManager:has_atw()
 	return self:is_dlc_unlocked("atw")
 end
@@ -197,6 +201,10 @@ function WINDLCManager:init_generated()
 		webpage = "ovk.af/bexwpyb"
 	}
 	Global.dlc_manager.all_dlc_data.anv = {
+		app_id = "218620",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.apfo = {
 		app_id = "218620",
 		no_install = true
 	}

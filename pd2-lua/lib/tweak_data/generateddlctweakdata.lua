@@ -103,6 +103,12 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.apfo_bundle = {
+		free = true,
+		content = {}
+	}
+	self.apfo_bundle.content.loot_global_value = "apfo"
+	self.apfo_bundle.content.loot_drops = {}
 	self.atw_bundle = {
 		dlc = "has_atw",
 		content = {}

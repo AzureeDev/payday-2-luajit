@@ -11,6 +11,7 @@ function FireManager:init()
 	self._doted_enemies = {}
 	self._fire_dot_grace_period = 1
 	self._fire_dot_tick_period = 1
+	self.predicted_dot_info = {}
 end
 
 function FireManager:update(t, dt)
@@ -130,8 +131,24 @@ function FireManager:_add_doted_enemy(enemy_unit, fire_damage_received_time, wea
 			}
 
 			table.insert(self._doted_enemies, dot_info)
-			self:_start_enemy_fire_effect(dot_info)
-			self:start_burn_body_sound(dot_info)
+
+			local has_delayed_info = false
+
+			for index, delayed_dot in pairs(self.predicted_dot_info) do
+				if enemy_unit == delayed_dot.enemy_unit then
+					dot_info.sound_source = delayed_dot.sound_source
+					dot_info.fire_effects = delayed_dot.fire_effects
+
+					table.remove(self.predicted_dot_info, index)
+
+					has_delayed_info = true
+				end
+			end
+
+			if not has_delayed_info then
+				self:_start_enemy_fire_effect(dot_info)
+				self:start_burn_body_sound(dot_info)
+			end
 		end
 
 		self:check_achievemnts(enemy_unit, fire_damage_received_time)
@@ -161,6 +178,26 @@ function FireManager:_remove_flame_effects_from_doted_unit(enemy_unit)
 				end
 			end
 		end
+	end
+end
+
+function FireManager:cop_hurt_fire_prediction(enemy_unit)
+	local already_activated = false
+
+	for _, dot_info in ipairs(self._doted_enemies) do
+		if dot_info.enemy_unit == enemy_unit then
+			already_activated = true
+		end
+	end
+
+	if not already_activated then
+		local dot_info = {
+			enemy_unit = enemy_unit
+		}
+
+		self:_start_enemy_fire_effect(dot_info)
+		self:start_burn_body_sound(dot_info)
+		table.insert(self.predicted_dot_info, dot_info)
 	end
 end
 

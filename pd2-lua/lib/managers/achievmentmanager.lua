@@ -247,6 +247,24 @@ function AchievmentManager.fetch_achievments(error_str)
 	managers.achievment.oldest_achievement_date = oldest_achievement_date or -1
 
 	managers.achievment.oldest_achievement_callback_handler:dispatch(managers.achievment.oldest_achievement_date)
+
+	local gsu_info = managers.achievment:get_info("gsu_01")
+
+	if gsu_info and not gsu_info.awarded and managers.achievment:check_gsu_01_achievement() then
+		local stat = tweak_data.achievement.enemy_melee_hit_achievements.gsu_01.stat
+		local unlocks = tweak_data.achievement.persistent_stat_unlocks[stat]
+		local value = managers.network.account:get_stat(stat)
+
+		for _, d in pairs(unlocks) do
+			if d.at <= value then
+				managers.achievment:award(d.award)
+			end
+		end
+	end
+end
+
+function AchievmentManager:check_gsu_01_achievement()
+	return (tonumber(managers.network.account:get_lifetime_stat("gsu")) or 0) >= 3
 end
 
 function AchievmentManager:_load_done()
@@ -666,7 +684,7 @@ function AchievmentManager:get_recent_achievements(params)
 end
 
 function AchievmentManager:_give_reward(id, skip_exp)
-	print("[AchievmentManager:_give_reward] ", id)
+	print("[AchievmentManager] give_reward", id)
 
 	local data = self:get_info(id)
 	data.awarded = true
@@ -696,7 +714,7 @@ function AchievmentManager:award_progress(stat, value)
 		return
 	end
 
-	print("[AchievmentManager:award_progress]: ", stat .. " increased by " .. tostring(value or 1))
+	print("[AchievmentManager] award_progress: ", stat .. " increased by " .. tostring(value or 1))
 
 	if SystemInfo:platform() == Idstring("WIN32") then
 		self.handler:achievement_store_callback(AchievmentManager.steam_unlock_result)
@@ -708,6 +726,10 @@ function AchievmentManager:award_progress(stat, value)
 		local info = self:get_info(v.award)
 
 		if info and info.awarded then
+			return false
+		end
+
+		if v.check_func_name and not callback(self, self, v.check_func_name)(stat) then
 			return false
 		end
 
@@ -723,6 +745,8 @@ function AchievmentManager:award_progress(stat, value)
 	managers.network.account:publish_statistics(stats, true)
 
 	local new_value = managers.network.account:get_stat(stat)
+
+	print("[AchievmentManager]", inspect(unlock_check))
 
 	for _, d in pairs(unlock_check) do
 		if d.at <= new_value then
@@ -740,11 +764,11 @@ function AchievmentManager:get_stat(stat)
 end
 
 function AchievmentManager:award_none(id)
-	Application:debug("[AchievmentManager:award_none] Awarded achievment", id)
+	print("[AchievmentManager] award_none Awarded achievment", id)
 end
 
 function AchievmentManager:award_steam(id)
-	Application:debug("[AchievmentManager:award_steam] Awarded Steam achievment", id)
+	print("[AchievmentManager] award_steam Awarded Steam achievment", id)
 	self.handler:achievement_store_callback(AchievmentManager.steam_unlock_result)
 	self.handler:set_achievement(self:get_info(id).id)
 	self.handler:store_data()

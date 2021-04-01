@@ -8244,4 +8244,14 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
+	self.ach_gsu_01 = {
+		content = {},
+		dlc = "has_achievement",
+		achievement_id = "gsu_01"
+	}
+	self.ach_gsu_01.content.loot_global_value = "apfo"
+	self.ach_gsu_01.content.loot_drops = {}
+	self.ach_gsu_01.content.upgrades = {
+		"spoon_gold"
+	}
 end

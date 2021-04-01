@@ -31,6 +31,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = -5,
 		category = "global_event"
 	}
+	self.global_values.apfo = {
+		name_id = "bm_global_value_apfo",
+		desc_id = "menu_l_global_value_apfo",
+		unlock_id = "bm_global_value_apfo_unlock",
+		color = tweak_data.screen_colors.event_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 507,
+		category = "global_event"
+	}
 	self.global_values.atw = {
 		name_id = "bm_global_value_atw",
 		desc_id = "menu_l_global_value_atw",

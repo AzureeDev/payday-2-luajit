@@ -1011,6 +1011,12 @@ function AchievementsTweakData:init(tweak_data)
 			result = "death",
 			melee_id = "great"
 		},
+		gsu_01 = {
+			melee_id = "spoon",
+			stat = "gsu_stat",
+			is_not_civilian = true,
+			result = "death"
+		},
 		melee_kills = {
 			result = "death",
 			is_not_civilian = true,
@@ -6736,6 +6742,13 @@ function AchievementsTweakData:init(tweak_data)
 			{
 				award = "bph_9",
 				at = 13
+			}
+		},
+		gsu_stat = {
+			{
+				at = 100,
+				check_func_name = "check_gsu_01_achievement",
+				award = "gsu_01"
 			}
 		}
 	}

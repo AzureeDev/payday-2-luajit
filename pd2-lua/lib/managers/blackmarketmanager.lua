@@ -9031,7 +9031,19 @@ function BlackMarketManager:_verify_dlc_items()
 				achievement = tweak.locks and tweak.locks.achievement
 
 				if achievement and managers.achievment:get_info(achievement) and not managers.achievment:get_info(achievement).awarded then
-					data.unlocked = false
+					if category == "melee_weapons" then
+						local level = managers.upgrades:find_in_level_tree(id)
+
+						if level then
+							local identifier = UpgradesManager.AQUIRE_STRINGS[4] .. tostring(level)
+
+							managers.upgrades:unaquire(id, identifier)
+						else
+							data.unlocked = false
+						end
+					else
+						data.unlocked = false
+					end
 				end
 			end
 

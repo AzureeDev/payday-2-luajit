@@ -14374,6 +14374,15 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
+	self.Other_H_All_ForAllYou = {
+		texture = "guis/dlcs/trk/atlases/apfo_achievement",
+		texture_rect = {
+			2,
+			2,
+			85,
+			85
+		}
+	}
 
 	TextureCorrectionTweakData:new(self)
 

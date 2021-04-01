@@ -169,7 +169,7 @@ function ContourExt:init(unit)
 
 	self._unit:set_extension_update_enabled(idstr_contour, false)
 
-	ContourExt._slotmask_world_geometry = ContourExt._slotmask_world_geometry or managers.slot:get_mask("world_geometry")
+	ContourExt._slotmask_world_geometry = ContourExt._slotmask_world_geometry or managers.slot:get_mask("contour_ray_check")
 	self._contour_list = self._contour_list or {}
 
 	if self.init_contour then

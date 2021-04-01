@@ -2425,6 +2425,18 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)
 
+			if tweak_data.blackmarket.melee_weapons[melee_entry].fire_dot_data and character_unit:character_damage().damage_fire then
+				local action_data = {
+					variant = "fire",
+					damage = 0,
+					attacker_unit = self._unit,
+					col_ray = col_ray,
+					fire_dot_data = tweak_data.blackmarket.melee_weapons[melee_entry].fire_dot_data
+				}
+
+				character_unit:character_damage():damage_fire(action_data)
+			end
+
 			return defense_data
 		else
 			self:_perform_sync_melee_damage(hit_unit, col_ray, damage)

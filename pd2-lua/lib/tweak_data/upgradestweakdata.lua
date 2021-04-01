@@ -4620,6 +4620,7 @@ function UpgradesTweakData:init(tweak_data)
 				"colt_1911",
 				"mac10",
 				"hajk",
+				"spoon",
 				"x_hajk",
 				"x_mac10"
 			}
@@ -11464,6 +11465,14 @@ function UpgradesTweakData:_melee_weapon_definitions()
 	}
 	self.definitions.dingdong = {
 		dlc = "gage_pack_assault",
+		category = "melee_weapon"
+	}
+	self.definitions.spoon = {
+		dlc = "apfo",
+		category = "melee_weapon"
+	}
+	self.definitions.spoon_gold = {
+		dlc = "apfo",
 		category = "melee_weapon"
 	}
 	self.definitions.bayonet = {

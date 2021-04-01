@@ -203,7 +203,7 @@ end
 local lang_mods = {
 	[Idstring("japanese"):key()] = "japanese",
 	[Idstring("schinese"):key()] = "schinese",
-	[Idstring("koreana"):key()] = "korean"
+	[Idstring("korean"):key()] = "korean"
 }
 
 function CoreSetup:__init()

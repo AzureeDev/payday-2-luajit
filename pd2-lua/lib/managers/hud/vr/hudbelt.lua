@@ -123,6 +123,11 @@ function HUDBeltInteraction:init(ws, id, custom_icon_id)
 	})
 	local custom_state = nil
 	self._texture, custom_state = get_icon(custom_icon_id or id)
+
+	if not DB:has(Idstring("texture"), Idstring(self._texture)) then
+		self._texture = "guis/textures/pd2/none_icon"
+	end
+
 	self._icon = self._panel:bitmap({
 		blend_mode = "add",
 		valign = "scale",
@@ -183,6 +188,10 @@ end
 
 function HUDBeltInteraction:update_icon()
 	self._texture = get_icon(self._custom_icon_id or self._id)
+
+	if not DB:has(Idstring("texture"), Idstring(self._texture)) then
+		self._texture = "guis/textures/pd2/none_icon"
+	end
 
 	self._icon:set_image(self._texture)
 	scale_by_aspect(self._icon, math.min(self._w, self._h))
