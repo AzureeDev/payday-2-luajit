@@ -726,6 +726,16 @@ end
 
 function CharacterTweakData:_init_triad(presets)
 	self.triad = deep_clone(self.gangster)
+	self.triad.detection = presets.detection.guard
+	self.triad.radio_prefix = "fri_"
+	self.triad.suspicious = true
+	self.triad.weapon.is_pistol.range = {
+		optimal = 900,
+		far = 3000,
+		close = 500
+	}
+	self.triad.crouch_move = nil
+	self.triad.no_arrest = false
 	self.triad.access = "gangster"
 	self.triad.calls_in = true
 
@@ -740,12 +750,11 @@ function CharacterTweakData:_init_captain(presets)
 	self.captain.no_retreat = true
 	self.captain.no_arrest = true
 	self.captain.surrender = nil
-	self.captain.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.captain.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
 	self.captain.flammable = false
-	self.captain.can_be_tased = false
 	self.captain.suppression = nil
 
-	table.insert(self._enemy_list, "biker")
+	table.insert(self._enemy_list, "captain")
 end
 
 function CharacterTweakData:_init_biker_escape(presets)
@@ -891,7 +900,7 @@ function CharacterTweakData:_init_mobster_boss(presets)
 	self.mobster_boss.HEALTH_INIT = 350
 	self.mobster_boss.headshot_dmg_mul = 2
 	self.mobster_boss.damage.explosion_damage_mul = 1
-	self.mobster_boss.damage.hurt_severity = presets.hurt_severities.base_no_poison
+	self.mobster_boss.damage.hurt_severity = presets.hurt_severities.base_no_poison_no_tase
 	self.mobster_boss.move_speed = presets.move_speed.very_slow
 	self.mobster_boss.allowed_poses = {
 		stand = true
@@ -919,7 +928,6 @@ function CharacterTweakData:_init_mobster_boss(presets)
 	self.mobster_boss.calls_in = nil
 	self.mobster_boss.chatter = presets.enemy_chatter.no_chatter
 	self.mobster_boss.use_radio = nil
-	self.mobster_boss.can_be_tased = false
 	self.mobster_boss.immune_to_concussion = true
 
 	table.insert(self._enemy_list, "mobster_boss")
@@ -1051,7 +1059,7 @@ function CharacterTweakData:_init_biker_boss(presets)
 	self.biker_boss.HEALTH_INIT = 350
 	self.biker_boss.headshot_dmg_mul = 2
 	self.biker_boss.damage.explosion_damage_mul = 1
-	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
 	self.biker_boss.move_speed = presets.move_speed.very_slow
 	self.biker_boss.allowed_poses = {
 		stand = true
@@ -1079,12 +1087,10 @@ function CharacterTweakData:_init_biker_boss(presets)
 	self.biker_boss.calls_in = nil
 	self.biker_boss.chatter = presets.enemy_chatter.no_chatter
 	self.biker_boss.use_radio = nil
-	self.biker_boss.can_be_tased = false
 	self.biker_boss.DAMAGE_CLAMP_BULLET = 80
 	self.biker_boss.DAMAGE_CLAMP_EXPLOSION = 80
 	self.biker_boss.use_animation_on_fire_damage = false
 	self.biker_boss.flammable = true
-	self.biker_boss.can_be_tased = false
 	self.biker_boss.immune_to_knock_down = true
 	self.biker_boss.immune_to_concussion = true
 
@@ -1217,6 +1223,7 @@ function CharacterTweakData:_init_chavez_boss(presets)
 	self.chavez_boss.HEALTH_INIT = 550
 	self.chavez_boss.headshot_dmg_mul = 2
 	self.chavez_boss.damage.explosion_damage_mul = 1
+	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.base_no_tase
 	self.chavez_boss.move_speed = presets.move_speed.fast
 	self.chavez_boss.allowed_poses = {
 		stand = true
@@ -1244,12 +1251,10 @@ function CharacterTweakData:_init_chavez_boss(presets)
 	self.chavez_boss.calls_in = nil
 	self.chavez_boss.chatter = presets.enemy_chatter.no_chatter
 	self.chavez_boss.use_radio = nil
-	self.chavez_boss.can_be_tased = false
 	self.chavez_boss.DAMAGE_CLAMP_BULLET = 80
 	self.chavez_boss.DAMAGE_CLAMP_EXPLOSION = 80
 	self.chavez_boss.use_animation_on_fire_damage = false
 	self.chavez_boss.flammable = true
-	self.chavez_boss.can_be_tased = false
 	self.chavez_boss.immune_to_knock_down = true
 	self.chavez_boss.immune_to_concussion = true
 
@@ -1262,6 +1267,7 @@ function CharacterTweakData:_init_hector_boss(presets)
 	self.hector_boss.DAMAGE_CLAMP_EXPLOSION = 550
 	self.hector_boss.melee_weapon_dmg_multiplier = 2.5
 	self.hector_boss.HEALTH_INIT = 900
+	self.hector_boss.damage.hurt_severity = presets.hurt_severities.base_no_poison_no_tase
 	self.hector_boss.weapon.is_shotgun_mag = {
 		aim_delay = {
 			0.1,
@@ -1377,14 +1383,13 @@ function CharacterTweakData:_init_hector_boss(presets)
 			}
 		}
 	}
-	self.hector_boss.can_be_tased = false
 
 	table.insert(self._enemy_list, "hector_boss")
 end
 
 function CharacterTweakData:_init_hector_boss_no_armor(presets)
 	self.hector_boss_no_armor = deep_clone(self.fbi)
-	self.hector_boss_no_armor.damage.hurt_severity = presets.hurt_severities.base_no_poison
+	self.hector_boss_no_armor.damage.hurt_severity = presets.hurt_severities.base_no_poison_no_tase
 	self.hector_boss_no_armor.no_retreat = true
 	self.hector_boss_no_armor.no_arrest = true
 	self.hector_boss_no_armor.surrender = nil
@@ -1394,7 +1399,6 @@ function CharacterTweakData:_init_hector_boss_no_armor(presets)
 	self.hector_boss_no_armor.calls_in = nil
 	self.hector_boss_no_armor.chatter = presets.enemy_chatter.no_chatter
 	self.hector_boss_no_armor.use_radio = nil
-	self.hector_boss_no_armor.can_be_tased = false
 	self.hector_boss_no_armor.immune_to_concussion = true
 
 	table.insert(self._enemy_list, "hector_boss_no_armor")
@@ -1554,6 +1558,7 @@ function CharacterTweakData:_init_drug_lord_boss(presets)
 	self.drug_lord_boss.HEALTH_INIT = 350
 	self.drug_lord_boss.headshot_dmg_mul = 2
 	self.drug_lord_boss.damage.explosion_damage_mul = 1
+	self.drug_lord_boss.damage.hurt_severity = presets.hurt_severities.base_no_tase
 	self.drug_lord_boss.move_speed = presets.move_speed.normal
 	self.drug_lord_boss.allowed_poses = {
 		stand = true
@@ -1582,12 +1587,10 @@ function CharacterTweakData:_init_drug_lord_boss(presets)
 	self.drug_lord_boss.calls_in = nil
 	self.drug_lord_boss.chatter = presets.enemy_chatter.no_chatter
 	self.drug_lord_boss.use_radio = nil
-	self.drug_lord_boss.can_be_tased = false
 	self.drug_lord_boss.DAMAGE_CLAMP_BULLET = 80
 	self.drug_lord_boss.DAMAGE_CLAMP_EXPLOSION = 80
 	self.drug_lord_boss.use_animation_on_fire_damage = false
 	self.drug_lord_boss.flammable = true
-	self.drug_lord_boss.can_be_tased = false
 	self.drug_lord_boss.immune_to_knock_down = true
 	self.drug_lord_boss.immune_to_concussion = true
 
@@ -1720,6 +1723,7 @@ function CharacterTweakData:_init_drug_lord_boss_stealth(presets)
 	self.drug_lord_boss_stealth.HEALTH_INIT = 50
 	self.drug_lord_boss_stealth.headshot_dmg_mul = 2
 	self.drug_lord_boss_stealth.damage.explosion_damage_mul = 1
+	self.drug_lord_boss_stealth.damage.hurt_severity = presets.hurt_severities.base_no_tase
 	self.drug_lord_boss_stealth.move_speed = presets.move_speed.normal
 	self.drug_lord_boss_stealth.allowed_poses = {
 		stand = true
@@ -1748,12 +1752,10 @@ function CharacterTweakData:_init_drug_lord_boss_stealth(presets)
 	self.drug_lord_boss_stealth.calls_in = nil
 	self.drug_lord_boss_stealth.chatter = presets.enemy_chatter.no_chatter
 	self.drug_lord_boss_stealth.use_radio = nil
-	self.drug_lord_boss_stealth.can_be_tased = false
 	self.drug_lord_boss_stealth.DAMAGE_CLAMP_BULLET = 80
 	self.drug_lord_boss_stealth.DAMAGE_CLAMP_EXPLOSION = 80
 	self.drug_lord_boss_stealth.use_animation_on_fire_damage = false
 	self.drug_lord_boss_stealth.flammable = true
-	self.drug_lord_boss_stealth.can_be_tased = false
 	self.drug_lord_boss_stealth.immune_to_knock_down = true
 	self.drug_lord_boss_stealth.immune_to_concussion = true
 
@@ -2058,7 +2060,7 @@ function CharacterTweakData:_init_tank(presets)
 		damage_mul = self.tank.headshot_dmg_mul * 1
 	}
 	self.tank.die_sound_event = "bdz_x02a_any_3p"
-	self.tank.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
 	self.tank.chatter = {
 		retreat = true,
 		aggressive = true,
@@ -2069,7 +2071,6 @@ function CharacterTweakData:_init_tank(presets)
 	self.tank.calls_in = nil
 	self.tank.use_animation_on_fire_damage = false
 	self.tank.flammable = true
-	self.tank.can_be_tased = false
 	self.tank.immune_to_knock_down = true
 	self.tank.immune_to_concussion = true
 	self.tank_hw = deep_clone(self.tank)
@@ -2138,7 +2139,6 @@ function CharacterTweakData:_init_tank(presets)
 	self.tank_hw.damage.explosion_damage_mul = 1
 	self.tank_hw.use_animation_on_fire_damage = false
 	self.tank_hw.flammable = true
-	self.tank_hw.can_be_tased = false
 	self.tank_medic = deep_clone(self.tank)
 
 	table.insert(self.tank_medic.tags, "medic")
@@ -2792,7 +2792,6 @@ function CharacterTweakData:_init_phalanx_vip(presets)
 	self.phalanx_vip.HEALTH_INIT = 300
 	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 100
 	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = self.phalanx_vip.DAMAGE_CLAMP_BULLET
-	self.phalanx_vip.can_be_tased = false
 	self.phalanx_vip.immune_to_knock_down = true
 	self.phalanx_vip.immune_to_concussion = true
 
@@ -3040,7 +3039,7 @@ function CharacterTweakData:_init_civilian(presets)
 			20
 		},
 		damage = {
-			hurt_severity = presets.hurt_severities.no_hurts
+			hurt_severity = presets.hurt_severities.no_hurts_no_tase
 		},
 		ecm_vulnerability = 1,
 		ecm_hurts = {
@@ -4006,6 +4005,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 	presets.hurt_severities.base = {
+		tase = true,
 		bullet = {
 			health_reference = "current",
 			zones = {
@@ -4101,6 +4101,8 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.hurt_severities.base_no_tase = deep_clone(presets.hurt_severities.base)
+	presets.hurt_severities.base_no_tase.tase = false
 	presets.hurt_severities.base_no_poison = deep_clone(presets.hurt_severities.base)
 	presets.hurt_severities.base_no_poison.poison = {
 		health_reference = 1,
@@ -4110,6 +4112,8 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.hurt_severities.base_no_poison_no_tase = deep_clone(presets.hurt_severities.base_no_poison)
+	presets.hurt_severities.base_no_poison_no_tase.tase = false
 	presets.base = {
 		HEALTH_INIT = 2.5,
 		headshot_dmg_mul = 2,

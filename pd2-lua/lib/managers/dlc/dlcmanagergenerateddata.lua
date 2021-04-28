@@ -62,6 +62,10 @@ function GenericDLCManager:has_in31()
 	return self:is_dlc_unlocked("in31")
 end
 
+function GenericDLCManager:has_in32()
+	return self:is_dlc_unlocked("in32")
+end
+
 function GenericDLCManager:has_inf()
 	return self:is_dlc_unlocked("inf")
 end
@@ -260,6 +264,10 @@ function WINDLCManager:init_generated()
 		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.in31 = {
+		app_id = "218620",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.in32 = {
 		app_id = "218620",
 		no_install = true
 	}

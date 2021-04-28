@@ -2929,6 +2929,12 @@ function CopDamage:sync_damage_tase(attacker_unit, damage_percent, variant, deat
 		return
 	end
 
+	if variant == 1 then
+		variant = "heavy"
+	else
+		variant = "light"
+	end
+
 	if self._tase_effect then
 		World:effect_manager():fade_kill(self._tase_effect)
 	end
@@ -2951,17 +2957,23 @@ function CopDamage:sync_damage_tase(attacker_unit, damage_percent, variant, deat
 		self:chk_killshot(attacker_unit, "tase")
 
 		local data = {
-			variant = "melee",
 			head_shot = false,
 			name = self._unit:base()._tweak_table,
-			stats_name = self._unit:base()._stats_name
+			stats_name = self._unit:base()._stats_name,
+			variant = variant
 		}
 
 		managers.statistics:killed_by_anyone(data)
 	else
+		local type = "taser_tased"
+
+		if not self._char_tweak.damage.hurt_severity.tase then
+			type = "none"
+		end
+
 		result = {
-			type = "taser_tased",
-			variant = variant == 1 and "heavy" or "light"
+			type = type,
+			variant = variant
 		}
 
 		self:_apply_damage_to_health(damage)

@@ -7489,6 +7489,26 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 			}
 		}
 	}
+	self.masks.goldenbrute = {
+		unit = "units/pd2_dlc_in32/masks/msk_goldenbrute/msk_goldenbrute",
+		name_id = "bm_msk_in32_goldenbrute",
+		pcs = {},
+		value = 0,
+		type = "helmet",
+		sort_number = 0,
+		preview_oobb_object = "g_mask",
+		global_value = "in32",
+		texture_bundle_folder = "in32"
+	}
+	self.masks.ingoldnito = {
+		unit = "units/pd2_dlc_in32/masks/msk_ingoldnito/msk_ingoldnito",
+		name_id = "bm_msk_in32_ingoldnito",
+		pcs = {},
+		value = 0,
+		dlc = "in32",
+		global_value = "in32",
+		texture_bundle_folder = "in32"
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.masks) do

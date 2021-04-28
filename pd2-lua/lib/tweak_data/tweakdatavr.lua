@@ -978,7 +978,8 @@ function TweakDataVR:init(tweak_data)
 		},
 		m590 = {
 			position = Vector3(3, 0, 0),
-			rotation = Rotation(-223, -129, 70)
+			rotation = Rotation(-223, -129, 70),
+			weapon_offset = Vector3(0, 16, 8)
 		},
 		boot = {
 			position = Vector3(3, 0, 0),
@@ -4077,6 +4078,17 @@ function TweakDataVR:init(tweak_data)
 				}
 			},
 			finish = {
+				{
+					time = 0,
+					anims = {
+						{
+							anim_group = "reload_exit",
+							to = 0.7,
+							from = 0.2,
+							part = "foregrip"
+						}
+					}
+				},
 				{
 					time = 0,
 					sound = "wp_m590_insert_shell"

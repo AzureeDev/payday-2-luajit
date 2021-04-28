@@ -3558,43 +3558,64 @@ function MenuSceneManager:spawn_armor(armor_id)
 	self:_spawn_item("units/menu/menu_character/menu_character_test", nil)
 end
 
-function MenuSceneManager:setup_infamy_menu()
+function MenuSceneManager:on_setup_infamy_menu()
 	self:add_one_frame_delayed_clbk(function ()
-		self._character_unit:set_position(Vector3(500, 0, -500))
+		if not _G.IS_VR then
+			self._character_unit:set_position(Vector3(500, 0, -500))
 
-		self._outfit_state = self._character_unit:play_redirect(Idstring("idle_menu"))
+			self._outfit_state = self._character_unit:play_redirect(Idstring("idle_menu"))
+		end
 
-		self:remove_item()
+		self.infamy_menu_ready = true
 	end)
+end
+
+function MenuSceneManager:on_close_infamy_menu()
+	if _G.IS_VR then
+		self:set_character_player_style(managers.blackmarket:equipped_player_style(), managers.blackmarket:get_suit_variation(), self._character_unit)
+		self:set_character_gloves(managers.blackmarket:equipped_glove_id(), self._character_unit)
+	end
+
+	self:remove_item()
+
+	self.infamy_menu_ready = false
 end
 
 function MenuSceneManager:spawn_infamy_outfit_preview(outfit_id, material_variation)
 	self:add_one_frame_delayed_clbk(function ()
 		self:set_character_player_style(outfit_id, material_variation, self._character_unit)
-		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "cvc_var1", 1)
-		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "husk2", 0)
-
-		self._character_yaw = -45
-
-		self._character_unit:set_rotation(Rotation(self._character_yaw))
 
 		local asset_id = Idstring(tweak_data.blackmarket.player_styles[outfit_id].unit)
 
-		self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_outfit_done", asset_id))
+		if not _G.IS_VR then
+			self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "cvc_var1", 1)
+			self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "husk2", 0)
+
+			self._character_yaw = -45
+
+			self._character_unit:set_rotation(Rotation(self._character_yaw))
+			self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_outfit_done", asset_id))
+
+			self._use_character_grab2 = true
+			self._use_character_pan = true
+		end
 
 		self._infamy_item_spawned = asset_id
-		self._use_character_grab2 = true
-		self._use_character_pan = true
 	end)
 end
 
 function MenuSceneManager:remove_outfit(...)
-	mvector3.set_z(self._character_values.pos_target, mvector3.z(self._character_values.pos_current))
-	self._character_unit:set_position(Vector3(500, 0, -500))
+	if not _G.IS_VR then
+		mvector3.set_z(self._character_values.pos_target, mvector3.z(self._character_values.pos_current))
+		self._character_unit:set_position(Vector3(500, 0, -500))
+
+		self._use_character_grab2 = false
+		self._use_character_pan = false
+	else
+		self:set_character_player_style(managers.blackmarket:equipped_player_style(), managers.blackmarket:get_suit_variation(), self._character_unit)
+	end
 
 	self._infamy_item_spawned = false
-	self._use_character_grab2 = false
-	self._use_character_pan = false
 end
 
 function MenuSceneManager:spawn_outfit_done(asset_id)
@@ -3614,28 +3635,35 @@ function MenuSceneManager:spawn_infamy_gloves_preview(glove_id)
 		self:set_character_player_style("default", nil, self._character_unit)
 		self:set_character_gloves(glove_id, self._character_unit)
 
-		self._character_yaw = -90
-
-		self._character_unit:set_rotation(Rotation(self._character_yaw))
-		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "cvc_var1", 0)
-		self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "husk2", 1)
-
 		local asset_id = Idstring(tweak_data.blackmarket.gloves[glove_id].unit)
 
-		self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_gloves_done", asset_id))
+		if not _G.IS_VR then
+			self._character_yaw = -90
+
+			self._character_unit:set_rotation(Rotation(self._character_yaw))
+			self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "cvc_var1", 0)
+			self._character_unit:anim_state_machine():set_parameter(self._outfit_state, "husk2", 1)
+			self._character_unit:base():add_clbk_listener("done", callback(self, self, "spawn_gloves_done", asset_id))
+
+			self._use_character_grab2 = false
+			self._use_item_grab = false
+		end
 
 		self._infamy_item_spawned = asset_id
-		self._use_character_grab2 = false
-		self._use_item_grab = false
 	end)
 end
 
 function MenuSceneManager:remove_gloves()
-	self._character_unit:set_position(Vector3(500, 0, -500))
+	if not _G.IS_VR then
+		self._character_unit:set_position(Vector3(500, 0, -500))
+
+		self._use_character_grab2 = false
+		self._use_item_grab = true
+	else
+		self:set_character_gloves(managers.blackmarket:equipped_glove_id(), self._character_unit)
+	end
 
 	self._infamy_item_spawned = false
-	self._use_character_grab2 = false
-	self._use_item_grab = true
 end
 
 function MenuSceneManager:spawn_gloves_done(asset_id)
@@ -3677,8 +3705,9 @@ end
 function MenuSceneManager:spawn_infamy_weapon_preview(color_id)
 	self:add_one_frame_delayed_clbk(function ()
 		self._use_item_grab = true
+		local blueprint = clone(tweak_data.weapon.factory.wpn_fps_pis_g17.default_blueprint)
 
-		managers.menu_scene:spawn_item_weapon("wpn_fps_pis_g22c", nil, {
+		managers.menu_scene:spawn_item_weapon("wpn_fps_pis_g17", blueprint, {
 			instance_id = "color_tan_khaki",
 			quality = "mint",
 			color_index = 10,

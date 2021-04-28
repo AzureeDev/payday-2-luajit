@@ -583,6 +583,10 @@ function TimerGui:_set_jammed(jammed)
 
 		self:post_event(self._jam_event)
 	else
+		if self._unit:damage() and self._unit:damage():has_sequence("resumed_trigger") then
+			self._unit:damage():run_sequence_simple("resumed_trigger")
+		end
+
 		for _, child in ipairs(self._gui_script.panel:children()) do
 			if child.children then
 				for _, grandchild in ipairs(child:children()) do

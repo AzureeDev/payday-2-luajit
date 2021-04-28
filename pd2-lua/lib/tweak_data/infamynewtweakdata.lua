@@ -27,7 +27,7 @@ function InfamyTweakData:init()
 		table.insert(self.statistics_rank_steps, 1, i)
 	end
 
-	self.join_stingers = 26
+	self.join_stingers = 35
 	self.free_join_stingers = {
 		0,
 		18
@@ -136,7 +136,25 @@ function InfamyTweakData:init()
 		"in31_suitpack_leather_white",
 		"in31_weapon_color_stinger_07",
 		"in31_glovepack_silver",
-		"in31_weapon_color_stinger_08"
+		"in31_weapon_color_stinger_08",
+		"in32_glovepack_goldnet",
+		"in32_weapon_color_stinger_01",
+		"in32_suitpack_gangstercoat",
+		"in32_weapon_color_stinger_02",
+		"in32_suitpack_gangstercoat_british",
+		"in32_weapon_color_stinger_03",
+		"in32_maskpack_goldenbrute",
+		"in32_weapon_color_stinger_04",
+		"in32_suitpack_gangstercoat_french",
+		"in32_weapon_color_stinger_05",
+		"in32_suitpack_gangstercoat_irish",
+		"in32_weapon_color_stinger_06",
+		"in32_maskpack_ingoldnito",
+		"in32_weapon_color_stinger_07",
+		"in32_suitpack_general_default_blue",
+		"in32_weapon_color_stinger_08",
+		"in32_suitglovepack_general_postmoto",
+		"in32_weapon_color_stinger_09"
 	}
 	self.cost = {
 		root = digest(0),
@@ -777,6 +795,7 @@ function InfamyTweakData:init()
 		})
 	end
 
+	local infamy_color_and_stinger_packs = {}
 	self.items.in31_maskpack_cyberpunk = {
 		name_id = "menu_in31_maskpack_cyberpunk_name",
 		desc_id = "menu_in31_maskpack_cyberpunk_desc",
@@ -877,41 +896,231 @@ function InfamyTweakData:init()
 			}
 		}
 	}
-	local in31_color_and_stinger_packs = {
+
+	table.list_append(infamy_color_and_stinger_packs, {
 		{
 			join_stinger = 19,
+			item_id = "in31_weapon_color_stinger_01",
 			weapon_color = "color_in31_06"
 		},
 		{
 			join_stinger = 20,
+			item_id = "in31_weapon_color_stinger_02",
 			weapon_color = "color_in31_04"
 		},
 		{
 			join_stinger = 21,
+			item_id = "in31_weapon_color_stinger_03",
 			weapon_color = "color_in31_05"
 		},
 		{
 			join_stinger = 22,
+			item_id = "in31_weapon_color_stinger_04",
 			weapon_color = "color_in31_02"
 		},
 		{
 			join_stinger = 23,
+			item_id = "in31_weapon_color_stinger_05",
 			weapon_color = "color_in31_01"
 		},
 		{
 			join_stinger = 24,
+			item_id = "in31_weapon_color_stinger_06",
 			weapon_color = "color_in31_08"
 		},
 		{
 			join_stinger = 25,
+			item_id = "in31_weapon_color_stinger_07",
 			weapon_color = "color_in31_03"
 		},
 		{
 			join_stinger = 26,
+			item_id = "in31_weapon_color_stinger_08",
 			weapon_color = "color_in31_07"
 		}
+	})
+
+	self.items.in32_maskpack_goldenbrute = {
+		name_id = "menu_in32_maskpack_goldenbrute_name",
+		desc_id = "menu_in32_maskpack_goldenbrute_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"masks",
+				"goldenbrute"
+			}
+		}
 	}
-	local generic_in31_weapon_color_and_stinger_item = {
+	self.items.in32_maskpack_ingoldnito = {
+		name_id = "menu_in32_maskpack_ingoldnito_name",
+		desc_id = "menu_in32_maskpack_ingoldnito_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"masks",
+				"ingoldnito"
+			}
+		}
+	}
+	self.items.in32_suitpack_gangstercoat = {
+		name_id = "menu_in32_suitpack_gangstercoat",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"gangstercoat",
+				"default"
+			}
+		}
+	}
+	self.items.in32_suitpack_gangstercoat_irish = {
+		name_id = "menu_in32_suitpack_gangstercoat_irish",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"gangstercoat",
+				"irish"
+			}
+		}
+	}
+	self.items.in32_suitpack_gangstercoat_british = {
+		name_id = "menu_in32_suitpack_gangstercoat_british",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"gangstercoat",
+				"british"
+			}
+		}
+	}
+	self.items.in32_suitpack_gangstercoat_french = {
+		name_id = "menu_in32_suitpack_gangstercoat_french",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"gangstercoat",
+				"french"
+			}
+		}
+	}
+	self.items.in32_suitpack_general_default_blue = {
+		name_id = "menu_in32_suitpack_general_default_blue",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"general",
+				"default"
+			},
+			{
+				nil,
+				"player_styles",
+				"general",
+				"blue"
+			}
+		}
+	}
+	self.items.in32_suitglovepack_general_postmoto = {
+		name_id = "menu_in32_suitglovepack_general_postmoto",
+		desc_id = "menu_infamy_suits_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"player_styles",
+				"general",
+				"red"
+			},
+			{
+				nil,
+				"player_styles",
+				"general",
+				"white"
+			},
+			{
+				nil,
+				"gloves",
+				"postmoto"
+			}
+		}
+	}
+	self.items.in32_glovepack_goldnet = {
+		name_id = "menu_in32_glovepack_goldnet",
+		desc_id = "menu_infamy_gloves_desc",
+		cost = self.cost.tier1,
+		upgrades = {
+			{
+				nil,
+				"gloves",
+				"goldnet"
+			}
+		}
+	}
+
+	table.list_append(infamy_color_and_stinger_packs, {
+		{
+			join_stinger = 27,
+			item_id = "in32_weapon_color_stinger_01",
+			weapon_color = "color_in32_01"
+		},
+		{
+			join_stinger = 28,
+			item_id = "in32_weapon_color_stinger_02",
+			weapon_color = "color_in32_02"
+		},
+		{
+			join_stinger = 29,
+			item_id = "in32_weapon_color_stinger_03",
+			weapon_color = "color_in32_03"
+		},
+		{
+			join_stinger = 30,
+			item_id = "in32_weapon_color_stinger_04",
+			weapon_color = "color_in32_04"
+		},
+		{
+			join_stinger = 31,
+			item_id = "in32_weapon_color_stinger_05",
+			weapon_color = "color_in32_05"
+		},
+		{
+			join_stinger = 32,
+			item_id = "in32_weapon_color_stinger_06",
+			weapon_color = "color_in32_06"
+		},
+		{
+			join_stinger = 33,
+			item_id = "in32_weapon_color_stinger_07",
+			weapon_color = "color_in32_07"
+		},
+		{
+			join_stinger = 34,
+			item_id = "in32_weapon_color_stinger_08",
+			weapon_color = "color_in32_08"
+		},
+		{
+			join_stinger = 35,
+			item_id = "in32_weapon_color_stinger_09",
+			weapon_color = "color_in32_09"
+		}
+	})
+
+	local generic_infamy_weapon_color_and_stinger_item = {
 		name_id = "menu_infamy_color_stinger_name",
 		desc_id = "menu_infamy_color_stinger_desc",
 		desc_params = {},
@@ -926,12 +1135,12 @@ function InfamyTweakData:init()
 		}
 	}
 
-	for index, data in ipairs(in31_color_and_stinger_packs) do
-		local item_id = "in31_weapon_color_stinger_" .. string.format("%02d", index)
+	for index, data in ipairs(infamy_color_and_stinger_packs) do
+		local item_id = data.item_id
 		local color_id = data.weapon_color
 		local join_stinger = data.join_stinger
 		local join_stinger_id = string.format("infamy_stinger_%03d", data.join_stinger)
-		self.items[item_id] = deep_clone(generic_in31_weapon_color_and_stinger_item)
+		self.items[item_id] = deep_clone(generic_infamy_weapon_color_and_stinger_item)
 		self.items[item_id].desc_param_ids.weapon_color = "bm_wskn_" .. color_id
 		self.items[item_id].desc_param_ids.join_stinger = "menu_" .. join_stinger_id .. "_name"
 

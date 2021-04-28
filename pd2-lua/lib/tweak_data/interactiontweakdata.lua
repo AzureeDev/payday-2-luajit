@@ -6695,4 +6695,10 @@ function InteractionTweakData:init(tweak_data)
 		timer = 1,
 		interact_distance = 200
 	}
+	self.chca_flip_table = {
+		text_id = "hud_int_flip_table",
+		action_text_id = "hud_action_flipping_table",
+		timer = 2,
+		interact_distance = 200
+	}
 end

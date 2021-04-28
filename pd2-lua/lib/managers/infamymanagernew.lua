@@ -53,8 +53,12 @@ function InfamyManager:required_points(item)
 	return tweak_data.infamy.items[item] and true or false
 end
 
-function InfamyManager:reward_player_styles(global_value, category, player_style)
+function InfamyManager:reward_player_styles(global_value, category, player_style, suit_variation)
 	managers.blackmarket:on_aquired_player_style(player_style)
+
+	if suit_variation and suit_variation ~= "default" then
+		managers.blackmarket:on_aquired_suit_variation(player_style, suit_variation)
+	end
 end
 
 function InfamyManager:reward_suit_variations(global_value, category, player_style, suit_variation)
@@ -83,7 +87,9 @@ function InfamyManager:unlock_item(item)
 
 	if self:available(item) and not self:owned(item) then
 		for bonus, entry in ipairs(infamy_item.upgrades) do
-			self["reward_" .. tostring(entry[2])] or self.reward_item(self, unpack(entry))
+			local reward_func = self["reward_" .. tostring(entry[2])] or self.reward_item
+
+			reward_func(self, unpack(entry))
 		end
 
 		if infamy_item.upgrades.join_stingers then

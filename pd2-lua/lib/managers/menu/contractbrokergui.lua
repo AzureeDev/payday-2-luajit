@@ -40,10 +40,10 @@ function ContractBrokerGui:init(ws, fullscreen_ws, node)
 	self._ws = managers.gui_data:create_saferect_workspace()
 	self._node = node
 	self._fullscreen_panel = self._fullscreen_ws:panel():panel({
-		layer = 1000
+		layer = tweak_data.gui.MENU_COMPONENT_LAYER
 	})
 	self._panel = self._ws:panel():panel({
-		layer = 1100
+		layer = tweak_data.gui.ATTRACT_SCREEN_LAYER
 	})
 	self.make_fine_text = BlackMarketGui.make_fine_text
 	local component_data = node:parameters().menu_component_data or {}

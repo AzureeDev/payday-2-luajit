@@ -63,13 +63,14 @@ function PlayerMovement:init(unit)
 	self._regenerate_timer = nil
 	self._stamina = self:_max_stamina()
 	self._underdog_skill_data = {
-		max_dis_sq = 3240000,
+		nr_enemies = 3,
 		chk_t = 6,
 		chk_interval_active = 6,
-		nr_enemies = 3,
-		max_vert_dis = 1000,
 		chk_interval_inactive = 1,
+		max_dis_sq = 3240000,
+		max_vert_dis = 1000,
 		has_dmg_dampener = managers.player:has_category_upgrade("temporary", "dmg_dampener_outnumbered") or managers.player:has_category_upgrade("temporary", "dmg_dampener_outnumbered_strong"),
+		has_dmg_dampener_close = managers.player:has_category_upgrade("temporary", "dmg_dampener_close_contact"),
 		has_dmg_mul = managers.player:has_category_upgrade("temporary", "dmg_multiplier_outnumbered")
 	}
 
@@ -431,8 +432,9 @@ function PlayerMovement:is_taser_attack_allowed()
 	return true
 end
 
-function PlayerMovement:on_non_lethal_electrocution()
+function PlayerMovement:on_non_lethal_electrocution(duration_multiplier)
 	self._state_data.non_lethal_electrocution = true
+	self._state_data.electrocution_duration_multiplier = duration_multiplier or 1
 
 	if alive(self._unit) then
 		self._unit:character_damage():on_tased(true)
@@ -727,11 +729,12 @@ end
 function PlayerMovement:_upd_underdog_skill(t)
 	local data = self._underdog_skill_data
 
-	if not self._attackers or not data.has_dmg_dampener and not data.has_dmg_mul or t < self._underdog_skill_data.chk_t then
+	if not self._attackers or not data.has_dmg_dampener and not data.has_dmg_mul and not data.has_dmg_dampener_close or t < self._underdog_skill_data.chk_t then
 		return
 	end
 
 	local my_pos = self._m_pos
+	local max_guys_to_check = data.nr_enemies
 	local nr_guys = 0
 	local activated = nil
 
@@ -748,24 +751,26 @@ function PlayerMovement:_upd_underdog_skill(t)
 		if dis_sq < data.max_dis_sq and math.abs(attacker_pos.z - my_pos.z) < data.max_vert_dis then
 			nr_guys = nr_guys + 1
 
-			if data.nr_enemies <= nr_guys then
-				activated = true
-
-				if data.has_dmg_mul then
-					managers.player:activate_temporary_upgrade("temporary", "dmg_multiplier_outnumbered")
-				end
-
-				if data.has_dmg_dampener then
-					managers.player:activate_temporary_upgrade("temporary", "dmg_dampener_outnumbered")
-					managers.player:activate_temporary_upgrade("temporary", "dmg_dampener_outnumbered_strong")
-				end
-
+			if max_guys_to_check <= nr_guys then
 				break
 			end
 		end
 	end
 
-	if nr_guys >= 1 then
+	if data.nr_enemies <= nr_guys then
+		activated = true
+
+		if data.has_dmg_mul then
+			managers.player:activate_temporary_upgrade("temporary", "dmg_multiplier_outnumbered")
+		end
+
+		if data.has_dmg_dampener then
+			managers.player:activate_temporary_upgrade("temporary", "dmg_dampener_outnumbered")
+			managers.player:activate_temporary_upgrade("temporary", "dmg_dampener_outnumbered_strong")
+		end
+	end
+
+	if data.has_dmg_dampener_close and nr_guys >= 1 then
 		managers.player:activate_temporary_upgrade("temporary", "dmg_dampener_close_contact")
 	end
 

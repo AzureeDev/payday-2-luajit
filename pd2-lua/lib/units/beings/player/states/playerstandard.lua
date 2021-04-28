@@ -2378,12 +2378,12 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 				self._unit:character_damage():restore_health(managers.player:temporary_upgrade_value("temporary", "melee_life_leech", 1))
 			end
 
-			local special_weapon = tweak_data.blackmarket.melee_weapons[melee_entry].special_weapon
 			local action_data = {
 				variant = "melee"
 			}
+			local special_weapon = tweak_data.blackmarket.melee_weapons[melee_entry].special_weapon
 
-			if special_weapon == "taser" then
+			if special_weapon then
 				action_data.variant = "taser_tased"
 			end
 

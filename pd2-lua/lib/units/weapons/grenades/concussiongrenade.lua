@@ -54,7 +54,8 @@ function ConcussionGrenade:_detonate(tag, unit, body, other_unit, other_body, po
 		damage = self._damage,
 		ignore_unit = self._unit,
 		alert_radius = self._alert_radius,
-		user = self._unit,
+		user = self:thrower_unit() or self._unit,
+		owner = self._unit,
 		verify_callback = callback(self, self, "_can_stun_unit")
 	})
 
