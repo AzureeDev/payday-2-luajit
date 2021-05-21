@@ -14,7 +14,7 @@ function IngameContractGui:init(ws, node)
 	local job_data = managers.job:current_job_data()
 	local job_chain = managers.job:current_job_chain_data()
 
-	if job_data and managers.job:current_job_id() == "safehouse" and Global.mission_manager.saved_job_values.playedSafeHouseBefore then
+	if job_data and managers.job:current_job_id() == "safehouse" and Global.mission_manager.saved_job_values.playedSafeHouseBefore or managers.job:current_job_id() == "chill" then
 		self._panel:set_visible(false)
 	end
 

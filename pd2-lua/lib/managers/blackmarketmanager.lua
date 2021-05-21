@@ -1865,7 +1865,11 @@ function BlackMarketManager:preload_weapon_blueprint(category, factory_id, bluep
 		table.insert(parts, workbench)
 	end
 
-	local loading_parts = {}
+	local loading_parts = {
+		[factory_id] = {
+			name = ids_unit_name
+		}
+	}
 
 	for part_id, part in pairs(parts) do
 		if part.package or not managers.dyn_resource:is_resource_ready(Idstring("unit"), part.name, managers.dyn_resource.DYN_RESOURCES_PACKAGE) then
@@ -4537,6 +4541,7 @@ function BlackMarketManager:on_aquired_grenade(upgrade, id, loading)
 
 	self._global.grenades[id].unlocked = true
 	self._global.grenades[id].owned = true
+	self._global.grenades[id].amount = managers.player:get_max_grenades(id)
 
 	if not loading then
 		self._global.new_drops.normal = self._global.new_drops.normal or {}
@@ -4552,6 +4557,7 @@ end
 function BlackMarketManager:on_unaquired_grenade(upgrade, id)
 	self._global.grenades[id].unlocked = false
 	self._global.grenades[id].owned = false
+	self._global.grenades[id].amount = 0
 	local equipped_grenade = managers.blackmarket:equipped_grenade()
 
 	if equipped_grenade and equipped_grenade == id then

@@ -175,15 +175,38 @@ function CivilianDamage:damage_melee(attack_data)
 end
 
 function CivilianDamage:damage_tase(attack_data)
-	if managers.player:has_category_upgrade("player", "civ_harmless_melee") and self.no_intimidation_by_dmg and not self:no_intimidation_by_dmg() and (not self._survive_shot_t or self._survive_shot_t < TimerManager:game():time()) then
-		self._survive_shot_t = TimerManager:game():time() + 2.5
-
-		self._unit:brain():on_intimidated(1, attack_data.attacker_unit)
-
+	if self._dead or self._invulnerable or self._char_tweak.is_escort then
 		return
 	end
 
-	attack_data.damage = 10
+	self._unit:brain():on_intimidated(1, attack_data.attacker_unit)
+	self:_play_civilian_tase_effect()
+	self:_send_tase_attack_result(attack_data, 0, 0)
+end
 
-	return CopDamage.damage_tase(self, attack_data)
+function CivilianDamage:sync_damage_tase(attacker_unit, damage_percent, variant, death)
+	self:_play_civilian_tase_effect()
+end
+
+function CivilianDamage:_play_civilian_tase_effect()
+	if self._tase_effect then
+		World:effect_manager():fade_kill(self._tase_effect)
+	end
+
+	self._tase_effect = World:effect_manager():spawn(self._tase_effect_table)
+
+	if not self._tase_effect_clbk_id then
+		self._tase_effect_clbk_id = "tase_effect_" .. tostring(self._unit:key())
+		local t = TimerManager:game():time()
+
+		managers.enemy:add_delayed_clbk(self._tase_effect_clbk_id, callback(self, self, "_tase_effect_clbk"), t + 1.5)
+	end
+end
+
+function CivilianDamage:_tase_effect_clbk(attacker_unit)
+	if alive(self._unit) then
+		self:on_tase_ended()
+	end
+
+	self._tase_effect_clbk_id = nil
 end

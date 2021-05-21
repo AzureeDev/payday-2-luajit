@@ -904,11 +904,11 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 			material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/shared_materials/fps_criminals_xmas_tuxedo_blue"
 		},
 		green = {
-			desc_id = "bm_suit_var_xmas_tuxedo_green_desc",
-			global_value = "xmn",
-			auto_aquire = true,
+			"xmn",
 			name_id = "bm_suit_var_xmas_tuxedo_green",
-			material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/shared_materials/fps_criminals_xmas_tuxedo_green"
+			material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/shared_materials/fps_criminals_xmas_tuxedo_green",
+			desc_id = "bm_suit_var_xmas_tuxedo_green_desc",
+			auto_aquire = true
 		}
 	}
 	self.player_styles.xmas_tuxedo.characters = {}
@@ -995,6 +995,72 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		third_material = "units/pd2_dlc_xmn/characters/xmn_acc_xmas_tuxedo/shared_materials/npc_acc_xmas_tux_suit_green"
 	}
 	self.player_styles.xmas_tuxedo.characters.ecp_male = xmas_tuxedo_male_fat
+	self.player_styles.cable_guy = {
+		name_id = "bm_suit_cable_guy",
+		desc_id = "bm_suit_cable_guy_desc",
+		texture_bundle_folder = "sawp",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_fps_poolrepair/xmn_acc_fps_poolrepair",
+		material_variations = {}
+	}
+	self.player_styles.cable_guy.material_variations.default = {
+		material = "units/pd2_dlc_sawp/characters/sawp_acc_poolrepair_electrician/shared_materials/sawp_acc_fps_poolrepair"
+	}
+	self.player_styles.cable_guy.characters = {}
+	local cable_guy_female_average = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_female_average/xmn_acc_poolrepair_female_average",
+		material_variations = {
+			default = {
+				third_material = "units/pd2_dlc_sawp/characters/sawp_acc_poolrepair_electrician/shared_materials/sawp_acc_poolrepair_female_electric"
+			}
+		}
+	}
+
+	set_characters_data("cable_guy", characters_female, cable_guy_female_average)
+
+	local cable_guy_female_big = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_female_big/xmn_acc_poolrepair_female_big",
+		material_variations = {
+			default = {
+				third_material = "units/pd2_dlc_sawp/characters/sawp_acc_poolrepair_electrician/shared_materials/sawp_acc_poolrepair_female_electric"
+			}
+		}
+	}
+
+	set_characters_data("cable_guy", characters_female_big, cable_guy_female_big)
+
+	local cable_guy_male_average = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_male_average/xmn_acc_poolrepair_male_average",
+		material_variations = {
+			default = {
+				third_material = "units/pd2_dlc_sawp/characters/sawp_acc_poolrepair_electrician/shared_materials/sawp_acc_poolrepair_male_electric"
+			}
+		}
+	}
+
+	set_characters_data("cable_guy", characters_male, cable_guy_male_average)
+
+	local cable_guy_male_big = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_male_big/xmn_acc_poolrepair_male_big",
+		material_variations = {
+			default = {
+				third_material = "units/pd2_dlc_sawp/characters/sawp_acc_poolrepair_electrician/shared_materials/sawp_acc_poolrepair_male_electric"
+			}
+		}
+	}
+
+	set_characters_data("cable_guy", characters_male_big, cable_guy_male_big)
+
+	local cable_guy_male_fat = {
+		third_unit = "units/pd2_dlc_xmn/characters/xmn_acc_poolrepair/xmn_acc_poolrepair_male_ethan/xmn_acc_poolrepair_male_ethan",
+		material_variations = {
+			default = {
+				third_material = "units/pd2_dlc_sawp/characters/sawp_acc_poolrepair_electrician/shared_materials/sawp_acc_poolrepair_male_electric"
+			}
+		}
+	}
+	self.player_styles.poolrepair.characters.ecp_male = cable_guy_male_fat
 	self.player_styles.mariachi = {
 		name_id = "bm_suit_mariachi",
 		desc_id = "bm_suit_mariachi_desc",

@@ -1683,6 +1683,22 @@ function LootDropTweakData:init(tweak_data)
 		sort_number = 300,
 		category = "dlc"
 	}
+	self.global_values.sawp_grenade = {
+		name_id = "bm_global_value_sawp",
+		desc_id = "menu_l_global_value_sawp",
+		unlock_id = "bm_wpn_gre_electric_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = false,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 508,
+		category = "dlc"
+	}
 
 	if SystemInfo:platform() == Idstring("PS3") then
 		self.global_values.sweettooth = {

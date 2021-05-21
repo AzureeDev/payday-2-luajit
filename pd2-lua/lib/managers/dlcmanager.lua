@@ -812,6 +812,10 @@ function GenericDLCManager:has_hlm2_deluxe()
 	return Global.dlc_manager.all_dlc_data.hlm2_deluxe and Global.dlc_manager.all_dlc_data.hlm2_deluxe.verified or self:is_dlc_unlocked("hlm2_aus")
 end
 
+function GenericDLCManager:has_sawp_dlc_or_achievement(data)
+	return self:is_dlc_unlocked("sawp") or self:has_achievement(data)
+end
+
 function GenericDLCManager:has_parent_dlc(data)
 	return data and data.parent_dlc and self:is_dlc_unlocked(data.parent_dlc)
 end
@@ -2164,6 +2168,7 @@ end
 
 function WINDLCManager:_init_promoted_dlc_list()
 	self._promoted_dlc_list = {
+		"sawp",
 		"chas",
 		"fawp",
 		"fex",

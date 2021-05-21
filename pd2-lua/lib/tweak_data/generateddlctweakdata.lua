@@ -841,6 +841,139 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.saco_bundle = {
+		dlc = "has_saco",
+		content = {}
+	}
+	self.saco_bundle.content.loot_global_value = "saco"
+	self.saco_bundle.content.loot_drops = {}
+	self.sawp_bundle = {
+		dlc = "has_sawp",
+		content = {}
+	}
+	self.sawp_bundle.content.loot_global_value = "sawp"
+	self.sawp_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_a_grenade_launcher_electric",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_a_grenade_launcher_electric_arbiter",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_a_underbarrel_electric",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_a_underbarrel_frag_groza",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_smg_pm9_m_quick",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_smg_pm9_b_short",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_smg_pm9_g_wood",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_smg_pm9_s_tactical",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_qbu88_b_short",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_qbu88_b_long",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_qbu88_m_extended",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_snp_qbu88_o_standard",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_groza_b_supressor",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_groza_m_speed",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_01",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_02",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_03",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_04",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_05",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_06",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_07",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_08",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_09",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_sawp_10",
+			amount = 1
+		}
+	}
 	self.scm_bundle = {
 		free = true,
 		content = {}

@@ -5088,6 +5088,11 @@ function GuiTweakData:init(tweak_data)
 	}
 
 	table.insert(self.new_heists, {
+		name_id = "menu_nh_sawp",
+		texture_path = "guis/textures/pd2/new_heists/sawp",
+		url = "https://ovk.af/SmugglerPack2SLW"
+	})
+	table.insert(self.new_heists, {
 		name_id = "menu_nh_in32",
 		texture_path = "guis/textures/pd2/new_heists/in32",
 		url = "https://ovk.af/in32Slider"

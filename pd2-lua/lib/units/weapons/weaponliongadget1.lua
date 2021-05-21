@@ -65,7 +65,7 @@ function WeaponLionGadget1:_unmount()
 end
 
 function WeaponLionGadget1:_get_bipod_obj()
-	if not self._bipod_obj and self._unit:parent() then
+	if not self._bipod_obj and alive(self._unit) and self._unit:parent() then
 		print("No Bipod object. Trying to recover.")
 
 		self._bipod_obj = self._unit:parent():get_object(Idstring("a_bp"))

@@ -463,6 +463,38 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 303,
 		category = "dlc"
 	}
+	self.global_values.saco = {
+		name_id = "bm_global_value_saco",
+		desc_id = "menu_l_global_value_saco",
+		unlock_id = "bm_global_value_saco_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 508,
+		category = "dlc"
+	}
+	self.global_values.sawp = {
+		name_id = "bm_global_value_sawp",
+		desc_id = "menu_l_global_value_sawp",
+		unlock_id = "bm_global_value_sawp_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 508,
+		category = "dlc"
+	}
 	self.global_values.scm = {
 		name_id = "bm_global_value_scm",
 		desc_id = "menu_l_global_value_scm",

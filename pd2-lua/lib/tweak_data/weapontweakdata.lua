@@ -52,6 +52,7 @@ function WeaponTweakData:init(tweak_data)
 	self:_init_data_m249_npc()
 	self:_init_data_contraband_npc()
 	self:_init_data_smoke_npc()
+	self:_init_data_groza_npc()
 	self:_init_data_mini_npc()
 	self:_init_data_m4_crew()
 	self:_init_data_m14_crew()
@@ -195,6 +196,10 @@ function WeaponTweakData:init(tweak_data)
 	self:_init_data_x_basset_crew()
 	self:_init_data_corgi_crew()
 	self:_init_data_slap_crew()
+	self:_init_data_qbu88_crew()
+	self:_init_data_pm9_crew()
+	self:_init_data_x_pm9_crew()
+	self:_init_data_groza_crew()
 	self:_init_data_x_coal_crew()
 	self:_init_data_x_baka_crew()
 	self:_init_data_x_cobray_crew()
@@ -249,27 +254,27 @@ function WeaponTweakData:_set_easy()
 end
 
 function WeaponTweakData:_set_normal()
-	self.swat_van_turret_module.HEALTH_INIT = 3500
-	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 70
+	self.swat_van_turret_module.HEALTH_INIT = 1500
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 40
 	self.swat_van_turret_module.DAMAGE = 0.2
 	self.ak47_ass_npc.DAMAGE = 0.1
-	self.mp5_npc.DAMAGE = 0.3
-	self.r870_npc.DAMAGE = 0.4
-	self.m4_npc.DAMAGE = 0.4
-	self.m4_yellow_npc.DAMAGE = 0.4
+	self.mp5_npc.DAMAGE = 0.1
+	self.r870_npc.DAMAGE = 0.3
+	self.m4_npc.DAMAGE = 0.1
+	self.m4_yellow_npc.DAMAGE = 0.3
 	self.c45_npc.DAMAGE = 0.1
-	self.raging_bull_npc.DAMAGE = 0.6
-	self.ump_npc.DAMAGE = 0.3
+	self.raging_bull_npc.DAMAGE = 0.4
+	self.ump_npc.DAMAGE = 0.2
 	self.mp9_npc.DAMAGE = 0.1
-	self.m14_sniper_npc.DAMAGE = 1
-	self.mac11_npc.DAMAGE = 0.3
+	self.m14_sniper_npc.DAMAGE = 0.6
+	self.mac11_npc.DAMAGE = 0.2
 	self.ceiling_turret_module.HEALTH_INIT = 875
 	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 2
 	self.ceiling_turret_module.DAMAGE = 0.2
-	self.aa_turret_module.HEALTH_INIT = 4500
-	self.aa_turret_module.SHIELD_HEALTH_INIT = 70
+	self.aa_turret_module.HEALTH_INIT = 2500
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 40
 	self.aa_turret_module.DAMAGE = 0.2
-	self.crate_turret_module.HEALTH_INIT = 875
+	self.crate_turret_module.HEALTH_INIT = 600
 	self.crate_turret_module.SHIELD_HEALTH_INIT = 2
 	self.crate_turret_module.DAMAGE = 0.2
 end
@@ -2999,6 +3004,40 @@ function WeaponTweakData:_init_data_baka_crew()
 	self.baka_crew.FIRE_MODE = "auto"
 end
 
+function WeaponTweakData:_init_data_pm9_crew()
+	self.pm9_crew.categories = clone(self.pm9.categories)
+	self.pm9_crew.sounds.prefix = "pm9_npc"
+	self.pm9_crew.use_data.selection_index = SELECTION.SECONDARY
+	self.pm9_crew.DAMAGE = 2
+	self.pm9_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.pm9_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.pm9_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.pm9_crew.CLIP_AMMO_MAX = 32
+	self.pm9_crew.NR_CLIPS_MAX = 5
+	self.pm9_crew.pull_magazine_during_reload = "smg"
+	self.pm9_crew.auto.fire_rate = 0.05
+	self.pm9_crew.hold = "pistol"
+	self.pm9_crew.alert_size = 5000
+	self.pm9_crew.suppression = 1
+	self.pm9_crew.FIRE_MODE = "auto"
+end
+
+function WeaponTweakData:_init_data_x_pm9_crew()
+	self.x_pm9_crew.categories = clone(self.x_pm9.categories)
+	self.x_pm9_crew.sounds.prefix = "pm9_x_npc"
+	self.x_pm9_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.x_pm9_crew.DAMAGE = 1.25
+	self.x_pm9_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.x_pm9_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.x_pm9_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_pm9_crew.CLIP_AMMO_MAX = 60
+	self.x_pm9_crew.NR_CLIPS_MAX = 5
+	self.x_pm9_crew.hold = "akimbo_pistol"
+	self.x_pm9_crew.alert_size = 1800
+	self.x_pm9_crew.suppression = 2
+	self.x_pm9_crew.FIRE_MODE = "auto"
+end
+
 function WeaponTweakData:_init_data_arblast_crew()
 	self.arblast_crew.categories = clone(self.arblast.categories)
 	self.arblast_crew.sounds.prefix = "arblast_npc"
@@ -3862,6 +3901,97 @@ function WeaponTweakData:_init_data_x_shrew_crew()
 	self.x_shrew_crew.alert_size = 1800
 	self.x_shrew_crew.suppression = 2
 	self.x_shrew_crew.FIRE_MODE = "single"
+end
+
+function WeaponTweakData:_init_data_qbu88_crew()
+	self.qbu88_crew.categories = clone(self.qbu88.categories)
+	self.qbu88_crew.sounds.prefix = "qbu88_npc"
+	self.qbu88_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.qbu88_crew.DAMAGE = 2
+	self.qbu88_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.qbu88_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.qbu88_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.qbu88_crew.CLIP_AMMO_MAX = 10
+	self.qbu88_crew.NR_CLIPS_MAX = 4
+	self.qbu88_crew.pull_magazine_during_reload = "rifle"
+	self.qbu88_crew.auto.fire_rate = 0.5
+	self.qbu88_crew.hold = {
+		"bullpup",
+		"rifle"
+	}
+	self.qbu88_crew.alert_size = 5000
+	self.qbu88_crew.suppression = 1
+	self.qbu88_crew.FIRE_MODE = "single"
+end
+
+function WeaponTweakData:_init_data_groza_crew()
+	self.groza_crew.categories = clone(self.groza.categories)
+	self.groza_crew.sounds.prefix = "groza_npc"
+	self.groza_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.groza_crew.DAMAGE = 2
+	self.groza_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.groza_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.groza_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.groza_crew.CLIP_AMMO_MAX = 30
+	self.groza_crew.NR_CLIPS_MAX = 5
+	self.groza_crew.pull_magazine_during_reload = "rifle"
+	self.groza_crew.auto.fire_rate = 0.083
+	self.groza_crew.hold = "rifle"
+	self.groza_crew.reload = "bullpup"
+	self.groza_crew.alert_size = 5000
+	self.groza_crew.suppression = 1
+	self.groza_crew.FIRE_MODE = "auto"
+	self.groza_underbarrel_crew.sounds.prefix = "grozagl_npc"
+	self.groza_underbarrel_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.groza_underbarrel_crew.DAMAGE = 2
+	self.groza_underbarrel_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.groza_underbarrel_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.groza_underbarrel_crew.no_trail = true
+	self.groza_underbarrel_crew.CLIP_AMMO_MAX = 1
+	self.groza_underbarrel_crew.NR_CLIPS_MAX = 4
+	self.groza_underbarrel_crew.auto.fire_rate = 0.1
+	self.groza_underbarrel_crew.hold = {
+		"bullpup",
+		"rifle"
+	}
+	self.groza_underbarrel_crew.alert_size = 2800
+	self.groza_underbarrel_crew.suppression = 1
+	self.groza_underbarrel_crew.FIRE_MODE = "auto"
+end
+
+function WeaponTweakData:_init_data_groza_npc()
+	self.groza_npc.categories = clone(self.groza.categories)
+	self.groza_npc.sounds.prefix = "groza_npc"
+	self.groza_npc.use_data.selection_index = SELECTION.PRIMARY
+	self.groza_npc.DAMAGE = 2
+	self.groza_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.groza_npc.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.groza_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.groza_npc.CLIP_AMMO_MAX = 30
+	self.groza_npc.NR_CLIPS_MAX = 5
+	self.groza_npc.pull_magazine_during_reload = "rifle"
+	self.groza_npc.auto.fire_rate = 0.083
+	self.groza_npc.hold = "rifle"
+	self.groza_npc.reload = "bullpup"
+	self.groza_npc.alert_size = 5000
+	self.groza_npc.suppression = 1
+	self.groza_npc.FIRE_MODE = "auto"
+	self.groza_underbarrel_npc.sounds.prefix = "grozagl_npc"
+	self.groza_underbarrel_npc.use_data.selection_index = SELECTION.PRIMARY
+	self.groza_underbarrel_npc.DAMAGE = 2
+	self.groza_underbarrel_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.groza_underbarrel_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.groza_underbarrel_npc.no_trail = true
+	self.groza_underbarrel_npc.CLIP_AMMO_MAX = 1
+	self.groza_underbarrel_npc.NR_CLIPS_MAX = 4
+	self.groza_underbarrel_npc.auto.fire_rate = 0.1
+	self.groza_underbarrel_npc.hold = {
+		"bullpup",
+		"rifle"
+	}
+	self.groza_underbarrel_npc.alert_size = 2800
+	self.groza_underbarrel_npc.suppression = 1
+	self.groza_underbarrel_npc.FIRE_MODE = "auto"
 end
 
 function WeaponTweakData:_init_data_basset_crew()
@@ -5541,6 +5671,10 @@ function WeaponTweakData:_init_new_weapons(weapon_data)
 	self:_init_par(weapon_data)
 	self:_init_sparrow(weapon_data)
 	self:_init_model70(weapon_data)
+	self:_init_qbu88(weapon_data)
+	self:_init_groza(weapon_data)
+	self:_init_pm9(weapon_data)
+	self:_init_x_pm9(weapon_data)
 	self:_init_m37(weapon_data)
 	self:_init_china(weapon_data)
 	self:_init_sr2(weapon_data)
@@ -13680,6 +13814,7 @@ function WeaponTweakData:_init_m32(weapon_data)
 		},
 		projectile_type = "launcher_frag_m32",
 		projectile_types = {
+			launcher_electric = "launcher_electric_m32",
 			launcher_incendiary = "launcher_incendiary_m32"
 		},
 		damage_melee = weapon_data.damage_melee_default,
@@ -15135,6 +15270,568 @@ function WeaponTweakData:_init_baka(weapon_data)
 	}
 end
 
+function WeaponTweakData:_init_x_pm9(weapon_data)
+	self.x_pm9 = {
+		categories = {
+			"akimbo",
+			"smg"
+		},
+		allow_akimbo_autofire = true,
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.x_pm9.sounds.fire = "pm9_x_fire"
+	self.x_pm9.sounds.fire_single = "pm9_x_fire_single"
+	self.x_pm9.sounds.fire_auto = "pm9_x_fire"
+	self.x_pm9.sounds.stop_fire = "pm9_x_stop"
+	self.x_pm9.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.x_pm9.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.x_pm9.sounds.dryfire = "secondary_dryfire"
+	self.x_pm9.timers = {
+		reload_not_empty = 3,
+		reload_empty = 3,
+		unequip = 0.5,
+		equip = 0.5
+	}
+	self.x_pm9.name_id = "bm_w_x_pm9"
+	self.x_pm9.desc_id = "bm_w_x_pm9_desc"
+	self.x_pm9.description_id = "des_x_pm9"
+	self.x_pm9.global_value = "sawp"
+	self.x_pm9.texture_bundle_folder = "sawp"
+	self.x_pm9.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.x_pm9.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.x_pm9.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_pm9.use_data = {
+		selection_index = SELECTION.PRIMARY
+	}
+	self.x_pm9.DAMAGE = 1
+	self.x_pm9.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
+	self.x_pm9.CLIP_AMMO_MAX = 50
+	self.x_pm9.NR_CLIPS_MAX = 5.5
+	self.x_pm9.AMMO_MAX = self.x_pm9.CLIP_AMMO_MAX * self.x_pm9.NR_CLIPS_MAX
+	self.x_pm9.AMMO_PICKUP = self:_pickup_chance(self.x_pm9.AMMO_MAX, PICKUP.OTHER)
+	self.x_pm9.FIRE_MODE = "auto"
+	self.x_pm9.fire_mode_data = {
+		fire_rate = 0.0545
+	}
+	self.x_pm9.single = {
+		fire_rate = 0.0545
+	}
+	self.x_pm9.CAN_TOGGLE_FIREMODE = true
+	self.x_pm9.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.x_pm9.kick = {
+		standing = {
+			0.8,
+			1,
+			-0.5,
+			0.5
+		}
+	}
+	self.x_pm9.kick.crouching = self.x_pm9.kick.standing
+	self.x_pm9.kick.steelsight = self.x_pm9.kick.standing
+	self.x_pm9.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.x_pm9.crosshair.standing.offset = 0.2
+	self.x_pm9.crosshair.standing.moving_offset = 0.6
+	self.x_pm9.crosshair.standing.kick_offset = 0.4
+	self.x_pm9.crosshair.crouching.offset = 0.1
+	self.x_pm9.crosshair.crouching.moving_offset = 0.6
+	self.x_pm9.crosshair.crouching.kick_offset = 0.3
+	self.x_pm9.crosshair.steelsight.hidden = true
+	self.x_pm9.crosshair.steelsight.offset = 0
+	self.x_pm9.crosshair.steelsight.moving_offset = 0
+	self.x_pm9.crosshair.steelsight.kick_offset = 0.1
+	self.x_pm9.shake = {
+		fire_multiplier = 1,
+		fire_steelsight_multiplier = -1
+	}
+	self.x_pm9.autohit = weapon_data.autohit_smg_default
+	self.x_pm9.aim_assist = weapon_data.aim_assist_smg_default
+	self.x_pm9.weapon_hold = "x_pm9"
+	self.x_pm9.animations = {
+		has_steelsight_stance = true,
+		recoil_steelsight = true
+	}
+	self.x_pm9.panic_suppression_chance = 0.2
+	self.x_pm9.stats = {
+		zoom = 3,
+		total_ammo_mod = 21,
+		damage = 60,
+		alert_size = 7,
+		spread = 8,
+		spread_moving = 4,
+		recoil = 15,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 14,
+		concealment = 26
+	}
+end
+
+function WeaponTweakData:_init_pm9(weapon_data)
+	self.pm9 = {
+		categories = {
+			"smg"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.pm9.sounds.fire = "pm9_fire_single"
+	self.pm9.sounds.fire_single = "pm9_fire_single"
+	self.pm9.sounds.fire_auto = "pm9_fire"
+	self.pm9.sounds.stop_fire = "pm9_stop"
+	self.pm9.sounds.dryfire = "secondary_dryfire"
+	self.pm9.sounds.enter_steelsight = "secondary_steel_sight_enter"
+	self.pm9.sounds.leave_steelsight = "secondary_steel_sight_exit"
+	self.pm9.timers = {
+		reload_not_empty = 1.85,
+		reload_empty = 2.6,
+		unequip = 0.7,
+		equip = 0.5
+	}
+	self.pm9.name_id = "bm_w_pm9"
+	self.pm9.desc_id = "bm_w_pm9_desc"
+	self.pm9.description_id = "des_pm9"
+	self.pm9.global_value = "sawp"
+	self.pm9.texture_bundle_folder = "sawp"
+	self.pm9.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.pm9.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.pm9.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.pm9.use_data = {
+		selection_index = SELECTION.SECONDARY
+	}
+	self.pm9.DAMAGE = 1
+	self.pm9.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
+	self.pm9.CLIP_AMMO_MAX = 25
+	self.pm9.NR_CLIPS_MAX = 7
+	self.pm9.AMMO_MAX = self.pm9.CLIP_AMMO_MAX * self.pm9.NR_CLIPS_MAX
+	self.pm9.AMMO_PICKUP = self:_pickup_chance(self.pm9.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
+	self.pm9.FIRE_MODE = "auto"
+	self.pm9.fire_mode_data = {
+		fire_rate = 0.0545
+	}
+	self.pm9.CAN_TOGGLE_FIREMODE = true
+	self.pm9.auto = {
+		fire_rate = 0.0545
+	}
+	self.pm9.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.pm9.kick = {
+		standing = {
+			-0.1,
+			0.6,
+			-1.2,
+			1.2
+		}
+	}
+	self.pm9.kick.crouching = self.pm9.kick.standing
+	self.pm9.kick.steelsight = self.pm9.kick.standing
+	self.pm9.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.pm9.crosshair.standing.offset = 0.5
+	self.pm9.crosshair.standing.moving_offset = 0.8
+	self.pm9.crosshair.standing.kick_offset = 0.7
+	self.pm9.crosshair.crouching.offset = 0.4
+	self.pm9.crosshair.crouching.moving_offset = 0.7
+	self.pm9.crosshair.crouching.kick_offset = 0.5
+	self.pm9.crosshair.steelsight.hidden = true
+	self.pm9.crosshair.steelsight.offset = 0
+	self.pm9.crosshair.steelsight.moving_offset = 0
+	self.pm9.crosshair.steelsight.kick_offset = 0.5
+	self.pm9.shake = {
+		fire_multiplier = 1.1,
+		fire_steelsight_multiplier = -1.1
+	}
+	self.pm9.autohit = weapon_data.autohit_smg_default
+	self.pm9.aim_assist = weapon_data.aim_assist_smg_default
+	self.pm9.weapon_hold = "pm9"
+	self.pm9.animations = {
+		equip_id = "equip_pm9",
+		recoil_steelsight = true
+	}
+	self.pm9.panic_suppression_chance = 0.2
+	self.pm9.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 60,
+		alert_size = 7,
+		spread = 8,
+		spread_moving = 4,
+		recoil = 15,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 14,
+		concealment = 26
+	}
+end
+
+function WeaponTweakData:_init_groza(weapon_data)
+	self.groza = {
+		categories = {
+			"assault_rifle"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.groza.sounds.fire = "groza_fire_single"
+	self.groza.sounds.fire_single = "groza_fire_single"
+	self.groza.sounds.fire_auto = "groza_fire"
+	self.groza.sounds.stop_fire = "groza_stop"
+	self.groza.sounds.dryfire = "primary_dryfire"
+	self.groza.sounds.enter_steelsight = "primary_steel_sight_enter"
+	self.groza.sounds.leave_steelsight = "primary_steel_sight_exit"
+	self.groza.timers = {
+		reload_not_empty = 2.16,
+		reload_empty = 2.9,
+		unequip = 0.55,
+		equip = 0.55
+	}
+	self.groza.name_id = "bm_w_groza"
+	self.groza.desc_id = "bm_w_groza_desc"
+	self.groza.description_id = "des_groza"
+	self.groza.global_value = "sawp"
+	self.groza.texture_bundle_folder = "sawp"
+	self.groza.muzzleflash = "effects/payday2/particles/weapons/556_auto_fps"
+	self.groza.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
+	self.groza.use_data = {
+		selection_index = SELECTION.PRIMARY
+	}
+	self.groza.DAMAGE = 1
+	self.groza.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
+	self.groza.CLIP_AMMO_MAX = 20
+	self.groza.NR_CLIPS_MAX = 4
+	self.groza.AMMO_MAX = self.groza.CLIP_AMMO_MAX * self.groza.NR_CLIPS_MAX
+	self.groza.AMMO_PICKUP = self:_pickup_chance(self.groza.AMMO_MAX, PICKUP.AR_MED_CAPACITY)
+	self.groza.FIRE_MODE = "auto"
+	self.groza.fire_mode_data = {
+		fire_rate = 0.086
+	}
+	self.groza.CAN_TOGGLE_FIREMODE = true
+	self.groza.auto = {
+		fire_rate = 0.086
+	}
+	self.groza.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.groza.kick = {
+		standing = {
+			0.7,
+			0.9,
+			-0.6,
+			0.6
+		}
+	}
+	self.groza.kick.crouching = self.groza.kick.standing
+	self.groza.kick.steelsight = self.groza.kick.standing
+	self.groza.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.groza.crosshair.standing.offset = 0.16
+	self.groza.crosshair.standing.moving_offset = 1
+	self.groza.crosshair.standing.kick_offset = 0.8
+	self.groza.crosshair.crouching.offset = 0.1
+	self.groza.crosshair.crouching.moving_offset = 0.6
+	self.groza.crosshair.crouching.kick_offset = 0.4
+	self.groza.crosshair.steelsight.hidden = true
+	self.groza.crosshair.steelsight.offset = 0
+	self.groza.crosshair.steelsight.moving_offset = 0
+	self.groza.crosshair.steelsight.kick_offset = 0.14
+	self.groza.shake = {
+		fire_multiplier = 0.4,
+		fire_steelsight_multiplier = -0.4
+	}
+	self.groza.autohit = weapon_data.autohit_rifle_default
+	self.groza.aim_assist = weapon_data.aim_assist_rifle_default
+	self.groza.weapon_hold = "groza"
+	self.groza.animations = {
+		equip_id = "equip_groza",
+		recoil_steelsight = true
+	}
+	self.groza.panic_suppression_chance = 0.2
+	self.groza.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 88,
+		alert_size = 8,
+		spread = 19,
+		spread_moving = 15,
+		recoil = 14,
+		value = 9,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 12,
+		concealment = 8
+	}
+	self.groza_underbarrel = {
+		categories = {
+			"grenade_launcher"
+		},
+		upgrade_blocks = {
+			weapon = {
+				"clip_ammo_increase"
+			}
+		},
+		projectile_types = {
+			underbarrel_electric = "underbarrel_electric_groza",
+			launcher_m203 = "underbarrel_m203_groza"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.groza_underbarrel.sounds.fire = "grozagl_fire"
+	self.groza_underbarrel.sounds.dryfire = "shotgun_dryfire"
+	self.groza_underbarrel.sounds.enter_steelsight = "secondary_steel_sight_enter"
+	self.groza_underbarrel.sounds.leave_steelsight = "secondary_steel_sight_exit"
+	self.groza_underbarrel.timers = {
+		reload_not_empty = 1.78,
+		reload_empty = 1.78,
+		unequip = 0.6,
+		equip = 0.6,
+		equip_underbarrel = 0.4,
+		unequip_underbarrel = 0.4
+	}
+	self.groza_underbarrel.name_id = "bm_w_groza_underbarrel"
+	self.groza_underbarrel.desc_id = "bm_w_groza_underbarrel_desc"
+	self.groza_underbarrel.description_id = "des_groza_underbarrel"
+	self.groza_underbarrel.global_value = "sawp"
+	self.groza_underbarrel.texture_bundle_folder = "sawp"
+	self.groza_underbarrel.muzzleflash = "effects/payday2/particles/weapons/762_auto_fps"
+	self.groza_underbarrel.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
+	self.groza_underbarrel.use_data = {
+		selection_index = SELECTION.UNDERBARREL
+	}
+	self.groza_underbarrel.DAMAGE = 6
+	self.groza_underbarrel.damage_near = 2000
+	self.groza_underbarrel.damage_far = 3000
+	self.groza_underbarrel.rays = 6
+	self.groza_underbarrel.CLIP_AMMO_MAX = 1
+	self.groza_underbarrel.NR_CLIPS_MAX = 2
+	self.groza_underbarrel.AMMO_MAX = self.groza_underbarrel.CLIP_AMMO_MAX * self.groza_underbarrel.NR_CLIPS_MAX
+	self.groza_underbarrel.AMMO_PICKUP = {
+		0.05,
+		0.45
+	}
+	self.groza_underbarrel.FIRE_MODE = "single"
+	self.groza_underbarrel.fire_mode_data = {
+		fire_rate = 0.75
+	}
+	self.groza_underbarrel.single = {
+		fire_rate = 0.75
+	}
+	self.groza_underbarrel.spread = {
+		standing = self.r870.spread.standing,
+		crouching = self.r870.spread.crouching,
+		steelsight = self.r870.spread.steelsight,
+		moving_standing = self.r870.spread.moving_standing,
+		moving_crouching = self.r870.spread.moving_crouching,
+		moving_steelsight = self.r870.spread.moving_steelsight
+	}
+	self.groza_underbarrel.kick = {
+		standing = {
+			2.9,
+			3,
+			-0.5,
+			0.5
+		}
+	}
+	self.groza_underbarrel.kick.crouching = self.groza_underbarrel.kick.standing
+	self.groza_underbarrel.kick.steelsight = self.groza_underbarrel.kick.standing
+	self.groza_underbarrel.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.groza_underbarrel.crosshair.standing.offset = 0.16
+	self.groza_underbarrel.crosshair.standing.moving_offset = 0.8
+	self.groza_underbarrel.crosshair.standing.kick_offset = 0.6
+	self.groza_underbarrel.crosshair.standing.hidden = true
+	self.groza_underbarrel.crosshair.crouching.offset = 0.08
+	self.groza_underbarrel.crosshair.crouching.moving_offset = 0.7
+	self.groza_underbarrel.crosshair.crouching.kick_offset = 0.4
+	self.groza_underbarrel.crosshair.crouching.hidden = true
+	self.groza_underbarrel.crosshair.steelsight.hidden = true
+	self.groza_underbarrel.crosshair.steelsight.offset = 0
+	self.groza_underbarrel.crosshair.steelsight.moving_offset = 0
+	self.groza_underbarrel.crosshair.steelsight.kick_offset = 0.1
+	self.groza_underbarrel.shake = {
+		fire_multiplier = 2,
+		fire_steelsight_multiplier = 2
+	}
+	self.groza_underbarrel.autohit = weapon_data.autohit_shotgun_default
+	self.groza_underbarrel.aim_assist = weapon_data.aim_assist_shotgun_default
+	self.groza_underbarrel.animations = {
+		equip_id = "equip_groza_underbarrel",
+		recoil_steelsight = true
+	}
+	self.groza_underbarrel.panic_suppression_chance = 0.2
+	self.groza_underbarrel.ignore_damage_upgrades = true
+	self.groza_underbarrel.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 200,
+		alert_size = 7,
+		spread = 25,
+		spread_moving = 6,
+		recoil = 25,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 2,
+		concealment = 18
+	}
+	self.groza_underbarrel.stats_modifiers = {
+		damage = 10
+	}
+end
+
+function WeaponTweakData:_init_qbu88(weapon_data)
+	self.qbu88 = {
+		categories = {
+			"snp"
+		},
+		upgrade_blocks = {
+			weapon = {
+				"clip_ammo_increase"
+			}
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.qbu88.sounds.fire = "qbu88_fire"
+	self.qbu88.sounds.dryfire = "primary_dryfire"
+	self.qbu88.sounds.enter_steelsight = "primary_steel_sight_enter"
+	self.qbu88.sounds.leave_steelsight = "primary_steel_sight_exit"
+	self.qbu88.timers = {
+		reload_not_empty = 2.3,
+		reload_empty = 3.3,
+		unequip = 0.9,
+		equip = 0.9
+	}
+	self.qbu88.name_id = "bm_w_qbu88"
+	self.qbu88.desc_id = "bm_w_qbu88_desc"
+	self.qbu88.description_id = "des_qbu88"
+	self.qbu88.global_value = "sawp"
+	self.qbu88.texture_bundle_folder = "sawp"
+	self.qbu88.muzzleflash = "effects/payday2/particles/weapons/big_762_auto_fps"
+	self.qbu88.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
+	self.qbu88.use_data = {
+		selection_index = SELECTION.PRIMARY
+	}
+	self.qbu88.DAMAGE = 1
+	self.qbu88.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_LOW
+	self.qbu88.CLIP_AMMO_MAX = 10
+	self.qbu88.NR_CLIPS_MAX = 4
+	self.qbu88.AMMO_MAX = self.qbu88.CLIP_AMMO_MAX * self.qbu88.NR_CLIPS_MAX
+	self.qbu88.AMMO_PICKUP = self:_pickup_chance(self.qbu88.AMMO_MAX, PICKUP.SNIPER_LOW_DAMAGE)
+	self.qbu88.FIRE_MODE = "single"
+	self.qbu88.fire_mode_data = {
+		fire_rate = 0.4
+	}
+	self.qbu88.CAN_TOGGLE_FIREMODE = false
+	self.qbu88.single = {
+		fire_rate = 0.4
+	}
+	self.qbu88.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.qbu88.kick = {
+		standing = {
+			1.5,
+			2,
+			-0.4,
+			0.4
+		}
+	}
+	self.qbu88.kick.crouching = self.qbu88.kick.standing
+	self.qbu88.kick.steelsight = self.qbu88.kick.standing
+	self.qbu88.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.qbu88.crosshair.standing.offset = 1.14
+	self.qbu88.crosshair.standing.moving_offset = 1.8
+	self.qbu88.crosshair.standing.kick_offset = 1.6
+	self.qbu88.crosshair.crouching.offset = 1.1
+	self.qbu88.crosshair.crouching.moving_offset = 1.6
+	self.qbu88.crosshair.crouching.kick_offset = 1.4
+	self.qbu88.crosshair.steelsight.hidden = true
+	self.qbu88.crosshair.steelsight.offset = 1
+	self.qbu88.crosshair.steelsight.moving_offset = 1
+	self.qbu88.crosshair.steelsight.kick_offset = 1.14
+	self.qbu88.shake = {
+		fire_multiplier = 1.1,
+		fire_steelsight_multiplier = -1.1
+	}
+	self.qbu88.autohit = weapon_data.autohit_snp_default
+	self.qbu88.aim_assist = weapon_data.aim_assist_snp_default
+	self.qbu88.weapon_hold = "qbu88"
+	self.qbu88.animations = {
+		equip_id = "equip_qbu88",
+		recoil_steelsight = true
+	}
+	self.qbu88.panic_suppression_chance = 0.2
+	self.qbu88.can_shoot_through_enemy = true
+	self.qbu88.can_shoot_through_shield = true
+	self.qbu88.can_shoot_through_wall = true
+	self.qbu88.armor_piercing_chance = 1
+	self.qbu88.stats_modifiers = {
+		damage = 1
+	}
+	self.qbu88.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 160,
+		alert_size = 8,
+		spread = 21,
+		spread_moving = 24,
+		recoil = 13,
+		value = 9,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 12,
+		concealment = 12
+	}
+end
+
 function WeaponTweakData:_init_arblast(weapon_data)
 	self.arblast = {
 		categories = {
@@ -15947,6 +16644,7 @@ function WeaponTweakData:_init_china(weapon_data)
 		},
 		projectile_type = "launcher_frag_china",
 		projectile_types = {
+			launcher_electric = "launcher_electric_china",
 			launcher_incendiary = "launcher_incendiary_china"
 		},
 		damage_melee = weapon_data.damage_melee_default,
@@ -18039,6 +18737,7 @@ function WeaponTweakData:_init_arbiter(weapon_data)
 		},
 		projectile_type = "launcher_frag_arbiter",
 		projectile_types = {
+			launcher_electric = "launcher_electric_arbiter",
 			launcher_incendiary = "launcher_incendiary_arbiter"
 		},
 		damage_melee = weapon_data.damage_melee_default,
@@ -20794,6 +21493,7 @@ function WeaponTweakData:_init_slap(weapon_data)
 		},
 		projectile_type = "launcher_frag_slap",
 		projectile_types = {
+			launcher_electric = "launcher_electric_slap",
 			launcher_incendiary = "launcher_incendiary_slap"
 		},
 		damage_melee = weapon_data.damage_melee_default,
@@ -26291,6 +26991,18 @@ function WeaponTweakData:_create_table_structure()
 		use_data = {},
 		auto = {}
 	}
+	self.groza_npc = {
+		usage = "is_rifle",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.groza_underbarrel_npc = {
+		usage = "is_shotgun_pump",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
 	self.mini_npc = {
 		usage = "mini",
 		sounds = {},
@@ -26890,6 +27602,37 @@ function WeaponTweakData:_create_table_structure()
 		use_data = {},
 		auto = {}
 	}
+	self.qbu88_crew = {
+		usage = "is_sniper",
+		anim_usage = "is_rifle",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.groza_crew = {
+		usage = "is_rifle",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.groza_underbarrel_crew = {
+		usage = "is_shotgun_pump",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.pm9_crew = {
+		usage = "is_smg",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.x_pm9_crew = {
+		usage = "akimbo_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
 	self.m37_crew = {
 		usage = "is_shotgun_pump",
 		sounds = {},
@@ -27475,18 +28218,18 @@ end
 
 function WeaponTweakData:get_akimbo_mappings()
 	return {
-		mp9 = "x_mp9",
+		glock_18c = "x_g18c",
 		usp = "x_usp",
 		breech = "x_breech",
-		shrew = "x_shrew",
+		glock_17 = "x_g17",
 		sparrow = "x_sparrow",
-		mp7 = "x_mp7",
+		mp9 = "x_mp9",
 		hs2000 = "x_hs2000",
 		p226 = "x_p226",
 		packrat = "x_packrat",
 		scorpion = "x_scorpion",
 		model3 = "x_model3",
-		glock_17 = "x_g17",
+		shrew = "x_shrew",
 		b92fs = "x_b92fs",
 		m1911 = "x_m1911",
 		sterling = "x_sterling",
@@ -27502,17 +28245,18 @@ function WeaponTweakData:get_akimbo_mappings()
 		sr2 = "x_sr2",
 		tec9 = "x_tec9",
 		hajk = "x_hajk",
-		coal = "x_coal",
+		pm9 = "x_pm9",
 		mac10 = "x_mac10",
 		chinchilla = "x_chinchilla",
 		new_mp5 = "x_mp5",
-		rota = "x_rota",
+		coal = "x_coal",
 		g22c = "x_g22c",
+		rota = "x_rota",
 		legacy = "x_legacy",
 		beer = "x_beer",
-		czech = "x_czech",
 		m1928 = "x_m1928",
 		c45_npc = "x_c45_npc",
+		czech = "x_czech",
 		stech = "x_stech",
 		holt = "x_holt",
 		judge = "x_judge",
@@ -27520,7 +28264,7 @@ function WeaponTweakData:get_akimbo_mappings()
 		saw = "saw_secondary",
 		ppk = "x_ppk",
 		baka = "x_baka",
-		glock_18c = "x_g18c",
+		mp7 = "x_mp7",
 		basset = "x_basset",
 		cobray = "x_cobray",
 		c96 = "x_c96",

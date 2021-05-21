@@ -1017,6 +1017,20 @@ function AchievementsTweakData:init(tweak_data)
 			is_not_civilian = true,
 			result = "death"
 		},
+		sawp_1 = {
+			is_not_civilian = true,
+			result = "death",
+			stat = "sawp_stat",
+			melee_weapons = {
+				"taser",
+				"zeus"
+			},
+			player_style = {
+				variation = "default",
+				style = "cable_guy"
+			},
+			difficulty = overkill_and_above
+		},
 		melee_kills = {
 			result = "death",
 			is_not_civilian = true,
@@ -6749,6 +6763,12 @@ function AchievementsTweakData:init(tweak_data)
 				at = 100,
 				check_func_name = "check_gsu_01_achievement",
 				award = "gsu_01"
+			}
+		},
+		sawp_stat = {
+			{
+				award = "sawp_1",
+				at = 200
 			}
 		}
 	}

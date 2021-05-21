@@ -4680,7 +4680,8 @@ function UpgradesTweakData:init(tweak_data)
 				"cobray",
 				"boxcutter",
 				"x_cobray",
-				"m590"
+				"m590",
+				"groza"
 			}
 		},
 		[13] = {
@@ -4738,7 +4739,9 @@ function UpgradesTweakData:init(tweak_data)
 				"slot_lever",
 				"frankish",
 				"ecp",
-				"chac"
+				"chac",
+				"pm9",
+				"x_pm9"
 			}
 		},
 		[18] = {
@@ -4881,7 +4884,8 @@ function UpgradesTweakData:init(tweak_data)
 				"vhs",
 				"bowie",
 				"micstand",
-				"x_hs2000"
+				"x_hs2000",
+				"qbu88"
 			}
 		},
 		[29] = {
@@ -5461,6 +5465,10 @@ function UpgradesTweakData:init(tweak_data)
 	self:_x_vityaz_weapon_definitions()
 	self:_m1911_weapon_definitions()
 	self:_x_m1911_weapon_definitions()
+	self:_groza_weapon_definitions()
+	self:_pm9_weapon_definitions()
+	self:_x_pm9_weapon_definitions()
+	self:_qbu88_weapon_definitions()
 	self:_breech_weapon_definitions()
 	self:_ching_weapon_definitions()
 	self:_erma_weapon_definitions()
@@ -11821,6 +11829,10 @@ function UpgradesTweakData:_grenades_definitions()
 	self.definitions.wpn_dallas_mask = {
 		category = "grenade"
 	}
+	self.definitions.wpn_gre_electric = {
+		dlc = "sawp_grenade",
+		category = "grenade"
+	}
 end
 
 function UpgradesTweakData:_weapon_definitions()
@@ -15122,6 +15134,48 @@ function UpgradesTweakData:_x_m1911_weapon_definitions()
 		dlc = "fawp",
 		factory_id = "wpn_fps_pis_x_m1911",
 		weapon_id = "x_m1911",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_groza_weapon_definitions()
+	self.definitions.groza = {
+		dlc = "sawp",
+		factory_id = "wpn_fps_ass_groza",
+		weapon_id = "groza",
+		category = "weapon"
+	}
+	self.definitions.groza_underbarrel = {
+		dlc = "sawp",
+		factory_id = "wpn_fps_ass_groza_gl_gp253",
+		weapon_id = "groza_underbarrel",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_pm9_weapon_definitions()
+	self.definitions.pm9 = {
+		dlc = "sawp",
+		factory_id = "wpn_fps_smg_pm9",
+		weapon_id = "pm9",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_pm9_weapon_definitions()
+	self.definitions.x_pm9 = {
+		dlc = "sawp",
+		factory_id = "wpn_fps_smg_x_pm9",
+		weapon_id = "x_pm9",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_qbu88_weapon_definitions()
+	self.definitions.qbu88 = {
+		dlc = "sawp",
+		factory_id = "wpn_fps_snp_qbu88",
+		weapon_id = "qbu88",
 		category = "weapon"
 	}
 end

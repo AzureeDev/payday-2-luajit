@@ -697,6 +697,15 @@ function TweakData:_init_pd2()
 			32
 		}
 	}
+	self.hud_icons.electric_grenade = {
+		texture = "guis/textures/pd2/equipment_02",
+		texture_rect = {
+			32,
+			0,
+			32,
+			32
+		}
+	}
 	self.hud_icons.none_icon = {
 		texture = "guis/textures/pd2/equipment_02",
 		texture_rect = {

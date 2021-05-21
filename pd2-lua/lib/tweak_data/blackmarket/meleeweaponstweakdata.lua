@@ -1377,7 +1377,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.taser.dlc = "kenaz"
 	self.melee_weapons.taser.texture_bundle_folder = "kenaz"
 	self.melee_weapons.taser.type = "knife"
-	self.melee_weapons.taser.special_weapon = "taser"
+	self.melee_weapons.taser.tase_data = {
+		tase_strength = "light"
+	}
 	self.melee_weapons.taser.align_objects = {
 		"a_weapon_right"
 	}
@@ -2176,7 +2178,9 @@ function BlackMarketTweakData:_init_melee_weapons(tweak_data)
 	self.melee_weapons.zeus.name_id = "bm_melee_zeus"
 	self.melee_weapons.zeus.info_id = "bm_melee_zeus_info"
 	self.melee_weapons.zeus.type = "fists"
-	self.melee_weapons.zeus.special_weapon = "taser"
+	self.melee_weapons.zeus.tase_data = {
+		tase_strength = "light"
+	}
 	self.melee_weapons.zeus.texture_bundle_folder = "mad"
 	self.melee_weapons.zeus.free = nil
 	self.melee_weapons.zeus.align_objects = {

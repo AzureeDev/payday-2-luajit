@@ -54,38 +54,6 @@ function PlayerTased:enter(state_data, enter_data)
 	self.tased = true
 	self._state_data = state_data
 
-	if managers.player:has_category_upgrade("player", "taser_malfunction") then
-		local data = managers.player:upgrade_value("player", "taser_malfunction")
-
-		if data then
-			managers.player:register_message(Message.SendTaserMalfunction, "taser_malfunction", function ()
-				self:_on_malfunction_to_taser_event()
-			end)
-			managers.player:add_coroutine("taser_malfunction", PlayerAction.TaserMalfunction, managers.player, data.interval, data.chance_to_trigger)
-		end
-	end
-
-	if managers.player:has_category_upgrade("player", "escape_taser") then
-		local interact_string = managers.localization:text("hud_int_escape_taser", {
-			BTN_INTERACT = managers.localization:btn_macro("interact", false)
-		})
-
-		managers.hud:show_interact({
-			icon = "mugshot_electrified",
-			text = interact_string
-		})
-
-		local target_time = managers.player:upgrade_value("player", "escape_taser", 2)
-
-		managers.player:add_coroutine("escape_tase", PlayerAction.EscapeTase, managers.player, managers.hud, Application:time() + target_time)
-
-		local function clbk()
-			self:give_shock_to_taser_no_damage()
-		end
-
-		managers.player:register_message(Message.EscapeTase, "escape_tase", clbk)
-	end
-
 	CopDamage.register_listener("on_criminal_tased", {
 		"on_criminal_tased"
 	}, callback(self, self, "_on_tased_event"))
@@ -502,6 +470,38 @@ end
 function PlayerTased:_on_tased_event(taser_unit, tased_unit)
 	if self._unit == tased_unit then
 		self._taser_unit = taser_unit
+
+		if managers.player:has_category_upgrade("player", "taser_malfunction") then
+			local data = managers.player:upgrade_value("player", "taser_malfunction")
+
+			if data then
+				managers.player:register_message(Message.SendTaserMalfunction, "taser_malfunction", function ()
+					self:_on_malfunction_to_taser_event()
+				end)
+				managers.player:add_coroutine("taser_malfunction", PlayerAction.TaserMalfunction, managers.player, data.interval, data.chance_to_trigger)
+			end
+		end
+
+		if managers.player:has_category_upgrade("player", "escape_taser") then
+			local interact_string = managers.localization:text("hud_int_escape_taser", {
+				BTN_INTERACT = managers.localization:btn_macro("interact", false)
+			})
+
+			managers.hud:show_interact({
+				icon = "mugshot_electrified",
+				text = interact_string
+			})
+
+			local target_time = managers.player:upgrade_value("player", "escape_taser", 2)
+
+			managers.player:add_coroutine("escape_tase", PlayerAction.EscapeTase, managers.player, managers.hud, Application:time() + target_time)
+
+			local function clbk()
+				self:give_shock_to_taser_no_damage()
+			end
+
+			managers.player:register_message(Message.EscapeTase, "escape_tase", clbk)
+		end
 	end
 end
 

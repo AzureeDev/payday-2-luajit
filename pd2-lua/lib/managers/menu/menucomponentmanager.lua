@@ -3653,7 +3653,7 @@ function MenuComponentManager:get_texture_from_mod_type(type, sub_type, gadget, 
 		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. (sub_type or is_auto and "autofire" or "singlefire")
 	elseif type == "sight" then
 		texture = "guis/textures/pd2/blackmarket/inv_mod_scope"
-	elseif type == "ammo" then
+	elseif type == "ammo" or type == "underbarrel_ammo" then
 		if equipped then
 			texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
 		elseif mods and #mods > 0 then

@@ -43,7 +43,15 @@ local function get_icon(icon_type)
 
 		return "guis/textures/pd2/blackmarket/icons/deployables/outline/" .. id
 	elseif icon_type == "throwable" then
-		return "guis/textures/pd2/blackmarket/icons/grenades/outline/" .. managers.blackmarket:equipped_grenade()
+		local g_id = managers.blackmarket:equipped_grenade()
+		local prefix = "guis"
+		local texture = "/textures/pd2/blackmarket/icons/grenades/outline/" .. g_id
+
+		if not DB:has(Idstring("texture"), Idstring(prefix .. texture)) then
+			prefix = "guis/dlcs/" .. tweak_data.blackmarket.projectiles[g_id].texture_bundle_folder
+		end
+
+		return prefix .. texture
 	elseif icon_type == "bag" then
 		return "guis/dlcs/vr/textures/pd2/vr_belt_bag_default"
 	elseif icon_type == "reload" then

@@ -2,6 +2,10 @@ HuskCivilianDamage = HuskCivilianDamage or class(HuskCopDamage)
 HuskCivilianDamage._HEALTH_INIT = CivilianDamage._HEALTH_INIT
 HuskCivilianDamage.damage_bullet = CivilianDamage.damage_bullet
 HuskCivilianDamage.damage_melee = CivilianDamage.damage_melee
+HuskCivilianDamage.damage_tase = CivilianDamage.damage_tase
+HuskCivilianDamage.sync_damage_tase = CivilianDamage.sync_damage_tase
+HuskCivilianDamage._play_civilian_tase_effect = CivilianDamage._play_civilian_tase_effect
+HuskCivilianDamage._tase_effect_clbk = CivilianDamage._tase_effect_clbk
 HuskCivilianDamage.no_intimidation_by_dmg = CivilianDamage.no_intimidation_by_dmg
 
 function HuskCivilianDamage:_on_damage_received(damage_info)

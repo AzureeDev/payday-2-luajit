@@ -2981,10 +2981,7 @@ function MenuSceneManager:remove_item()
 
 					linked_unit:unlink()
 					World:delete_unit(linked_unit)
-
-					if managers.dyn_resource:has_resource(ids_unit, linked_unit_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE) then
-						managers.dyn_resource:unload(ids_unit, linked_unit_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
-					end
+					managers.dyn_resource:unload(ids_unit, linked_unit_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
 				end
 			end
 
@@ -2993,11 +2990,11 @@ function MenuSceneManager:remove_item()
 			end
 
 			World:delete_unit(self._item_unit.unit)
+		elseif self._item_unit.backstrap_unit_name then
+			managers.dyn_resource:unload(ids_unit, self._item_unit.backstrap_unit_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
 		end
 
-		if managers.dyn_resource:has_resource(ids_unit, self._item_unit.name, DynamicResourceManager.DYN_RESOURCES_PACKAGE) then
-			managers.dyn_resource:unload(ids_unit, self._item_unit.name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
-		end
+		managers.dyn_resource:unload(ids_unit, self._item_unit.name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
 
 		self._item_unit = nil
 	end
@@ -3213,10 +3210,7 @@ function MenuSceneManager:spawn_item_weapon(factory_id, blueprint, cosmetics, te
 	local factory_weapon = tweak_data.weapon.factory[factory_id]
 	local ids_unit_name = Idstring(factory_weapon.unit)
 
-	if not managers.dyn_resource:is_resource_ready(Idstring("unit"), ids_unit_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE) then
-		print("[MenuSceneManager:spawn_item_weapon]", "Weapon unit is not loaded, force loading it.", factory_weapon.unit)
-		managers.dyn_resource:load(Idstring("unit"), ids_unit_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
-	end
+	managers.dyn_resource:load(Idstring("unit"), ids_unit_name, DynamicResourceManager.DYN_RESOURCES_PACKAGE, false)
 
 	self._item_pos = custom_data and custom_data.item_pos or Vector3(0, 0, 200)
 
@@ -3566,6 +3560,8 @@ function MenuSceneManager:on_setup_infamy_menu()
 			self._outfit_state = self._character_unit:play_redirect(Idstring("idle_menu"))
 		end
 
+		self:remove_item()
+
 		self.infamy_menu_ready = true
 	end)
 end
@@ -3575,8 +3571,6 @@ function MenuSceneManager:on_close_infamy_menu()
 		self:set_character_player_style(managers.blackmarket:equipped_player_style(), managers.blackmarket:get_suit_variation(), self._character_unit)
 		self:set_character_gloves(managers.blackmarket:equipped_glove_id(), self._character_unit)
 	end
-
-	self:remove_item()
 
 	self.infamy_menu_ready = false
 end
@@ -3703,6 +3697,7 @@ function MenuSceneManager:spawn_infamy_card_preview(card_sqeuence_name, show_fro
 end
 
 function MenuSceneManager:spawn_infamy_weapon_preview(color_id)
+	Application:stack_dump()
 	self:add_one_frame_delayed_clbk(function ()
 		self._use_item_grab = true
 		local blueprint = clone(tweak_data.weapon.factory.wpn_fps_pis_g17.default_blueprint)

@@ -551,6 +551,55 @@ function BlackMarketTweakData:_init_projectiles(tweak_data)
 		client_authoritative = true,
 		is_explosive = true
 	}
+	self.projectiles.wpn_gre_electric = {
+		name_id = "bm_grenade_electric",
+		desc_id = "bm_grenade_electric_desc",
+		unit = "units/pd2_dlc_sawp/weapons/wpn_fps_gre_electric/wpn_third_gre_electric",
+		unit_dummy = "units/pd2_dlc_sawp/weapons/wpn_fps_gre_electric/wpn_fps_gre_electric_husk",
+		sprint_unit = "units/pd2_dlc_sawp/weapons/wpn_fps_gre_electric/wpn_third_gre_electric_sprint",
+		icon = "electric_grenade",
+		throwable = true,
+		max_amount = 4,
+		animation = "throw_grenade",
+		anim_global_param = "projectile_frag",
+		texture_bundle_folder = "sawp",
+		throw_allowed_expire_t = 0.1,
+		expire_t = 0.9,
+		repeat_expire_t = 1.5,
+		is_a_grenade = true,
+		dlc = "sawp_grenade"
+	}
+	self.projectiles.launcher_electric = deep_clone(self.projectiles.launcher_frag)
+	self.projectiles.launcher_electric.unit = "units/pd2_dlc_sawp/weapons/wpn_launcher_electric/wpn_launcher_electric"
+	self.projectiles.launcher_electric.add_trail_effect = true
+	self.projectiles.launcher_electric.dlc = "sawp"
+	self.projectiles.launcher_electric.weapon_id = "gre_m79"
+	self.projectiles.launcher_electric.time_cheat = 0.1
+	self.projectiles.launcher_electric_m32 = deep_clone(self.projectiles.launcher_electric)
+	self.projectiles.launcher_electric_m32.unit = "units/pd2_dlc_sawp/weapons/wpn_launcher_electric/wpn_launcher_electric_m32"
+	self.projectiles.launcher_electric_m32.weapon_id = "m32"
+	self.projectiles.launcher_electric_china = deep_clone(self.projectiles.launcher_electric)
+	self.projectiles.launcher_electric_china.unit = "units/pd2_dlc_sawp/weapons/wpn_launcher_electric/wpn_launcher_electric_china"
+	self.projectiles.launcher_electric_china.weapon_id = "china"
+	self.projectiles.launcher_electric_slap = deep_clone(self.projectiles.launcher_electric)
+	self.projectiles.launcher_electric_slap.unit = "units/pd2_dlc_sawp/weapons/wpn_launcher_electric/wpn_launcher_electric_slap"
+	self.projectiles.launcher_electric_slap.weapon_id = "slap"
+	self.projectiles.launcher_electric_arbiter = deep_clone(self.projectiles.launcher_electric)
+	self.projectiles.launcher_electric_arbiter.unit = "units/pd2_dlc_sawp/weapons/wpn_launcher_electric/wpn_launcher_electric_arbiter"
+	self.projectiles.launcher_electric_arbiter.weapon_id = "arbiter"
+	self.projectiles.underbarrel_electric = deep_clone(self.projectiles.launcher_frag)
+	self.projectiles.underbarrel_electric.unit = "units/pd2_dlc_sawp/weapons/wpn_launcher_electric/wpn_underbarrel_electric"
+	self.projectiles.underbarrel_electric.add_trail_effect = true
+	self.projectiles.underbarrel_electric.dlc = "sawp"
+	self.projectiles.underbarrel_electric.weapon_id = "contraband_m203"
+	self.projectiles.underbarrel_electric.time_cheat = 0.1
+	self.projectiles.underbarrel_electric_groza = deep_clone(self.projectiles.underbarrel_electric)
+	self.projectiles.underbarrel_electric_groza.unit = "units/pd2_dlc_sawp/weapons/wpn_launcher_electric/wpn_underbarrel_electric_groza"
+	self.projectiles.underbarrel_electric_groza.weapon_id = "groza"
+	self.projectiles.underbarrel_m203_groza = deep_clone(self.projectiles.launcher_m203)
+	self.projectiles.underbarrel_m203_groza.unit = "units/pd2_dlc_sawp/weapons/wpn_launcher_electric/wpn_underbarrel_m203_groza"
+	self.projectiles.underbarrel_m203_groza.weapon_id = "groza"
+	self.projectiles.underbarrel_m203_groza.dlc = "sawp"
 	self._projectiles_index = {
 		"frag",
 		"launcher_frag",
@@ -601,7 +650,16 @@ function BlackMarketTweakData:_init_projectiles(tweak_data)
 		"launcher_incendiary_slap",
 		"elastic_arrow",
 		"elastic_arrow_poison",
-		"elastic_arrow_exp"
+		"elastic_arrow_exp",
+		"wpn_gre_electric",
+		"launcher_electric",
+		"launcher_electric_m32",
+		"launcher_electric_china",
+		"launcher_electric_slap",
+		"launcher_electric_arbiter",
+		"underbarrel_electric",
+		"underbarrel_electric_groza",
+		"underbarrel_m203_groza"
 	}
 	local free_dlcs = tweak_data:free_dlc_list()
 

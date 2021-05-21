@@ -9201,6 +9201,23 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
+		sawp_1 = {
+			need_unlock_icons = true,
+			icon_id = "Other_H_All_Buzz",
+			progress = true,
+			sort_name = "Other_H_All_Buzz",
+			additional_id = true,
+			unlock_id = true,
+			tags = {
+				tags.progress.generic,
+				tags.difficulty.overkill,
+				tags.unlock.weapon,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.inventory.weapon,
+				tags.inventory.equipment
+			}
+		},
 		skm_1 = {
 			icon_id = "C_Dentist_H_GoldenGrinCasino_Holdout_3",
 			ladder = "S_GoldenGrinCasino",

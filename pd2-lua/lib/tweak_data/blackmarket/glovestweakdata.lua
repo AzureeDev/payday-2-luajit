@@ -151,6 +151,7 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		punk = "punk",
 		cartelboss = "heist_default",
 		raincoat = "heist_default",
+		cable_guy = "heist_default",
 		jail_pd2_clan = "heist_default",
 		esport = "esport",
 		murky_suit = "murky"

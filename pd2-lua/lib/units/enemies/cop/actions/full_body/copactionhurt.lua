@@ -360,26 +360,57 @@ function CopActionHurt:init(action_desc, common_data)
 			end
 		end
 	elseif action_type == "taser_tased" then
-		local char_tweak = tweak_data.character[self._unit:base()._tweak_table]
+		if self._unit:brain() and self._unit:brain()._current_logic_name ~= "intimidated" then
+			local tase_data = tweak_data.tase_data[action_desc.variant] or tweak_data.tase_data.light
 
-		if (char_tweak.can_be_tased == nil or char_tweak.can_be_tased) and self._unit:brain() and self._unit:brain()._current_logic_name ~= "intimidated" then
-			redir_res = self._ext_movement:play_redirect("taser")
-			local variant = self:_pseudorandom(4)
-			local dir_str = nil
+			if tase_data.duration then
+				redir_res = self._ext_movement:play_redirect("explosion_tased")
 
-			if variant == 1 then
-				dir_str = "var1"
-			elseif variant == 2 then
-				dir_str = "var2"
-			elseif variant == 3 then
-				dir_str = "var3"
-			elseif variant == 4 then
-				dir_str = "var4"
+				if not redir_res then
+					debug_pause("[CopActionHurt:init] taser_tased tased redirect failed in", self._machine:segment_state(Idstring("upper_body")))
+
+					return
+				end
+
+				if tweak_table == "shield" then
+					local rnd_max = 4
+					local rnd_anim = self:_pseudorandom(rnd_max)
+					local rnd_anim_str = "shield_var" .. tostring(rnd_anim)
+
+					self._machine:set_parameter(redir_res, rnd_anim_str, 1)
+				else
+					local rnd_max = 5
+					local rnd_anim = self:_pseudorandom(rnd_max)
+					local rnd_anim_str = "var" .. tostring(rnd_anim)
+
+					self._machine:set_parameter(redir_res, rnd_anim_str, 1)
+				end
 			else
-				dir_str = "fwd"
-			end
+				redir_res = self._ext_movement:play_redirect("taser")
 
-			self._machine:set_parameter(redir_res, dir_str, 1)
+				if not redir_res then
+					debug_pause("[CopActionHurt:init] taser_tased taser redirect failed in", self._machine:segment_state(Idstring("upper_body")))
+
+					return
+				end
+
+				local variant = self:_pseudorandom(4)
+				local dir_str = nil
+
+				if variant == 1 then
+					dir_str = "var1"
+				elseif variant == 2 then
+					dir_str = "var2"
+				elseif variant == 3 then
+					dir_str = "var3"
+				elseif variant == 4 then
+					dir_str = "var4"
+				else
+					dir_str = "fwd"
+				end
+
+				self._machine:set_parameter(redir_res, dir_str, 1)
+			end
 		end
 	elseif action_type == "light_hurt" then
 		if not self._ext_anim.upper_body_active or self._ext_anim.upper_body_empty or self._ext_anim.recoil then
@@ -737,6 +768,15 @@ function CopActionHurt:init(action_desc, common_data)
 		end
 	elseif action_type == "hurt_sick" or action_type == "poison_hurt" or action_type == "concussion" then
 		self.update = self._upd_sick
+	elseif action_type == "taser_tased" then
+		local tase_data = tweak_data.tase_data[action_desc.variant] or tweak_data.tase_data.light
+
+		if tase_data.duration then
+			self._tased_down_time = t + tase_data.duration
+			self.update = self._upd_tased_down
+		else
+			self.update = self._upd_hurt
+		end
 	elseif action_desc.variant == "tase" then
 		-- Nothing
 	elseif self._ragdolled then
@@ -1202,6 +1242,10 @@ function CopActionHurt:on_exit()
 		managers.hud:set_mugshot_normal(self._unit:unit_data().mugshot_id)
 	end
 
+	if self._hurt_type == "taser_tased" and self._unit:character_damage().on_tase_ended then
+		self._unit:character_damage():on_tase_ended()
+	end
+
 	if self._unit and alive(self._unit) and self._unit.character_damage and self._unit:character_damage().call_listener then
 		self._unit:character_damage():call_listener("on_exit_hurt")
 	end
@@ -1285,6 +1329,12 @@ end
 
 function CopActionHurt:_upd_tased_down(t)
 	if not self._tased_down_time or self._tased_down_time < t then
+		self._expired = true
+	end
+end
+
+function CopActionHurt:_upd_taser_tased(t)
+	if not self._taser_tased_t or self._taser_tased_t < t then
 		self._expired = true
 	end
 end

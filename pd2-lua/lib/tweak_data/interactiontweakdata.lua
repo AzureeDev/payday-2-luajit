@@ -6701,4 +6701,53 @@ function InteractionTweakData:init(tweak_data)
 		timer = 2,
 		interact_distance = 200
 	}
+	self.chca_force_open_vent = {
+		text_id = "hud_int_pku_force_open_vent",
+		action_text_id = "hud_action_pkuing_force_open_vent",
+		timer = 1,
+		start_active = true,
+		interact_distance = 150,
+		axis = "x"
+	}
+	self.chca_hold_open_safe = {
+		text_id = "hud_int_open_safe",
+		action_text_id = "hud_action_opening_safe",
+		timer = 5,
+		axis = "y",
+		special_equipment = "keychain",
+		equipment_text_id = "hud_equipment_need_keychain",
+		equipment_consume = true
+	}
+	self.chca_hold_use_handprint = {
+		text_id = "hud_int_use_handprint",
+		action_text_id = "hud_action_using_handprint",
+		timer = 5,
+		axis = "y",
+		special_equipment = "hand",
+		equipment_text_id = "hud_equipment_need_handprint",
+		equipment_consume = true
+	}
+	self.chca_hold_pour_diesel = {
+		text_id = "hud_int_pour_diesel",
+		action_text_id = "hud_action_pkuing_pouring_diesel",
+		timer = 5,
+		special_equipment = "diesel",
+		equipment_text_id = "hud_equipment_need_diesel"
+	}
+	self.chca_hold_pour_diesel = {
+		text_id = "hud_int_pour_diesel",
+		action_text_id = "hud_action_pkuing_pouring_diesel",
+		timer = 5,
+		special_equipment = "diesel",
+		equipment_text_id = "hud_equipment_need_diesel"
+	}
+	self.chca_connect_winch_hook = {
+		text_id = "chca_connect_winch_hook",
+		action_text_id = "chca_action_connecting_winch_hook",
+		equipment_text_id = "hint_no_winch_hook",
+		special_equipment = "cas_winch_hook",
+		interact_distance = 200,
+		timer = 2,
+		equipment_consume = true
+	}
 end

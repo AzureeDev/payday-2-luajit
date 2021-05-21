@@ -39885,4 +39885,164 @@ function BlackMarketTweakData:_setup_weapon_color_skins(tweak_data)
 		pattern_default = Idstring("units/pd2_dlc_in32/weapon_colors/pattern/pattern_in32_09_df"),
 		gradient_default = Idstring("units/pd2_dlc_in32/weapon_colors/pattern_gradient/gradient_in32_09_df")
 	})
+	self:create_new_color_skin("color_sawp_01", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 1,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_01_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_01_df")
+	})
+	self:create_new_color_skin("color_sawp_02", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 2,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_02_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_02_df")
+	})
+	self:create_new_color_skin("color_sawp_03", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 3,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_03_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_03_df")
+	})
+	self:create_new_color_skin("color_sawp_04", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 4,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_04_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_04_df")
+	})
+	self:create_new_color_skin("color_sawp_05", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 5,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_05_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_05_df")
+	})
+	self:create_new_color_skin("color_sawp_06", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 6,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_in32/weapon_colors/base_gradient/in32_base_gold_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_in32/weapon_colors/base_gradient/in32_base_gold_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_in32/weapon_colors/base_gradient/in32_base_gold_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_in32/weapon_colors/base_gradient/in32_base_gold_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_in32/weapon_colors/base_gradient/in32_base_gold_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_in32/weapon_colors/base_gradient/in32_base_gold_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_in32/weapon_colors/base_gradient/in32_base_gold"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_06_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_06_df")
+	})
+	self:create_new_color_skin("color_sawp_07", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 7,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_07_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_07_df")
+	})
+	self:create_new_color_skin("color_sawp_08", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 8,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_08_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_08_df")
+	})
+	self:create_new_color_skin("color_sawp_09", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 9,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_09_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_09_df")
+	})
+	self:create_new_color_skin("color_sawp_10", {
+		texture_bundle_folder = "sawp",
+		dlc = "sawp",
+		sort_number = 10,
+		color = Color("1e1e1e")
+	}, {
+		base_default = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_default"),
+		base_metal = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_metal"),
+		base_plastic = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_plastic"),
+		base_half = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half"),
+		base_half_02 = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_half_02"),
+		base_detail = Idstring("units/pd2_dlc_wcc/weapon_colors/base_gradient/base_gradient_wcc_pattern_details"),
+		base_variation = Idstring("units/pd2_dlc_wcs/weapon_colors/base_gradient/wcs_black_df"),
+		pattern_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern/pattern_sawp_10_df"),
+		gradient_default = Idstring("units/pd2_dlc_sawp/weapon_colors/pattern_gradient/gradient_sawp_10_df")
+	})
 end

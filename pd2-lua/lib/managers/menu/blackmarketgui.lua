@@ -6688,29 +6688,35 @@ function BlackMarketGui:update_info_text()
 		updated_texts[1].text = self._slot_data.name_localized
 
 		if not slot_data.unlocked then
-			local skill_based = slot_data.skill_based
-			local level_based = slot_data.level and slot_data.level > 0
-			local dlc_based = slot_data.dlc_based or tweak_data.lootdrop.global_values[slot_data.global_value] and tweak_data.lootdrop.global_values[slot_data.global_value].dlc and not managers.dlc:is_dlc_unlocked(slot_data.global_value)
-			local skill_text_id = skill_based and (slot_data.skill_name or "bm_menu_skilltree_locked") or false
-			local level_text_id = level_based and "bm_menu_level_req" or false
-			local dlc_text_id = dlc_based and slot_data.dlc_locked or false
-			local text = ""
+			local grenade_tweak = tweak_data.blackmarket.projectiles[slot_data.name]
 
-			if slot_data.install_lock then
-				text = text .. managers.localization:to_upper_text(slot_data.install_lock, {}) .. "\n"
-			elseif skill_text_id then
-				text = text .. managers.localization:to_upper_text(skill_text_id, {
-					slot_data.name_localized
-				}) .. "\n"
-			elseif dlc_text_id then
-				text = text .. managers.localization:to_upper_text(dlc_text_id, {}) .. "\n"
-			elseif level_text_id then
-				text = text .. managers.localization:to_upper_text(level_text_id, {
-					level = slot_data.level
-				}) .. "\n"
+			if grenade_tweak and grenade_tweak.unlock_id then
+				updated_texts[3].text = managers.localization:to_upper_text(grenade_tweak.unlock_id)
+			else
+				local skill_based = slot_data.skill_based
+				local level_based = slot_data.level and slot_data.level > 0
+				local dlc_based = slot_data.dlc_based or tweak_data.lootdrop.global_values[slot_data.global_value] and tweak_data.lootdrop.global_values[slot_data.global_value].dlc and not managers.dlc:is_dlc_unlocked(slot_data.global_value)
+				local skill_text_id = skill_based and (slot_data.skill_name or "bm_menu_skilltree_locked") or false
+				local level_text_id = level_based and "bm_menu_level_req" or false
+				local dlc_text_id = dlc_based and slot_data.dlc_locked or false
+				local text = ""
+
+				if slot_data.install_lock then
+					text = text .. managers.localization:to_upper_text(slot_data.install_lock, {}) .. "\n"
+				elseif skill_text_id then
+					text = text .. managers.localization:to_upper_text(skill_text_id, {
+						slot_data.name_localized
+					}) .. "\n"
+				elseif dlc_text_id then
+					text = text .. managers.localization:to_upper_text(dlc_text_id, {}) .. "\n"
+				elseif level_text_id then
+					text = text .. managers.localization:to_upper_text(level_text_id, {
+						level = slot_data.level
+					}) .. "\n"
+				end
+
+				updated_texts[3].text = text
 			end
-
-			updated_texts[3].text = text
 		end
 
 		updated_texts[4].resource_color = {}
@@ -10232,13 +10238,13 @@ function BlackMarketGui:populate_grenades(data)
 	end
 
 	local index = 0
-	local guis_catalog, m_tweak_data, grenade_id = nil
+	local guis_catalog, g_tweak_data, grenade_id = nil
 
 	for i, grenades_data in ipairs(sort_data) do
 		grenade_id = grenades_data[1]
-		m_tweak_data = tweak_data.blackmarket.projectiles[grenades_data[1]] or {}
+		g_tweak_data = tweak_data.blackmarket.projectiles[grenades_data[1]] or {}
 		guis_catalog = "guis/"
-		local bundle_folder = m_tweak_data.texture_bundle_folder
+		local bundle_folder = g_tweak_data.texture_bundle_folder
 
 		if bundle_folder then
 			guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
@@ -10254,16 +10260,16 @@ function BlackMarketGui:populate_grenades(data)
 		new_data.equipped = grenades_data[2].equipped
 		new_data.level = grenades_data[2].level
 		new_data.stream = true
-		new_data.global_value = tweak_data.lootdrop.global_values[m_tweak_data.dlc] and m_tweak_data.dlc or "normal"
+		new_data.global_value = tweak_data.lootdrop.global_values[g_tweak_data.dlc] and g_tweak_data.dlc or "normal"
 		new_data.skill_based = grenades_data[2].skill_based
 		new_data.skill_name = "bm_menu_skill_locked_" .. new_data.name
 		new_data.equipped_text = not new_data.unlocked and new_data.equipped and " "
 
-		if m_tweak_data and m_tweak_data.locks then
-			local dlc = m_tweak_data.locks.dlc
-			local achievement = m_tweak_data.locks.achievement
-			local saved_job_value = m_tweak_data.locks.saved_job_value
-			local level = m_tweak_data.locks.level
+		if g_tweak_data and g_tweak_data.locks then
+			local dlc = g_tweak_data.locks.dlc
+			local achievement = g_tweak_data.locks.achievement
+			local saved_job_value = g_tweak_data.locks.saved_job_value
+			local level = g_tweak_data.locks.level
 			new_data.dlc_based = true
 			new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_community")
 
@@ -10274,6 +10280,10 @@ function BlackMarketGui:populate_grenades(data)
 			else
 				new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
 			end
+		elseif g_tweak_data and g_tweak_data.dlc then
+			new_data.dlc_based = true
+			new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_dlc")
+			new_data.dlc_locked = tweak_data.lootdrop.global_values[g_tweak_data.dlc].unlock_id or "bm_menu_dlc_locked"
 		else
 			new_data.lock_texture = self:get_lock_icon(new_data)
 			new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
@@ -10309,7 +10319,7 @@ function BlackMarketGui:populate_grenades(data)
 				table.insert(new_data, "lo_g_equip")
 			end
 
-			if new_data.unlocked and data.allow_preview and m_tweak_data.unit then
+			if new_data.unlocked and data.allow_preview and g_tweak_data.unit then
 				table.insert(new_data, "lo_g_preview")
 			end
 		end

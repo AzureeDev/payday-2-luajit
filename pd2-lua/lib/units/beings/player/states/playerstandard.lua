@@ -62,15 +62,7 @@ PlayerStandard.ANIM_STATES = {
 		recoil_loop = Idstring("bipod_recoil_loop"),
 		recoil_exit = Idstring("bipod_recoil_exit")
 	},
-	underbarrel = {
-		equip = Idstring("underbarrel_equip"),
-		unequip = Idstring("underbarrel_unequip"),
-		start_running = Idstring("underbarrel_start_running"),
-		stop_running = Idstring("underbarrel_stop_running"),
-		melee = Idstring("underbarrel_melee"),
-		melee_miss = Idstring("underbarrel_melee_miss"),
-		idle = Idstring("underbarrel_idle")
-	}
+	underbarrel = {}
 }
 PlayerStandard.projectile_throw_delays = {
 	projectile_frag_com = 0.83062744140625,
@@ -771,6 +763,11 @@ function PlayerStandard:_update_check_actions(t, dt, paused)
 	local new_action = nil
 	local anim_data = self._ext_anim
 	new_action = new_action or self:_check_action_weapon_gadget(t, input)
+
+	if _G.IS_VR then
+		new_action = new_action or self:_check_action_deploy_underbarrel(t, input)
+	end
+
 	new_action = new_action or self:_check_action_weapon_firemode(t, input)
 	new_action = new_action or self:_check_action_melee(t, input)
 	new_action = new_action or self:_check_action_reload(t, input)
@@ -2381,11 +2378,6 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			local action_data = {
 				variant = "melee"
 			}
-			local special_weapon = tweak_data.blackmarket.melee_weapons[melee_entry].special_weapon
-
-			if special_weapon then
-				action_data.variant = "taser_tased"
-			end
 
 			if _G.IS_VR and melee_entry == "weapon" and not bayonet_melee then
 				dmg_multiplier = 0.1
@@ -2424,6 +2416,17 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)
+
+			if tweak_data.blackmarket.melee_weapons[melee_entry].tase_data and character_unit:character_damage().damage_tase then
+				local action_data = {
+					variant = tweak_data.blackmarket.melee_weapons[melee_entry].tase_data.tase_strength,
+					damage = 0,
+					attacker_unit = self._unit,
+					col_ray = col_ray
+				}
+
+				character_unit:character_damage():damage_tase(action_data)
+			end
 
 			if tweak_data.blackmarket.melee_weapons[melee_entry].fire_dot_data and character_unit:character_damage().damage_fire then
 				local action_data = {
@@ -3811,7 +3814,11 @@ function PlayerStandard:_check_action_deploy_underbarrel(t, input)
 	local new_action = nil
 	local action_forbidden = false
 
-	if not input.btn_deploy_bipod and not self._toggle_underbarrel_wanted then
+	if _G.IS_VR then
+		if not input.btn_weapon_firemode_press and not self._toggle_underbarrel_wanted then
+			return new_action
+		end
+	elseif not input.btn_deploy_bipod and not self._toggle_underbarrel_wanted then
 		return new_action
 	end
 

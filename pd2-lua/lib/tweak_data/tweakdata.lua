@@ -2265,6 +2265,42 @@ Play the full version soon to get your full PAYDAY!]],
 		launcher_m203 = {
 			explosion = false,
 			fire = false
+		},
+		wpn_gre_electric = {
+			explosion = false,
+			tase = false
+		},
+		launcher_electric = {
+			explosion = false,
+			tase = false
+		},
+		launcher_electric_m32 = {
+			explosion = false,
+			tase = false
+		},
+		launcher_electric_china = {
+			explosion = false,
+			tase = false
+		},
+		launcher_electric_slap = {
+			explosion = false,
+			tase = false
+		},
+		launcher_electric_arbiter = {
+			explosion = false,
+			tase = false
+		},
+		underbarrel_electric = {
+			explosion = false,
+			tase = false
+		},
+		underbarrel_electric_groza = {
+			explosion = false,
+			tase = false
+		},
+		underbarrel_m203_groza = {
+			explosion = false,
+			tase = false
 		}
 	}
 	self.projectiles = {
@@ -2620,6 +2656,45 @@ Play the full version soon to get your full PAYDAY!]],
 	self.projectiles.elastic_arrow_exp.damage = 140
 	self.projectiles.elastic_arrow_exp.bullet_class = "InstantExplosiveBulletBase"
 	self.projectiles.elastic_arrow_exp.remove_on_impact = true
+	self.projectiles.wpn_gre_electric = {
+		damage = 60,
+		curve_pow = 3.5,
+		range = 1000,
+		name_id = "bm_electric_grenade",
+		sound_event = "grenade_electric_explode"
+	}
+	self.projectiles.launcher_electric = deep_clone(self.projectiles.launcher_frag)
+	self.projectiles.launcher_electric.launch_speed = 1250
+	self.projectiles.launcher_electric.projectile_trail = true
+	self.projectiles.launcher_electric.damage = 80
+	self.projectiles.launcher_electric.player_damage = 0
+	self.projectiles.launcher_electric.curve_pow = 2.5
+	self.projectiles.launcher_electric.range = 800
+	self.projectiles.launcher_electric.sound_event = "gl_electric_explode"
+	self.projectiles.launcher_electric_m32 = deep_clone(self.projectiles.launcher_electric)
+	self.projectiles.launcher_electric_m32.damage = 90
+	self.projectiles.launcher_electric_m32.sound_event = "gl_electric_explode"
+	self.projectiles.launcher_electric_china = deep_clone(self.projectiles.launcher_electric)
+	self.projectiles.launcher_electric_china.damage = 56
+	self.projectiles.launcher_electric_china.sound_event = "gl_electric_explode"
+	self.projectiles.launcher_electric_slap = deep_clone(self.projectiles.launcher_electric)
+	self.projectiles.launcher_electric_slap.damage = 90
+	self.projectiles.launcher_electric_slap.sound_event = "gl_electric_explode"
+	self.projectiles.launcher_electric_arbiter = deep_clone(self.projectiles.launcher_electric)
+	self.projectiles.launcher_electric_arbiter.launch_speed = 7000
+	self.projectiles.launcher_electric_arbiter.damage = 30
+	self.projectiles.launcher_electric_arbiter.sound_event = "gl_electric_explode"
+	self.projectiles.underbarrel_electric = deep_clone(self.projectiles.launcher_frag)
+	self.projectiles.underbarrel_electric.launch_speed = 1250
+	self.projectiles.underbarrel_electric.projectile_trail = true
+	self.projectiles.underbarrel_electric.damage = 80
+	self.projectiles.underbarrel_electric.player_damage = 0
+	self.projectiles.underbarrel_electric.curve_pow = 2.5
+	self.projectiles.underbarrel_electric.range = 800
+	self.projectiles.underbarrel_electric.sound_event = "gl_electric_explode"
+	self.projectiles.underbarrel_electric_groza = deep_clone(self.projectiles.underbarrel_electric)
+	self.projectiles.underbarrel_electric_groza.sound_event = "gl_electric_explode"
+	self.projectiles.underbarrel_m203_groza = deep_clone(self.projectiles.launcher_m203)
 	self.voting = {
 		timeout = 30,
 		cooldown = 50,
@@ -2631,6 +2706,12 @@ Play the full version soon to get your full PAYDAY!]],
 			dot_damage = 25,
 			dot_length = 6,
 			hurt_animation_chance = 1
+		}
+	}
+	self.tase_data = {
+		light = {},
+		heavy = {
+			duration = 3
 		}
 	}
 	self.quickplay = {

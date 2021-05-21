@@ -539,6 +539,9 @@ function TweakDataVR:init(tweak_data)
 			baka = {
 				position = Vector3(-0.2, -0.5, 2.5)
 			},
+			pm9 = {
+				position = Vector3(-0.2, -0.5, 2.5)
+			},
 			sr2 = {
 				position = Vector3(-0.2, -0.5, 0)
 			},
@@ -556,6 +559,9 @@ function TweakDataVR:init(tweak_data)
 			},
 			x_sr2 = {
 				position = Vector3(-0.2, -0.5, 0)
+			},
+			x_pm9 = {
+				position = Vector3(-0.2, -0.5, 2.5)
 			},
 			x_shepheard = {
 				position = Vector3(-0.2, 1, 1)
@@ -696,6 +702,9 @@ function TweakDataVR:init(tweak_data)
 			siltstone = {
 				position = Vector3(-0.2, 1, 1)
 			},
+			qbu88 = {
+				position = Vector3(-0.2, -1, 0)
+			},
 			gre_m79 = {
 				grip = "weapon_2_grip",
 				position = Vector3(-1.5, 1.8, 0)
@@ -747,6 +756,9 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-0.5, 3, 1)
 			},
 			l85a2 = {
+				position = Vector3(-0.5, 0.8, 2)
+			},
+			groza = {
 				position = Vector3(-0.5, 0.8, 2)
 			},
 			galil = {
@@ -1077,6 +1089,10 @@ function TweakDataVR:init(tweak_data)
 			position = Vector3(1, 0, -5),
 			rotation = Rotation(0, -15, 0)
 		},
+		pm9 = {
+			position = Vector3(1, 0, -5),
+			rotation = Rotation(0, -15, 0)
+		},
 		sr2 = {
 			position = Vector3(1, 2, 5),
 			rotation = Rotation(0, -15, 0)
@@ -1116,6 +1132,10 @@ function TweakDataVR:init(tweak_data)
 		},
 		x_sr2 = {
 			position = Vector3(1, 2, 5),
+			rotation = Rotation(0, -15, 0)
+		},
+		x_pm9 = {
+			position = Vector3(1, 0, -5),
 			rotation = Rotation(0, -15, 0)
 		},
 		x_shepheard = {
@@ -1271,6 +1291,10 @@ function TweakDataVR:init(tweak_data)
 			position = Vector3(0, 3, 2),
 			rotation = Rotation(0, -25, 0)
 		},
+		groza = {
+			position = Vector3(0, 3, 2),
+			rotation = Rotation(0, -25, 0)
+		},
 		komodo = {
 			position = Vector3(0, 3, 2),
 			rotation = Rotation(0, -25, 0)
@@ -1310,6 +1334,10 @@ function TweakDataVR:init(tweak_data)
 		siltstone = {
 			position = Vector3(1, 2, 5),
 			rotation = Rotation(-2, -16, 9)
+		},
+		qbu88 = {
+			position = Vector3(0, 3, 5),
+			rotation = Rotation(88, 100, 28)
 		},
 		hk21 = {
 			position = Vector3(12, 0, 0)
@@ -1619,6 +1647,10 @@ function TweakDataVR:init(tweak_data)
 				grip = "idle_wpn",
 				position = Vector3(-1, 35, 0)
 			},
+			qbu88 = {
+				grip = "idle_wpn",
+				position = Vector3(-1, 35, 0)
+			},
 			tti = {
 				grip = "idle_wpn",
 				position = Vector3(0, 26.5, 2)
@@ -1754,6 +1786,9 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(0, 24, 0)
 			},
 			l85a2 = {
+				position = Vector3(0, 19, -4)
+			},
+			groza = {
 				position = Vector3(0, 19, -4)
 			},
 			contraband = {
@@ -3645,6 +3680,41 @@ function TweakDataVR:init(tweak_data)
 				}
 			}
 		},
+		pm9 = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_pm9_mag_slide_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, 0, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_pm9_mag_slide_in",
+					visible = true,
+					pos = Vector3(0, 0, -10)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, 0, -4.5)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, 0, -4)
+				},
+				{
+					time = 0.6,
+					sound = "wp_pm9_lever_release",
+					pos = Vector3()
+				}
+			}
+		},
 		sr2 = {
 			start = {
 				{
@@ -5216,6 +5286,46 @@ function TweakDataVR:init(tweak_data)
 				}
 			}
 		},
+		groza = {
+			start = {
+				{
+					time = 0,
+					sound = "groza_mag_out"
+				},
+				{
+					time = 0.02,
+					pos = Vector3(0, 4, -1),
+					rot = Rotation(0, 30, 0)
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, 10, -20),
+					rot = Rotation(0, 60, 0)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "groza_mag_in",
+					visible = true,
+					pos = Vector3(0, 0, -20),
+					rot = Rotation()
+				},
+				{
+					time = 0.3,
+					pos = Vector3(0, 4, -1),
+					rot = Rotation(0, 30, 0)
+				},
+				{
+					time = 0.5,
+					sound = "groza_lever_release",
+					pos = Vector3(),
+					rot = Rotation()
+				}
+			}
+		},
 		asval = {
 			start = {
 				{
@@ -5388,6 +5498,28 @@ function TweakDataVR:init(tweak_data)
 					time = 0.5,
 					sound = "contraband_grenade_push_handle",
 					pos = Vector3()
+				}
+			}
+		},
+		groza_underbarrel = {
+			start = {
+				{
+					time = 0,
+					sound = "groza_underbarrel_shell_in"
+				},
+				{
+					drop_mag = true,
+					time = 0.03,
+					visible = false,
+					pos = Vector3(0, 0, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "groza_underbarrel_shell_in",
+					visible = true,
+					pos = Vector3(0, 0, -20)
 				}
 			}
 		},
@@ -6769,6 +6901,41 @@ function TweakDataVR:init(tweak_data)
 					sound = "wp_vityaz_lever_release",
 					pos = Vector3(),
 					rot = Rotation()
+				}
+			}
+		},
+		x_pm9 = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_pm9_mag_slide_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, 0, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_pm9_mag_slide_in",
+					visible = true,
+					pos = Vector3(0, 0, -10)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, 0, -4.5)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, 0, -4)
+				},
+				{
+					time = 0.6,
+					sound = "wp_pm9_lever_release",
+					pos = Vector3()
 				}
 			}
 		},
@@ -8596,6 +8763,46 @@ function TweakDataVR:init(tweak_data)
 					time = 0.6,
 					sound = "wp_m70_pull_lever_01",
 					pos = Vector3()
+				}
+			}
+		},
+		qbu88 = {
+			start = {
+				{
+					time = 0,
+					sound = "qbu88_mag_out"
+				},
+				{
+					time = 0.02,
+					pos = Vector3(0, 4, -1),
+					rot = Rotation(0, 30, 0)
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, 10, -20),
+					rot = Rotation(0, 60, 0)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "qbu88_mag_in",
+					visible = true,
+					pos = Vector3(0, 0, -20),
+					rot = Rotation()
+				},
+				{
+					time = 0.3,
+					pos = Vector3(0, 4, -1),
+					rot = Rotation(0, 30, 0)
+				},
+				{
+					time = 0.5,
+					sound = "qbu88_lever_release",
+					pos = Vector3(),
+					rot = Rotation()
 				}
 			}
 		},

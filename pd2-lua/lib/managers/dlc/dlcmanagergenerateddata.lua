@@ -114,6 +114,14 @@ function GenericDLCManager:has_pgo()
 	return self:is_dlc_unlocked("pgo")
 end
 
+function GenericDLCManager:has_saco()
+	return self:is_dlc_unlocked("saco")
+end
+
+function GenericDLCManager:has_sawp()
+	return self:is_dlc_unlocked("sawp")
+end
+
 function GenericDLCManager:has_scm()
 	return self:is_dlc_unlocked("scm")
 end
@@ -325,6 +333,15 @@ function WINDLCManager:init_generated()
 		app_id = "1449440",
 		no_install = true,
 		webpage = "https://ovk.af/FEXTP3YB"
+	}
+	Global.dlc_manager.all_dlc_data.saco = {
+		app_id = "1619070",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.sawp = {
+		app_id = "1619070",
+		no_install = true,
+		webpage = "https://ovk.af/SmugglerPack2YBS"
 	}
 	Global.dlc_manager.all_dlc_data.scm = {
 		app_id = "218620",

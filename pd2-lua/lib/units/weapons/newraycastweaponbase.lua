@@ -223,6 +223,15 @@ function NewRaycastWeaponBase:clbk_assembly_complete(clbk, parts, blueprint)
 		end
 	end
 
+	local underbarrel_part = managers.weapon_factory:get_part_from_weapon_by_type("underbarrel", self._parts)
+	local underbarrel_ammo_data = managers.weapon_factory:get_part_data_type_from_weapon_by_type("underbarrel_ammo", "custom_stats", self._parts)
+
+	if underbarrel_part and alive(underbarrel_part.unit) and underbarrel_part.unit:base() and underbarrel_part.unit:base().set_launcher_projectile and underbarrel_ammo_data then
+		local launcher_grenade = underbarrel_ammo_data.launcher_grenade
+
+		underbarrel_part.unit:base():set_launcher_projectile(launcher_grenade)
+	end
+
 	self:_apply_cosmetics(clbk or function ()
 	end)
 	self:apply_texture_switches()
