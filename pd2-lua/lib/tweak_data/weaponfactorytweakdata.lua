@@ -977,7 +977,7 @@ function WeaponFactoryTweakData:_init_sights()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_smg_pm9 = {
-				translation = Vector3(0.9, 5, -5),
+				translation = Vector3(0.2, -2, -5.3),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_desertfox = {
@@ -38763,7 +38763,7 @@ function WeaponFactoryTweakData:_init_varmods()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_qbu88 = {
-				translation = Vector3(-2.83, -6, -9.65),
+				translation = Vector3(-0, -6, 0.25),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_sbl = {

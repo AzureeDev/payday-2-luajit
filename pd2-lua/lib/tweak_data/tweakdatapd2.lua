@@ -698,9 +698,9 @@ function TweakData:_init_pd2()
 		}
 	}
 	self.hud_icons.electric_grenade = {
-		texture = "guis/textures/pd2/equipment_02",
+		texture = "guis/dlcs/sawp/textures/pd2/equipment_sawp",
 		texture_rect = {
-			32,
+			0,
 			0,
 			32,
 			32

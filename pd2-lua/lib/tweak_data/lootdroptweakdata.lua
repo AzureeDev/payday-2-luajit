@@ -1788,6 +1788,11 @@ function LootDropTweakData:init(tweak_data)
 	}
 
 	self:init_generated(tweak_data)
+
+	if self.global_values.srtr then
+		self.global_values.srtr.unique_lock_icon = "guis/textures/pd2/blackmarket/money_lock"
+	end
+
 	self:_create_global_value_list_map()
 end
 

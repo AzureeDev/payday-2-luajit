@@ -8274,4 +8274,20 @@ function DLCTweakData:init(tweak_data)
 	self.sawp_grenade.content.upgrades = {
 		"wpn_gre_electric"
 	}
+	self.srtr = {
+		dlc = "has_srtr_or_srtr2",
+		content = {}
+	}
+	self.srtr.content.loot_global_value = "srtr"
+	self.srtr.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "boss"
+		},
+		{
+			type_items = "masks",
+			item_entry = "boss",
+			amount = 1
+		}
+	}
 end

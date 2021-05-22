@@ -3511,7 +3511,7 @@ end
 function PlayerTweakData:_init_pm9()
 	self.stances.pm9 = deep_clone(self.stances.default)
 	local pivot_shoulder_translation = Vector3(9.33471, 13.913, -0.0159556)
-	local pivot_shoulder_rotation = Rotation(0.001265, 0.00210433, -0.000365091)
+	local pivot_shoulder_rotation = Rotation(0, 0, -0)
 	local pivot_head_translation = Vector3(7, 16, 1.5)
 	local pivot_head_rotation = Rotation(0, 0, 0)
 	self.stances.pm9.standard.shoulders.translation = pivot_head_translation - pivot_shoulder_translation:rotate_with(pivot_shoulder_rotation:inverse()):rotate_with(pivot_head_rotation)
@@ -3521,8 +3521,8 @@ function PlayerTweakData:_init_pm9()
 	self.stances.pm9.standard.vel_overshot.yaw_pos = -9
 	self.stances.pm9.standard.vel_overshot.pitch_neg = -9
 	self.stances.pm9.standard.vel_overshot.pitch_pos = 9
-	local pivot_head_translation = Vector3(-1.89, 16, 4.5)
-	local pivot_head_rotation = Rotation(0, 0, 0)
+	local pivot_head_translation = Vector3(-1.3, 16, 4.5)
+	local pivot_head_rotation = Rotation(0.1, 0, 7)
 	self.stances.pm9.steelsight.shoulders.translation = pivot_head_translation - pivot_shoulder_translation:rotate_with(pivot_shoulder_rotation:inverse()):rotate_with(pivot_head_rotation)
 	self.stances.pm9.steelsight.shoulders.rotation = pivot_head_rotation * pivot_shoulder_rotation:inverse()
 	self.stances.pm9.steelsight.zoom_fov = false

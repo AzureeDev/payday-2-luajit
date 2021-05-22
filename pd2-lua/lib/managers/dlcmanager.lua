@@ -816,6 +816,10 @@ function GenericDLCManager:has_sawp_dlc_or_achievement(data)
 	return self:is_dlc_unlocked("sawp") or self:has_achievement(data)
 end
 
+function GenericDLCManager:has_srtr_or_srtr2()
+	return Global.dlc_manager.all_dlc_data.srtr and Global.dlc_manager.all_dlc_data.srtr.verified or Global.dlc_manager.all_dlc_data.srtr2 and Global.dlc_manager.all_dlc_data.srtr2.verified
+end
+
 function GenericDLCManager:has_parent_dlc(data)
 	return data and data.parent_dlc and self:is_dlc_unlocked(data.parent_dlc)
 end
@@ -2155,6 +2159,11 @@ function WINDLCManager:init()
 				ghm = {
 					app_id = "218620",
 					no_install = true
+				},
+				srtr2 = {
+					no_install = true,
+					app_id = "55230",
+					external = true
 				}
 			}
 		}

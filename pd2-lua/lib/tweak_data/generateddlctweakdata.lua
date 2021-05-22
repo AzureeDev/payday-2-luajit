@@ -1037,6 +1037,12 @@ function DLCTweakData:init_generated()
 	}
 	self.sms_bundle.content.loot_global_value = "sms"
 	self.sms_bundle.content.loot_drops = {}
+	self.srtr_bundle = {
+		dlc = "has_srtr",
+		content = {}
+	}
+	self.srtr_bundle.content.loot_global_value = "srtr"
+	self.srtr_bundle.content.loot_drops = {}
 	self.sus_bundle = {
 		dlc = "has_sus",
 		content = {}

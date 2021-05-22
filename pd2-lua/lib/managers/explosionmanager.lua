@@ -463,7 +463,7 @@ function ExplosionManager:_detect_hits(params)
 	return results
 end
 
-function ExplosionManager:_damage_characters(characters, params, variant, damage_func_name)
+function ExplosionManager:_damage_characters(detect_results, params, variant, damage_func_name)
 	local user_unit = params.user
 	local owner = params.owner
 	local damage = params.damage
@@ -493,10 +493,20 @@ function ExplosionManager:_damage_characters(characters, params, variant, damage
 		}
 	}
 	local criminal_names = CriminalsManager.character_names()
-	local dir, len, type, count_table = nil
 
-	for key, unit in pairs(characters) do
-		dir = unit:position()
+	local function get_first_body_hit(bodies_hit)
+		for _, hit_body in ipairs(bodies_hit or {}) do
+			if alive(hit_body) then
+				return hit_body
+			end
+		end
+	end
+
+	local dir, len, type, count_table, hit_body = nil
+
+	for key, unit in pairs(detect_results.characters_hit) do
+		hit_body = get_first_body_hit(detect_results.bodies_hit[key])
+		dir = hit_body and hit_body:center_of_mass() or alive(unit) and unit:position()
 		len = mvector3.direction(dir, hit_pos, dir)
 		local can_damage = not verify_callback
 
@@ -504,7 +514,7 @@ function ExplosionManager:_damage_characters(characters, params, variant, damage
 			can_damage = verify_callback(unit)
 		end
 
-		if can_damage then
+		if alive(unit) and can_damage then
 			if unit:character_damage()[damage_func_name] then
 				local action_data = {
 					variant = variant or "explosion"
@@ -530,7 +540,7 @@ function ExplosionManager:_damage_characters(characters, params, variant, damage
 			end
 		end
 
-		if unit:base() and unit:base()._tweak_table then
+		if alive(unit) and unit:base() and unit:base()._tweak_table then
 			type = unit:base()._tweak_table
 
 			if table.contains(criminal_names, CriminalsManager.convert_new_to_old_character_workname(type)) then
@@ -565,6 +575,32 @@ function ExplosionManager:_damage_characters(characters, params, variant, damage
 	return results
 end
 
+function ExplosionManager:_damage_bodies(detect_results, params)
+	local user_unit = params.user
+	local hit_pos = params.hit_pos
+	local damage = params.damage
+	local range = params.range
+	local curve_pow = params.curve_pow
+
+	for _, bodies in pairs(detect_results.bodies_hit) do
+		for _, hit_body in ipairs(bodies) do
+			local apply_dmg = alive(hit_body) and hit_body:extension() and hit_body:extension().damage
+
+			if apply_dmg then
+				local dir = hit_body:center_of_mass()
+				local len = mvector3.direction(dir, hit_pos, dir)
+				local prop_damage = damage * math.pow(math.clamp(1 - len / range, 0, 1), curve_pow)
+
+				if 1 - len / range < -5 then
+					prop_damage = math.max(prop_damage, 1)
+				end
+
+				self:_apply_body_damage(true, hit_body, user_unit, dir, prop_damage)
+			end
+		end
+	end
+end
+
 function ExplosionManager:detect_and_tase(params)
 	local user_unit = params.user
 	local owner = params.owner
@@ -588,7 +624,7 @@ function ExplosionManager:detect_and_tase(params)
 	})
 
 	local detect_results = self:_detect_hits(params)
-	local damage_results = self:_damage_characters(detect_results.characters_hit, params, tase_strength, "damage_tase", verify_callback)
+	local damage_results = self:_damage_characters(detect_results, params, tase_strength, "damage_tase", verify_callback)
 	local results = {}
 
 	if owner then
@@ -625,7 +661,7 @@ function ExplosionManager:detect_and_stun(params)
 	})
 
 	local detect_results = self:_detect_hits(params)
-	local damage_results = self:_damage_characters(detect_results.characters_hit, params, "stun", "stun_hit", verify_callback)
+	local damage_results = self:_damage_characters(detect_results, params, "stun", "stun_hit", verify_callback)
 	local results = {}
 
 	if owner then
@@ -682,7 +718,10 @@ function ExplosionManager:detect_and_give_dmg(params)
 	})
 
 	local detect_results = self:_detect_hits(params)
-	local damage_results = self:_damage_characters(detect_results.characters_hit, params)
+
+	self:_damage_bodies(detect_results, params)
+
+	local damage_results = self:_damage_characters(detect_results, params)
 	local results = {}
 
 	if owner then

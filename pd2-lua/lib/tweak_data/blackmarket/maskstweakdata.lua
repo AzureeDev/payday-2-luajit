@@ -7509,6 +7509,108 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "in32",
 		texture_bundle_folder = "in32"
 	}
+	self.masks.boss = {
+		unit = "units/pd2_dlc_srtr/masks/msk_boss/msk_boss",
+		name_id = "bm_msk_boss",
+		pcs = {},
+		value = 0,
+		dlc = "srtr",
+		texture_bundle_folder = "srtr",
+		sort_number = 61,
+		type = "glasses",
+		skip_mask_on_sequence = true,
+		global_value = "srtr",
+		offsets = {
+			sydney = {
+				Vector3(0, -0.399472, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			dragon = {
+				Vector3(0, 1.15, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			female_1 = {
+				Vector3(0, -0.399472, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			hoxton = {
+				Vector3(0, 0.792991, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			sokol = {
+				Vector3(0, -0.399472, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			wolf = {
+				Vector3(0, -0.399472, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			bodhi = {
+				Vector3(0, 1.15073, -0.757211),
+				Rotation(0, 3.13382, 0)
+			},
+			jimmy = {
+				Vector3(0, 1.262472, -0.16098),
+				Rotation(-0, 2.275, -0)
+			},
+			max = {
+				Vector3(0, 0.673745, -0.637965),
+				Rotation(0, 2.27524, 0)
+			},
+			dallas = {
+				Vector3(0, 0.673745, -0.637965),
+				Rotation(0, 3.13382, 0)
+			},
+			dragan = {
+				Vector3(0, 0.792991, -0.280226),
+				Rotation(0, 2.27524, 0)
+			},
+			wild = {
+				Vector3(0, 0.196472, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			old_hoxton = {
+				Vector3(0, 0.316006, -0.637965),
+				Rotation(0, 2.27524, 0)
+			},
+			chains = {
+				Vector3(0, 0.792991, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			ecp_female = {
+				Vector3(0, -0.399472, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			ecp_male = {
+				Vector3(0, 0.316006, -0.637965),
+				Rotation(0, 3.99239, 0)
+			},
+			jowi = {
+				Vector3(0, 0.792991, -0.876458),
+				Rotation(0, 3.99239, 0)
+			},
+			chico = {
+				Vector3(0, 0.792991, -0.637965),
+				Rotation(0, 3.13382, 0)
+			},
+			myh = {
+				Vector3(0, 0.912237, -1.59194),
+				Rotation(0, 6.56811, 0)
+			},
+			jacket = {
+				Vector3(0, 0.912237, -0.16098),
+				Rotation(0, 3.99239, 0)
+			},
+			bonnie = {
+				Vector3(0, 0.5545, -0.16098),
+				Rotation(-0, -0, -0)
+			},
+			joy = {
+				Vector3(0, 0.554498, -0.637965),
+				Rotation(0, 2.27524, 0)
+			}
+		}
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.masks) do

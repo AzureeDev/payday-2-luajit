@@ -150,6 +150,10 @@ function GenericDLCManager:has_sms()
 	return self:is_dlc_unlocked("sms")
 end
 
+function GenericDLCManager:has_srtr()
+	return self:is_dlc_unlocked("srtr")
+end
+
 function GenericDLCManager:has_sus()
 	return self:is_dlc_unlocked("sus")
 end
@@ -370,6 +374,11 @@ function WINDLCManager:init_generated()
 	Global.dlc_manager.all_dlc_data.sms = {
 		app_id = "218620",
 		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.srtr = {
+		app_id = "978300",
+		no_install = true,
+		external = true
 	}
 	Global.dlc_manager.all_dlc_data.sus = {
 		app_id = "218620",
