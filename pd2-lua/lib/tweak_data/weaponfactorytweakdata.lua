@@ -15542,6 +15542,10 @@ function WeaponFactoryTweakData:_init_g3()
 			concealment = 4,
 			recoil = 5
 		},
+		custom_stats = {
+			ammo_pickup_max_mul = 2.8,
+			ammo_pickup_min_mul = 2
+		},
 		forbids = {
 			"wpn_fps_ammo_type"
 		},
@@ -18358,6 +18362,8 @@ function WeaponFactoryTweakData:create_bonuses(tweak_data, weapon_skins)
 				weapon = {
 					"b92fs",
 					"famas",
+					"g26",
+					"jowi",
 					"new_raging_bull",
 					"ppk"
 				}
@@ -18442,6 +18448,10 @@ function WeaponFactoryTweakData:create_ammunition()
 		stats = {
 			value = 5,
 			damage = 15
+		},
+		custom_stats = {
+			damage_near_mul = 1,
+			damage_far_mul = 1
 		}
 	}
 
@@ -18780,11 +18790,10 @@ function WeaponFactoryTweakData:_init_g26()
 			40
 		},
 		stats = {
-			spread = 1,
 			value = 4,
+			recoil = -2,
 			damage = 1,
-			concealment = -1,
-			recoil = -2
+			spread = 1
 		},
 		animations = {
 			fire = "recoil",
@@ -18819,11 +18828,9 @@ function WeaponFactoryTweakData:_init_g26()
 			40
 		},
 		stats = {
-			spread = 0,
 			value = 7,
-			damage = 1,
-			concealment = -1,
-			recoil = 1
+			recoil = 1,
+			spread = 0
 		}
 	}
 	self.parts.wpn_fps_pis_g26_body_stardard = {
@@ -18906,8 +18913,8 @@ function WeaponFactoryTweakData:_init_g26()
 			spread = 0,
 			value = 6,
 			damage = 0,
-			concealment = -1,
-			recoil = 2
+			concealment = 0,
+			recoil = 1
 		},
 		animations = {
 			reload_not_empty = "reload_not_empty",
@@ -20563,7 +20570,7 @@ function WeaponFactoryTweakData:_init_sterling()
 			prefix = "g_bullet_"
 		},
 		stats = {
-			extra_ammo = 5,
+			extra_ammo = 3,
 			value = 1,
 			concealment = -2
 		},
@@ -20603,7 +20610,7 @@ function WeaponFactoryTweakData:_init_sterling()
 			prefix = "g_bullet_"
 		},
 		stats = {
-			extra_ammo = -5,
+			extra_ammo = -2,
 			value = 1,
 			concealment = 2
 		},
@@ -43281,14 +43288,14 @@ function WeaponFactoryTweakData:_init_x_sterling()
 			},
 			wpn_fps_smg_sterling_m_short = {
 				stats = {
-					extra_ammo = -10,
+					extra_ammo = -4,
 					value = 1,
 					concealment = 2
 				}
 			},
 			wpn_fps_smg_sterling_m_long = {
 				stats = {
-					extra_ammo = 10,
+					extra_ammo = 6,
 					value = 1,
 					concealment = -2
 				}

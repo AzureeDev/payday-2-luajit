@@ -1394,6 +1394,7 @@ function LevelsTweakData:init()
 			secondary = "wpn_fps_pis_g17",
 			armor = "level_1",
 			deployable = "none",
+			body_bags = 1,
 			primary = "wpn_fps_ass_amcar",
 			primary_mods = {
 				"wpn_fps_upg_ns_ass_smg_small"
@@ -2299,6 +2300,83 @@ function LevelsTweakData:init()
 			}
 		}
 	}
+	self.sand = {
+		name_id = "heist_sand_hl",
+		briefing_id = "heist_sand_briefing",
+		briefing_dialog = "Play_loc_sand_brf",
+		world_name = "narratives/jiu/sand",
+		intro_event = "Play_loc_sand_intro",
+		outro_event = {
+			loud = "Play_loc_sand_end_loud",
+			stealth = "Play_loc_sand_end_stealth"
+		},
+		music = "heist",
+		package = "packages/job_sand",
+		cube = "cube_apply_heist_bank",
+		block_AIs = {
+			old_hoxton = true
+		},
+		ai_group_type = america,
+		narrator = "locke",
+		ghost_bonus = 0.15,
+		load_screen = "guis/dlcs/sand/textures/loading/job_sand_01_df",
+		teams = {
+			criminal1 = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					converted_enemy = true,
+					escort = true
+				}
+			},
+			law1 = {
+				foes = {
+					converted_enemy = true,
+					criminal1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			},
+			mobster1 = {
+				foes = {
+					converted_enemy = true,
+					law1 = true,
+					criminal1 = true
+				},
+				friends = {}
+			},
+			converted_enemy = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					criminal1 = true,
+					escort = true
+				}
+			},
+			neutral1 = {
+				foes = {},
+				friends = {}
+			},
+			hacked_turret = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			},
+			escort = {
+				foes = {},
+				friends = {
+					converted_enemy = true,
+					criminal1 = true
+				}
+			}
+		}
+	}
 	self._level_index = {
 		"welcome_to_the_jungle_1",
 		"welcome_to_the_jungle_1_night",
@@ -2420,7 +2498,8 @@ function LevelsTweakData:init()
 		"bex",
 		"pex",
 		"fex",
-		"chas"
+		"chas",
+		"sand"
 	}
 
 	if SystemInfo:distribution() == Idstring("STEAM") then
@@ -2807,4 +2886,21 @@ function LevelsTweakData:get_ai_group_type()
 	print("[LevelsTweakData:get_ai_group_type] group is not defined for this level, fallback on default")
 
 	return self.ai_groups.default
+end
+
+function LevelsTweakData:get_narrator_prefix(narrator)
+	if not narrator then
+		local level_data = Global.level_data and Global.level_data.level_id and self[Global.level_data.level_id]
+
+		if level_data then
+			narrator = level_data.narrator
+		end
+	end
+
+	local narrator_codes = {
+		bain = "ban",
+		locke = "loc"
+	}
+
+	return narrator_codes[narrator] or "ban"
 end

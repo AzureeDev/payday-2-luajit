@@ -2599,8 +2599,8 @@ function PlayerTweakData:_init_b682()
 	self.stances.b682.standard.vel_overshot.yaw_pos = -14
 	self.stances.b682.standard.vel_overshot.pitch_neg = -14
 	self.stances.b682.standard.vel_overshot.pitch_pos = 14
-	local pivot_head_translation = Vector3(0, 24.8, -0.5)
-	local pivot_head_rotation = Rotation(0, 0.3, 0)
+	local pivot_head_translation = Vector3(0, 20, -1.5)
+	local pivot_head_rotation = Rotation(0, 1, 0)
 	self.stances.b682.steelsight.shoulders.translation = pivot_head_translation - pivot_shoulder_translation:rotate_with(pivot_shoulder_rotation:inverse()):rotate_with(pivot_head_rotation)
 	self.stances.b682.steelsight.shoulders.rotation = pivot_head_rotation * pivot_shoulder_rotation:inverse()
 	self.stances.b682.steelsight.vel_overshot.pivot = pivot_shoulder_translation + Vector3(0, -30, 0)

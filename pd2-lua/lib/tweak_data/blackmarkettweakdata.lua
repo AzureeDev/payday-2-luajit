@@ -644,6 +644,15 @@ function BlackMarketTweakData:_init_xp()
 		10,
 		40
 	}
+	self.xp.xp15 = {
+		name_id = "bm_exp_xp15",
+		value_id = "xp15",
+		multiplier = 1,
+		pcs = {
+			15,
+			40
+		}
+	}
 	self.xp.xp20 = {
 		name_id = "bm_exp_xp20",
 		value_id = "xp20",

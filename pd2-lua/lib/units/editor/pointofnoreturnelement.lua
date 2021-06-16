@@ -5,8 +5,10 @@ PointOfNoReturnElement.LINK_ELEMENTS = {
 
 function PointOfNoReturnElement:init(unit)
 	PointOfNoReturnElement.super.init(self, unit)
+	self:_add_tweak_options()
 
 	self._hed.elements = {}
+	self._hed.tweak_id = "noreturn"
 	self._hed.time_easy = 300
 	self._hed.time_normal = 240
 	self._hed.time_hard = 120
@@ -17,6 +19,7 @@ function PointOfNoReturnElement:init(unit)
 	self._hed.time_sm_wish = nil
 
 	table.insert(self._save_values, "elements")
+	table.insert(self._save_values, "tweak_id")
 	table.insert(self._save_values, "time_easy")
 	table.insert(self._save_values, "time_normal")
 	table.insert(self._save_values, "time_hard")
@@ -39,6 +42,34 @@ function PointOfNoReturnElement:post_init(...)
 	end
 end
 
+function PointOfNoReturnElement:_add_tweak_options()
+	self._tweak_options = table.map_keys(tweak_data.point_of_no_returns, function (x, y)
+		if x == "noreturn" then
+			return true
+		end
+
+		if y == "noreturn" then
+			return false
+		end
+
+		return x < y
+	end)
+end
+
+function PointOfNoReturnElement:_set_text()
+	local data = tweak_data.point_of_no_returns[self._hed.tweak_id]
+
+	self._text:set_value(managers.localization:text(data.text_id))
+end
+
+function PointOfNoReturnElement:set_element_data(params, ...)
+	PointOfNoReturnElement.super.set_element_data(self, params, ...)
+
+	if params.value == "tweak_id" then
+		self:_set_text()
+	end
+end
+
 function PointOfNoReturnElement:_build_panel(panel, panel_sizer)
 	self:_create_panel()
 
@@ -49,6 +80,17 @@ function PointOfNoReturnElement:_build_panel(panel, panel_sizer)
 	}
 
 	self:_build_add_remove_unit_from_list(panel, panel_sizer, self._hed.elements, nil, exact_names)
+	self:_build_value_combobox(panel, panel_sizer, "tweak_id", self._tweak_options, "Select an id from the combobox")
+
+	local data = tweak_data.point_of_no_returns[self._hed.tweak_id]
+	local text_sizer = EWS:BoxSizer("HORIZONTAL")
+
+	text_sizer:add(EWS:StaticText(panel, "Text: ", "", ""), 1, 2, "ALIGN_CENTER_VERTICAL,RIGHT,EXPAND")
+
+	self._text = EWS:StaticText(panel, managers.localization:text(data.text_id), "", "")
+
+	text_sizer:add(self._text, 2, 2, "RIGHT,TOP,EXPAND")
+	panel_sizer:add(text_sizer, 0, 4, "EXPAND,BOTTOM")
 
 	local time_params_easy = {
 		name = "Time left on easy:",

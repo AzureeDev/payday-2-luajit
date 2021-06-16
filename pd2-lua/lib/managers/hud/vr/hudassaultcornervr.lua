@@ -37,14 +37,18 @@ function HUDAssaultCornerVR:init(hud, full_hud, tweak_hud)
 	self._watch_point_of_no_return_timer:set_center(watch_panel:w() / 2, watch_panel:h() / 2)
 end
 
-function HUDAssaultCornerVR:show_point_of_no_return_timer()
+function HUDAssaultCornerVR:show_point_of_no_return_timer(id)
 	local delay_time = self._assault and 1.2 or 0
 
 	self:_end_assault()
-	self._hud_panel:child("point_of_no_return_panel"):stop()
-	self._hud_panel:child("point_of_no_return_panel"):animate(callback(self, self, "_animate_show_noreturn"), delay_time)
+	self:_update_noreturn(id)
+
+	local point_of_no_return_panel = self._hud_panel:child("point_of_no_return_panel")
+
+	point_of_no_return_panel:stop()
+	point_of_no_return_panel:animate(callback(self, self, "_animate_show_noreturn"), delay_time)
 	self._watch_point_of_no_return_timer:set_visible(true)
-	self:_set_feedback_color(self._noreturn_color)
+	self:_set_feedback_color(self._noreturn_data.color)
 
 	self._point_of_no_return = true
 
@@ -77,10 +81,12 @@ function HUDAssaultCornerVR:flash_point_of_no_return_timer()
 
 		while t < 0.5 do
 			t = t + coroutine.yield()
+			local color = self._noreturn_data.color or Color(1, 1, 0, 0)
+			local flash_color = self._noreturn_data.flash_color or Color(1, 1, 0.8, 0.2)
 			local n = 1 - math.sin(t * 180)
-			local r = math.lerp(1 or self._noreturn_color.r, 1, n)
-			local g = math.lerp(0 or self._noreturn_color.g, 0.8, n)
-			local b = math.lerp(0 or self._noreturn_color.b, 0.2, n)
+			local r = math.lerp(color.r, flash_color.r, n)
+			local g = math.lerp(color.g, flash_color.g, n)
+			local b = math.lerp(color.b, flash_color.b, n)
 
 			o:set_color(Color(r, g, b))
 			o:set_font_size(math.lerp(26, 32, n))
@@ -109,7 +115,7 @@ function HUDAssaultCornerVR:_animate_show_noreturn(point_of_no_return_panel, del
 	self._noreturn_bg_box:stop()
 	self._noreturn_bg_box:animate(callback(nil, _G, "HUDBGBox_animate_open_left"), 0.75, 242, open_done, {
 		attention_forever = true,
-		attention_color = self._casing_color
+		attention_color = self._noreturn_data.attention_color
 	})
 end
 

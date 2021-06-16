@@ -74,6 +74,10 @@ function GenericDLCManager:has_ja21()
 	return self:is_dlc_unlocked("ja21")
 end
 
+function GenericDLCManager:has_jun21()
+	return self:is_dlc_unlocked("jun21")
+end
+
 function GenericDLCManager:has_mar21()
 	return self:is_dlc_unlocked("mar21")
 end
@@ -118,6 +122,10 @@ function GenericDLCManager:has_saco()
 	return self:is_dlc_unlocked("saco")
 end
 
+function GenericDLCManager:has_sand()
+	return self:is_dlc_unlocked("sand")
+end
+
 function GenericDLCManager:has_sawp()
 	return self:is_dlc_unlocked("sawp")
 end
@@ -128,6 +136,10 @@ end
 
 function GenericDLCManager:has_sdm()
 	return self:is_dlc_unlocked("sdm")
+end
+
+function GenericDLCManager:has_sdtp()
+	return self:is_dlc_unlocked("sdtp")
 end
 
 function GenericDLCManager:has_sft()
@@ -291,6 +303,10 @@ function WINDLCManager:init_generated()
 		app_id = "218620",
 		no_install = true
 	}
+	Global.dlc_manager.all_dlc_data.jun21 = {
+		app_id = "218620",
+		no_install = true
+	}
 	Global.dlc_manager.all_dlc_data.mar21 = {
 		app_id = "218620",
 		no_install = true
@@ -342,6 +358,11 @@ function WINDLCManager:init_generated()
 		app_id = "1619070",
 		no_install = true
 	}
+	Global.dlc_manager.all_dlc_data.sand = {
+		app_id = "1654480",
+		no_install = true,
+		webpage = "https://ovk.af/UkrainianPrisonerYBS"
+	}
 	Global.dlc_manager.all_dlc_data.sawp = {
 		app_id = "1619070",
 		no_install = true,
@@ -354,6 +375,11 @@ function WINDLCManager:init_generated()
 	Global.dlc_manager.all_dlc_data.sdm = {
 		app_id = "218620",
 		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.sdtp = {
+		app_id = "1654481",
+		no_install = true,
+		webpage = "https://ovk.af/UkrainianPrisonerYBS2"
 	}
 	Global.dlc_manager.all_dlc_data.sft = {
 		app_id = "218620",

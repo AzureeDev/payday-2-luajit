@@ -196,6 +196,9 @@ CopMovement._gadgets = {
 	},
 	instrument_violin = {
 		Idstring("units/pd2_dlc_bex/props/bex_prop_instruments/bex_prop_instrument_violin")
+	},
+	cake = {
+		Idstring("units/pd2_dlc_sand/props/sand_interactable_cake/sand_interactable_cake_piece")
 	}
 }
 local action_variants = {
@@ -297,6 +300,7 @@ action_variants.escort_ralph = action_variants.civilian
 action_variants.escort_undercover = clone(action_variants.civilian)
 action_variants.escort_undercover.walk = EscortWithSuitcaseActionWalk
 action_variants.escort_criminal = action_variants.civilian
+action_variants.escort_sand = action_variants.civilian
 action_variants.team_ai = clone(security_variant)
 action_variants.team_ai.walk = CriminalActionWalk
 action_variants.german = action_variants.team_ai

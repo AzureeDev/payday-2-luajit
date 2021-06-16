@@ -1665,6 +1665,60 @@ function HudIconsTweakData:init()
 			32
 		}
 	}
+	self.equipment_documents = {
+		texture = "guis/dlcs/sand/textures/pd2/hud_pickups_sand",
+		texture_rect = {
+			0,
+			0,
+			32,
+			32
+		}
+	}
+	self.equipment_syringe = {
+		texture = "guis/dlcs/sand/textures/pd2/hud_pickups_sand",
+		texture_rect = {
+			32,
+			0,
+			32,
+			32
+		}
+	}
+	self.equipment_notepad = {
+		texture = "guis/dlcs/sand/textures/pd2/hud_pickups_sand",
+		texture_rect = {
+			64,
+			0,
+			32,
+			32
+		}
+	}
+	self.equipment_cleaning_product = {
+		texture = "guis/dlcs/sand/textures/pd2/hud_pickups_sand",
+		texture_rect = {
+			0,
+			32,
+			32,
+			32
+		}
+	}
+	self.equipment_defibrillator = {
+		texture = "guis/dlcs/sand/textures/pd2/hud_pickups_sand",
+		texture_rect = {
+			32,
+			32,
+			32,
+			32
+		}
+	}
+	self.equipment_gas_canister = {
+		texture = "guis/dlcs/sand/textures/pd2/hud_pickups_sand",
+		texture_rect = {
+			64,
+			32,
+			32,
+			32
+		}
+	}
 	self.interaction_free = {
 		texture = "guis/textures/hud_icons",
 		texture_rect = {
@@ -11224,6 +11278,7 @@ function HudIconsTweakData:init()
 	self.sidebar_crimespree = self:create_next_icon(sidebar_atlas)
 	self.sidebar_filters = self:create_next_icon(sidebar_atlas)
 	self.sidebar_question = self:create_next_icon(sidebar_atlas)
+	self.sidebar_quickplay = self:create_next_icon(sidebar_atlas)
 	self.sidebar_skirmish = {
 		texture = "guis/dlcs/skm/textures/pd2/crimenet/crimenet_sidebar_icon_skm",
 		texture_rect = {
@@ -14014,6 +14069,105 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
+	self.C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D0 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			89,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D1 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			2,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D2 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			89,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D3 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			176,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D4 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			2,
+			89,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D5 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			89,
+			176,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D6 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			263,
+			350,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_AllDiffs_OD_D6 = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			2,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_JustToCheese = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			2,
+			2,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_Thinking = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			176,
+			263,
+			85,
+			85
+		}
+	}
+	self.C_JiuFeng_H_UkrainianPrisoner_ThisCallForARound = {
+		texture = "guis/dlcs/trk/atlases/achievement_atlas_sand",
+		texture_rect = {
+			2,
+			350,
+			85,
+			85
+		}
+	}
 	self.C_Bain_H_Arena_Holdout_3 = {
 		texture = "guis/dlcs/trk/atlases/achievement_atlas_shl",
 		texture_rect = {
@@ -14338,7 +14492,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.Other_H_All_Infamy_50 = {
+	self.C_All_H_All_Infamy_50 = {
 		texture = "guis/dlcs/trk/atlases/inf_achievement",
 		texture_rect = {
 			89,
@@ -14347,7 +14501,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.Other_H_All_Infamy_75 = {
+	self.C_All_H_All_Infamy_75 = {
 		texture = "guis/dlcs/trk/atlases/inf_achievement",
 		texture_rect = {
 			176,
@@ -14356,7 +14510,7 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
-	self.Other_H_All_Infamy_C = {
+	self.C_All_H_All_Infamy_C = {
 		texture = "guis/dlcs/trk/atlases/inf_achievement",
 		texture_rect = {
 			2,

@@ -2177,6 +2177,8 @@ end
 
 function WINDLCManager:_init_promoted_dlc_list()
 	self._promoted_dlc_list = {
+		"sand",
+		"sdtp",
 		"sawp",
 		"chas",
 		"fawp",

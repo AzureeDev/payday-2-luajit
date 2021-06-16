@@ -4370,6 +4370,7 @@ function init_auto_generated_achievement_data(tags)
 			progress = true,
 			tags = {
 				tags.progress.generic,
+				tags.difficulty.normal,
 				tags.tactics.stealth,
 				tags.tactics.killer,
 				tags.inventory.mask,
@@ -8383,26 +8384,29 @@ function init_auto_generated_achievement_data(tags)
 		},
 		ignominy_100 = {
 			ladder = "Infamy",
-			sort_name = "Other_H_All_Infamy_C",
-			icon_id = "Other_H_All_Infamy_C",
+			sort_name = "C_All_H_All_Infamy_C",
+			icon_id = "C_All_H_All_Infamy_C",
 			tags = {
-				tags.progress.leveling
+				tags.progress.leveling,
+				tags.contracts.all
 			}
 		},
 		ignominy_50 = {
 			ladder = "Infamy",
-			sort_name = "Other_H_All_Infamy_50",
-			icon_id = "Other_H_All_Infamy_50",
+			sort_name = "C_All_H_All_Infamy_50",
+			icon_id = "C_All_H_All_Infamy_50",
 			tags = {
-				tags.progress.leveling
+				tags.progress.leveling,
+				tags.contracts.all
 			}
 		},
 		ignominy_75 = {
 			ladder = "Infamy",
-			sort_name = "Other_H_All_Infamy_75",
-			icon_id = "Other_H_All_Infamy_75",
+			sort_name = "C_All_H_All_Infamy_75",
+			icon_id = "C_All_H_All_Infamy_75",
 			tags = {
-				tags.progress.leveling
+				tags.progress.leveling,
+				tags.contracts.all
 			}
 		},
 		mex2_1 = {
@@ -9201,6 +9205,145 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.locke
 			}
 		},
+		sand_1 = {
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D0",
+			ladder = "H_UkrainianPrisoner",
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_10 = {
+			additional_id = true,
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_JustToCheese",
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_JustToCheese",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_11 = {
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_ThisCallForARound",
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_ThisCallForARound",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.inventory.weapon,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_2 = {
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D1",
+			ladder = "H_UkrainianPrisoner",
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_3 = {
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D2",
+			ladder = "H_UkrainianPrisoner",
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_4 = {
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D3",
+			ladder = "H_UkrainianPrisoner",
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_5 = {
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D4",
+			ladder = "H_UkrainianPrisoner",
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_6 = {
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D5",
+			ladder = "H_UkrainianPrisoner",
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_7 = {
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D6",
+			ladder = "H_UkrainianPrisoner",
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_8 = {
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_OD_D6",
+			ladder = "H_UkrainianPrisoner",
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
+		sand_9 = {
+			sort_name = "C_JiuFeng_H_UkrainianPrisoner_Thinking",
+			icon_id = "C_JiuFeng_H_UkrainianPrisoner_Thinking",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.jiufeng
+			}
+		},
 		sawp_1 = {
 			need_unlock_icons = true,
 			icon_id = "Other_H_All_Buzz",
@@ -9213,6 +9356,7 @@ function init_auto_generated_achievement_data(tags)
 				tags.difficulty.overkill,
 				tags.unlock.weapon,
 				tags.tactics.loud,
+				tags.tactics.stealth,
 				tags.tactics.killer,
 				tags.inventory.weapon,
 				tags.inventory.equipment
@@ -11073,6 +11217,7 @@ function init_auto_generated_achievement_data(tags)
 			tags = {
 				tags.progress.completion,
 				tags.difficulty.normal,
+				tags.unlock.outfit,
 				tags.tactics.loud,
 				tags.contracts.classic
 			}
@@ -14061,6 +14206,8 @@ function init_auto_generated_achievement_data(tags)
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
 				tags.contracts.bain,
 				tags.contracts.the_elephant
 			}
@@ -14130,6 +14277,7 @@ function init_auto_generated_achievement_data(tags)
 			tags = {
 				tags.progress.heisting,
 				tags.difficulty.death_wish,
+				tags.tactics.loud,
 				tags.contracts.the_dentist
 			}
 		},

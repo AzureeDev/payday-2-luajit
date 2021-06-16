@@ -2,11 +2,29 @@ local medium_font = tweak_data.menu.pd2_medium_font
 local medium_font_size = tweak_data.menu.pd2_medium_font_size
 SearchBoxGuiObject = SearchBoxGuiObject or class()
 
-function SearchBoxGuiObject:init(parent_panel, ws)
+function SearchBoxGuiObject:init(parent_panel, ws, current_search)
 	self._ws = ws
 	self._sorting_list = {}
 
 	self:set_searchbox(parent_panel)
+
+	if current_search then
+		self.text:set_text(current_search)
+
+		local n = utf8.len(current_search)
+
+		self.text:set_selection(n, n)
+	end
+
+	self.placeholder_text:set_visible(not self._focus and #self.text:text() == 0)
+end
+
+function SearchBoxGuiObject:destroy()
+	self._disconnect_callback = nil
+	self._finish_sorting_callback = nil
+
+	self:disconnect_search_input()
+	self.panel:parent():remove(self.panel)
 end
 
 function SearchBoxGuiObject:set_searchbox(parent_panel)
@@ -69,6 +87,10 @@ function SearchBoxGuiObject:register_callback(callback)
 	self._finish_sorting_callback = callback
 end
 
+function SearchBoxGuiObject:register_disconnect_callback(callback)
+	self._disconnect_callback = callback
+end
+
 function SearchBoxGuiObject:register_list(list)
 	self._sorting_list = list
 end
@@ -76,9 +98,25 @@ end
 function SearchBoxGuiObject:mouse_pressed(button, x, y)
 	if button == Idstring("0") and self.panel:inside(x, y) then
 		self:connect_search_input()
+
+		return true
 	elseif self._focus then
 		self:disconnect_search_input()
+
+		return true
 	end
+
+	return false
+end
+
+function SearchBoxGuiObject:mouse_moved(o, x, y)
+	local inside = self.panel:inside(x, y)
+
+	if self._focus and not inside or not self._focus and inside then
+		return true, "link"
+	end
+
+	return false, "arrow"
 end
 
 function SearchBoxGuiObject:build_and_apply_filter(search_string)
@@ -97,7 +135,9 @@ function SearchBoxGuiObject:build_and_apply_filter(search_string)
 		end
 	end
 
-	self._finish_sorting_callback(index_list, self.text:text())
+	if self._finish_sorting_callback then
+		self._finish_sorting_callback(index_list, self.text:text())
+	end
 end
 
 function SearchBoxGuiObject:input_focus()
@@ -125,6 +165,7 @@ function SearchBoxGuiObject:connect_search_input()
 	self._focus = true
 
 	self:update_caret()
+	managers.menu_component:post_event("menu_enter")
 end
 
 function SearchBoxGuiObject:disconnect_search_input()
@@ -140,6 +181,11 @@ function SearchBoxGuiObject:disconnect_search_input()
 		self._focus = nil
 
 		self:update_caret()
+		managers.menu_component:post_event("menu_exit")
+
+		if self._disconnect_callback then
+			self._disconnect_callback(self.text:text())
+		end
 	end
 end
 

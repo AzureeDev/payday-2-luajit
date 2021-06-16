@@ -4576,6 +4576,50 @@ function MenuNodeChooseWeaponCosmeticGui:close(...)
 	managers.environment_controller:set_dof_distance(10, false)
 end
 
+MenuNodeQuickplayGui = MenuNodeQuickplayGui or class(MenuNodeCrimenetFiltersGui)
+
+function MenuNodeQuickplayGui:init(node, layer, parameters)
+	MenuNodeQuickplayGui.super.init(self, node, layer, parameters)
+	managers.menu_component:disable_crimenet()
+
+	local mc_full_ws = managers.menu_component:fullscreen_ws()
+	self._fullscreen_panel = mc_full_ws:panel():panel({
+		layer = 50
+	})
+
+	self._fullscreen_panel:rect({
+		alpha = 0.5,
+		layer = 0,
+		color = Color.black
+	})
+
+	local blur = self._fullscreen_panel:bitmap({
+		texture = "guis/textures/test_blur_df",
+		render_template = "VertexColorTexturedBlur3D",
+		w = self._fullscreen_panel:w(),
+		h = self._fullscreen_panel:h()
+	})
+
+	local function func(o)
+		local start_blur = 0
+
+		over(0.6, function (p)
+			o:set_alpha(math.lerp(start_blur, 1, p))
+		end)
+	end
+
+	blur:animate(func)
+end
+
+function MenuNodeQuickplayGui:close(...)
+	self._fullscreen_panel:parent():remove(self._fullscreen_panel)
+
+	self._fullscreen_panel = nil
+
+	managers.menu_component:enable_crimenet()
+	MenuNodeQuickplayGui.super.close(self, ...)
+end
+
 MenuNodeDOFGui = MenuNodeDOFGui or class(MenuNodeGui)
 
 function MenuNodeDOFGui:init(...)

@@ -281,9 +281,16 @@ function MenuItemGrid:scroll_bar_grabbed(row_item)
 end
 
 function MenuItemGrid:wheel_scroll_start(dy, row_item)
-	local scroll_item = row_item.scroll_panel:scroll_item()
+	local max_row = math.ceil(#self._options / self._columns)
+	local size = row_item.scroll_panel:canvas():h()
+	local size_per_row = size / max_row
+	local row_to_show = math.floor((-row_item.scroll_panel:canvas():y() + 1) / size_per_row) - dy
+	local option_to_show = 1 + row_to_show * self._columns
+	local selection_option = self._options[option_to_show]
 
-	scroll_item:perform_scroll(scroll_item.SCROLL_SPEED * TimerManager:main():delta_time() * 200, dy)
+	if selection_option then
+		row_item.scroll_panel:scroll_item():scroll_to(selection_option.gui_panel:top())
+	end
 end
 
 function MenuItemGrid:mouse_released(button, x, y, row_item)

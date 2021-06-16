@@ -137,12 +137,15 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		miami = "heist_default",
 		candycane = "heist_default",
 		general = "heist_default",
+		highinttech = "heist_default",
 		mariachi = "mariatchi",
 		poolrepair = "heist_default",
 		traditional = "heist_default",
 		sneak_suit = "sneak",
 		tux = "heist_default",
 		continental = "continental",
+		lowinttech = "heist_default",
+		boss = "heist_default",
 		peacoat = "saints",
 		thug = "heist_default",
 		badsanta = "heist_default",
@@ -465,5 +468,77 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		sort_number = 2,
 		unit = "units/pd2_dlc_in32/characters/in32_glv_postmoto/glv_postmoto",
 		third_material = "units/pd2_dlc_in32/characters/in32_glv_postmoto/glv_postmoto_third"
+	}
+	self.gloves.techlow_tortoise = {
+		name_id = "bm_gloves_techlow_tortoise",
+		desc_id = "bm_gloves_techlow_tortoise_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_sdtp/characters/glv_techlow_tortoise/glv_techlow_tortoise",
+		third_material = "units/pd2_dlc_sdtp/characters/glv_techlow_tortoise/glv_techlow_tortoise_third"
+	}
+	self.gloves.techlow_dragon = {
+		name_id = "bm_gloves_techlow_dragon",
+		desc_id = "bm_gloves_techlow_dragon_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_sdtp/characters/glv_techlow_dragon/glv_techlow_dragon",
+		third_material = "units/pd2_dlc_sdtp/characters/glv_techlow_dragon/glv_techlow_dragon_third"
+	}
+	self.gloves.techlow_tiger = {
+		name_id = "bm_gloves_techlow_tiger",
+		desc_id = "bm_gloves_techlow_tiger_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_sdtp/characters/glv_techlow_tiger/glv_techlow_tiger",
+		third_material = "units/pd2_dlc_sdtp/characters/glv_techlow_tiger/glv_techlow_tiger_third"
+	}
+	self.gloves.techlow_bird = {
+		name_id = "bm_gloves_techlow_bird",
+		desc_id = "bm_gloves_techlow_bird_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_sdtp/characters/glv_techlow_bird/glv_techlow_bird",
+		third_material = "units/pd2_dlc_sdtp/characters/glv_techlow_bird/glv_techlow_bird_third"
+	}
+	self.gloves.techhigh_tiger = {
+		name_id = "bm_gloves_techhigh_tiger",
+		desc_id = "bm_gloves_techhigh_tiger_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_sdtp/characters/glv_techhigh_tiger/glv_techhigh_tiger",
+		third_material = "units/pd2_dlc_sdtp/characters/glv_techhigh_tiger/glv_techhigh_tiger_third"
+	}
+	self.gloves.techhigh_tortoise = {
+		name_id = "bm_gloves_techhigh_tortoise",
+		desc_id = "bm_gloves_techhigh_tortoise_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_sdtp/characters/glv_techhigh_tortoise/glv_techhigh_tortoise",
+		third_material = "units/pd2_dlc_sdtp/characters/glv_techhigh_tortoise/glv_techhigh_tortoise_third"
+	}
+	self.gloves.techhigh_dragon = {
+		name_id = "bm_gloves_techhigh_dragon",
+		desc_id = "bm_gloves_techhigh_dragon_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_sdtp/characters/glv_techhigh_dragon/glv_techhigh_dragon",
+		third_material = "units/pd2_dlc_sdtp/characters/glv_techhigh_dragon/glv_techhigh_dragon_third"
+	}
+	self.gloves.techhigh_bird = {
+		name_id = "bm_gloves_techhigh_bird",
+		desc_id = "bm_gloves_techhigh_bird_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_sdtp/characters/glv_techhigh_bird/glv_techhigh_bird",
+		third_material = "units/pd2_dlc_sdtp/characters/glv_techhigh_bird/glv_techhigh_bird_third"
 	}
 end

@@ -314,7 +314,8 @@ function LootDropTweakData:init(tweak_data)
 		drops = true,
 		track = true,
 		sort_number = -100,
-		unique_lock_icon = "guis/textures/pd2/lock_community"
+		unique_lock_icon = "guis/textures/pd2/lock_community",
+		unique_lock_color = Color(255, 59, 174, 254) / 255
 	}
 	self.global_values.poetry_soundtrack = {
 		name_id = "bm_global_value_poetry_soundtrack",

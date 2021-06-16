@@ -716,8 +716,50 @@ function TweakData:_init_pd2()
 		}
 	}
 
+	self:_setup_point_of_no_returns()
 	self:_setup_scene_poses()
 	self:_setup_scene_pose_items()
+end
+
+function TweakData:_setup_point_of_no_returns()
+	self.point_of_no_returns = {
+		noreturn = {}
+	}
+	self.point_of_no_returns.noreturn.texture = "guis/textures/pd2/hud_icon_noreturnbox"
+	self.point_of_no_returns.noreturn.texture_rect = {
+		0,
+		0,
+		32,
+		32
+	}
+	self.point_of_no_returns.noreturn.color = Color(1, 1, 0, 0)
+	self.point_of_no_returns.noreturn.timer_flash_color = Color(1, 1, 0.8, 0.2)
+
+	if _G.IS_VR then
+		self.point_of_no_returns.noreturn.text_id = "hud_assault_point_no_return"
+	else
+		self.point_of_no_returns.noreturn.text_id = "hud_assault_point_no_return_in"
+	end
+
+	self.point_of_no_returns.rescue_vlad = {
+		texture = "guis/textures/pd2/hud_icon_noreturnbox",
+		texture_rect = {
+			0,
+			0,
+			32,
+			32
+		},
+		color = Color(1, 1, 0, 0),
+		timer_flash_color = Color(1, 1, 0.8, 0.2),
+		attention_color = Color(1, 1, 1, 1),
+		scale_box = true
+	}
+
+	if _G.IS_VR then
+		self.point_of_no_returns.rescue_vlad.text_id = "hud_assault_point_no_vlad"
+	else
+		self.point_of_no_returns.rescue_vlad.text_id = "hud_assault_point_no_vlad_in"
+	end
 end
 
 function TweakData:get_scene_pose_items(scene_pose)

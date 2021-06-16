@@ -536,24 +536,9 @@ end
 function ContractBrokerHeistItem:trigger_open_store_page()
 	local job_tweak = self._job_data and tweak_data.narrative.jobs[self._job_data.job_id]
 	local dlc = job_tweak and job_tweak.dlc
-	local is_unlocked = not dlc or managers.dlc:is_dlc_unlocked(dlc)
 
-	if not is_unlocked and MenuCallbackHandler:is_overlay_enabled() then
-		local dlc_data = Global.dlc_manager.all_dlc_data[dlc]
-
-		if dlc_data and not dlc_data.external then
-			if dlc_data.webpage then
-				Steam:overlay_activate("url", dlc_data.webpage)
-			elseif dlc_data.app_id then
-				Steam:overlay_activate("store", dlc_data.app_id)
-			elseif dlc_data.source_id then
-				Steam:overlay_activate("game", "OfficialGameGroup")
-			else
-				Steam:overlay_activate("url", tweak_data.gui.store_page)
-			end
-
-			return true
-		end
+	if dlc and not managers.dlc:is_dlc_unlocked(dlc) then
+		return MenuCallbackHandler:open_dlc_store_page(dlc, "crimenet")
 	end
 
 	return false

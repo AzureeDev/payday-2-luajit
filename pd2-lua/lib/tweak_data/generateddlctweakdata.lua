@@ -448,6 +448,12 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.jun21_bundle = {
+		free = true,
+		content = {}
+	}
+	self.jun21_bundle.content.loot_global_value = "jun21"
+	self.jun21_bundle.content.loot_drops = {}
 	self.mar21_bundle = {
 		free = true,
 		content = {}
@@ -847,6 +853,12 @@ function DLCTweakData:init_generated()
 	}
 	self.saco_bundle.content.loot_global_value = "saco"
 	self.saco_bundle.content.loot_drops = {}
+	self.sand_bundle = {
+		dlc = "has_sand",
+		content = {}
+	}
+	self.sand_bundle.content.loot_global_value = "sand"
+	self.sand_bundle.content.loot_drops = {}
 	self.sawp_bundle = {
 		dlc = "has_sawp",
 		content = {}
@@ -1004,6 +1016,83 @@ function DLCTweakData:init_generated()
 		{
 			type_items = "masks",
 			item_entry = "sdm_04",
+			amount = 1
+		}
+	}
+	self.sdtp_bundle = {
+		dlc = "has_sdtp",
+		content = {}
+	}
+	self.sdtp_bundle.content.loot_global_value = "sdtp"
+	self.sdtp_bundle.content.loot_drops = {
+		{
+			type_items = "player_styles",
+			item_entry = "highinttech",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "blacktortoise",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "vermilionbird",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "azuredragon",
+			amount = 1
+		},
+		{
+			type_items = "masks",
+			item_entry = "whitetiger",
+			amount = 1
+		},
+		{
+			type_items = "player_styles",
+			item_entry = "lowinttech",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "techhigh_tortoise",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "techhigh_bird",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "techhigh_tiger",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "techhigh_dragon",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "techlow_tortoise",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "techlow_bird",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "techlow_tiger",
+			amount = 1
+		},
+		{
+			type_items = "gloves",
+			item_entry = "techlow_dragon",
 			amount = 1
 		}
 	}

@@ -799,4 +799,34 @@ function EquipmentsTweakData:init()
 		text_id = "hud_equipment_diesel",
 		icon = "equipment_gasoline"
 	}
+	self.specials.laxative = {
+		sync_possession = true,
+		icon = "equipment_cleaning_product",
+		text_id = "hud_equipment_laxative"
+	}
+	self.specials.adrenaline = {
+		sync_possession = true,
+		icon = "equipment_syringe",
+		text_id = "hud_equipment_adrenaline"
+	}
+	self.specials.documents = {
+		sync_possession = true,
+		icon = "equipment_documents",
+		text_id = "hud_equipment_documents"
+	}
+	self.specials.notepad = {
+		sync_possession = true,
+		icon = "equipment_notepad",
+		text_id = "hud_equipment_notepad"
+	}
+	self.specials.defibrillator_paddles = {
+		sync_possession = true,
+		icon = "equipment_defibrillator",
+		text_id = "hud_equipment_defibrillator_paddles"
+	}
+	self.specials.gas_canister = {
+		sync_possession = true,
+		icon = "equipment_gas_canister",
+		text_id = "hud_equipment_gas_canister"
+	}
 end

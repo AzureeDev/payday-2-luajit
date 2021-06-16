@@ -200,7 +200,7 @@ function CustomSafehouseManager:reset()
 end
 
 function CustomSafehouseManager:unlocked()
-	return Global.mission_manager.has_played_tutorial and (tweak_data.safehouse.level_limit <= managers.experience:current_level() or managers.experience:current_rank() > 0)
+	return true
 end
 
 function CustomSafehouseManager:coins()

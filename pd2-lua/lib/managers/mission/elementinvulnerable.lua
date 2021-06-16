@@ -31,8 +31,24 @@ function ElementInvulnerable:perform_invulnerable(instigator)
 	end
 end
 
-function ElementInvulnerable:make_unit_invulnerable(unit)
+function ElementInvulnerable:_check_unit(unit)
 	if alive(unit) and unit:character_damage() then
+		local all_char_criminals = managers.groupai:state():all_char_criminals()
+
+		for key, char_data in pairs(all_char_criminals) do
+			if char_data.unit == unit then
+				return false
+			end
+		end
+
+		return unit:character_damage().set_invulnerable and unit:character_damage().set_immortal
+	end
+
+	return false
+end
+
+function ElementInvulnerable:make_unit_invulnerable(unit)
+	if self:_check_unit(unit) then
 		unit:character_damage():set_invulnerable(self._values.invulnerable)
 		unit:character_damage():set_immortal(self._values.immortal)
 	end

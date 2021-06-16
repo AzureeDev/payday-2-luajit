@@ -636,7 +636,7 @@ function UpgradesTweakData:_init_pd2_values()
 		1.1,
 		1.2,
 		1.4,
-		1.8
+		2
 	}
 	self.values.weapon.passive_damage_multiplier = {
 		1.05
@@ -3786,7 +3786,7 @@ function UpgradesTweakData:_init_pd2_values()
 				"20%"
 			},
 			{
-				"40%",
+				"60%",
 				"3%",
 				"5",
 				"10%"
@@ -4597,6 +4597,7 @@ function UpgradesTweakData:init(tweak_data)
 				"dynamite",
 				"molotov",
 				"wpn_dallas_mask",
+				"msr",
 				"corgi",
 				"clean",
 				"aziz"
@@ -4709,7 +4710,6 @@ function UpgradesTweakData:init(tweak_data)
 		[15] = {
 			name_id = "weapons",
 			upgrades = {
-				"msr",
 				"benelli",
 				"plainsrider",
 				"sub2000",

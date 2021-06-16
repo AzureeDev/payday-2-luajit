@@ -3973,6 +3973,16 @@ function BlackMarketManager:get_sorted_melee_weapons(hide_locked, id_list_only)
 	local xd, yd, x_td, y_td, x_sn, y_sn, x_gv, y_gv = nil
 	local m_tweak_data = tweak_data.blackmarket.melee_weapons
 	local l_tweak_data = tweak_data.lootdrop.global_values
+	local locked_sort_numbers = {}
+
+	for _, item in ipairs(items) do
+		local id = item[1]
+		local data = item[2]
+		local dlc = m_tweak_data[id] and m_tweak_data[id].dlc or managers.dlc:global_value_to_dlc(m_tweak_data[id].global_value)
+		local func = data.func_based or false
+		local skill = data.skill_based or false
+		locked_sort_numbers[id] = tweak_data.gui:get_locked_sort_number(dlc, func, skill)
+	end
 
 	local function sort_func(x, y)
 		xd = x[2]
@@ -3986,6 +3996,15 @@ function BlackMarketManager:get_sorted_melee_weapons(hide_locked, id_list_only)
 
 		if xd.unlocked ~= yd.unlocked then
 			return xd.unlocked
+		end
+
+		if not xd.unlocked then
+			x_sn = locked_sort_numbers[x[1]]
+			y_sn = locked_sort_numbers[y[1]]
+
+			if x_sn ~= y_sn then
+				return x_sn < y_sn
+			end
 		end
 
 		if xd.level ~= yd.level then
@@ -5388,13 +5407,26 @@ function BlackMarketManager:get_sorted_grenades(hide_locked)
 	local m_tweak_data = tweak_data.blackmarket.projectiles
 	local l_tweak_data = tweak_data.lootdrop.global_values
 
-	for id, d in pairs(Global.blackmarket_manager.grenades) do
-		if not hide_locked or d.unlocked then
+	for id, grenade_data in pairs(Global.blackmarket_manager.grenades) do
+		local gv = m_tweak_data[id].global_value or m_tweak_data[id].dlc or "normal"
+
+		if grenade_data.unlocked or not hide_locked and (not l_tweak_data[gv] or not l_tweak_data[gv].hide_unavailable) then
 			table.insert(sort_data, {
 				id,
-				d
+				grenade_data
 			})
 		end
+	end
+
+	local locked_sort_numbers = {}
+
+	for _, item in ipairs(sort_data) do
+		local id = item[1]
+		local data = item[2]
+		local dlc = m_tweak_data[id] and m_tweak_data[id].dlc or managers.dlc:global_value_to_dlc(m_tweak_data[id].global_value)
+		local func = data.func_based or false
+		local skill = data.skill_based or false
+		locked_sort_numbers[id] = tweak_data.gui:get_locked_sort_number(dlc, func, skill)
 	end
 
 	table.sort(sort_data, function (x, y)
@@ -5405,6 +5437,15 @@ function BlackMarketManager:get_sorted_grenades(hide_locked)
 
 		if xd.unlocked ~= yd.unlocked then
 			return xd.unlocked
+		end
+
+		if not xd.unlocked then
+			x_sn = locked_sort_numbers[x[1]]
+			y_sn = locked_sort_numbers[y[1]]
+
+			if x_sn ~= y_sn then
+				return x_sn < y_sn
+			end
 		end
 
 		if xd.ability ~= yd.ability then
@@ -9727,6 +9768,12 @@ function BlackMarketManager:forced_throwable()
 	local level_data = tweak_data.levels[managers.job:current_level_id()]
 
 	return level_data and level_data.force_equipment and level_data.force_equipment.throwable
+end
+
+function BlackMarketManager:forced_body_bags()
+	local level_data = tweak_data.levels[managers.job:current_level_id()]
+
+	return level_data and level_data.force_equipment and level_data.force_equipment.body_bags
 end
 
 function BlackMarketManager:check_frog_1()

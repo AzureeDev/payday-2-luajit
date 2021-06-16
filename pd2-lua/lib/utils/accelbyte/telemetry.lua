@@ -721,7 +721,8 @@ function Telemetry:send_on_player_heist_start()
 		Tactic = job_plan,
 		Mods = weapon_mods,
 		Loadout = gather_or_convert_loadout_data(),
-		Skills = gather_player_skill_information()
+		Skills = gather_player_skill_information(),
+		Story = managers.story:is_heist_story_started(managers.job:current_level_id())
 	}
 
 	self:send("player_heist_start", telemetry_payload)

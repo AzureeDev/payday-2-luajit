@@ -1344,6 +1344,13 @@ function SkillTreeGui:_setup(add_skilltree, add_specialization)
 				prio = 3,
 				pc_btn = "menu_preview_item",
 				callback = callback(self, self, "max_specialization")
+			},
+			buy_dlc = {
+				btn = "BTN_A",
+				prio = 1,
+				name = "bm_menu_buy_dlc",
+				color = tweak_data.screen_colors.dlc_buy_color,
+				callback = callback(self, self, "show_dlc_store")
 			}
 		}
 		self._btn_panel = self._specialization_panel:panel({
@@ -2061,6 +2068,11 @@ function SkillTreeGui:update_spec_descriptions(item)
 
 	if dlc and not managers.dlc:is_dlc_unlocked(dlc) then
 		local unlock_id = tweak_data:get_raw_value("lootdrop", "global_values", dlc, "unlock_id") or "bm_menu_dlc_locked"
+
+		if tweak_data:get_raw_value("lootdrop", "global_values", dlc, "hide_unavailable") then
+			unlock_id = "bm_menu_dlc_locked"
+		end
+
 		locked_string = managers.localization:to_upper_text(unlock_id)
 	end
 
@@ -2553,6 +2565,10 @@ function SkillTreeGui:mouse_moved(o, x, y)
 				end
 			end
 		end
+	end
+
+	if self._button_highlighted then
+		return true, "link"
 	end
 
 	if managers.menu:is_pc_controller() then
@@ -3534,6 +3550,8 @@ function SkillTreeGui:refresh_btns()
 			table.insert(btns, "add_points")
 			table.insert(btns, "remove_points")
 		end
+	elseif not tweak_data:get_raw_value("lootdrop", "global_values", dlc, "hide_unavailable") then
+		table.insert(btns, "buy_dlc")
 	end
 
 	self:show_btns(unpack(btns))
@@ -3744,6 +3762,12 @@ function SkillTreeGui:_actually_max_specialization(params)
 			item:refresh()
 		end
 	end
+end
+
+function SkillTreeGui:show_dlc_store(tree, tier)
+	local dlc = tweak_data:get_raw_value("skilltree", "specializations", tree, "dlc")
+
+	MenuCallbackHandler:open_dlc_store_page(dlc, "skilltree")
 end
 
 SpecializationItem = SpecializationItem or class()
@@ -4563,6 +4587,8 @@ SpecializationGuiButtonItem = SpecializationGuiButtonItem or class(Specializatio
 function SpecializationGuiButtonItem:init(main_panel, data, x)
 	SpecializationGuiButtonItem.super.init(self, main_panel, data, 0, 0, 10, 10)
 
+	self._highlighted_color = data.highlighted_color or tweak_data.screen_colors.button_stage_2
+	self._color = data.color or tweak_data.screen_colors.button_stage_3
 	local up_font_size = NOT_WIN_32 and RenderSettings.resolution.y < 720 and self._data.btn == "BTN_STICK_R" and 2 or 0
 	self._btn_text = self._panel:text({
 		text = "",
@@ -4573,7 +4599,7 @@ function SpecializationGuiButtonItem:init(main_panel, data, x)
 		layer = 1,
 		font_size = small_font_size + up_font_size,
 		font = small_font,
-		color = tweak_data.screen_colors.button_stage_3
+		color = self._color
 	})
 	self._btn_text_id = data.name
 	self._btn_text_legends = data.legends
@@ -4587,7 +4613,7 @@ function SpecializationGuiButtonItem:init(main_panel, data, x)
 		halign = "scale",
 		alpha = 0.3,
 		valign = "scale",
-		color = tweak_data.screen_colors.button_stage_3
+		color = tweak_data.screen_colors.button_stage_2
 	})
 
 	if not managers.menu:is_pc_controller() or managers.menu:is_steam_controller() then
@@ -4612,7 +4638,7 @@ end
 
 function SpecializationGuiButtonItem:refresh()
 	if managers.menu:is_pc_controller() then
-		self._btn_text:set_color(self._highlighted and tweak_data.screen_colors.button_stage_2 or tweak_data.screen_colors.button_stage_3)
+		self._btn_text:set_color(self._highlighted and self._highlighted_color or self._color)
 	end
 
 	self._panel:child("select_rect"):set_visible(self._highlighted)

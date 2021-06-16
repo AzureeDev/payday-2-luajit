@@ -696,6 +696,26 @@ function MenuNodeGui:_create_menu_item(row_item)
 			})
 		end
 
+		if row_item.item:parameters().glow then
+			row_item.glow = self.item_panel:bitmap({
+				layer = 0,
+				texture = row_item.item:parameters().glow,
+				texture_rect = row_item.item:parameters().glow_rect,
+				rotation = row_item.item:parameters().glow_rotation or 360,
+				visible = row_item.item:glow_visible()
+			})
+
+			local function animate_story_glow(o)
+				while true do
+					over(1, function (p)
+						o:set_alpha(math.lerp(0.4, 0.85, math.sin(p * 180)))
+					end)
+				end
+			end
+
+			row_item.glow:animate(animate_story_glow)
+		end
+
 		self:_align_normal(row_item)
 	end
 
@@ -712,7 +732,7 @@ function MenuNodeGui:_create_menu_item(row_item)
 end
 
 function MenuNodeGui:_setup_trial_buy(row_item)
-	row_item.row_item_color = Color(1, 1, 0.6588235294117647, 0)
+	row_item.row_item_color = tweak_data.screen_colors.dlc_buy_color
 
 	row_item.gui_panel:set_color(row_item.row_item_color)
 end
@@ -977,27 +997,8 @@ function MenuNodeGui:_align_friend(row_item)
 	row_item.friend_name:set_height(h)
 	row_item.friend_name:set_right(row_item.friend_name:parent():w())
 	row_item.gui_panel:set_height(h)
-
-	if row_item.icon then
-		local left = row_item.gui_panel:left()
-		local right = row_item.gui_panel:right()
-
-		if row_item.gui_panel.set_text then
-			local x, y, w, h = row_item.gui_panel:text_rect()
-			left = x
-			right = x + w
-		end
-
-		if row_item.item:parameters().icon_align == "left" then
-			row_item.icon:set_right(left)
-		else
-			row_item.icon:set_left(right)
-		end
-
-		row_item.icon:set_center_y(row_item.gui_panel:center_y())
-		row_item.icon:set_color(row_item.gui_panel:color())
-	end
-
+	self:update_icon_alignment(row_item)
+	self:update_glow_alignment(row_item)
 	row_item.signin_status:set_font_size(self.font_size)
 	row_item.signin_status:set_height(h)
 
@@ -1379,6 +1380,39 @@ function MenuNodeGui:update_item_icon_visibility()
 	end
 end
 
+function MenuNodeGui:update_icon_alignment(row_item)
+	if row_item.icon then
+		local left = row_item.gui_panel:left()
+		local right = row_item.gui_panel:right()
+
+		if row_item.gui_panel.set_text then
+			local x, y, w, h = row_item.gui_panel:text_rect()
+			left = x
+			right = x + w
+		end
+
+		if row_item.item:parameters().icon_align == "left" then
+			row_item.icon:set_right(left)
+		else
+			row_item.icon:set_left(right)
+		end
+
+		row_item.icon:set_center_y(row_item.gui_panel:center_y())
+		row_item.icon:set_color(row_item.gui_panel:color())
+	end
+end
+
+function MenuNodeGui:update_glow_alignment(row_item)
+	if row_item.glow then
+		local x, y, w, h = row_item.gui_panel:text_rect()
+
+		row_item.glow:set_center_y(row_item.gui_panel:center_y())
+		row_item.glow:set_center_x(x + w / 2)
+		row_item.glow:set_width(w * 3)
+		row_item.glow:set_color(row_item.gui_panel:color())
+	end
+end
+
 function MenuNodeGui:_reload_friend(item)
 	local row_item = self:row_item(item)
 	local status_text = managers.localization:text("menu_friends_" .. row_item.item:parameters().signin_status)
@@ -1466,26 +1500,8 @@ function MenuNodeGui:_highlight_row_item(row_item, mouse_over)
 			end
 
 			MenuNodeGui.super._highlight_row_item(self, row_item)
-
-			if row_item.icon then
-				local left = row_item.gui_panel:left()
-				local right = row_item.gui_panel:right()
-
-				if row_item.gui_panel.set_text then
-					local x, y, w, h = row_item.gui_panel:text_rect()
-					left = x
-					right = x + w
-				end
-
-				if row_item.item:parameters().icon_align == "left" then
-					row_item.icon:set_right(left)
-				else
-					row_item.icon:set_left(right)
-				end
-
-				row_item.icon:set_center_y(row_item.gui_panel:center_y())
-				row_item.icon:set_color(row_item.gui_panel:color())
-			end
+			self:update_icon_alignment(row_item)
+			self:update_glow_alignment(row_item)
 		end
 
 		local active_menu = managers.menu:active_menu()
@@ -1641,26 +1657,8 @@ function MenuNodeGui:_fade_row_item(row_item)
 			end
 
 			MenuNodeGui.super._fade_row_item(self, row_item)
-
-			if row_item.icon then
-				local left = row_item.gui_panel:left()
-				local right = row_item.gui_panel:right()
-
-				if row_item.gui_panel.set_text then
-					local x, y, w, h = row_item.gui_panel:text_rect()
-					left = x
-					right = x + w
-				end
-
-				if row_item.item:parameters().icon_align == "left" then
-					row_item.icon:set_right(left)
-				else
-					row_item.icon:set_left(right)
-				end
-
-				row_item.icon:set_center_y(row_item.gui_panel:center_y())
-				row_item.icon:set_color(row_item.gui_panel:color())
-			end
+			self:update_icon_alignment(row_item)
+			self:update_glow_alignment(row_item)
 		end
 	end
 end
@@ -1693,26 +1691,8 @@ function MenuNodeGui:_align_normal(row_item)
 	row_item.gui_panel:set_height(h)
 	row_item.gui_panel:set_left(self:_right_align() + (row_item.item:parameters().expand_value or 0))
 	row_item.gui_panel:set_w(safe_rect.width - row_item.gui_panel:left())
-
-	if row_item.icon then
-		local left = row_item.gui_panel:left()
-		local right = row_item.gui_panel:right()
-
-		if row_item.gui_panel.set_text then
-			local x, y, w, h = row_item.gui_panel:text_rect()
-			left = x
-			right = x + w
-		end
-
-		if row_item.item:parameters().icon_align == "left" then
-			row_item.icon:set_right(left)
-		else
-			row_item.icon:set_left(right)
-		end
-
-		row_item.icon:set_center_y(row_item.gui_panel:center_y())
-		row_item.icon:set_color(row_item.gui_panel:color())
-	end
+	self:update_icon_alignment(row_item)
+	self:update_glow_alignment(row_item)
 
 	if row_item.gui_info_panel then
 		self:_align_info_panel(row_item)
@@ -1740,26 +1720,8 @@ function MenuNodeGui:_align_chat(row_item)
 	row_item.chat_output:set_w(row_item.gui_panel:w())
 	row_item.chat_output:set_bottom(h)
 	row_item.chat_output:set_right(row_item.gui_panel:w())
-
-	if row_item.icon then
-		local left = row_item.gui_panel:left()
-		local right = row_item.gui_panel:right()
-
-		if row_item.gui_panel.set_text then
-			local x, y, w, h = row_item.gui_panel:text_rect()
-			left = x
-			right = x + w
-		end
-
-		if row_item.item:parameters().icon_align == "left" then
-			row_item.icon:set_right(left)
-		else
-			row_item.icon:set_left(right)
-		end
-
-		row_item.icon:set_center_y(row_item.gui_panel:center_y())
-		row_item.icon:set_color(row_item.gui_panel:color())
-	end
+	self:update_icon_alignment(row_item)
+	self:update_glow_alignment(row_item)
 end
 
 function MenuNodeGui:_update_scaled_values()

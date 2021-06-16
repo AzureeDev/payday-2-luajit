@@ -1257,10 +1257,13 @@ function CopBrain:clbk_alarm_pager(ignore_this, data)
 		managers.groupai:state():on_police_called("alarm_pager_not_answered")
 		self._unit:sound():stop()
 
+		local narrator_prefix = tweak_data.levels:get_narrator_prefix()
+		local sound_event = narrator_prefix .. "_alm_any_any"
+
 		if self._unit:character_damage():dead() then
-			self._unit:sound():corpse_play("pln_alm_any_any", nil, true)
+			self._unit:sound():corpse_play(sound_event, nil, true)
 		else
-			self._unit:sound():play("pln_alm_any_any", nil, true)
+			self._unit:sound():play(sound_event, nil, true)
 		end
 
 		self:end_alarm_pager()

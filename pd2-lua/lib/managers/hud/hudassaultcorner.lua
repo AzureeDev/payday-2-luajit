@@ -153,9 +153,8 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 		w = size,
 		x = self._hud_panel:w() - size
 	})
-	self._noreturn_color = Color(1, 1, 0, 0)
+	self._noreturn_data = self:_get_noreturn_data()
 	local icon_noreturnbox = point_of_no_return_panel:bitmap({
-		texture = "guis/textures/pd2/hud_icon_noreturnbox",
 		name = "icon_noreturnbox",
 		h = 24,
 		layer = 0,
@@ -166,7 +165,9 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 		halign = "right",
 		x = 0,
 		valign = "top",
-		color = self._noreturn_color
+		color = self._noreturn_data.color,
+		texture = self._noreturn_data.icon_texture,
+		texture_rect = self._noreturn_data.icon_texture_rect
 	})
 
 	icon_noreturnbox:set_right(icon_noreturnbox:parent():w())
@@ -178,7 +179,7 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 		w = self._bg_box_size
 	}, {
 		blend_mode = "add",
-		color = self._noreturn_color
+		color = self._noreturn_data.color
 	})
 
 	self._noreturn_bg_box:set_right(icon_noreturnbox:left() - 3)
@@ -195,12 +196,12 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 		y = 0,
 		x = 0,
 		layer = 1,
-		color = self._noreturn_color,
+		color = self._noreturn_data.color,
 		font_size = tweak_data.hud_corner.noreturn_size,
 		font = tweak_data.hud_corner.assault_font
 	})
 
-	point_of_no_return_text:set_text(utf8.to_upper(managers.localization:text("hud_assault_point_no_return_in", {
+	point_of_no_return_text:set_text(utf8.to_upper(managers.localization:text(self._noreturn_data.text_id, {
 		time = ""
 	})))
 	point_of_no_return_text:set_size(self._noreturn_bg_box:w(), self._noreturn_bg_box:h())
@@ -215,7 +216,7 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 		y = 0,
 		x = 0,
 		layer = 1,
-		color = self._noreturn_color,
+		color = self._noreturn_data.color,
 		font_size = tweak_data.hud_corner.noreturn_size,
 		font = tweak_data.hud_corner.assault_font
 	})
@@ -224,6 +225,7 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 	point_of_no_return_timer:set_size(46, self._noreturn_bg_box:h())
 	point_of_no_return_timer:set_right(point_of_no_return_timer:parent():w())
 	point_of_no_return_text:set_right(math.round(point_of_no_return_timer:left()))
+	self:_update_noreturn()
 
 	if self._hud_panel:child("casing_panel") then
 		self._hud_panel:remove(self._hud_panel:child("casing_panel"))
@@ -315,6 +317,73 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 	})
 
 	vip_icon:set_center(self._vip_bg_box:w() / 2, self._vip_bg_box:h() / 2)
+end
+
+function HUDAssaultCorner:_get_noreturn_data(id)
+	local noreturn_tweak_data = id and tweak_data.point_of_no_returns[id] or tweak_data.point_of_no_returns.noreturn
+	local noreturn_data = {
+		color = noreturn_tweak_data.color or Color(1, 1, 0, 0),
+		flash_color = noreturn_tweak_data.timer_flash_color or noreturn_tweak_data.color or Color(1, 1, 0.8, 0.2),
+		attention_color = noreturn_tweak_data.attention_color or Color.white,
+		icon_texture = noreturn_tweak_data.texture or "guis/textures/pd2/hud_icon_noreturnbox",
+		icon_texture_rect = noreturn_tweak_data.texture_rect or nil,
+		scale_box = noreturn_tweak_data.scale_box or false,
+		text_id = noreturn_tweak_data.text_id
+	}
+
+	if not noreturn_data.text_id then
+		if _G.IS_VR then
+			noreturn_data.text_id = "hud_assault_point_no_return"
+		else
+			noreturn_data.text_id = "hud_assault_point_no_return_in"
+		end
+	end
+
+	return noreturn_data
+end
+
+function HUDAssaultCorner:_update_noreturn(id)
+	local point_of_no_return_panel = self._hud_panel:child("point_of_no_return_panel")
+	local icon_noreturnbox = point_of_no_return_panel:child("icon_noreturnbox")
+	local point_of_no_return_text = self._noreturn_bg_box:child("point_of_no_return_text")
+	local point_of_no_return_timer = self._noreturn_bg_box:child("point_of_no_return_timer")
+	local noreturn_data = self:_get_noreturn_data(id)
+
+	if noreturn_data.color ~= self._noreturn_data.color then
+		HUDBGBox_set_color(self._noreturn_bg_box, {
+			color = noreturn_data.color
+		})
+		point_of_no_return_text:set_color(noreturn_data.color)
+		point_of_no_return_timer:set_color(noreturn_data.color)
+		icon_noreturnbox:set_color(noreturn_data.color)
+	end
+
+	local x = self._noreturn_data.texture_rect or {}
+	local y = noreturn_data.texture_rect or {}
+	local texture_rects_match = x[1] == y[1] and x[2] == y[2] and x[3] == y[3] and x[4] == y[4]
+
+	if noreturn_data.texture ~= self._noreturn_data.texture or not texture_rects_match then
+		icon_noreturnbox:set_image(noreturn_data.texture, unpack(noreturn_data.texture_rect))
+	end
+
+	if noreturn_data.text_id ~= self._noreturn_data.text_id then
+		point_of_no_return_text:set_text(managers.localization:to_upper_text(noreturn_data.text_id))
+
+		local bg_box_size = self._bg_box_size
+
+		if noreturn_data.scale_box then
+			local text_x, text_y, text_w, text_h = point_of_no_return_text:text_rect()
+			bg_box_size = text_w + point_of_no_return_timer:w() + 10
+		end
+
+		self._noreturn_bg_box:set_width(bg_box_size)
+		self._noreturn_bg_box:set_right(icon_noreturnbox:left() - 3)
+		point_of_no_return_timer:set_right(bg_box_size)
+		point_of_no_return_text:set_width(bg_box_size)
+		point_of_no_return_text:set_right(math.round(point_of_no_return_timer:left()))
+	end
+
+	self._noreturn_data = noreturn_data
 end
 
 function HUDAssaultCorner:setup_wave_display(top, right)
@@ -917,17 +986,18 @@ function HUDAssaultCorner:feed_point_of_no_return_timer(time, is_inside)
 	self._noreturn_bg_box:child("point_of_no_return_timer"):set_text(text)
 end
 
-function HUDAssaultCorner:show_point_of_no_return_timer()
+function HUDAssaultCorner:show_point_of_no_return_timer(id)
 	local delay_time = self._assault and 1.2 or 0
 
 	self:_end_assault()
+	self:_update_noreturn(id)
+	self:_hide_hostages()
 
 	local point_of_no_return_panel = self._hud_panel:child("point_of_no_return_panel")
 
-	self:_hide_hostages()
 	point_of_no_return_panel:stop()
 	point_of_no_return_panel:animate(callback(self, self, "_animate_show_noreturn"), delay_time)
-	self:_set_feedback_color(self._noreturn_color)
+	self:_set_feedback_color(self._noreturn_data.color)
 
 	self._point_of_no_return = true
 end
@@ -948,10 +1018,12 @@ function HUDAssaultCorner:flash_point_of_no_return_timer(beep)
 
 		while t < 0.5 do
 			t = t + coroutine.yield()
+			local color = self._noreturn_data.color or Color(1, 1, 0, 0)
+			local flash_color = self._noreturn_data.flash_color or Color(1, 1, 0.8, 0.2)
 			local n = 1 - math.sin(t * 180)
-			local r = math.lerp(1 or self._point_of_no_return_color.r, 1, n)
-			local g = math.lerp(0 or self._point_of_no_return_color.g, 0.8, n)
-			local b = math.lerp(0 or self._point_of_no_return_color.b, 0.2, n)
+			local r = math.lerp(color.r, flash_color.r, n)
+			local g = math.lerp(color.g, flash_color.g, n)
+			local b = math.lerp(color.b, flash_color.b, n)
 
 			o:set_color(Color(r, g, b))
 			o:set_font_size(math.lerp(tweak_data.hud_corner.noreturn_size, tweak_data.hud_corner.noreturn_size * 1.25, n))
@@ -1108,10 +1180,17 @@ function HUDAssaultCorner:_animate_show_noreturn(point_of_no_return_panel, delay
 		})
 	end
 
+	local bg_box_size = self._bg_box_size
+
+	if self._noreturn_data.scale_box then
+		local text_x, text_y, text_w, text_h = point_of_no_return_text:text_rect()
+		bg_box_size = text_w + point_of_no_return_timer:w() + 10
+	end
+
 	self._noreturn_bg_box:stop()
-	self._noreturn_bg_box:animate(callback(nil, _G, "HUDBGBox_animate_open_left"), 0.75, self._bg_box_size, open_done, {
+	self._noreturn_bg_box:animate(callback(nil, _G, "HUDBGBox_animate_open_left"), 0.75, bg_box_size, open_done, {
 		attention_forever = true,
-		attention_color = self._casing_color
+		attention_color = self._noreturn_data.attention_color
 	})
 end
 

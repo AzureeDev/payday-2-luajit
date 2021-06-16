@@ -2273,6 +2273,15 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 			global_value = "mar21",
 			desc_id = "bm_suit_mar21_thug_default_desc",
 			prio = 0
+		},
+		black = {
+			desc_id = "bm_suit_jun21_thug_black_desc",
+			global_value = "jun21",
+			prio = 1,
+			auto_aquire = true,
+			name_id = "bm_suit_jun21_thug_black",
+			third_material = "units/pd2_dlc_jun21/characters/shared_materials/jun21_acc_thug_black",
+			material = "units/pd2_dlc_jun21/characters/shared_materials/jun21_acc_fps_thug_black"
 		}
 	}
 	local thug_characters_male = {
@@ -2497,6 +2506,152 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		sequence = "set_ehtan"
 	}
 	self.player_styles.boss.characters.ecp_male = boss_characters_male_fat
+	self.player_styles.lowinttech = {
+		name_id = "bm_suit_lowinttech",
+		desc_id = "bm_suit_lowinttech_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/sdtp_acc_fps_lowinttech_male/sdtp_acc_fps_lowinttech_male",
+		material_variations = {}
+	}
+	self.player_styles.lowinttech.material_variations.default = {
+		name_id = "bm_suit_lowinttech",
+		global_value = "sdtp",
+		desc_id = "bm_suit_lowinttech_desc"
+	}
+	self.player_styles.lowinttech.material_variations.blue = {
+		desc_id = "bm_suit_var_lowinttech_blue_desc",
+		global_value = "sdtp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_lowinttech_blue",
+		third_material = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/shared_materials/sdtp_acc_lowinttech_blue",
+		material = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/shared_materials/sdtp_acc_fps_lowinttech_blue"
+	}
+	self.player_styles.lowinttech.material_variations.red = {
+		desc_id = "bm_suit_var_lowinttech_red_desc",
+		global_value = "sdtp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_lowinttech_red",
+		third_material = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/shared_materials/sdtp_acc_lowinttech_red",
+		material = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/shared_materials/sdtp_acc_fps_lowinttech_red"
+	}
+	self.player_styles.lowinttech.material_variations.yellow = {
+		desc_id = "bm_suit_var_lowinttech_yellow_desc",
+		global_value = "sdtp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_lowinttech_yellow",
+		third_material = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/shared_materials/sdtp_acc_lowinttech_yellow",
+		material = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/shared_materials/sdtp_acc_fps_lowinttech_yellow"
+	}
+	self.player_styles.lowinttech.characters = {}
+	local lowinttech_characters_male = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/sdtp_acc_lowinttech_male_average/sdtp_acc_lowinttech_male_average"
+	}
+
+	set_characters_data("lowinttech", characters_male, lowinttech_characters_male)
+
+	local lowinttech_characters_male_big = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/sdtp_acc_lowinttech_male_big/sdtp_acc_lowinttech_male_big"
+	}
+
+	set_characters_data("lowinttech", characters_male_big, lowinttech_characters_male_big)
+
+	local lowinttech_characters_female = {
+		unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/sdtp_acc_fps_lowinttech_female/sdtp_acc_fps_lowinttech_female",
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/sdtp_acc_lowinttech_female_average/sdtp_acc_lowinttech_female_average"
+	}
+
+	set_characters_data("lowinttech", characters_female, lowinttech_characters_female)
+
+	local lowinttech_characters_female_big = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/sdtp_acc_lowinttech_female_fat/sdtp_acc_lowinttech_female_fat"
+	}
+
+	set_characters_data("lowinttech", characters_female_big, lowinttech_characters_female_big)
+
+	local lowinttech_characters_male_fat = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_lowinttech/sdtp_acc_lowinttech_male_fat/sdtp_acc_lowinttech_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.lowinttech.characters.ecp_male = lowinttech_characters_male_fat
+	self.player_styles.highinttech = {
+		name_id = "bm_suit_highinttech",
+		desc_id = "bm_suit_highinttech_desc",
+		texture_bundle_folder = "sdtp",
+		global_value = "sdtp",
+		body_replacement = body_replacement_standard,
+		third_body_replacement = body_replacement_standard,
+		unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/sdtp_acc_fps_highinttech_male/sdtp_acc_fps_highinttech_male",
+		material_variations = {}
+	}
+	self.player_styles.highinttech.material_variations.default = {
+		name_id = "bm_suit_highinttech",
+		global_value = "sdtp",
+		desc_id = "bm_suit_highinttech_desc"
+	}
+	self.player_styles.highinttech.characters = {}
+	self.player_styles.highinttech.material_variations = {
+		default = {
+			name_id = "bm_suit_var_highinttech_default",
+			global_value = "sdtp",
+			desc_id = "bm_suit_var_highinttech_default_desc"
+		},
+		blue = {
+			desc_id = "bm_suit_var_highinttech_blue_desc",
+			global_value = "sdtp",
+			auto_aquire = true,
+			name_id = "bm_suit_var_highinttech_blue",
+			third_material = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/shared_materials/sdtp_acc_highinttech_blue",
+			material = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/shared_materials/sdtp_acc_fps_highinttech_male_blue"
+		},
+		orange = {
+			desc_id = "bm_suit_var_highinttech_orange_desc",
+			global_value = "sdtp",
+			auto_aquire = true,
+			name_id = "bm_suit_var_highinttech_orange",
+			third_material = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/shared_materials/sdtp_acc_highinttech_orange",
+			material = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/shared_materials/sdtp_acc_fps_highinttech_male_orange"
+		},
+		green = {
+			desc_id = "bm_suit_var_highinttech_green_desc",
+			global_value = "sdtp",
+			auto_aquire = true,
+			name_id = "bm_suit_var_highinttech_green",
+			third_material = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/shared_materials/sdtp_acc_highinttech_green",
+			material = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/shared_materials/sdtp_acc_fps_highinttech_male_green"
+		}
+	}
+	local highinttech_characters_male = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/sdtp_acc_highinttech_male_average/sdtp_acc_highinttech_male_average"
+	}
+
+	set_characters_data("highinttech", characters_male, highinttech_characters_male)
+
+	local highinttech_characters_male_big = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/sdtp_acc_highinttech_male_big/sdtp_acc_highinttech_male_big"
+	}
+
+	set_characters_data("highinttech", characters_male_big, highinttech_characters_male_big)
+
+	local highinttech_characters_female = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/sdtp_acc_highinttech_female_average/sdtp_acc_highinttech_female_average"
+	}
+
+	set_characters_data("highinttech", characters_female, highinttech_characters_female)
+
+	local highinttech_characters_female_big = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/sdtp_acc_highinttech_female_fat/sdtp_acc_highinttech_female_fat"
+	}
+
+	set_characters_data("highinttech", characters_female_big, highinttech_characters_female_big)
+
+	local highinttech_characters_male_fat = {
+		third_unit = "units/pd2_dlc_sdtp/characters/sdtp_acc_highinttech/sdtp_acc_highinttech_male_fat/sdtp_acc_highinttech_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.highinttech.characters.ecp_male = highinttech_characters_male_fat
 end
 
 function BlackMarketTweakData:get_player_style_value(player_style, character_name, key)

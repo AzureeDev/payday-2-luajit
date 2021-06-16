@@ -2,6 +2,7 @@ PlayerProfileGuiObject = PlayerProfileGuiObject or class()
 
 function PlayerProfileGuiObject:init(ws)
 	local panel = ws:panel():panel()
+	local COLOR_TRANSPARENT = Color(180, 255, 255, 255) / 255
 	local next_level_data = managers.experience:next_level_data() or {}
 	local max_left_len = 0
 	local max_right_len = 0
@@ -9,7 +10,7 @@ function PlayerProfileGuiObject:init(ws)
 	local font_size = tweak_data.menu.pd2_small_font_size
 	local bg_ring = panel:bitmap({
 		texture = "guis/textures/pd2/level_ring_small",
-		y = 10,
+		y = 25,
 		alpha = 0.4,
 		x = 10,
 		w = (font_size + 1) * 4,
@@ -20,13 +21,24 @@ function PlayerProfileGuiObject:init(ws)
 		texture = "guis/textures/pd2/level_ring_small",
 		render_template = "VertexColorTexturedRadial",
 		blend_mode = "add",
-		y = 10,
+		y = 25,
 		x = 10,
 		layer = 1,
 		w = (font_size + 1) * 4,
 		h = (font_size + 1) * 4,
 		color = Color((next_level_data.current_points or 1) / (next_level_data.points or 1), 1, 1)
 	})
+	local player_text = panel:text({
+		y = 10,
+		font = font,
+		font_size = font_size,
+		text = tostring(managers.network.account:username() or managers.blackmarket:get_preferred_character_real_name()),
+		color = tweak_data.screen_colors.text
+	})
+
+	self:_make_fine_text(player_text)
+	player_text:set_top(panel:top())
+
 	local player_level = managers.experience:current_level()
 	local player_rank = managers.experience:current_rank()
 	local is_infamous = player_rank > 0
@@ -128,18 +140,7 @@ function PlayerProfileGuiObject:init(ws)
 		player_level_panel:set_size(level_text:size())
 	end
 
-	local player_text = panel:text({
-		y = 10,
-		font = font,
-		font_size = font_size,
-		text = tostring(managers.network.account:username() or managers.blackmarket:get_preferred_character_real_name()),
-		color = tweak_data.screen_colors.text
-	})
-
-	self:_make_fine_text(player_text)
-	player_text:set_left(math.round(exp_ring:right()))
-
-	max_left_len = math.max(max_left_len, player_text:w())
+	local text_offset = 10
 	local money_text = panel:text({
 		text = self:get_text("menu_cash", {
 			money = managers.money:total_string()
@@ -150,19 +151,21 @@ function PlayerProfileGuiObject:init(ws)
 	})
 
 	self:_make_fine_text(money_text)
-	money_text:set_left(math.round(exp_ring:right()))
-	money_text:set_top(math.round(player_text:bottom()))
+	managers.menu_component:make_color_text(money_text, COLOR_TRANSPARENT)
+	money_text:set_left(math.round(exp_ring:right() + text_offset))
+	money_text:set_top(math.round(exp_ring:top()))
 
 	max_left_len = math.max(max_left_len, money_text:w())
 	local total_money_text = panel:text({
-		text = self:get_text("hud_offshore_account") .. ": " .. managers.experience:cash_string(managers.money:offshore()),
+		text = "##" .. self:get_text("hud_offshore_account") .. "##: " .. managers.experience:cash_string(managers.money:offshore()),
 		font_size = font_size,
 		font = font,
 		color = tweak_data.screen_colors.text
 	})
 
 	self:_make_fine_text(total_money_text)
-	total_money_text:set_left(math.round(exp_ring:right()))
+	managers.menu_component:make_color_text(total_money_text, COLOR_TRANSPARENT)
+	total_money_text:set_left(math.round(exp_ring:right() + text_offset))
 	total_money_text:set_top(math.round(money_text:bottom()))
 
 	max_left_len = math.max(max_left_len, total_money_text:w())
@@ -174,14 +177,15 @@ function PlayerProfileGuiObject:init(ws)
 
 	if unlocked then
 		local coin_text = panel:text({
-			text = self:get_text("menu_es_coins_progress") .. ": " .. managers.experience:cash_string(math.floor(coins), ""),
+			text = "##" .. self:get_text("menu_es_coins_progress") .. "##: " .. managers.experience:cash_string(math.floor(coins), ""),
 			font_size = font_size,
 			font = font,
 			color = tweak_data.screen_colors.text
 		})
 
 		self:_make_fine_text(coin_text)
-		coin_text:set_left(math.round(exp_ring:right()))
+		managers.menu_component:make_color_text(coin_text, COLOR_TRANSPARENT)
+		coin_text:set_left(math.round(exp_ring:right() + text_offset))
 		coin_text:set_top(skillpoint_top)
 
 		max_left_len = math.max(max_left_len, coin_text:w())
@@ -203,7 +207,8 @@ function PlayerProfileGuiObject:init(ws)
 		})
 
 		self:_make_fine_text(skill_text)
-		skill_text:set_left(math.round(exp_ring:right()))
+		managers.menu_component:make_color_text(skill_text, COLOR_TRANSPARENT)
+		skill_text:set_left(math.round(exp_ring:right() + text_offset))
 		skill_text:set_top(skillpoint_top)
 
 		max_left_len = math.max(max_left_len, skill_text:w())
@@ -230,108 +235,10 @@ function PlayerProfileGuiObject:init(ws)
 	end
 
 	local font_scale = 1
-	local mastermind_ponts, num_skills = managers.skilltree:get_tree_progress_2("mastermind")
-	mastermind_ponts = string.format("%02d", mastermind_ponts)
-	local mastermind_text = panel:text({
-		y = 10,
-		text = self:get_text("menu_profession_progress", {
-			profession = self:get_text("st_menu_mastermind"),
-			progress = mastermind_ponts,
-			num_skills = num_skills
-		}),
-		font_size = font_size * font_scale,
-		font = font,
-		color = tweak_data.screen_colors.text
-	})
-
-	self:_make_fine_text(mastermind_text)
-
-	max_right_len = math.max(max_right_len, mastermind_text:w())
-	local enforcer_ponts, num_skills = managers.skilltree:get_tree_progress_2("enforcer")
-	enforcer_ponts = string.format("%02d", enforcer_ponts)
-	local enforcer_text = panel:text({
-		text = self:get_text("menu_profession_progress", {
-			profession = self:get_text("st_menu_enforcer"),
-			progress = enforcer_ponts,
-			num_skills = num_skills
-		}),
-		font_size = font_size * font_scale,
-		font = font,
-		color = tweak_data.screen_colors.text
-	})
-
-	self:_make_fine_text(enforcer_text)
-	enforcer_text:set_top(math.round(mastermind_text:bottom()))
-
-	max_right_len = math.max(max_right_len, enforcer_text:w())
-	local technician_ponts, num_skills = managers.skilltree:get_tree_progress_2("technician")
-	technician_ponts = string.format("%02d", technician_ponts)
-	local technician_text = panel:text({
-		text = self:get_text("menu_profession_progress", {
-			profession = self:get_text("st_menu_technician"),
-			progress = technician_ponts,
-			num_skills = num_skills
-		}),
-		font_size = font_size * font_scale,
-		font = font,
-		color = tweak_data.screen_colors.text
-	})
-
-	self:_make_fine_text(technician_text)
-	technician_text:set_top(math.round(enforcer_text:bottom()))
-
-	max_right_len = math.max(max_right_len, technician_text:w())
-	local ghost_ponts, num_skills = managers.skilltree:get_tree_progress_2("ghost")
-	ghost_ponts = string.format("%02d", ghost_ponts)
-	local ghost_text = panel:text({
-		text = self:get_text("menu_profession_progress", {
-			profession = self:get_text("st_menu_ghost"),
-			progress = ghost_ponts,
-			num_skills = num_skills
-		}),
-		font_size = font_size * font_scale,
-		font = font,
-		color = tweak_data.screen_colors.text
-	})
-
-	self:_make_fine_text(ghost_text)
-	ghost_text:set_top(math.round(technician_text:bottom()))
-
-	max_right_len = math.max(max_right_len, ghost_text:w())
-	local hoxton_ponts, num_skills = managers.skilltree:get_tree_progress_2("hoxton")
-	hoxton_ponts = string.format("%02d", hoxton_ponts)
-	local hoxton_text = panel:text({
-		text = self:get_text("menu_profession_progress", {
-			profession = self:get_text("st_menu_hoxton_pack"),
-			progress = hoxton_ponts,
-			num_skills = num_skills
-		}),
-		font_size = font_size * font_scale,
-		font = font,
-		color = tweak_data.screen_colors.text
-	})
-
-	self:_make_fine_text(hoxton_text)
-	hoxton_text:set_top(math.round(ghost_text:bottom()))
-
-	max_right_len = math.max(max_right_len, hoxton_text:w())
 	self._panel = panel
 
-	self._panel:set_size(exp_ring:w() + max_left_len + 15 + max_right_len + 10, math.max(skill_text and skill_text:bottom() or total_money_text:bottom(), hoxton_text:bottom()) + 8)
+	self._panel:set_size(exp_ring:w() + max_left_len + 15 + max_right_len + 10, math.max(skill_text and skill_text:bottom() or 0, bg_ring:bottom()) + 8)
 	self._panel:set_bottom(self._panel:parent():h() - 60)
-	BoxGuiObject:new(self._panel, {
-		sides = {
-			1,
-			1,
-			1,
-			1
-		}
-	})
-	mastermind_text:set_right(self._panel:w() - 10)
-	enforcer_text:set_right(self._panel:w() - 10)
-	technician_text:set_right(self._panel:w() - 10)
-	ghost_text:set_right(self._panel:w() - 10)
-	hoxton_text:set_right(self._panel:w() - 10)
 	bg_ring:move(-5, 0)
 	exp_ring:move(-5, 0)
 	player_level_panel:set_center(exp_ring:center())

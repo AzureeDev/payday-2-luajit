@@ -6695,4 +6695,272 @@ function InteractionTweakData:init(tweak_data)
 		timer = 1,
 		interact_distance = 200
 	}
+	self.sand_release_vlad = {
+		text_id = "hud_int_release_vlad",
+		action_text_id = "hud_action_releasing_vlad",
+		interact_distance = 100,
+		timer = 3
+	}
+	self.sand_open_first_aid_kit = {
+		text_id = "hud_int_open_first_aid_kit",
+		action_text_id = "hud_action_opening_first_aid_kit",
+		interact_distance = 200,
+		start_active = false,
+		timer = 1
+	}
+	self.sand_take_adrenaline = {
+		text_id = "hud_int_take_adrenaline",
+		action_text_id = "hud_action_taking_adrenaline",
+		start_active = false,
+		interact_distance = 200
+	}
+	self.sand_use_adrenaline = {
+		text_id = "hud_int_use_adrenaline",
+		action_text_id = "hud_action_using_adrenaline",
+		equipment_text_id = "hint_no_adrenaline",
+		special_equipment = "adrenaline",
+		interact_distance = 200,
+		timer = 3,
+		equipment_consume = true
+	}
+	self.sand_move_truck = {
+		text_id = "hud_int_move_truck",
+		action_text_id = "hud_action_moving_truck",
+		interact_distance = 100,
+		timer = 3
+	}
+	self.sand_open_warehouse_door = {
+		text_id = "hud_int_open_warehouse_door",
+		action_text_id = "hud_action_opening_warehouse_door",
+		interact_distance = 300,
+		timer = 2
+	}
+	self.sand_open_slide_gate = {
+		text_id = "hud_int_open_slide_gate",
+		action_text_id = "hud_action_opening_slide_gate",
+		interact_distance = 300,
+		timer = 2
+	}
+	self.sand_search_for_documents = {
+		text_id = "hud_int_search_for_documents",
+		action_text_id = "hud_action_searching_for_documents",
+		interact_distance = 150,
+		axis = "y",
+		timer = 3,
+		start_active = false
+	}
+	self.sand_take_usb = {
+		text_id = "hud_int_take_usb",
+		action_text_id = "hud_action_taking_usb",
+		axis = "y",
+		interact_distance = 200
+	}
+	self.sand_insert_usb = {
+		text_id = "hud_int_insert_usb",
+		action_text_id = "hud_action_inserting_usb_sand",
+		equipment_text_id = "hint_usb_stick",
+		interact_distance = 200,
+		timer = 1,
+		special_equipment = "cas_usb_key",
+		axis = "y",
+		start_active = false,
+		equipment_consume = true
+	}
+	self.sand_place_documents = {
+		text_id = "hud_int_place_documents",
+		action_text_id = "hud_action_placing_documents",
+		interact_distance = 200,
+		timer = 3,
+		equipment_text_id = "hint_no_documents",
+		special_equipment = "documents",
+		axis = "y",
+		start_active = false,
+		equipment_consume = true
+	}
+	self.sand_take_laxative = {
+		text_id = "hud_int_take_laxative",
+		action_text_id = "hud_action_taking_laxative",
+		interact_distance = 200,
+		axis = "y",
+		start_active = false
+	}
+	self.sand_spike_cake = {
+		text_id = "hud_int_spike_cake",
+		action_text_id = "hud_action_spiking_cake",
+		equipment_text_id = "hint_no_laxative",
+		special_equipment = "laxative",
+		interact_distance = 200,
+		timer = 2,
+		start_active = false,
+		equipment_consume = true
+	}
+	self.sand_take_gas_canister = {
+		text_id = "hud_int_take_gas_canister",
+		action_text_id = "hud_action_taking_gas_canister",
+		interact_distance = 200,
+		timer = 1,
+		start_active = false
+	}
+	self.sand_place_gas_canister = {
+		text_id = "hud_int_place_gas_canister",
+		action_text_id = "hud_action_placing_gas_canister",
+		equipment_text_id = "hint_no_gas_canister",
+		special_equipment = "gas_canister",
+		interact_distance = 200,
+		timer = 3,
+		equipment_consume = true
+	}
+	self.sand_charge_paddles = {
+		text_id = "hud_int_charge_paddles",
+		action_text_id = "hud_action_charging_paddles",
+		equipment_text_id = "hint_no_defibrillator_paddles",
+		special_equipment = "defibrillator_paddles",
+		interact_distance = 200
+	}
+	self.sand_take_paddles = {
+		text_id = "hud_int_take_paddles",
+		action_text_id = "hud_action_taking_paddles",
+		interact_distance = 200,
+		axis = "x"
+	}
+	self.sand_place_paddles = {
+		text_id = "hud_int_place_paddles",
+		action_text_id = "hud_action_placing_paddles",
+		equipment_text_id = "hint_no_defibrillator_paddles",
+		special_equipment = "defibrillator_paddles",
+		interact_distance = 200,
+		timer = 2,
+		equipment_consume = true,
+		axis = "x"
+	}
+	self.sand_use_paddles = {
+		text_id = "hud_int_use_paddles",
+		action_text_id = "hud_action_using_paddles",
+		equipment_text_id = "hint_no_defibrillator_paddles",
+		special_equipment = "defibrillator_paddles",
+		interact_distance = 200,
+		timer = 2
+	}
+	self.sand_start_defibrillator = {
+		text_id = "hud_int_start_defibrillator",
+		action_text_id = "hud_action_starting_defibrillator",
+		interact_distance = 200,
+		timer = 1,
+		axis = "x"
+	}
+	self.sand_slide_ramp = {
+		text_id = "hud_int_slide_ramp",
+		action_text_id = "hud_action_sliding_ramp",
+		interact_distance = 300,
+		timer = 3,
+		start_active = false
+	}
+	self.sand_take_note = {
+		text_id = "hud_int_take_note",
+		action_text_id = "hud_action_taking_note",
+		interact_distance = 200,
+		axis = "z"
+	}
+	self.sand_place_note = {
+		text_id = "hud_int_place_note",
+		action_text_id = "hud_action_placing_note",
+		equipment_text_id = "hint_no_notepad",
+		special_equipment = "notepad",
+		interact_distance = 200,
+		equipment_consume = true
+	}
+	self.sand_open_handcuffs = {
+		text_id = "hud_int_open_handcuffs",
+		action_text_id = "hud_action_opening_handcuffs",
+		interact_distance = 200,
+		timer = 3,
+		sound_start = "bar_rescue",
+		sound_interupt = "bar_rescue_cancel",
+		sound_done = "bar_rescue_finished"
+	}
+	self.sand_button_number_sign = {
+		text_id = "hud_int_press_number_sign",
+		start_active = false,
+		interact_distance = 50
+	}
+	self.sand_hit_gong = {
+		text_id = "hud_int_hit_gong",
+		start_active = false,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.fake_pick_lock_easy_no_skill = {
+		text_id = "hud_int_pick_lock",
+		start_active = true,
+		interact_distance = 100
+	}
+	self.sand_hold_blow_torch = {
+		text_id = "hud_int_hold_cut",
+		action_text_id = "hud_action_cutting",
+		timer = 5,
+		equipment_text_id = "hud_equipment_need_blow_torch",
+		special_equipment = "blow_torch",
+		sound_start = "bar_blowtorch",
+		sound_interupt = "bar_blowtorch_end",
+		sound_done = "bar_blowtorch_end",
+		axis = "y"
+	}
+	self.sand_ring_bell = {
+		text_id = "hud_int_ring_bell",
+		action_text_id = "hud_action_ringing_bell",
+		interact_distance = 200
+	}
+	self.sand_move_cargo = {
+		text_id = "hud_int_move_cargo",
+		action_text_id = "hud_action_move_cargo",
+		interact_distance = 200
+	}
+	self.sand_help_vlad = {
+		text_id = "hud_int_help_vlad",
+		action_text_id = "hud_action_helping_vlad",
+		interact_distance = 200,
+		timer = 1
+	}
+	self.sand_open_truck_door = {
+		text_id = "hud_int_open_truck_door",
+		action_text_id = "hud_action_opening_truck_door",
+		start_active = false,
+		interact_distance = 200,
+		timer = 2
+	}
+	self.sand_close_truck_door = {
+		text_id = "hud_int_close_truck_door",
+		action_text_id = "hud_action_closing_truck_door",
+		start_active = false,
+		interact_distance = 200,
+		timer = 2
+	}
+	self.sand_raise_ramp = {
+		text_id = "hud_int_raise_ramp",
+		action_text_id = "hud_action_raise_ramp",
+		interact_distance = 200,
+		timer = 1,
+		axis = "y"
+	}
+	self.sand_torture_tape = {
+		text_id = "hud_int_listen_to_tape",
+		interact_distance = 100,
+		axis = "x"
+	}
+	self.sand_pickup_harddrive = {
+		text_id = "hud_int_take_harddrive",
+		action_text_id = "hud_action_take_harddrive",
+		special_equipment_block = "harddrive",
+		timer = 1,
+		axis = "y"
+	}
+	self.sand_hold_move_truck = deep_clone(self.hold_move_car)
+	self.sand_hold_move_truck.text_id = "hud_int_move_truck"
+	self.sand_hold_move_truck.action_text_id = "hud_action_moving_truck"
+	self.sand_tort_tape = {
+		text_id = "hud_int_play_tort_tape",
+		interact_distance = 100
+	}
+	self.sand_ipad = deep_clone(self.money_wrap_single_chas)
+	self.sand_ipad.interact_distance = 200
 end

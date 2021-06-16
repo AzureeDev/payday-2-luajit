@@ -303,6 +303,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 300,
 		category = "normal"
 	}
+	self.global_values.jun21 = {
+		name_id = "bm_global_value_jun21",
+		desc_id = "menu_l_global_value_jun21",
+		unlock_id = "bm_global_value_jun21_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 262,
+		category = "normal"
+	}
 	self.global_values.mar21 = {
 		name_id = "bm_global_value_mar21",
 		desc_id = "menu_l_global_value_mar21",
@@ -479,6 +495,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 508,
 		category = "dlc"
 	}
+	self.global_values.sand = {
+		name_id = "bm_global_value_sand",
+		desc_id = "menu_l_global_value_sand",
+		unlock_id = "bm_global_value_sand_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 509,
+		category = "dlc"
+	}
 	self.global_values.sawp = {
 		name_id = "bm_global_value_sawp",
 		desc_id = "menu_l_global_value_sawp",
@@ -526,6 +558,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		track = true,
 		sort_number = 300,
 		category = "normal"
+	}
+	self.global_values.sdtp = {
+		name_id = "bm_global_value_sdtp",
+		desc_id = "menu_l_global_value_sdtp",
+		unlock_id = "bm_global_value_sdtp_unlock",
+		color = tweak_data.screen_colors.dlc_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 509,
+		category = "dlc"
 	}
 	self.global_values.sft = {
 		name_id = "bm_global_value_sft",

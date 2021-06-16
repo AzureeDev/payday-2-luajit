@@ -10675,6 +10675,7 @@ function WeaponTweakData:_init_gre_m79(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		ammo_default_sub_type = "ammo_explosive",
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -12291,9 +12292,9 @@ function WeaponTweakData:_init_sterling(weapon_data)
 		selection_index = SELECTION.SECONDARY
 	}
 	self.sterling.DAMAGE = 1
-	self.sterling.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_LOW
-	self.sterling.CLIP_AMMO_MAX = 20
-	self.sterling.NR_CLIPS_MAX = 11
+	self.sterling.damage_falloff = FALLOFF_TEMPLATE.SMG_FALL_HIGH
+	self.sterling.CLIP_AMMO_MAX = 24
+	self.sterling.NR_CLIPS_MAX = 4
 	self.sterling.AMMO_MAX = self.sterling.CLIP_AMMO_MAX * self.sterling.NR_CLIPS_MAX
 	self.sterling.AMMO_PICKUP = self:_pickup_chance(self.sterling.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
 	self.sterling.FIRE_MODE = "auto"
@@ -12348,9 +12349,9 @@ function WeaponTweakData:_init_sterling(weapon_data)
 	self.sterling.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 42,
+		damage = 99,
 		alert_size = 7,
-		spread = 8,
+		spread = 14,
 		spread_moving = 8,
 		recoil = 20,
 		value = 7,
@@ -13817,6 +13818,7 @@ function WeaponTweakData:_init_m32(weapon_data)
 			launcher_electric = "launcher_electric_m32",
 			launcher_incendiary = "launcher_incendiary_m32"
 		},
+		ammo_default_sub_type = "ammo_explosive",
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -15289,8 +15291,8 @@ function WeaponTweakData:_init_x_pm9(weapon_data)
 	self.x_pm9.sounds.leave_steelsight = "pistol_steel_sight_exit"
 	self.x_pm9.sounds.dryfire = "secondary_dryfire"
 	self.x_pm9.timers = {
-		reload_not_empty = 3,
-		reload_empty = 3,
+		reload_not_empty = 2.1,
+		reload_empty = 2.7,
 		unequip = 0.5,
 		equip = 0.5
 	}
@@ -15421,11 +15423,11 @@ function WeaponTweakData:_init_pm9(weapon_data)
 	self.pm9.AMMO_PICKUP = self:_pickup_chance(self.pm9.AMMO_MAX, PICKUP.AR_HIGH_CAPACITY)
 	self.pm9.FIRE_MODE = "auto"
 	self.pm9.fire_mode_data = {
-		fire_rate = 0.0545
+		fire_rate = 0.05455
 	}
 	self.pm9.CAN_TOGGLE_FIREMODE = true
 	self.pm9.auto = {
-		fire_rate = 0.0545
+		fire_rate = 0.05455
 	}
 	self.pm9.spread = {
 		standing = self.new_m4.spread.standing,
@@ -15493,6 +15495,7 @@ function WeaponTweakData:_init_groza(weapon_data)
 		categories = {
 			"assault_rifle"
 		},
+		ammo_default_sub_type = "ammo_electric",
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -16647,6 +16650,7 @@ function WeaponTweakData:_init_china(weapon_data)
 			launcher_electric = "launcher_electric_china",
 			launcher_incendiary = "launcher_incendiary_china"
 		},
+		ammo_default_sub_type = "ammo_explosive",
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -18740,6 +18744,7 @@ function WeaponTweakData:_init_arbiter(weapon_data)
 			launcher_electric = "launcher_electric_arbiter",
 			launcher_incendiary = "launcher_incendiary_arbiter"
 		},
+		ammo_default_sub_type = "ammo_explosive",
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -18855,6 +18860,7 @@ function WeaponTweakData:_init_contraband(weapon_data)
 		categories = {
 			"assault_rifle"
 		},
+		ammo_default_sub_type = "ammo_explosive",
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -21496,6 +21502,7 @@ function WeaponTweakData:_init_slap(weapon_data)
 			launcher_electric = "launcher_electric_slap",
 			launcher_incendiary = "launcher_incendiary_slap"
 		},
+		ammo_default_sub_type = "ammo_explosive",
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -23280,9 +23287,9 @@ function WeaponTweakData:_init_x_sterling(weapon_data)
 		selection_index = SELECTION.PRIMARY
 	}
 	self.x_sterling.DAMAGE = 1
-	self.x_sterling.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_LOW
-	self.x_sterling.CLIP_AMMO_MAX = 40
-	self.x_sterling.NR_CLIPS_MAX = 7
+	self.x_sterling.damage_falloff = FALLOFF_TEMPLATE.AKI_SMG_FALL_HIGH
+	self.x_sterling.CLIP_AMMO_MAX = 48
+	self.x_sterling.NR_CLIPS_MAX = 3.5
 	self.x_sterling.AMMO_MAX = self.x_sterling.CLIP_AMMO_MAX * self.x_sterling.NR_CLIPS_MAX
 	self.x_sterling.AMMO_PICKUP = self:_pickup_chance(self.x_sterling.AMMO_MAX, PICKUP.OTHER)
 	self.x_sterling.FIRE_MODE = "auto"
@@ -23342,9 +23349,9 @@ function WeaponTweakData:_init_x_sterling(weapon_data)
 	self.x_sterling.stats = {
 		zoom = 3,
 		total_ammo_mod = 21,
-		damage = 42,
+		damage = 99,
 		alert_size = 7,
-		spread = 8,
+		spread = 14,
 		spread_moving = 8,
 		recoil = 20,
 		value = 7,

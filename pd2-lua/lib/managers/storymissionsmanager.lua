@@ -127,7 +127,14 @@ function StoryMissionsManager:claim_rewards(mission)
 		return
 	end
 
-	for _, t in pairs(mission.rewards or {}) do
+	local skipped_mission = self:get_last_skipped_mission() == mission
+	local rewards = mission.rewards_halved and skipped_mission and mission.rewards_halved or mission.rewards
+
+	for _, t in pairs(rewards or {}) do
+		if t[1] == "safehouse_coins" and skipped_mission then
+			t[2] = math.floor(t[2] / 2)
+		end
+
 		self:_reward(t)
 	end
 
@@ -197,15 +204,17 @@ function StoryMissionsManager:_find_next_mission(dont_set)
 	local last = nil
 
 	for _, m in pairs(self._global.mission_order) do
-		if not m.completed or not m.rewarded then
-			if not dont_set then
-				self:_change_current_mission(m)
+		if not m.is_header then
+			if not m.completed or not m.rewarded then
+				if not dont_set then
+					self:_change_current_mission(m)
+				end
+
+				return m
 			end
 
-			return m
+			last = last or m.last_mission and m
 		end
-
-		last = last or m.last_mission and m
 	end
 
 	if not dont_set then
@@ -411,7 +420,7 @@ function StoryMissionsManager:start_mission(mission, objective_id)
 		return
 	end
 
-	if o.basic then
+	if o.basic or Global.game_settings.single_player then
 		Global.game_settings.team_ai = true
 		Global.game_settings.team_ai_option = 2
 
@@ -422,19 +431,73 @@ function StoryMissionsManager:start_mission(mission, objective_id)
 		})
 
 		return
+	else
+		MenuCallbackHandler:play_online_game()
 	end
 
 	local job_data = tweak_data.narrative:job_data(level)
 	local data = {
+		customize_difficulty = true,
 		difficulty = difficulty,
 		difficulty_id = tweak_data:difficulty_to_index(difficulty),
 		job_id = level,
 		contract_visuals = job_data and job_data.contract_visuals
 	}
+	self._global.story_level_opened = level
 
 	managers.menu:open_node(Global.game_settings.single_player and "crimenet_contract_singleplayer" or "crimenet_contract_host", {
 		data
 	})
+end
+
+function StoryMissionsManager:skip_mission(mission)
+	local m = self:get_mission(mission) or mission
+
+	if not m then
+		Application:error("Failed to complete mission...", m)
+
+		return
+	end
+
+	for _, o in pairs(m.objectives_flat) do
+		o.completed = true
+		o.progress = o.max_progress
+	end
+
+	self:_check_complete(m)
+
+	self._global.skipped_mission = mission
+end
+
+function StoryMissionsManager:get_last_skipped_mission(mission)
+	return self._global.skipped_mission
+end
+
+function StoryMissionsManager:set_last_failed_heist(last_failed_heist)
+	self._global.last_failed_heist_id = last_failed_heist
+end
+
+function StoryMissionsManager:get_last_failed_heist()
+	return self._global.last_failed_heist_id or ""
+end
+
+function StoryMissionsManager:is_heist_story_started(heist_id)
+	local mission = self:current_mission()
+	heist_id = heist_id or ""
+
+	for i, objective_row in ipairs(mission.objectives) do
+		for _, objective in ipairs(objective_row) do
+			if not mission.completed and not objective.completed and objective.levels then
+				for _, level in ipairs(objective.levels) do
+					if heist_id == level and heist_id == self._global.story_level_opened then
+						return true
+					end
+				end
+			end
+		end
+	end
+
+	return false
 end
 
 function StoryMissionsManager:reset_all()

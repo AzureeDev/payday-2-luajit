@@ -122,6 +122,7 @@ function StatisticsManager:_setup(reset)
 	self._defaults.play_time = {
 		minutes = 0
 	}
+	self._defaults.menu = {}
 	self._defaults.sessions.job_stats_version = StatisticsManager.JOB_STATS_VERSION
 
 	if not Global.statistics_manager or reset then
@@ -418,6 +419,14 @@ function StatisticsManager:_increment_misc(name, amount)
 			amount
 		})
 	end
+end
+
+function StatisticsManager:_increment_menu(name, amount)
+	if not self._global.menu then
+		self._global.menu = {}
+	end
+
+	self._global.menu[name] = (self._global.menu[name] or 0) + amount
 end
 
 function StatisticsManager:use_trip_mine()
@@ -1069,6 +1078,19 @@ function StatisticsManager:publish_level_to_steam()
 				type = "int"
 			}
 		end
+	end
+
+	managers.network.account:publish_statistics(stats)
+end
+
+function StatisticsManager:publish_menu_stats_to_steam(name, value)
+	local stats = {}
+
+	for name, amount in pairs(self._global.menu) do
+		stats[name] = {
+			type = "int",
+			value = amount
+		}
 	end
 
 	managers.network.account:publish_statistics(stats)
@@ -2493,7 +2515,8 @@ function StatisticsManager:save(data)
 		play_time = self._global.play_time,
 		days_in_row = self._global.days_in_row,
 		days_alone_time = self._global.days_alone_time,
-		stat_check = self._global.stat_check
+		stat_check = self._global.stat_check,
+		menu = self._global.menu
 	}
 	data.StatisticsManager = state
 end

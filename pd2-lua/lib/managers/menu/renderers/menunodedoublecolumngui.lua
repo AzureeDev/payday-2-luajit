@@ -89,6 +89,14 @@ function MenuNodeDoubleColumnGui:_set_item_positions()
 				row_item.icon:set_color(row_item.gui_panel:color())
 			end
 
+			if alive(row_item.glow) then
+				local x, y, w, h = row_item.gui_panel:text_rect()
+
+				row_item.glow:set_center_y(row_item.gui_panel:center_y())
+				row_item.glow:set_center_x(x + w / 2)
+				row_item.glow:set_width(w * 3)
+			end
+
 			local x, y, w, h = row_item.gui_panel:shape()
 			current_item_height = h + self.spacing
 			current_y = current_y + current_item_height
@@ -143,6 +151,14 @@ function MenuNodeDoubleColumnGui:_set_item_positions()
 
 				row_item.icon:set_center_y(row_item.gui_panel:center_y())
 				row_item.icon:set_color(row_item.gui_panel:color())
+			end
+
+			if alive(row_item.glow) then
+				local x, y, w, h = row_item.gui_panel:text_rect()
+
+				row_item.glow:set_center_y(row_item.gui_panel:center_y())
+				row_item.glow:set_center_x(x + w / 2)
+				row_item.glow:set_width(w * 3)
 			end
 
 			local x, y, w, h = row_item.gui_panel:shape()

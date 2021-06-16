@@ -2037,6 +2037,11 @@ function MenuCallbackHandler:_dialog_save_progress_backup_no()
 	setup:quit()
 end
 
+function MenuCallbackHandler:on_press_tracking(item)
+	managers.statistics:_increment_menu("main_menu_" .. item:name(), 1)
+	managers.statistics:publish_menu_stats_to_steam()
+end
+
 function MenuCallbackHandler:chk_dlc_content_updated()
 	if SystemInfo:platform() ~= Idstring("XB1") and managers.dlc then
 		managers.dlc:chk_content_updated()
@@ -2669,6 +2674,18 @@ function MenuCallbackHandler:customize_contract(item)
 	end
 
 	return managers.menu:active_menu().logic:selected_node():parameters().menu_component_data.customize_contract
+end
+
+function MenuCallbackHandler:customize_contract_or_difficulty(item)
+	local active_menu = managers.menu:active_menu()
+	local selected_node = active_menu and active_menu.logic and active_menu.logic:selected_node()
+	local menu_component_data = selected_node and selected_node:parameters().menu_component_data
+
+	if not menu_component_data then
+		return false
+	end
+
+	return menu_component_data.customize_contract or menu_component_data.customize_difficulty
 end
 
 function MenuCallbackHandler:change_contract_difficulty(item)

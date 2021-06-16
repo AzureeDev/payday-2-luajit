@@ -435,6 +435,12 @@ function CustomSafehouseGuiPageMap:_setup_info_panel()
 				pc_btn = "menu_remove_item",
 				callback = callback(self, self, "defend_safehouse")
 			})
+			table.insert(buttons, {
+				btn = "BTN_Y",
+				name_id = "menu_cn_chill_combat_ignore_defend",
+				pc_btn = "menu_toggle_ready",
+				callback = callback(self, self, "ignore_defend")
+			})
 		else
 			table.insert(buttons, {
 				btn = "BTN_X",

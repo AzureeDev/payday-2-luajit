@@ -103,11 +103,8 @@ function DialogManager:queue_narrator_dialog(id, params)
 end
 
 function DialogManager:set_narrator(narrator)
-	local narrator_codes = {
-		bain = "ban",
-		locke = "loc"
-	}
-	self._narrator_prefix = "Play_" .. narrator_codes[narrator] .. "_"
+	local narrator_prefix = tweak_data.levels:get_narrator_prefix(narrator)
+	self._narrator_prefix = "Play_" .. narrator_prefix .. "_"
 end
 
 function DialogManager:finished()

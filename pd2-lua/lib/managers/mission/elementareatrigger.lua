@@ -106,6 +106,10 @@ function ElementAreaTrigger:project_instigators()
 		for _, data in pairs(managers.groupai:state():all_char_criminals()) do
 			table.insert(instigators, data.unit)
 		end
+	elseif self._values.instigator == "player_criminals" then
+		for _, data in pairs(managers.groupai:state():all_player_criminals()) do
+			table.insert(instigators, data.unit)
+		end
 	elseif self._values.instigator == "local_criminals" then
 		table.insert(instigators, managers.player:player_unit())
 

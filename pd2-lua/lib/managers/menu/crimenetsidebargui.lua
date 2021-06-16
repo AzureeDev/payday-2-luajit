@@ -265,9 +265,7 @@ function CrimeNetSidebarGui:confirm_pressed()
 end
 
 function CrimeNetSidebarGui:back_pressed()
-	managers.menu:force_back(false, true)
-
-	return true
+	return false
 end
 
 function CrimeNetSidebarGui:update(t, dt)
@@ -312,9 +310,9 @@ function CrimeNetSidebarGui:input_focus()
 	local mouse_pos_x, mouse_pos_y = managers.mouse_pointer:modified_mouse_pos()
 
 	if self:collapsed() then
-		return self._icons_panel:inside(mouse_pos_x, mouse_pos_y)
+		return self._icons_panel:inside(mouse_pos_x, mouse_pos_y) and 1
 	else
-		return self._panel:inside(mouse_pos_x, mouse_pos_y)
+		return self._panel:inside(mouse_pos_x, mouse_pos_y) and 1
 	end
 end
 
@@ -391,6 +389,10 @@ end
 
 function CrimeNetSidebarGui:clbk_open_story_missions()
 	managers.menu:open_node("story_missions")
+end
+
+function CrimeNetSidebarGui:clbk_open_quickplay()
+	managers.menu:open_node("quickplay_settings")
 end
 
 function CrimeNetSidebarGui:clbk_skirmish()

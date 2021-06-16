@@ -254,6 +254,10 @@ function MenuCallbackHandler:got_new_lootdrop()
 	return managers.blackmarket and managers.blackmarket:got_any_new_drop()
 end
 
+function MenuCallbackHandler:is_new_player_story_glow()
+	return managers.experience:current_level() <= tweak_data.story.main_menu_glow_level_limit and managers.experience:current_rank() <= 0
+end
+
 function MenuCallbackHandler:not_completed_all_story_assignments()
 	local current = managers.story:current_mission() or {}
 
@@ -3331,19 +3335,8 @@ function MenuCallbackHandler:buy_weapon_color_dlc(item)
 	local cosmetic_data = weapon_color_data.cosmetic_data
 	local color_tweak = tweak_data.blackmarket.weapon_skins[cosmetic_data.id]
 	local dlc = color_tweak.dlc or managers.dlc:global_value_to_dlc(color_tweak.global_value)
-	local dlc_data = Global.dlc_manager.all_dlc_data[dlc]
 
-	if dlc_data then
-		if dlc_data.webpage then
-			Steam:overlay_activate("url", dlc_data.webpage)
-		elseif dlc_data.app_id then
-			Steam:overlay_activate("store", dlc_data.app_id)
-		elseif dlc_data.source_id then
-			Steam:overlay_activate("game", "OfficialGameGroup")
-		else
-			Steam:overlay_activate("url", tweak_data.gui.store_page)
-		end
-	end
+	MenuCallbackHandler:open_dlc_store_page(dlc, "weapon_colors")
 end
 
 function MenuCallbackHandler:is_weapon_color_option_visible(item_option)
@@ -3450,6 +3443,37 @@ function MenuCallbackHandler:sort_weapon_colors(x_option, y_option)
 	end
 
 	return y_id < x_id
+end
+
+function MenuCallbackHandler:open_dlc_store_page(dlc, context)
+	if not MenuCallbackHandler:is_overlay_enabled() then
+		managers.menu:show_enable_steam_overlay()
+
+		return false
+	end
+
+	local dlc_data = Global.dlc_manager.all_dlc_data[dlc]
+
+	if not dlc_data then
+		dlc = managers.dlc:global_value_to_dlc(dlc)
+		dlc_data = Global.dlc_manager.all_dlc_data[dlc]
+	end
+
+	if dlc_data then
+		if dlc_data.app_id then
+			local url = string.format("https://store.steampowered.com/app/%s/?utm_source=%s&utm_medium=%s&utm_campaign=%s", tostring(dlc_data.app_id), "ingame", context and tostring(context) or "inventory", "ingameupsell")
+
+			Steam:overlay_activate("url", url)
+		elseif dlc_data.source_id then
+			Steam:overlay_activate("game", "OfficialGameGroup")
+		else
+			Steam:overlay_activate("url", tweak_data.gui.store_page)
+		end
+
+		return true
+	end
+
+	return false
 end
 
 MenuArmorSkinEditorInitiator = MenuArmorSkinEditorInitiator or class(MenuInitiatorBase)

@@ -5018,6 +5018,47 @@ function AchievementsTweakData:init(tweak_data)
 			job = "chas",
 			difficulty = sm_wish_and_above
 		},
+		sand_1 = {
+			award = "sand_1",
+			job = "sand",
+			difficulty = normal_and_above
+		},
+		sand_2 = {
+			award = "sand_2",
+			job = "sand",
+			difficulty = hard_and_above
+		},
+		sand_3 = {
+			award = "sand_3",
+			job = "sand",
+			difficulty = veryhard_and_above
+		},
+		sand_4 = {
+			award = "sand_4",
+			job = "sand",
+			difficulty = overkill_and_above
+		},
+		sand_5 = {
+			award = "sand_5",
+			job = "sand",
+			difficulty = easywish_and_above
+		},
+		sand_6 = {
+			award = "sand_6",
+			job = "sand",
+			difficulty = deathwish_and_above
+		},
+		sand_7 = {
+			award = "sand_7",
+			job = "sand",
+			difficulty = sm_wish_and_above
+		},
+		sand_8 = {
+			award = "sand_8",
+			one_down = true,
+			job = "sand",
+			difficulty = sm_wish_and_above
+		},
 		uno_1 = {
 			award = "uno_1",
 			bag_loot_value = 400000,
@@ -5683,13 +5724,8 @@ function AchievementsTweakData:init(tweak_data)
 			story = "story_jewelry_store"
 		},
 		story_bank_heist = {
-			story = "story_bank_heist",
-			jobs = {
-				"branchbank_prof",
-				"branchbank_gold_prof",
-				"branchbank_cash",
-				"branchbank_deposit"
-			}
+			job = "branchbank_cash",
+			story = "story_bank_heist"
 		},
 		story_go_bank = {
 			job = "roberts",
@@ -6241,7 +6277,8 @@ function AchievementsTweakData:init(tweak_data)
 			"peta",
 			"moon",
 			"bex",
-			"fex"
+			"fex",
+			"sand"
 		},
 		hector = {
 			"watchdogs_wrapper",
@@ -8199,7 +8236,7 @@ function AchievementsTweakData:_init_visual(tweak_data)
 				visual.unlock_icons = visual.unlock_icons or {}
 				visual.unlock_id = visual.unlock_id or true
 
-				for _, loot in pairs(data.content.loot_drops) do
+				for _, loot in pairs(data.content.loot_drops or {}) do
 					local tex_data = get_texture_path(tweak_data, loot.type_items, loot.item_entry)
 
 					if not table.contains(visual.unlock_icons, tex_data) then

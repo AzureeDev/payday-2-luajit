@@ -150,19 +150,13 @@ function MenuMainState:at_enter(old_state)
 		end
 
 		if not managers.custom_safehouse:unlocked() then
-			if not Global.mission_manager.has_played_tutorial and not Global.skip_menu_dialogs then
-				local function yes_func()
-					MenuCallbackHandler:play_safehouse({
-						skip_question = true
-					})
-				end
+			-- Nothing
+		elseif (tweak_data.safehouse.level_limit <= managers.experience:current_level() or managers.experience:current_rank() > 0) and not managers.custom_safehouse:has_entered_safehouse() and Global.mission_manager.safehouse_ask_amount < 2 and not Global.skip_menu_dialogs then
+			Global.mission_manager.safehouse_ask_amount = Global.mission_manager.safehouse_ask_amount + 1
 
-				managers.menu:show_question_start_tutorial({
-					yes_func = yes_func
-				})
-			end
-		elseif not managers.custom_safehouse:has_entered_safehouse() and not Global.skip_menu_dialogs then
 			local function yes_func()
+				Global.mission_manager.safehouse_ask_amount = 2
+
 				MenuCallbackHandler:play_single_player()
 				MenuCallbackHandler:start_single_player_job({
 					difficulty = "normal",

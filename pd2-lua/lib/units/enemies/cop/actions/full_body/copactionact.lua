@@ -63,6 +63,10 @@ CopActionAct._act_redirects = {
 		"e_sp_kick",
 		"e_sp_kicked",
 		"e_sp_sit_sleep_over_desk",
+		"e_sp_fwd_5m_down_5m_swing",
+		"e_sp_slide_to_dwn_5m",
+		"e_sp_slide_to_dwn_10m",
+		"e_sp_slide_to_dwn_10m_var2",
 		"e_sp_dah_up_climb_one_window",
 		"e_sp_dah_up_climb_to_roof",
 		"e_sp_dah_up_balcony",
@@ -895,6 +899,8 @@ CopActionAct._act_redirects = {
 		"e_so_des_walk_idle",
 		"e_so_pull_lever_var2",
 		"e_so_press_button_mid",
+		"e_so_ntl_eat_enter_var2",
+		"e_so_ntl_eat_exit_var2",
 		"e_so_ntl_bored",
 		"e_so_ntl_stand_inspect_var1",
 		"e_so_ntl_stand_inspect_var2",
@@ -1441,7 +1447,19 @@ CopActionAct._act_redirects = {
 		"drive_wanker_driver",
 		"drive_wanker_passanger",
 		"drive_wanker_back_right",
-		"drive_wanker_back_left"
+		"drive_wanker_back_left",
+		"esc_sand_std_hurt_idle",
+		"cm_so_sand_tied_to_wall_loop",
+		"cm_so_sand_tied_to_wall_talk",
+		"cm_so_sand_tied_to_wall_fall",
+		"cm_so_sand_fall",
+		"cm_so_sand_climb_out_bucket_stealth",
+		"cm_so_sand_jump_to_boat",
+		"cm_so_sand_laying_chock",
+		"cm_so_sand_laying_exit",
+		"cm_so_sand_laying_exit_inject",
+		"cm_so_sand_climb_in_bucket",
+		"cm_so_sand_climb_out_bucket"
 	}
 }
 

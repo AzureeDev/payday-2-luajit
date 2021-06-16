@@ -2598,6 +2598,7 @@ function GroupAIStateBase:save(save_data)
 	my_save_data._bain_state = self._bain_state
 	my_save_data._point_of_no_return_timer = self._point_of_no_return_timer
 	my_save_data._point_of_no_return_id = self._point_of_no_return_id
+	my_save_data._point_of_no_return_tweak_id = self._point_of_no_return_tweak_id
 	my_save_data._police_called = self._police_called
 	my_save_data._enemy_weapons_hot = self._enemy_weapons_hot
 
@@ -2624,7 +2625,7 @@ function GroupAIStateBase:load(load_data)
 	self:set_fake_assault_mode(my_load_data._fake_assault_mode)
 	self:set_whisper_mode(my_load_data._whisper_mode)
 	self:set_bain_state(my_load_data._bain_state)
-	self:set_point_of_no_return_timer(my_load_data._point_of_no_return_timer, my_load_data._point_of_no_return_id)
+	self:set_point_of_no_return_timer(my_load_data._point_of_no_return_timer, my_load_data._point_of_no_return_id, my_load_data._point_of_no_return_tweak_id)
 
 	if my_load_data.hostage_headcount then
 		self:sync_hostage_headcount(my_load_data.hostage_headcount)
@@ -2645,7 +2646,7 @@ function GroupAIStateBase:load(load_data)
 	self:set_damage_reduction_buff_hud()
 end
 
-function GroupAIStateBase:set_point_of_no_return_timer(time, point_of_no_return_id)
+function GroupAIStateBase:set_point_of_no_return_timer(time, point_of_no_return_id, point_of_no_return_tweak_id)
 	if time == nil or setup:has_queued_exec() then
 		return
 	end
@@ -2660,9 +2661,10 @@ function GroupAIStateBase:set_point_of_no_return_timer(time, point_of_no_return_
 
 	self._point_of_no_return_timer = time
 	self._point_of_no_return_id = point_of_no_return_id
+	self._point_of_no_return_tweak_id = point_of_no_return_tweak_id
 	self._point_of_no_return_areas = nil
 
-	managers.hud:show_point_of_no_return_timer()
+	managers.hud:show_point_of_no_return_timer(self._point_of_no_return_tweak_id)
 	managers.hud:add_updator("point_of_no_return", callback(self, self, "_update_point_of_no_return"))
 end
 
@@ -2677,8 +2679,12 @@ function GroupAIStateBase:remove_point_of_no_return_timer(point_of_no_return_id)
 
 		self._point_of_no_return_timer = nil
 		self._point_of_no_return_id = nil
+		self._point_of_no_return_tweak_id = nil
 		self._point_of_no_return_areas = nil
 		self._peers_inside_point_of_no_return = nil
+		self._forbid_drop_in = false
+
+		managers.network.matchmake:set_server_joinable(true)
 	else
 		Application:error("[GroupAIStateBase:remove_point_of_no_return_timer] Missmatch ids!", "current", self._point_of_no_return_id, "id", point_of_no_return_id)
 	end

@@ -78,6 +78,17 @@ function HUDBGBox_create(panel, params, config)
 	return box_panel
 end
 
+function HUDBGBox_set_color(box_panel, config)
+	local color = config and config.color
+	local bg_color = config and config.bg_color or Color(1, 0, 0, 0)
+
+	box_panel:child("bg"):set_color(bg_color)
+	box_panel:child("left_top"):set_color(color)
+	box_panel:child("left_bottom"):set_color(color)
+	box_panel:child("right_top"):set_color(color)
+	box_panel:child("right_bottom"):set_color(color)
+end
+
 local box_speed = 1000
 
 function HUDBGBox_animate_open_right(panel, wait_t, target_w, done_cb)

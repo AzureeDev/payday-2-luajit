@@ -801,6 +801,124 @@ function IconButton:_enabled_changed(state)
 	self:_set_color(state and self._normal_color or self._disabled_color)
 end
 
+ToggleButton = ToggleButton or class(BaseButton)
+
+function ToggleButton:init(parent, toggle_config, panel_config, func)
+	panel_config = set_defaults(panel_config, {
+		binding = toggle_config.binding
+	})
+
+	ToggleButton.super.init(self, parent, panel_config)
+
+	self._select_panel = ExtendedPanel:new(self)
+	self._active_state = toggle_config.initial_state
+	self._button = self._select_panel:bitmap({
+		texture = "guis/textures/menu_tickbox",
+		texture_rect = {
+			self._active_state and 24 or 0,
+			0,
+			24,
+			24
+		}
+	})
+	self._toggle_trigger = func or function (state)
+	end
+	self._normal_color = toggle_config.normal_color or toggle_config.color or tweak_data.screen_colors.button_stage_3
+	self._hover_color = toggle_config.hover_color or toggle_config.color or tweak_data.screen_colors.button_stage_2
+	self._disabled_color = toggle_config.disabled_color or toggle_config.color or tweak_data.screen_colors.achievement_grey
+
+	self._button:set_color(self._normal_color)
+	self:set_size(self._button:size())
+end
+
+function ToggleButton:_trigger()
+	self:set_state(not self._active_state)
+	self:_toggle_trigger(self._active_state)
+end
+
+function ToggleButton:_toggle_trigger(state)
+end
+
+function ToggleButton:set_state(state)
+	self._active_state = state
+
+	self:_update_toggle()
+end
+
+function ToggleButton:get_state()
+	return self._active_state
+end
+
+function ToggleButton:_update_toggle()
+	self._button:set_image("guis/textures/menu_tickbox", self._active_state and 24 or 0, 0, 24, 24)
+end
+
+function ToggleButton:_hover_changed(hover)
+	self._button:set_color(hover and self._hover_color or self._normal_color)
+
+	if hover then
+		managers.menu_component:post_event("highlight")
+	end
+end
+
+function ToggleButton:_enabled_changed(state)
+	self._button:set_color(state and self._normal_color or self._disabled_color)
+end
+
+CompositeButton = CompositeButton or class(BaseButton)
+
+function CompositeButton:init(parent, composite_button_config, panel_config, func)
+	panel_config = set_defaults(panel_config, {
+		binding = composite_button_config.binding
+	})
+
+	CompositeButton.super.init(self, parent, panel_config)
+
+	self._child_list = {}
+	self._trigger_func = func or function ()
+	end
+	self._normal_color = composite_button_config.normal_color or composite_button_config.color or tweak_data.screen_colors.button_stage_3
+	self._hover_color = composite_button_config.hover_color or composite_button_config.color or tweak_data.screen_colors.button_stage_2
+	self._disabled_color = composite_button_config.disabled_color or composite_button_config.color or tweak_data.screen_colors.achievement_grey
+	self._rect = self:rect()
+
+	self._rect:set_color(self._normal_color)
+	self._rect:set_alpha(0)
+end
+
+function CompositeButton:_hover_changed(hover)
+	self._rect:set_color(hover and self._hover_color or self._normal_color)
+	self._rect:set_alpha(hover and 0.25 or 0)
+
+	for _, item in pairs(self._child_list) do
+		item:_hover_changed(hover)
+	end
+
+	if hover then
+		managers.menu_component:post_event("highlight")
+	end
+end
+
+function CompositeButton:_trigger()
+	self:_trigger_func()
+
+	for _, item in pairs(self._child_list) do
+		item:_trigger()
+	end
+end
+
+function CompositeButton:_enabled_changed(state)
+	self._rect:set_color(state and self._normal_color or self._disabled_color)
+
+	for _, item in pairs(self._child_list) do
+		item:_enabled_changed(state)
+	end
+end
+
+function CompositeButton:register_child(item)
+	table.insert(self._child_list, item)
+end
+
 ProgressBar = ProgressBar or class(ExtendedPanel)
 
 function ProgressBar:init(parent, config, progress)

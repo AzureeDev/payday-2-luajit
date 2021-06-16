@@ -3638,7 +3638,7 @@ function MenuComponentManager:close_view_character_profile_gui()
 	end
 end
 
-function MenuComponentManager:get_texture_from_mod_type(type, sub_type, gadget, silencer, is_auto, equipped, mods, types, is_a_path)
+function MenuComponentManager:get_texture_from_mod_type(type, sub_type, gadget, silencer, is_auto, equipped, mods, types, is_a_path, weapon)
 	local texture = nil
 
 	if is_a_path then
@@ -3655,13 +3655,14 @@ function MenuComponentManager:get_texture_from_mod_type(type, sub_type, gadget, 
 		texture = "guis/textures/pd2/blackmarket/inv_mod_scope"
 	elseif type == "ammo" or type == "underbarrel_ammo" then
 		if equipped then
-			texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
+			-- Nothing
+		elseif tweak_data.weapon[weapon] and tweak_data.weapon[weapon].ammo_default_sub_type then
+			sub_type = tweak_data.weapon[weapon].ammo_default_sub_type
 		elseif mods and #mods > 0 then
 			local weapon_factory_tweak_data = tweak_data.weapon.factory.parts
 			local part_id = mods[1][1]
 			type = weapon_factory_tweak_data[part_id].type
 			sub_type = weapon_factory_tweak_data[part_id].sub_type
-			texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
 		end
 
 		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
@@ -3788,7 +3789,7 @@ function MenuComponentManager:create_weapon_mod_icon_list(weapon, category, fact
 				end
 			end
 
-			local texture = self:get_texture_from_mod_type(name, sub_type, gadget, silencer, is_auto, equipped, mods[name], types, weapon_skin_bonus)
+			local texture = self:get_texture_from_mod_type(name, sub_type, gadget, silencer, is_auto, equipped, mods[name], types, weapon_skin_bonus, weapon)
 
 			if texture then
 				if DB:has(Idstring("texture"), texture) then

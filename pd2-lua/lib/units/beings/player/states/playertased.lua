@@ -22,6 +22,10 @@ function PlayerTased:enter(state_data, enter_data)
 		tased_time = managers.modifiers:modify_value("PlayerTased:TasedTime", tased_time)
 
 		managers.enemy:add_delayed_clbk(self._fatal_delayed_clbk, callback(self, self, "clbk_exit_to_fatal"), TimerManager:game():time() + tased_time)
+
+		if Network:is_server() then
+			self:_register_revive_SO()
+		end
 	end
 
 	self._next_shock = 0.5
@@ -29,11 +33,6 @@ function PlayerTased:enter(state_data, enter_data)
 	self._num_shocks = 0
 
 	managers.groupai:state():on_criminal_disabled(self._unit, "electrified")
-
-	if Network:is_server() then
-		self:_register_revive_SO()
-	end
-
 	self._equipped_unit:base():on_reload()
 
 	local projectile_entry = managers.blackmarket:equipped_projectile()

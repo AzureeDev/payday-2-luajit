@@ -145,6 +145,7 @@ function MissionManager:init(...)
 	self:add_area_instigator_categories("escorts")
 	self:add_area_instigator_categories("persons")
 	self:add_area_instigator_categories("local_criminals")
+	self:add_area_instigator_categories("player_criminals")
 	self:add_area_instigator_categories("criminals")
 	self:add_area_instigator_categories("ai_teammates")
 	self:add_area_instigator_categories("loot")
@@ -252,7 +253,8 @@ function MissionManager:init(...)
 			stage_job_values = {},
 			job_values = {},
 			saved_job_values = {},
-			has_played_tutorial = false
+			has_played_tutorial = false,
+			safehouse_ask_amount = 0
 		}
 	end
 end
@@ -290,6 +292,9 @@ function MissionManager:on_reset_profile()
 	for key, value in pairs(Global.mission_manager.saved_job_values) do
 		Global.mission_manager.saved_job_values[key] = nil
 	end
+
+	Global.mission_manager.has_played_tutorial = false
+	Global.mission_manager.safehouse_ask_amount = 0
 end
 
 function MissionManager:set_job_value(key, value)
@@ -404,7 +409,8 @@ end
 function MissionManager:save_job_values(data)
 	local state = {
 		saved_job_values = Global.mission_manager.saved_job_values,
-		has_played_tutorial = Global.mission_manager.has_played_tutorial
+		has_played_tutorial = Global.mission_manager.has_played_tutorial,
+		safehouse_ask_amount = Global.mission_manager.safehouse_ask_amount
 	}
 	data.ProductMissionManager = state
 end
@@ -415,6 +421,7 @@ function MissionManager:load_job_values(data)
 	if state then
 		Global.mission_manager.saved_job_values = state.saved_job_values
 		Global.mission_manager.has_played_tutorial = state.has_played_tutorial
+		Global.mission_manager.safehouse_ask_amount = state.safehouse_ask_amount or 0
 	end
 end
 

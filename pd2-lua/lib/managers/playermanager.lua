@@ -716,7 +716,7 @@ function PlayerManager:_internal_load()
 		grenade = grenade,
 		amount = math.min(amount, self:get_max_grenades())
 	})
-	self:_set_body_bags_amount(self._local_player_body_bags or self:total_body_bags())
+	self:_set_body_bags_amount(managers.blackmarket:forced_body_bags() or self._local_player_body_bags or self:total_body_bags())
 
 	if not self._respawn then
 		self:_add_level_equipment(player)

@@ -564,7 +564,7 @@ function BlackMarketTweakData:_init_projectiles(tweak_data)
 		anim_global_param = "projectile_frag",
 		texture_bundle_folder = "sawp",
 		throw_allowed_expire_t = 0.1,
-		expire_t = 0.9,
+		expire_t = 1.1,
 		repeat_expire_t = 1.5,
 		is_a_grenade = true,
 		dlc = "sawp_grenade"

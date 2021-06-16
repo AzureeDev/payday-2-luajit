@@ -38,6 +38,10 @@ function Item:init(data_node, parameters)
 		self._icon_visible_callback_name_list = string.split(params.icon_visible_callback, " ")
 	end
 
+	if params.glow_visible_callback then
+		self._glow_visible_callback_name_list = string.split(params.glow_visible_callback, " ")
+	end
+
 	if params.callback then
 		params.callback = string.split(params.callback, " ")
 	else
@@ -130,6 +134,14 @@ function Item:set_callback_handler(callback_handler)
 		end
 	end
 
+	if self._glow_visible_callback_name_list then
+		for _, visible_callback_name in pairs(self._glow_visible_callback_name_list) do
+			self._glow_visible_callback_list = self._glow_visible_callback_list or {}
+
+			table.insert(self._glow_visible_callback_list, callback(callback_handler, callback_handler, visible_callback_name))
+		end
+	end
+
 	if self._enabled_callback_name_list then
 		for _, enabled_callback_name in pairs(self._enabled_callback_name_list) do
 			if callback_handler[enabled_callback_name] then
@@ -185,6 +197,7 @@ function Item:on_delete_item()
 	self._parameters.callback_disabled = {}
 	self._visible_callback_list = nil
 	self._icon_visible_callback_list = nil
+	self._glow_visible_callback_list = nil
 end
 
 function Item:on_item_position(row_item, node)
@@ -220,6 +233,18 @@ end
 function Item:icon_visible()
 	if self._icon_visible_callback_list then
 		for _, visible_callback in pairs(self._icon_visible_callback_list) do
+			if not visible_callback(self) then
+				return false
+			end
+		end
+	end
+
+	return true
+end
+
+function Item:glow_visible()
+	if self._glow_visible_callback_list then
+		for _, visible_callback in pairs(self._glow_visible_callback_list) do
 			if not visible_callback(self) then
 				return false
 			end

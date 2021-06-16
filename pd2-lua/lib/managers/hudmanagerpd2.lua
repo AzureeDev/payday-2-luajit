@@ -1040,8 +1040,8 @@ function HUDManager:feed_point_of_no_return_timer(time, is_inside)
 	self._hud_assault_corner:feed_point_of_no_return_timer(time, is_inside)
 end
 
-function HUDManager:show_point_of_no_return_timer()
-	self._hud_assault_corner:show_point_of_no_return_timer()
+function HUDManager:show_point_of_no_return_timer(tweak_id)
+	self._hud_assault_corner:show_point_of_no_return_timer(tweak_id)
 end
 
 function HUDManager:hide_point_of_no_return_timer()

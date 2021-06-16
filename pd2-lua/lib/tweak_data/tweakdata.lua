@@ -1297,8 +1297,9 @@ Play the full version soon to get your full PAYDAY!]],
 	self.experience_manager.values.size20 = 1000
 	self.experience_manager.loot_drop_value = {
 		xp10 = 2000,
+		xp15 = 3000,
 		xp20 = 4000,
-		xp30 = 6000,
+		xp30 = 7000,
 		xp40 = 10000,
 		xp50 = 12000,
 		xp60 = 15000,
@@ -1804,6 +1805,9 @@ Play the full version soon to get your full PAYDAY!]],
 		},
 		{
 			track = "track_72"
+		},
+		{
+			track = "track_73"
 		},
 		{
 			track = "track_pth_01",
@@ -2834,6 +2838,7 @@ function TweakData:init_screen_colors()
 		crime_spree_risk = Color(255, 255, 255, 0) / 255,
 		achievement_grey = Color(255, 145, 145, 145) / 255,
 		skirmish_color = Color(255, 255, 85, 30) / 255,
+		dlc_buy_color = Color(255, 255, 168, 0) / 255,
 		heat_cold_color = Color(255, 255, 51, 51) / 255,
 		heat_warm_color = Color("ff7f00"),
 		heat_standard_color = Color(255, 255, 255, 255) / 255
