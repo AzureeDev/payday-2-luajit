@@ -140,7 +140,7 @@ function StoryMissionsGui:init(ws, fullscreen_ws, node)
 	self._toggle_panel:register_child(toggle_button)
 
 	local toggle_text = TextButton:new(self._toggle_panel, {
-		text = "Play Online",
+		text = managers.localization:text("menu_sm_play_online"),
 		font_size = small_font_size,
 		font = small_font
 	})

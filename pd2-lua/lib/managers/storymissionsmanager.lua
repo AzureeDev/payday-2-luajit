@@ -420,7 +420,13 @@ function StoryMissionsManager:start_mission(mission, objective_id)
 		return
 	end
 
-	if o.basic or Global.game_settings.single_player then
+	if Global.game_settings.single_player then
+		MenuCallbackHandler:play_single_player()
+	else
+		MenuCallbackHandler:play_online_game()
+	end
+
+	if o.basic then
 		Global.game_settings.team_ai = true
 		Global.game_settings.team_ai_option = 2
 
@@ -431,8 +437,6 @@ function StoryMissionsManager:start_mission(mission, objective_id)
 		})
 
 		return
-	else
-		MenuCallbackHandler:play_online_game()
 	end
 
 	local job_data = tweak_data.narrative:job_data(level)

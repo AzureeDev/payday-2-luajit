@@ -6110,6 +6110,16 @@ function AchievementsTweakData:init(tweak_data)
 			award = "flat_5",
 			total_accuracy = 200
 		},
+		sand_11 = {
+			local_accuracy = 100,
+			award = "sand_11",
+			level_id = "sand",
+			success = true,
+			killed_by_weapon_categories = {
+				snp = 100
+			},
+			difficulty = overkill_and_above
+		},
 		daily_professional = {
 			trophy_stat = "daily_professional",
 			difficulty = overkill_and_above,

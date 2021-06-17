@@ -636,6 +636,7 @@ function UpgradesTweakData:_init_pd2_values()
 		1.1,
 		1.2,
 		1.4,
+		1.8,
 		2
 	}
 	self.values.weapon.passive_damage_multiplier = {
@@ -6039,6 +6040,15 @@ function UpgradesTweakData:_player_definitions()
 		category = "feature",
 		upgrade = {
 			value = 4,
+			upgrade = "passive_health_multiplier",
+			category = "player"
+		}
+	}
+	self.definitions.player_passive_health_multiplier_5 = {
+		name_id = "menu_player_health_multiplier",
+		category = "feature",
+		upgrade = {
+			value = 5,
 			upgrade = "passive_health_multiplier",
 			category = "player"
 		}

@@ -11621,6 +11621,41 @@ function BlackMarketGui:populate_gloves(data)
 		end
 	end
 
+	local sort_table = {}
+
+	for sort_number, glove_id in ipairs(sort_data) do
+		tweak = tweak_data.blackmarket.gloves[glove_id]
+		local unlocked = managers.blackmarket:glove_id_unlocked(glove_id)
+		local global_value = tweak.global_value
+		local dlc = tweak.dlc or global_value and managers.dlc:global_value_to_dlc(global_value)
+		local achievement_locked = managers.dlc:is_content_achievement_locked("gloves", glove_id) or managers.dlc:is_content_achievement_milestone_locked("gloves", glove_id)
+		local infamy_locked = managers.dlc:is_content_infamy_locked("gloves", glove_id)
+		sort_table[glove_id] = {
+			unlocked = unlocked,
+			locked_sort = tweak_data.gui:get_locked_sort_number(dlc, achievement_locked, infamy_locked),
+			sort_number = sort_number
+		}
+	end
+
+	local x_data, y_data = nil
+
+	local function sort_func(x, y)
+		x_data = sort_table[x]
+		y_data = sort_table[y]
+
+		if x_data.unlocked ~= y_data.unlocked then
+			return x_data.unlocked
+		end
+
+		if not x_data.unlocked and x_data.locked_sort ~= y_data.locked_sort then
+			return x_data.locked_sort < y_data.locked_sort
+		end
+
+		return x_data.sort_number < y_data.sort_number
+	end
+
+	table.sort(sort_data, sort_func)
+
 	local achievement_locked_content = managers.dlc:achievement_locked_content().gloves or {}
 	local mannequin_glove = data.mannequin_glove_id or managers.menu_scene and managers.menu_scene:get_glove_id() or "none"
 	local default_glove_id = managers.blackmarket:get_default_glove_id()
@@ -15768,7 +15803,7 @@ function BlackMarketGui:choose_mask_buy_callback(data)
 		sort_cached_mask_data[mask_id] = {
 			loc = loc_man:to_upper_text(td.name_id),
 			unlocked = unlocked,
-			locked_sort = tweak_data.gui:get_locked_sort_number(dlc_locked and dlc, infamy_locked, achievement_locked, skirmish_locked, crimespree_locked),
+			locked_sort = tweak_data.gui:get_locked_sort_number(dlc_locked and dlc, achievement_locked, infamy_locked, skirmish_locked, crimespree_locked),
 			sort_number = sort_number + (td.sort_number or 0),
 			iso = table.get_key(iso, mask_id) or 0,
 			value = value,

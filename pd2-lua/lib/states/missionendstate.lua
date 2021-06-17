@@ -573,7 +573,7 @@ function MissionEndState:on_statistics_result(best_kills_peer_id, best_kills_sco
 
 	print("on_statistics_result end")
 
-	local level_id, all_pass, total_kill_pass, total_accuracy_pass, total_headshots_pass, total_downed_pass, level_pass, levels_pass, num_players_pass, diff_pass, one_down_pass, is_dropin_pass, success_pass, killed_by_weapon_category_pass = nil
+	local level_id, all_pass, total_kill_pass, total_accuracy_pass, total_headshots_pass, total_downed_pass, level_pass, levels_pass, num_players_pass, diff_pass, one_down_pass, is_dropin_pass, success_pass, killed_by_weapon_category_pass, local_accuracy_pass = nil
 
 	for achievement, achievement_data in pairs(tweak_data.achievement.complete_heist_statistics_achievements or {}) do
 		level_id = managers.job:has_active_job() and managers.job:current_level_id() or ""
@@ -585,6 +585,7 @@ function MissionEndState:on_statistics_result(best_kills_peer_id, best_kills_sco
 		total_kill_pass = not achievement_data.total_kills or achievement_data.total_kills <= total_kills
 		total_accuracy_pass = not achievement_data.total_accuracy or achievement_data.total_accuracy <= group_accuracy
 		total_downed_pass = not achievement_data.total_downs or group_downs <= achievement_data.total_downs
+		local_accuracy_pass = not achievement_data.local_accuracy or achievement_data.local_accuracy <= managers.statistics:session_hit_accuracy()
 		is_dropin_pass = achievement_data.is_dropin == nil or achievement_data.is_dropin == managers.statistics:is_dropin()
 		success_pass = not achievement_data.success or self._success
 
@@ -616,7 +617,7 @@ function MissionEndState:on_statistics_result(best_kills_peer_id, best_kills_sco
 			end
 		end
 
-		all_pass = diff_pass and one_down_pass and num_players_pass and level_pass and levels_pass and total_kill_pass and total_accuracy_pass and total_downed_pass and is_dropin_pass and total_headshots_pass and managers.challenge:check_equipped(achievement_data) and managers.challenge:check_equipped_team(achievement_data) and success_pass and killed_by_weapon_category_pass
+		all_pass = diff_pass and one_down_pass and num_players_pass and level_pass and levels_pass and total_kill_pass and total_accuracy_pass and total_downed_pass and is_dropin_pass and total_headshots_pass and managers.challenge:check_equipped(achievement_data) and managers.challenge:check_equipped_team(achievement_data) and success_pass and killed_by_weapon_category_pass and local_accuracy_pass
 
 		if all_pass and not managers.achievment:award_data(achievement_data) then
 			Application:debug("[MissionEndState] complete_heist_achievements:", achievement)

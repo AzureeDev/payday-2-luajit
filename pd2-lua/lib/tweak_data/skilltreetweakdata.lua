@@ -3296,7 +3296,7 @@ function SkillTreeTweakData:init()
 				name_id = "menu_deck2_9",
 				upgrades = {
 					"player_passive_loot_drop_multiplier",
-					"player_passive_health_multiplier_4",
+					"player_passive_health_multiplier_5",
 					"player_passive_health_regen"
 				},
 				icon_xy = {
