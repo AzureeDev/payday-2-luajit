@@ -1843,7 +1843,6 @@ MenuNodeMainGui = MenuNodeMainGui or class(MenuNodeGui)
 function MenuNodeMainGui:_setup_item_rows(node)
 	MenuNodeMainGui.super._setup_item_rows(self, node)
 	self:_add_version_string()
-	managers.features:announce_feature("short_heists_available")
 
 	if MenuCallbackHandler:enable_movie_theater() then
 		managers.features:announce_feature("movie_theater_unlocked")

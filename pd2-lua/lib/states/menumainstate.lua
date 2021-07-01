@@ -145,10 +145,6 @@ function MenuMainState:at_enter(old_state)
 
 		managers.menu:open_node("trial_info")
 	elseif not has_invite and not managers.network:session() then
-		if managers.statistics:get_play_time() < 300 then
-			managers.features:announce_feature("short_heist")
-		end
-
 		if not managers.custom_safehouse:unlocked() then
 			-- Nothing
 		elseif (tweak_data.safehouse.level_limit <= managers.experience:current_level() or managers.experience:current_rank() > 0) and not managers.custom_safehouse:has_entered_safehouse() and Global.mission_manager.safehouse_ask_amount < 2 and not Global.skip_menu_dialogs then

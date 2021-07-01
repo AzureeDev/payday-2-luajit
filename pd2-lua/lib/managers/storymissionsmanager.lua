@@ -39,7 +39,7 @@ function StoryMissionsManager:init()
 	end
 
 	self._global = Global.story_mission_manager
-	self._global.current_mission = self._global.mission_order[1]
+	self._global.current_mission = self._global.mission_order[2]
 
 	call_on_next_update(function ()
 		managers.story:_find_next_mission()
@@ -259,15 +259,17 @@ function StoryMissionsManager:save(cache)
 	local completed_missions = {}
 
 	for _, mission in ipairs(self._global.mission_order) do
-		if not mission.completed then
-			break
-		end
+		if not mission.is_header then
+			if not mission.completed then
+				break
+			end
 
-		completed_missions[mission.id] = {
-			id = mission.id,
-			objectives = self:_save_objectives(mission),
-			rewarded = mission.rewarded
-		}
+			completed_missions[mission.id] = {
+				id = mission.id,
+				objectives = self:_save_objectives(mission),
+				rewarded = mission.rewarded
+			}
+		end
 	end
 
 	local current_mission = nil
@@ -520,7 +522,9 @@ function StoryMissionsManager:reset_all()
 	end
 
 	for _, m in pairs(self._global.missions) do
-		reset(m)
+		if not m.is_header then
+			reset(m)
+		end
 	end
 
 	self:_find_next_mission()

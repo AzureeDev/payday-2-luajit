@@ -4414,10 +4414,10 @@ function NarrativeTweakData:init(tweak_data)
 	}
 	self.tutorials = {
 		{
-			job = "short1"
+			job = "short2"
 		},
 		{
-			job = "short2"
+			job = "short1"
 		}
 	}
 	self.stages.chill = {

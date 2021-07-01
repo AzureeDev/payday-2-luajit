@@ -899,7 +899,9 @@ function MenuInput:_give_special_buttons()
 			if self._accept_input and self._controller then
 				if self._controller:get_input_pressed(button) then
 					if managers.menu:active_menu().renderer:special_btn_pressed(Idstring(button)) then
-						managers.menu:active_menu().renderer:disable_input(0.2)
+						if managers.menu:active_menu() then
+							managers.menu:active_menu().renderer:disable_input(0.2)
+						end
 
 						break
 					end
