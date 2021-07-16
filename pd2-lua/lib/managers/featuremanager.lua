@@ -21,6 +21,7 @@ function FeatureManager:_setup()
 	self._default.announcements.crimenet_hacked = 1
 	self._default.announcements.short_heist = 1
 	self._default.announcements.short_heists_available = 1
+	self._default.announcements.new_career = 1
 	self._default.announcements.safehouse_dailies = 1
 	self._default.announcements.tango_weapon_unlocked = 1
 	self._default.announcements.movie_theater_unlocked = 1
@@ -40,6 +41,7 @@ function FeatureManager:_setup()
 		Global.feature_manager.announcements.freed_old_hoxton = 1
 		Global.feature_manager.announcements.short_heist = 1
 		Global.feature_manager.announcements.short_heists_available = 1
+		Global.feature_manager.announcements.new_career = 1
 		Global.feature_manager.announced = {}
 	end
 
@@ -332,6 +334,11 @@ function FeatureManager:short_heists_available()
 	})
 
 	return true
+end
+
+function FeatureManager:new_career()
+	print("FeatureManager:new_career()")
+	managers.menu:show_new_player_popup()
 end
 
 function FeatureManager:safehouse_dailies()

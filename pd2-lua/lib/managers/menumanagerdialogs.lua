@@ -2460,6 +2460,22 @@ function MenuManager:show_question_start_tutorial(params)
 	managers.system_menu:show(dialog_data)
 end
 
+function MenuManager:show_new_player_popup(params)
+	local dialog_data = {
+		focus_button = 1,
+		title = managers.localization:text("dialog_new_player_title"),
+		text = managers.localization:text("dialog_new_player_text")
+	}
+	local ok_button = {
+		text = managers.localization:text("dialog_ok")
+	}
+	dialog_data.button_list = {
+		ok_button
+	}
+
+	managers.system_menu:show(dialog_data)
+end
+
 function MenuManager:show_question_new_safehouse(params)
 	local dialog_data = {
 		focus_button = 1,

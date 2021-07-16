@@ -5088,6 +5088,11 @@ function GuiTweakData:init(tweak_data)
 	}
 
 	table.insert(self.new_heists, {
+		name_id = "menu_nh_sand_bundle",
+		texture_path = "guis/dlcs/sand/textures/pd2/new_heists/sand_bundle",
+		url = "https://ovk.af/UKPBundleSLS"
+	})
+	table.insert(self.new_heists, {
 		name_id = "menu_nh_sand",
 		texture_path = "guis/textures/pd2/new_heists/sand",
 		url = "https://ovk.af/UkrainianPrisonerSLS"
