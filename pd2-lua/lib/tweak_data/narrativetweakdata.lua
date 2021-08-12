@@ -4504,7 +4504,8 @@ function NarrativeTweakData:init(tweak_data)
 			speed = 10,
 			from = chill_combat_marker_dot_color,
 			to = chill_combat_marker_dot_color_to
-		}
+		},
+		show_in_filters = true
 	}
 	self.stages.friend = {
 		type = "d",

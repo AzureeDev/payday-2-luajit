@@ -288,6 +288,7 @@ function WeaponFactoryTweakData:init()
 	self:_init_x_rota()
 	self:_init_shuno()
 	self:_init_system()
+	self:_init_money()
 	self:_init_komodo()
 	self:_init_elastic()
 	self:_init_legacy()
@@ -772,28 +773,28 @@ function WeaponFactoryTweakData:_init_sights()
 		},
 		stance_mod = {
 			wpn_fps_ass_m4 = {
-				translation = Vector3(0, 0, -0.58)
+				translation = Vector3(0, -1.5, -0.58)
 			},
 			wpn_fps_ass_amcar = {
-				translation = Vector3(0, 0, -0.1)
+				translation = Vector3(0, -4.5, -0.1)
 			},
 			wpn_fps_ass_m16 = {
-				translation = Vector3(0, 0, -0.12)
+				translation = Vector3(0, -3.5, -0.12)
 			},
 			wpn_fps_smg_olympic = {
-				translation = Vector3(0, 0, -0.12)
+				translation = Vector3(0, -3.5, -0.12)
 			},
 			wpn_fps_ass_74 = {
-				translation = Vector3(0, 0, -3.1)
+				translation = Vector3(0, -20, -3.1)
 			},
 			wpn_fps_ass_akm = {
-				translation = Vector3(0, 0, -3.2)
+				translation = Vector3(0, -25, -3)
 			},
 			wpn_fps_ass_akm_gold = {
-				translation = Vector3(0, 0, -3.2)
+				translation = Vector3(0, -25, -3)
 			},
 			wpn_fps_shot_saiga = {
-				translation = Vector3(0, 0, -3)
+				translation = Vector3(0, -20, -3)
 			},
 			wpn_fps_shot_r870 = {
 				translation = Vector3(0.01, 0, -3.3)
@@ -802,7 +803,7 @@ function WeaponFactoryTweakData:_init_sights()
 				translation = Vector3(0, 0, -3.3)
 			},
 			wpn_fps_smg_akmsu = {
-				translation = Vector3(-0.028, 0, -3.35)
+				translation = Vector3(-0.028, -20, -3)
 			},
 			wpn_fps_ass_ak5 = {
 				translation = Vector3(0, 0, -3.5),
@@ -834,7 +835,7 @@ function WeaponFactoryTweakData:_init_sights()
 				translation = Vector3(0, -10, -3.1)
 			},
 			wpn_fps_ass_s552 = {
-				translation = Vector3(-0.08, 0, -2.1)
+				translation = Vector3(-0.08, -3.5, -2.1)
 			},
 			wpn_fps_smg_m45 = {
 				translation = Vector3(0, 0, -3.9)
@@ -843,7 +844,7 @@ function WeaponFactoryTweakData:_init_sights()
 				translation = Vector3(0, 0, -2.8)
 			},
 			wpn_fps_ass_scar = {
-				translation = Vector3(0, 0, -0.25)
+				translation = Vector3(0, -8, -0.25)
 			},
 			wpn_fps_pis_rage = {
 				translation = Vector3(-0.05, -10, -4.65)
@@ -941,7 +942,7 @@ function WeaponFactoryTweakData:_init_sights()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_r700 = {
-				translation = Vector3(0, -10, -3.8),
+				translation = Vector3(0, -15, -3.8),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_shot_m37 = {
@@ -961,7 +962,7 @@ function WeaponFactoryTweakData:_init_sights()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_tecci = {
-				translation = Vector3(-0.01, 5, -1.7),
+				translation = Vector3(-0.01, 0, -1.7),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_smg_hajk = {
@@ -997,7 +998,7 @@ function WeaponFactoryTweakData:_init_sights()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_contraband = {
-				translation = Vector3(-0.01, 5, -1.7),
+				translation = Vector3(-0.01, -9, -1.7),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_tti = {
@@ -1009,7 +1010,7 @@ function WeaponFactoryTweakData:_init_sights()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_flint = {
-				translation = Vector3(0, 5, -2.65),
+				translation = Vector3(0, -15, -2.65),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_smg_coal = {
@@ -1895,28 +1896,28 @@ function WeaponFactoryTweakData:_init_content_dlc2_dec16()
 		},
 		stance_mod = {
 			wpn_fps_ass_m4 = {
-				translation = Vector3(0, 10, -0.58)
+				translation = Vector3(0, 3.5, -0.58)
 			},
 			wpn_fps_ass_amcar = {
-				translation = Vector3(0, 10, -0.1)
+				translation = Vector3(0, 3.5, -0.1)
 			},
 			wpn_fps_ass_m16 = {
-				translation = Vector3(0, 10, -0.12)
+				translation = Vector3(0, 3, -0.12)
 			},
 			wpn_fps_smg_olympic = {
-				translation = Vector3(0, 10, -0.12)
+				translation = Vector3(0, 3.5, -0.12)
 			},
 			wpn_fps_ass_74 = {
-				translation = Vector3(0, -10, -3.1)
+				translation = Vector3(0, -20, -3)
 			},
 			wpn_fps_ass_akm = {
-				translation = Vector3(-0.02, -10, -3.15)
+				translation = Vector3(-0.02, -20, -3)
 			},
 			wpn_fps_ass_akm_gold = {
-				translation = Vector3(-0.02, -10, -3.15)
+				translation = Vector3(-0.02, -20, -3)
 			},
 			wpn_fps_shot_saiga = {
-				translation = Vector3(0, 0, -3)
+				translation = Vector3(0, -15, -3)
 			},
 			wpn_fps_shot_r870 = {
 				translation = Vector3(0.015, 0, -3.25)
@@ -1925,7 +1926,7 @@ function WeaponFactoryTweakData:_init_content_dlc2_dec16()
 				translation = Vector3(0, 0, -3.25)
 			},
 			wpn_fps_smg_akmsu = {
-				translation = Vector3(-0.028, 0, -3.3)
+				translation = Vector3(-0.028, -13, -3)
 			},
 			wpn_fps_ass_ak5 = {
 				translation = Vector3(0, 0, -3.5)
@@ -1976,7 +1977,7 @@ function WeaponFactoryTweakData:_init_content_dlc2_dec16()
 				translation = Vector3(0, 0, -2.8)
 			},
 			wpn_fps_ass_scar = {
-				translation = Vector3(0, 0, -0.25)
+				translation = Vector3(0, -5, -0.25)
 			},
 			wpn_fps_lmg_hk21 = {
 				translation = Vector3(0, 0, -3.2)
@@ -2099,7 +2100,7 @@ function WeaponFactoryTweakData:_init_content_dlc2_dec16()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_tecci = {
-				translation = Vector3(-0.01, 10, -1.68),
+				translation = Vector3(-0.01, 5, -1.68),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_smg_hajk = {
@@ -2123,7 +2124,7 @@ function WeaponFactoryTweakData:_init_content_dlc2_dec16()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_contraband = {
-				translation = Vector3(-0.01, 0, -1.68),
+				translation = Vector3(-0.01, -2, -1.68),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_tti = {
@@ -2135,7 +2136,7 @@ function WeaponFactoryTweakData:_init_content_dlc2_dec16()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_flint = {
-				translation = Vector3(0, 5, -2.6),
+				translation = Vector3(0, -12, -2.6),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_smg_coal = {
@@ -22502,13 +22503,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22516,13 +22517,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22530,13 +22531,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22544,13 +22545,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22558,13 +22559,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22572,13 +22573,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22586,13 +22587,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22600,13 +22601,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 6, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 6, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 6, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22614,13 +22615,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22628,13 +22629,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22642,13 +22643,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22656,13 +22657,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22670,13 +22671,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22684,26 +22685,26 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
 			wpn_fps_upg_o_xpsg33_magnifier = {
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22711,13 +22712,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22725,13 +22726,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22739,26 +22740,26 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
 			wpn_fps_upg_o_sig = {
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22766,13 +22767,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			}
@@ -22802,13 +22803,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22816,13 +22817,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22830,13 +22831,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22844,13 +22845,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22858,13 +22859,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22872,13 +22873,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22886,13 +22887,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22900,13 +22901,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 6, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 6, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 6, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22914,13 +22915,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22928,13 +22929,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22942,13 +22943,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22956,13 +22957,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22970,13 +22971,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -22984,26 +22985,26 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
 			wpn_fps_upg_o_xpsg33_magnifier = {
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -23011,13 +23012,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -23025,13 +23026,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -23039,26 +23040,26 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
 			wpn_fps_upg_o_sig = {
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			},
@@ -23066,13 +23067,13 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_krebs",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -3.8)
+						translation = Vector3(0, -20, -3.8)
 					}
 				}
 			}
@@ -23100,7 +23101,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23108,7 +23109,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23116,7 +23117,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23124,7 +23125,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23132,7 +23133,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23140,7 +23141,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23148,7 +23149,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23156,7 +23157,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 6, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23164,7 +23165,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23172,7 +23173,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23180,7 +23181,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23188,7 +23189,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23196,7 +23197,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23204,14 +23205,14 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
 			wpn_fps_upg_o_xpsg33_magnifier = {
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23219,7 +23220,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 15, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23227,7 +23228,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23235,14 +23236,14 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
 			wpn_fps_upg_o_sig = {
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			},
@@ -23250,7 +23251,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_zenit",
 				stance_mod = {
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(0, 0, -3.3)
+						translation = Vector3(0, -17, -3.3)
 					}
 				}
 			}
@@ -23384,19 +23385,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23404,19 +23405,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23424,19 +23425,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23444,19 +23445,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23464,19 +23465,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23484,19 +23485,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23504,19 +23505,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23524,19 +23525,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23544,19 +23545,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23564,19 +23565,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23584,19 +23585,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23604,19 +23605,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 5, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 0, -4.36)
+						translation = Vector3(-0.028, 5, -4.36)
 					}
 				}
 			},
@@ -23680,16 +23681,16 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 			wpn_fps_upg_o_xpsg33_magnifier = {
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 6, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 6, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 6, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 6, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
 						translation = Vector3(-0.028, 0, -4.36)
@@ -23716,16 +23717,16 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 			wpn_fps_upg_o_sig = {
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 6, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 6, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 6, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 6, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
 						translation = Vector3(-0.028, 0, -4.36)
@@ -23753,19 +23754,19 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 20, -4.6)
+						translation = Vector3(0, 9, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 20, -4.6)
+						translation = Vector3(0, 9, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 20, -4.6)
+						translation = Vector3(0, 9, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 20, -4.6)
+						translation = Vector3(0, 9, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
-						translation = Vector3(-0.028, 20, -4.36)
+						translation = Vector3(-0.028, 9, -4.39)
 					}
 				}
 			},
@@ -23773,16 +23774,16 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
 						translation = Vector3(-0.028, 0, -4.36)
@@ -23793,16 +23794,16 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
 						translation = Vector3(-0.028, 0, -4.36)
@@ -23813,16 +23814,16 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 				a_obj = "a_o_sm",
 				stance_mod = {
 					wpn_fps_ass_74 = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_ass_akm = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_ass_akm_gold = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_shot_saiga = {
-						translation = Vector3(0, 0, -4.6)
+						translation = Vector3(0, 8, -4.6)
 					},
 					wpn_fps_smg_akmsu = {
 						translation = Vector3(-0.028, 0, -4.36)
@@ -27472,7 +27473,7 @@ function WeaponFactoryTweakData:_init_asval()
 		},
 		stance_mod = {
 			wpn_fps_ass_asval = {
-				translation = Vector3(0, 0, -6.48),
+				translation = Vector3(0, 5, -6.48),
 				rotation = Rotation(0, 0, 0)
 			}
 		}
@@ -33029,6 +33030,11 @@ function WeaponFactoryTweakData:_init_vityaz()
 					"wpn_fps_smg_vityaz_ns_standard"
 				}
 			},
+			wpn_fps_upg_o_poe = {
+				forbids = {
+					"wpn_fps_smg_vityaz_ns_standard"
+				}
+			},
 			wpn_fps_upg_ns_ass_smg_large = {
 				forbids = {
 					"wpn_fps_smg_vityaz_ns_standard"
@@ -34014,6 +34020,9 @@ function WeaponFactoryTweakData:_init_groza()
 			wpn_fps_upg_o_tf90 = {
 				"wpn_fps_ass_groza_o_adapter"
 			},
+			wpn_fps_upg_o_poe = {
+				"wpn_fps_ass_groza_o_adapter"
+			},
 			wpn_fps_upg_o_uh = {
 				"wpn_fps_ass_groza_o_adapter"
 			},
@@ -34184,6 +34193,9 @@ function WeaponFactoryTweakData:_init_x_mp5()
 				"wpn_fps_smg_mp5_body_rail"
 			},
 			wpn_fps_upg_o_tf90 = {
+				"wpn_fps_smg_mp5_body_rail"
+			},
+			wpn_fps_upg_o_poe = {
 				"wpn_fps_smg_mp5_body_rail"
 			}
 		},
@@ -44838,6 +44850,87 @@ function WeaponFactoryTweakData:_init_shuno()
 	self.wpn_fps_lmg_shuno_npc.unit = "units/pd2_dlc_dmg/weapons/wpn_fps_lmg_shuno/wpn_fps_lmg_shuno_npc"
 end
 
+function WeaponFactoryTweakData:_init_money()
+	self.parts.wpn_fps_fla_money_b_standard = {
+		a_obj = "a_b",
+		type = "barrel",
+		name_id = "bm_wp_money_body_standard",
+		unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_fps_fla_money_b_standard",
+		stats = {
+			value = 1
+		}
+	}
+	self.parts.wpn_fps_fla_money_body_standard = {
+		a_obj = "a_body",
+		type = "lower_reciever",
+		name_id = "bm_wp_money_body_standard",
+		unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_fps_fla_money_body_standard",
+		stats = {
+			value = 1
+		}
+	}
+	self.parts.wpn_fps_fla_money_body_upper = {
+		a_obj = "a_body",
+		type = "upper_reciever",
+		name_id = "bm_wp_money_body_standard",
+		unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_fps_fla_money_body_upper",
+		stats = {
+			value = 1
+		}
+	}
+	self.parts.wpn_fps_fla_money_dh_standard = {
+		a_obj = "a_dh",
+		type = "drag_handle",
+		name_id = "bm_wp_money_body_standard",
+		unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_fps_fla_money_dh_standard",
+		stats = {
+			value = 1
+		}
+	}
+	self.parts.wpn_fps_fla_money_m_standard = {
+		a_obj = "a_m",
+		type = "magazine",
+		name_id = "bm_wp_money_body_standard",
+		unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_fps_fla_money_m_standard",
+		stats = {
+			value = 1
+		}
+	}
+	self.parts.wpn_fps_fla_money_b_standard.third_unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_third_fla_money_b_standard"
+	self.parts.wpn_fps_fla_money_body_standard.third_unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_third_fla_money_body_standard"
+	self.parts.wpn_fps_fla_money_body_upper.third_unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_third_fla_money_body_upper"
+	self.parts.wpn_fps_fla_money_dh_standard.third_unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_third_fla_money_dh_standard"
+	self.parts.wpn_fps_fla_money_m_standard.third_unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money_pts/wpn_third_fla_money_m_standard"
+	self.wpn_fps_fla_money = {
+		unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money/wpn_fps_fla_money",
+		animations = {
+			reload_not_empty = "reload",
+			reload = "reload"
+		},
+		default_blueprint = {
+			"wpn_fps_fla_money_b_standard",
+			"wpn_fps_fla_money_body_standard",
+			"wpn_fps_fla_money_body_upper",
+			"wpn_fps_fla_money_dh_standard",
+			"wpn_fps_fla_money_m_standard"
+		},
+		uses_parts = {
+			"wpn_fps_fla_money_b_standard",
+			"wpn_fps_fla_money_body_standard",
+			"wpn_fps_fla_money_body_upper",
+			"wpn_fps_fla_money_dh_standard",
+			"wpn_fps_fla_money_m_standard",
+			"wpn_fps_upg_fl_ass_smg_sho_peqbox",
+			"wpn_fps_upg_fl_ass_smg_sho_surefire",
+			"wpn_fps_upg_fl_ass_peq15",
+			"wpn_fps_upg_fl_ass_laser",
+			"wpn_fps_upg_fl_ass_utg"
+		}
+	}
+	self.wpn_fps_fla_money_npc = deep_clone(self.wpn_fps_fla_money)
+	self.wpn_fps_fla_money_npc.unit = "units/pd2_dlc_pda8/weapons/wpn_fps_fla_money/wpn_fps_fla_money_npc"
+end
+
 function WeaponFactoryTweakData:_init_system()
 	self.parts.wpn_fps_fla_system_b_standard = {
 		a_obj = "a_b",
@@ -46172,28 +46265,28 @@ function WeaponFactoryTweakData:_init_mwm()
 		},
 		stance_mod = {
 			wpn_fps_ass_m4 = {
-				translation = Vector3(0, 19, -0.58)
+				translation = Vector3(0, 5, -0.58)
 			},
 			wpn_fps_ass_amcar = {
-				translation = Vector3(0, 18, -0.1)
+				translation = Vector3(0, 5, -0.1)
 			},
 			wpn_fps_ass_m16 = {
-				translation = Vector3(0, 19, -0.12)
+				translation = Vector3(0, 4, -0.12)
 			},
 			wpn_fps_smg_olympic = {
-				translation = Vector3(0, 15, -0.12)
+				translation = Vector3(0, 5, -0.12)
 			},
 			wpn_fps_ass_74 = {
-				translation = Vector3(0, 8, -3.1)
+				translation = Vector3(0, -15, -3.1)
 			},
 			wpn_fps_ass_akm = {
-				translation = Vector3(-0.02, 8, -3.15)
+				translation = Vector3(-0.02, -15, -3.15)
 			},
 			wpn_fps_ass_akm_gold = {
-				translation = Vector3(-0.02, 8, -3.15)
+				translation = Vector3(-0.02, -15, -3.15)
 			},
 			wpn_fps_shot_saiga = {
-				translation = Vector3(0, 8, -3)
+				translation = Vector3(0, -22, -3)
 			},
 			wpn_fps_shot_r870 = {
 				translation = Vector3(0.015, 8, -3.25)
@@ -46208,7 +46301,7 @@ function WeaponFactoryTweakData:_init_mwm()
 				translation = Vector3(0, 15, -3.25)
 			},
 			wpn_fps_smg_akmsu = {
-				translation = Vector3(-0.028, 5, -3.3)
+				translation = Vector3(-0.028, -12, -3.3)
 			},
 			wpn_fps_ass_ak5 = {
 				translation = Vector3(0, 7, -3.5)
@@ -46247,7 +46340,7 @@ function WeaponFactoryTweakData:_init_mwm()
 				translation = Vector3(0, 8, -2.8)
 			},
 			wpn_fps_ass_scar = {
-				translation = Vector3(0, 13, -0.25)
+				translation = Vector3(0, 0, -0.25)
 			},
 			wpn_fps_pis_rage = {
 				translation = Vector3(-0.05, -10, -4.65)
@@ -46333,11 +46426,11 @@ function WeaponFactoryTweakData:_init_mwm()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_model70 = {
-				translation = Vector3(0, -2, -4.05),
+				translation = Vector3(0, -7, -4.05),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_r700 = {
-				translation = Vector3(0, -2, -3.8),
+				translation = Vector3(0, -8, -3.8),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_qbu88 = {
@@ -46357,7 +46450,7 @@ function WeaponFactoryTweakData:_init_mwm()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_tecci = {
-				translation = Vector3(-0.01, 17, -1.68),
+				translation = Vector3(-0.01, 10, -1.68),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_smg_hajk = {
@@ -46381,7 +46474,7 @@ function WeaponFactoryTweakData:_init_mwm()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_contraband = {
-				translation = Vector3(-0.01, 8, -1.68),
+				translation = Vector3(-0.01, -3, -1.68),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_snp_tti = {
@@ -46393,7 +46486,7 @@ function WeaponFactoryTweakData:_init_mwm()
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_ass_flint = {
-				translation = Vector3(0, 5, -2.6),
+				translation = Vector3(0, -10, -2.6),
 				rotation = Rotation(0, 0, 0)
 			},
 			wpn_fps_smg_coal = {

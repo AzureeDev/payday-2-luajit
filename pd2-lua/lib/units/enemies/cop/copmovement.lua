@@ -1690,6 +1690,7 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 			body_part = body_part,
 			blocks = blocks,
 			client_interrupt = client_interrupt,
+			weapon_unit = damage_info.weapon_unit,
 			attacker_unit = damage_info.attacker_unit,
 			death_type = tweak.damage.death_severity and (tweak.damage.death_severity < damage_info.damage / tweak.HEALTH_INIT and "heavy" or "normal") or "normal",
 			ignite_character = damage_info.ignite_character,

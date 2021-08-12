@@ -110,6 +110,10 @@ function GenericDLCManager:has_ocp()
 	return self:is_dlc_unlocked("ocp")
 end
 
+function GenericDLCManager:has_pda8()
+	return self:is_dlc_unlocked("pda8")
+end
+
 function GenericDLCManager:has_pex()
 	return self:is_dlc_unlocked("pex")
 end
@@ -343,6 +347,10 @@ function WINDLCManager:init_generated()
 		app_id = "1449442",
 		no_install = true,
 		webpage = "https://ovk.af/FEXWCP3YB"
+	}
+	Global.dlc_manager.all_dlc_data.pda8 = {
+		app_id = "218620",
+		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.pex = {
 		app_id = "1347750",

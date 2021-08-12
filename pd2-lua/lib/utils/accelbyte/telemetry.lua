@@ -632,7 +632,7 @@ function Telemetry:on_start_heist()
 	self:send_batch_immediately()
 end
 
-function Telemetry:on_end_heist(end_reason, total_exp_earned)
+function Telemetry:on_end_heist(end_reason, total_exp_earned, moneythrower_spent)
 	if get_platform_name() ~= "WIN32" or not self._global._logged_in then
 		return
 	end
@@ -650,6 +650,7 @@ function Telemetry:on_end_heist(end_reason, total_exp_earned)
 	self._end_reason = end_reason
 	self._total_exp_earned = total_exp_earned
 	self._heist_duration = select(2, managers.statistics:session_time_played())
+	self._moneythrower_spent = moneythrower_spent
 
 	self:send_on_heist_end()
 	self:send_on_player_heist_end()
@@ -764,6 +765,7 @@ function Telemetry:send_on_player_heist_end()
 	end
 
 	telemetry_payload.TotalSpoons = total_spoons
+	telemetry_payload.TotalRetired = self._moneythrower_spent
 
 	self:send("player_heist_end", telemetry_payload)
 end

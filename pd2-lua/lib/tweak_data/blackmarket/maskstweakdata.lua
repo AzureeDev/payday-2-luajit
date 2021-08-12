@@ -7509,6 +7509,14 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "in32",
 		texture_bundle_folder = "in32"
 	}
+	self.masks.eighthgrin = {
+		unit = "units/pd2_dlc_pda8/masks/msk_eighthgrin/msk_eighthgrin",
+		name_id = "bm_msk_eighthgrin",
+		pcs = {},
+		value = 0,
+		global_value = "pda8",
+		texture_bundle_folder = "pda8"
+	}
 	self.masks.boss = {
 		unit = "units/pd2_dlc_srtr/masks/msk_boss/msk_boss",
 		name_id = "bm_msk_boss",

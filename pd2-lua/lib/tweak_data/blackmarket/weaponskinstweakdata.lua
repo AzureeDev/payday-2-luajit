@@ -37494,6 +37494,9 @@ function BlackMarketTweakData:create_new_color_skin(name, data, color_skin_data)
 	data.weapon_ids = {
 		"akm_gold"
 	}
+
+	table.insert(data.weapon_ids, "money")
+
 	data.use_blacklist = true
 	data.is_a_unlockable = true
 	data.is_a_color_skin = true

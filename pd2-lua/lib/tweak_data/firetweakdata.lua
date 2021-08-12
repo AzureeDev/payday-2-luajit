@@ -33,6 +33,16 @@ function FireTweakData:init(tweak_data)
 			expensive = "effects/payday2/particles/explosions/molotov_grenade_enemy_on_fire_9s",
 			cheap = "effects/payday2/particles/explosions/molotov_grenade_enemy_on_fire_9s_cheap",
 			normal = "effects/payday2/particles/explosions/molotov_grenade_enemy_on_fire_9s_cheap"
+		},
+		short_money = {
+			expensive = "effects/payday2/particles/explosions/sparkle_enemies_11sec",
+			cheap = "effects/payday2/particles/explosions/sparkle_enemies_11sec",
+			normal = "effects/payday2/particles/explosions/sparkle_enemies_11sec"
+		},
+		endless_money = {
+			expensive = "effects/payday2/particles/explosions/sparkle_enemies",
+			cheap = "effects/payday2/particles/explosions/sparkle_enemies",
+			normal = "effects/payday2/particles/explosions/sparkle_enemies"
 		}
 	}
 	self.effects_cost = {

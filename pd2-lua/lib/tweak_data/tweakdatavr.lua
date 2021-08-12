@@ -442,6 +442,9 @@ function TweakDataVR:init(tweak_data)
 			shrew = {
 				position = Vector3(-0.5, 1, 1)
 			},
+			rsh12 = {
+				position = Vector3(-0.5, 3, 1.2)
+			},
 			stech = {
 				position = Vector3(-0.5, 1, 1)
 			},
@@ -869,6 +872,16 @@ function TweakDataVR:init(tweak_data)
 			position = Vector3(0, 3, -2)
 		},
 		lemming = {
+			position = Vector3(0, 1.5, -2)
+		},
+		rsh12 = {
+			position = Vector3(3, 0, 0),
+			rotation = Rotation(-223, -129, 70)
+		},
+		type54 = {
+			position = Vector3(0, 1.5, -2)
+		},
+		x_type54 = {
 			position = Vector3(0, 1.5, -2)
 		},
 		breech = {
@@ -2698,6 +2711,76 @@ function TweakDataVR:init(tweak_data)
 				}
 			}
 		},
+		type54 = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_lemming_mag_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -5, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_lemming_mag_in",
+					visible = true,
+					pos = Vector3(0, -5, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -3, -10)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -3, -10)
+				},
+				{
+					time = 0.6,
+					sound = "wp_lemming_mantle_forward",
+					pos = Vector3()
+				}
+			}
+		},
+		x_type54 = {
+			start = {
+				{
+					time = 0,
+					sound = "wp_lemming_mag_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, -5, -20)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_lemming_mag_in",
+					visible = true,
+					pos = Vector3(0, -5, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, -3, -10)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, -3, -10)
+				},
+				{
+					time = 0.6,
+					sound = "wp_lemming_mantle_forward",
+					pos = Vector3()
+				}
+			}
+		},
 		chinchilla = {
 			custom_mag_unit = "units/pd2_dlc_vr/units/wpn_pis_speedloader_6x/wpn_pis_speedloader_6x",
 			start = {
@@ -3977,6 +4060,77 @@ function TweakDataVR:init(tweak_data)
 			}
 		},
 		judge = {
+			reload_part_type = "lower_reciever",
+			custom_mag_unit = "units/pd2_dlc_vr/units/wpn_vr_m_slug/wpn_vr_m_slug_6",
+			start = {
+				{
+					time = 0,
+					sound = "wp_rbull_drum_open",
+					anims = {
+						{
+							anim_group = "reload",
+							to = 1,
+							from = 0.5,
+							part = "lower_reciever"
+						}
+					}
+				},
+				{
+					time = 0.02,
+					sound = "wp_rbull_shells_out"
+				},
+				{
+					time = 0.09,
+					visible = {
+						visible = false,
+						parts = {
+							lower_reciever = {
+								"g_bullet_1",
+								"g_bullet_2",
+								"g_bullet_3",
+								"g_bullet_4",
+								"g_bullet_5"
+							}
+						}
+					},
+					effect = {
+						part = "lower_reciever",
+						name = "effects/payday2/particles/weapons/shells/shell_judge_dump",
+						object = "align_house_align"
+					}
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "wp_rbull_shells_in",
+					anims = {
+						{
+							anim_group = "reload",
+							part = "lower_reciever",
+							from = 1.9
+						}
+					},
+					visible = {
+						visible = true,
+						parts = {
+							lower_reciever = {
+								"g_bullet_1",
+								"g_bullet_2",
+								"g_bullet_3",
+								"g_bullet_4",
+								"g_bullet_5"
+							}
+						}
+					}
+				},
+				{
+					time = 0.5,
+					sound = "wp_rbull_drum_close"
+				}
+			}
+		},
+		rsh12 = {
 			reload_part_type = "lower_reciever",
 			custom_mag_unit = "units/pd2_dlc_vr/units/wpn_vr_m_slug/wpn_vr_m_slug_6",
 			start = {

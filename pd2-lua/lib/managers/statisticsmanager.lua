@@ -1486,7 +1486,8 @@ function StatisticsManager:_get_boom_guns()
 			"long",
 			"arbiter",
 			"ray",
-			"contraband_m203"
+			"contraband_m203",
+			"groza_underbarrel"
 		}
 	end
 

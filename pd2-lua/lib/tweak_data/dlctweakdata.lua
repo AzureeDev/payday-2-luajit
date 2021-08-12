@@ -8290,4 +8290,11 @@ function DLCTweakData:init(tweak_data)
 			amount = 1
 		}
 	}
+	self.pda8_wpn_money = {
+		content = {},
+		dlc = "has_pda8_wpn_money"
+	}
+	self.pda8_wpn_money.content.loot_global_value = "pda8_wpn_money"
+	self.pda8_wpn_money.content.loot_drops = {}
+	self.pda8_wpn_money.content.upgrades = {}
 end

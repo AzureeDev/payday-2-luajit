@@ -321,6 +321,15 @@ function GroupAIStateBesiege:_begin_new_tasks()
 		local demand = force_factor and force_factor.force
 		local nr_police = table.size(area.police.units)
 		local nr_criminals = table.size(area.criminal.units)
+		local criminal_character_in_area = false
+
+		for criminal_key, _ in pairs(area.criminal.units) do
+			if not self._criminals[criminal_key].status and not self._criminals[criminal_key].is_deployable then
+				criminal_character_in_area = true
+
+				break
+			end
+		end
 
 		if reenforce_candidates and demand and demand > 0 and nr_criminals == 0 then
 			local area_free = true
@@ -367,17 +376,11 @@ function GroupAIStateBesiege:_begin_new_tasks()
 			end
 		end
 
-		if assault_candidates then
-			for criminal_key, _ in pairs(area.criminal.units) do
-				if not self._criminals[criminal_key].status and not self._criminals[criminal_key].is_deployable then
-					table.insert(assault_candidates, area)
-
-					break
-				end
-			end
+		if assault_candidates and criminal_character_in_area then
+			table.insert(assault_candidates, area)
 		end
 
-		if nr_criminals == 0 then
+		if not criminal_character_in_area then
 			for neighbour_area_id, neighbour_area in pairs(area.neighbours) do
 				if not found_areas[neighbour_area_id] then
 					table.insert(to_search_areas, neighbour_area)

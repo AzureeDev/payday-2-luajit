@@ -447,6 +447,22 @@ function LootDropTweakData:init_generated(tweak_data)
 		sort_number = 292,
 		category = "dlc"
 	}
+	self.global_values.pda8 = {
+		name_id = "bm_global_value_pda8",
+		desc_id = "menu_l_global_value_pda8",
+		unlock_id = "bm_global_value_pda8_unlock",
+		color = tweak_data.screen_colors.event_color,
+		dlc = true,
+		free = true,
+		hide_unavailable = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = true,
+		track = true,
+		sort_number = 510,
+		category = "global_event"
+	}
 	self.global_values.pex = {
 		name_id = "bm_global_value_pex",
 		desc_id = "menu_l_global_value_pex",

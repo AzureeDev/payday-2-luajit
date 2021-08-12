@@ -473,6 +473,7 @@ function StoryMissionsManager:skip_mission(mission)
 	self:_check_complete(m)
 
 	self._global.skipped_mission = mission
+	self._global.last_failed_heist_id = ""
 end
 
 function StoryMissionsManager:get_last_skipped_mission(mission)

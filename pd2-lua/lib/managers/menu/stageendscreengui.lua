@@ -420,6 +420,9 @@ function StatsTabItem:feed_statistics(stats_data)
 			if stat:h() < h then
 				stat:set_font(tweak_data.menu.pd2_small_font_id)
 				stat:set_font_size(tweak_data.menu.pd2_small_font_size)
+			else
+				stat:set_h(h)
+				child:set_h(stat:bottom() + 10)
 			end
 		elseif child:name() == "gage_assignment_summary" then
 			-- Nothing
@@ -626,11 +629,28 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 		table.insert(self._items, item)
 	end
 
+	local moneythrower_spent = game_state_machine:current_state()._moneythrower_spendings or 0
+	local should_show_moneythrower_spending = moneythrower_spent > 0
+
 	if show_summary then
+		local stats = {
+			"stage_cash_summary"
+		}
+
+		if should_show_moneythrower_spending then
+			stats[#stats + 1] = "moneythrower_spending"
+		end
+
+		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_summary")), 1)
+
+		item:set_stats(stats)
+		table.insert(self._items, item)
+		self._items[1]._panel:set_alpha(0)
+	elseif should_show_moneythrower_spending then
 		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_summary")), 1)
 
 		item:set_stats({
-			"stage_cash_summary"
+			"moneythrower_spending"
 		})
 		table.insert(self._items, item)
 		self._items[1]._panel:set_alpha(0)

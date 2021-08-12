@@ -805,4 +805,8 @@ function MoneyTweakData:init(tweak_data)
 
 	self.unlock_new_mask_slot_value = self.biggest_cashout
 	self.unlock_new_weapon_slot_value = self.biggest_cashout
+	self.moneythrower = {
+		max_kills_per_session = 100,
+		kill_to_offshore_multiplier = 1000
+	}
 end

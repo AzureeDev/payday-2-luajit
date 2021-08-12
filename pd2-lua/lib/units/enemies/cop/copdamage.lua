@@ -2572,7 +2572,8 @@ function CopDamage:sync_damage_fire(attacker_unit, damage_percent, start_dot_dan
 	local is_fire_dot_damage = false
 	local attack_data = {
 		variant = variant,
-		attacker_unit = attacker_unit
+		attacker_unit = attacker_unit,
+		weapon_unit = attacker_unit and attacker_unit:inventory() and attacker_unit:inventory():equipped_unit()
 	}
 	local result = nil
 

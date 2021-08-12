@@ -511,6 +511,7 @@ function SavefileManager:_save_cache(slot)
 		managers.story:save(cache)
 		managers.promo_unlocks:save(cache)
 		managers.generic_side_jobs:save(cache)
+		managers.event_jobs:save(cache)
 		managers.skirmish:save(cache)
 	end
 
@@ -1062,6 +1063,7 @@ function SavefileManager:_load_cache(slot)
 			managers.story:load(cache, version)
 			managers.promo_unlocks:load(cache, version)
 			managers.generic_side_jobs:load(cache, version)
+			managers.event_jobs:load(cache, version)
 			managers.skirmish:load(cache, version)
 		end
 	else

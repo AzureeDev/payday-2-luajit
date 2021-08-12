@@ -1452,6 +1452,7 @@ function MenuManager:do_clear_progress()
 	managers.custom_safehouse:reset()
 	managers.tango:reset()
 	managers.generic_side_jobs:reset()
+	managers.event_jobs:reset()
 	managers.story:reset_all()
 
 	if Global.game_settings.difficulty == "overkill_145" then
@@ -2950,6 +2951,7 @@ end
 
 function MenuCallbackHandler:play_single_player()
 	Global.game_settings.single_player = true
+	Global.game_settings.team_ai_option = math.min(Global.game_settings.team_ai_option, 1)
 
 	managers.network:host_game()
 	Network:set_server()
@@ -2957,6 +2959,7 @@ end
 
 function MenuCallbackHandler:play_online_game()
 	Global.game_settings.single_player = false
+	Global.game_settings.team_ai_option = math.min(Global.game_settings.team_ai_option, 1)
 
 	if managers.network.matchmake and managers.network.matchmake.load_user_filters then
 		managers.network.matchmake:load_user_filters()
@@ -9372,7 +9375,7 @@ function MenuCrimeNetFiltersInitiator:add_filters(node)
 		return
 	end
 
-	local params = {
+	local item_params = {
 		visible_callback = "is_multiplayer is_win32",
 		name = "job_id_filter",
 		callback = "choice_job_id_filter",
@@ -9392,7 +9395,7 @@ function MenuCrimeNetFiltersInitiator:add_filters(node)
 		local job_tweak = tweak_data.narrative.jobs[job_id]
 		local contact = job_tweak.contact
 		local contact_tweak = tweak_data.narrative.contacts[contact]
-		local is_hidden = job_tweak.hidden or contact_tweak and contact_tweak.hidden
+		local is_hidden = (job_tweak.hidden or contact_tweak and contact_tweak.hidden) and not job_tweak.show_in_filters
 		local allow = not job_tweak.wrapped_to_job and not is_hidden
 
 		if allow then
@@ -9414,12 +9417,12 @@ function MenuCrimeNetFiltersInitiator:add_filters(node)
 		end
 	end
 
-	local new_item = node:create_item(data_node, params)
+	local new_item = node:create_item(data_node, item_params)
 
 	new_item:set_value(managers.network.matchmake:get_lobby_filter("job_id") or -1)
 	node:add_item(new_item)
 
-	local params = {
+	local kick_params = {
 		visible_callback = "is_multiplayer is_win32",
 		name = "kick_option_filter",
 		callback = "choice_kick_option",
@@ -9457,12 +9460,12 @@ function MenuCrimeNetFiltersInitiator:add_filters(node)
 		})
 	end
 
-	local new_item = node:create_item(data_node, params)
+	local new_item = node:create_item(data_node, kick_params)
 
 	new_item:set_value(managers.network.matchmake:get_lobby_filter("kick_option") or -1)
 	node:add_item(new_item)
 
-	local params = {
+	local divider_params = {
 		size = 8,
 		name = "divider_end",
 		no_text = true
@@ -9470,18 +9473,18 @@ function MenuCrimeNetFiltersInitiator:add_filters(node)
 	local data_node = {
 		type = "MenuItemDivider"
 	}
-	local new_item = node:create_item(data_node, params)
+	local new_item = node:create_item(data_node, divider_params)
 
 	node:add_item(new_item)
 
-	local params = {
+	local reset_params = {
 		callback = "_reset_filters",
 		name = "reset_filters",
 		align = "right",
 		text_id = "dialog_reset_filters"
 	}
 	local data_node = {}
-	local new_item = node:create_item(data_node, params)
+	local new_item = node:create_item(data_node, reset_params)
 
 	node:add_item(new_item)
 	self:modify_node(node, {})

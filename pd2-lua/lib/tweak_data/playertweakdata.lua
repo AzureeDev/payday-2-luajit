@@ -1180,6 +1180,7 @@ function PlayerTweakData:_init_new_stances()
 	self:_init_x_rota()
 	self:_init_shuno()
 	self:_init_system()
+	self:_init_money()
 	self:_init_komodo()
 	self:_init_elastic()
 	self:_init_legacy()
@@ -5591,6 +5592,31 @@ function PlayerTweakData:_init_system()
 	self.stances.system.crouched.shoulders.translation = pivot_head_translation - pivot_shoulder_translation:rotate_with(pivot_shoulder_rotation:inverse()):rotate_with(pivot_head_rotation)
 	self.stances.system.crouched.shoulders.rotation = pivot_head_rotation * pivot_shoulder_rotation:inverse()
 	self.stances.system.crouched.vel_overshot.pivot = pivot_shoulder_translation + Vector3(0, -30, 0)
+end
+
+function PlayerTweakData:_init_money()
+	self.stances.money = deep_clone(self.stances.default)
+	local pivot_shoulder_translation = Vector3(10.3456, 14.9643, -6.50593)
+	local pivot_shoulder_rotation = Rotation(9.27922e-05, 0.000287294, -0.000913965)
+	local pivot_head_translation = Vector3(8, 12, -5)
+	local pivot_head_rotation = Rotation(0, 0, 0)
+	self.stances.money.standard.shoulders.translation = pivot_head_translation - pivot_shoulder_translation:rotate_with(pivot_shoulder_rotation:inverse()):rotate_with(pivot_head_rotation)
+	self.stances.money.standard.shoulders.rotation = pivot_head_rotation * pivot_shoulder_rotation:inverse()
+	self.stances.money.standard.vel_overshot.pivot = pivot_shoulder_translation + Vector3(0, -30, 0)
+	local pivot_head_translation = Vector3(4, 18, -1)
+	local pivot_head_rotation = Rotation(0, 0, 0)
+	self.stances.money.steelsight.shoulders.translation = pivot_head_translation - pivot_shoulder_translation:rotate_with(pivot_shoulder_rotation:inverse()):rotate_with(pivot_head_rotation)
+	self.stances.money.steelsight.shoulders.rotation = pivot_head_rotation * pivot_shoulder_rotation:inverse()
+	self.stances.money.steelsight.vel_overshot.pivot = pivot_shoulder_translation + Vector3(0, -30, 0)
+	self.stances.money.steelsight.vel_overshot.yaw_neg = 12
+	self.stances.money.steelsight.vel_overshot.yaw_pos = -12
+	self.stances.money.steelsight.vel_overshot.pitch_neg = -12
+	self.stances.money.steelsight.vel_overshot.pitch_pos = 12
+	local pivot_head_translation = Vector3(8, 12, -2)
+	local pivot_head_rotation = Rotation(0, 0, 0)
+	self.stances.money.crouched.shoulders.translation = pivot_head_translation - pivot_shoulder_translation:rotate_with(pivot_shoulder_rotation:inverse()):rotate_with(pivot_head_rotation)
+	self.stances.money.crouched.shoulders.rotation = pivot_head_rotation * pivot_shoulder_rotation:inverse()
+	self.stances.money.crouched.vel_overshot.pivot = pivot_shoulder_translation + Vector3(0, -30, 0)
 end
 
 function PlayerTweakData:_init_komodo()

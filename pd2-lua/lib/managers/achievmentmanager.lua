@@ -36,6 +36,9 @@ function AchievmentManager:init()
 			else
 				self.handler = Global.achievment_manager.handler
 				self.achievments = Global.achievment_manager.achievments
+
+				self.handler:refresh_global_stats_cb(AchievmentManager.update_global_stats)
+				self.handler:refresh_global_stats()
 			end
 		else
 			AchievmentManager.do_award = AchievmentManager.award_none
@@ -242,23 +245,42 @@ function AchievmentManager.fetch_achievments(error_str)
 		end
 	end
 
+	AchievmentManager.update_global_stats(error_str == "success")
 	managers.network.account:achievements_fetched()
 
 	managers.achievment.oldest_achievement_date = oldest_achievement_date or -1
 
 	managers.achievment.oldest_achievement_callback_handler:dispatch(managers.achievment.oldest_achievement_date)
+end
 
-	local gsu_info = managers.achievment:get_info("gsu_01")
+function AchievmentManager.update_global_stats(success)
+	print("[AchievmentManager.update_global_stats]", success)
 
-	if gsu_info and not gsu_info.awarded and managers.achievment:check_gsu_01_achievement() then
-		local stat = tweak_data.achievement.enemy_melee_hit_achievements.gsu_01.stat
-		local unlocks = tweak_data.achievement.persistent_stat_unlocks[stat]
-		local value = managers.network.account:get_stat(stat)
+	if success then
+		local gsu_info = managers.achievment:get_info("gsu_01")
 
-		for _, d in pairs(unlocks) do
-			if d.at <= value then
-				managers.achievment:award(d.award)
+		if gsu_info and not gsu_info.awarded and managers.achievment:check_gsu_01_achievement() then
+			local stat = tweak_data.achievement.enemy_melee_hit_achievements.gsu_01.stat
+			local unlocks = tweak_data.achievement.persistent_stat_unlocks[stat]
+			local value = managers.network.account:get_stat(stat)
+
+			for _, d in pairs(unlocks) do
+				if d.at <= value then
+					managers.achievment:award(d.award)
+				end
 			end
+		end
+
+		if (tonumber(managers.network.account:get_lifetime_stat("pda_stat_d")) or 0) >= 1 then
+			managers.event_jobs:set_event_stage(5)
+		elseif (tonumber(managers.network.account:get_lifetime_stat("pda_stat_c")) or 0) >= 1 then
+			managers.event_jobs:set_event_stage(4)
+		elseif (tonumber(managers.network.account:get_lifetime_stat("pda_stat_b")) or 0) >= 1 then
+			managers.event_jobs:set_event_stage(3)
+		elseif (tonumber(managers.network.account:get_lifetime_stat("pda_stat_a")) or 0) >= 1 then
+			managers.event_jobs:set_event_stage(2)
+		else
+			managers.event_jobs:set_event_stage(1)
 		end
 	end
 end
@@ -485,6 +507,7 @@ function AchievmentManager:award(id)
 	managers.challenge:on_achievement_awarded(id)
 	managers.custom_safehouse:on_achievement_awarded(id)
 	managers.generic_side_jobs:award(id)
+	managers.event_jobs:award(id)
 
 	if managers.mutators:are_achievements_disabled() then
 		return
@@ -709,6 +732,7 @@ function AchievmentManager:award_progress(stat, value)
 	managers.challenge:on_achievement_progressed(stat)
 	managers.custom_safehouse:on_achievement_progressed(stat, value)
 	managers.generic_side_jobs:award(stat)
+	managers.event_jobs:award(stat)
 
 	if managers.mutators:are_mutators_active() and game_state_machine:current_state_name() ~= "menu_main" then
 		return
@@ -1012,6 +1036,7 @@ function AchievmentManager:_award_achievement(t, name)
 	elseif t.award then
 		managers.achievment:award(t.award)
 		managers.generic_side_jobs:award(t.award)
+		managers.event_jobs:award(t.award)
 	elseif t.challenge_stat then
 		managers.challenge:award_progress(t.challenge_stat)
 	elseif t.challenge_award then

@@ -2652,6 +2652,59 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		sequence = "set_ehtan"
 	}
 	self.player_styles.highinttech.characters.ecp_male = highinttech_characters_male_fat
+	self.player_styles.baron = {
+		name_id = "bm_suit_baron",
+		desc_id = "bm_suit_baron_desc",
+		texture_bundle_folder = "pda8",
+		global_value = "pda8",
+		material_variations = {}
+	}
+	self.player_styles.baron.material_variations.default = {
+		name_id = "bm_suit_var_baron_default",
+		global_value = "pda8",
+		desc_id = "bm_suit_var_baron_default_desc"
+	}
+	self.player_styles.baron.material_variations.blue = {
+		desc_id = "bm_suit_var_baron_blue_desc",
+		global_value = "pda8",
+		auto_aquire = true,
+		name_id = "bm_suit_var_baron_blue",
+		third_material = "units/pd2_dlc_pda8/characters/pda8_acc_baron/shared_materials/pda8_acc_baron_blue",
+		material = "units/pd2_dlc_pda8/characters/pda8_acc_baron/shared_materials/pda8_acc_fps_baron_male_blue"
+	}
+	self.player_styles.baron.body_replacement = body_replacement_standard
+	self.player_styles.baron.third_body_replacement = body_replacement_standard
+	self.player_styles.baron.unit = "units/pd2_dlc_pda8/characters/pda8_acc_baron/pda8_acc_fps_baron_male/pda8_acc_fps_baron_male"
+	self.player_styles.baron.characters = {}
+	local baron_characters_male = {
+		third_unit = "units/pd2_dlc_pda8/characters/pda8_acc_baron/pda8_acc_baron_male_average/pda8_acc_baron_male_average"
+	}
+
+	set_characters_data("baron", characters_male, baron_characters_male)
+
+	local baron_characters_male_big = {
+		third_unit = "units/pd2_dlc_pda8/characters/pda8_acc_baron/pda8_acc_baron_male_big/pda8_acc_baron_male_big"
+	}
+
+	set_characters_data("baron", characters_male_big, baron_characters_male_big)
+
+	local baron_characters_female = {
+		third_unit = "units/pd2_dlc_pda8/characters/pda8_acc_baron/pda8_acc_baron_female_average/pda8_acc_baron_female_average"
+	}
+
+	set_characters_data("baron", characters_female, baron_characters_female)
+
+	local baron_characters_female_big = {
+		third_unit = "units/pd2_dlc_pda8/characters/pda8_acc_baron/pda8_acc_baron_female_fat/pda8_acc_baron_female_fat"
+	}
+
+	set_characters_data("baron", characters_female_big, baron_characters_female_big)
+
+	local baron_characters_male_fat = {
+		third_unit = "units/pd2_dlc_pda8/characters/pda8_acc_baron/pda8_acc_baron_male_fat/pda8_acc_baron_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.baron.characters.ecp_male = baron_characters_male_fat
 end
 
 function BlackMarketTweakData:get_player_style_value(player_style, character_name, key)

@@ -11363,6 +11363,8 @@ function BlackMarketGui:populate_player_styles(data)
 				new_data.lock_texture = self:get_lock_icon(new_data, "guis/textures/pd2/lock_dlc")
 				new_data.dlc_locked = tweak_data.lootdrop.global_values[new_data.global_value] and tweak_data.lootdrop.global_values[new_data.global_value].unlock_id or "bm_menu_dlc_locked"
 			elseif not new_data.unlocked then
+				new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
+
 				if managers.dlc:is_content_achievement_locked(data.category, new_data.name) or managers.dlc:is_content_achievement_milestone_locked(data.category, new_data.name) then
 					local ach_dlc_id = managers.dlc:get_achievement_from_locked_content(data.category, new_data.name)
 					local dlc_tweak = tweak_data.dlc[ach_dlc_id]
@@ -11381,7 +11383,12 @@ function BlackMarketGui:populate_player_styles(data)
 						new_data.lock_texture = "guis/textures/pd2/lock_achievement"
 						new_data.dlc_locked = achievement_visual and achievement_visual.desc_id or "achievement_" .. tostring(achievement) .. "_desc"
 					else
-						new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
+						local event_job_challenge = managers.event_jobs:get_challenge_from_reward(data.category, new_data.name)
+
+						if event_job_challenge then
+							new_data.lock_texture = "guis/textures/pd2/lock_achievement"
+							new_data.dlc_locked = event_job_challenge.locked_id or "menu_event_job_lock_info"
+						end
 					end
 				end
 			end
@@ -11494,6 +11501,7 @@ function BlackMarketGui:populate_suit_variations(data)
 				new_data.lock_texture = "guis/textures/pd2/lock_infamy"
 				new_data.dlc_locked = "menu_infamy_lock_info"
 			elseif not new_data.unlocked then
+				new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
 				local achievement = suit_variation_data and suit_variation_data.locks and suit_variation_data.locks.achievement
 
 				if suit_variation == "default" then
@@ -11505,7 +11513,21 @@ function BlackMarketGui:populate_suit_variations(data)
 					new_data.lock_texture = "guis/textures/pd2/lock_achievement"
 					new_data.dlc_locked = achievement_visual and achievement_visual.desc_id or "achievement_" .. tostring(achievement) .. "_desc"
 				else
-					new_data.lock_texture = "guis/textures/pd2/skilltree/padlock"
+					local event_job_challenge = nil
+
+					if suit_variation == "default" or suit_variation_data.auto_aquire then
+						event_job_challenge = managers.event_jobs:get_challenge_from_reward("player_styles", player_style)
+					else
+						event_job_challenge = managers.event_jobs:get_challenge_from_reward(data.category, {
+							player_style,
+							new_data.name
+						})
+					end
+
+					if event_job_challenge then
+						new_data.lock_texture = "guis/textures/pd2/lock_achievement"
+						new_data.dlc_locked = event_job_challenge.locked_id or "menu_event_job_lock_info"
+					end
 				end
 			end
 
@@ -11712,6 +11734,13 @@ function BlackMarketGui:populate_gloves(data)
 					local achievement_visual = tweak_data.achievement.visual[dlc_tweak.achievement_id]
 					new_data.lock_texture = "guis/textures/pd2/lock_achievement"
 					new_data.dlc_locked = achievement_visual and achievement_visual.desc_id or "achievement_" .. tostring(achievement) .. "_desc"
+				else
+					local event_job_challenge = managers.event_jobs:get_challenge_from_reward(data.category, new_data.name)
+
+					if event_job_challenge then
+						new_data.lock_texture = "guis/textures/pd2/lock_achievement"
+						new_data.dlc_locked = event_job_challenge.locked_id or "menu_event_job_lock_info"
+					end
 				end
 			end
 
@@ -13333,7 +13362,10 @@ function BlackMarketGui:populate_buy_weapon(data)
 		end
 
 		if weapon_data.func_based and not BlackMarketGui.get_func_based(weapon_data.func_based) then
+			local _, name, icon = BlackMarketGui.get_func_based(weapon_data.func_based)
 			new_data.unlocked = false
+			new_data.dlc_locked = name
+			new_data.lock_texture = icon or "guis/textures/pd2/skilltree/padlock"
 		end
 
 		new_data.equipped = false
@@ -13531,6 +13563,14 @@ function BlackMarketGui:populate_buy_mask(data)
 		elseif managers.dlc:is_content_infamy_locked(data.category, new_data.name) and (not new_data.unlocked or new_data.unlocked == 0) then
 			new_data.lock_texture = "guis/textures/pd2/lock_infamy"
 			new_data.infamy_lock = true
+		else
+			local event_job_challenge = managers.event_jobs:get_challenge_from_reward(data.category, new_data.name)
+
+			if event_job_challenge and not event_job_challenge.completed then
+				new_data.unlocked = -math.abs(new_data.unlocked)
+				new_data.lock_texture = "guis/textures/pd2/lock_achievement"
+				new_data.dlc_locked = event_job_challenge.locked_id or "menu_event_job_lock_info"
+			end
 		end
 
 		new_data.lock_color = self:get_lock_color(new_data)

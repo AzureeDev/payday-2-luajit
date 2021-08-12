@@ -4,7 +4,8 @@ UpgradesManager.AQUIRE_STRINGS = {
 	"SkillTree",
 	"SpecializationTree",
 	"LevelTree",
-	"DLC"
+	"DLC",
+	"SideJob"
 }
 
 function UpgradesManager:init()

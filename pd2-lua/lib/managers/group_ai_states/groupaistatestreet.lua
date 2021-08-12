@@ -95,6 +95,15 @@ function GroupAIStateStreet:_begin_new_tasks()
 		local demand = force_factor and force_factor.force
 		local nr_police = table.size(area.police.units)
 		local nr_criminals = table.size(area.criminal.units)
+		local criminal_character_in_area = false
+
+		for criminal_key, _ in pairs(area.criminal.units) do
+			if not self._criminals[criminal_key].status and not self._criminals[criminal_key].is_deployable then
+				criminal_character_in_area = true
+
+				break
+			end
+		end
 
 		if demand and (nr_criminals == 0 and reenforce_candidates or demand == 0) then
 			local area_free = true
@@ -145,7 +154,7 @@ function GroupAIStateStreet:_begin_new_tasks()
 			end
 		end
 
-		if nr_criminals == 0 then
+		if not criminal_character_in_area then
 			for neighbour_area_id, neighbour_area in pairs(area.neighbours) do
 				if not found_areas[neighbour_area_id] then
 					table.insert(to_search_areas, neighbour_area)

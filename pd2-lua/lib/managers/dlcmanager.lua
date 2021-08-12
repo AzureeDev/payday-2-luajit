@@ -277,6 +277,7 @@ end
 
 function GenericDLCManager:give_dlc_and_verify_blackmarket()
 	self:give_dlc_package()
+	managers.event_jobs:aquire_claimed_upgrades()
 
 	if managers.blackmarket then
 		managers.blackmarket:tradable_dlcs()
@@ -780,6 +781,10 @@ end
 
 function GenericDLCManager:has_ghm()
 	return self:is_dlc_unlocked("ghm")
+end
+
+function GenericDLCManager:has_pda8_wpn_money()
+	return managers.event_jobs:get_event_stage() < 5
 end
 
 function GenericDLCManager:has_goty_all_dlc_bundle_2014()

@@ -247,7 +247,9 @@ function FireManager:_start_enemy_fire_effect(dot_info)
 			idx = math.random(1, num_objects)
 		end
 
-		local effect = tweak_data.fire.effects.endless[tweak_data.fire.effects_cost[i]]
+		local fire_variant = alive(dot_info.weapon_unit) and (tweak_data.weapon[dot_info.weapon_unit:base():get_name_id()] or tweak_data.weapon.amcar).fire_variant
+		local effect_prefix = fire_variant and fire_variant .. "_" or ""
+		local effect = tweak_data.fire.effects[effect_prefix .. "endless"][tweak_data.fire.effects_cost[i]]
 		local bone = dot_info.enemy_unit:get_object(Idstring(tweak_data.fire.fire_bones[idx]))
 
 		if bone then

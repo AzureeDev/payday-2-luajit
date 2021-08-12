@@ -2232,6 +2232,10 @@ function BlackMarketManager:add_to_inventory(global_value, category, id, not_new
 		local value_id = tweak_data.blackmarket[category][id].value_id
 
 		managers.money:on_loot_drop_cash(value_id)
+	elseif category == "offshore" then
+		local value_id = tweak_data.blackmarket[category][id].value_id
+
+		managers.money:on_loot_drop_offshore(value_id)
 	elseif category == "xp" then
 		local value_id = tweak_data.blackmarket[category][id].value_id
 
@@ -8965,14 +8969,15 @@ function BlackMarketManager:_verify_dlc_items()
 	self:_verify_preferred_characters()
 
 	local player_level = managers.experience:current_level()
-	local unlocked, level, skill_based, weapon_def, weapon_dlc, has_dlc = nil
+	local unlocked, level, skill_based, func_based, weapon_def, weapon_dlc, has_dlc = nil
 
 	for weapon_id, weapon in pairs(Global.blackmarket_manager.weapons) do
 		unlocked = weapon.unlocked
 		level = weapon.level
 		skill_based = weapon.skill_based
+		func_based = weapon.func_based
 
-		if not unlocked and level <= player_level and not skill_based then
+		if not unlocked and level <= player_level and not skill_based and not func_based then
 			weapon_def = tweak_data.upgrades.definitions[weapon_id]
 
 			if weapon_def then
@@ -10210,4 +10215,10 @@ end
 
 function BlackMarketManager:has_unlocked_shock()
 	return managers.achievment:get_info("sah_11").awarded, "bm_menu_locked_shock"
+end
+
+function BlackMarketManager:has_unlocked_money()
+	local is_unlocked = managers.event_jobs:has_completed_and_claimed_rewards("pda8_1")
+
+	return is_unlocked, "bm_menu_locked_pda8_1", "guis/textures/pd2/lock_achievement"
 end

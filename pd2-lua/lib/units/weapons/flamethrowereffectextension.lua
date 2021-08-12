@@ -8,7 +8,7 @@ end
 
 function FlamethrowerEffectExtension:setup_default()
 	self._flame_effect = {
-		effect = Idstring("effects/payday2/particles/explosions/flamethrower")
+		effect = Idstring(tweak_data.weapon[self._name_id].flame_effect)
 	}
 	self._nozzle_effect = {
 		effect = Idstring("effects/payday2/particles/explosions/flamethrower_nosel")
@@ -70,10 +70,11 @@ function FlamethrowerEffectExtension:_spawn_muzzle_effect(from_pos, direction)
 	local nozzle_obj = self._unit:get_object(Idstring("fire"))
 	local nozzle_pos = nozzle_obj:position()
 	local attach_obj = self._unit
+	local rotation = Rotation(direction, math.UP)
 	local effect_id = World:effect_manager():spawn({
 		effect = self._flame_effect.effect,
 		position = nozzle_pos,
-		normal = math.UP
+		rotation = rotation
 	})
 	self._last_fire_time = managers.player:player_timer():time()
 
@@ -81,6 +82,6 @@ function FlamethrowerEffectExtension:_spawn_muzzle_effect(from_pos, direction)
 		been_alive = false,
 		id = effect_id,
 		position = nozzle_pos,
-		direction = direction
+		direction = rotation:y()
 	})
 end

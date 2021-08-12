@@ -84,6 +84,8 @@ function CustomSafehouseGuiPageDaily:_setup_side_menu()
 		"monthly"
 	}
 
+	table.insert(categories, "event_jobs")
+
 	if managers.dlc:has_dlc("tango") then
 		table.insert(categories, "tango")
 	end
@@ -129,6 +131,25 @@ function CustomSafehouseGuiPageDaily:_setup_side_menu()
 		category_id = "menu_cs_div_safehouse_daily"
 	}
 	self._challenges[current_daily.id] = challenges.safehouse_daily[1].data
+	challenges.event_jobs = {
+		category_id = "menu_event_jobs"
+	}
+
+	for _, event_jobs_data in ipairs(managers.event_jobs:challenges()) do
+		if not event_jobs_data.is_active_func or managers.event_jobs[event_jobs_data.is_active_func](managers.event_jobs) then
+			local data = deep_clone(event_jobs_data)
+			data.name_id = event_jobs_data.name_id
+			data.category = "event_jobs"
+			local event_jobs_challenge = {
+				id = event_jobs_data.id,
+				data = data
+			}
+
+			table.insert(challenges.event_jobs, event_jobs_challenge)
+
+			self._challenges[event_jobs_challenge.id] = event_jobs_challenge.data
+		end
+	end
 
 	if managers.dlc:has_dlc("tango") then
 		challenges.tango = {
@@ -241,6 +262,7 @@ function CustomSafehouseGuiPageDaily:_update_buttons()
 			completed = managers.custom_safehouse:has_completed_daily()
 		else
 			local challenge = managers.challenge:get_active_challenge(id)
+			challenge = challenge or managers.event_jobs:get_challenge(id)
 			challenge = challenge or managers.tango:get_challenge(id)
 
 			for _, side_job_dlc in ipairs(managers.generic_side_jobs:side_jobs()) do
@@ -564,30 +586,32 @@ function CustomSafehouseGuiPageDaily:_setup_challenge(id)
 				objective_str = ""
 			end
 
-			local objective_text = scroll:canvas():text({
-				name = "ObjectiveText",
-				blend_mode = "add",
-				wrap = true,
-				align = "left",
-				word_wrap = true,
-				vertical = "top",
-				valign = "scale",
-				halign = "scale",
-				layer = 1,
-				font_size = small_font_size,
-				font = small_font,
-				color = tweak_data.screen_colors.title,
-				text = objective_str,
-				w = scroll:canvas():w()
-			})
+			if objective_str ~= "" and objective_str ~= " " then
+				local objective_text = scroll:canvas():text({
+					name = "ObjectiveText",
+					blend_mode = "add",
+					wrap = true,
+					align = "left",
+					word_wrap = true,
+					vertical = "top",
+					valign = "scale",
+					halign = "scale",
+					layer = 1,
+					font_size = small_font_size,
+					font = small_font,
+					color = tweak_data.screen_colors.title,
+					text = objective_str,
+					w = scroll:canvas():w()
+				})
 
-			objective_text:set_top(current_y)
+				objective_text:set_top(current_y)
 
-			local _, _, _, h = objective_text:text_rect()
+				local _, _, _, h = objective_text:text_rect()
 
-			objective_text:set_h(h)
+				objective_text:set_h(h)
 
-			current_y = objective_text:bottom()
+				current_y = objective_text:bottom()
+			end
 		end
 	end
 
@@ -595,8 +619,8 @@ function CustomSafehouseGuiPageDaily:_setup_challenge(id)
 		local progress_title = scroll:canvas():text({
 			name = "ProgressHeader",
 			blend_mode = "add",
-			vertical = "top",
 			align = "left",
+			vertical = "top",
 			valign = "scale",
 			halign = "scale",
 			layer = 1,
@@ -604,11 +628,11 @@ function CustomSafehouseGuiPageDaily:_setup_challenge(id)
 			font = small_font,
 			color = tweak_data.screen_colors.challenge_title,
 			text = utf8.to_upper(managers.localization:text("menu_unlock_progress")),
-			w = scroll:canvas():w()
+			w = scroll:canvas():w(),
+			h = small_font_size
 		})
 
 		progress_title:set_top(current_y + PANEL_PADDING * 2)
-		self:make_fine_text(progress_title)
 
 		current_y = progress_title:bottom()
 		self._progress_items = {}
@@ -629,6 +653,7 @@ function CustomSafehouseGuiPageDaily:_setup_challenge(id)
 
 	if daily_challenge.rewards then
 		local updated_challenge = self:is_safehouse_daily(id) and managers.custom_safehouse:get_daily_challenge() or managers.challenge:get_active_challenge(id)
+		updated_challenge = updated_challenge or managers.event_jobs:get_challenge(id)
 		updated_challenge = updated_challenge or managers.tango:get_challenge(id)
 
 		for _, side_job_dlc in ipairs(managers.generic_side_jobs:side_jobs()) do
@@ -699,6 +724,7 @@ function CustomSafehouseGuiPageDaily:_setup_challenge(id)
 			})
 
 			self:make_fine_text(reward_text)
+			reward_text:set_size(math.ceil(reward_text:w()), math.ceil(reward_text:h()))
 			reward_text:set_top(reward_title:bottom())
 		elseif daily_challenge.reward_type == "tango" then
 			local reward_macros = {}
@@ -800,7 +826,7 @@ function CustomSafehouseGuiPageDaily:_update_daily_panel_size(new_width)
 		local progress_title = canvas:child("ProgressHeader")
 
 		if progress_title then
-			progress_title:set_top(objective_text:bottom() + h + PANEL_PADDING * 2)
+			progress_title:set_top(objective_text:bottom() + PANEL_PADDING * 2)
 
 			for idx, item in ipairs(self._progress_items) do
 				item:set_w(new_width - (self._challenge_scroll:is_scrollable() and PANEL_PADDING * 2 or 0))
@@ -1401,7 +1427,7 @@ function CustomSafehouseGuiPageDaily:get_legend()
 	local id = self._current_challenge
 
 	if id then
-		local challenge = managers.challenge:get_active_challenge(id)
+		local challenge = managers.challenge:get_active_challenge(id) or managers.tango:get_challenge(id) or managers.generic_side_jobs:get_challenge(id) or managers.event_jobs:get_challenge(id)
 
 		if challenge then
 			local completed = self:is_safehouse_daily(id) and managers.custom_safehouse:has_completed_daily(id) or challenge.completed
@@ -1450,9 +1476,38 @@ function CustomSafehouseGuiRewardItem:init(daily_page, panel, order, reward_data
 		texture_path = reward_data.texture_path or "guis/textures/pd2/icon_reward"
 		texture_rect = reward_data.texture_rect
 		reward_string = reward_data.name_s or managers.localization:text(reward_data.name_id or "menu_challenge_choose_reward")
+	elseif reward_data.type_items == "suit_variations" then
+		local player_style_id = reward_data.item_entry[1]
+		local suit_variation_id = reward_data.item_entry[2]
+		local player_style_data = tweak_data:get_raw_value("blackmarket", "player_styles", player_style_id)
+		local suit_variation_data = player_style_data and player_style_data.material_variations and player_style_data.material_variations[suit_variation_id]
+
+		if suit_variation_data then
+			local guis_catalog = "guis/"
+			local bundle_folder = suit_variation_data.texture_bundle_folder or player_style_data.texture_bundle_folder
+
+			if bundle_folder then
+				guis_catalog = guis_catalog .. "dlcs/" .. tostring(bundle_folder) .. "/"
+			end
+
+			texture_path = guis_catalog .. "textures/pd2/blackmarket/icons/player_styles/" .. player_style_id
+			texture_path = texture_path .. "_" .. suit_variation_id
+		end
+	elseif reward_data.type_items == "offshore" then
+		local td = tweak_data:get_raw_value("blackmarket", "cash", reward_data.item_entry)
+
+		if td then
+			texture_path = "guis/textures/pd2/blackmarket/cash_drop"
+			reward_string = managers.experience:cash_string(managers.money:get_loot_drop_cash_value(td.value_id))
+		end
 	elseif reward_data.item_entry then
 		local id = reward_data.item_entry
 		local category = reward_data.type_items
+
+		if category == "upgrades" then
+			category = managers.upgrades:get_category(id)
+		end
+
 		local td = tweak_data:get_raw_value("blackmarket", category, id) or tweak_data:get_raw_value(category, id)
 
 		if td then
@@ -1514,16 +1569,17 @@ function CustomSafehouseGuiRewardItem:init(daily_page, panel, order, reward_data
 		blend_mode = "add",
 		halign = "scale",
 		word_wrap = true,
-		layer = 1,
+		layer = 2,
 		font_size = small_font_size,
 		font = small_font,
 		color = tweak_data.screen_colors.title,
 		text = reward_string,
-		w = self._panel:w(),
+		w = self._panel:w() - PANEL_PADDING,
 		h = small_font_size * 2
 	})
 
 	BlackMarketGui.make_fine_text(self, self._text)
+	self._text:set_size(math.ceil(self._text:w()), math.ceil(self._text:h()))
 	self._text:set_bottom(self._panel:bottom() - PANEL_PADDING * 0.5)
 	self._text:set_x(self._panel:w() * 0.5 - self._text:w() * 0.5)
 
@@ -1558,11 +1614,10 @@ function CustomSafehouseGuiRewardItem:init(daily_page, panel, order, reward_data
 		self._image:set_h(panel:h() * 0.7 * ratio_h)
 	end
 
-	if is_weapon or is_weapon_mod then
-		self._image:set_center_y(self._panel:h() * 0.5)
-	end
+	self._image:set_center_y(self._panel:h() * 0.5)
 
 	local completed = self._is_safehouse_daily and managers.custom_safehouse:has_completed_daily() or managers.challenge:get_active_challenge(id) and managers.challenge:get_active_challenge(id).completed
+	completed = completed or managers.event_jobs:get_challenge(self._id) and managers.event_jobs:get_challenge(self._id).completed
 	completed = completed or managers.tango:get_challenge(self._id) and managers.tango:get_challenge(self._id).completed
 
 	for _, side_job_dlc in ipairs(managers.generic_side_jobs:side_jobs()) do
@@ -1619,8 +1674,10 @@ end
 function CustomSafehouseGuiRewardItem:refresh()
 	if managers.menu:is_pc_controller() then
 		self._text:set_visible(self._selected or self._reward.completed)
+		self._image:set_alpha(self._selected and 0.8 or 1)
 	else
 		self._text:set_visible(true)
+		self._image:set_alpha(0.8)
 	end
 end
 
@@ -1667,6 +1724,13 @@ function CustomSafehouseGuiRewardItem:trigger()
 					self._daily_page:select_challenge(self._id)
 				end
 			end
+		elseif managers.event_jobs:get_challenge(self._id) and managers.event_jobs:get_challenge(self._id).completed and not managers.event_jobs:get_challenge(self._id).rewarded and not managers.event_jobs:has_already_claimed_reward(self._id, self._order) then
+			managers.menu_component:post_event("menu_skill_investment")
+			self._glow:stop()
+			self._glow:set_alpha(0)
+			self:set_active(false)
+			managers.event_jobs:claim_reward(self._id, self._order)
+			self._daily_page:select_challenge(self._id)
 		elseif managers.tango:get_challenge(self._id) and managers.tango:get_challenge(self._id).completed and not managers.tango:get_challenge(self._id).rewarded and not managers.tango:has_already_claimed_reward(self._id, self._order) then
 			managers.menu_component:post_event("menu_skill_investment")
 			self._glow:stop()

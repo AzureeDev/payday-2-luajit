@@ -764,6 +764,12 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.pda8_bundle = {
+		free = true,
+		content = {}
+	}
+	self.pda8_bundle.content.loot_global_value = "pda8"
+	self.pda8_bundle.content.loot_drops = {}
 	self.pex_bundle = {
 		dlc = "has_pex",
 		content = {}

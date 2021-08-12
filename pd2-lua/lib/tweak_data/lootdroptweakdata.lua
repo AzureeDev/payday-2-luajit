@@ -1684,6 +1684,20 @@ function LootDropTweakData:init(tweak_data)
 		sort_number = 300,
 		category = "dlc"
 	}
+	self.global_values.dlc_achievement = {
+		name_id = "bm_global_value_normal",
+		desc_id = "menu_l_global_value_normal",
+		unlock_id = "bm_global_value_normal_unlock",
+		color = dlc_color,
+		dlc = false,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = false,
+		track = true,
+		sort_number = 300,
+		category = "dlc"
+	}
 	self.global_values.sawp_grenade = {
 		name_id = "bm_global_value_sawp",
 		desc_id = "menu_l_global_value_sawp",
@@ -1699,6 +1713,22 @@ function LootDropTweakData:init(tweak_data)
 		track = true,
 		sort_number = 508,
 		category = "dlc"
+	}
+	self.global_values.pda8_wpn_money = {
+		name_id = "bm_global_value_pda8",
+		desc_id = "menu_l_global_value_pda8",
+		unlock_id = "bm_wpn_money_event_ended",
+		color = tweak_data.screen_colors.event_color,
+		dlc = true,
+		free = false,
+		hide_unavailable = true,
+		chance = 1,
+		value_multiplier = 1,
+		durability_multiplier = 1,
+		drops = false,
+		track = true,
+		sort_number = 510,
+		category = "global_event"
 	}
 
 	if SystemInfo:platform() == Idstring("PS3") then

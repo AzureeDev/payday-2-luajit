@@ -1076,6 +1076,12 @@ function MoneyManager:on_loot_drop_cash(value_id)
 	}, TelemetryConst.economy_origin.loot_drop_cash)
 end
 
+function MoneyManager:on_loot_drop_offshore(value_id)
+	local amount = self:get_loot_drop_cash_value(value_id)
+
+	self:add_to_offshore(amount)
+end
+
 function MoneyManager:get_cached_mask_part_id(category, id, global_value, mask_id)
 	return Idstring(string.format("%s%s%s%s", category, id, global_value, mask_id)):key()
 end
@@ -1610,4 +1616,39 @@ function MoneyManager:load(data)
 		XboxLive:write_hero_stat("cash", self._global.total)
 		XboxLive:write_hero_stat("offshore", self._global.offshore)
 	end
+end
+
+function MoneyManager:session_moneythrower_spending()
+	return managers.statistics:session_killed_by_weapon("money") > 0 and tweak_data:get_value("money_manager", "moneythrower", "kill_to_offshore_multiplier") <= self:offshore()
+end
+
+function MoneyManager:get_session_moneythrower_kills()
+	local offshore_multiplier = tweak_data:get_value("money_manager", "moneythrower", "kill_to_offshore_multiplier")
+	local max_kills_per_session = tweak_data:get_value("money_manager", "moneythrower", "max_kills_per_session")
+	local offshore_kills = self:offshore() % offshore_multiplier
+	local session_kills = managers.statistics:session_killed_by_weapon("money")
+
+	return math.min(session_kills, offshore_kills, max_kills_per_session)
+end
+
+function MoneyManager:get_session_moneythrower_spending()
+	local offshore_multiplier = tweak_data:get_value("money_manager", "moneythrower", "kill_to_offshore_multiplier")
+	local kills_to_spend = self:get_session_moneythrower_kills()
+
+	return kills_to_spend * offshore_multiplier
+end
+
+function MoneyManager:on_spend_session_moneythrower()
+	local offshore_multiplier = tweak_data:get_value("money_manager", "moneythrower", "kill_to_offshore_multiplier")
+	local max_kills_per_session = tweak_data:get_value("money_manager", "moneythrower", "max_kills_per_session")
+	local offshore_kills = math.floor(self:offshore() / offshore_multiplier)
+	local session_kills = managers.statistics:session_killed_by_weapon("money")
+	local spending_kills = math.min(session_kills, offshore_kills, max_kills_per_session)
+	local spendings = spending_kills * offshore_multiplier
+
+	if spendings > 0 then
+		self:deduct_from_offshore(spendings)
+	end
+
+	return spending_kills, spendings
 end

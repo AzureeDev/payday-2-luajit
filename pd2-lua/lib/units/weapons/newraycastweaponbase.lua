@@ -1160,11 +1160,15 @@ end
 
 function NewRaycastWeaponBase:_set_parts_visible(visible)
 	if self._parts then
+		local is_visible = nil
+
 		for part_id, data in pairs(self._parts) do
 			local unit = data.unit or data.link_to_unit
 
 			if alive(unit) then
-				unit:set_visible(visible and self:_is_part_visible(part_id))
+				is_visible = visible and self:_is_part_visible(part_id)
+
+				unit:set_visible(is_visible)
 			end
 		end
 	end
