@@ -127,7 +127,7 @@ function SideJobEventManager:load(cache, version)
 				if not saved_challenge.completed then
 					for _, objective in ipairs(challenge.objectives) do
 						for _, saved_objective in ipairs(saved_challenge.objectives) do
-							if objective.achievement_id ~= nil and objective.achievement_id == saved_objective.achievement_id or objective.progress_id ~= nil and objective.progress_id == saved_objective.progress_id or objective.collective_id ~= nil and objective.collective_id == saved_objective.collective_id then
+							if objective.achievement_id ~= nil and objective.achievement_id == saved_objective.achievement_id or objective.progress_id ~= nil and objective.progress_id == saved_objective.progress_id or objective.collective_id ~= nil and objective.collective_id == saved_objective.collective_id or objective.stage_id ~= nil and objective.stage_id == saved_objective.stage_id then
 								for _, save_value in ipairs(objective.save_values) do
 									objective[save_value] = saved_objective[save_value] or objective[save_value]
 								end

@@ -1640,10 +1640,9 @@ end
 
 function MoneyManager:on_spend_session_moneythrower()
 	local offshore_multiplier = tweak_data:get_value("money_manager", "moneythrower", "kill_to_offshore_multiplier")
-	local max_kills_per_session = tweak_data:get_value("money_manager", "moneythrower", "max_kills_per_session")
 	local offshore_kills = math.floor(self:offshore() / offshore_multiplier)
-	local session_kills = managers.statistics:session_killed_by_weapon("money")
-	local spending_kills = math.min(session_kills, offshore_kills, max_kills_per_session)
+	local session_kills = managers.statistics:session_killed_by_weapon("money") or 0
+	local spending_kills = math.min(session_kills, offshore_kills)
 	local spendings = spending_kills * offshore_multiplier
 
 	if spendings > 0 then
