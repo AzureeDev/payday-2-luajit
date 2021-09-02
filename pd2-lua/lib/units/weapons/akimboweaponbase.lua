@@ -34,8 +34,22 @@ function AkimboWeaponBase:_create_second_gun(unit_name)
 		new_unit:base():set_cosmetics_data(self._cosmetics)
 	end
 
+	local function remove_blueprint_charms(blueprint)
+		local new_blueprint = {}
+
+		for i = 1, #blueprint do
+			if not blueprint[i]:find("charm") then
+				table.insert(new_blueprint, blueprint[i])
+			end
+		end
+
+		return new_blueprint
+	end
+
 	if self._blueprint then
-		new_unit:base():assemble_from_blueprint(self._factory_id, self._blueprint)
+		local bp = remove_blueprint_charms(self._blueprint)
+
+		new_unit:base():assemble_from_blueprint(self._factory_id, bp)
 	elseif not unit_name then
 		new_unit:base():assemble(self._factory_id)
 	end

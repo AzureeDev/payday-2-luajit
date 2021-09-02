@@ -36,9 +36,6 @@ function AchievmentManager:init()
 			else
 				self.handler = Global.achievment_manager.handler
 				self.achievments = Global.achievment_manager.achievments
-
-				self.handler:refresh_global_stats_cb(AchievmentManager.update_global_stats)
-				self.handler:refresh_global_stats()
 			end
 		else
 			AchievmentManager.do_award = AchievmentManager.award_none

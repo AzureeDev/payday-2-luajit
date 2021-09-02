@@ -10,6 +10,7 @@ function PlayerCamera:init(unit)
 	self._m_cam_rot = unit:rotation()
 	self._m_cam_pos = unit:position() + math.UP * 140
 	self._m_cam_fwd = self._m_cam_rot:y()
+	self._m_cam_right = self._m_cam_rot:x()
 	self._camera_object = World:create_camera()
 
 	self._camera_object:set_near_range(3)
@@ -216,6 +217,10 @@ function PlayerCamera:forward()
 	return self._m_cam_fwd
 end
 
+function PlayerCamera:right()
+	return self._m_cam_right
+end
+
 local camera_mvec = Vector3()
 local reticle_mvec = Vector3()
 
@@ -273,6 +278,7 @@ function PlayerCamera:set_rotation(rot)
 
 	mrotation.set_yaw_pitch_roll(self._m_cam_rot, rot:yaw(), rot:pitch(), rot:roll())
 	mrotation.y(self._m_cam_rot, self._m_cam_fwd)
+	mrotation.x(self._m_cam_rot, self._m_cam_right)
 
 	local t = TimerManager:game():time()
 	local sync_dt = t - self._last_sync_t

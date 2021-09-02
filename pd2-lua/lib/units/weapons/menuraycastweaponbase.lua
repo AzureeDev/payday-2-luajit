@@ -131,7 +131,7 @@ function NewRaycastWeaponBase:_cosmetics_applied(clbk)
 
 	for pard_id, data in pairs(self._parts) do
 		if data.unit then
-			data.unit:set_visible(true)
+			data.unit:set_visible(data.steelsight_visible ~= true)
 		end
 	end
 

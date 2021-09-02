@@ -737,9 +737,11 @@ function WeaponFactoryManager:_add_part(p_unit, factory_id, part_id, forbidden, 
 			animations = part.animations,
 			name = ids_unit_name,
 			link_to_unit = link_to_unit,
-			a_obj = Idstring(part.a_obj),
+			a_obj = part.a_obj and Idstring(part.a_obj),
 			parent = part.parent,
-			reload_objects = part.reload_objects
+			reload_objects = part.reload_objects,
+			steelsight_visible = part.steelsight_visible,
+			steelsight_swap_progress_trigger = part.steelsight_swap_progress_trigger
 		}
 
 		managers.dyn_resource:load(ids_unit, ids_unit_name, "packages/dyn_resources", callback(self, self, "clbk_part_unit_loaded", async_task_data))
@@ -748,7 +750,7 @@ function WeaponFactoryManager:_add_part(p_unit, factory_id, part_id, forbidden, 
 			managers.dyn_resource:load(ids_unit, ids_unit_name, "packages/dyn_resources", false)
 		end
 
-		local unit = self:_spawn_and_link_unit(ids_unit_name, Idstring(part.a_obj), third_person, link_to_unit)
+		local unit = self:_spawn_and_link_unit(ids_unit_name, part.a_obj and Idstring(part.a_obj), third_person, link_to_unit)
 		parts[part_id] = {
 			unit = unit,
 			animations = part.animations,
@@ -756,6 +758,11 @@ function WeaponFactoryManager:_add_part(p_unit, factory_id, part_id, forbidden, 
 			package = package,
 			reload_objects = part.reload_objects
 		}
+
+		unit:set_visible(part.steelsight_visible ~= true)
+
+		parts[part_id].steelsight_visible = part.steelsight_visible
+		parts[part_id].steelsight_swap_progress_trigger = part.steelsight_swap_progress_trigger
 	end
 end
 
@@ -772,7 +779,7 @@ function WeaponFactoryManager:clbk_part_unit_loaded(task_data, status, u_type, u
 
 			part.unit = unit
 
-			part.unit:set_visible(part.link_to_unit:visible())
+			part.unit:set_visible(part.link_to_unit:visible() and part.steelsight_visible ~= true)
 
 			part.a_obj = nil
 			part.link_to_unit = nil
@@ -873,6 +880,7 @@ end
 
 function WeaponFactoryManager:_spawn_and_link_unit(u_name, a_obj, third_person, link_to_unit)
 	local unit = World:spawn_unit(u_name, Vector3(), Rotation())
+	a_obj = a_obj or link_to_unit:orientation_object():name()
 	local res = link_to_unit:link(a_obj, unit, unit:orientation_object():name())
 
 	if managers.occlusion and not third_person then

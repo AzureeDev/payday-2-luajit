@@ -5069,6 +5069,7 @@ function GuiTweakData:init(tweak_data)
 		}
 	}
 	wts.types.gadget = wts.types.sight
+	wts.types.sight_swap = wts.types.sight
 	self.weapon_texture_switches = wts
 	self.default_part_texture_switch = "1 3"
 	self.part_texture_switches = {
@@ -5088,9 +5089,9 @@ function GuiTweakData:init(tweak_data)
 	}
 
 	table.insert(self.new_heists, {
-		name_id = "menu_nh_pda8",
-		texture_path = "guis/dlcs/pda8/textures/pd2/new_heists/pda8",
-		url = "https://ovk.af/8thAnniversaryPD2SLA"
+		name_id = "menu_nh_ivs",
+		texture_path = "guis/dlcs/ivs/textures/pd2/new_heists/ivs",
+		url = "https://ovk.af/PD2Upd210SLA"
 	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_sand_bundle",

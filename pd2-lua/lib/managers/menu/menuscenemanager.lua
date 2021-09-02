@@ -2365,6 +2365,8 @@ function MenuSceneManager:clbk_weapon_base_unit_loaded(params, status, asset_typ
 	weapon_unit:base():set_cosmetics_data(params.cosmetics)
 
 	if params.blueprint then
+		params.unit = weapon_unit:base()
+
 		weapon_unit:base():assemble_from_blueprint(params.factory_id, params.blueprint, nil, callback(self, self, "clbk_weapon_assembly_complete", params))
 	else
 		weapon_unit:base():assemble(params.factory_id)
@@ -2395,6 +2397,7 @@ function MenuSceneManager:clbk_weapon_assembly_complete(params)
 	end
 
 	owner_weapon_data[params.type].assembly_complete = true
+	params.unit.assembled = true
 
 	self:_chk_character_visibility(owner)
 end
@@ -3222,7 +3225,20 @@ function MenuSceneManager:spawn_item_weapon(factory_id, blueprint, cosmetics, te
 
 	mrotation.set_zero(self._item_rot)
 
-	local function spawn_weapon(pos, rot)
+	local function remove_blueprint_charms(blueprint)
+		local new_blueprint = {}
+
+		for i = 1, #blueprint do
+			if not blueprint[i]:find("charm") then
+				table.insert(new_blueprint, blueprint[i])
+			end
+		end
+
+		return new_blueprint
+	end
+
+	local function spawn_weapon(pos, rot, remove_charms)
+		remove_charms = remove_charms or false
 		local w_unit = World:spawn_unit(ids_unit_name, pos, rot)
 
 		w_unit:base():set_factory_data(factory_id)
@@ -3230,7 +3246,13 @@ function MenuSceneManager:spawn_item_weapon(factory_id, blueprint, cosmetics, te
 		w_unit:base():set_texture_switches(texture_switches)
 
 		if blueprint then
-			w_unit:base():assemble_from_blueprint(factory_id, blueprint, true)
+			local bp = blueprint
+
+			if remove_charms then
+				bp = remove_blueprint_charms(blueprint)
+			end
+
+			w_unit:base():assemble_from_blueprint(factory_id, bp, true)
 		else
 			w_unit:base():assemble(factory_id, true)
 		end
@@ -3242,7 +3264,7 @@ function MenuSceneManager:spawn_item_weapon(factory_id, blueprint, cosmetics, te
 	local second_unit = nil
 
 	if new_unit:base().AKIMBO then
-		second_unit = spawn_weapon(self._item_pos + self._item_rot:x() * -10 + self._item_rot:z() * -7 + self._item_rot:y() * -5, self._item_rot * Rotation(0, 8, -10))
+		second_unit = spawn_weapon(self._item_pos + self._item_rot:x() * -10 + self._item_rot:z() * -7 + self._item_rot:y() * -5, self._item_rot * Rotation(0, 8, -10), true)
 
 		new_unit:link(new_unit:orientation_object():name(), second_unit)
 		second_unit:base():tweak_data_anim_stop("unequip")
@@ -4593,6 +4615,14 @@ end
 
 function MenuSceneManager:get_character_unit()
 	return self._character_unit
+end
+
+function MenuSceneManager:is_character_posing()
+	return self._use_character_grab or self._use_character_grab2
+end
+
+function MenuSceneManager:is_gun_interactable()
+	return self._use_item_grab
 end
 
 function MenuSceneManager:preview_character_skin(skin_id, unit, clbks)

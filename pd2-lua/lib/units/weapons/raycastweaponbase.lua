@@ -1837,6 +1837,13 @@ function RaycastWeaponBase:set_visibility_state(state)
 	self._unit:set_visible(state)
 end
 
+function RaycastWeaponBase:update_visibility_state()
+end
+
+function RaycastWeaponBase:get_steelsight_swap_progress_trigger()
+	return self:weapon_tweak_data().steelsight_swap_progress_trigger or 1
+end
+
 function RaycastWeaponBase:set_bullet_hit_slotmask(new_slotmask)
 	self._bullet_slotmask = new_slotmask
 end

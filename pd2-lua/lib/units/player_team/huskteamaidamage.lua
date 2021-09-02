@@ -114,9 +114,33 @@ function HuskTeamAIDamage:damage_melee(attack_data)
 		end
 
 		managers.hud:set_mugshot_damage_taken(self._unit:unit_data().mugshot_id)
-		self._unit:network():send_to_host("damage_melee", attacker, damage_percent, 1, hit_offset_height, 0)
+		self._unit:network():send_to_host("damage_melee", attacker, damage_percent, damage_percent, 1, hit_offset_height, 0, false)
 		self:_send_damage_drama(attack_data, damage_abs)
 	end
+end
+
+function HuskTeamAIDamage:damage_tase(attack_data)
+	if self._dead or self._fatal then
+		return
+	end
+
+	local attacker_unit = attack_data and attack_data.attacker_unit
+
+	if attacker_unit and attacker_unit:base() and attacker_unit:base().thrower_unit then
+		attacker_unit = attacker_unit:base():thrower_unit()
+	end
+
+	if attacker_unit and PlayerDamage.is_friendly_fire(self, attacker_unit) then
+		self._unit:network():send_to_host("friendly_fire_hit")
+
+		return
+	end
+
+	if self._tase_effect then
+		World:effect_manager():fade_kill(self._tase_effect)
+	end
+
+	self._tase_effect = World:effect_manager():spawn(self._tase_effect_table)
 end
 
 function HuskTeamAIDamage:sync_damage_bullet(attacker_unit, hit_offset_height, result_index)

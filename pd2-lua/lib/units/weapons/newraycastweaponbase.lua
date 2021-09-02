@@ -95,6 +95,17 @@ end
 
 function NewRaycastWeaponBase:set_texture_switches(texture_switches)
 	self._texture_switches = texture_switches
+
+	if self._texture_switches then
+		local sight_swap_switches = {}
+
+		for part_id, texture_data in pairs(self._texture_switches) do
+			sight_swap_switches[part_id] = texture_data
+			sight_swap_switches[part_id .. "_steelsight"] = texture_data
+		end
+
+		self._texture_switches = sight_swap_switches
+	end
 end
 
 function NewRaycastWeaponBase:set_factory_data(factory_id)
@@ -1161,12 +1172,19 @@ end
 function NewRaycastWeaponBase:_set_parts_visible(visible)
 	if self._parts then
 		local is_visible = nil
+		local is_player = self._setup.user_unit == managers.player:player_unit()
+		local steelsight_swap_state = false
+
+		if is_player then
+			steelsight_swap_state = self._setup.user_unit:camera() and alive(self._setup.user_unit:camera():camera_unit()) and self._setup.user_unit:camera():camera_unit():base():get_steelsight_swap_state() or false
+		end
 
 		for part_id, data in pairs(self._parts) do
 			local unit = data.unit or data.link_to_unit
 
 			if alive(unit) then
 				is_visible = visible and self:_is_part_visible(part_id)
+				is_visible = is_visible and (self._parts[part_id].steelsight_visible == nil or self._parts[part_id].steelsight_visible == steelsight_swap_state)
 
 				unit:set_visible(is_visible)
 			end
@@ -1177,6 +1195,20 @@ end
 function NewRaycastWeaponBase:set_visibility_state(state)
 	NewRaycastWeaponBase.super.set_visibility_state(self, state)
 	self:_set_parts_visible(state)
+end
+
+function NewRaycastWeaponBase:update_visibility_state()
+	self:_set_parts_visible(self._unit:visible())
+end
+
+function NewRaycastWeaponBase:get_steelsight_swap_progress_trigger()
+	local part = managers.weapon_factory:get_part_from_weapon_by_type("sight_swap", self._parts)
+
+	if part and part.steelsight_swap_progress_trigger then
+		return part.steelsight_swap_progress_trigger
+	end
+
+	return NewRaycastWeaponBase.super.get_steelsight_swap_progress_trigger(self)
 end
 
 function NewRaycastWeaponBase:fire_mode()

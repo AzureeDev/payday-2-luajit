@@ -664,7 +664,7 @@ function GenericDLCManager:has_dbd_clan()
 end
 
 function GenericDLCManager:has_dbd_deluxe()
-	return Global.dlc_manager.all_dlc_data.dbd_deluxe and Global.dlc_manager.all_dlc_data.dbd_deluxe.verified
+	return Global.dlc_manager.all_dlc_data.dbd_deluxe and Global.dlc_manager.all_dlc_data.dbd_deluxe.verified or Global.dlc_manager.all_dlc_data.dbd_regular and Global.dlc_manager.all_dlc_data.dbd_regular.verified
 end
 
 function GenericDLCManager:has_solus_clan()
@@ -1978,6 +1978,11 @@ function WINDLCManager:init()
 				dbd_deluxe = {
 					no_install = true,
 					app_id = "489980",
+					external = true
+				},
+				dbd_regular = {
+					no_install = true,
+					app_id = "381210",
 					external = true
 				},
 				pim = {

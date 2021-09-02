@@ -5512,7 +5512,6 @@ function UpgradesTweakData:init(tweak_data)
 	self:_x_rota_weapon_definitions()
 	self:_shuno_weapon_definitions()
 	self:_system_weapon_definitions()
-	self:_money_weapon_definitions()
 	self:_komodo_weapon_definitions()
 	self:_elastic_weapon_definitions()
 	self:_legacy_weapon_definitions()
@@ -15593,15 +15592,6 @@ function UpgradesTweakData:_system_weapon_definitions()
 	self.definitions.system = {
 		factory_id = "wpn_fps_fla_system",
 		weapon_id = "system",
-		category = "weapon"
-	}
-end
-
-function UpgradesTweakData:_money_weapon_definitions()
-	self.definitions.money = {
-		dlc = "pda8_wpn_money",
-		factory_id = "wpn_fps_fla_money",
-		weapon_id = "money",
 		category = "weapon"
 	}
 end

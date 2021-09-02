@@ -472,7 +472,7 @@ function StoryMissionsGui:_update_info(mission)
 					color = text_col
 				}), obj_padd_x, 0)
 
-				if (not mission.completed or objective.basic) and (not objective.completed or objective.basic) and objective.levels and (not objective.basic or not Network:is_server()) and not Network:is_client() then
+				if (not mission.completed or objective.basic) and (not objective.completed or objective.basic) and objective.levels and (not objective.basic or not Network:is_server()) and not Network:is_client() and mission.completed == mission.rewarded then
 					if objective.dlc and not managers.dlc:is_dlc_unlocked(objective.dlc) and not Global.game_settings.single_player then
 						placer:add_right(canvas:fine_text({
 							text = managers.localization:to_upper_text("menu_ultimate_edition_short"),

@@ -651,5 +651,5 @@ function SideJobEventManager:get_event_stage()
 end
 
 function SideJobEventManager:is_event_active()
-	return self._global.event_stage < tweak_data.event_jobs.pda_base + 5
+	return self._global.event_stage < 5
 end

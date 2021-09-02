@@ -58,6 +58,7 @@ function FPCameraPlayerBase:init(unit)
 	self._fov = {
 		fov = 75
 	}
+	self._steelsight_swap_state = false
 	self._input = {}
 	self._tweak_data = tweak_data.input.gamepad
 	self._camera_properties.look_speed_current = self._tweak_data.look_speed_standard
@@ -239,6 +240,13 @@ function FPCameraPlayerBase:_update_stance(t, dt)
 
 			self._shoulder_stance.rotation = trans_data.end_rotation
 			self._shoulder_stance.transition = nil
+			local in_steelsight = self._parent_movement_ext._current_state:in_steelsight()
+
+			if in_steelsight and not self._steelsight_swap_state then
+				self:_set_steelsight_swap_state(true)
+			elseif not in_steelsight and self._steelsight_swap_state then
+				self:_set_steelsight_swap_state(false)
+			end
 		else
 			local progress = elapsed_t / trans_data.duration
 			local progress_smooth = math.bezier(bezier_values, progress)
@@ -246,6 +254,20 @@ function FPCameraPlayerBase:_update_stance(t, dt)
 			mvector3.lerp(self._shoulder_stance.translation, trans_data.start_translation, trans_data.end_translation, progress_smooth)
 
 			self._shoulder_stance.rotation = trans_data.start_rotation:slerp(trans_data.end_rotation, progress_smooth)
+			local in_steelsight = self._parent_movement_ext._current_state:in_steelsight()
+			local absolute_progress = nil
+
+			if in_steelsight then
+				absolute_progress = (1 - trans_data.absolute_progress) * progress_smooth + trans_data.absolute_progress
+			else
+				absolute_progress = trans_data.absolute_progress * (1 - progress_smooth)
+			end
+
+			if in_steelsight and not self._steelsight_swap_state and trans_data.steelsight_swap_progress_trigger <= absolute_progress then
+				self:_set_steelsight_swap_state(true)
+			elseif not in_steelsight and self._steelsight_swap_state and absolute_progress < trans_data.steelsight_swap_progress_trigger then
+				self:_set_steelsight_swap_state(false)
+			end
 		end
 	end
 
@@ -1134,18 +1156,61 @@ function FPCameraPlayerBase:set_stance_fov_instant(stance_name)
 	end
 end
 
+function FPCameraPlayerBase:get_steelsight_swap_state()
+	return self._steelsight_swap_state
+end
+
+function FPCameraPlayerBase:_set_steelsight_swap_state(steelsight_swap_state)
+	self._steelsight_swap_state = steelsight_swap_state
+	local equipped_weapon = self._parent_unit:inventory():equipped_unit()
+
+	if alive(equipped_weapon) then
+		equipped_weapon:base():update_visibility_state()
+	end
+end
+
 function FPCameraPlayerBase:clbk_stance_entered(new_shoulder_stance, new_head_stance, new_vel_overshot, new_fov, new_shakers, stance_mod, duration_multiplier, duration)
 	local t = managers.player:player_timer():time()
 
 	if new_shoulder_stance then
+		local was_in_steelsight = self._shoulder_stance.in_steelsight
+		local absolute_progress = nil
+
+		if self._shoulder_stance.transition then
+			local trans_data = self._shoulder_stance.transition
+			local elapsed_t = t - trans_data.start_t
+			local progress = elapsed_t / trans_data.duration
+			local progress_smooth = math.bezier(bezier_values, progress)
+
+			if was_in_steelsight then
+				absolute_progress = (1 - trans_data.absolute_progress) * progress_smooth + trans_data.absolute_progress
+			else
+				absolute_progress = trans_data.absolute_progress * (1 - progress_smooth)
+			end
+		elseif was_in_steelsight then
+			absolute_progress = 1
+		else
+			absolute_progress = 0
+		end
+
+		local steelsight_swap_progress_trigger = 1
+		local equipped_weapon = self._parent_unit:inventory():equipped_unit()
+
+		if alive(equipped_weapon) then
+			steelsight_swap_progress_trigger = equipped_weapon:base():get_steelsight_swap_progress_trigger()
+		end
+
 		local transition = {}
 		self._shoulder_stance.transition = transition
+		self._shoulder_stance.in_steelsight = self._parent_movement_ext._current_state:in_steelsight()
 		transition.end_translation = new_shoulder_stance.translation + (stance_mod.translation or Vector3())
 		transition.end_rotation = new_shoulder_stance.rotation * (stance_mod.rotation or Rotation())
 		transition.start_translation = mvector3.copy(self._shoulder_stance.translation)
 		transition.start_rotation = self._shoulder_stance.rotation
 		transition.start_t = t
 		transition.duration = duration * duration_multiplier
+		transition.absolute_progress = absolute_progress
+		transition.steelsight_swap_progress_trigger = steelsight_swap_progress_trigger
 	end
 
 	if new_head_stance then

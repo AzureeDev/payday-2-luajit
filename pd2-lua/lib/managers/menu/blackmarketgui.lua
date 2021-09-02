@@ -7178,6 +7178,33 @@ function BlackMarketGui:update_info_text()
 			table.insert(updated_texts[4].resource_color, tweak_data.lootdrop.global_values[slot_data.global_value].color)
 		end
 
+		local current_zoom = slot_data.comparision_data and slot_data.comparision_data.zoom or 1
+		local zoom_stat = part_data and part_data.stats and part_data.stats.zoom
+		local gadget_zoom_stat = part_data and part_data.stats and part_data.stats.gadget_zoom
+		local gadget_zoom_add_stat = part_data and part_data.stats and part_data.stats.gadget_zoom_add
+		local zoom_magnification = nil
+
+		if zoom_stat then
+			zoom_magnification = 1 + zoom_stat
+		elseif gadget_zoom_stat then
+			zoom_magnification = gadget_zoom_stat
+		elseif gadget_zoom_add_stat then
+			zoom_magnification = current_zoom + gadget_zoom_add_stat
+		end
+
+		if zoom_magnification then
+			zoom_magnification = math.clamp(zoom_magnification, 1, #tweak_data.weapon.stats.zoom)
+			zoom_magnification = tweak_data.weapon.stats.zoom[1] / tweak_data.weapon.stats.zoom[zoom_magnification]
+			zoom_magnification = math.round(zoom_magnification * zoom_magnification, 0.25)
+
+			if zoom_magnification > 1 then
+				local zoom_level_string = managers.localization:text("bm_menu_sight_zoom_level", {
+					zoom = zoom_magnification
+				})
+				updated_texts[1].text = updated_texts[1].text .. "  " .. zoom_level_string
+			end
+		end
+
 		if perks and table.contains(perks, "bonus") then
 			updated_texts[4].text = updated_texts[4].text .. "\n##" .. managers.localization:to_upper_text("bm_menu_disables_cosmetic_bonus") .. "##"
 

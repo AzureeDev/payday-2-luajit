@@ -624,7 +624,7 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 
 	if managers.crime_spree:is_active() then
 		show_summary = false
-		item = CrimeSpreeResultTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_crime_spree_summary")), 1)
+		item = CrimeSpreeResultTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_crime_spree_summary")), #self._items + 1)
 
 		table.insert(self._items, item)
 	end
@@ -641,22 +641,21 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 			stats[#stats + 1] = "moneythrower_spending"
 		end
 
-		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_summary")), 1)
+		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_summary")), #self._items + 1)
 
 		item:set_stats(stats)
 		table.insert(self._items, item)
 		self._items[1]._panel:set_alpha(0)
 	elseif should_show_moneythrower_spending then
-		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_summary")), 1)
+		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_summary")), #self._items + 1)
 
 		item:set_stats({
 			"moneythrower_spending"
 		})
 		table.insert(self._items, item)
-		self._items[1]._panel:set_alpha(0)
 	end
 
-	item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_stats_crew")), 2)
+	item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_stats_crew")), #self._items + 1)
 
 	item:set_stats({
 		"time_played",
@@ -670,7 +669,7 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 	})
 	table.insert(self._items, item)
 
-	item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_stats_personal")), 3)
+	item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_stats_personal")), #self._items + 1)
 
 	item:set_stats({
 		"total_downed",
@@ -683,7 +682,7 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 	})
 	table.insert(self._items, item)
 
-	item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_stats_gage_assignment")), 4)
+	item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_stats_gage_assignment")), #self._items + 1)
 
 	item:set_stats({
 		"gage_assignment_summary"
@@ -691,7 +690,7 @@ function StageEndScreenGui:init(saferect_ws, fullrect_ws, statistics_data)
 	table.insert(self._items, item)
 
 	if managers.custom_safehouse:unlocked() then
-		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_safehouse_summary")), 5)
+		item = StatsTabItem:new(self._panel, self._tab_panel, utf8.to_upper(managers.localization:text("menu_es_safehouse_summary")), #self._items + 1)
 
 		item:set_stats({
 			"stage_safehouse_summary"

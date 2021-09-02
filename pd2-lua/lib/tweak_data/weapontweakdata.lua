@@ -232,7 +232,6 @@ function WeaponTweakData:init(tweak_data)
 	self:_init_data_x_rota_crew()
 	self:_init_data_shuno_crew()
 	self:_init_data_system_crew()
-	self:_init_data_money_crew()
 	self:_init_data_komodo_crew()
 	self:_init_data_elastic_crew()
 	self:_init_data_legacy_crew()
@@ -4576,32 +4575,6 @@ function WeaponTweakData:_init_data_shuno_crew()
 	self.shuno_crew.has_fire_animation = true
 end
 
-function WeaponTweakData:_init_data_money_crew()
-	self.money_crew.categories = clone(self.money.categories)
-	self.money_crew.sounds.prefix = "moneythrower_npc"
-	self.money_crew.sounds.fire = "moneythrower_npc_fire"
-	self.money_crew.sounds.stop_fire = "moneythrower_npc_fire_stop"
-	self.money_crew.use_data.selection_index = SELECTION.SECONDARY
-	self.money_crew.DAMAGE = 1
-	self.money_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
-	self.money_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
-	self.money_crew.shell_ejection = "effects/payday2/particles/weapons/shells/empty"
-	self.money_crew.CLIP_AMMO_MAX = 300
-	self.money_crew.NR_CLIPS_MAX = 4
-	self.money_crew.pull_magazine_during_reload = "large_metal"
-	self.money_crew.hold = {
-		"bullpup",
-		"rifle"
-	}
-	self.money_crew.reload = "rifle"
-	self.money_crew.auto.fire_rate = 0.05
-	self.money_crew.fire_variant = "money"
-	self.money_crew.hud_icon = "rifle"
-	self.money_crew.alert_size = 2500
-	self.money_crew.suppression = 0.45
-	self.money_crew.FIRE_MODE = "auto"
-end
-
 function WeaponTweakData:_init_data_system_crew()
 	self.system_crew.categories = clone(self.system.categories)
 	self.system_crew.sounds.prefix = "system_npc"
@@ -5780,7 +5753,6 @@ function WeaponTweakData:_init_new_weapons(weapon_data)
 	self:_init_x_rota(weapon_data)
 	self:_init_shuno(weapon_data)
 	self:_init_system(weapon_data)
-	self:_init_money(weapon_data)
 	self:_init_komodo(weapon_data)
 	self:_init_elastic(weapon_data)
 	self:_init_legacy(weapon_data)
@@ -5895,7 +5867,7 @@ function WeaponTweakData:_init_new_m4(weapon_data)
 	self.new_m4.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 52,
+		damage = 62,
 		alert_size = 7,
 		spread = 12,
 		spread_moving = 10,
@@ -6148,7 +6120,7 @@ function WeaponTweakData:_init_r870(weapon_data)
 	self.r870.DAMAGE = 6
 	self.r870.damage_near = 2000
 	self.r870.damage_far = 3000
-	self.r870.rays = 12
+	self.r870.rays = 10
 	self.r870.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_MEDIUM
 	self.r870.CLIP_AMMO_MAX = 6
 	self.r870.NR_CLIPS_MAX = 7
@@ -6434,7 +6406,7 @@ function WeaponTweakData:_init_amcar(weapon_data)
 	self.amcar.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 42,
+		damage = 45,
 		alert_size = 7,
 		spread = 10,
 		spread_moving = 8,
@@ -6751,7 +6723,7 @@ function WeaponTweakData:_init_ak74(weapon_data)
 	self.ak74.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 56,
+		damage = 63,
 		alert_size = 7,
 		spread = 13,
 		spread_moving = 11,
@@ -7111,7 +7083,7 @@ function WeaponTweakData:_init_saiga(weapon_data)
 	self.saiga.DAMAGE = 6
 	self.saiga.damage_near = 2000
 	self.saiga.damage_far = 3000
-	self.saiga.rays = 12
+	self.saiga.rays = 8
 	self.saiga.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_LOW
 	self.saiga.CLIP_AMMO_MAX = 7
 	self.saiga.NR_CLIPS_MAX = 10
@@ -7271,7 +7243,7 @@ function WeaponTweakData:_init_ak5(weapon_data)
 	self.ak5.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 56,
+		damage = 66,
 		alert_size = 7,
 		spread = 16,
 		spread_moving = 14,
@@ -7371,7 +7343,7 @@ function WeaponTweakData:_init_aug(weapon_data)
 	self.aug.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 55,
+		damage = 65,
 		alert_size = 7,
 		spread = 17,
 		spread_moving = 15,
@@ -7471,7 +7443,7 @@ function WeaponTweakData:_init_g36(weapon_data)
 	self.g36.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 44,
+		damage = 54,
 		alert_size = 7,
 		spread = 11,
 		spread_moving = 9,
@@ -8115,7 +8087,7 @@ function WeaponTweakData:_init_serbu(weapon_data)
 	self.serbu.DAMAGE = 6
 	self.serbu.damage_near = 2000
 	self.serbu.damage_far = 3000
-	self.serbu.rays = 12
+	self.serbu.rays = 10
 	self.serbu.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_HIGH
 	self.serbu.CLIP_AMMO_MAX = 6
 	self.serbu.NR_CLIPS_MAX = 7
@@ -8881,7 +8853,7 @@ function WeaponTweakData:_init_judge(weapon_data)
 	self.judge.DAMAGE = 6
 	self.judge.damage_near = 2000
 	self.judge.damage_far = 3000
-	self.judge.rays = 12
+	self.judge.rays = 10
 	self.judge.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_VERYHIGH
 	self.judge.CLIP_AMMO_MAX = 5
 	self.judge.NR_CLIPS_MAX = 7
@@ -9139,7 +9111,7 @@ function WeaponTweakData:_init_s552(weapon_data)
 	self.s552.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 42,
+		damage = 52,
 		alert_size = 7,
 		spread = 10,
 		spread_moving = 8,
@@ -9913,7 +9885,7 @@ function WeaponTweakData:_init_rpk(weapon_data)
 		extra_ammo = 51,
 		reload = 11,
 		suppression = 8,
-		concealment = 1
+		concealment = 5
 	}
 end
 
@@ -10406,7 +10378,7 @@ function WeaponTweakData:_init_benelli(weapon_data)
 	self.benelli.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_LOW
 	self.benelli.damage_near = 2000
 	self.benelli.damage_far = 3000
-	self.benelli.rays = 12
+	self.benelli.rays = 9
 	self.benelli.CLIP_AMMO_MAX = 8
 	self.benelli.NR_CLIPS_MAX = 8
 	self.benelli.AMMO_MAX = self.benelli.CLIP_AMMO_MAX * self.benelli.NR_CLIPS_MAX
@@ -10512,7 +10484,7 @@ function WeaponTweakData:_init_striker(weapon_data)
 	self.striker.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_MEDIUM
 	self.striker.damage_near = 2000
 	self.striker.damage_far = 3000
-	self.striker.rays = 12
+	self.striker.rays = 9
 	self.striker.CLIP_AMMO_MAX = 12
 	self.striker.NR_CLIPS_MAX = 6
 	self.striker.AMMO_MAX = self.striker.CLIP_AMMO_MAX * self.striker.NR_CLIPS_MAX
@@ -10615,7 +10587,7 @@ function WeaponTweakData:_init_ksg(weapon_data)
 	self.ksg.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_MEDIUM
 	self.ksg.damage_near = 2000
 	self.ksg.damage_far = 3000
-	self.ksg.rays = 12
+	self.ksg.rays = 9
 	self.ksg.CLIP_AMMO_MAX = 14
 	self.ksg.NR_CLIPS_MAX = 3
 	self.ksg.AMMO_MAX = self.ksg.CLIP_AMMO_MAX * self.ksg.NR_CLIPS_MAX
@@ -10948,7 +10920,7 @@ function WeaponTweakData:_init_galil(weapon_data)
 	}
 	self.galil.DAMAGE = 1
 	self.galil.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
-	self.galil.CLIP_AMMO_MAX = 30
+	self.galil.CLIP_AMMO_MAX = 35
 	self.galil.NR_CLIPS_MAX = 5
 	self.galil.AMMO_MAX = self.galil.CLIP_AMMO_MAX * self.galil.NR_CLIPS_MAX
 	self.galil.AMMO_PICKUP = self:_pickup_chance(self.galil.AMMO_MAX, PICKUP.AR_MED_CAPACITY)
@@ -11004,14 +10976,14 @@ function WeaponTweakData:_init_galil(weapon_data)
 	self.galil.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 57,
+		damage = 67,
 		alert_size = 7,
 		spread = 13,
 		spread_moving = 10,
 		recoil = 18,
 		value = 4,
 		extra_ammo = 51,
-		reload = 11,
+		reload = 15,
 		suppression = 7,
 		concealment = 15
 	}
@@ -11105,7 +11077,7 @@ function WeaponTweakData:_init_famas(weapon_data)
 	self.famas.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 41,
+		damage = 51,
 		alert_size = 7,
 		spread = 10,
 		spread_moving = 8,
@@ -11993,7 +11965,7 @@ function WeaponTweakData:_init_spas12(weapon_data)
 	self.spas12.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_LOW
 	self.spas12.damage_near = 2000
 	self.spas12.damage_far = 3000
-	self.spas12.rays = 12
+	self.spas12.rays = 10
 	self.spas12.CLIP_AMMO_MAX = 6
 	self.spas12.NR_CLIPS_MAX = 11
 	self.spas12.AMMO_MAX = self.spas12.CLIP_AMMO_MAX * self.spas12.NR_CLIPS_MAX
@@ -12712,7 +12684,7 @@ function WeaponTweakData:_init_l85a2(weapon_data)
 	self.l85a2.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 58,
+		damage = 65,
 		alert_size = 8,
 		spread = 17,
 		spread_moving = 15,
@@ -12760,7 +12732,7 @@ function WeaponTweakData:_init_vhs(weapon_data)
 	self.vhs.DAMAGE = 1
 	self.vhs.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_LOW
 	self.vhs.CLIP_AMMO_MAX = 30
-	self.vhs.NR_CLIPS_MAX = 5
+	self.vhs.NR_CLIPS_MAX = 6
 	self.vhs.AMMO_MAX = self.vhs.CLIP_AMMO_MAX * self.vhs.NR_CLIPS_MAX
 	self.vhs.AMMO_PICKUP = self:_pickup_chance(self.vhs.AMMO_MAX, PICKUP.AR_MED_CAPACITY)
 	self.vhs.FIRE_MODE = "auto"
@@ -12819,14 +12791,14 @@ function WeaponTweakData:_init_vhs(weapon_data)
 	self.vhs.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 58,
+		damage = 78,
 		alert_size = 8,
 		spread = 16,
 		spread_moving = 15,
 		recoil = 16,
 		value = 9,
 		extra_ammo = 51,
-		reload = 11,
+		reload = 14,
 		suppression = 12,
 		concealment = 17
 	}
@@ -13998,7 +13970,7 @@ function WeaponTweakData:_init_aa12(weapon_data)
 	self.aa12.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_LOW
 	self.aa12.damage_near = 2000
 	self.aa12.damage_far = 3000
-	self.aa12.rays = 12
+	self.aa12.rays = 8
 	self.aa12.CLIP_AMMO_MAX = 8
 	self.aa12.NR_CLIPS_MAX = 9
 	self.aa12.AMMO_MAX = self.aa12.CLIP_AMMO_MAX * self.aa12.NR_CLIPS_MAX
@@ -14741,7 +14713,7 @@ function WeaponTweakData:_init_asval(weapon_data)
 	self.asval.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 41,
+		damage = 50,
 		alert_size = 12,
 		spread = 15,
 		spread_moving = 8,
@@ -14890,7 +14862,7 @@ function WeaponTweakData:_init_wa2000(weapon_data)
 	}
 	self.wa2000.DAMAGE = 1
 	self.wa2000.damage_falloff = FALLOFF_TEMPLATE.SNIPER_FALL_LOW
-	self.wa2000.CLIP_AMMO_MAX = 10
+	self.wa2000.CLIP_AMMO_MAX = 15
 	self.wa2000.NR_CLIPS_MAX = 4
 	self.wa2000.AMMO_MAX = self.wa2000.CLIP_AMMO_MAX * self.wa2000.NR_CLIPS_MAX
 	self.wa2000.AMMO_PICKUP = self:_pickup_chance(self.wa2000.AMMO_MAX, PICKUP.SNIPER_LOW_DAMAGE)
@@ -14960,7 +14932,7 @@ function WeaponTweakData:_init_wa2000(weapon_data)
 		recoil = 6,
 		value = 9,
 		extra_ammo = 51,
-		reload = 11,
+		reload = 16,
 		suppression = 12,
 		concealment = 16
 	}
@@ -16585,7 +16557,7 @@ function WeaponTweakData:_init_m37(weapon_data)
 	self.m37.DAMAGE = 6
 	self.m37.damage_near = 2000
 	self.m37.damage_far = 3000
-	self.m37.rays = 12
+	self.m37.rays = 10
 	self.m37.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_VERYHIGH
 	self.m37.CLIP_AMMO_MAX = 7
 	self.m37.NR_CLIPS_MAX = 4
@@ -17329,7 +17301,7 @@ function WeaponTweakData:_init_x_m1911(weapon_data)
 		extra_ammo = 51,
 		reload = 11,
 		suppression = 15,
-		concealment = 27
+		concealment = 28
 	}
 end
 
@@ -17591,7 +17563,7 @@ function WeaponTweakData:_init_m590(weapon_data)
 	self.m590.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_MEDIUM
 	self.m590.damage_near = 2000
 	self.m590.damage_far = 3000
-	self.m590.rays = 12
+	self.m590.rays = 9
 	self.m590.CLIP_AMMO_MAX = 7
 	self.m590.NR_CLIPS_MAX = 6
 	self.m590.AMMO_MAX = self.m590.CLIP_AMMO_MAX * self.m590.NR_CLIPS_MAX
@@ -17982,16 +17954,16 @@ function WeaponTweakData:_init_tecci(weapon_data)
 	self.tecci.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 40,
+		damage = 70,
 		alert_size = 7,
 		spread = 7,
 		spread_moving = 10,
 		recoil = 14,
 		value = 1,
 		extra_ammo = 51,
-		reload = 11,
+		reload = 13,
 		suppression = 10,
-		concealment = 20
+		concealment = 14
 	}
 end
 
@@ -18140,7 +18112,7 @@ function WeaponTweakData:_init_boot(weapon_data)
 	self.boot.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_HIGH
 	self.boot.damage_near = 2000
 	self.boot.damage_far = 3000
-	self.boot.rays = 12
+	self.boot.rays = 10
 	self.boot.CLIP_AMMO_MAX = 7
 	self.boot.NR_CLIPS_MAX = 3
 	self.boot.AMMO_MAX = self.boot.CLIP_AMMO_MAX * self.boot.NR_CLIPS_MAX
@@ -18655,7 +18627,7 @@ function WeaponTweakData:_init_x_packrat(weapon_data)
 		extra_ammo = 51,
 		reload = 11,
 		suppression = 15,
-		concealment = 27
+		concealment = 29
 	}
 end
 
@@ -18694,7 +18666,7 @@ function WeaponTweakData:_init_rota(weapon_data)
 	self.rota.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_MEDIUM
 	self.rota.damage_near = 2000
 	self.rota.damage_far = 3000
-	self.rota.rays = 12
+	self.rota.rays = 8
 	self.rota.CLIP_AMMO_MAX = 6
 	self.rota.NR_CLIPS_MAX = 9
 	self.rota.AMMO_MAX = self.rota.CLIP_AMMO_MAX * self.rota.NR_CLIPS_MAX
@@ -20251,7 +20223,7 @@ function WeaponTweakData:_init_m1897(weapon_data)
 	self.m1897.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_PRIMARY_MEDIUM
 	self.m1897.damage_near = 2000
 	self.m1897.damage_far = 3000
-	self.m1897.rays = 12
+	self.m1897.rays = 10
 	self.m1897.CLIP_AMMO_MAX = 7
 	self.m1897.NR_CLIPS_MAX = 5
 	self.m1897.AMMO_MAX = self.m1897.CLIP_AMMO_MAX * self.m1897.NR_CLIPS_MAX
@@ -21231,7 +21203,7 @@ function WeaponTweakData:_init_basset(weapon_data)
 	self.basset.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_LOW
 	self.basset.damage_near = 2000
 	self.basset.damage_far = 3000
-	self.basset.rays = 12
+	self.basset.rays = 6
 	self.basset.CLIP_AMMO_MAX = 8
 	self.basset.NR_CLIPS_MAX = 13
 	self.basset.AMMO_MAX = self.basset.CLIP_AMMO_MAX * self.basset.NR_CLIPS_MAX
@@ -21345,7 +21317,7 @@ function WeaponTweakData:_init_x_basset(weapon_data)
 	self.x_basset.DAMAGE = 4
 	self.x_basset.damage_near = 2000
 	self.x_basset.damage_far = 3000
-	self.x_basset.rays = 12
+	self.x_basset.rays = 6
 	self.x_basset.fire_mode_data.fire_rate = 0.18
 	self.x_basset.damage_falloff = FALLOFF_TEMPLATE.AKI_SHOTGUN_FALL_LOW
 	self.x_basset.single = {
@@ -21503,7 +21475,7 @@ function WeaponTweakData:_init_corgi(weapon_data)
 	self.corgi.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 58,
+		damage = 59,
 		alert_size = 8,
 		spread = 18,
 		spread_moving = 15,
@@ -24746,7 +24718,7 @@ function WeaponTweakData:_init_x_judge(weapon_data)
 	self.x_judge.damage_falloff = FALLOFF_TEMPLATE.AKI_SHOTGUN_FALL_HIGH
 	self.x_judge.damage_near = 2000
 	self.x_judge.damage_far = 3000
-	self.x_judge.rays = 12
+	self.x_judge.rays = 10
 	self.x_judge.use_shotgun_reload = false
 	self.x_judge.CLIP_AMMO_MAX = 10
 	self.x_judge.NR_CLIPS_MAX = 4
@@ -24857,7 +24829,7 @@ function WeaponTweakData:_init_x_rota(weapon_data)
 	self.x_rota.damage_falloff = FALLOFF_TEMPLATE.AKI_SHOTGUN_FALL_MEDIUM
 	self.x_rota.damage_near = 2000
 	self.x_rota.damage_far = 3000
-	self.x_rota.rays = 12
+	self.x_rota.rays = 8
 	self.x_rota.use_shotgun_reload = false
 	self.x_rota.CLIP_AMMO_MAX = 12
 	self.x_rota.NR_CLIPS_MAX = 6
@@ -25038,125 +25010,6 @@ function WeaponTweakData:_init_shuno(weapon_data)
 		reload = 11,
 		suppression = 4,
 		concealment = 5
-	}
-end
-
-function WeaponTweakData:_init_money(weapon_data)
-	self.money = {
-		categories = {
-			"flamethrower"
-		},
-		has_description = false,
-		damage_melee = weapon_data.damage_melee_default,
-		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
-		sounds = {}
-	}
-	self.money.sounds.fire = "moneythrower_fire"
-	self.money.sounds.stop_fire = "moneythrower_stop"
-	self.money.sounds.dryfire = "flamethrower_dryfire"
-	self.money.sounds.enter_steelsight = "secondary_steel_sight_enter"
-	self.money.sounds.leave_steelsight = "secondary_steel_sight_exit"
-	self.money.timers = {
-		reload_not_empty = 8.5,
-		reload_empty = 8.5,
-		unequip = 0.85,
-		equip = 0.85
-	}
-	self.money.name_id = "bm_w_money"
-	self.money.desc_id = "bm_w_money_desc"
-	self.money.description_id = "des_money"
-	self.money.global_value = "pda8_wpn_money"
-	self.money.texture_bundle_folder = "pda8"
-	self.money.unlock_func = "has_unlocked_money"
-	self.money.muzzleflash = "effects/payday2/particles/weapons/762_auto_fps"
-	self.money.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
-	self.money.flame_effect = "effects/payday2/particles/explosions/moneythrower"
-	self.money.use_data = {
-		selection_index = SELECTION.SECONDARY,
-		align_place = "right_hand"
-	}
-	self.money.DAMAGE = 1
-	self.money.rays = 12
-	self.money.CLIP_AMMO_MAX = 400
-	self.money.NR_CLIPS_MAX = 2
-	self.money.AMMO_MAX = self.money.CLIP_AMMO_MAX * self.money.NR_CLIPS_MAX
-	self.money.AMMO_PICKUP = self:_pickup_chance(self.money.CLIP_AMMO_MAX, PICKUP.SNIPER_HIGH_DAMAGE)
-	self.money.FIRE_MODE = "auto"
-	self.money.fire_mode_data = {
-		fire_rate = 0.03
-	}
-	self.money.auto = {
-		fire_rate = 0.05
-	}
-	self.money.spread = {
-		standing = self.r870.spread.standing,
-		crouching = self.r870.spread.crouching,
-		steelsight = self.r870.spread.steelsight,
-		moving_standing = self.r870.spread.moving_standing,
-		moving_crouching = self.r870.spread.moving_crouching,
-		moving_steelsight = self.r870.spread.moving_steelsight
-	}
-	self.money.kick = {
-		standing = {
-			0,
-			0,
-			0,
-			0
-		}
-	}
-	self.money.kick.crouching = self.money.kick.standing
-	self.money.kick.steelsight = self.money.kick.standing
-	self.money.crosshair = {
-		standing = {},
-		crouching = {},
-		steelsight = {}
-	}
-	self.money.crosshair.standing.offset = 0.16
-	self.money.crosshair.standing.moving_offset = 0.8
-	self.money.crosshair.standing.kick_offset = 0.6
-	self.money.crosshair.standing.hidden = true
-	self.money.crosshair.crouching.offset = 0.08
-	self.money.crosshair.crouching.moving_offset = 0.7
-	self.money.crosshair.crouching.kick_offset = 0.4
-	self.money.crosshair.crouching.hidden = true
-	self.money.crosshair.steelsight.hidden = true
-	self.money.crosshair.steelsight.offset = 0
-	self.money.crosshair.steelsight.moving_offset = 0
-	self.money.crosshair.steelsight.kick_offset = 0.1
-	self.money.shake = {
-		fire_multiplier = 0,
-		fire_steelsight_multiplier = 0
-	}
-	self.money.autohit = weapon_data.autohit_shotgun_default
-	self.money.aim_assist = weapon_data.aim_assist_shotgun_default
-	self.money.animations = {}
-	self.money.weapon_hold = "system"
-	self.money.animations.equip_id = "equip_system"
-	self.money.animations.recoil_steelsight = false
-	self.money.fire_variant = "money"
-	self.money.flame_max_range = 1300
-	self.money.single_flame_effect_duration = 1
-	self.money.panic_suppression_chance = 0.2
-	self.money.fire_dot_data = {
-		dot_trigger_chance = 0.75,
-		dot_damage = 10,
-		dot_length = 1,
-		dot_trigger_max_distance = 1300,
-		dot_tick_period = 0.5
-	}
-	self.money.stats = {
-		zoom = 1,
-		total_ammo_mod = 21,
-		damage = 95,
-		alert_size = 1,
-		spread = 1,
-		spread_moving = 6,
-		recoil = 0,
-		value = 1,
-		extra_ammo = 51,
-		reload = 11,
-		suppression = 2,
-		concealment = 21
 	}
 end
 
@@ -25375,7 +25228,7 @@ function WeaponTweakData:_init_komodo(weapon_data)
 	self.komodo.stats = {
 		zoom = 1,
 		total_ammo_mod = 21,
-		damage = 58,
+		damage = 62,
 		alert_size = 8,
 		spread = 16,
 		spread_moving = 15,
@@ -28263,12 +28116,6 @@ function WeaponTweakData:_create_table_structure()
 		auto = {}
 	}
 	self.system_crew = {
-		usage = "is_rifle",
-		sounds = {},
-		use_data = {},
-		auto = {}
-	}
-	self.money_crew = {
 		usage = "is_rifle",
 		sounds = {},
 		use_data = {},

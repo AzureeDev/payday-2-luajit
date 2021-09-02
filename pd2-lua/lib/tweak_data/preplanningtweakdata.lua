@@ -2876,6 +2876,7 @@ function PrePlanningTweakData:_create_locations(tweak_data)
 			custom_points = {}
 		},
 		mission_briefing_texture = "guis/dlcs/berry/textures/pd2/pre_planning/mission_briefing_pbr",
+		post_event_prefix = "loc",
 		total_budget = 6,
 		default_plans = {},
 		start_location = {
