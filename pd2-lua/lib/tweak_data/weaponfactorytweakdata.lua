@@ -5103,7 +5103,7 @@ function WeaponFactoryTweakData:_init_ak74()
 				stats = {
 					spread = 3,
 					total_ammo_mod = -12,
-					damage = 104,
+					damage = 97,
 					concealment = -4,
 					value = 1,
 					recoil = -9
@@ -24036,7 +24036,7 @@ function WeaponFactoryTweakData:_init_modpack_m4_ak()
 		stats = {
 			spread = 4,
 			total_ammo_mod = -12,
-			damage = 108,
+			damage = 98,
 			concealment = -4,
 			value = 1,
 			recoil = -10
