@@ -13,6 +13,17 @@ end
 function WeaponUnderbarrel:destroy(unit)
 end
 
+function WeaponUnderbarrel:setup_data(setup_data, damage_multiplier, ammo_data)
+	self._alert_events = setup_data.alert_AI and {} or nil
+	self._alert_fires = {}
+	self._autoaim = setup_data.autoaim
+	self._setup = setup_data
+end
+
+function WeaponUnderbarrel:_update_stats_values()
+	return {}
+end
+
 function WeaponUnderbarrel:setup_underbarrel()
 	self._ammo = WeaponAmmo:new(self.name_id, self._tweak_data.CLIP_AMMO_MAX, self._tweak_data.AMMO_MAX)
 end
@@ -62,7 +73,7 @@ function WeaponUnderbarrel:ammo_base()
 end
 
 function WeaponUnderbarrel:_get_sound_event(weapon, event, alternative_event)
-	local str_name = self.name_id
+	local str_name = self.name_id or self._name_id
 
 	if not weapon.third_person_important or not weapon:third_person_important() then
 		str_name = self.name_id:gsub("_crew", "")
@@ -84,6 +95,14 @@ end
 
 function WeaponUnderbarrel:_spawn_shell_eject_effect()
 	return true
+end
+
+function WeaponUnderbarrel:_check_alert(...)
+	return nil
+end
+
+function WeaponUnderbarrel:_build_suppression(...)
+	return nil
 end
 
 function WeaponUnderbarrel:_check_state(current_state)
@@ -117,4 +136,10 @@ end
 
 function WeaponUnderbarrel:toggle_requires_stance_update()
 	return true
+end
+
+function WeaponUnderbarrel:on_add_ammo_from_bag()
+	if self._tweak_data.reload_on_ammo_bag then
+		self._ammo:set_ammo_remaining_in_clip(math.min(self._ammo:get_ammo_total(), self._ammo:get_ammo_max_per_clip()))
+	end
 end

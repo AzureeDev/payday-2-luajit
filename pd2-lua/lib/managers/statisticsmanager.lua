@@ -2488,7 +2488,7 @@ function StatisticsManager:check_stats()
 		end
 
 		local check = self._global.stat_check.h
-		local checkURL = "https://fbi.overkillsoftware.com/fstatscheck/fstatscheck.php"
+		local checkURL = "https://fbi.paydaythegame.com/fstatscheck/fstatscheck.php"
 		local id = Steam:userid()
 		checkURL = checkURL .. "?id=" .. id .. "&h=" .. check
 

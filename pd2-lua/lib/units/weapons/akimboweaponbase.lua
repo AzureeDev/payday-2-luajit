@@ -34,8 +34,22 @@ function AkimboWeaponBase:_create_second_gun(unit_name)
 		new_unit:base():set_cosmetics_data(self._cosmetics)
 	end
 
+	local function remove_blueprint_charms(blueprint)
+		local new_blueprint = {}
+
+		for i = 1, #blueprint do
+			if not blueprint[i]:find("charm") then
+				table.insert(new_blueprint, blueprint[i])
+			end
+		end
+
+		return new_blueprint
+	end
+
 	if self._blueprint then
-		new_unit:base():assemble_from_blueprint(self._factory_id, self._blueprint)
+		local bp = remove_blueprint_charms(self._blueprint)
+
+		new_unit:base():assemble_from_blueprint(self._factory_id, bp)
 	elseif not unit_name then
 		new_unit:base():assemble(self._factory_id)
 	end
@@ -223,6 +237,40 @@ function AkimboWeaponBase:set_gadget_on(...)
 	if alive(self._second_gun) then
 		self._second_gun:base():set_gadget_on(...)
 	end
+end
+
+function AkimboWeaponBase:_check_sound_switch(...)
+	AkimboWeaponBase.super._check_sound_switch(self, ...)
+
+	if alive(self._second_gun) then
+		self._second_gun:base():_check_sound_switch(...)
+	end
+end
+
+function AkimboWeaponBase:reset_cached_gadget()
+	AkimboWeaponBase.super.reset_cached_gadget(self)
+
+	if alive(self._second_gun) then
+		self._second_gun:base():reset_cached_gadget()
+	end
+end
+
+function AkimboWeaponBase:underbarrel_toggle()
+	local is_on = AkimboWeaponBase.super.underbarrel_toggle(self)
+
+	if alive(self._second_gun) then
+		local underbarrel_part = managers.weapon_factory:get_part_from_weapon_by_type("underbarrel", self._second_gun:base()._parts)
+
+		if underbarrel_part and alive(underbarrel_part.unit) and underbarrel_part.unit:base() and underbarrel_part.unit:base().toggle then
+			if is_on then
+				underbarrel_part.unit:base():set_on()
+			else
+				underbarrel_part.unit:base():set_off()
+			end
+		end
+	end
+
+	return is_on
 end
 
 function AkimboWeaponBase:set_gadget_color(...)

@@ -704,7 +704,7 @@ function GuiTweakData:init(tweak_data)
 	self.WEAPON_COLUMNS_PER_PAGE = 4
 	self.MAX_WEAPON_PAGES = math.ceil(min_amount_weapons / (self.WEAPON_ROWS_PER_PAGE * self.WEAPON_COLUMNS_PER_PAGE))
 	self.MAX_WEAPON_SLOTS = self.MAX_WEAPON_PAGES * self.WEAPON_ROWS_PER_PAGE * self.WEAPON_COLUMNS_PER_PAGE
-	self.fbi_files_webpage = "http://fbi.overkillsoftware.com/"
+	self.fbi_files_webpage = "https://fbi.paydaythegame.com/"
 	self.crimefest_challenges_webpage = "http://www.overkillsoftware.com/games/roadtocrimefest/"
 	self.crime_net = {
 		controller = {}
@@ -5088,6 +5088,11 @@ function GuiTweakData:init(tweak_data)
 		limit = 5
 	}
 
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_tawp",
+		texture_path = "guis/dlcs/tawp/textures/pd2/new_heists/tawp",
+		url = "https://ovk.af/SmugglerPack3SLS"
+	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_ivs",
 		texture_path = "guis/dlcs/ivs/textures/pd2/new_heists/ivs",

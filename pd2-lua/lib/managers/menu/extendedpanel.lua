@@ -204,6 +204,10 @@ function ExtendedPanel.make_fine_text(text, keep_w, keep_h)
 	text:set_size(keep_w and text:w() or math.ceil(w), keep_h and text:h() or math.ceil(h))
 	text:set_position(math.round(text:x()), math.round(text:y()))
 
+	if text:word_wrap() then
+		text:grow(1, 0)
+	end
+
 	return text
 end
 

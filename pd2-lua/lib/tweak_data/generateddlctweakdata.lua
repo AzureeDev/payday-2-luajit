@@ -1156,6 +1156,12 @@ function DLCTweakData:init_generated()
 			amount = 1
 		}
 	}
+	self.taco_bundle = {
+		dlc = "has_taco",
+		content = {}
+	}
+	self.taco_bundle.content.loot_global_value = "taco"
+	self.taco_bundle.content.loot_drops = {}
 	self.tam_bundle = {
 		free = true,
 		content = {}
@@ -1168,6 +1174,113 @@ function DLCTweakData:init_generated()
 	}
 	self.tar_bundle.content.loot_global_value = "tar"
 	self.tar_bundle.content.loot_drops = {}
+	self.tawp_bundle = {
+		dlc = "has_tawp",
+		content = {}
+	}
+	self.tawp_bundle.content.loot_global_value = "tawp"
+	self.tawp_bundle.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_charm_bag",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_charm_dallas",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_charm_grenade",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_charm_piggy",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_tawp_01",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_tawp_02",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_tawp_03",
+			amount = 1
+		},
+		{
+			type_items = "weapon_skins",
+			item_entry = "color_tawp_04",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_shak12_body_vks",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_shak12_o_carry_dummy",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_shak12_ns_suppressor",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_ass_shak12_ns_muzzle",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_type54_b_long",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_type54_m_ext",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_type54_underbarrel",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_x_type54_underbarrel",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_rsh12_b_comp",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_rsh12_b_short",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_rsh12_g_wood",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_o_poe",
+			amount = 1
+		}
+	}
 	self.tjp_bundle = {
 		dlc = "has_tjp",
 		content = {}

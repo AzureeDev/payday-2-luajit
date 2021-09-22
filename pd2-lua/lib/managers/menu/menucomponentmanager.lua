@@ -3653,6 +3653,19 @@ function MenuComponentManager:get_texture_from_mod_type(type, sub_type, gadget, 
 		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. (sub_type or is_auto and "autofire" or "singlefire")
 	elseif type == "sight" then
 		texture = "guis/textures/pd2/blackmarket/inv_mod_scope"
+	elseif type == "charm" then
+		texture = "guis/dlcs/tawp/textures/pd2/blackmarket/inv_mod_charm"
+	elseif type == "underbarrel" then
+		if equipped then
+			-- Nothing
+		elseif mods and #mods > 0 then
+			local weapon_factory_tweak_data = tweak_data.weapon.factory.parts
+			local part_id = mods[1][1]
+			type = weapon_factory_tweak_data[part_id].type
+			sub_type = weapon_factory_tweak_data[part_id].sub_type
+		end
+
+		texture = "guis/textures/pd2/blackmarket/inv_mod_" .. tostring(sub_type or type)
 	elseif type == "ammo" or type == "underbarrel_ammo" then
 		if equipped then
 			-- Nothing

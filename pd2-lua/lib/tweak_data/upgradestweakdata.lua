@@ -4555,7 +4555,8 @@ function UpgradesTweakData:_init_pd2_values()
 			"45%"
 		},
 		{
-			kill_health_gain
+			kill_health_gain,
+			"15%"
 		},
 		{
 			"135%"
@@ -4571,6 +4572,7 @@ function UpgradesTweakData:_init_pd2_values()
 		},
 		{
 			kill_health_gain_team,
+			"15%",
 			"10%"
 		}
 	})
@@ -4829,7 +4831,9 @@ function UpgradesTweakData:init(tweak_data)
 				"scalper",
 				"switchblade",
 				"x_m1911",
-				"x_vityaz"
+				"x_vityaz",
+				"type54",
+				"x_type54"
 			}
 		},
 		[25] = {
@@ -4857,6 +4861,7 @@ function UpgradesTweakData:init(tweak_data)
 				"sandsteel",
 				"packrat",
 				"lemming",
+				"rsh12",
 				"chinchilla",
 				"x_chinchilla",
 				"model3",
@@ -5008,7 +5013,8 @@ function UpgradesTweakData:init(tweak_data)
 		[40] = {
 			name_id = "lvl_40",
 			upgrades = {
-				"rep_upgrade4"
+				"rep_upgrade4",
+				"shak12"
 			}
 		},
 		[41] = {
@@ -5453,6 +5459,9 @@ function UpgradesTweakData:init(tweak_data)
 	self:_flint_weapon_definitions()
 	self:_coal_weapon_definitions()
 	self:_lemming_weapon_definitions()
+	self:_rsh12_weapon_definitions()
+	self:_type54_weapon_definitions()
+	self:_x_type54_weapon_definitions()
 	self:_chinchilla_weapon_definitions()
 	self:_x_chinchilla_weapon_definitions()
 	self:_sbl_weapon_definitions()
@@ -5470,6 +5479,7 @@ function UpgradesTweakData:init(tweak_data)
 	self:_pm9_weapon_definitions()
 	self:_x_pm9_weapon_definitions()
 	self:_qbu88_weapon_definitions()
+	self:_shak12_weapon_definitions()
 	self:_breech_weapon_definitions()
 	self:_ching_weapon_definitions()
 	self:_erma_weapon_definitions()
@@ -15085,6 +15095,45 @@ function UpgradesTweakData:_lemming_weapon_definitions()
 	}
 end
 
+function UpgradesTweakData:_rsh12_weapon_definitions()
+	self.definitions.rsh12 = {
+		dlc = "tawp",
+		factory_id = "wpn_fps_pis_rsh12",
+		weapon_id = "rsh12",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_type54_weapon_definitions()
+	self.definitions.type54 = {
+		dlc = "tawp",
+		factory_id = "wpn_fps_pis_type54",
+		weapon_id = "type54",
+		category = "weapon"
+	}
+	self.definitions.type54_underbarrel = {
+		dlc = "tawp",
+		factory_id = "wpn_fps_pis_type54_underbarrel",
+		weapon_id = "type54_underbarrel",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_x_type54_weapon_definitions()
+	self.definitions.x_type54 = {
+		dlc = "tawp",
+		factory_id = "wpn_fps_pis_x_type54",
+		weapon_id = "x_type54",
+		category = "weapon"
+	}
+	self.definitions.x_type54_underbarrel = {
+		dlc = "tawp",
+		factory_id = "wpn_fps_pis_x_type54_underbarrel",
+		weapon_id = "x_type54_underbarrel",
+		category = "weapon"
+	}
+end
+
 function UpgradesTweakData:_chinchilla_weapon_definitions()
 	self.definitions.chinchilla = {
 		dlc = "max",
@@ -15186,6 +15235,15 @@ function UpgradesTweakData:_qbu88_weapon_definitions()
 		dlc = "sawp",
 		factory_id = "wpn_fps_snp_qbu88",
 		weapon_id = "qbu88",
+		category = "weapon"
+	}
+end
+
+function UpgradesTweakData:_shak12_weapon_definitions()
+	self.definitions.shak12 = {
+		dlc = "tawp",
+		factory_id = "wpn_fps_ass_shak12",
+		weapon_id = "shak12",
 		category = "weapon"
 	}
 end

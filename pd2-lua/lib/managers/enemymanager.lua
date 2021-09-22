@@ -810,7 +810,7 @@ function EnemyManager:on_civilian_died(dead_unit, damage_info)
 
 	managers.groupai:state():on_civilian_unregistered(dead_unit)
 
-	if Network:is_server() and damage_info.attacker_unit and not dead_unit:base().enemy then
+	if Network:is_server() and damage_info.attacker_unit and not dead_unit:base().enemy and not tweak_data.character[dead_unit:base()._tweak_table].no_civ_penalty then
 		managers.groupai:state():hostage_killed(damage_info.attacker_unit)
 	end
 

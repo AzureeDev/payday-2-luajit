@@ -8297,4 +8297,61 @@ function DLCTweakData:init(tweak_data)
 	self.pda8_wpn_money.content.loot_global_value = "pda8_wpn_money"
 	self.pda8_wpn_money.content.loot_drops = {}
 	self.pda8_wpn_money.content.upgrades = {}
+	self.ach_tawp_1 = {
+		content = {},
+		dlc = "has_achievement",
+		achievement_id = "tawp_1"
+	}
+	self.ach_tawp_1.content.loot_global_value = "normal"
+	self.ach_tawp_1.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_charm_cloaker"
+		}
+	}
+	self.ach_tawp_1.content.upgrades = {}
+	self.pd2_clan_charm = {
+		content = {},
+		dlc = "has_pd2_clan"
+	}
+	self.pd2_clan_charm.content.loot_global_value = "pd2_clan"
+	self.pd2_clan_charm.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_upg_charm_skulldozer"
+		}
+	}
+	self.tawp_gage_pack_shotgun = {
+		dlc = "has_gage_pack_shotgun",
+		content = {}
+	}
+	self.tawp_gage_pack_shotgun.content.loot_global_value = "gage_pack_shotgun"
+	self.tawp_gage_pack_shotgun.content.loot_drops = {
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_type54_underbarrel_slug",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_type54_underbarrel_piercing",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_x_type54_underbarrel_slug",
+			amount = 1
+		},
+		{
+			type_items = "weapon_mods",
+			item_entry = "wpn_fps_pis_x_type54_underbarrel_piercing",
+			amount = 1
+		}
+	}
+	self.tawp_bbq = {
+		dlc = "has_bbq",
+		content = {}
+	}
+	self.tawp_bbq.content.loot_global_value = "bbq"
+	self.tawp_bbq.content.loot_drops = {}
 end

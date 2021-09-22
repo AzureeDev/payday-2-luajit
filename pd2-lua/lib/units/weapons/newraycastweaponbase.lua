@@ -55,6 +55,23 @@ function NewRaycastWeaponBase:init(unit)
 	self:_default_damage_falloff()
 end
 
+function NewRaycastWeaponBase:setup(setup_data, multiplier)
+	NewRaycastWeaponBase.super.setup(self, setup_data, multiplier)
+
+	if self._assembly_complete then
+		self:setup_underbarrel_data()
+	end
+end
+
+function NewRaycastWeaponBase:setup_underbarrel_data()
+	local underbarrel_part = managers.weapon_factory:get_part_from_weapon_by_type("underbarrel", self._parts)
+	local underbarrel_ammo_data = managers.weapon_factory:get_part_data_type_from_weapon_by_type("underbarrel_ammo", "custom_stats", self._parts)
+
+	if underbarrel_part and alive(underbarrel_part.unit) and underbarrel_part.unit:base() and underbarrel_part.unit:base().setup_data then
+		underbarrel_part.unit:base():setup_data(self._setup, 1, underbarrel_ammo_data)
+	end
+end
+
 function NewRaycastWeaponBase:_default_damage_falloff()
 	local weapon_tweak = tweak_data.weapon[self._name_id]
 	local falloff_data = weapon_tweak.damage_falloff or {
@@ -234,15 +251,7 @@ function NewRaycastWeaponBase:clbk_assembly_complete(clbk, parts, blueprint)
 		end
 	end
 
-	local underbarrel_part = managers.weapon_factory:get_part_from_weapon_by_type("underbarrel", self._parts)
-	local underbarrel_ammo_data = managers.weapon_factory:get_part_data_type_from_weapon_by_type("underbarrel_ammo", "custom_stats", self._parts)
-
-	if underbarrel_part and alive(underbarrel_part.unit) and underbarrel_part.unit:base() and underbarrel_part.unit:base().set_launcher_projectile and underbarrel_ammo_data then
-		local launcher_grenade = underbarrel_ammo_data.launcher_grenade
-
-		underbarrel_part.unit:base():set_launcher_projectile(launcher_grenade)
-	end
-
+	self:setup_underbarrel_data()
 	self:_apply_cosmetics(clbk or function ()
 	end)
 	self:apply_texture_switches()
@@ -504,14 +513,14 @@ function NewRaycastWeaponBase:got_silencer()
 	return self._silencer
 end
 
-function NewRaycastWeaponBase:_update_stats_values(disallow_replenish)
+function NewRaycastWeaponBase:_update_stats_values(disallow_replenish, ammo_data)
 	self:_default_damage_falloff()
 	self:_check_sound_switch()
 
 	self._silencer = managers.weapon_factory:has_perk("silencer", self._factory_id, self._blueprint)
 	self._locked_fire_mode = managers.weapon_factory:has_perk("fire_mode_auto", self._factory_id, self._blueprint) and ids_auto or managers.weapon_factory:has_perk("fire_mode_single", self._factory_id, self._blueprint) and ids_single
 	self._fire_mode = self._locked_fire_mode or self:get_recorded_fire_mode(self:_weapon_tweak_data_id()) or Idstring(self:weapon_tweak_data().FIRE_MODE or "single")
-	self._ammo_data = managers.weapon_factory:get_ammo_data_from_weapon(self._factory_id, self._blueprint) or {}
+	self._ammo_data = ammo_data or managers.weapon_factory:get_ammo_data_from_weapon(self._factory_id, self._blueprint) or {}
 	self._can_shoot_through_shield = tweak_data.weapon[self._name_id].can_shoot_through_shield
 	self._can_shoot_through_enemy = tweak_data.weapon[self._name_id].can_shoot_through_enemy
 	self._can_shoot_through_wall = tweak_data.weapon[self._name_id].can_shoot_through_wall
@@ -1950,7 +1959,7 @@ function NewRaycastWeaponBase:update_reloading(t, dt, time_left)
 	end
 end
 
-function RaycastWeaponBase:reload_prefix()
+function NewRaycastWeaponBase:reload_prefix()
 	if self:gadget_overrides_weapon_functions() then
 		return self:gadget_function_override("reload_prefix")
 	end
@@ -2116,6 +2125,26 @@ function NewRaycastWeaponBase:gadget_function_override(func, ...)
 
 	if gadget and gadget[func] then
 		return gadget[func](gadget, ...)
+	end
+end
+
+function NewRaycastWeaponBase:underbarrel_toggle()
+	local underbarrel_part = managers.weapon_factory:get_part_from_weapon_by_type("underbarrel", self._parts)
+
+	if underbarrel_part and alive(underbarrel_part.unit) and underbarrel_part.unit:base() and underbarrel_part.unit:base().toggle then
+		underbarrel_part.unit:base():toggle()
+
+		return underbarrel_part.unit:base():is_on()
+	end
+
+	return nil
+end
+
+function RaycastWeaponBase:underbarrel_name_id()
+	local underbarrel_part = managers.weapon_factory:get_part_from_weapon_by_type("underbarrel", self._parts)
+
+	if underbarrel_part and alive(underbarrel_part.unit) and underbarrel_part.unit:base() then
+		return underbarrel_part.unit:base().name_id or underbarrel_part.unit:base()._name_id
 	end
 end
 

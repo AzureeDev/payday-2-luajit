@@ -92,6 +92,8 @@ function PlayerInventory:equipped_unit()
 end
 
 function PlayerInventory:unit_by_selection(selection)
+	selection = (tonumber(selection) - 1) % 2 + 1
+
 	return self._available_selections[selection] and self._available_selections[selection].unit
 end
 

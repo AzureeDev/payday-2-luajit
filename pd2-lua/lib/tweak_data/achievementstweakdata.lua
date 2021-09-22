@@ -5069,6 +5069,18 @@ function AchievementsTweakData:init(tweak_data)
 				"branchbank_deposit"
 			}
 		},
+		tawp_1 = {
+			mask = "flm",
+			award = "tawp_1",
+			job = "help",
+			difficulty = normal_and_above,
+			specials_killed = {
+				{
+					enemy = "spooc",
+					count = 1
+				}
+			}
+		},
 		bain_jobs = {
 			complete_job = true,
 			contract = "bain",
@@ -7668,6 +7680,10 @@ function AchievementsTweakData:init(tweak_data)
 		stat = "ameno_08_stats",
 		text_id = "bm_wp_ameno_8_achievment"
 	}
+	local tawp_1_achievement = {
+		award = "tawp_1",
+		text_id = "bm_wp_tawp_1_achievment"
+	}
 	self.mask_tracker = {}
 	self.weapon_part_tracker = {
 		wpn_fps_snp_m95_barrel_long = {
@@ -7881,7 +7897,8 @@ function AchievementsTweakData:init(tweak_data)
 		wpn_fps_upg_m4_m_l5 = ameno_7_achievement,
 		wpn_fps_upg_ak_fg_trax = ameno_8_achievement,
 		wpn_fps_upg_ak_fg_krebs = ameno_8_achievement,
-		wpn_fps_upg_ak_b_ak105 = ameno_8_achievement
+		wpn_fps_upg_ak_b_ak105 = ameno_8_achievement,
+		wpn_fps_upg_charm_cloaker = tawp_1_achievement
 	}
 
 	if SystemInfo:platform() == Idstring("PS4") or SystemInfo:platform() == Idstring("XB1") then
@@ -8191,6 +8208,7 @@ function AchievementsTweakData:_init_visual(tweak_data)
 	table.insert(self.tags.unlock, "outfit")
 	table.insert(self.tags.unlock, "weapon_color")
 	table.insert(self.tags.unlock, "gloves")
+	table.insert(self.tags.unlock, "weapon_charm")
 
 	local contacts = {}
 

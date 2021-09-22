@@ -227,7 +227,7 @@ function HuskPlayerInventory._get_weapon_name_from_sync_index(w_index)
 end
 
 function HuskPlayerInventory:set_weapon_underbarrel(selection_index, underbarrel_id, is_on)
-	selection_index = 2
+	selection_index = (tonumber(selection_index) - 1) % 2 + 1
 	local selection = self._available_selections[selection_index]
 
 	if not selection then

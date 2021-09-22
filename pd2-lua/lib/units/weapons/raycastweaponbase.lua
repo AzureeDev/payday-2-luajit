@@ -248,11 +248,18 @@ end
 function RaycastWeaponBase:gadget_function_override(func, ...)
 end
 
+function RaycastWeaponBase:underbarrel_toggle()
+end
+
+function RaycastWeaponBase:underbarrel_name_id()
+	return self._name_id
+end
+
 function RaycastWeaponBase:ammo_base()
 	local base = self.parent_weapon and self.parent_weapon:base() or self
 
-	if self:gadget_overrides_weapon_functions() then
-		base = self:gadget_overrides_weapon_functions():ammo_base() or base
+	if base:gadget_overrides_weapon_functions() then
+		base = base:gadget_overrides_weapon_functions():ammo_base() or base
 	end
 
 	return base
@@ -444,17 +451,30 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		self:_check_alert(ray_res.rays, from_pos, direction, user_unit)
 	end
 
-	if ray_res.enemies_in_cone then
-		for enemy_data, dis_error in pairs(ray_res.enemies_in_cone) do
+	self:_build_suppression(ray_res.enemies_in_cone, suppr_mul)
+	managers.player:send_message(Message.OnWeaponFired, nil, self._unit, ray_res)
+
+	return ray_res
+end
+
+function RaycastWeaponBase:_build_suppression(enemies_in_cone, suppr_mul)
+	if self:gadget_overrides_weapon_functions() then
+		local r = self:gadget_function_override("_build_suppression", self, enemies_in_cone, suppr_mul)
+
+		if r ~= nil then
+			return
+		end
+	end
+
+	if enemies_in_cone then
+		for enemy_data, dis_error in pairs(enemies_in_cone) do
+			print(enemy_data.unit)
+
 			if not enemy_data.unit:movement():cool() then
 				enemy_data.unit:character_damage():build_suppression(suppr_mul * dis_error * self._suppression, self._panic_suppression_chance)
 			end
 		end
 	end
-
-	managers.player:send_message(Message.OnWeaponFired, nil, self._unit, ray_res)
-
-	return ray_res
 end
 
 function RaycastWeaponBase:use_ammo(base, ammo_usage)
@@ -891,6 +911,14 @@ end
 local mvec_from_pos = Vector3()
 
 function RaycastWeaponBase:_check_alert(rays, fire_pos, direction, user_unit)
+	if self:gadget_overrides_weapon_functions() then
+		local r = self:gadget_function_override("_check_alert", self, rays, fire_pos, direction, user_unit)
+
+		if r ~= nil then
+			return
+		end
+	end
+
 	local group_ai = managers.groupai:state()
 	local t = TimerManager:game():time()
 	local exp_t = t + 1.5
@@ -1708,6 +1736,8 @@ function RaycastWeaponBase:add_ammo_from_bag(available)
 			local ammo = process_ammo(gadget:ammo_base(), available)
 			can_have = can_have + ammo
 			available = available - ammo
+
+			gadget:on_add_ammo_from_bag()
 		end
 	end
 

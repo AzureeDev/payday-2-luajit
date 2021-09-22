@@ -7722,6 +7722,7 @@ function init_auto_generated_achievement_data(tags)
 				tags.difficulty.overkill,
 				tags.tactics.loud,
 				tags.tactics.stealth,
+				tags.tactics.timed,
 				tags.teamwork.players_1_to_4,
 				tags.contracts.jiufeng
 			}
@@ -9919,6 +9920,21 @@ function init_auto_generated_achievement_data(tags)
 				tags.difficulty.overkill,
 				tags.tactics.stealth,
 				tags.contracts.locke
+			}
+		},
+		tawp_1 = {
+			need_unlock_icons = true,
+			icon_id = "C_Event_H_PrisonNightmare_CloakerCharmer",
+			sort_name = "C_Event_H_PrisonNightmare_CloakerCharmer",
+			unlock_id = true,
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.very_hard,
+				tags.unlock.weapon_charm,
+				tags.tactics.loud,
+				tags.tactics.killer,
+				tags.inventory.mask,
+				tags.contracts.events
 			}
 		},
 		glace_1 = {

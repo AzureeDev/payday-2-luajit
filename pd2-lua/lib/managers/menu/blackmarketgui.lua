@@ -4808,7 +4808,7 @@ function BlackMarketGui:_update_borders()
 	end
 
 	self._weapon_info_panel:set_h(weapon_info_height)
-	self._info_texts_panel:set_h(weapon_info_height - 20)
+	self._info_texts_panel:set_h(weapon_info_height - 10)
 
 	if self._detection_panel:visible() then
 		self._detection_panel:set_top(self._weapon_info_panel:bottom() + 8)
@@ -6603,9 +6603,15 @@ function BlackMarketGui:update_info_text()
 				updated_texts[4].below_stats = true
 			end
 
+			local weapon_id = slot_data.name
+			local weapon_tweak = weapon_id and tweak_data.weapon[weapon_id]
+
+			if weapon_tweak.has_description then
+				updated_texts[4].text = updated_texts[4].text .. "\n" .. managers.localization:to_upper_text(tweak_data.weapon[slot_data.name].desc_id)
+				updated_texts[4].below_stats = true
+			end
+
 			if slot_data.not_moddable then
-				local weapon_id = slot_data.name
-				local weapon_tweak = weapon_id and tweak_data.weapon[weapon_id]
 				local movement_penalty = weapon_tweak and tweak_data.upgrades.weapon_movement_penalty[weapon_tweak.categories[1]] or 1
 
 				if movement_penalty < 1 then
@@ -6613,11 +6619,6 @@ function BlackMarketGui:update_info_text()
 					updated_texts[5].text = updated_texts[5].text .. managers.localization:to_upper_text("bm_menu_weapon_movement_penalty_info", {
 						penalty = penalty_as_string
 					})
-				end
-
-				if weapon_tweak.has_description then
-					updated_texts[4].text = updated_texts[4].text .. "\n\n" .. managers.localization:to_upper_text(tweak_data.weapon[slot_data.name].desc_id)
-					updated_texts[4].below_stats = true
 				end
 			end
 
@@ -13117,8 +13118,9 @@ function BlackMarketGui:populate_mods(data)
 			end
 
 			local is_gadget = false
+			local show_stats = not new_data.conflict and new_data.unlocked and not is_gadget and not new_data.dlc_locked and tweak_data.weapon.factory.parts[new_data.name].type ~= "charm"
 
-			if not new_data.conflict and new_data.unlocked and not is_gadget and not new_data.dlc_locked then
+			if show_stats then
 				new_data.comparision_data = managers.blackmarket:get_weapon_stats_with_mod(new_data.category, new_data.slot, mod_name)
 			end
 
@@ -14421,6 +14423,8 @@ function BlackMarketGui:choose_weapon_mods_callback(data)
 			y_pc = y_td.value or y_td.pc or y_td.pcs and y_td.pcs[1] or 10
 			x_pc = x_pc + (x[2] and tweak_data.lootdrop.global_values[x[2]].sort_number or 0)
 			y_pc = y_pc + (y[2] and tweak_data.lootdrop.global_values[y[2]].sort_number or 0)
+			x_pc = x_pc + (x_td.sort_number or 0)
+			y_pc = y_pc + (y_td.sort_number or 0)
 
 			return x_pc < y_pc or x_pc == y_pc and x[1] < y[1]
 		end)

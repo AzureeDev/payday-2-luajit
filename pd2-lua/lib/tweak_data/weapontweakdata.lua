@@ -15,7 +15,8 @@ local PICKUP = {
 local SELECTION = {
 	SECONDARY = 1,
 	PRIMARY = 2,
-	UNDERBARREL = 3
+	UNDERBARREL_SECONDARY = 3,
+	UNDERBARREL_PRIMARY = 4
 }
 local FALLOFF_TEMPLATE = WeaponFalloffTemplate.setup_weapon_falloff_templates()
 WeaponTweakData = WeaponTweakData or class()
@@ -53,6 +54,8 @@ function WeaponTweakData:init(tweak_data)
 	self:_init_data_contraband_npc()
 	self:_init_data_smoke_npc()
 	self:_init_data_groza_npc()
+	self:_init_data_type54_npc()
+	self:_init_data_x_type54_npc()
 	self:_init_data_mini_npc()
 	self:_init_data_m4_crew()
 	self:_init_data_m14_crew()
@@ -178,6 +181,9 @@ function WeaponTweakData:init(tweak_data)
 	self:_init_data_flint_crew()
 	self:_init_data_coal_crew()
 	self:_init_data_lemming_crew()
+	self:_init_data_type54_crew()
+	self:_init_data_rsh12_crew()
+	self:_init_data_x_type54_crew()
 	self:_init_data_chinchilla_crew()
 	self:_init_data_x_chinchilla_crew()
 	self:_init_data_model3_crew()
@@ -200,6 +206,7 @@ function WeaponTweakData:init(tweak_data)
 	self:_init_data_pm9_crew()
 	self:_init_data_x_pm9_crew()
 	self:_init_data_groza_crew()
+	self:_init_data_shak12_crew()
 	self:_init_data_x_coal_crew()
 	self:_init_data_x_baka_crew()
 	self:_init_data_x_cobray_crew()
@@ -3038,6 +3045,27 @@ function WeaponTweakData:_init_data_x_pm9_crew()
 	self.x_pm9_crew.FIRE_MODE = "auto"
 end
 
+function WeaponTweakData:_init_data_shak12_crew()
+	self.shak12_crew.categories = clone(self.shak12.categories)
+	self.shak12_crew.sounds.prefix = "shak12_npc"
+	self.shak12_crew.use_data.selection_index = 2
+	self.shak12_crew.DAMAGE = 1.05
+	self.shak12_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.shak12_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.shak12_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.shak12_crew.CLIP_AMMO_MAX = 30
+	self.shak12_crew.NR_CLIPS_MAX = 5
+	self.shak12_crew.pull_magazine_during_reload = "rifle"
+	self.shak12_crew.auto.fire_rate = 0.07
+	self.shak12_crew.hold = {
+		"bullpup",
+		"rifle"
+	}
+	self.shak12_crew.alert_size = 5000
+	self.shak12_crew.suppression = 1
+	self.shak12_crew.FIRE_MODE = "auto"
+end
+
 function WeaponTweakData:_init_data_arblast_crew()
 	self.arblast_crew.categories = clone(self.arblast.categories)
 	self.arblast_crew.sounds.prefix = "arblast_npc"
@@ -3692,6 +3720,145 @@ function WeaponTweakData:_init_data_lemming_crew()
 	self.lemming_crew.alert_size = 2500
 	self.lemming_crew.suppression = 1
 	self.lemming_crew.FIRE_MODE = "single"
+end
+
+function WeaponTweakData:_init_data_type54_crew()
+	self.type54_crew.categories = clone(self.type54.categories)
+	self.type54_crew.sounds.prefix = "type54_npc"
+	self.type54_crew.use_data.selection_index = SELECTION.SECONDARY
+	self.type54_crew.DAMAGE = 1
+	self.type54_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.type54_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.type54_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.type54_crew.CLIP_AMMO_MAX = 10
+	self.type54_crew.NR_CLIPS_MAX = 5
+	self.type54_crew.pull_magazine_during_reload = "pistol"
+	self.type54_crew.hold = "pistol"
+	self.type54_crew.alert_size = 2500
+	self.type54_crew.suppression = 1
+	self.type54_crew.FIRE_MODE = "single"
+	self.type54_underbarrel_crew.sounds.prefix = "type54shotty_npc"
+	self.type54_underbarrel_crew.use_data.selection_index = SELECTION.SECONDARY
+	self.type54_underbarrel_crew.DAMAGE = 2
+	self.type54_underbarrel_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.type54_underbarrel_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.type54_underbarrel_crew.no_trail = true
+	self.type54_underbarrel_crew.CLIP_AMMO_MAX = 1
+	self.type54_underbarrel_crew.NR_CLIPS_MAX = 3
+	self.type54_underbarrel_crew.auto.fire_rate = 0.75
+	self.type54_underbarrel_crew.hold = "pistol"
+	self.type54_underbarrel_crew.alert_size = 2800
+	self.type54_underbarrel_crew.suppression = 1
+	self.type54_underbarrel_crew.FIRE_MODE = "single"
+end
+
+function WeaponTweakData:_init_data_type54_npc()
+	self.type54_npc.categories = clone(self.type54.categories)
+	self.type54_npc.sounds.prefix = "type54_npc"
+	self.type54_npc.use_data.selection_index = SELECTION.SECONDARY
+	self.type54_npc.DAMAGE = 2
+	self.type54_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.type54_npc.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.type54_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.type54_npc.CLIP_AMMO_MAX = 10
+	self.type54_npc.NR_CLIPS_MAX = 5
+	self.type54_npc.pull_magazine_during_reload = "pistol"
+	self.type54_npc.hold = "pistol"
+	self.type54_npc.alert_size = 2500
+	self.type54_npc.suppression = 1
+	self.type54_npc.FIRE_MODE = "single"
+	self.type54_underbarrel_npc.sounds.prefix = "type54shotty_npc"
+	self.type54_underbarrel_npc.use_data.selection_index = SELECTION.SECONDARY
+	self.type54_underbarrel_npc.DAMAGE = 2
+	self.type54_underbarrel_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.type54_underbarrel_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.type54_underbarrel_npc.no_trail = true
+	self.type54_underbarrel_npc.CLIP_AMMO_MAX = 1
+	self.type54_underbarrel_npc.NR_CLIPS_MAX = 3
+	self.type54_underbarrel_npc.auto.fire_rate = 0.75
+	self.type54_underbarrel_npc.hold = "pistol"
+	self.type54_underbarrel_npc.alert_size = 2800
+	self.type54_underbarrel_npc.suppression = 1
+	self.type54_underbarrel_npc.FIRE_MODE = "single"
+end
+
+function WeaponTweakData:_init_data_x_type54_crew()
+	self.x_type54_crew.categories = clone(self.x_type54.categories)
+	self.x_type54_crew.sounds.prefix = "type54_npc"
+	self.x_type54_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.x_type54_crew.DAMAGE = 1
+	self.x_type54_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.x_type54_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.x_type54_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_type54_crew.CLIP_AMMO_MAX = 20
+	self.x_type54_crew.NR_CLIPS_MAX = 5
+	self.x_type54_crew.hold = "akimbo_pistol"
+	self.x_type54_crew.alert_size = 2500
+	self.x_type54_crew.suppression = 1
+	self.x_type54_crew.FIRE_MODE = "single"
+	self.x_type54_underbarrel_crew.sounds = {
+		prefix = "type54shotty_npc"
+	}
+	self.x_type54_underbarrel_crew.use_data.selection_index = SELECTION.PRIMARY
+	self.x_type54_underbarrel_crew.DAMAGE = 2
+	self.x_type54_underbarrel_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.x_type54_underbarrel_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_type54_underbarrel_crew.no_trail = true
+	self.x_type54_underbarrel_crew.CLIP_AMMO_MAX = 2
+	self.x_type54_underbarrel_crew.NR_CLIPS_MAX = 3
+	self.x_type54_underbarrel_crew.auto.fire_rate = 0.75
+	self.x_type54_underbarrel_crew.hold = "akimbo_pistol"
+	self.x_type54_underbarrel_crew.alert_size = 2800
+	self.x_type54_underbarrel_crew.suppression = 1
+	self.x_type54_underbarrel_crew.FIRE_MODE = "single"
+end
+
+function WeaponTweakData:_init_data_x_type54_npc()
+	self.x_type54_npc.categories = clone(self.x_type54.categories)
+	self.x_type54_npc.sounds.prefix = "type54_npc"
+	self.x_type54_npc.use_data.selection_index = SELECTION.PRIMARY
+	self.x_type54_npc.DAMAGE = 1
+	self.x_type54_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.x_type54_npc.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.x_type54_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_type54_npc.CLIP_AMMO_MAX = 20
+	self.x_type54_npc.NR_CLIPS_MAX = 5
+	self.x_type54_npc.hold = "akimbo_pistol"
+	self.x_type54_npc.alert_size = 2500
+	self.x_type54_npc.suppression = 1
+	self.x_type54_npc.FIRE_MODE = "single"
+	self.x_type54_underbarrel_npc.sounds = {
+		prefix = "type54shotty_npc"
+	}
+	self.x_type54_underbarrel_npc.use_data.selection_index = SELECTION.PRIMARY
+	self.x_type54_underbarrel_npc.DAMAGE = 2
+	self.x_type54_underbarrel_npc.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.x_type54_underbarrel_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_type54_underbarrel_npc.no_trail = true
+	self.x_type54_underbarrel_npc.CLIP_AMMO_MAX = 2
+	self.x_type54_underbarrel_npc.NR_CLIPS_MAX = 3
+	self.x_type54_underbarrel_npc.auto.fire_rate = 0.75
+	self.x_type54_underbarrel_npc.hold = "akimbo_pistol"
+	self.x_type54_underbarrel_npc.alert_size = 2800
+	self.x_type54_underbarrel_npc.suppression = 1
+	self.x_type54_underbarrel_npc.FIRE_MODE = "single"
+end
+
+function WeaponTweakData:_init_data_rsh12_crew()
+	self.rsh12_crew.categories = clone(self.rsh12.categories)
+	self.rsh12_crew.sounds.prefix = "rsh12_npc"
+	self.rsh12_crew.use_data.selection_index = SELECTION.SECONDARY
+	self.rsh12_crew.DAMAGE = 4
+	self.rsh12_crew.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.rsh12_crew.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.rsh12_crew.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
+	self.rsh12_crew.CLIP_AMMO_MAX = 5
+	self.rsh12_crew.NR_CLIPS_MAX = 5
+	self.rsh12_crew.hold = "pistol"
+	self.rsh12_crew.reload = "revolver"
+	self.rsh12_crew.alert_size = 5000
+	self.rsh12_crew.suppression = 1.8
+	self.rsh12_crew.FIRE_MODE = "single"
 end
 
 function WeaponTweakData:_init_data_chinchilla_crew()
@@ -5675,6 +5842,7 @@ function WeaponTweakData:_init_new_weapons(weapon_data)
 	self:_init_groza(weapon_data)
 	self:_init_pm9(weapon_data)
 	self:_init_x_pm9(weapon_data)
+	self:_init_shak12(weapon_data)
 	self:_init_m37(weapon_data)
 	self:_init_china(weapon_data)
 	self:_init_sr2(weapon_data)
@@ -5703,6 +5871,9 @@ function WeaponTweakData:_init_new_weapons(weapon_data)
 	self:_init_flint(weapon_data)
 	self:_init_coal(weapon_data)
 	self:_init_lemming(weapon_data)
+	self:_init_type54(weapon_data)
+	self:_init_rsh12(weapon_data)
+	self:_init_x_type54(weapon_data)
 	self:_init_chinchilla(weapon_data)
 	self:_init_x_chinchilla(weapon_data)
 	self:_init_model3(weapon_data)
@@ -8481,6 +8652,7 @@ function WeaponTweakData:_init_saw(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -9899,6 +10071,7 @@ function WeaponTweakData:_init_m95(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -10017,6 +10190,7 @@ function WeaponTweakData:_init_msr(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -10134,6 +10308,7 @@ function WeaponTweakData:_init_r93(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -12372,6 +12547,7 @@ function WeaponTweakData:_init_mosin(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -14168,6 +14344,7 @@ function WeaponTweakData:_init_winchester1874(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		use_shotgun_reload = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
@@ -14288,6 +14465,7 @@ function WeaponTweakData:_init_sbl(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		use_shotgun_reload = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
@@ -14836,6 +15014,7 @@ function WeaponTweakData:_init_wa2000(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -15634,7 +15813,7 @@ function WeaponTweakData:_init_groza(weapon_data)
 	self.groza_underbarrel.muzzleflash = "effects/payday2/particles/weapons/762_auto_fps"
 	self.groza_underbarrel.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
 	self.groza_underbarrel.use_data = {
-		selection_index = SELECTION.UNDERBARREL
+		selection_index = SELECTION.UNDERBARREL_PRIMARY
 	}
 	self.groza_underbarrel.DAMAGE = 6
 	self.groza_underbarrel.damage_near = 2000
@@ -15730,6 +15909,7 @@ function WeaponTweakData:_init_qbu88(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -15833,6 +16013,118 @@ function WeaponTweakData:_init_qbu88(weapon_data)
 		reload = 11,
 		suppression = 12,
 		concealment = 12
+	}
+end
+
+function WeaponTweakData:_init_shak12(weapon_data)
+	self.shak12 = {
+		categories = {
+			"assault_rifle"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.shak12.sounds.fire = "shak12_fire_single"
+	self.shak12.sounds.fire_single = "shak12_fire_single"
+	self.shak12.sounds.fire_auto = "shak12_fire"
+	self.shak12.sounds.stop_fire = "shak12_stop"
+	self.shak12.sounds.dryfire = "primary_dryfire"
+	self.shak12.sounds.enter_steelsight = "primary_steel_sight_enter"
+	self.shak12.sounds.leave_steelsight = "primary_steel_sight_exit"
+	self.shak12.timers = {
+		reload_not_empty = 2.1,
+		reload_empty = 2.9,
+		unequip = 0.6,
+		equip = 0.6
+	}
+	self.shak12.name_id = "bm_w_shak12"
+	self.shak12.desc_id = "bm_w_shak12_desc"
+	self.shak12.description_id = "des_shak12"
+	self.shak12.muzzleflash = "effects/payday2/particles/weapons/50cal_auto"
+	self.shak12.shell_ejection = "effects/payday2/particles/weapons/shells/shell_shak"
+	self.shak12.use_data = {
+		selection_index = SELECTION.PRIMARY
+	}
+	self.shak12.DAMAGE = 1
+	self.shak12.damage_falloff = FALLOFF_TEMPLATE.ASSAULT_FALL_HIGH
+	self.shak12.CLIP_AMMO_MAX = 30
+	self.shak12.NR_CLIPS_MAX = 3
+	self.shak12.AMMO_MAX = self.shak12.CLIP_AMMO_MAX * self.shak12.NR_CLIPS_MAX
+	self.shak12.AMMO_PICKUP = self:_pickup_chance(self.shak12.AMMO_MAX, PICKUP.AR_LOW_CAPACITY)
+	self.shak12.FIRE_MODE = "auto"
+	self.shak12.fire_mode_data = {
+		fire_rate = 0.12
+	}
+	self.shak12.CAN_TOGGLE_FIREMODE = true
+	self.shak12.auto = {
+		fire_rate = 0.12
+	}
+	self.shak12.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.shak12.kick = {
+		standing = self.new_m4.kick.standing,
+		crouching = {
+			0.4,
+			0.6,
+			-1,
+			1
+		},
+		steelsight = {
+			0.3,
+			0.5,
+			-0.8,
+			0.8
+		}
+	}
+	self.shak12.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.shak12.crosshair.standing.offset = 0.16
+	self.shak12.crosshair.standing.moving_offset = 1
+	self.shak12.crosshair.standing.kick_offset = 2.8
+	self.shak12.crosshair.crouching.offset = 0.1
+	self.shak12.crosshair.crouching.moving_offset = 0.6
+	self.shak12.crosshair.crouching.kick_offset = 2.4
+	self.shak12.crosshair.steelsight.hidden = true
+	self.shak12.crosshair.steelsight.offset = 0
+	self.shak12.crosshair.steelsight.moving_offset = 0
+	self.shak12.crosshair.steelsight.kick_offset = 1.64
+	self.shak12.shake = {
+		fire_multiplier = 1,
+		fire_steelsight_multiplier = -0.16
+	}
+	self.shak12.autohit = weapon_data.autohit_rifle_default
+	self.shak12.aim_assist = weapon_data.aim_assist_rifle_default
+	self.shak12.weapon_hold = "shak12"
+	self.shak12.animations = {
+		equip_id = "equip_shak12",
+		recoil_steelsight = true
+	}
+	self.shak12.global_value = "tawp"
+	self.shak12.texture_bundle_folder = "tawp"
+	self.shak12.panic_suppression_chance = 0.2
+	self.shak12.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 115,
+		alert_size = 8,
+		spread = 12,
+		spread_moving = 15,
+		recoil = 8,
+		value = 9,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 14,
+		concealment = 16
 	}
 end
 
@@ -16412,6 +16704,7 @@ function WeaponTweakData:_init_model70(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -18410,6 +18703,7 @@ function WeaponTweakData:_init_desertfox(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -18990,7 +19284,7 @@ function WeaponTweakData:_init_contraband(weapon_data)
 	self.contraband_m203.muzzleflash = "effects/payday2/particles/weapons/762_auto_fps"
 	self.contraband_m203.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
 	self.contraband_m203.use_data = {
-		selection_index = SELECTION.UNDERBARREL,
+		selection_index = SELECTION.UNDERBARREL_PRIMARY,
 		align_place = "right_hand"
 	}
 	self.contraband_m203.DAMAGE = 6
@@ -19209,6 +19503,7 @@ function WeaponTweakData:_init_tti(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -19325,6 +19620,7 @@ function WeaponTweakData:_init_grv(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -19647,6 +19943,7 @@ function WeaponTweakData:_init_lemming(weapon_data)
 		categories = {
 			"pistol"
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -19745,6 +20042,544 @@ function WeaponTweakData:_init_lemming(weapon_data)
 		concealment = 29
 	}
 	self.lemming.armor_piercing_chance = 1
+end
+
+function WeaponTweakData:_init_type54(weapon_data)
+	self.type54 = {
+		categories = {
+			"pistol"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.type54.sounds.fire = "type54_fire"
+	self.type54.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.type54.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.type54.sounds.dryfire = "secondary_dryfire"
+	self.type54.sounds.magazine_empty = "wp_pistol_slide_lock"
+	self.type54.timers = {
+		reload_not_empty = 1.5,
+		reload_empty = 2.15,
+		unequip = 0.5,
+		equip = 0.35
+	}
+	self.type54.name_id = "bm_w_type54"
+	self.type54.desc_id = "bm_w_type54_desc"
+	self.type54.description_id = "des_type54"
+	self.type54.global_value = "tawp"
+	self.type54.texture_bundle_folder = "tawp"
+	self.type54.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.type54.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.type54.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.type54.use_data = {
+		selection_index = SELECTION.SECONDARY
+	}
+	self.type54.DAMAGE = 1
+	self.type54.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_HIGH
+	self.type54.CLIP_AMMO_MAX = 10
+	self.type54.NR_CLIPS_MAX = 6
+	self.type54.AMMO_MAX = self.type54.CLIP_AMMO_MAX * self.type54.NR_CLIPS_MAX
+	self.type54.AMMO_PICKUP = self:_pickup_chance(self.type54.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
+	self.type54.FIRE_MODE = "single"
+	self.type54.fire_mode_data = {
+		fire_rate = 0.125
+	}
+	self.type54.single = {
+		fire_rate = 0.125
+	}
+	self.type54.spread = {
+		standing = self.new_m4.spread.standing,
+		crouching = self.new_m4.spread.crouching,
+		steelsight = self.new_m4.spread.steelsight,
+		moving_standing = self.new_m4.spread.moving_standing,
+		moving_crouching = self.new_m4.spread.moving_crouching,
+		moving_steelsight = self.new_m4.spread.moving_steelsight
+	}
+	self.type54.kick = {
+		standing = self.glock_17.kick.standing
+	}
+	self.type54.kick.crouching = self.type54.kick.standing
+	self.type54.kick.steelsight = self.type54.kick.standing
+	self.type54.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.type54.crosshair.standing.offset = 0.2
+	self.type54.crosshair.standing.moving_offset = 0.4
+	self.type54.crosshair.standing.kick_offset = 0.3
+	self.type54.crosshair.crouching.offset = 0.1
+	self.type54.crosshair.crouching.moving_offset = 0.5
+	self.type54.crosshair.crouching.kick_offset = 0.2
+	self.type54.crosshair.steelsight.hidden = true
+	self.type54.crosshair.steelsight.offset = 0
+	self.type54.crosshair.steelsight.moving_offset = 0
+	self.type54.crosshair.steelsight.kick_offset = 0.1
+	self.type54.shake = {
+		fire_multiplier = 1,
+		fire_steelsight_multiplier = -1
+	}
+	self.type54.autohit = weapon_data.autohit_pistol_default
+	self.type54.aim_assist = weapon_data.aim_assist_pistol_default
+	self.type54.weapon_hold = "type54"
+	self.type54.animations = {
+		equip_id = "equip_type54",
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
+	}
+	self.type54.panic_suppression_chance = 0.2
+	self.type54.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 85,
+		alert_size = 7,
+		spread = 17,
+		spread_moving = 18,
+		recoil = 10,
+		value = 4,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 15,
+		concealment = 28
+	}
+	self.type54_underbarrel = deep_clone(self.type54)
+	self.type54_underbarrel.categories = {
+		"shotgun"
+	}
+	self.type54_underbarrel.upgrade_blocks = {
+		weapon = {
+			"clip_ammo_increase"
+		}
+	}
+	self.type54_underbarrel.projectile_types = {
+		underbarrel_electric = "underbarrel_electric_groza",
+		launcher_m203 = "underbarrel_m203_groza"
+	}
+	self.type54_underbarrel.damage_melee = weapon_data.damage_melee_default
+	self.type54_underbarrel.damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default
+	self.type54_underbarrel.sounds = {
+		fire = "type54shotty_fire",
+		dryfire = "secondary_dryfire",
+		enter_steelsight = "secondary_steel_sight_enter",
+		leave_steelsight = "secondary_steel_sight_exit"
+	}
+	self.type54_underbarrel.timers = {
+		reload_not_empty = 1.78,
+		reload_empty = 1.78,
+		unequip = 0.6,
+		equip = 0.6,
+		equip_underbarrel = 0.4,
+		unequip_underbarrel = 0.4
+	}
+	self.type54_underbarrel.name_id = "bm_w_type54_underbarrel"
+	self.type54_underbarrel.desc_id = "bm_w_type54_underbarrel_desc"
+	self.type54_underbarrel.description_id = "des_type54_underbarrel"
+	self.type54_underbarrel.global_value = "tawp"
+	self.type54_underbarrel.texture_bundle_folder = "tawp"
+	self.type54_underbarrel.muzzleflash = "effects/payday2/particles/weapons/762_auto_fps"
+	self.type54_underbarrel.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
+	self.type54_underbarrel.use_data = {
+		selection_index = SELECTION.UNDERBARREL_SECONDARY
+	}
+	self.type54_underbarrel.DAMAGE = 6
+	self.type54_underbarrel.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_HIGH
+	self.type54_underbarrel.damage_near = 2000
+	self.type54_underbarrel.damage_far = 3000
+	self.type54_underbarrel.rays = 8
+	self.type54_underbarrel.CLIP_AMMO_MAX = 1
+	self.type54_underbarrel.NR_CLIPS_MAX = 3
+	self.type54_underbarrel.AMMO_MAX = self.type54_underbarrel.CLIP_AMMO_MAX * self.type54_underbarrel.NR_CLIPS_MAX
+	self.type54_underbarrel.AMMO_PICKUP = {
+		0.015,
+		1
+	}
+	self.type54_underbarrel.reload_on_ammo_bag = true
+	self.type54_underbarrel.FIRE_MODE = "single"
+	self.type54_underbarrel.fire_mode_data = {
+		fire_rate = 0.75
+	}
+	self.type54_underbarrel.single = {
+		fire_rate = 0.75
+	}
+	self.type54_underbarrel.spread = {
+		standing = self.r870.spread.standing,
+		crouching = self.r870.spread.crouching,
+		steelsight = self.r870.spread.steelsight,
+		moving_standing = self.r870.spread.moving_standing,
+		moving_crouching = self.r870.spread.moving_crouching,
+		moving_steelsight = self.r870.spread.moving_steelsight
+	}
+	self.type54_underbarrel.kick = {
+		standing = {
+			4,
+			5,
+			-0.5,
+			0.5
+		}
+	}
+	self.type54_underbarrel.kick.crouching = self.type54_underbarrel.kick.standing
+	self.type54_underbarrel.kick.steelsight = self.type54_underbarrel.kick.standing
+	self.type54_underbarrel.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.type54_underbarrel.crosshair.standing.offset = 0.16
+	self.type54_underbarrel.crosshair.standing.moving_offset = 0.8
+	self.type54_underbarrel.crosshair.standing.kick_offset = 0.6
+	self.type54_underbarrel.crosshair.standing.hidden = true
+	self.type54_underbarrel.crosshair.crouching.offset = 0.08
+	self.type54_underbarrel.crosshair.crouching.moving_offset = 0.7
+	self.type54_underbarrel.crosshair.crouching.kick_offset = 0.4
+	self.type54_underbarrel.crosshair.crouching.hidden = true
+	self.type54_underbarrel.crosshair.steelsight.hidden = true
+	self.type54_underbarrel.crosshair.steelsight.offset = 0
+	self.type54_underbarrel.crosshair.steelsight.moving_offset = 0
+	self.type54_underbarrel.crosshair.steelsight.kick_offset = 0.1
+	self.type54_underbarrel.shake = {
+		fire_multiplier = 2,
+		fire_steelsight_multiplier = 2
+	}
+	self.type54_underbarrel.autohit = weapon_data.autohit_shotgun_default
+	self.type54_underbarrel.aim_assist = weapon_data.aim_assist_shotgun_default
+	self.type54_underbarrel.panic_suppression_chance = 0.2
+	self.type54_underbarrel.ignore_crit_damage = true
+	self.type54_underbarrel.ignore_damage_multipliers = true
+	self.type54_underbarrel.ignore_damage_upgrades = true
+	self.type54_underbarrel.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 85,
+		alert_size = 7,
+		spread = 6,
+		spread_moving = 6,
+		recoil = 5,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 2,
+		concealment = 18
+	}
+	self.type54_underbarrel.stats_modifiers = {
+		damage = 10
+	}
+end
+
+function WeaponTweakData:_init_x_type54(weapon_data)
+	self.x_type54 = {
+		categories = {
+			"akimbo",
+			"pistol"
+		},
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.x_type54.sounds.fire = "type54_fire"
+	self.x_type54.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.x_type54.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.x_type54.sounds.dryfire = "secondary_dryfire"
+	self.x_type54.sounds.magazine_empty = "wp_akimbo_pistol_slide_lock"
+	self.x_type54.timers = {
+		reload_not_empty = 3.17,
+		reload_empty = 4,
+		unequip = 0.5,
+		equip = 0.5
+	}
+	self.x_type54.name_id = "bm_w_x_type54"
+	self.x_type54.desc_id = "bm_w_x_type54_desc"
+	self.x_type54.description_id = "des_x_type54"
+	self.x_type54.global_value = "tawp"
+	self.x_type54.texture_bundle_folder = "tawp"
+	self.x_type54.muzzleflash = "effects/payday2/particles/weapons/9mm_auto_fps"
+	self.x_type54.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence_fps"
+	self.x_type54.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.x_type54.use_data = {
+		selection_index = SELECTION.PRIMARY
+	}
+	self.x_type54.DAMAGE = 1
+	self.x_type54.damage_falloff = FALLOFF_TEMPLATE.AKI_PISTOL_FALL_HIGH
+	self.x_type54.CLIP_AMMO_MAX = 20
+	self.x_type54.NR_CLIPS_MAX = 4
+	self.x_type54.AMMO_MAX = self.x_type54.CLIP_AMMO_MAX * self.x_type54.NR_CLIPS_MAX
+	self.x_type54.AMMO_PICKUP = self:_pickup_chance(self.x_type54.AMMO_MAX, PICKUP.PISTOL_LOW_CAPACITY)
+	self.x_type54.FIRE_MODE = "single"
+	self.x_type54.fire_mode_data = {
+		fire_rate = 0.166
+	}
+	self.x_type54.single = {
+		fire_rate = 0.166
+	}
+	self.x_type54.spread = {
+		standing = self.colt_1911.spread.standing,
+		crouching = self.colt_1911.spread.crouching,
+		steelsight = self.colt_1911.spread.steelsight,
+		moving_standing = self.colt_1911.spread.moving_standing,
+		moving_crouching = self.colt_1911.spread.moving_crouching,
+		moving_steelsight = self.colt_1911.spread.moving_steelsight
+	}
+	self.x_type54.kick = {
+		standing = {
+			1.6,
+			1.3,
+			-0.3,
+			0.3
+		}
+	}
+	self.x_type54.kick.crouching = self.x_type54.kick.standing
+	self.x_type54.kick.steelsight = self.x_type54.kick.standing
+	self.x_type54.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.x_type54.crosshair.standing.offset = 0.2
+	self.x_type54.crosshair.standing.moving_offset = 0.6
+	self.x_type54.crosshair.standing.kick_offset = 0.4
+	self.x_type54.crosshair.crouching.offset = 0.1
+	self.x_type54.crosshair.crouching.moving_offset = 0.6
+	self.x_type54.crosshair.crouching.kick_offset = 0.3
+	self.x_type54.crosshair.steelsight.hidden = true
+	self.x_type54.crosshair.steelsight.offset = 0
+	self.x_type54.crosshair.steelsight.moving_offset = 0
+	self.x_type54.crosshair.steelsight.kick_offset = 0.1
+	self.x_type54.shake = {
+		fire_multiplier = 1,
+		fire_steelsight_multiplier = -1
+	}
+	self.x_type54.autohit = weapon_data.autohit_pistol_default
+	self.x_type54.aim_assist = weapon_data.aim_assist_pistol_default
+	self.x_type54.weapon_hold = "jowi_pistol"
+	self.x_type54.animations = {
+		second_gun_versions = {
+			reload_not_empty = "reload_not_empty_left",
+			reload = "reload_left"
+		},
+		has_steelsight_stance = true,
+		recoil_steelsight = true,
+		magazine_empty = "last_recoil"
+	}
+	self.x_type54.panic_suppression_chance = 0.2
+	self.x_type54.stats = {
+		zoom = 3,
+		total_ammo_mod = 21,
+		damage = 85,
+		alert_size = 7,
+		spread = 17,
+		spread_moving = 18,
+		recoil = 10,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 14,
+		concealment = 28
+	}
+	self.x_type54_underbarrel = deep_clone(self.x_type54)
+	self.x_type54_underbarrel.categories = {
+		"shotgun"
+	}
+	self.x_type54_underbarrel.sounds = {
+		fire = "type54shotty_fire",
+		fire_single = "type54shotty_fire",
+		enter_steelsight = "pistol_steel_sight_enter",
+		leave_steelsight = "pistol_steel_sight_exit",
+		dryfire = "secondary_dryfire",
+		magazine_empty = "wp_akimbo_pistol_slide_lock"
+	}
+	self.x_type54_underbarrel.name_id = "bm_w_x_type54_underbarrel"
+	self.x_type54_underbarrel.desc_id = "bm_w_x_type54_underbarrel_desc"
+	self.x_type54_underbarrel.description_id = "des_x_type54_underbarrel"
+	self.x_type54_underbarrel.use_data.selection_index = SELECTION.UNDERBARREL_PRIMARY
+	self.x_type54_underbarrel.animations.equip_id = "equip_type54_underbarrel"
+	self.x_type54_underbarrel.muzzleflash = "effects/payday2/particles/weapons/big_762_auto_fps"
+	self.x_type54_underbarrel.damage_near = 2000
+	self.x_type54_underbarrel.damage_far = 3000
+	self.x_type54_underbarrel.rays = 8
+	self.x_type54_underbarrel.damage_falloff = FALLOFF_TEMPLATE.SHOTGUN_FALL_SECONDARY_HIGH
+	self.x_type54_underbarrel.CLIP_AMMO_MAX = 2
+	self.x_type54_underbarrel.NR_CLIPS_MAX = 3
+	self.x_type54_underbarrel.AMMO_MAX = self.x_type54_underbarrel.CLIP_AMMO_MAX * self.x_type54_underbarrel.NR_CLIPS_MAX
+	self.x_type54_underbarrel.AMMO_PICKUP = {
+		0.005,
+		1
+	}
+	self.x_type54_underbarrel.reload_on_ammo_bag = true
+	self.x_type54_underbarrel.FIRE_MODE = "single"
+	self.x_type54_underbarrel.fire_mode_data = {
+		fire_rate = 0.75
+	}
+	self.x_type54_underbarrel.kick = {
+		standing = {
+			4,
+			5,
+			-0.5,
+			0.5
+		}
+	}
+	self.x_type54_underbarrel.kick.crouching = self.x_type54_underbarrel.kick.standing
+	self.x_type54_underbarrel.kick.steelsight = self.x_type54_underbarrel.kick.standing
+	self.x_type54_underbarrel.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.x_type54_underbarrel.crosshair.standing.offset = 0.16
+	self.x_type54_underbarrel.crosshair.standing.moving_offset = 0.8
+	self.x_type54_underbarrel.crosshair.standing.kick_offset = 0.6
+	self.x_type54_underbarrel.crosshair.standing.hidden = true
+	self.x_type54_underbarrel.crosshair.crouching.offset = 0.08
+	self.x_type54_underbarrel.crosshair.crouching.moving_offset = 0.7
+	self.x_type54_underbarrel.crosshair.crouching.kick_offset = 0.4
+	self.x_type54_underbarrel.crosshair.crouching.hidden = true
+	self.x_type54_underbarrel.crosshair.steelsight.hidden = true
+	self.x_type54_underbarrel.crosshair.steelsight.offset = 0
+	self.x_type54_underbarrel.crosshair.steelsight.moving_offset = 0
+	self.x_type54_underbarrel.crosshair.steelsight.kick_offset = 0.1
+	self.x_type54_underbarrel.shake = {
+		fire_multiplier = 2,
+		fire_steelsight_multiplier = 2
+	}
+	self.x_type54_underbarrel.ignore_crit_damage = true
+	self.x_type54_underbarrel.ignore_damage_multipliers = true
+	self.x_type54_underbarrel.ignore_damage_upgrades = true
+	self.x_type54_underbarrel.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 85,
+		alert_size = 7,
+		spread = 5,
+		spread_moving = 6,
+		recoil = 5,
+		value = 1,
+		extra_ammo = 51,
+		reload = 14,
+		suppression = 2,
+		concealment = 18
+	}
+	self.x_type54_underbarrel.stats_modifiers = {
+		damage = 10
+	}
+end
+
+function WeaponTweakData:_init_rsh12(weapon_data)
+	self.rsh12 = {
+		categories = {
+			"pistol",
+			"revolver"
+		},
+		upgrade_blocks = {
+			weapon = {
+				"clip_ammo_increase"
+			}
+		},
+		has_description = true,
+		damage_melee = weapon_data.damage_melee_default,
+		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
+		sounds = {}
+	}
+	self.rsh12.sounds.fire = "rsh12_fire"
+	self.rsh12.sounds.dryfire = "secondary_dryfire"
+	self.rsh12.sounds.enter_steelsight = "pistol_steel_sight_enter"
+	self.rsh12.sounds.leave_steelsight = "pistol_steel_sight_exit"
+	self.rsh12.timers = {
+		reload_not_empty = 2.25,
+		reload_empty = 2.25,
+		unequip = 0.5,
+		equip = 0.45
+	}
+	self.rsh12.FIRE_MODE = "single"
+	self.rsh12.fire_mode_data = {
+		fire_rate = 0.15
+	}
+	self.rsh12.single = {
+		fire_rate = 0.15
+	}
+	self.rsh12.name_id = "bm_w_rsh12"
+	self.rsh12.desc_id = "bm_w_rsh12_desc"
+	self.rsh12.description_id = "des_rsh12"
+	self.rsh12.global_value = "tawp"
+	self.rsh12.texture_bundle_folder = "tawp"
+	self.rsh12.muzzleflash = "effects/payday2/particles/weapons/50cal_auto_fps"
+	self.rsh12.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
+	self.rsh12.use_data = {
+		selection_index = SELECTION.SECONDARY
+	}
+	self.rsh12.DAMAGE = 2
+	self.rsh12.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_SUPER
+	self.rsh12.CLIP_AMMO_MAX = 5
+	self.rsh12.NR_CLIPS_MAX = 3
+	self.rsh12.AMMO_MAX = self.rsh12.CLIP_AMMO_MAX * self.rsh12.NR_CLIPS_MAX
+	self.rsh12.AMMO_PICKUP = {
+		0.75,
+		0.25
+	}
+	self.rsh12.spread = {
+		standing = self.r870.spread.standing,
+		crouching = self.r870.spread.crouching,
+		steelsight = self.r870.spread.steelsight,
+		moving_standing = self.r870.spread.moving_standing,
+		moving_crouching = self.r870.spread.moving_crouching,
+		moving_steelsight = self.r870.spread.moving_steelsight
+	}
+	self.rsh12.kick = {
+		standing = {
+			2.9,
+			3,
+			-0.5,
+			0.5
+		}
+	}
+	self.rsh12.kick.crouching = self.rsh12.kick.standing
+	self.rsh12.kick.steelsight = self.rsh12.kick.standing
+	self.rsh12.crosshair = {
+		standing = {},
+		crouching = {},
+		steelsight = {}
+	}
+	self.rsh12.crosshair.standing.offset = 0.2
+	self.rsh12.crosshair.standing.moving_offset = 0.8
+	self.rsh12.crosshair.standing.kick_offset = 0.6
+	self.rsh12.crosshair.crouching.offset = 0.1
+	self.rsh12.crosshair.crouching.moving_offset = 0.7
+	self.rsh12.crosshair.crouching.kick_offset = 0.4
+	self.rsh12.crosshair.steelsight.hidden = true
+	self.rsh12.crosshair.steelsight.offset = 0
+	self.rsh12.crosshair.steelsight.moving_offset = 0
+	self.rsh12.crosshair.steelsight.kick_offset = 0.1
+	self.rsh12.shake = {
+		fire_multiplier = 2,
+		fire_steelsight_multiplier = 2
+	}
+	self.rsh12.autohit = weapon_data.autohit_shotgun_default
+	self.rsh12.aim_assist = weapon_data.aim_assist_shotgun_default
+	self.rsh12.weapon_hold = "raging_bull"
+	self.rsh12.animations = {
+		equip_id = "equip_raging_bull",
+		recoil_steelsight = true
+	}
+	self.rsh12.panic_suppression_chance = 0.2
+	self.rsh12.can_shoot_through_enemy = true
+	self.rsh12.can_shoot_through_shield = true
+	self.rsh12.can_shoot_through_wall = true
+	self.rsh12.stats = {
+		zoom = 1,
+		total_ammo_mod = 21,
+		damage = 105,
+		alert_size = 7,
+		spread = 14,
+		spread_moving = 14,
+		recoil = 6,
+		value = 1,
+		extra_ammo = 51,
+		reload = 11,
+		suppression = 5,
+		concealment = 20
+	}
+	self.rsh12.armor_piercing_chance = 1
+	self.rsh12.stats_modifiers = {
+		damage = 2
+	}
 end
 
 function WeaponTweakData:_init_chinchilla(weapon_data)
@@ -26724,6 +27559,7 @@ function WeaponTweakData:_init_r700(weapon_data)
 				"clip_ammo_increase"
 			}
 		},
+		has_description = true,
 		damage_melee = weapon_data.damage_melee_default,
 		damage_melee_effect_mul = weapon_data.damage_melee_effect_multiplier_default,
 		sounds = {}
@@ -27008,6 +27844,12 @@ function WeaponTweakData:_create_table_structure()
 	}
 	self.groza_underbarrel_npc = {
 		usage = "is_shotgun_pump",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.shak12_npc = {
+		usage = "is_rifle",
 		sounds = {},
 		use_data = {},
 		auto = {}
@@ -27642,6 +28484,36 @@ function WeaponTweakData:_create_table_structure()
 		use_data = {},
 		auto = {}
 	}
+	self.shak12_crew = {
+		usage = "is_rifle",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.type54_underbarrel_crew = {
+		usage = "is_shotgun_pump",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.type54_underbarrel_npc = {
+		usage = "is_shotgun_pump",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.x_type54_underbarrel_crew = {
+		usage = "akimbo_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.x_type54_underbarrel_npc = {
+		usage = "akimbo_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
 	self.m37_crew = {
 		usage = "is_shotgun_pump",
 		sounds = {},
@@ -27785,6 +28657,36 @@ function WeaponTweakData:_create_table_structure()
 	}
 	self.lemming_crew = {
 		usage = "is_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.type54_crew = {
+		usage = "is_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.type54_npc = {
+		usage = "is_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.x_type54_crew = {
+		usage = "akimbo_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.x_type54_npc = {
+		usage = "akimbo_pistol",
+		sounds = {},
+		use_data = {},
+		auto = {}
+	}
+	self.rsh12_crew = {
+		usage = "is_revolver",
 		sounds = {},
 		use_data = {},
 		auto = {}
@@ -28268,6 +29170,7 @@ function WeaponTweakData:get_akimbo_mappings()
 		czech = "x_czech",
 		stech = "x_stech",
 		holt = "x_holt",
+		type54 = "x_type54",
 		judge = "x_judge",
 		m45 = "x_m45",
 		saw = "saw_secondary",

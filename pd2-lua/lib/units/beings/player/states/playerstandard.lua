@@ -3835,60 +3835,54 @@ function PlayerStandard:_check_action_deploy_underbarrel(t, input)
 	if not action_forbidden then
 		self._toggle_underbarrel_wanted = false
 		local weapon = self._equipped_unit:base()
-		local underbarrel_names = managers.weapon_factory:get_parts_from_weapon_by_type_or_perk("underbarrel", weapon._factory_id, weapon._blueprint)
 
-		if underbarrel_names and underbarrel_names[1] then
-			local underbarrel = weapon._parts[underbarrel_names[1]]
+		if weapon.record_fire_mode then
+			weapon:record_fire_mode()
+		end
 
-			if underbarrel then
-				local underbarrel_base = underbarrel.unit:base()
-				local underbarrel_tweak = tweak_data.weapon[underbarrel_base.name_id]
+		local underbarrel_state = weapon:underbarrel_toggle()
 
-				if weapon.record_fire_mode then
-					weapon:record_fire_mode()
-				end
+		if underbarrel_state ~= nil then
+			local underbarrel_name_id = weapon:underbarrel_name_id()
+			local underbarrel_tweak = tweak_data.weapon[underbarrel_name_id]
+			new_action = true
 
-				underbarrel_base:toggle()
-
-				new_action = true
-
-				if weapon.reset_cached_gadget then
-					weapon:reset_cached_gadget()
-				end
-
-				if weapon._update_stats_values then
-					weapon:_update_stats_values(true)
-				end
-
-				local anim_ids = nil
-				local switch_delay = 1
-
-				if underbarrel_base:is_on() then
-					anim_ids = Idstring("underbarrel_enter_" .. weapon.name_id)
-					switch_delay = underbarrel_tweak.timers.equip_underbarrel
-
-					self:set_animation_state("underbarrel")
-				else
-					anim_ids = Idstring("underbarrel_exit_" .. weapon.name_id)
-					switch_delay = underbarrel_tweak.timers.unequip_underbarrel
-
-					self:set_animation_state("standard")
-				end
-
-				if anim_ids then
-					self._ext_camera:play_redirect(anim_ids, 1)
-				end
-
-				self:set_animation_weapon_hold(nil)
-				self:set_stance_switch_delay(switch_delay)
-
-				if alive(self._equipped_unit) then
-					managers.hud:set_ammo_amount(self._equipped_unit:base():selection_index(), self._equipped_unit:base():ammo_info())
-					managers.hud:set_teammate_weapon_firemode(HUDManager.PLAYER_PANEL, self._unit:inventory():equipped_selection(), self._equipped_unit:base():fire_mode())
-				end
-
-				managers.network:session():send_to_peers_synched("sync_underbarrel_switch", self._equipped_unit:base():selection_index(), underbarrel_base.name_id, underbarrel_base:is_on())
+			if weapon.reset_cached_gadget then
+				weapon:reset_cached_gadget()
 			end
+
+			if weapon._update_stats_values then
+				weapon:_update_stats_values(true)
+			end
+
+			local anim_ids = nil
+			local switch_delay = 1
+
+			if underbarrel_state then
+				anim_ids = Idstring("underbarrel_enter_" .. weapon.name_id)
+				switch_delay = underbarrel_tweak.timers.equip_underbarrel
+
+				self:set_animation_state("underbarrel")
+			else
+				anim_ids = Idstring("underbarrel_exit_" .. weapon.name_id)
+				switch_delay = underbarrel_tweak.timers.unequip_underbarrel
+
+				self:set_animation_state("standard")
+			end
+
+			if anim_ids then
+				self._ext_camera:play_redirect(anim_ids, 1)
+			end
+
+			self:set_animation_weapon_hold(nil)
+			self:set_stance_switch_delay(switch_delay)
+
+			if alive(self._equipped_unit) then
+				managers.hud:set_ammo_amount(self._equipped_unit:base():selection_index(), self._equipped_unit:base():ammo_info())
+				managers.hud:set_teammate_weapon_firemode(HUDManager.PLAYER_PANEL, self._unit:inventory():equipped_selection(), self._equipped_unit:base():fire_mode())
+			end
+
+			managers.network:session():send_to_peers_synched("sync_underbarrel_switch", self._equipped_unit:base():selection_index(), underbarrel_name_id, underbarrel_state)
 		end
 	end
 
@@ -4241,24 +4235,30 @@ function PlayerStandard:_check_action_primary_attack(t, input)
 					local spread_mul = math.lerp(1, tweak_data.player.suppression.spread_mul, suppression_ratio)
 					local autohit_mul = math.lerp(1, tweak_data.player.suppression.autohit_chance_mul, suppression_ratio)
 					local suppression_mul = managers.blackmarket:threat_multiplier()
-					local dmg_mul = managers.player:temporary_upgrade_value("temporary", "dmg_multiplier_outnumbered", 1)
+					local dmg_mul = 1
+					local weapon_tweak_data = weap_base:weapon_tweak_data()
+					local primary_category = weapon_tweak_data.categories[1]
 
-					if managers.player:has_category_upgrade("player", "overkill_all_weapons") or weap_base:is_category("shotgun", "saw") then
-						dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "overkill_damage_multiplier", 1)
+					if not weapon_tweak_data.ignore_damage_multipliers then
+						dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "dmg_multiplier_outnumbered", 1)
+
+						if managers.player:has_category_upgrade("player", "overkill_all_weapons") or weap_base:is_category("shotgun", "saw") then
+							dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "overkill_damage_multiplier", 1)
+						end
+
+						local health_ratio = self._ext_damage:health_ratio()
+						local damage_health_ratio = managers.player:get_damage_health_ratio(health_ratio, primary_category)
+
+						if damage_health_ratio > 0 then
+							local upgrade_name = weap_base:is_category("saw") and "melee_damage_health_ratio_multiplier" or "damage_health_ratio_multiplier"
+							local damage_ratio = damage_health_ratio
+							dmg_mul = dmg_mul * (1 + managers.player:upgrade_value("player", upgrade_name, 0) * damage_ratio)
+						end
+
+						dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "berserker_damage_multiplier", 1)
+						dmg_mul = dmg_mul * managers.player:get_property("trigger_happy", 1)
 					end
 
-					local health_ratio = self._ext_damage:health_ratio()
-					local primary_category = weap_base:weapon_tweak_data().categories[1]
-					local damage_health_ratio = managers.player:get_damage_health_ratio(health_ratio, primary_category)
-
-					if damage_health_ratio > 0 then
-						local upgrade_name = weap_base:is_category("saw") and "melee_damage_health_ratio_multiplier" or "damage_health_ratio_multiplier"
-						local damage_ratio = damage_health_ratio
-						dmg_mul = dmg_mul * (1 + managers.player:upgrade_value("player", upgrade_name, 0) * damage_ratio)
-					end
-
-					dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "berserker_damage_multiplier", 1)
-					dmg_mul = dmg_mul * managers.player:get_property("trigger_happy", 1)
 					local fired = nil
 
 					if fire_mode == "single" then

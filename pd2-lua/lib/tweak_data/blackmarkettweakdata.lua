@@ -86,7 +86,10 @@ function BlackMarketTweakData:_init_weapon_mods(tweak_data)
 		tweak_data.weapon.factory:create_bonuses(tweak_data, self.weapon_skins)
 	end
 
+	tweak_data.weapon.factory:create_charms(tweak_data)
+
 	self.weapon_mods = {}
+	local steelsight_parts = {}
 
 	for id, data in pairs(tweak_data.weapon.factory.parts) do
 		if is_nextgen_console then
@@ -107,11 +110,46 @@ function BlackMarketTweakData:_init_weapon_mods(tweak_data)
 			texture_bundle_folder = data.texture_bundle_folder,
 			is_a_unlockable = data.is_a_unlockable,
 			unatainable = data.unatainable,
-			inaccessible = data.inaccessible
+			inaccessible = data.inaccessible,
+			sort_number = data.sort_number
 		}
+
+		if data.steelsight_parent then
+			steelsight_parts[id] = data.steelsight_parent
+		end
 	end
 
 	self:_add_desc_from_name_macro(self.weapon_mods)
+
+	for id, data in pairs(self.weapon_skins) do
+		for part_id, parent_id in pairs(steelsight_parts) do
+			if data.parts and data.parts[parent_id] then
+				data.parts[part_id] = data.parts[parent_id]
+			end
+		end
+
+		if data.types and data.types.sight and not data.types.sight_swap then
+			data.types.sight_swap = data.types.sight
+		end
+	end
+
+	local template_color_skin = self.weapon_color_templates.color_skin
+
+	if template_color_skin and template_color_skin.types.sight and not template_color_skin.types.sight_swap then
+		template_color_skin.types.sight_swap = template_color_skin.types.sight
+	end
+
+	for weapon_id, data in pairs(template_color_skin.weapons) do
+		for part_id, parent_id in pairs(steelsight_parts) do
+			if data.parts and data.parts[parent_id] then
+				data.parts[part_id] = data.parts[parent_id]
+			end
+		end
+
+		if data.types and data.types.sight and not data.types.sight_swap then
+			data.types.sight_swap = data.types.sight
+		end
+	end
 end
 
 function BlackMarketTweakData:_init_characters(tweak_data)

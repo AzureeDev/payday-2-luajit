@@ -1003,6 +1003,8 @@ function PlayerManager:spawned_player(id, unit)
 			self:replenish_grenades(grenade_cooldown)
 		end
 	end
+
+	managers.charm:on_spawned()
 end
 
 function PlayerManager:_change_player_state()

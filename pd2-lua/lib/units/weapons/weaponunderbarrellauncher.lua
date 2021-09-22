@@ -7,8 +7,10 @@ function WeaponUnderbarrelLauncher:init(unit)
 	self._launcher_projectile = self.launcher_projectile
 end
 
-function WeaponUnderbarrelLauncher:set_launcher_projectile(launcher_projectile)
-	self._launcher_projectile = launcher_projectile
+function WeaponUnderbarrelLauncher:setup_data(setup_data, damage_multiplier, ammo_data)
+	WeaponUnderbarrelLauncher.super.setup_data(self, setup_data, damage_multiplier, ammo_data)
+
+	self._launcher_projectile = ammo_data and ammo_data.launcher_grenade or self._launcher_projectile
 end
 
 local mvec_spread_direction = Vector3()

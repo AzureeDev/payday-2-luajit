@@ -247,7 +247,7 @@ function HUDManager:set_teammate_weapon_firemode(i, id, firemode)
 end
 
 function HUDManager:set_ammo_amount(selection_index, max_clip, current_clip, current_left, max)
-	if selection_index > 3 then
+	if selection_index > 4 then
 		print("set_ammo_amount", selection_index, max_clip, current_clip, current_left, max)
 		Application:stack_dump()
 		debug_pause("WRONG SELECTION INDEX!")
@@ -270,6 +270,7 @@ function HUDManager:set_ammo_amount(selection_index, max_clip, current_clip, cur
 end
 
 function HUDManager:set_teammate_ammo_amount(id, selection_index, max_clip, current_clip, current_left, max)
+	selection_index = (tonumber(selection_index) - 1) % 2 + 1
 	local type = selection_index == 1 and "secondary" or "primary"
 
 	self._teammate_panels[id]:set_ammo_amount_by_type(type, max_clip, current_clip, current_left, max)

@@ -787,6 +787,14 @@ function GenericDLCManager:has_pda8_wpn_money()
 	return managers.event_jobs:get_event_stage() < 5
 end
 
+function GenericDLCManager:has_gage_pack_shotgun()
+	return self:is_dlc_unlocked("gage_pack_shotgun")
+end
+
+function GenericDLCManager:has_bbq()
+	return self:is_dlc_unlocked("bbq")
+end
+
 function GenericDLCManager:has_goty_all_dlc_bundle_2014()
 	return self:has_goty_weapon_bundle_2014() and self:has_goty_heist_bundle_2014() and self:is_dlcs_unlocked({
 		"character_pack_clover"
@@ -2187,6 +2195,7 @@ end
 
 function WINDLCManager:_init_promoted_dlc_list()
 	self._promoted_dlc_list = {
+		"tawp",
 		"sand",
 		"sdtp",
 		"sawp",
@@ -2320,7 +2329,7 @@ function WINDLCManager:check_pdth(clbk)
 
 		self._check_pdth_request = true
 
-		Steam:http_request("http://fbi.overkillsoftware.com/veterancheck/veterancheck.php?steamid=" .. Steam:userid(), result_function)
+		Steam:http_request("https://fbi.paydaythegame.com/veterancheck/veterancheck.php?steamid=" .. Steam:userid(), result_function)
 	end
 end
 

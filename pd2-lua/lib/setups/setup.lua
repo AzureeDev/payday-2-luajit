@@ -128,6 +128,7 @@ require("lib/utils/WeightedSelector")
 require("lib/units/MaskExt")
 require("lib/utils/dev/api/TestAPI")
 require("lib/utils/accelbyte/Telemetry")
+require("lib/managers/CharmManager")
 
 script_data = script_data or {}
 game_state_machine = game_state_machine or nil
@@ -314,6 +315,7 @@ function Setup:init_managers(managers)
 
 	managers.savefile:load_settings()
 
+	managers.charm = CharmManager:new()
 	game_state_machine = GameStateMachine:new()
 end
 
@@ -584,6 +586,7 @@ function Setup:update(t, dt)
 
 	managers.menu_component:update(t, dt)
 	managers.player:update(t, dt)
+	managers.charm:update(t, dt)
 	managers.blackmarket:update(t, dt)
 	managers.vote:update(t, dt)
 	managers.vehicle:update(t, dt)

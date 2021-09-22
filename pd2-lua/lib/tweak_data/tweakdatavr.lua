@@ -1308,6 +1308,10 @@ function TweakDataVR:init(tweak_data)
 			position = Vector3(0, 3, 2),
 			rotation = Rotation(0, -25, 0)
 		},
+		shak12 = {
+			position = Vector3(0, 3, 2),
+			rotation = Rotation(0, -25, 0)
+		},
 		komodo = {
 			position = Vector3(0, 3, 2),
 			rotation = Rotation(0, -25, 0)
@@ -1849,6 +1853,9 @@ function TweakDataVR:init(tweak_data)
 				position = Vector3(-2, 28, 2)
 			},
 			corgi = {
+				position = Vector3(0, 22, -3)
+			},
+			shak12 = {
 				position = Vector3(0, 22, -3)
 			},
 			komodo = {
@@ -5756,6 +5763,42 @@ function TweakDataVR:init(tweak_data)
 			}
 		},
 		corgi = {
+			start = {
+				{
+					time = 0,
+					sound = "corgi_clip_out"
+				},
+				{
+					drop_mag = true,
+					time = 0.05,
+					visible = false,
+					pos = Vector3(0, 5, -20),
+					rot = Rotation(0, 30, 0)
+				}
+			},
+			finish = {
+				{
+					time = 0,
+					sound = "corgi_clip_in",
+					visible = true,
+					pos = Vector3(0, 0, -20)
+				},
+				{
+					time = 0.1,
+					pos = Vector3(0, 0, -4.5)
+				},
+				{
+					time = 0.56,
+					pos = Vector3(0, 0, -4)
+				},
+				{
+					time = 0.6,
+					sound = "corgi_lever_release",
+					pos = Vector3()
+				}
+			}
+		},
+		shak12 = {
 			start = {
 				{
 					time = 0,

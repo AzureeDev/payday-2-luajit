@@ -178,12 +178,20 @@ function GenericDLCManager:has_svc()
 	return self:is_dlc_unlocked("svc")
 end
 
+function GenericDLCManager:has_taco()
+	return self:is_dlc_unlocked("taco")
+end
+
 function GenericDLCManager:has_tam()
 	return self:is_dlc_unlocked("tam")
 end
 
 function GenericDLCManager:has_tar()
 	return self:is_dlc_unlocked("tar")
+end
+
+function GenericDLCManager:has_tawp()
+	return self:is_dlc_unlocked("tawp")
 end
 
 function GenericDLCManager:has_tjp()
@@ -422,12 +430,20 @@ function WINDLCManager:init_generated()
 		app_id = "1257320",
 		no_install = true
 	}
+	Global.dlc_manager.all_dlc_data.taco = {
+		app_id = "218620",
+		no_install = true
+	}
 	Global.dlc_manager.all_dlc_data.tam = {
 		app_id = "218620",
 		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.tar = {
 		app_id = "218620",
+		no_install = true
+	}
+	Global.dlc_manager.all_dlc_data.tawp = {
+		app_id = "1746580",
 		no_install = true
 	}
 	Global.dlc_manager.all_dlc_data.tjp = {

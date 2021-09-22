@@ -352,11 +352,20 @@ function MenuNodeCustomizeWeaponColorGui:_setup_item_panel(safe_rect, res)
 		layer = self.layers.items
 	})
 	self._tabs = {}
+	self._tab_scroll_parent_panel = self._tab_panel:panel({
+		x = self.item_panel:left(),
+		width = self.item_panel:right() - self.item_panel:left()
+	})
+	self._tab_scroll_panel = self._tab_scroll_parent_panel:panel({
+		x = self.node.tab_panel_position or 0
+	})
 	local _, tw, th, tab_panel, tab_text, tab_select_rect = nil
 	local color_group_data = self.node.color_group_data
+	local tab_scroll_h = 0
+	local tab_padding = 15
 
 	for index, option in ipairs(color_group_data.options) do
-		tab_panel = self._tab_panel:panel()
+		tab_panel = self._tab_scroll_panel:panel()
 		tab_select_rect = tab_panel:bitmap({
 			texture = "guis/textures/pd2/shared_tab_box",
 			halign = "grow",
@@ -376,8 +385,11 @@ function MenuNodeCustomizeWeaponColorGui:_setup_item_panel(safe_rect, res)
 		})
 		_, _, tw, th = tab_text:text_rect()
 
-		tab_panel:set_size(tw + 15, th + 10)
-		tab_panel:set_leftbottom(#self._tabs > 0 and self._tabs[#self._tabs].panel:right() or self.item_panel:left(), self.item_panel:top() + 2 - align_padding)
+		tab_panel:set_size(tw + tab_padding, th + 10)
+		tab_panel:set_left(#self._tabs > 0 and self._tabs[#self._tabs].panel:right() or 0)
+
+		tab_scroll_h = math.max(tab_scroll_h, th + 10)
+
 		table.insert(self._tabs, {
 			panel = tab_panel,
 			text = tab_text,
@@ -386,6 +398,68 @@ function MenuNodeCustomizeWeaponColorGui:_setup_item_panel(safe_rect, res)
 		self:_update_tab(index)
 	end
 
+	self._tab_scroll_parent_panel:set_height(tab_scroll_h)
+	self._tab_scroll_parent_panel:set_bottom(self.item_panel:top() + 2 - align_padding)
+	self._tab_scroll_panel:set_size(self._tabs[#self._tabs].panel:right(), tab_scroll_h)
+
+	if self._tab_scroll_parent_panel:width() < self._tab_scroll_panel:width() then
+		local is_pc_controller = managers.menu:is_pc_controller()
+		local is_steam_controller = is_pc_controller and managers.menu:is_steam_controller() or false
+		local prev_string = nil
+
+		if is_pc_controller then
+			prev_string = is_steam_controller and managers.localization:steam_btn("bumper_l") or "<"
+		else
+			prev_string = managers.localization:get_default_macro("BTN_BOTTOM_L")
+		end
+
+		local prev_color = self._prev_page_highlighted and tweak_data.screen_colors.button_stage_2 or tweak_data.screen_colors.button_stage_3
+		local prev_page = self._tab_panel:text({
+			name = "prev_page",
+			layer = 1,
+			font_size = medium_font_size,
+			font = medium_font,
+			color = prev_color,
+			text = prev_string
+		})
+		_, _, tw, th = prev_page:text_rect()
+
+		prev_page:set_size(tw, tab_scroll_h)
+		prev_page:set_position(align_padding, self._tab_scroll_parent_panel:top())
+
+		local next_string = nil
+
+		if is_pc_controller then
+			next_string = is_steam_controller and managers.localization:steam_btn("bumper_r") or ">"
+		else
+			next_string = managers.localization:get_default_macro("BTN_BOTTOM_R")
+		end
+
+		local next_color = self._next_page_highlighted and tweak_data.screen_colors.button_stage_2 or tweak_data.screen_colors.button_stage_3
+		local next_page = self._tab_panel:text({
+			name = "next_page",
+			layer = 1,
+			font_size = medium_font_size,
+			font = medium_font,
+			color = next_color,
+			text = next_string
+		})
+		_, _, tw, th = next_page:text_rect()
+
+		next_page:set_size(tw, tab_scroll_h)
+		next_page:set_righttop(self._tab_panel:width() - align_padding - 4, self._tab_scroll_parent_panel:top())
+		self._tab_scroll_parent_panel:set_width(next_page:left() - prev_page:right() - 2 * align_padding)
+		self._tab_scroll_parent_panel:set_x(prev_page:right() + align_padding)
+
+		if is_steam_controller or not is_pc_controller then
+			prev_page:set_color(tweak_data.screen_colors.text)
+			next_page:set_color(tweak_data.screen_colors.text)
+			prev_page:move(0, 4)
+			next_page:move(0, 4)
+		end
+	end
+
+	self:update_tab_panel_position()
 	self:update_color_info()
 
 	if alive(self.box_panel) then
@@ -461,6 +535,32 @@ function MenuNodeCustomizeWeaponColorGui:_update_tab(index)
 	end
 end
 
+function MenuNodeCustomizeWeaponColorGui:update_tab_panel_position()
+	local color_group_data = self.node.color_group_data
+	local selected = color_group_data.selected
+	local tab = self._tabs[selected]
+	local tab_panel = tab.panel
+
+	if tab_panel:left() + self._tab_scroll_panel:x() < 0 then
+		self._tab_scroll_panel:set_left(-tab_panel:left())
+	elseif self._tab_scroll_parent_panel:width() < tab_panel:right() + self._tab_scroll_panel:x() then
+		self._tab_scroll_panel:set_right(self._tab_scroll_parent_panel:width() - (tab_panel:right() - self._tab_scroll_panel:width()))
+	end
+
+	self.node.tab_panel_position = self._tab_scroll_panel:left()
+	local prev_page = self._tab_panel:child("prev_page")
+
+	if alive(prev_page) then
+		prev_page:set_visible(self._tab_scroll_panel:left() < 0)
+	end
+
+	local next_page = self._tab_panel:child("next_page")
+
+	if alive(next_page) then
+		next_page:set_visible(self._tab_scroll_parent_panel:width() < self._tab_scroll_panel:right())
+	end
+end
+
 function MenuNodeCustomizeWeaponColorGui:_set_color_group_index(index)
 	local color_group_data = self.node.color_group_data
 	local new_index = math.clamp(index, 1, #color_group_data.options)
@@ -481,6 +581,10 @@ function MenuNodeCustomizeWeaponColorGui:input_focus()
 			return 1
 		end
 	end
+
+	if self._mouse_over_tab_panel or self._prev_page_highlighted or self._next_page_highlighted then
+		return 1
+	end
 end
 
 function MenuNodeCustomizeWeaponColorGui:mouse_moved(o, x, y)
@@ -489,6 +593,7 @@ function MenuNodeCustomizeWeaponColorGui:mouse_moved(o, x, y)
 
 	if managers.menu_scene:input_focus() then
 		self._mouse_over_row_item = nil
+		self._mouse_over_tab_panel = nil
 
 		return used, icon
 	end
@@ -553,6 +658,59 @@ function MenuNodeCustomizeWeaponColorGui:mouse_moved(o, x, y)
 		self._mouse_over_row_item = nil
 	end
 
+	self._mouse_over_tab_panel = self._tab_scroll_parent_panel:inside(x, y)
+	local prev_page = self._tab_panel:child("prev_page")
+
+	if alive(prev_page) then
+		local is_inside = prev_page:inside(x, y) and prev_page:visible()
+
+		if is_inside then
+			used = true
+			icon = "link"
+		end
+
+		if is_inside then
+			if not self._prev_page_highlighted then
+				self._prev_page_highlighted = true
+
+				managers.menu_component:post_event("highlight")
+				prev_page:set_color(tweak_data.screen_colors.button_stage_2)
+			end
+
+			return used, icon
+		elseif self._prev_page_highlighted then
+			self._prev_page_highlighted = nil
+
+			prev_page:set_color(tweak_data.screen_colors.button_stage_3)
+		end
+	end
+
+	local next_page = self._tab_panel:child("next_page")
+
+	if alive(next_page) then
+		local is_inside = next_page:inside(x, y) and next_page:visible()
+
+		if is_inside then
+			used = true
+			icon = "link"
+		end
+
+		if is_inside then
+			if not self._next_page_highlighted then
+				self._next_page_highlighted = true
+
+				managers.menu_component:post_event("highlight")
+				next_page:set_color(tweak_data.screen_colors.button_stage_2)
+			end
+
+			return used, icon
+		elseif self._next_page_highlighted then
+			self._next_page_highlighted = nil
+
+			next_page:set_color(tweak_data.screen_colors.button_stage_3)
+		end
+	end
+
 	local color_group_data = self.node.color_group_data
 
 	if color_group_data.highlighted then
@@ -568,19 +726,23 @@ function MenuNodeCustomizeWeaponColorGui:mouse_moved(o, x, y)
 		self:_update_tab(prev_highlighted)
 	end
 
-	for index, tab in ipairs(self._tabs) do
-		if tab.panel:inside(x, y) then
-			color_group_data.highlighted = index
+	if self._mouse_over_tab_panel then
+		for index, tab in ipairs(self._tabs) do
+			if tab.panel:inside(x, y) then
+				color_group_data.highlighted = index
 
-			self:_update_tab(index)
+				self:_update_tab(index)
 
-			used = true
-			icon = "link"
+				used = true
+				icon = "link"
 
-			if color_group_data.selected ~= index then
-				icon = "arrow"
+				if color_group_data.selected ~= index then
+					icon = "arrow"
 
-				managers.menu_component:post_event("highlight")
+					managers.menu_component:post_event("highlight")
+				end
+
+				break
 			end
 		end
 	end
@@ -650,6 +812,24 @@ function MenuNodeCustomizeWeaponColorGui:mouse_pressed(button, x, y)
 
 			return true
 		end
+	elseif self._mouse_over_tab_panel then
+		if button == Idstring("mouse wheel down") then
+			self:next_page()
+
+			return true
+		elseif button == Idstring("mouse wheel up") then
+			self:previous_page()
+
+			return true
+		end
+	elseif self._prev_page_highlighted then
+		self:previous_page()
+
+		return true
+	elseif self._next_page_highlighted then
+		self:next_page()
+
+		return true
 	end
 
 	if button == Idstring("0") then
@@ -870,13 +1050,17 @@ function MenuNodeCustomizeWeaponColorGui:_clear_gui()
 
 	self._mouse_over_row_item = nil
 
-	self._item_panel_parent:remove(self._text_panel)
+	if self._text_panel then
+		self._item_panel_parent:remove(self._text_panel)
 
-	self._text_panel = nil
+		self._text_panel = nil
+	end
 
-	self._item_panel_parent:remove(self._tab_panel)
+	if self._tab_panel then
+		self._item_panel_parent:remove(self._tab_panel)
 
-	self._tab_panel = nil
+		self._tab_panel = nil
+	end
 end
 
 function MenuNodeCustomizeWeaponColorGui:_setup_item_rows(node)

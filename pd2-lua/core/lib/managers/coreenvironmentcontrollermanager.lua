@@ -1,5 +1,6 @@
 local flashbang_test_offset = Vector3(0, 0, 150)
 local debug_vec1 = Vector3()
+local temp_vec_1 = Vector3()
 CoreEnvironmentControllerManager = CoreEnvironmentControllerManager or class()
 
 function CoreEnvironmentControllerManager:init()
@@ -18,6 +19,7 @@ function CoreEnvironmentControllerManager:init()
 	self._supression_start_flash = 0
 	self._old_health_effect_value = 1
 	self._health_effect_value_diff = 0
+	self._buff_effect_value = 0
 	self._GAME_DEFAULT_COLOR_GRADING = "color_off"
 	self._default_color_grading = self._GAME_DEFAULT_COLOR_GRADING
 	self._ignore_user_color_grading = false
@@ -160,6 +162,10 @@ end
 
 function CoreEnvironmentControllerManager:taser_value()
 	return self._taser_value
+end
+
+function CoreEnvironmentControllerManager:set_buff_effect(buff_effect_value)
+	self._buff_effect_value = -buff_effect_value
 end
 
 function CoreEnvironmentControllerManager:set_suppression_value(effective_value, raw_value)
@@ -548,8 +554,11 @@ function CoreEnvironmentControllerManager:set_post_composite(t, dt)
 	end
 
 	self._health_effect_value_diff = math.max(self._health_effect_value_diff - dt * 0.5, 0)
+	self._buff_effect_value = math.min(self._buff_effect_value + dt * 0.5, 0)
 
-	self._lut_modifier_material:set_variable(ids_LUT_settings_a, Vector3(math.clamp(self._health_effect_value_diff * 1.3 * (1 + hurt_mod * 1.3), 0, 1.2), 0, math.min(blur_zone_val + self._HE_blinding, 1)))
+	mvector3.set(temp_vec_1, Vector3(math.clamp(self._health_effect_value_diff * 1.3 * (1 + hurt_mod * 1.3), 0, 1.2), 0, math.min(blur_zone_val + self._HE_blinding, 1)))
+	mvector3.add(temp_vec_1, Vector3(self._buff_effect_value, self._buff_effect_value, self._buff_effect_value, 0.5))
+	self._lut_modifier_material:set_variable(ids_LUT_settings_a, temp_vec_1)
 
 	local last_life = 0
 

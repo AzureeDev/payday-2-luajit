@@ -226,6 +226,14 @@ function WeaponFalloffTemplate.setup_weapon_falloff_templates()
 		near_multiplier = 1,
 		far_multiplier = 0.8
 	}
+	weapon_falloff_templates.PISTOL_FALL_SUPER = {
+		optimal_distance = 0,
+		optimal_range = 3000,
+		near_falloff = 0,
+		far_falloff = 1000,
+		near_multiplier = 1,
+		far_multiplier = 1
+	}
 	weapon_falloff_templates.SMG_FALL_LOW = {
 		optimal_distance = 0,
 		optimal_range = 1200,
