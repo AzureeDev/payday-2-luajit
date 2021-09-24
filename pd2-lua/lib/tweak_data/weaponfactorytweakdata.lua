@@ -3396,7 +3396,9 @@ function WeaponFactoryTweakData:_init_m4()
 			"wpn_fps_upg_ass_ns_linear",
 			"wpn_fps_upg_ass_ns_surefire",
 			"wpn_fps_upg_ass_ns_battle",
-			"wpn_fps_upg_ns_ass_smg_v6"
+			"wpn_fps_upg_ns_ass_smg_v6",
+			"wpn_fps_ass_shak12_ns_suppressor",
+			"wpn_fps_ass_shak12_ns_muzzle"
 		}
 	}
 	self.parts.wpn_fps_m4_uupg_fg_lr300 = {
@@ -17155,7 +17157,9 @@ function WeaponFactoryTweakData:_init_famas()
 			"wpn_fps_upg_ass_ns_linear",
 			"wpn_fps_upg_ass_ns_surefire",
 			"wpn_fps_upg_ass_ns_battle",
-			"wpn_fps_upg_ns_ass_smg_v6"
+			"wpn_fps_upg_ns_ass_smg_v6",
+			"wpn_fps_ass_shak12_ns_suppressor",
+			"wpn_fps_ass_shak12_ns_muzzle"
 		}
 	}
 	self.parts.wpn_fps_ass_famas_b_standard = {
@@ -18785,13 +18789,13 @@ function WeaponFactoryTweakData:create_charms(tweak_data)
 			a_obj = "a_charm_2",
 			parent = "barrel"
 		},
-		wpn_fps_lmg_m134_m_standard = {
+		wpn_fps_lmg_m134_body = {
 			a_obj = "a_charm_2",
-			parent = "magazine"
+			parent = "lower_reciever"
 		}
 	}
 
-	self:_add_charms_to_all_weapons(tweak_data, weapon_charms, weapon_overrides, part_overrides, weapon_exclude_list)
+	return self:_add_charms_to_all_weapons(tweak_data, weapon_charms, weapon_overrides, part_overrides, weapon_exclude_list)
 end
 
 function WeaponFactoryTweakData:_add_charms_to_all_weapons(tweak_data, weapon_charms, weapon_overrides, part_overrides, weapon_exclude_list)
@@ -18821,6 +18825,8 @@ function WeaponFactoryTweakData:_add_charms_to_all_weapons(tweak_data, weapon_ch
 			self.parts[part_id].override[charm_id] = override
 		end
 	end
+
+	return charm_list
 end
 
 function WeaponFactoryTweakData:create_ammunition()
@@ -22411,7 +22417,9 @@ function WeaponFactoryTweakData:_init_vhs()
 			"wpn_fps_upg_ass_ns_linear",
 			"wpn_fps_upg_ass_ns_surefire",
 			"wpn_fps_upg_ass_ns_battle",
-			"wpn_fps_upg_ns_ass_smg_v6"
+			"wpn_fps_upg_ns_ass_smg_v6",
+			"wpn_fps_ass_shak12_ns_suppressor",
+			"wpn_fps_ass_shak12_ns_muzzle"
 		},
 		override = {
 			wpn_fps_ass_vhs_ns_vhs = {
@@ -34432,9 +34440,9 @@ function WeaponFactoryTweakData:_init_groza()
 	self.parts.wpn_fps_ass_groza_b_supressor = {
 		type = "barrel",
 		texture_bundle_folder = "sawp",
-		dlc = "sawp",
 		a_obj = "a_b",
 		sub_type = "silencer",
+		dlc = "sawp",
 		name_id = "bm_wp_groza_b_supressed",
 		unit = "units/pd2_dlc_sawp/weapons/wpn_fps_ass_groza_pts/wpn_fps_ass_groza_b_supressor",
 		pcs = {
@@ -34469,7 +34477,9 @@ function WeaponFactoryTweakData:_init_groza()
 			"wpn_fps_upg_ass_ns_linear",
 			"wpn_fps_upg_ass_ns_surefire",
 			"wpn_fps_upg_ass_ns_battle",
-			"wpn_fps_upg_ns_ass_smg_v6"
+			"wpn_fps_upg_ns_ass_smg_v6",
+			"wpn_fps_ass_shak12_ns_suppressor",
+			"wpn_fps_ass_shak12_ns_muzzle"
 		}
 	}
 	self.parts.wpn_fps_ass_groza_gl_gp25 = {
@@ -35190,7 +35200,6 @@ function WeaponFactoryTweakData:_init_shak12()
 			value = 1,
 			concealment = -1,
 			damage = 2,
-			alert_size = 12,
 			spread = 1,
 			recoil = 1
 		}

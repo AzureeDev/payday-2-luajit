@@ -277,7 +277,11 @@ function StatisticsTweakData:statistics_table()
 		self._glove_list = clone(tweak_data.blackmarket.glove_list)
 	end
 
-	return self._level_list, self._job_list, self._mask_list, self._weapon_list, self._melee_list, self._grenade_list, enemy_list, armor_list, character_list, deployable_list, self._suit_list, self._weapon_color_list, self._glove_list
+	if not self._charm_list then
+		self._charm_list = clone(tweak_data.blackmarket.weapon_charms)
+	end
+
+	return self._level_list, self._job_list, self._mask_list, self._weapon_list, self._melee_list, self._grenade_list, enemy_list, armor_list, character_list, deployable_list, self._suit_list, self._weapon_color_list, self._glove_list, self._charm_list
 end
 
 function StatisticsTweakData:resolution_statistics_table()

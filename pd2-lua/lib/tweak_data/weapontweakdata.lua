@@ -3775,7 +3775,7 @@ function WeaponTweakData:_init_data_type54_npc()
 	self.type54_underbarrel_npc.no_trail = true
 	self.type54_underbarrel_npc.CLIP_AMMO_MAX = 1
 	self.type54_underbarrel_npc.NR_CLIPS_MAX = 3
-	self.type54_underbarrel_npc.auto.fire_rate = 0.75
+	self.type54_underbarrel_npc.auto.fire_rate = 0.6
 	self.type54_underbarrel_npc.hold = "pistol"
 	self.type54_underbarrel_npc.alert_size = 2800
 	self.type54_underbarrel_npc.suppression = 1
@@ -3806,7 +3806,7 @@ function WeaponTweakData:_init_data_x_type54_crew()
 	self.x_type54_underbarrel_crew.no_trail = true
 	self.x_type54_underbarrel_crew.CLIP_AMMO_MAX = 2
 	self.x_type54_underbarrel_crew.NR_CLIPS_MAX = 3
-	self.x_type54_underbarrel_crew.auto.fire_rate = 0.75
+	self.x_type54_underbarrel_crew.auto.fire_rate = 0.6
 	self.x_type54_underbarrel_crew.hold = "akimbo_pistol"
 	self.x_type54_underbarrel_crew.alert_size = 2800
 	self.x_type54_underbarrel_crew.suppression = 1
@@ -20197,10 +20197,10 @@ function WeaponTweakData:_init_type54(weapon_data)
 	self.type54_underbarrel.reload_on_ammo_bag = true
 	self.type54_underbarrel.FIRE_MODE = "single"
 	self.type54_underbarrel.fire_mode_data = {
-		fire_rate = 0.75
+		fire_rate = 0.6
 	}
 	self.type54_underbarrel.single = {
-		fire_rate = 0.75
+		fire_rate = 0.6
 	}
 	self.type54_underbarrel.spread = {
 		standing = self.r870.spread.standing,
@@ -20407,7 +20407,7 @@ function WeaponTweakData:_init_x_type54(weapon_data)
 	self.x_type54_underbarrel.reload_on_ammo_bag = true
 	self.x_type54_underbarrel.FIRE_MODE = "single"
 	self.x_type54_underbarrel.fire_mode_data = {
-		fire_rate = 0.75
+		fire_rate = 0.6
 	}
 	self.x_type54_underbarrel.kick = {
 		standing = {

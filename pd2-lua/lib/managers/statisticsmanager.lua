@@ -497,7 +497,7 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 		return
 	end
 
-	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list, glove_list = tweak_data.statistics:statistics_table()
+	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list, glove_list, weapon_charm_list = tweak_data.statistics:statistics_table()
 	local stats = self:check_version()
 	self._global.play_time.minutes = math.ceil(self._global.play_time.minutes + session_time_minutes)
 	local current_time = math.floor(self._global.play_time.minutes / 60)
@@ -709,6 +709,9 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 	}
 
 	if completion then
+		local primary = managers.blackmarket:equipped_primary()
+		local secondary = managers.blackmarket:equipped_secondary()
+
 		for weapon_name, weapon_data in pairs(session.shots_by_weapon) do
 			if weapon_data.total > 0 and table.contains(weapon_list, weapon_name) then
 				stats["weapon_used_" .. weapon_name] = {
@@ -789,8 +792,6 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 			}
 		end
 
-		local primary = managers.blackmarket:equipped_primary()
-
 		if primary and primary.cosmetics and table.contains(weapon_color_list, primary.cosmetics.id) then
 			stats["weapon_color_used_" .. primary.cosmetics.id] = {
 				value = 1,
@@ -798,13 +799,33 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 			}
 		end
 
-		local secondary = managers.blackmarket:equipped_secondary()
-
 		if secondary and secondary.cosmetics and table.contains(weapon_color_list, secondary.cosmetics.id) then
 			stats["weapon_color_used_" .. secondary.cosmetics.id] = {
 				value = 1,
 				type = "int"
 			}
+		end
+
+		if primary and primary.blueprint then
+			local primary_charm_id = managers.weapon_factory:get_part_id_from_weapon_by_type("charm", primary.blueprint)
+
+			if primary_charm_id and table.contains(weapon_charm_list, primary_charm_id) then
+				stats["weapon_charm_used_" .. primary_charm_id] = {
+					value = 1,
+					type = "int"
+				}
+			end
+		end
+
+		if secondary and secondary.blueprint then
+			local secondary_charm_id = managers.weapon_factory:get_part_id_from_weapon_by_type("charm", secondary.blueprint)
+
+			if secondary_charm_id and table.contains(weapon_charm_list, secondary_charm_id) then
+				stats["weapon_charm_used_" .. secondary_charm_id] = {
+					value = 1,
+					type = "int"
+				}
+			end
 		end
 
 		local join_stinger_index = managers.experience:current_rank() > 0 and managers.infamy:selected_join_stinger_index() or 0
@@ -1131,7 +1152,7 @@ function StatisticsManager:gather_equipment_data()
 	end
 
 	local stats = {}
-	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list, glove_list = tweak_data.statistics:statistics_table()
+	local level_list, job_list, mask_list, weapon_list, melee_list, grenade_list, enemy_list, armor_list, character_list, deployable_list, suit_list, weapon_color_list, glove_list, weapon_charm_list = tweak_data.statistics:statistics_table()
 	local mask_name = managers.blackmarket:equipped_mask().mask_id
 	local mask_index = self:_table_contains(mask_list, mask_name)
 

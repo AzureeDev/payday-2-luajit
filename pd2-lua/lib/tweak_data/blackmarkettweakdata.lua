@@ -86,8 +86,7 @@ function BlackMarketTweakData:_init_weapon_mods(tweak_data)
 		tweak_data.weapon.factory:create_bonuses(tweak_data, self.weapon_skins)
 	end
 
-	tweak_data.weapon.factory:create_charms(tweak_data)
-
+	self.weapon_charms = tweak_data.weapon.factory:create_charms(tweak_data)
 	self.weapon_mods = {}
 	local steelsight_parts = {}
 

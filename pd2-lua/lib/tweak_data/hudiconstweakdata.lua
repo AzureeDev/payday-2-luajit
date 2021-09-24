@@ -14546,6 +14546,15 @@ function HudIconsTweakData:init()
 			85
 		}
 	}
+	self.C_Event_H_PrisonNightmare_CloakerCharmer = {
+		texture = "guis/dlcs/trk/atlases/tawp_achievement",
+		texture_rect = {
+			2,
+			2,
+			85,
+			85
+		}
+	}
 
 	TextureCorrectionTweakData:new(self)
 
