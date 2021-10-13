@@ -829,14 +829,15 @@ function CrimeNetSidebarMutatorsItem:init(sidebar, panel, parameters)
 	CrimeNetSidebarMutatorsItem.super.init(self, sidebar, panel, parameters)
 
 	if managers.mutators:are_mutators_enabled() then
-		self._glow_panel = self:create_glow(sidebar._fullscreen_panel, Color(1, 0, 1) * 0.8, 0.85)
+		local color = parameters.glow_color or Color(1, 0, 1)
+		self._glow_panel = self:create_glow(sidebar._fullscreen_panel, color * 0.8, 0.85)
 
 		self._glow_panel:set_center(self._icon:right() + self._icon:w() + 14 - 2, self._panel:bottom() + self._panel:h() * 0.5 - 2)
 		self._glow_panel:set_alpha(0.4)
 
 		self._pulse_offset = math.random()
 
-		self:set_color(Color(1, 0, 1))
+		self:set_color(color)
 	end
 end
 

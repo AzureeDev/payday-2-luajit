@@ -2377,6 +2377,86 @@ function LevelsTweakData:init()
 			}
 		}
 	}
+	self.chca = {
+		name_id = "heist_chca_hl",
+		briefing_id = "heist_chca_briefing",
+		briefing_dialog = "Play_loc_chca_brf",
+		world_name = "narratives/vlad/chca",
+		intro_event = {
+			"Play_loc_chca_intro_stealth",
+			"Play_loc_chca_intro_loud"
+		},
+		outro_event = {
+			loud = "Play_loc_chca_end_loud",
+			stealth = "Play_loc_chca_end_stealth"
+		},
+		music = "heist",
+		package = "packages/job_chca",
+		cube = "cube_apply_heist_bank",
+		block_AIs = {
+			old_hoxton = true
+		},
+		ai_group_type = america,
+		narrator = "locke",
+		ghost_bonus = 0.15,
+		load_screen = "guis/dlcs/chca/textures/loading/job_chca_01_df",
+		teams = {
+			criminal1 = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					converted_enemy = true,
+					escort = true
+				}
+			},
+			law1 = {
+				foes = {
+					converted_enemy = true,
+					criminal1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			},
+			mobster1 = {
+				foes = {
+					converted_enemy = true,
+					law1 = true,
+					criminal1 = true
+				},
+				friends = {}
+			},
+			converted_enemy = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					criminal1 = true,
+					escort = true
+				}
+			},
+			neutral1 = {
+				foes = {},
+				friends = {}
+			},
+			hacked_turret = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			},
+			escort = {
+				foes = {},
+				friends = {
+					converted_enemy = true,
+					criminal1 = true
+				}
+			}
+		}
+	}
 	self._level_index = {
 		"welcome_to_the_jungle_1",
 		"welcome_to_the_jungle_1_night",
@@ -2499,7 +2579,8 @@ function LevelsTweakData:init()
 		"pex",
 		"fex",
 		"chas",
-		"sand"
+		"sand",
+		"chca"
 	}
 
 	if SystemInfo:distribution() == Idstring("STEAM") then

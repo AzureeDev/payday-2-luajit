@@ -244,7 +244,9 @@ function MissionManager:init(...)
 		"player_criminal_death",
 		"keychain",
 		"blue_loot_bag_dropped",
-		"pku_adrenaline_syringe"
+		"pku_adrenaline_syringe",
+		"pku_business_card",
+		"pku_hand"
 	})
 
 	self._mission_filter = {}

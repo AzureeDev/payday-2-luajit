@@ -1767,13 +1767,13 @@ function PlayerStandard:_check_action_use_ability(t, input)
 	local action_wanted = input.btn_throw_grenade_press
 
 	if not action_wanted then
-		return
+		return action_wanted
 	end
 
 	local equipped_ability = managers.blackmarket:equipped_grenade()
 
 	if not managers.player:attempt_ability(equipped_ability) then
-		return
+		return false
 	end
 
 	return action_wanted
@@ -2292,9 +2292,11 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 
 			self._camera_unit:base():play_anim_melee_item("hit_body")
-		elseif self._on_melee_restart_drill and hit_unit:base() and (hit_unit:base().is_drill or hit_unit:base().is_saw) then
-			hit_unit:base():on_melee_hit(managers.network:session():local_peer():id())
 		else
+			if self._on_melee_restart_drill and hit_unit:base() and (hit_unit:base().is_drill or hit_unit:base().is_saw) then
+				hit_unit:base():on_melee_hit(managers.network:session():local_peer():id())
+			end
+
 			if bayonet_melee then
 				self._unit:sound():play("knife_hit_gen", nil, false)
 			else

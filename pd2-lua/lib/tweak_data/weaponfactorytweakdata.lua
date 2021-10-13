@@ -7529,6 +7529,33 @@ function WeaponFactoryTweakData:_init_mp9()
 			"wpn_fps_smg_mp9_m_short",
 			"wpn_fps_smg_mp9_b_dummy"
 		},
+		override = {
+			wpn_fps_upg_fl_ass_smg_sho_peqbox = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_surefire = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_laser = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_peq15 = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_utg = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			}
+		},
 		uses_parts = {
 			"wpn_fps_smg_mp9_b_dummy",
 			"wpn_fps_smg_mp9_b_suppressed",
@@ -12429,6 +12456,33 @@ function WeaponFactoryTweakData:_init_mp7()
 			"wpn_fps_smg_mp7_b_standard",
 			"wpn_fps_smg_mp7_body_standard",
 			"wpn_fps_smg_mp7_s_standard"
+		},
+		override = {
+			wpn_fps_upg_fl_ass_smg_sho_peqbox = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_surefire = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_laser = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_peq15 = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_utg = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			}
 		},
 		uses_parts = {
 			"wpn_fps_smg_mp7_m_short",
@@ -33750,6 +33804,31 @@ function WeaponFactoryTweakData:_init_vityaz()
 				forbids = {
 					"wpn_fps_smg_vityaz_ns_standard"
 				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_peqbox = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_surefire = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_laser = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_peq15 = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_utg = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
 			}
 		},
 		default_blueprint = {
@@ -34888,7 +34967,7 @@ function WeaponFactoryTweakData:_init_shak12()
 	}
 	self.parts.wpn_fps_ass_shak12_ejector_standard = {
 		a_obj = "a_ejector",
-		type = "ejector",
+		type = "extra",
 		name_id = "bm_wp_shak12_body",
 		unit = "units/pd2_dlc_tawp/weapons/wpn_fps_ass_shak12_pts/wpn_fps_ass_shak12_ejector_standard",
 		stats = {
@@ -35083,8 +35162,8 @@ function WeaponFactoryTweakData:_init_shak12()
 				a_obj = "a_or",
 				stance_mod = {
 					wpn_fps_ass_shak12 = {
-						translation = Vector3(0, -3, -3.2),
-						rotation = Rotation(0, -0.5, 0)
+						translation = Vector3(-0.25, -3, -13.7),
+						rotation = Rotation(0, 0, -45)
 					}
 				}
 			},
@@ -35092,8 +35171,8 @@ function WeaponFactoryTweakData:_init_shak12()
 				a_obj = "a_or",
 				stance_mod = {
 					wpn_fps_ass_shak12 = {
-						translation = Vector3(0, -3, -3.2),
-						rotation = Rotation(0, -0.5, 0)
+						translation = Vector3(-0.25, -3, -13.7),
+						rotation = Rotation(0, 0, -45)
 					}
 				}
 			},
@@ -35128,8 +35207,8 @@ function WeaponFactoryTweakData:_init_shak12()
 				a_obj = "a_or",
 				stance_mod = {
 					wpn_fps_ass_shak12 = {
-						translation = Vector3(0, -3, -3.2),
-						rotation = Rotation(0, -0.5, 0)
+						translation = Vector3(-0.25, -3, -13.7),
+						rotation = Rotation(0, 0, -45)
 					}
 				}
 			},
@@ -36043,6 +36122,33 @@ function WeaponFactoryTweakData:_init_hajk()
 			"wpn_fps_smg_hajk_body_standard",
 			"wpn_fps_smg_hajk_vg_moe"
 		},
+		override = {
+			wpn_fps_upg_fl_ass_smg_sho_peqbox = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_surefire = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_laser = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_peq15 = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_utg = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			}
+		},
 		uses_parts = {
 			"wpn_fps_smg_hajk_b_standard",
 			"wpn_fps_smg_hajk_b_short",
@@ -36820,6 +36926,33 @@ function WeaponFactoryTweakData:_init_schakal()
 			fire_steelsight = "recoil",
 			reload = "reload",
 			magazine_empty = "last_recoil"
+		},
+		override = {
+			wpn_fps_upg_fl_ass_smg_sho_peqbox = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_smg_sho_surefire = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_laser = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_peq15 = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			},
+			wpn_fps_upg_fl_ass_utg = {
+				forbids = {
+					"wpn_fps_addon_ris"
+				}
+			}
 		},
 		default_blueprint = {
 			"wpn_fps_smg_schakal_b_standard",

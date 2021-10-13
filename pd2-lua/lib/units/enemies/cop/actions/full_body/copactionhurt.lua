@@ -1577,10 +1577,12 @@ function CopActionHurt:expired()
 end
 
 function CopActionHurt:chk_block(action_type, t)
-	if CopActionAct.chk_block(self, action_type, t) then
+	if self._hurt_type == "death" then
 		return true
 	elseif action_type == "death" then
-		-- Nothing
+		return false
+	elseif CopActionAct.chk_block(self, action_type, t) then
+		return true
 	elseif (action_type == "hurt" or action_type == "heavy_hurt" or action_type == "hurt_sick" or action_type == "poison_hurt") and not self._ext_anim.hurt_exit then
 		return true
 	elseif action_type == "turn" then

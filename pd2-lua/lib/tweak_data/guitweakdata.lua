@@ -5089,6 +5089,16 @@ function GuiTweakData:init(tweak_data)
 	}
 
 	table.insert(self.new_heists, {
+		name_id = "menu_nh_chca_01",
+		texture_path = "guis/dlcs/chca/textures/pd2/new_heists/chca_01",
+		url = "https://ovk.af/BlackCatSLS"
+	})
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_cctp_01",
+		texture_path = "guis/dlcs/cctp/textures/pd2/new_heists/cctp_01",
+		url = "https://ovk.af/BlackCatSLS2"
+	})
+	table.insert(self.new_heists, {
 		name_id = "menu_nh_tawp",
 		texture_path = "guis/dlcs/tawp/textures/pd2/new_heists/tawp",
 		url = "https://ovk.af/SmugglerPack3SLS"

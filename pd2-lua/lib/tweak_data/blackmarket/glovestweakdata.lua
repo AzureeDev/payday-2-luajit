@@ -138,6 +138,7 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		candycane = "heist_default",
 		general = "heist_default",
 		highinttech = "heist_default",
+		cybertrench = "heist_default",
 		mariachi = "mariatchi",
 		poolrepair = "heist_default",
 		traditional = "heist_default",
@@ -158,7 +159,8 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		cable_guy = "heist_default",
 		jail_pd2_clan = "heist_default",
 		esport = "esport",
-		murky_suit = "murky"
+		murky_suit = "murky",
+		cyberhoodie = "heist_default"
 	}
 	self.gloves.default = {
 		name_id = "bm_gloves_default",
@@ -550,5 +552,41 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		sort_number = 1,
 		unit = "units/pd2_dlc_pda8/characters/glv_jesterstripe/glv_jesterstripe",
 		third_material = "units/pd2_dlc_pda8/characters/glv_jesterstripe/glv_jesterstripe_third"
+	}
+	self.gloves.mnk = {
+		name_id = "bm_gloves_mnk",
+		desc_id = "bm_gloves_mnk_desc",
+		texture_bundle_folder = "cctp",
+		global_value = "cctp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_cctp/characters/glv_mnk/glv_mnk",
+		third_material = "units/pd2_dlc_cctp/characters/glv_mnk/glv_mnk_third"
+	}
+	self.gloves.mnt = {
+		name_id = "bm_gloves_mnt",
+		desc_id = "bm_gloves_mnt_desc",
+		texture_bundle_folder = "cctp",
+		global_value = "cctp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_cctp/characters/glv_mnt/glv_mnt",
+		third_material = "units/pd2_dlc_cctp/characters/glv_mnt/glv_mnt_third"
+	}
+	self.gloves.tgr = {
+		name_id = "bm_gloves_tgr",
+		desc_id = "bm_gloves_tgr_desc",
+		texture_bundle_folder = "cctp",
+		global_value = "cctp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_cctp/characters/glv_tgr/glv_tgr",
+		third_material = "units/pd2_dlc_cctp/characters/glv_tgr/glv_tgr_third"
+	}
+	self.gloves.vpr = {
+		name_id = "bm_gloves_vpr",
+		desc_id = "bm_gloves_vpr_desc",
+		texture_bundle_folder = "cctp",
+		global_value = "cctp",
+		sort_number = 1,
+		unit = "units/pd2_dlc_cctp/characters/glv_vpr/glv_vpr",
+		third_material = "units/pd2_dlc_cctp/characters/glv_vpr/glv_vpr_third"
 	}
 end

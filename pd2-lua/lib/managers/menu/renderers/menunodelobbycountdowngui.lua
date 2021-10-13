@@ -96,7 +96,7 @@ function MenuNodeLobbyCountdownGui:_setup_item_panel(safe_rect, res)
 	local title = self._text_panel:text({
 		halign = "grow",
 		name = "title_text",
-		text = managers.localization:to_upper_text("menu_mutators_lobby_wait_title"),
+		text = managers.localization:to_upper_text("menu_" .. managers.mutators:get_enabled_active_mutator_category() .. "s" .. "_lobby_wait_title"),
 		font = tweak_data.menu.pd2_medium_font,
 		font_size = tweak_data.menu.pd2_medium_font_size,
 		h = tweak_data.menu.pd2_medium_font_size

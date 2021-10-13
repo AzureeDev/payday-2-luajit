@@ -1353,72 +1353,123 @@ function WeaponColorTemplates._setup_color_skin_weapons(tweak_data)
 			}
 		}
 	}
-	weapons.qbu88.pattern_tweak = Vector3(1, 0, 0)
-	weapons.qbu88.parts = {
-		wpn_fps_snp_qbu88_fg_standard = {
-			[Idstring("mtr_upper"):key()] = {
-				pattern_tweak = Vector3(2.87622, 0, 1),
-				pattern_pos = Vector3(-0.251371, -0.0510372, 0)
+	weapons.rsh12.pattern_tweak = Vector3(1, 0, 0)
+	weapons.rsh12.parts = {
+		wpn_fps_pis_rsh12_g_standard = {
+			[Idstring("mtr_grip"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
 			}
 		},
-		wpn_fps_snp_qbu88_body_standard = {
-			[Idstring("mtr_lower"):key()] = {
-				pattern_pos = Vector3(0, -0.0987357, 0),
-				pattern_tweak = Vector3(2.49464, 0, 1)
+		wpn_fps_pis_rsh12_g_wood = {
+			[Idstring("mtr_grip"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
 			}
 		},
-		wpn_fps_snp_qbu88_b_standard = {
-			[Idstring("mtr_flash"):key()] = {
-				pattern_tweak = Vector3(0.777489, 0, 1),
-				pattern_pos = Vector3(0, -0.117815, 0)
+		wpn_fps_pis_rsh12_body_standard = {
+			[Idstring("mtr_body"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			},
+			[Idstring("mtr_mag"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			}
+		},
+		wpn_fps_pis_rsh12_b_short = {
+			[Idstring("mtr_b_short"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			}
+		},
+		wpn_fps_pis_rsh12_b_standard = {
+			[Idstring("mtr_b_std"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			}
+		},
+		wpn_fps_pis_rsh12_b_comp = {
+			[Idstring("mtr_b_std"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			},
+			[Idstring("mtr_comp"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			}
+		}
+	}
+	weapons.type54.pattern_tweak = Vector3(1, 0, 0)
+	weapons.type54.parts = {
+		wpn_fps_pis_type54_body = {
+			[Idstring("mtr_frame"):key()] = {
+				pattern_tweak = Vector3(6.7875, 0, 1)
+			},
+			[Idstring("mtr_grip"):key()] = {
+				pattern_tweak = Vector3(6.7875, 0, 1)
+			}
+		},
+		wpn_fps_pis_type54_body_akimbo = {
+			[Idstring("mtr_frame"):key()] = {
+				pattern_tweak = Vector3(6.7875, 0, 1)
+			},
+			[Idstring("mtr_grip"):key()] = {
+				pattern_tweak = Vector3(6.7875, 0, 1)
+			}
+		},
+		wpn_fps_pis_type54_underbarrel = {
+			[Idstring("mtr_shotty"):key()] = {
+				pattern_tweak = Vector3(6.7875, 0, 1)
+			}
+		},
+		wpn_fps_pis_type54_m_standard = {
+			[Idstring("mtr_m_std"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			}
+		},
+		wpn_fps_pis_type54_m_ext = {
+			[Idstring("mtr_m_ext"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			},
+			[Idstring("mtr_m_std"):key()] = {
+				pattern_tweak = Vector3(6.8829, 0, 1)
+			}
+		},
+		wpn_fps_pis_type54_b_standard = {
+			[Idstring("mtr_b_std"):key()] = {
+				pattern_tweak = Vector3(6.7875, 0, 1)
+			}
+		},
+		wpn_fps_pis_type54_b_long = {
+			[Idstring("mtr_b_long"):key()] = {
+				pattern_tweak = Vector3(6.7875, 0, 1)
 			},
 			[Idstring("mtr_b_std"):key()] = {
-				pattern_tweak = Vector3(2.16075, 0, 1),
-				pattern_pos = Vector3(0, -0.0796563, 0)
+				pattern_tweak = Vector3(6.7875, 0, 1)
 			}
 		},
-		wpn_fps_snp_qbu88_b_long = {
-			[Idstring("mtr_flash"):key()] = {
-				pattern_tweak = Vector3(0.777489, 0, 1),
-				pattern_pos = Vector3(0, -0.117815, 0)
-			},
-			[Idstring("mtr_b_long"):key()] = {
-				pattern_tweak = Vector3(2.16075, 0, 1),
-				pattern_pos = Vector3(0, -0.0796563, 0)
+		wpn_fps_pis_type54_fl_rail = {
+			[Idstring("mtr_rail"):key()] = {
+				pattern_tweak = Vector3(6.8352, 0, 1)
 			}
 		},
-		wpn_fps_snp_qbu88_b_short = {
-			[Idstring("mtr_flash"):key()] = {
-				pattern_tweak = Vector3(0.777489, 0, 1),
-				pattern_pos = Vector3(0, -0.117815, 0)
-			},
-			[Idstring("mtr_b_short"):key()] = {
-				pattern_tweak = Vector3(2.16075, 0, 1),
-				pattern_pos = Vector3(0, -0.0796563, 0)
+		wpn_fps_pis_type54_sl_standard = {
+			[Idstring("mtr_slide"):key()] = {
+				pattern_tweak = Vector3(6.8352, 0, 1)
+			}
+		}
+	}
+	weapons.shak12.pattern_tweak = Vector3(1, 0, 0)
+	weapons.shak12.parts = {
+		wpn_fps_ass_shak12_body_upper = {
+			[Idstring("mtr_upper"):key()] = {
+				pattern_tweak = Vector3(1.685, 0, 1),
+				pattern_pos = Vector3(-0.24, -0.689, 0)
 			}
 		},
-		wpn_fps_snp_qbu88_bolt_standard = {
-			[Idstring("mtr_bolt"):key()] = {
-				pattern_pos = Vector3(-0.556642, -0.528023, 0),
-				pattern_tweak = Vector3(1.87455, 0, 1)
+		wpn_fps_ass_shak12_fg_rail = {
+			[Idstring("mtr_foregrip"):key()] = {
+				pattern_tweak = Vector3(1.25, 0, 1),
+				pattern_pos = Vector3(-0.341, -0.225, 0)
 			}
 		},
-		wpn_fps_snp_qbu88_m_standard = {
-			[Idstring("mtr_mag"):key()] = {
-				pattern_tweak = Vector3(1.06368, 0, 1),
-				pattern_pos = Vector3(-0.00333866, -0.00333866, 0)
-			}
-		},
-		wpn_fps_snp_qbu88_m_extended = {
-			[Idstring("mtr_mag"):key()] = {
-				pattern_tweak = Vector3(1.06368, 0, 1),
-				pattern_pos = Vector3(-0.00333866, -0.00333866, 0)
-			}
-		},
-		wpn_fps_snp_qbu88_o_standard = {
-			[Idstring("mtr_sights"):key()] = {
-				pattern_tweak = Vector3(0.920584, 0, 1),
-				pattern_pos = Vector3(-0.184593, -0.404006, 0)
+		wpn_fps_ass_shak12_body_vks = {
+			[Idstring("mtr_vks"):key()] = {
+				pattern_tweak = Vector3(1.06, 0, 1),
+				pattern_pos = Vector3(0.739, 0.686, 0)
 			}
 		}
 	}

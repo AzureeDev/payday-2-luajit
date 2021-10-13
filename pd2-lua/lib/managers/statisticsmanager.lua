@@ -72,6 +72,7 @@ function StatisticsManager:_setup(reset)
 	}
 	self._defaults.shots_by_weapon = {}
 	self._defaults.used_weapons = {}
+	self._defaults.used_projectiles = {}
 	self._defaults.melee_hit = false
 	self._defaults.sessions = {
 		count = 0,
@@ -1113,8 +1114,6 @@ function StatisticsManager:publish_menu_stats_to_steam(name, value)
 			value = amount
 		}
 	end
-
-	managers.network.account:publish_statistics(stats)
 end
 
 function StatisticsManager:publish_custom_stat_to_steam(name, value)
@@ -1854,6 +1853,21 @@ function StatisticsManager:_used_weapon(weapon_id)
 	self._global.session.used_weapons[weapon_id] = true
 end
 
+function StatisticsManager:used_projectile(projectile_id)
+	if not self._global.session.used_projectiles[projectile_id] then
+		if Network:is_server() then
+			self:_used_projectile(projectile_id)
+			managers.network:session():send_to_peers("sync_used_projectile", projectile_id)
+		else
+			managers.network:session():send_to_host("client_used_projectile", projectile_id)
+		end
+	end
+end
+
+function StatisticsManager:_used_projectile(projectile_id)
+	self._global.session.used_projectiles[projectile_id] = true
+end
+
 function StatisticsManager:downed(data)
 	managers.achievment:set_script_data("stand_together_fail", true)
 
@@ -2384,8 +2398,6 @@ function StatisticsManager:session_anyone_used_weapon_except(weapon_id)
 				return true
 			end
 		end
-
-		return false
 	else
 		for id in pairs(self._global.session.used_weapons) do
 			if id ~= self:create_unified_weapon_name(weapon_id) then
@@ -2393,6 +2405,8 @@ function StatisticsManager:session_anyone_used_weapon_except(weapon_id)
 			end
 		end
 	end
+
+	return false
 end
 
 function StatisticsManager:session_anyone_used_weapon_category(category)
@@ -2409,6 +2423,28 @@ function StatisticsManager:session_anyone_used_weapon_category_except(category)
 			return true
 		end
 	end
+end
+
+function StatisticsManager:session_anyone_used_projectiles()
+	return self._global.session.used_projectiles
+end
+
+function StatisticsManager:session_anyone_used_projectile_except(projectile_id)
+	if type(projectile_id) == "table" then
+		for id in pairs(self._global.session.used_projectiles) do
+			if not table.contains(projectile_id, id) then
+				return true
+			end
+		end
+	else
+		for id in pairs(self._global.session.used_projectiles) do
+			if id ~= projectile_id then
+				return true
+			end
+		end
+	end
+
+	return false
 end
 
 function StatisticsManager:session_enemy_killed_by_type(enemy, type)
@@ -2446,6 +2482,16 @@ function StatisticsManager:session_total_kills_by_anyone()
 end
 
 function StatisticsManager:session_total_shots(weapon_type)
+	if weapon_type == "all" then
+		local total_shots = 0
+
+		for weapon_id, shots in pairs(self._global.session.shots_by_weapon) do
+			total_shots = total_shots + shots.total
+		end
+
+		return total_shots
+	end
+
 	local weapon = weapon_type == "primaries" and managers.blackmarket:equipped_primary() or managers.blackmarket:equipped_secondary()
 	local weapon_data = weapon and self._global.session.shots_by_weapon[weapon.weapon_id]
 

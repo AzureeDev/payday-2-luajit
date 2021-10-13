@@ -501,7 +501,7 @@ function HUDStatsScreen:recreate_right()
 	rb:child("bg"):set_color(Color(0, 0, 0):with_alpha(0.75))
 	rb:child("bg"):set_alpha(1)
 
-	if managers.mutators:are_mutators_active() then
+	if managers.mutators:are_mutators_active() and managers.mutators:get_enabled_active_mutator_category() == "mutator" then
 		self:_create_mutators_list(self._right)
 	else
 		self:_create_tracked_list(self._right)

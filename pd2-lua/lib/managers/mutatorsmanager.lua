@@ -684,6 +684,26 @@ function MutatorsManager:_parse_mutator_strings(...)
 	return mutators_list
 end
 
+function MutatorsManager:get_enabled_active_mutator_category()
+	return "mutator"
+end
+
+function MutatorsManager:get_category_color(category)
+	if category == "mutator" then
+		return tweak_data.screen_colors.mutators_color
+	end
+
+	return tweak_data.screen_colors.mutators_color
+end
+
+function MutatorsManager:get_category_text_color(category)
+	if category == "mutator" then
+		return tweak_data.screen_colors.mutators_color_text
+	end
+
+	return tweak_data.screen_colors.mutators_color_text
+end
+
 function MutatorsManager:show_mutators_launch_countdown(countdown)
 	if Network:is_server() then
 		return

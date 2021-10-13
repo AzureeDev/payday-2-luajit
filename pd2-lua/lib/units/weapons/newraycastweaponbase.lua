@@ -1193,7 +1193,12 @@ function NewRaycastWeaponBase:_set_parts_visible(visible)
 
 			if alive(unit) then
 				is_visible = visible and self:_is_part_visible(part_id)
-				is_visible = is_visible and (self._parts[part_id].steelsight_visible == nil or self._parts[part_id].steelsight_visible == steelsight_swap_state)
+
+				if self:is_second_sight_on() then
+					is_visible = is_visible and not self._parts[part_id].steelsight_visible
+				else
+					is_visible = is_visible and (self._parts[part_id].steelsight_visible == nil or self._parts[part_id].steelsight_visible == steelsight_swap_state)
+				end
 
 				unit:set_visible(is_visible)
 			end
@@ -2140,7 +2145,7 @@ function NewRaycastWeaponBase:underbarrel_toggle()
 	return nil
 end
 
-function RaycastWeaponBase:underbarrel_name_id()
+function NewRaycastWeaponBase:underbarrel_name_id()
 	local underbarrel_part = managers.weapon_factory:get_part_from_weapon_by_type("underbarrel", self._parts)
 
 	if underbarrel_part and alive(underbarrel_part.unit) and underbarrel_part.unit:base() then

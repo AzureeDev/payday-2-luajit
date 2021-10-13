@@ -3653,7 +3653,8 @@ function InteractionTweakData:init(tweak_data)
 		timer = 3,
 		interact_distance = 300,
 		start_active = false,
-		can_interact_only_in_civilian = true
+		can_interact_only_in_civilian = true,
+		persists_on_synced_interaction = true
 	}
 	self.cas_security_door = {
 		text_id = "hud_cas_security_door",
@@ -6965,6 +6966,174 @@ function InteractionTweakData:init(tweak_data)
 	}
 	self.sand_ipad = deep_clone(self.money_wrap_single_chas)
 	self.sand_ipad.interact_distance = 200
+	self.chca_flip_table = {
+		text_id = "hud_int_flip_table",
+		action_text_id = "hud_action_flipping_table",
+		timer = 2,
+		interact_distance = 150,
+		axis = "x"
+	}
+	self.chca_force_open_vent = {
+		text_id = "hud_int_pku_force_open_vent",
+		action_text_id = "hud_action_pkuing_force_open_vent",
+		timer = 1,
+		start_active = true,
+		interact_distance = 150,
+		axis = "x"
+	}
+	self.chca_hold_open_safe = {
+		text_id = "hud_int_open_safe",
+		action_text_id = "hud_action_opening_safe",
+		timer = 5,
+		axis = "y",
+		special_equipment = "keychain",
+		equipment_text_id = "hud_equipment_need_keychain",
+		equipment_consume = true
+	}
+	self.chca_hold_use_handprint = {
+		text_id = "hud_int_use_handprint",
+		action_text_id = "hud_action_using_handprint",
+		timer = 2,
+		axis = "y",
+		special_equipment = "hand",
+		equipment_text_id = "hud_equipment_need_handprint",
+		equipment_consume = true
+	}
+	self.chca_hold_pour_diesel = {
+		text_id = "hud_int_pour_diesel",
+		action_text_id = "hud_action_pkuing_pouring_diesel",
+		timer = 5,
+		interact_distance = 300,
+		special_equipment = "diesel",
+		equipment_text_id = "hud_equipment_need_diesel",
+		sound_start = "liquid_pour",
+		sound_interupt = "liquid_pour_stop",
+		sound_done = "liquid_pour_stop"
+	}
+	self.chca_connect_winch_hook = {
+		text_id = "chca_connect_winch_hook",
+		action_text_id = "chca_action_connecting_winch_hook",
+		equipment_text_id = "hint_no_winch_hook",
+		special_equipment = "cas_winch_hook",
+		interact_distance = 200,
+		timer = 2,
+		equipment_consume = true
+	}
+	self.chca_hold_disable_firewall = {
+		text_id = "hud_int_pku_disable_firewall",
+		action_text_id = "hud_action_pkuing_disable_firewall",
+		timer = 5,
+		start_active = true,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.chca_hold_lower_lifeboat = {
+		text_id = "hud_int_lower_lifeboat",
+		action_text_id = "hud_action_lowering_lifeboat",
+		timer = 5,
+		start_active = true,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.chca_hold_take_business_card = {
+		text_id = "hud_int_take_business_card",
+		start_active = true,
+		interact_distance = 200
+	}
+	self.chca_hold_lower_big_painting = {
+		text_id = "hud_int_lower_painting",
+		action_text_id = "hud_action_lowering_painting",
+		timer = 3,
+		start_active = true,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.chca_hold_open_round_window = {
+		text_id = "hud_int_open_window",
+		action_text_id = "hud_action_opening_window",
+		timer = 3,
+		start_active = true,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.chca_hold_passenger_manifest = {
+		text_id = "hud_int_passenger_manifest",
+		action_text_id = "hud_action_displaying_passenger_manifest",
+		timer = 5,
+		start_active = true,
+		interact_distance = 200,
+		axis = "y"
+	}
+	self.apply_thermite_paste_chca = {
+		text_id = "hud_int_hold_ignite_thermite_paste",
+		action_text_id = "hud_action_ignite_thermite_paste",
+		special_equipment = "thermite_paste",
+		equipment_text_id = "hud_int_need_thermite_paste",
+		equipment_consume = true,
+		timer = 5,
+		interact_distance = 350
+	}
+	self.chca_hold_ink_money = {
+		text_id = "hud_int_ink_money",
+		action_text_id = "hud_action_inking_money",
+		timer = 2,
+		start_active = true,
+		interact_distance = 200,
+		axis = "y",
+		sound_start = "bar_c4_apply",
+		sound_interupt = "bar_c4_apply_cancel",
+		sound_done = "bar_c4_apply_finished"
+	}
+	self.chca_hold_burn_money = {
+		text_id = "chca_int_hold_burn_money",
+		action_text_id = "chca_action_burning_money",
+		timer = 2,
+		start_active = true,
+		interact_distance = 200,
+		axis = "y",
+		special_equipment = "diesel",
+		equipment_text_id = "hud_equipment_need_diesel"
+	}
+	self.chca_start_hacking = {
+		text_id = "hud_int_hold_start_hack",
+		action_text_id = "hud_action_starting_hack",
+		interact_distance = 200,
+		start_active = false,
+		timer = 3,
+		axis = "y"
+	}
+	self.chca_remove_hatch = {
+		text_id = "hud_int_hold_open_hatch",
+		action_text_id = "hud_action_opening_hatch",
+		interact_distance = 200,
+		start_active = false,
+		timer = 3,
+		axis = "y"
+	}
+	self.chca_place_bug = {
+		text_id = "hud_int_hold_place_bug",
+		action_text_id = "hud_action_placeing_bug",
+		interact_distance = 200,
+		start_active = false,
+		timer = 5,
+		axis = "x"
+	}
+	self.chca_keycard = {
+		text_id = "hud_int_equipment_keycard",
+		equipment_text_id = "hud_int_equipment_no_keycard",
+		special_equipment = "bank_manager_key",
+		equipment_consume = true,
+		start_active = true,
+		axis = "z"
+	}
+	self.hold_take_hand = {
+		text_id = "hud_int_hold_take_hand",
+		action_text_id = "hud_action_take_hand",
+		special_equipment_block = "hand",
+		interact_distance = 150,
+		timer = 1,
+		start_active = true
+	}
 	self.pick_up_item = {
 		text_id = "hud_int_pick_up_item",
 		action_text_id = "hud_action_picking_up_item",

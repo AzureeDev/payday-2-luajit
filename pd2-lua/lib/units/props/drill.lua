@@ -1,4 +1,9 @@
 Drill = Drill or class(UnitBase)
+Drill.EVENT_IDS = {
+	melee_restart_success = 3,
+	autorepair = 1,
+	melee_restart_client = 2
+}
 Drill.active_drills = Drill.active_drills or 0
 Drill.jammed_drills = Drill.jammed_drills or 0
 Drill.on_hit_autorepair_chance = 0.5
@@ -74,7 +79,7 @@ function Drill:start()
 			self:_set_attention_state(true)
 			self:_set_alert_state(true)
 
-			if not self.is_hacking_device then
+			if self.is_drill and self._alert_radius then
 				managers.dialog:queue_narrator_dialog("drl_wrn_snd", {})
 			end
 
@@ -263,6 +268,16 @@ function Drill:load(data)
 	local state = data.Drill
 
 	self:set_skill_upgrades(state.skill_upgrades)
+end
+
+function Drill:sync_net_event(event_id, peer)
+	if event_id == Drill.EVENT_IDS.autorepair then
+		self:on_autorepair()
+	elseif event_id == Drill.EVENT_IDS.melee_restart_client then
+		self:on_melee_hit(peer:id())
+	elseif event_id == Drill.EVENT_IDS.melee_restart_success then
+		self:on_melee_hit_success()
+	end
 end
 
 function Drill:set_powered(powered)
@@ -599,7 +614,11 @@ function Drill:set_skill_upgrades(upgrades)
 				self:set_autorepair(true)
 			end
 
-			add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_1"))
+			if current_auto_repair_level_1 > 0 and current_auto_repair_level_2 > 0 then
+				add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_2"))
+			else
+				add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_1"))
+			end
 		else
 			add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_0"))
 		end
@@ -639,9 +658,23 @@ function Drill:clbk_autorepair()
 	self._autorepair_clbk_id = nil
 
 	if alive(self._unit) then
-		self._unit:timer_gui():set_jammed(false)
-		self._unit:interaction():set_active(false, true)
+		self:on_autorepair()
 	end
+end
+
+function Drill:on_autorepair()
+	local unit = self._unit
+	local int_ext = unit:interaction()
+
+	int_ext:remove_interact()
+	unit:damage():run_sequence_simple("interact")
+
+	if Network:is_server() then
+		managers.network:session():send_to_peers_synched("sync_unit_event_id_16", unit, "base", Drill.EVENT_IDS.autorepair)
+	end
+
+	int_ext:set_active(false)
+	int_ext:check_for_upgrade()
 end
 
 function Drill:_set_alert_state(state)
@@ -835,7 +868,17 @@ function Drill:set_attention_state(state)
 	self:_set_attention_state(state)
 end
 
-function Drill:destroy()
+function Drill:destroy(...)
+	Drill.super.destroy(self, ...)
+
+	local nav_tracker = self._nav_tracker
+
+	if nav_tracker then
+		managers.navigation:destroy_nav_tracker(nav_tracker)
+
+		self._nav_tracker = nil
+	end
+
 	if self._alert_clbk_id then
 		managers.enemy:remove_delayed_clbk(self._alert_clbk_id)
 
@@ -874,24 +917,54 @@ function Drill:_reset_melee_autorepair()
 end
 
 function Drill:on_melee_hit(peer_id)
-	if self._disable_upgrades then
+	if self._disable_upgrades or not self._jammed or self:_does_peer_exist(peer_id) then
 		return
 	end
 
-	if not self:_does_peer_exist(peer_id) and self._jammed then
-		table.insert(self._peer_ids, peer_id)
+	local unit = self._unit
+	local session = managers.network:session()
+	local local_peer = session:local_peer()
 
-		local rand = math.random()
+	if local_peer:id() == peer_id then
+		local peer_unit = local_peer and local_peer:unit()
 
-		if rand < Drill.on_hit_autorepair_chance then
-			self._unit:timer_gui():set_jammed(false)
-			self._unit:interaction():set_active(false, true)
-			self._unit:interaction():check_for_upgrade()
-
-			if self._kickstarter_success_sequence then
-				self._unit:damage():run_sequence_simple(self._kickstarter_success_sequence)
-			end
+		if not alive(peer_unit) or not unit:interaction():can_interact(peer_unit) then
+			return
 		end
+	end
+
+	local registered_peers = self._peer_ids
+	registered_peers[#registered_peers + 1] = peer_id
+
+	if Network:is_client() then
+		session:send_to_host("sync_unit_event_id_16", unit, "base", Drill.EVENT_IDS.melee_restart_client)
+
+		return
+	end
+
+	local repair_roll = math.random() < Drill.on_hit_autorepair_chance
+
+	if repair_roll then
+		self:on_melee_hit_success()
+	end
+end
+
+function Drill:on_melee_hit_success()
+	local unit = self._unit
+	local int_ext = unit:interaction()
+
+	int_ext:remove_interact()
+	unit:damage():run_sequence_simple("interact")
+
+	if Network:is_server() then
+		managers.network:session():send_to_peers_synched("sync_unit_event_id_16", unit, "base", Drill.EVENT_IDS.melee_restart_success)
+	end
+
+	int_ext:set_active(false)
+	int_ext:check_for_upgrade()
+
+	if self._kickstarter_success_sequence then
+		unit:damage():run_sequence_simple(self._kickstarter_success_sequence)
 	end
 end
 

@@ -1700,6 +1700,92 @@ function PrePlanningTweakData:init(tweak_data)
 		cost = tweak_data:get_value("money_manager", "preplanning_asset_cost_pex_open_window"),
 		budget_cost = 2
 	}
+	self.types.chca_entry_as_guest = {
+		name_id = "menu_pp_asset_chca_entry_as_guest",
+		desc_id = "menu_pp_asset_chca_entry_as_guest_desc",
+		plan = "entry_plan_generic",
+		pos_not_important = false,
+		category = "entry_plan_generic",
+		icon = 95,
+		total = 1,
+		cost = 0,
+		budget_cost = 0,
+		post_event = "preplan_07",
+		prio = 3
+	}
+	self.types.chca_entry_as_crew = {
+		name_id = "menu_pp_asset_chca_entry_as_crew",
+		desc_id = "menu_pp_asset_chca_entry_as_crew_desc",
+		plan = "entry_plan_generic",
+		pos_not_important = false,
+		category = "entry_plan_generic",
+		icon = 95,
+		total = 1,
+		cost = tweak_data:get_value("money_manager", "preplanning_asset_cost_fex_stealth_entry_with_boat"),
+		budget_cost = 4,
+		post_event = "preplan_07",
+		prio = 3
+	}
+	self.types.chca_entry_helicopter = {
+		name_id = "menu_pp_asset_chca_entry_helicopter",
+		desc_id = "menu_pp_asset_chca_entry_helicopter_desc",
+		plan = "entry_plan_generic",
+		pos_not_important = false,
+		category = "entry_plan_generic",
+		icon = 95,
+		total = 1,
+		cost = tweak_data:get_value("money_manager", "preplanning_asset_cost_fex_stealth_entry_with_boat"),
+		budget_cost = 4,
+		post_event = "preplan_07",
+		prio = 3
+	}
+	self.types.chca_unlocked_doors = {
+		name_id = "menu_pp_asset_chca_unlocked_doors",
+		desc_id = "menu_pp_asset_chca_unlocked_doors_desc",
+		upgrade_lock = {
+			upgrade = "additional_assets",
+			category = "player"
+		},
+		pos_not_important = false,
+		category = "insider_help",
+		icon = 41,
+		total = 1,
+		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_unlocked_door"),
+		budget_cost = 2,
+		post_event = "",
+		prio = 3
+	}
+	self.types.chca_spiked_drink = {
+		name_id = "menu_pp_asset_chca_spiked_drink",
+		desc_id = "menu_pp_asset_chca_spiked_drink_desc",
+		upgrade_lock = {
+			upgrade = "additional_assets",
+			category = "player"
+		},
+		category = "insider_help",
+		icon = 82,
+		total = 1,
+		post_event = "preplan_16",
+		prio = 3,
+		cost = tweak_data:get_value("money_manager", "preplanning_asset_cost_pex_spiked_churro"),
+		budget_cost = 2
+	}
+	self.types.chca_keycard = {
+		name_id = "menu_pp_asset_chca_keycard",
+		desc_id = "menu_pp_asset_chca_keycard_desc",
+		upgrade_lock = {
+			upgrade = "additional_assets",
+			category = "player"
+		},
+		pos_not_important = false,
+		category = "insider_help",
+		icon = 53,
+		total = 1,
+		cost = tweak_data:get_value("money_manager", "preplaning_asset_cost_unlocked_door"),
+		budget_cost = 2,
+		post_event = "",
+		prio = 3
+	}
 end
 
 function PrePlanningTweakData:_create_locations(tweak_data)
@@ -3429,6 +3515,59 @@ function PrePlanningTweakData:_create_locations(tweak_data)
 		post_event_prefix = "loc",
 		total_budget = 10,
 		default_plans = {},
+		start_location = {
+			group = "a",
+			zoom = 1,
+			x = 512,
+			y = 512
+		}
+	}
+	self.locations.chca = {
+		{
+			texture = "guis/dlcs/chca/textures/pd2/pre_planning/chca_01",
+			x2 = 5000,
+			rotation = 0,
+			map_size = 1,
+			map_x = -0.55,
+			x1 = -25000,
+			map_y = 0,
+			name_id = "menu_pp_chca_bpr_loc_a",
+			y2 = 21000,
+			y1 = -9000,
+			custom_points = {}
+		},
+		{
+			texture = "guis/dlcs/chca/textures/pd2/pre_planning/chca_02",
+			x2 = 5000,
+			rotation = 0,
+			map_size = 1,
+			map_x = 0,
+			x1 = -25000,
+			map_y = 0,
+			name_id = "menu_pp_chca_bpr_loc_b",
+			y2 = 21000,
+			y1 = -9000,
+			custom_points = {}
+		},
+		{
+			texture = "guis/dlcs/chca/textures/pd2/pre_planning/chca_03",
+			x2 = 5000,
+			rotation = 0,
+			map_size = 1,
+			map_x = 0.55,
+			x1 = -25000,
+			map_y = 0,
+			name_id = "menu_pp_chca_bpr_loc_c",
+			y2 = 21000,
+			y1 = -9000,
+			custom_points = {}
+		},
+		mission_briefing_texture = "guis/dlcs/chca/textures/pd2/pre_planning/chca_preview",
+		post_event_prefix = "loc",
+		total_budget = 10,
+		default_plans = {
+			entry_plan_generic = "chca_entry_as_guest"
+		},
 		start_location = {
 			group = "a",
 			zoom = 1,

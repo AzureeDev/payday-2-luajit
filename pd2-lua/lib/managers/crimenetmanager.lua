@@ -2812,6 +2812,9 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 	local friend_color = tweak_data.screen_colors.friend_color
 	local regular_color = tweak_data.screen_colors.regular_color
 	local pro_color = tweak_data.screen_colors.pro_color
+	local mutator_category = data.mutators and managers.mutators:get_mutator_from_id(next(data.mutators)):main_category() or "mutator"
+	local mutator_color = managers.mutators:get_category_color(mutator_category)
+	local mutator_text_color = managers.mutators:get_category_text_color(mutator_category)
 	local side_panel = self._pan_panel:panel({
 		alpha = 0,
 		layer = 26
@@ -3117,9 +3120,9 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 	})
 
 	if data.mutators then
-		job_name:set_color(tweak_data.screen_colors.mutators_color_text)
-		contact_name:set_color(tweak_data.screen_colors.mutators_color_text)
-		info_name:set_color(tweak_data.screen_colors.mutators_color_text)
+		job_name:set_color(mutator_text_color)
+		contact_name:set_color(mutator_text_color)
+		info_name:set_color(mutator_text_color)
 	end
 
 	if is_crime_spree or data.is_crime_spree then
@@ -3392,7 +3395,7 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 	end
 
 	if data.mutators then
-		marker_dot:set_color(tweak_data.screen_colors.mutators_color)
+		marker_dot:set_color(mutator_color)
 	end
 
 	if data.is_crime_spree then
@@ -3476,7 +3479,7 @@ function CrimeNetGui:_create_job_gui(data, type, fixed_x, fixed_y, fixed_locatio
 			player_marker:set_position(cx, cy)
 
 			if data.mutators then
-				player_marker:set_color(tweak_data.screen_colors.mutators_color)
+				player_marker:set_color(mutator_color)
 			end
 
 			if data.is_crime_spree then
@@ -3914,13 +3917,15 @@ function CrimeNetGui:update_server_job(data, i)
 
 	local new_color = Color.white
 	local new_text_color = Color.white
+	local mutator = data.mutators and next(data.mutators) or false
+	local mutator_category = mutator and managers.mutators:get_mutator_from_id(mutator):main_category() or "mutator"
 
 	if data.mutators then
-		new_color = tweak_data.screen_colors.mutators_color or new_color
+		new_color = managers.mutators:get_category_color(mutator_category) or new_color
 	end
 
 	if data.mutators then
-		new_text_color = tweak_data.screen_colors.mutators_color_text or new_text_color
+		new_text_color = managers.mutators:get_category_text_color(mutator_category) or new_text_color
 	end
 
 	if data.is_crime_spree then

@@ -894,6 +894,7 @@ CopActionAct._act_redirects = {
 		"cm_so_lifted_body_start",
 		"cm_so_lifted_body_loop",
 		"so_shake_bars",
+		"cm_so_put_in_ear",
 		"e_so_des_walk_enter",
 		"e_so_des_walk_exit",
 		"e_so_des_walk_idle",

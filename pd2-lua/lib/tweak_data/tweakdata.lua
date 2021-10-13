@@ -46,6 +46,7 @@ require("lib/tweak_data/PromotionalMenusTweakData")
 require("lib/tweak_data/PromoUnlocksTweakData")
 require("lib/tweak_data/RaidJobsTweakData")
 require("lib/tweak_data/EventJobsTweakData")
+require("lib/tweak_data/MutatorTweakData")
 require("lib/tweak_data/TweakDataVR")
 require("lib/tweak_data/SkirmishTweakData")
 
@@ -761,6 +762,7 @@ function TweakData:init()
 	self.promo_unlocks = PromoUnlocksTweakData:new(self)
 	self.raid_jobs = RaidJobsTweakData:new(self)
 	self.event_jobs = EventJobsTweakData:new(self)
+	self.mutators = MutatorTweakData:new(self)
 
 	self.blackmarket:build_player_style_list(self)
 	self.blackmarket:build_glove_list(self)
@@ -1476,6 +1478,9 @@ Play the full version soon to get your full PAYDAY!]],
 		},
 		keychain = {
 			unit = Idstring("units/pd2_dlc_chas/pickups/chas_pku_keychain/chas_pku_keychain")
+		},
+		hand = {
+			unit = Idstring("units/pd2_dlc_chca/pickups/chca_pku_hand/chca_pku_hand")
 		}
 	}
 	self.danger_zones = {
@@ -1810,6 +1815,9 @@ Play the full version soon to get your full PAYDAY!]],
 		},
 		{
 			track = "track_73"
+		},
+		{
+			track = "track_74"
 		},
 		{
 			track = "track_pth_01",

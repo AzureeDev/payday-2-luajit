@@ -107,14 +107,16 @@ function ContractBoxGui:init(ws, fullscreen_ws)
 	self:create_contract_box()
 	self:create_mutators_tooltip()
 
+	local mutator_category = managers.mutators:get_enabled_active_mutator_category()
+	local mutator_string_id = "menu_" .. mutator_category .. "s" .. "_lobby_wait_title"
 	self._lobby_mutators_text = self._panel:text({
 		vertical = "top",
 		name = "mutated_text",
 		align = "left",
-		text = managers.localization:to_upper_text("menu_mutators_lobby_wait_title"),
+		text = managers.localization:to_upper_text(mutator_string_id),
 		font_size = tweak_data.menu.pd2_large_font_size * 0.75,
 		font = tweak_data.menu.pd2_large_font,
-		color = tweak_data.screen_colors.mutators_color_text
+		color = managers.mutators:get_category_text_color(mutator_category)
 	})
 	local _, _, w, h = self._lobby_mutators_text:text_rect()
 
@@ -452,9 +454,11 @@ function ContractBoxGui:create_contract_box()
 		self._contract_panel:set_h(payout_text_header:bottom() + 10)
 
 		if managers.mutators:are_mutators_enabled() and managers.mutators:allow_mutators_in_level(job_chain and job_chain[1] and job_chain[1].level_id) then
+			local mutator_category = managers.mutators:get_enabled_active_mutator_category()
+			local mutator_string_id = "cn_menu_contract_" .. mutator_category .. "s" .. "_header"
 			local mutators_text_header = self._contract_panel:text({
 				name = "mutators_text_header",
-				text = managers.localization:to_upper_text("cn_menu_contract_mutators_header"),
+				text = managers.localization:to_upper_text(mutator_string_id),
 				font_size = font_size,
 				font = font,
 				color = tweak_data.screen_colors.text
@@ -471,7 +475,7 @@ function ContractBoxGui:create_contract_box()
 				font = font,
 				font_size = font_size,
 				text = managers.localization:to_upper_text("cn_menu_contract_mutators_active"),
-				color = tweak_data.screen_colors.mutators_color_text
+				color = managers.mutators:get_category_text_color(mutator_category)
 			})
 			local _, _, tw, th = mutators_text:text_rect()
 

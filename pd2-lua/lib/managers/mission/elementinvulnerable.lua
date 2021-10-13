@@ -16,7 +16,6 @@ function ElementInvulnerable:on_executed(instigator)
 end
 
 function ElementInvulnerable:client_on_executed(instigator)
-	self:perform_invulnerable(instigator)
 end
 
 function ElementInvulnerable:perform_invulnerable(instigator)
@@ -60,4 +59,5 @@ end
 function ElementInvulnerable:make_unit_invulnerable(unit)
 	unit:character_damage():set_invulnerable(self._values.invulnerable)
 	unit:character_damage():set_immortal(self._values.immortal)
+	unit:network():send("set_unit_invulnerable", self._values.invulnerable, self._values.immortal)
 end

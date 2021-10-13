@@ -80,6 +80,10 @@ function BaseMutator:icon()
 	}
 end
 
+function BaseMutator:main_category()
+	return "mutator"
+end
+
 function BaseMutator:is_compatible_with(mutator)
 	for i, mutator_id in ipairs(self.incompatiblities) do
 		if mutator:id() == mutator_id then

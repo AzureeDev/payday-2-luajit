@@ -4530,10 +4530,13 @@ function PlayerManager:on_throw_grenade()
 	end
 
 	local peer_id = managers.network:session():local_peer():id()
+	local grenade_id = self:get_synced_grenades(peer_id).grenade
 
-	if table.contains(tweak_data.achievement.fire_in_the_hole.grenade, self:get_synced_grenades(peer_id).grenade) then
+	if table.contains(tweak_data.achievement.fire_in_the_hole.grenade, grenade_id) then
 		managers.achievment:award_progress(tweak_data.achievement.fire_in_the_hole.stat)
 	end
+
+	managers.statistics:used_projectile(grenade_id)
 end
 
 function PlayerManager:set_carry(carry_id, carry_multiplier, dye_initiated, has_dye_pack, dye_value_multiplier)
@@ -5413,7 +5416,7 @@ end
 
 function PlayerManager:attempt_ability(ability)
 	if not self:player_unit() then
-		return
+		return false
 	end
 
 	local local_peer_id = managers.network:session():local_peer():id()
@@ -5422,13 +5425,13 @@ function PlayerManager:attempt_ability(ability)
 	local swan_song_active = managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier")
 
 	if has_no_grenades or is_downed or swan_song_active then
-		return
+		return false
 	end
 
 	local attempt_func = self["_attempt_" .. ability]
 
 	if attempt_func and not attempt_func(self) then
-		return
+		return false
 	end
 
 	local tweak = tweak_data.blackmarket.projectiles[ability]
@@ -5439,6 +5442,8 @@ function PlayerManager:attempt_ability(ability)
 
 	self:add_grenade_amount(-1)
 	self._message_system:notify("ability_activated", nil, ability)
+
+	return true
 end
 
 function PlayerManager:_attempt_chico_injector()

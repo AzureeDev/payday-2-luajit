@@ -110,6 +110,7 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_civilian_mariachi(presets)
 	self:_init_triad(presets)
 	self:_init_escort_sand(presets)
+	self:_init_civilian_no_penalty(presets)
 
 	self._prefix_data = nil
 	self._prefix_data_p1 = nil
@@ -2794,6 +2795,9 @@ end
 
 function CharacterTweakData:_init_phalanx_vip(presets)
 	self.phalanx_vip = deep_clone(self.phalanx_minion)
+
+	table.insert(self.phalanx_vip.tags, "phalanx_vip")
+
 	self.phalanx_vip.LOWER_HEALTH_PERCENTAGE_LIMIT = 1
 	self.phalanx_vip.FINAL_LOWER_HEALTH_PERCENTAGE_LIMIT = 0.2
 	self.phalanx_vip.HEALTH_INIT = 300
@@ -3085,6 +3089,11 @@ end
 
 function CharacterTweakData:_init_civilian_mariachi(presets)
 	self.civilian_mariachi = deep_clone(self.civilian)
+end
+
+function CharacterTweakData:_init_civilian_no_penalty(presets)
+	self.civilian_no_penalty = deep_clone(self.civilian)
+	self.civilian_no_penalty.no_civ_penalty = true
 end
 
 function CharacterTweakData:_init_melee_box(presets)
@@ -17031,6 +17040,24 @@ function CharacterTweakData:character_map()
 				"civ_male_dockworker_01",
 				"civ_male_dockworker_02",
 				"civ_male_dockworker_03"
+			}
+		},
+		chca = {
+			path = "units/pd2_dlc_chca/characters/",
+			list = {
+				"civ_male_boss_1",
+				"civ_male_boss_2",
+				"ene_security_cruise_1",
+				"ene_security_cruise_2",
+				"ene_security_cruise_3",
+				"ene_triad_cruise_1",
+				"ene_triad_cruise_2",
+				"ene_triad_cruise_3",
+				"civ_male_bathhouse_1",
+				"civ_male_bathhouse_2",
+				"civ_male_bathhouse_3",
+				"civ_female_bathhouse_1",
+				"civ_female_bathhouse_2"
 			}
 		}
 	}

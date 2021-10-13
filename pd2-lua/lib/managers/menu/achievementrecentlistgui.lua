@@ -33,6 +33,13 @@ function AchievementRecentListItem:init(parent, item, black_bg)
 	})
 
 	self._visual = tweak_data.achievement.visual[item.id]
+
+	if not self._visual then
+		Application:error("[AchievementRecentListItem] Missing visual for item", item.id)
+
+		self._visual = {}
+	end
+
 	local placer = self:placer()
 	local texture, texture_rect = tweak_data.hud_icons:get_icon_or(self._visual.icon_id, "guis/dlcs/unfinished/textures/placeholder")
 	local bitmap = placer:add_bottom(self:bitmap({

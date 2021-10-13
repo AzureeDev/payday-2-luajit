@@ -2282,6 +2282,15 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 			name_id = "bm_suit_jun21_thug_black",
 			third_material = "units/pd2_dlc_jun21/characters/shared_materials/jun21_acc_thug_black",
 			material = "units/pd2_dlc_jun21/characters/shared_materials/jun21_acc_fps_thug_black"
+		},
+		red = {
+			desc_id = "bm_suit_oct21_thug_red_desc",
+			global_value = "oct21",
+			prio = 2,
+			auto_aquire = true,
+			name_id = "bm_suit_oct21_thug_red",
+			third_material = "units/pd2_dlc_oct21/characters/shared_materials/oct21_acc_thug_red",
+			material = "units/pd2_dlc_oct21/characters/shared_materials/oct21_acc_fps_thug_red"
 		}
 	}
 	local thug_characters_male = {
@@ -2705,6 +2714,144 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		sequence = "set_ehtan"
 	}
 	self.player_styles.baron.characters.ecp_male = baron_characters_male_fat
+	self.player_styles.cyberhoodie = {
+		name_id = "bm_suit_cyberhoodie",
+		desc_id = "bm_suit_cyberhoodie_desc",
+		texture_bundle_folder = "cctp",
+		global_value = "cctp",
+		material_variations = {}
+	}
+	self.player_styles.cyberhoodie.material_variations.default = {
+		name_id = "bm_suit_var_cyberhoodie_default",
+		global_value = "cctp",
+		desc_id = "bm_suit_var_cyberhoodie_default_desc"
+	}
+	self.player_styles.cyberhoodie.material_variations.vpr = {
+		desc_id = "bm_suit_var_cyberhoodie_vpr_desc",
+		global_value = "cctp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_cyberhoodie_vpr",
+		third_material = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/shared_materials/cctp_acc_cyberhoodie_vpr",
+		material = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/shared_materials/cctp_acc_fps_cyberhoodie_vpr"
+	}
+	self.player_styles.cyberhoodie.material_variations.tgr = {
+		desc_id = "bm_suit_var_cyberhoodie_tgr_desc",
+		global_value = "cctp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_cyberhoodie_tgr",
+		third_material = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/shared_materials/cctp_acc_cyberhoodie_tgr",
+		material = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/shared_materials/cctp_acc_fps_cyberhoodie_tgr"
+	}
+	self.player_styles.cyberhoodie.material_variations.mnt = {
+		desc_id = "bm_suit_var_cyberhoodie_mnt_desc",
+		global_value = "cctp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_cyberhoodie_mnt",
+		third_material = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/shared_materials/cctp_acc_cyberhoodie_mnt",
+		material = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/shared_materials/cctp_acc_fps_cyberhoodie_mnt"
+	}
+	self.player_styles.cyberhoodie.body_replacement = body_replacement_standard
+	self.player_styles.cyberhoodie.third_body_replacement = body_replacement_standard
+	self.player_styles.cyberhoodie.unit = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/cctp_acc_fps_cyberhoodie_male/cctp_acc_fps_cyberhoodie_male"
+	self.player_styles.cyberhoodie.characters = {}
+	local cyberhoodie_characters_male = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/cctp_acc_cyberhoodie_male_average/cctp_acc_cyberhoodie_male_average"
+	}
+
+	set_characters_data("cyberhoodie", characters_male, cyberhoodie_characters_male)
+
+	local cyberhoodie_characters_male_big = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/cctp_acc_cyberhoodie_male_big/cctp_acc_cyberhoodie_male_big"
+	}
+
+	set_characters_data("cyberhoodie", characters_male_big, cyberhoodie_characters_male_big)
+
+	local cyberhoodie_characters_female = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/cctp_acc_cyberhoodie_female_average/cctp_acc_cyberhoodie_female_average"
+	}
+
+	set_characters_data("cyberhoodie", characters_female, cyberhoodie_characters_female)
+
+	local cyberhoodie_characters_female_big = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/cctp_acc_cyberhoodie_female_fat/cctp_acc_cyberhoodie_female_fat"
+	}
+
+	set_characters_data("cyberhoodie", characters_female_big, cyberhoodie_characters_female_big)
+
+	local cyberhoodie_characters_male_fat = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cyberhoodie/cctp_acc_cyberhoodie_male_fat/cctp_acc_cyberhoodie_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.cyberhoodie.characters.ecp_male = cyberhoodie_characters_male_fat
+	self.player_styles.cybertrench = {
+		name_id = "bm_suit_cybertrench",
+		desc_id = "bm_suit_cybertrench_desc",
+		texture_bundle_folder = "cctp",
+		global_value = "cctp",
+		material_variations = {}
+	}
+	self.player_styles.cybertrench.material_variations.default = {
+		name_id = "bm_suit_var_cybertrench_default",
+		global_value = "cctp",
+		desc_id = "bm_suit_var_cybertrench_default_desc"
+	}
+	self.player_styles.cybertrench.material_variations.vpr = {
+		desc_id = "bm_suit_var_cybertrench_vpr_desc",
+		global_value = "cctp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_cybertrench_vpr",
+		third_material = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/shared_materials/cctp_acc_cybertrench_vpr",
+		material = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/shared_materials/cctp_acc_fps_cybertrench_vpr"
+	}
+	self.player_styles.cybertrench.material_variations.tgr = {
+		desc_id = "bm_suit_var_cybertrench_tgr_desc",
+		global_value = "cctp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_cybertrench_tgr",
+		third_material = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/shared_materials/cctp_acc_cybertrench_tgr",
+		material = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/shared_materials/cctp_acc_fps_cybertrench_tgr"
+	}
+	self.player_styles.cybertrench.material_variations.mnt = {
+		desc_id = "bm_suit_var_cybertrench_mnt_desc",
+		global_value = "cctp",
+		auto_aquire = true,
+		name_id = "bm_suit_var_cybertrench_mnt",
+		third_material = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/shared_materials/cctp_acc_cybertrench_mnt",
+		material = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/shared_materials/cctp_acc_fps_cybertrench_mnt"
+	}
+	self.player_styles.cybertrench.body_replacement = body_replacement_standard
+	self.player_styles.cybertrench.third_body_replacement = body_replacement_standard
+	self.player_styles.cybertrench.unit = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/cctp_acc_fps_cybertrench_male/cctp_acc_fps_cybertrench_male"
+	self.player_styles.cybertrench.characters = {}
+	local cybertrench_characters_male = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/cctp_acc_cybertrench_male_average/cctp_acc_cybertrench_male_average"
+	}
+
+	set_characters_data("cybertrench", characters_male, cybertrench_characters_male)
+
+	local cybertrench_characters_male_big = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/cctp_acc_cybertrench_male_big/cctp_acc_cybertrench_male_big"
+	}
+
+	set_characters_data("cybertrench", characters_male_big, cybertrench_characters_male_big)
+
+	local cybertrench_characters_female = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/cctp_acc_cybertrench_female_average/cctp_acc_cybertrench_female_average"
+	}
+
+	set_characters_data("cybertrench", characters_female, cybertrench_characters_female)
+
+	local cybertrench_characters_female_big = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/cctp_acc_cybertrench_female_fat/cctp_acc_cybertrench_female_fat"
+	}
+
+	set_characters_data("cybertrench", characters_female_big, cybertrench_characters_female_big)
+
+	local cybertrench_characters_male_fat = {
+		third_unit = "units/pd2_dlc_cctp/characters/cctp_acc_cybertrench/cctp_acc_cybertrench_male_fat/cctp_acc_cybertrench_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.cybertrench.characters.ecp_male = cybertrench_characters_male_fat
 end
 
 function BlackMarketTweakData:get_player_style_value(player_style, character_name, key)

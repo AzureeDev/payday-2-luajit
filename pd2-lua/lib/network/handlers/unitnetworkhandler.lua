@@ -1165,12 +1165,13 @@ function UnitNetworkHandler:hostage_trade(unit, enable, trade_success, skip_hint
 	CopLogicTrade.hostage_trade(unit, enable, trade_success, skip_hint)
 end
 
-function UnitNetworkHandler:set_unit_invulnerable(unit, enable)
+function UnitNetworkHandler:set_unit_invulnerable(unit, invulnerable, immortal)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_character(unit) then
 		return
 	end
 
-	unit:character_damage():set_invulnerable(enable)
+	unit:character_damage():set_invulnerable(invulnerable)
+	unit:character_damage():set_immortal(immortal)
 end
 
 function UnitNetworkHandler:set_trade_countdown(enable)
@@ -1572,6 +1573,10 @@ function UnitNetworkHandler:request_place_ecm_jammer(battery_life_upgrade_lvl, b
 		return
 	end
 
+	if not alive(body) then
+		return
+	end
+
 	local peer = self._verify_sender(rpc)
 	local unit = ECMJammerBase.spawn(Vector3(), Rotation(), battery_life_upgrade_lvl, owner_unit, peer:id())
 
@@ -1596,6 +1601,10 @@ function UnitNetworkHandler:from_server_ecm_jammer_place_result(unit, body, rel_
 		return
 	end
 
+	if not alive(body) then
+		return
+	end
+
 	unit:base():set_owner(managers.player:player_unit())
 	unit:base():link_attachment(body, rel_pos, rel_rot)
 end
@@ -1606,6 +1615,10 @@ function UnitNetworkHandler:sync_deployable_attachment(unit, body, relative_pos,
 	end
 
 	if not alive(unit) then
+		return
+	end
+
+	if not alive(body) then
 		return
 	end
 
@@ -1757,7 +1770,7 @@ function UnitNetworkHandler:from_server_sentry_gun_place_result(owner_peer_id, e
 end
 
 function UnitNetworkHandler:sync_sentrygun_dynamic(unit)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
@@ -1765,7 +1778,7 @@ function UnitNetworkHandler:sync_sentrygun_dynamic(unit)
 end
 
 function UnitNetworkHandler:sentrygun_ammo(unit, ammo_ratio, owner_id)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
@@ -1773,15 +1786,23 @@ function UnitNetworkHandler:sentrygun_ammo(unit, ammo_ratio, owner_id)
 end
 
 function UnitNetworkHandler:sentrygun_sync_armor_piercing(unit, use_armor_piercing)
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+
 	unit:weapon():set_fire_mode_net(use_armor_piercing)
 end
 
 function UnitNetworkHandler:sync_fire_mode_interaction(unit, fire_mode_unit, owner_id)
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+
 	unit:weapon():interaction_setup(fire_mode_unit, owner_id)
 end
 
 function UnitNetworkHandler:sentrygun_health(unit, health_ratio)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
@@ -1789,7 +1810,7 @@ function UnitNetworkHandler:sentrygun_health(unit, health_ratio)
 end
 
 function UnitNetworkHandler:turret_idle_state(unit, state)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
@@ -1797,7 +1818,7 @@ function UnitNetworkHandler:turret_idle_state(unit, state)
 end
 
 function UnitNetworkHandler:turret_update_shield_smoke_level(unit, ratio, up)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
@@ -1805,7 +1826,7 @@ function UnitNetworkHandler:turret_update_shield_smoke_level(unit, ratio, up)
 end
 
 function UnitNetworkHandler:turret_repair(unit)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
@@ -1813,7 +1834,7 @@ function UnitNetworkHandler:turret_repair(unit)
 end
 
 function UnitNetworkHandler:turret_complete_repairing(unit)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
@@ -1821,7 +1842,7 @@ function UnitNetworkHandler:turret_complete_repairing(unit)
 end
 
 function UnitNetworkHandler:turret_repair_shield(unit)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
@@ -1868,6 +1889,14 @@ function UnitNetworkHandler:sync_ammo_bag_setup(unit, upgrade_lvl, peer_id, bull
 	end
 
 	unit:base():sync_setup(upgrade_lvl, peer_id, bullet_storm_level)
+end
+
+function UnitNetworkHandler:sync_a10th_balloon_setup(unit, buff_id)
+	if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+
+	unit:base():set_buff_id(buff_id)
 end
 
 function UnitNetworkHandler:sync_ammo_bag_ammo_taken(unit, amount, sender)

@@ -838,8 +838,10 @@ function UseInteractionExt:sync_interacted(peer, player, status, skip_alive_chec
 		end
 	end
 
-	self:remove_interact()
-	self:set_active(false)
+	if not self._tweak_data.persists_on_synced_interaction then
+		self:remove_interact()
+		self:set_active(false)
+	end
 
 	if self._unit:damage() then
 		self._unit:damage():run_sequence_simple("interact", {
@@ -2446,9 +2448,10 @@ function MissionDoorDeviceInteractionExt:sync_interacted(peer, player, status, s
 		self._unit:damage():run_sequence_simple("interact", {
 			unit = player
 		})
+	else
+		MissionDoorDeviceInteractionExt.super.sync_interacted(self, peer, nil, nil, true)
 	end
 
-	MissionDoorDeviceInteractionExt.super.sync_interacted(self, peer, nil, nil, true)
 	self:check_for_upgrade()
 end
 

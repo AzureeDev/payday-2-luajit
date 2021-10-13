@@ -6471,6 +6471,79 @@ function NarrativeTweakData:init(tweak_data)
 		6,
 		16
 	}
+	self.stages.chca = {
+		type = "d",
+		type_id = "heist_type_assault",
+		level_id = "chca",
+		mission_filter = {
+			1
+		}
+	}
+	self.jobs.chca = {
+		name_id = "heist_chca",
+		briefing_id = "heist_chca_crimenet",
+		contact = "vlad",
+		region = "street",
+		jc = 30,
+		dlc = "chca",
+		chain = {
+			self.stages.chca
+		},
+		briefing_event = "Play_vld_chca_cbf_01",
+		debrief_event = nil,
+		crimenet_callouts = {
+			"Play_vld_chca_cnc_01"
+		},
+		crimenet_videos = {
+			"codex/vlad1"
+		},
+		payout = {
+			50000,
+			125000,
+			250000,
+			550000,
+			700000,
+			700000,
+			700000
+		},
+		contract_cost = {
+			24000,
+			48000,
+			120000,
+			240000,
+			300000,
+			300000,
+			300000
+		},
+		contract_visuals = {}
+	}
+	self.jobs.chca.contract_visuals.min_mission_xp = {
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200,
+		14200
+	}
+	self.jobs.chca.contract_visuals.max_mission_xp = {
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200,
+		23200
+	}
+	self.jobs.chca.contract_visuals.preview_image = {
+		id = "chca",
+		folder = "chca"
+	}
+	self.jobs.chca.date_added = {
+		2021,
+		10,
+		13
+	}
 	self.stages.lbe_lobby_end = {
 		type = "d",
 		type_id = "heist_type_assault",
@@ -7265,7 +7338,8 @@ function NarrativeTweakData:init(tweak_data)
 		"pex",
 		"fex",
 		"chas",
-		"sand"
+		"sand",
+		"chca"
 	}
 	self.forced_jobs = {
 		firestarter = true,

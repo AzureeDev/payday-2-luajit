@@ -829,4 +829,9 @@ function EquipmentsTweakData:init()
 		icon = "equipment_gas_canister",
 		text_id = "hud_equipment_gas_canister"
 	}
+	self.specials.business_card = {
+		sync_possession = true,
+		icon = "equipment_businesscard",
+		text_id = "hud_equipment_business_card"
+	}
 end

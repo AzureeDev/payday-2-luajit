@@ -1105,6 +1105,14 @@ function ConnectionNetworkHandler:sync_used_weapon(weapon_id)
 	managers.statistics:_used_weapon(weapon_id)
 end
 
+function ConnectionNetworkHandler:client_used_projectile(projectile_id)
+	managers.statistics:used_projectile(projectile_id)
+end
+
+function ConnectionNetworkHandler:sync_used_projectile(projectile_id)
+	managers.statistics:_used_projectile(projectile_id)
+end
+
 function ConnectionNetworkHandler:sync_mutators_launch(countdown, sender)
 	managers.mutators:show_mutators_launch_countdown(countdown)
 end

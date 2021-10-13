@@ -754,7 +754,7 @@ function MoneyTweakData:init(tweak_data)
 		self.small_loot.federali_medal = 11000
 	end
 
-	self.max_small_loot_value = 2800000
+	self.max_small_loot_value = 20000000
 	self.skilltree = {
 		respec = {}
 	}

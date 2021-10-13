@@ -1981,11 +1981,14 @@ function EconomyTweakData:_add_content(data, content, tweaks)
 				data[rarity] = entry
 			else
 				local item_data = tweaks[category][entry]
-				local rarity = content.rarity or item_data.rarity or "common"
-				data[rarity] = data[rarity] or {}
-				data[rarity][category] = data[rarity][category] or {}
 
-				table.insert(data[rarity][category], entry)
+				if item_data then
+					local rarity = content.rarity or item_data.rarity or "common"
+					data[rarity] = data[rarity] or {}
+					data[rarity][category] = data[rarity][category] or {}
+
+					table.insert(data[rarity][category], entry)
+				end
 			end
 		end
 	end

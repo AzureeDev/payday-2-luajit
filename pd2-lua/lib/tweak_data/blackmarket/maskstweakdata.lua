@@ -7673,6 +7673,47 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 			}
 		}
 	}
+	self.masks.mnk = {
+		unit = "units/pd2_dlc_cctp/masks/msk_mnk/msk_mnk",
+		name_id = "bm_msk_cctp_mnk",
+		pcs = {},
+		value = 0,
+		type = "helmet",
+		sort_number = 0,
+		preview_oobb_object = "g_mask",
+		global_value = "cctp",
+		texture_bundle_folder = "cctp"
+	}
+	self.masks.mnt = {
+		unit = "units/pd2_dlc_cctp/masks/msk_mnt/msk_mnt",
+		name_id = "bm_msk_cctp_mnt",
+		pcs = {},
+		value = 0,
+		sort_number = 0,
+		preview_oobb_object = "g_mask",
+		global_value = "cctp",
+		texture_bundle_folder = "cctp"
+	}
+	self.masks.tgr = {
+		unit = "units/pd2_dlc_cctp/masks/msk_tgr/msk_tgr",
+		name_id = "bm_msk_cctp_tgr",
+		pcs = {},
+		value = 0,
+		sort_number = 0,
+		preview_oobb_object = "g_mask",
+		global_value = "cctp",
+		texture_bundle_folder = "cctp"
+	}
+	self.masks.vpr = {
+		unit = "units/pd2_dlc_cctp/masks/msk_vpr/msk_vpr",
+		name_id = "bm_msk_cctp_vpr",
+		pcs = {},
+		value = 0,
+		sort_number = 0,
+		preview_oobb_object = "g_mask",
+		global_value = "cctp",
+		texture_bundle_folder = "cctp"
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.masks) do

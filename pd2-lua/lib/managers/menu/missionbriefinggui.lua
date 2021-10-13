@@ -3668,7 +3668,7 @@ function MissionBriefingGui:init(saferect_ws, fullrect_ws, node)
 		index = index + 1
 	end
 
-	if managers.mutators and managers.mutators:are_mutators_active() then
+	if managers.mutators and managers.mutators:are_mutators_active() and managers.mutators:get_enabled_active_mutator_category() == "mutator" then
 		self._mutators_item = MutatorsItem:new(self._panel, utf8.to_upper(managers.localization:text("menu_mutators")), index)
 
 		table.insert(self._items, self._mutators_item)
@@ -3753,14 +3753,15 @@ function MissionBriefingGui:init(saferect_ws, fullrect_ws, node)
 	self._multi_profile_item:set_name_editing_enabled(false)
 
 	local mutators_panel = self._safe_workspace:panel()
+	local mutator_category = managers.mutators:get_enabled_active_mutator_category()
 	self._lobby_mutators_text = mutators_panel:text({
 		vertical = "top",
 		name = "mutated_text",
 		align = "right",
-		text = managers.localization:to_upper_text("menu_mutators_lobby_wait_title"),
+		text = managers.localization:to_upper_text("menu_" .. mutator_category .. "s" .. "_lobby_wait_title"),
 		font_size = tweak_data.menu.pd2_large_font_size * 0.8,
 		font = tweak_data.menu.pd2_large_font,
-		color = tweak_data.screen_colors.mutators_color_text,
+		color = managers.mutators:get_category_text_color(mutator_category),
 		layer = self._ready_button:layer()
 	})
 	local _, _, w, h = self._lobby_mutators_text:text_rect()

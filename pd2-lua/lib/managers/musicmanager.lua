@@ -629,6 +629,7 @@ function MusicManager:jukebox_default_tracks()
 		heist_hox1 = "track_20",
 		heist_brb = "track_59",
 		heist_arm_cro = "all",
+		heist_chca = "track_74",
 		heist_pbr = "all",
 		heist_big = "all",
 		heist_peta2 = "all",

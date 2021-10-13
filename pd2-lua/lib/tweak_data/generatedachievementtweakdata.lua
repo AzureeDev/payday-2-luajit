@@ -7829,6 +7829,156 @@ function init_auto_generated_achievement_data(tags)
 				tags.contracts.jiufeng
 			}
 		},
+		chca_1 = {
+			icon_id = "C_Vlad_H_BlackCat_AllDiffs_D0",
+			ladder = "H_BlackCat",
+			sort_name = "C_Vlad_H_BlackCat_AllDiffs_D0",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.normal,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_10 = {
+			additional_id = true,
+			sort_name = "C_Vlad_H_BlackCat_Master",
+			icon_id = "C_Vlad_H_BlackCat_Master",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.mayhem,
+				tags.tactics.stealth,
+				tags.tactics.killer,
+				tags.contracts.vlad
+			}
+		},
+		chca_11 = {
+			sort_name = "C_Vlad_H_BlackCat_SecretSea",
+			icon_id = "C_Vlad_H_BlackCat_SecretSea",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_12 = {
+			additional_id = true,
+			sort_name = "C_Vlad_H_BlackCat_OneClaw",
+			icon_id = "C_Vlad_H_BlackCat_OneClaw",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.contracts.vlad
+			}
+		},
+		chca_2 = {
+			icon_id = "C_Vlad_H_BlackCat_AllDiffs_D1",
+			ladder = "H_BlackCat",
+			sort_name = "C_Vlad_H_BlackCat_AllDiffs_D1",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_3 = {
+			icon_id = "C_Vlad_H_BlackCat_AllDiffs_D2",
+			ladder = "H_BlackCat",
+			sort_name = "C_Vlad_H_BlackCat_AllDiffs_D2",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.very_hard,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_4 = {
+			icon_id = "C_Vlad_H_BlackCat_AllDiffs_D3",
+			ladder = "H_BlackCat",
+			sort_name = "C_Vlad_H_BlackCat_AllDiffs_D3",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.overkill,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_5 = {
+			icon_id = "C_Vlad_H_BlackCat_AllDiffs_D4",
+			ladder = "H_BlackCat",
+			sort_name = "C_Vlad_H_BlackCat_AllDiffs_D4",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.mayhem,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_6 = {
+			icon_id = "C_Vlad_H_BlackCat_AllDiffs_D5",
+			ladder = "H_BlackCat",
+			sort_name = "C_Vlad_H_BlackCat_AllDiffs_D5",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_wish,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_7 = {
+			icon_id = "C_Vlad_H_BlackCat_AllDiffs_D6",
+			ladder = "H_BlackCat",
+			sort_name = "C_Vlad_H_BlackCat_AllDiffs_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_8 = {
+			icon_id = "C_Vlad_H_BlackCat_AllDiffs_OD_D6",
+			ladder = "H_BlackCat",
+			sort_name = "C_Vlad_H_BlackCat_AllDiffs_OD_D6",
+			additional_id = true,
+			tags = {
+				tags.progress.completion,
+				tags.difficulty.death_sentence,
+				tags.tactics.loud,
+				tags.tactics.stealth,
+				tags.contracts.vlad
+			}
+		},
+		chca_9 = {
+			additional_id = true,
+			sort_name = "C_Vlad_H_BlackCat_Swimming",
+			icon_id = "C_Vlad_H_BlackCat_Swimming",
+			tags = {
+				tags.progress.heisting,
+				tags.difficulty.overkill,
+				tags.tactics.stealth,
+				tags.teamwork.players_1_to_4,
+				tags.contracts.vlad
+			}
+		},
 		ckr_1 = {
 			icon_id = "C_Event_H_CursedKillRoom_AllDiffs_D0",
 			ladder = "H_CursedKill",

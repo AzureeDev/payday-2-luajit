@@ -313,8 +313,6 @@ function RaycastWeaponBase:start_shooting_allowed()
 		return self:gadget_function_override("start_shooting_allowed")
 	end
 
-	print("SimonAllow")
-
 	return self._next_fire_allowed <= self._unit:timer():time()
 end
 
@@ -332,8 +330,6 @@ function RaycastWeaponBase:start_shooting()
 	self._next_fire_allowed = math.max(self._next_fire_allowed, self._unit:timer():time())
 	self._shooting = true
 	self._bullets_fired = 0
-
-	print("SimonStart")
 end
 
 function RaycastWeaponBase:stop_shooting()
@@ -342,8 +338,6 @@ function RaycastWeaponBase:stop_shooting()
 	self._shooting = nil
 	self._kills_without_releasing_trigger = nil
 	self._bullets_fired = nil
-
-	print("SimonStop")
 end
 
 function RaycastWeaponBase:update_next_shooting_time()
@@ -357,8 +351,6 @@ function RaycastWeaponBase:update_next_shooting_time()
 
 	local next_fire = (tweak_data.weapon[self._name_id].fire_mode_data and tweak_data.weapon[self._name_id].fire_mode_data.fire_rate or 0) / self:fire_rate_multiplier()
 	self._next_fire_allowed = self._next_fire_allowed + next_fire
-
-	print("SimonUpdate")
 end
 
 function RaycastWeaponBase:trigger_pressed(...)

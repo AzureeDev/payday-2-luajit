@@ -217,6 +217,7 @@ function StatisticsTweakData:statistics_table()
 		"bolivian_indoors_mex",
 		"security_mex",
 		"civilian_mariachi",
+		"civilian_no_penalty",
 		"security_mex_no_pager",
 		"swat_turret"
 	}

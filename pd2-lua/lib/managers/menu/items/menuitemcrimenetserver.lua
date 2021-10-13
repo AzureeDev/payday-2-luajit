@@ -68,7 +68,7 @@ function MenuItemCrimeNetServer:setup_gui(node, row_item)
 		w = 32,
 		x = 2,
 		layer = 1,
-		color = mutators and tweak_data.screen_colors.mutators_color or color
+		color = mutators and managers.mutators:get_category_color() or color
 	})
 	local cx, cy = nil
 
@@ -82,7 +82,7 @@ function MenuItemCrimeNetServer:setup_gui(node, row_item)
 			blend_mode = "normal",
 			layer = 2,
 			name = tostring(i),
-			color = mutators and tweak_data.screen_colors.mutators_color or color,
+			color = mutators and managers.mutators:get_category_color() or color,
 			visible = i <= num_plrs
 		})
 
@@ -111,7 +111,7 @@ function MenuItemCrimeNetServer:setup_gui(node, row_item)
 		text = job_string,
 		font = tweak_data.menu.pd2_small_font,
 		font_size = tweak_data.menu.pd2_small_font_size,
-		color = mutators and tweak_data.screen_colors.mutators_color_text or color
+		color = mutators and managers.mutators:get_category_text_color() or color
 	})
 	local _, _, w, h = host_name:text_rect()
 

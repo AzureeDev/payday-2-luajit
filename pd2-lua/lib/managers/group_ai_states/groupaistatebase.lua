@@ -440,8 +440,6 @@ function GroupAIStateBase:remove_alert_listener(id)
 end
 
 function GroupAIStateBase:propagate_alert(alert_data)
-	print("CheckAlertReason", inspect(alert_data))
-
 	if managers.network:session() and Network and not Network:is_server() then
 		managers.network:session():send_to_host("propagate_alert", alert_data[1], alert_data[2], alert_data[3], alert_data[4], alert_data[5], alert_data[6])
 
@@ -5368,6 +5366,7 @@ GroupAIStateBase.blame_triggers = {
 	security_mex_no_pager = "cop",
 	taser = "cop",
 	mobster_boss = "gan",
+	civilian_no_penalty = "civ",
 	civilian_mariachi = "civ",
 	triad = "gan"
 }

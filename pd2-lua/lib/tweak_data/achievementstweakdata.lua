@@ -5059,6 +5059,55 @@ function AchievementsTweakData:init(tweak_data)
 			job = "sand",
 			difficulty = sm_wish_and_above
 		},
+		chca_1 = {
+			award = "chca_1",
+			job = "chca",
+			difficulty = normal_and_above
+		},
+		chca_2 = {
+			award = "chca_2",
+			job = "chca",
+			difficulty = hard_and_above
+		},
+		chca_3 = {
+			award = "chca_3",
+			job = "chca",
+			difficulty = veryhard_and_above
+		},
+		chca_4 = {
+			award = "chca_4",
+			job = "chca",
+			difficulty = overkill_and_above
+		},
+		chca_5 = {
+			award = "chca_5",
+			job = "chca",
+			difficulty = easywish_and_above
+		},
+		chca_6 = {
+			award = "chca_6",
+			job = "chca",
+			difficulty = deathwish_and_above
+		},
+		chca_7 = {
+			award = "chca_7",
+			job = "chca",
+			difficulty = sm_wish_and_above
+		},
+		chca_8 = {
+			award = "chca_8",
+			one_down = true,
+			job = "chca",
+			difficulty = sm_wish_and_above
+		},
+		chca_9 = {
+			stealth = true,
+			award = "chca_9",
+			job = "chca",
+			used_projectile = "",
+			shots_by_weapon = "",
+			difficulty = overkill_and_above
+		},
 		uno_1 = {
 			award = "uno_1",
 			bag_loot_value = 400000,
@@ -6300,7 +6349,7 @@ function AchievementsTweakData:init(tweak_data)
 			"moon",
 			"bex",
 			"fex",
-			"sand"
+			"chca"
 		},
 		hector = {
 			"watchdogs_wrapper",
@@ -6387,7 +6436,8 @@ function AchievementsTweakData:init(tweak_data)
 			"fish"
 		},
 		jiufeng = {
-			"chas"
+			"chas",
+			"sand"
 		}
 	}
 	self.persistent_stat_unlocks = {

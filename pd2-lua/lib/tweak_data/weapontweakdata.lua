@@ -20508,7 +20508,7 @@ function WeaponTweakData:_init_rsh12(weapon_data)
 	self.rsh12.DAMAGE = 2
 	self.rsh12.damage_falloff = FALLOFF_TEMPLATE.PISTOL_FALL_SUPER
 	self.rsh12.CLIP_AMMO_MAX = 5
-	self.rsh12.NR_CLIPS_MAX = 3
+	self.rsh12.NR_CLIPS_MAX = 4
 	self.rsh12.AMMO_MAX = self.rsh12.CLIP_AMMO_MAX * self.rsh12.NR_CLIPS_MAX
 	self.rsh12.AMMO_PICKUP = {
 		0.75,
@@ -20574,7 +20574,7 @@ function WeaponTweakData:_init_rsh12(weapon_data)
 		extra_ammo = 51,
 		reload = 11,
 		suppression = 5,
-		concealment = 20
+		concealment = 25
 	}
 	self.rsh12.armor_piercing_chance = 1
 	self.rsh12.stats_modifiers = {

@@ -289,6 +289,7 @@ action_variants.spa_vip_hurt = action_variants.civilian
 action_variants.escort_chinese_prisoner = clone(action_variants.civilian)
 action_variants.escort_chinese_prisoner.walk = EscortWithSuitcaseActionWalk
 action_variants.civilian_mariachi = action_variants.civilian
+action_variants.civilian_no_penalty = action_variants.civilian
 action_variants.boris = action_variants.civilian
 action_variants.escort = action_variants.civilian
 action_variants.escort_suitcase = clone(action_variants.civilian)
@@ -808,15 +809,13 @@ function CopMovement:chk_action_forbidden(action_type)
 end
 
 function CopMovement:can_request_actions()
-	if Network:is_server() then
-		if self._active_actions[1] and self._active_actions[1]:type() == "hurt" and self._active_actions[1]:hurt_type() == "death" then
-			return false
-		else
-			return true
-		end
-	else
-		return true
+	local full_body_action = self._active_actions[1]
+
+	if full_body_action and full_body_action:type() == "hurt" and full_body_action:hurt_type() == "death" then
+		return false
 	end
+
+	return true
 end
 
 function CopMovement:action_request(action_desc)

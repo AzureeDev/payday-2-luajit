@@ -623,6 +623,10 @@ function PlayerDamage:replenish()
 	SoundDevice:set_rtpc("downed_state_progression", 0)
 end
 
+function PlayerDamage:regenerate_armor(no_sound)
+	self:_regenerate_armor(no_sound)
+end
+
 function PlayerDamage:_regenerate_armor(no_sound)
 	if self._unit:sound() and not no_sound then
 		self._unit:sound():play("shield_full_indicator")
