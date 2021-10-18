@@ -2397,9 +2397,17 @@ function CopMovement:sync_action_walk_nav_point(pos, explicit)
 	local walk_action, is_queued = self:_get_latest_walk_action(explicit)
 
 	if is_queued and self._unit:base():has_tag("civilian") then
-		self:_cancel_latest_action("walk")
+		local int_ext = self._unit:interaction()
 
-		walk_action, is_queued = self:_get_latest_walk_action(explicit)
+		if int_ext then
+			local cur_tweak_id = int_ext.tweak_data
+
+			if cur_tweak_id == "hostage_move" or cur_tweak_id == "hostage_stay" then
+				self:_cancel_latest_action("walk")
+
+				walk_action, is_queued = self:_get_latest_walk_action(explicit)
+			end
+		end
 	end
 
 	if is_queued then

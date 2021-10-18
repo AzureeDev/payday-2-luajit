@@ -2313,9 +2313,6 @@ function LevelsTweakData:init()
 		music = "heist",
 		package = "packages/job_sand",
 		cube = "cube_apply_heist_bank",
-		block_AIs = {
-			old_hoxton = true
-		},
 		ai_group_type = america,
 		narrator = "locke",
 		ghost_bonus = 0.15,
@@ -2393,9 +2390,6 @@ function LevelsTweakData:init()
 		music = "heist",
 		package = "packages/job_chca",
 		cube = "cube_apply_heist_bank",
-		block_AIs = {
-			old_hoxton = true
-		},
 		ai_group_type = america,
 		narrator = "locke",
 		ghost_bonus = 0.15,
