@@ -1038,6 +1038,7 @@ function HUDStatsScreen:_create_mutators_list(mutators_panel)
 	end
 
 	local y = 2
+	local mutator_text = "menu_" .. managers.mutators:get_enabled_active_mutator_category() .. "s"
 	local title = mutators_panel:text({
 		name = "title",
 		vertical = "center",
@@ -1045,7 +1046,7 @@ function HUDStatsScreen:_create_mutators_list(mutators_panel)
 		visible = true,
 		x = -2,
 		layer = 2,
-		text = managers.localization:to_upper_text("menu_mutators"),
+		text = managers.localization:to_upper_text(mutator_text),
 		font_size = tweak_data.hud_stats.loot_title_size,
 		font = tweak_data.hud_stats.objectives_font,
 		color = Color.white,

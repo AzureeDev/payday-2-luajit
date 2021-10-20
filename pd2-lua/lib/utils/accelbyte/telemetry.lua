@@ -714,9 +714,6 @@ function Telemetry:send_on_player_heist_start()
 		is_quickplay = Global.telemetry._last_quickplay_room_id == managers.network.matchmake.lobby_handler:id()
 	end
 
-	local mutators = nil
-	local mutator_manager = managers.mutators
-	local mutators = mutator_manager:are_mutators_active() and (Network:is_client() and mutator_manager:active_mutators() or mutator_manager:get_mutators_from_lobby_data() or nil)
 	local telemetry_payload = {
 		MapName = self._map_name,
 		HeistName = self._heist_name,
@@ -729,7 +726,8 @@ function Telemetry:send_on_player_heist_start()
 		Mods = weapon_mods,
 		Loadout = gather_or_convert_loadout_data(),
 		Skills = gather_player_skill_information(),
-		Story = managers.story:is_heist_story_started(managers.job:current_level_id())
+		Story = managers.story:is_heist_story_started(managers.job:current_level_id()),
+		Mutators = managers.mutators:get_mutators_from_lobby_data()
 	}
 
 	self:send("player_heist_start", telemetry_payload)

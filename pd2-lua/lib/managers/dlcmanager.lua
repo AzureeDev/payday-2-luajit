@@ -795,6 +795,10 @@ function GenericDLCManager:has_bbq()
 	return self:is_dlc_unlocked("bbq")
 end
 
+function GenericDLCManager:has_a10mask()
+	return self:is_dlc_unlocked("a10mask")
+end
+
 function GenericDLCManager:has_goty_all_dlc_bundle_2014()
 	return self:has_goty_weapon_bundle_2014() and self:has_goty_heist_bundle_2014() and self:is_dlcs_unlocked({
 		"character_pack_clover"
@@ -2182,6 +2186,10 @@ function WINDLCManager:init()
 					no_install = true,
 					app_id = "55230",
 					external = true
+				},
+				a10mask = {
+					app_id = "1788140",
+					no_install = true
 				}
 			}
 		}

@@ -378,6 +378,7 @@ function MenuSceneManager:_set_up_templates()
 			position = Vector3(160, -250, -40)
 		})
 	}
+	self._scene_templates.standard.show_mm10_event = true
 	self._scene_templates.blackmarket = {
 		fov = 20,
 		use_item_grab = true,
@@ -1153,8 +1154,73 @@ function MenuSceneManager:_setup_bg()
 	self._menu_logo = World:spawn_unit(Idstring("units/menu/menu_scene/menu_logo"), Vector3(0, 10, 0), Rotation(yaw, 0, 0))
 
 	self:set_character(managers.blackmarket:get_preferred_character())
+	self:_setup_mm10_event_units()
 	self:_setup_lobby_characters()
 	self:_setup_henchmen_characters()
+end
+
+function MenuSceneManager:_setup_mm10_event_units()
+	local positions = {
+		Vector3(100, 100, -75),
+		Vector3(100, 175, -75),
+		Vector3(25, 125, -75),
+		Vector3(125, 125, -125),
+		Vector3(75, 200, -125),
+		Vector3(50, 100, -125),
+		Vector3(0, 150, -125),
+		Vector3(-25, 75, -75),
+		Vector3(0, 50, -125),
+		Vector3(-50, 100, -125)
+	}
+	local unit_names = {
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_diamonds"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_diamonds"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_polkal"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_polkal"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_polkas"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_polkas"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_stars"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_stars"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_stripes"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_stripes"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_zigzag"),
+		Idstring("units/pd2_dlc_a10th/props/a10th_gifts/a10th_gifts_zigzag")
+	}
+
+	if self._mm10_event_units then
+		for _, unit in ipairs(self._mm10_event_units) do
+			unit:set_slot(0)
+		end
+	end
+
+	self._mm10_event_units = {}
+	local rotation, unit_index = nil
+
+	for i, position in ipairs(positions) do
+		rotation = Rotation((math.random(2) - 1) * 25, 0, 0)
+		unit_index = math.random(#unit_names)
+		self._mm10_event_units[i] = World:spawn_unit(unit_names[unit_index], position, rotation)
+
+		table.remove(unit_names, unit_index)
+	end
+
+	local e_money = self._bg_unit:effect_spawner(Idstring("e_money"))
+
+	if e_money then
+		e_money:set_enabled(false)
+	end
+
+	if self._confetti_effect then
+		World:effect_manager():kill(self._confetti_effect)
+
+		self._confetti_effect = nil
+	end
+
+	self._confetti_effect = World:effect_manager():spawn({
+		effect = Idstring("effects/payday2/environment/confetti_menu"),
+		position = Vector3(0, 0, 0),
+		rotation = Rotation()
+	})
 end
 
 function MenuSceneManager:_set_player_character_unit(unit_name)
@@ -2828,6 +2894,10 @@ function MenuSceneManager:set_scene_template(template, data, custom_name, skip_t
 
 		if alive(self._menu_logo) then
 			self._menu_logo:set_visible(not template_data.hide_menu_logo)
+		end
+
+		for _, balloon_unit in ipairs(self._mm10_event_units or {}) do
+			balloon_unit:set_visible(template_data.show_mm10_event)
 		end
 	end
 

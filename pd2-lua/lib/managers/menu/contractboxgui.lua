@@ -562,7 +562,9 @@ function ContractBoxGui:create_mutators_tooltip()
 		self._mutators_data = nil
 	end
 
-	if not managers.network:session() or not managers.mutators:are_mutators_enabled() then
+	local mutator_lobby_data = managers.mutators:get_mutators_from_lobby_data()
+
+	if not managers.network:session() or not managers.mutators:are_mutators_enabled() or not mutator_lobby_data then
 		return
 	end
 
@@ -583,7 +585,7 @@ function ContractBoxGui:create_mutators_tooltip()
 	})
 	local _y = mutators_title:bottom() + 5
 	local mutators_list = {}
-	self._mutators_data = deep_clone(managers.mutators:get_mutators_from_lobby_data())
+	self._mutators_data = deep_clone(mutator_lobby_data or {})
 
 	for mutator_id, mutator_data in pairs(self._mutators_data) do
 		local mutator = managers.mutators:get_mutator_from_id(mutator_id)
@@ -643,7 +645,7 @@ function ContractBoxGui:check_update_mutators_tooltip()
 	else
 		local lobby_data = managers.mutators:get_mutators_from_lobby_data()
 
-		if self._mutators_data then
+		if self._mutators_data and lobby_data then
 			refresh_contract = self._contract_panel:child("mutators_text") == nil
 
 			for mutator_id, mutator_data in pairs(lobby_data) do

@@ -1436,9 +1436,7 @@ function WeaponFactoryTweakData:_init_sights()
 			wpn_fps_pis_beretta = {
 				translation = Vector3(0, 0, -0.25),
 				rotation = Rotation(0, -0.1, 0)
-			}
-		},
-		stance_mod = {
+			},
 			wpn_fps_sho_m590 = {
 				translation = Vector3(-0.15, 0, -1.8),
 				rotation = Rotation(0, -0.1, 0)

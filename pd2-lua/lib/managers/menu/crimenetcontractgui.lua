@@ -776,7 +776,8 @@ function CrimeNetContractGui:init(ws, fullscreen_ws, node)
 	if job_data.mutators then
 		managers.mutators:set_crimenet_lobby_data(job_data.mutators)
 
-		local mutators_panel = add_tab("menu_cn_mutators_active")
+		local mutator_tab_name = "menu_cn_" .. managers.mutators:get_enabled_active_mutator_category() .. "s" .. "_active"
+		local mutators_panel = add_tab(mutator_tab_name)
 		self._mutators_scroll = ScrollablePanel:new(mutators_panel, "mutators_scroll", {
 			padding = 0
 		})

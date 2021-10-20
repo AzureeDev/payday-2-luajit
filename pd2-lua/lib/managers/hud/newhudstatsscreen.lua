@@ -501,7 +501,7 @@ function HUDStatsScreen:recreate_right()
 	rb:child("bg"):set_color(Color(0, 0, 0):with_alpha(0.75))
 	rb:child("bg"):set_alpha(1)
 
-	if managers.mutators:are_mutators_active() and managers.mutators:get_enabled_active_mutator_category() == "mutator" then
+	if managers.mutators:are_mutators_active() then
 		self:_create_mutators_list(self._right)
 	else
 		self:_create_tracked_list(self._right)
@@ -559,9 +559,10 @@ end
 
 function HUDStatsScreen:_create_mutators_list(panel)
 	local placer = UiPlacer:new(10, 10)
+	local mutator_text = "menu_" .. managers.mutators:get_enabled_active_mutator_category() .. "s"
 
 	placer:add_bottom(self._right:fine_text({
-		text = managers.localization:to_upper_text("menu_mutators"),
+		text = managers.localization:to_upper_text(mutator_text),
 		font = large_font,
 		font_size = tweak_data.hud_stats.objectives_title_size
 	}))

@@ -7517,6 +7517,15 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "pda8",
 		texture_bundle_folder = "pda8"
 	}
+	self.masks.jesterskulls = {
+		unit = "units/pd2_dlc_a10th/masks/msk_jesterskulls/msk_jesterskulls",
+		name_id = "bm_msk_jesterskulls",
+		pcs = {},
+		value = 0,
+		global_value = "a10th",
+		texture_bundle_folder = "a10th",
+		hide_unavailable = true
+	}
 	self.masks.boss = {
 		unit = "units/pd2_dlc_srtr/masks/msk_boss/msk_boss",
 		name_id = "bm_msk_boss",

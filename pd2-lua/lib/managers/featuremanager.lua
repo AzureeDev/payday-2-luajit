@@ -25,6 +25,7 @@ function FeatureManager:_setup()
 	self._default.announcements.safehouse_dailies = 1
 	self._default.announcements.tango_weapon_unlocked = 1
 	self._default.announcements.movie_theater_unlocked = 1
+	self._default.announcements.a10th_event_explanation = 1
 
 	if not Global.feature_manager then
 		Global.feature_manager = {
@@ -42,6 +43,7 @@ function FeatureManager:_setup()
 		Global.feature_manager.announcements.short_heist = 1
 		Global.feature_manager.announcements.short_heists_available = 1
 		Global.feature_manager.announcements.new_career = 1
+		Global.feature_manager.announcements.a10th_event_explanation = 1
 		Global.feature_manager.announced = {}
 	end
 
@@ -360,6 +362,12 @@ end
 
 function FeatureManager:movie_theater_unlocked()
 	managers.menu:show_movie_theater_unlocked_dialog()
+
+	return true
+end
+
+function FeatureManager:a10th_event_explanation()
+	managers.menu:show_a10th_event_dialog()
 
 	return true
 end

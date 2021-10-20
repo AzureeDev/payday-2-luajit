@@ -151,6 +151,7 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		baron = "jesterstripe",
 		thug = "heist_default",
 		badsanta = "heist_default",
+		clown_2 = "heist_default",
 		gangstercoat = "heist_default",
 		leather = "heist_default",
 		punk = "punk",

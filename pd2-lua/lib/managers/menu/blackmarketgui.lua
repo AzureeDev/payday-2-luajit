@@ -15805,7 +15805,9 @@ function BlackMarketGui:choose_mask_buy_callback(data)
 		if mask.pc or mask.pcs then
 			local global_values = {}
 
-			if mask.dlc or mask.dlcs then
+			if mask.hide_unavailable and managers.blackmarket:get_crafted_item_amount("masks", mask_id) == 0 then
+				-- Nothing
+			elseif mask.dlc or mask.dlcs then
 				local dlcs = {}
 
 				if mask.dlc then

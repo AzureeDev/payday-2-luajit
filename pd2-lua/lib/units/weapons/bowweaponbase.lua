@@ -51,7 +51,7 @@ function BowWeaponBase:trigger_released(...)
 end
 
 function BowWeaponBase:add_damage_result(unit, is_dead, attacker, damage_percent)
-	if not alive(attacker) or attacker ~= managers.player:player_unit() then
+	if type_name(attacker) ~= "Unit" or not alive(attacker) or attacker ~= managers.player:player_unit() then
 		return
 	end
 
@@ -200,7 +200,7 @@ function CrossbowWeaponBase:charge_fail()
 end
 
 function CrossbowWeaponBase:add_damage_result(unit, is_dead, attacker, damage_percent)
-	if not alive(attacker) or attacker ~= managers.player:player_unit() then
+	if type_name(attacker) ~= "Unit" or not alive(attacker) or attacker ~= managers.player:player_unit() then
 		return
 	end
 

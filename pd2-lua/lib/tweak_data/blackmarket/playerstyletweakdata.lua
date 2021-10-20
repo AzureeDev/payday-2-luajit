@@ -2852,6 +2852,75 @@ function BlackMarketTweakData:_init_player_styles(tweak_data)
 		sequence = "set_ehtan"
 	}
 	self.player_styles.cybertrench.characters.ecp_male = cybertrench_characters_male_fat
+	self.player_styles.clown_2 = {
+		name_id = "bm_suit_clown_2",
+		desc_id = "bm_suit_clown_desc_2",
+		texture_bundle_folder = "a10th",
+		global_value = "a10th",
+		material_variations = {}
+	}
+	self.player_styles.clown_2.material_variations.default = {
+		name_id = "bm_suit_var_clown_2_default",
+		global_value = "a10th",
+		desc_id = "bm_suit_var_clown_2_default_desc"
+	}
+	self.player_styles.clown_2.material_variations.orange = {
+		desc_id = "bm_suit_var_clown_2_orange_desc",
+		global_value = "a10th",
+		auto_aquire = true,
+		name_id = "bm_suit_var_clown_2_orange",
+		third_material = "units/pd2_dlc_a10th/characters/a10th_acc_clown/shared_materials/a10th_acc_clown_orange",
+		material = "units/pd2_dlc_a10th/characters/a10th_acc_clown/shared_materials/a10th_acc_fps_clown_orange"
+	}
+	self.player_styles.clown_2.material_variations.white = {
+		desc_id = "bm_suit_var_clown_2_white_desc",
+		global_value = "a10th",
+		auto_aquire = true,
+		name_id = "bm_suit_var_clown_2_white",
+		third_material = "units/pd2_dlc_a10th/characters/a10th_acc_clown/shared_materials/a10th_acc_clown_white",
+		material = "units/pd2_dlc_a10th/characters/a10th_acc_clown/shared_materials/a10th_acc_fps_clown_white"
+	}
+	self.player_styles.clown_2.material_variations.yellow = {
+		desc_id = "bm_suit_var_clown_2_yellow_desc",
+		global_value = "a10th",
+		auto_aquire = true,
+		name_id = "bm_suit_var_clown_2_yellow",
+		third_material = "units/pd2_dlc_a10th/characters/a10th_acc_clown/shared_materials/a10th_acc_clown_yellow",
+		material = "units/pd2_dlc_a10th/characters/a10th_acc_clown/shared_materials/a10th_acc_fps_clown_yellow"
+	}
+	self.player_styles.clown_2.body_replacement = body_replacement_standard
+	self.player_styles.clown_2.third_body_replacement = body_replacement_standard
+	self.player_styles.clown_2.unit = "units/pd2_dlc_a10th/characters/a10th_acc_clown/a10th_acc_fps_clown_male/a10th_acc_fps_clown_male"
+	self.player_styles.clown_2.characters = {}
+	local clown_2_characters_male = {
+		third_unit = "units/pd2_dlc_a10th/characters/a10th_acc_clown/a10th_acc_clown_male_average/a10th_acc_clown_male_average"
+	}
+
+	set_characters_data("clown_2", characters_male, clown_2_characters_male)
+
+	local clown_2_characters_male_big = {
+		third_unit = "units/pd2_dlc_a10th/characters/a10th_acc_clown/a10th_acc_clown_male_big/a10th_acc_clown_male_big"
+	}
+
+	set_characters_data("clown_2", characters_male_big, clown_2_characters_male_big)
+
+	local clown_2_characters_female = {
+		third_unit = "units/pd2_dlc_a10th/characters/a10th_acc_clown/a10th_acc_clown_female_average/a10th_acc_clown_female_average"
+	}
+
+	set_characters_data("clown_2", characters_female, clown_2_characters_female)
+
+	local clown_2_characters_female_big = {
+		third_unit = "units/pd2_dlc_a10th/characters/a10th_acc_clown/a10th_acc_clown_female_fat/a10th_acc_clown_female_fat"
+	}
+
+	set_characters_data("clown_2", characters_female_big, clown_2_characters_female_big)
+
+	local clown_2_characters_male_fat = {
+		third_unit = "units/pd2_dlc_a10th/characters/a10th_acc_clown/a10th_acc_clown_male_fat/a10th_acc_clown_male_fat",
+		sequence = "set_ehtan"
+	}
+	self.player_styles.clown_2.characters.ecp_male = clown_2_characters_male_fat
 end
 
 function BlackMarketTweakData:get_player_style_value(player_style, character_name, key)

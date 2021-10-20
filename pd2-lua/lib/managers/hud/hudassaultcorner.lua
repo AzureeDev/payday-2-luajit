@@ -31,7 +31,7 @@ function HUDAssaultCorner:init(hud, full_hud, tweak_hud)
 	if managers.mutators:are_mutators_active() then
 		local mutator_color = managers.mutators:get_category_color(managers.mutators:get_enabled_active_mutator_category())
 		self._assault_color = mutator_color
-		self._vip_assault_color = Color(mutator_color.a, mutator_color.r, mutator_color.b, mutator_color.g)
+		self._vip_assault_color = Color(mutator_color.a, mutator_color.b, mutator_color.g, mutator_color.r)
 	end
 
 	if managers.skirmish:is_skirmish() then

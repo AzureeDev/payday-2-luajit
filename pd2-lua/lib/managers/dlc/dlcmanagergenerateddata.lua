@@ -1,3 +1,7 @@
+function GenericDLCManager:has_a10th()
+	return self:is_dlc_unlocked("a10th")
+end
+
 function GenericDLCManager:has_afp()
 	return self:is_dlc_unlocked("afp")
 end
@@ -247,6 +251,10 @@ function GenericDLCManager:has_xmn()
 end
 
 function WINDLCManager:init_generated()
+	Global.dlc_manager.all_dlc_data.a10th = {
+		app_id = "218620",
+		no_install = true
+	}
 	Global.dlc_manager.all_dlc_data.afp = {
 		app_id = "1255151",
 		no_install = true,
