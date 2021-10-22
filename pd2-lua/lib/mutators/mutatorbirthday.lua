@@ -6,7 +6,7 @@ MutatorBirthday.reductions = {
 	money = 0,
 	exp = 0
 }
-MutatorBirthday.disables_achievements = false
+MutatorBirthday.disables_achievements = true
 MutatorBirthday.categories = {
 	"event"
 }

@@ -3717,7 +3717,7 @@ end
 function MenuCallbackHandler:start_the_game()
 	local mutators_manager = managers.mutators
 
-	if mutators_manager and mutators_manager:should_delay_game_start() then
+	if mutators_manager and mutators_manager:should_delay_game_start() and mutators_manager:get_enabled_active_mutator_category() == "mutator" then
 		if not mutators_manager:_check_all_peers_are_ready() then
 			mutators_manager:use_start_the_game_initial_delay()
 		end

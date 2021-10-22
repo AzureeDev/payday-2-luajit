@@ -24,6 +24,7 @@ function PlayerDamage:init(unit)
 
 	local player_manager = managers.player
 	self._bleed_out_health = Application:digest_value(tweak_data.player.damage.BLEED_OUT_HEALTH_INIT * player_manager:upgrade_value("player", "bleed_out_health_multiplier", 1), true)
+	Global.god_mode = false
 	self._god_mode = Global.god_mode
 	self._invulnerable = false
 	self._mission_damage_blockers = {}
@@ -1481,8 +1482,9 @@ function PlayerDamage:damage_fall(data)
 			type = "hurt"
 		}
 	}
+	local is_free_falling = self._unit:movement():current_state_name() == "jerry1"
 
-	if self._god_mode or self._invulnerable or self._mission_damage_blockers.invulnerable then
+	if self._god_mode and not is_free_falling or self._invulnerable or self._mission_damage_blockers.invulnerable then
 		self:_call_listeners(damage_info)
 
 		return
@@ -1507,7 +1509,7 @@ function PlayerDamage:damage_fall(data)
 	managers.environment_controller:hit_feedback_down()
 	managers.hud:on_hit_direction(Vector3(0, 0, 0), die and HUDHitDirection.DAMAGE_TYPES.HEALTH or HUDHitDirection.DAMAGE_TYPES.ARMOUR, 0)
 
-	if self._bleed_out and self._unit:movement():current_state_name() ~= "jerry1" then
+	if self._bleed_out and not is_free_falling then
 		return
 	end
 
@@ -1518,7 +1520,7 @@ function PlayerDamage:damage_fall(data)
 
 		self:set_health(0)
 
-		if self._unit:movement():current_state_name() == "jerry1" then
+		if is_free_falling then
 			self._revives = Application:digest_value(1, true)
 		end
 	else
