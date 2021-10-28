@@ -706,6 +706,7 @@ function GuiTweakData:init(tweak_data)
 	self.MAX_WEAPON_SLOTS = self.MAX_WEAPON_PAGES * self.WEAPON_ROWS_PER_PAGE * self.WEAPON_COLUMNS_PER_PAGE
 	self.fbi_files_webpage = "https://fbi.paydaythegame.com/"
 	self.crimefest_challenges_webpage = "http://www.overkillsoftware.com/games/roadtocrimefest/"
+	self.sbz_account_webpage = "https://www.paydaythegame.com/account/register/"
 	self.crime_net = {
 		controller = {}
 	}
@@ -1921,13 +1922,6 @@ function GuiTweakData:init(tweak_data)
 			id = "skirmish",
 			icon = "sidebar_skirmish",
 			item_class = "CrimeNetSidebarSkirmishItem"
-		},
-		{
-			name_id = "menu_event_a10th_info",
-			callback = "clbk_a10th_event",
-			id = "event",
-			icon = "sidebar_mutators",
-			item_class = "CrimeNetSidebarEventsItem"
 		}
 	}
 	self.crime_net.codex = {
@@ -5095,6 +5089,11 @@ function GuiTweakData:init(tweak_data)
 		limit = 5
 	}
 
+	table.insert(self.new_heists, {
+		name_id = "menu_nh_trik_01",
+		texture_path = "guis/dlcs/trik/textures/pd2/new_heists/trik_01",
+		url = "https://ovk.af/PD2HW21SLW"
+	})
 	table.insert(self.new_heists, {
 		name_id = "menu_nh_a10th_01",
 		texture_path = "guis/dlcs/a10th/textures/pd2/new_heists/a10th_01",

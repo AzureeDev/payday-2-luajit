@@ -3065,21 +3065,6 @@ function MenuManager:show_movie_theater_unlocked_dialog()
 	managers.system_menu:show(dialog_data)
 end
 
-function MenuManager:show_a10th_event_dialog()
-	local dialog_data = {
-		title = managers.localization:text("dialog_a10th_event_title"),
-		text = managers.localization:text("dialog_a10th_event_text")
-	}
-	local ok_button = {
-		text = managers.localization:text("dialog_ok")
-	}
-	dialog_data.button_list = {
-		ok_button
-	}
-
-	managers.system_menu:show(dialog_data)
-end
-
 function MenuManager:show_accept_telemetry(params)
 	local dialog_data = {
 		title = managers.localization:text("dialog_telemetry_title"),

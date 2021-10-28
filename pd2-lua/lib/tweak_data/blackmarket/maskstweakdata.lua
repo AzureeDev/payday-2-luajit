@@ -7723,6 +7723,39 @@ function BlackMarketTweakData:_init_masks(tweak_data)
 		global_value = "cctp",
 		texture_bundle_folder = "cctp"
 	}
+	self.masks.tophatske = {
+		unit = "units/pd2_dlc_trik/masks/msk_tophatske/msk_tophatske",
+		name_id = "bm_msk_trik_tophatske",
+		pcs = {},
+		value = 0,
+		type = "helmet",
+		sort_number = 0,
+		preview_oobb_object = "g_mask",
+		global_value = "trik",
+		texture_bundle_folder = "trik"
+	}
+	self.masks.tophatskered = {
+		unit = "units/pd2_dlc_trik/masks/msk_tophatskered/msk_tophatskered",
+		name_id = "bm_msk_trik_tophatskered",
+		pcs = {},
+		value = 0,
+		type = "helmet",
+		sort_number = 0,
+		preview_oobb_object = "g_mask",
+		global_value = "trik",
+		texture_bundle_folder = "trik"
+	}
+	self.masks.tophatskeblue = {
+		unit = "units/pd2_dlc_trik/masks/msk_tophatskeblue/msk_tophatskeblue",
+		name_id = "bm_msk_trik_tophatskeblue",
+		pcs = {},
+		value = 0,
+		type = "helmet",
+		sort_number = 0,
+		preview_oobb_object = "g_mask",
+		global_value = "trik",
+		texture_bundle_folder = "trik"
+	}
 	local free_dlcs = tweak_data:free_dlc_list()
 
 	for _, data in pairs(self.masks) do

@@ -128,6 +128,10 @@ function NewNPCRaycastWeaponBase:setup(setup_data)
 	self._hit_player = setup_data.hit_player and true or false
 	self._setup = setup_data
 	self._part_stats = managers.weapon_factory:get_stats(self._factory_id, self._blueprint)
+
+	if self._assembly_complete then
+		self:_chk_has_charms(self._parts, setup_data)
+	end
 end
 
 function NewNPCRaycastWeaponBase:assemble(factory_id)
@@ -396,8 +400,7 @@ function NewNPCRaycastWeaponBase:_spawn_muzzle_effect(from_pos, direction)
 end
 
 function NewNPCRaycastWeaponBase:destroy(unit)
-	RaycastWeaponBase.super.pre_destroy(self, unit)
-	managers.weapon_factory:disassemble(self._parts)
+	NewNPCRaycastWeaponBase.super.destroy(self, unit)
 
 	if self._shooting then
 		self:stop_autofire()

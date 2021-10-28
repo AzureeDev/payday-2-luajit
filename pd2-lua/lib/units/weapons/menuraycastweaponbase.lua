@@ -12,6 +12,71 @@ function NewRaycastWeaponBase:init(unit)
 	self._materials = nil
 end
 
+function NewRaycastWeaponBase:_chk_has_charms(parts)
+	if self._charm_data then
+		print("[MenuRaycastWeaponBase:_chk_has_charms] wiping existing charm data")
+		Application:stack_dump()
+		managers.charm:remove_weapon(self._unit)
+	end
+
+	managers.charm:add_weapon(self._unit, parts, nil, true, self._custom_units)
+end
+
+function NewRaycastWeaponBase:charm_data()
+	return self._charm_data
+end
+
+function NewRaycastWeaponBase:set_charm_data(data, upd_state)
+	self._charm_data = data
+	self._charm_upd_state = upd_state
+end
+
+function NewRaycastWeaponBase:_chk_charm_upd_state()
+	local data = self._charm_data
+
+	if not data then
+		print("[MenuRaycastWeaponBase:_chk_charm_upd_state] No charm data")
+
+		return
+	end
+
+	local state = true
+	local to_remove = {}
+
+	for u_key, c_data in pairs(data) do
+		local charm_unit = c_data.unit
+
+		if not alive(charm_unit) then
+			to_remove[u_key] = true
+		end
+	end
+
+	if next(to_remove) then
+		for u_key, _ in pairs(to_remove) do
+			data[u_key] = nil
+		end
+
+		if not next(data) then
+			print("[MenuRaycastWeaponBase:_chk_charm_upd_state] All charm units are dead, wiping charm data. Possibly due to part swapping")
+			managers.charm:remove_weapon(self._unit)
+
+			return
+		end
+	end
+
+	if state then
+		if not self._charm_upd_state then
+			self._charm_upd_state = true
+
+			managers.charm:enable_charm_upd(self._unit)
+		end
+	elseif self._charm_upd_state then
+		self._charm_upd_state = false
+
+		managers.charm:disable_charm_upd(self._unit)
+	end
+end
+
 function NewRaycastWeaponBase:_check_thq_align_anim()
 	if not self:is_npc() then
 		return
@@ -120,6 +185,7 @@ function NewRaycastWeaponBase:_assemble_completed(clbk, parts, blueprint)
 	self:_update_fire_object()
 	self:_update_stats_values()
 	self:set_scope_enabled(true)
+	self:_chk_has_charms(parts)
 end
 
 function NewRaycastWeaponBase:_cosmetics_applied(clbk)
@@ -238,6 +304,7 @@ function NewRaycastWeaponBase:change_part(part_id)
 
 	self:_update_fire_object()
 	self:_update_stats_values()
+	self:_chk_has_charms(self._parts)
 end
 
 function NewRaycastWeaponBase:remove_part(part_id)
@@ -245,6 +312,7 @@ function NewRaycastWeaponBase:remove_part(part_id)
 
 	self:_update_fire_object()
 	self:_update_stats_values()
+	self:_chk_has_charms(self._parts)
 end
 
 function NewRaycastWeaponBase:remove_part_by_type(type)
@@ -252,6 +320,7 @@ function NewRaycastWeaponBase:remove_part_by_type(type)
 
 	self:_update_fire_object()
 	self:_update_stats_values()
+	self:_chk_has_charms(self._parts)
 end
 
 function NewRaycastWeaponBase:change_blueprint(blueprint)
@@ -260,6 +329,7 @@ function NewRaycastWeaponBase:change_blueprint(blueprint)
 
 	self:_update_fire_object()
 	self:_update_stats_values()
+	self:_chk_has_charms(self._parts)
 end
 
 function NewRaycastWeaponBase:blueprint_to_string()
@@ -402,11 +472,13 @@ end
 function NewRaycastWeaponBase:on_enabled(...)
 	NewRaycastWeaponBase.super.on_enabled(self, ...)
 	self:_set_parts_enabled(true)
+	self:_chk_charm_upd_state()
 end
 
 function NewRaycastWeaponBase:on_disabled(...)
 	self:gadget_off()
 	self:_set_parts_enabled(false)
+	self:_chk_charm_upd_state()
 end
 
 function NewRaycastWeaponBase:has_gadget()
@@ -498,6 +570,10 @@ function NewRaycastWeaponBase:destroy(unit)
 				TextureCache:unretrieve(texture_data.name)
 			end
 		end
+	end
+
+	if self._charm_data then
+		managers.charm:remove_weapon(unit)
 	end
 
 	managers.weapon_factory:disassemble(self._parts)

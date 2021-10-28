@@ -51,21 +51,7 @@ function BuffBalloon:on_balloon_shot()
 
 	if not self._destroyed then
 		self._destroyed = true
-
-		if managers.mutators:is_mutator_active(MutatorBirthday) then
-			local birthday_mutator = managers.mutators:get_mutator(MutatorBirthday)
-
-			birthday_mutator:activate_buff(self._buff_id or 0)
-		end
 	end
-end
-
-function BuffBalloon:on_balloon_server_damage(attack_unit)
-	print("[BuffBalloon] on_balloon_server_damage() ", attack_unit)
-	Telemetry:on_player_game_event_action(Telemetry.event_actions.balloon_popped, {
-		balloon_type = tweak_data.mutators:get_birthday_unit_from_id(self._buff_id)
-	})
-	managers.statistics:on_popped_balloon()
 end
 
 function BuffBalloon:self_destruct()

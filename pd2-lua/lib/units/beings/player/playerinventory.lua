@@ -57,6 +57,10 @@ function PlayerInventory:destroy_all_items()
 		if selection_data.unit and selection_data.unit:base() then
 			selection_data.unit:base():remove_destroy_listener(self._listener_id)
 			selection_data.unit:base():set_slot(selection_data.unit, 0)
+
+			if selection_data.unit:base():charm_data() then
+				managers.charm:remove_weapon(selection_data.unit)
+			end
 		else
 			debug_pause_unit(self._unit, "[PlayerInventory:destroy_all_items] broken inventory unit", selection_data.unit, selection_data.unit:base())
 		end

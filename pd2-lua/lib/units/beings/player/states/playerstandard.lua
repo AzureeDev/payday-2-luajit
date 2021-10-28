@@ -4261,7 +4261,6 @@ function PlayerStandard:_check_action_primary_attack(t, input)
 						dmg_mul = dmg_mul * managers.player:get_property("trigger_happy", 1)
 					end
 
-					dmg_mul = dmg_mul * managers.player:get_temporary_property("birthday_multiplier", 1)
 					local fired = nil
 
 					if fire_mode == "single" then

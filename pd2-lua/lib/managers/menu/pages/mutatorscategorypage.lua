@@ -46,7 +46,7 @@ function MutatorsCategoryPage:_setup_mutators_list()
 	self._mutators_scroll = scroll
 
 	for i, mutator in ipairs(managers.mutators:mutators()) do
-		if (self.category == "all" or table.contains(mutator.categories, self.category)) and not table.contains(mutator.categories, "event") then
+		if self.category == "all" or table.contains(mutator.categories, self.category) then
 			table.insert(mutators_list, mutator)
 		end
 	end

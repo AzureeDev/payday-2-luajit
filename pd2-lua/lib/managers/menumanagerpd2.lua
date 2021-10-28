@@ -32,10 +32,6 @@ function MenuManager:on_enter_lobby()
 		managers.menu:active_menu().logic:select_node("crime_spree_lobby", true, {})
 	else
 		managers.menu:active_menu().logic:select_node("lobby", true, {})
-
-		if managers.mutators:get_enabled_active_mutator_category() == "event" then
-			managers.music:post_event(tweak_data.mutators.birthday.event_track)
-		end
 	end
 
 	managers.platform:set_rich_presence("MPLobby")

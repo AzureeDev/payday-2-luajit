@@ -136,7 +136,8 @@ function AchievementsTweakData:init(tweak_data)
 			"frag",
 			"frag_com",
 			"concussion",
-			"dada_com"
+			"dada_com",
+			"fir_com"
 		}
 	}
 	self.level_achievements = {

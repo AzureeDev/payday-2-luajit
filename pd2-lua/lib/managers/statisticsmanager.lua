@@ -478,10 +478,6 @@ function StatisticsManager:aquired_coins(coins)
 	self:_increment_misc("coins", coins)
 end
 
-function StatisticsManager:on_popped_balloon()
-	self:_increment_misc("balloons_popped", 1)
-end
-
 function StatisticsManager:mission_stats(name)
 	self._global.session.mission_stats = self._global.session.mission_stats or {}
 	self._global.session.mission_stats[name] = (self._global.session.mission_stats[name] or 0) + 1
@@ -898,13 +894,6 @@ function StatisticsManager:publish_to_steam(session, success, completion)
 				value = enemy_data.count
 			}
 		end
-	end
-
-	if managers.mutators:is_mutator_active(MutatorBirthday) then
-		stats.balloons_popped = {
-			type = "int",
-			value = session.misc.balloons_popped or 0
-		}
 	end
 
 	if completion == "win_begin" then

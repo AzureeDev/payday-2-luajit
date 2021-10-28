@@ -24,7 +24,6 @@ function PlayerDamage:init(unit)
 
 	local player_manager = managers.player
 	self._bleed_out_health = Application:digest_value(tweak_data.player.damage.BLEED_OUT_HEALTH_INIT * player_manager:upgrade_value("player", "bleed_out_health_multiplier", 1), true)
-	Global.god_mode = false
 	self._god_mode = Global.god_mode
 	self._invulnerable = false
 	self._mission_damage_blockers = {}

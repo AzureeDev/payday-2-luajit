@@ -2,7 +2,7 @@ require("lib/utils/accelbyte/Telemetry")
 
 NetworkMatchMakingSTEAM = NetworkMatchMakingSTEAM or class()
 NetworkMatchMakingSTEAM.OPEN_SLOTS = tweak_data.max_players
-NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "payday2_v1.112.51"
+NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "payday2_v1.113.57"
 
 function NetworkMatchMakingSTEAM:init()
 	cat_print("lobby", "matchmake = NetworkMatchMakingSTEAM")
@@ -98,7 +98,6 @@ function NetworkMatchMakingSTEAM:load_user_filters()
 	Global.game_settings.crime_spree_max_lobby_diff = managers.user:get_setting("crime_spree_lobby_diff")
 	Global.game_settings.search_only_weekly_skirmish = managers.user:get_setting("crimenet_filter_weekly_skirmish")
 	Global.game_settings.skirmish_wave_filter = managers.user:get_setting("crimenet_filter_skirmish_wave")
-	Global.game_settings.search_event_lobbies_override = false
 	local new_servers = managers.user:get_setting("crimenet_filter_new_servers_only")
 	local in_lobby = managers.user:get_setting("crimenet_filter_in_lobby")
 	local max_servers = managers.user:get_setting("crimenet_filter_max_servers")
@@ -240,10 +239,6 @@ function NetworkMatchMakingSTEAM:get_friends_lobbies()
 				if NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY then
 					local build_key = lobby:key_value(NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY)
 					is_friend_server_ok = is_key_valid(build_key)
-				end
-
-				if Global.game_settings.search_event_lobbies_override then
-					is_friend_server_ok = is_friend_server_ok and is_key_valid(lobby:key_value("event"))
 				end
 
 				if is_friend_server_ok then
@@ -457,10 +452,6 @@ function NetworkMatchMakingSTEAM:search_lobby(friends_only, no_filters)
 			table.insert(interest_keys, self._BUILD_SEARCH_INTEREST_KEY)
 		end
 
-		if Global.game_settings.search_event_lobbies_override then
-			table.insert(interest_keys, "event")
-		end
-
 		self.browser:set_interest_keys(interest_keys)
 		self.browser:set_distance_filter(self._distance_filter)
 
@@ -513,10 +504,6 @@ function NetworkMatchMakingSTEAM:search_lobby(friends_only, no_filters)
 			elseif Global.game_settings.gamemode_filter == GamemodeStandard.id then
 				self.browser:set_lobby_filter("crime_spree", -1, "equalto_less_than")
 				self.browser:set_lobby_filter("skirmish", 0, "equalto_less_than")
-
-				if Global.game_settings.search_event_lobbies_override then
-					self.browser:set_lobby_filter("event", "true", "equal")
-				end
 			end
 		end
 
@@ -641,18 +628,6 @@ function NetworkMatchMakingSTEAM:join_server_with_check(room_id, is_invite)
 
 			if ikey == "value_missing" or ikey == "value_pending" then
 				print("Wrong version!!")
-				managers.system_menu:close("join_server")
-				managers.menu:show_failed_joining_dialog()
-
-				return
-			end
-		end
-
-		if Global.game_settings.search_event_lobbies_override then
-			local ikey = lobby:key_value("event")
-
-			if ikey == "value_missing" or ikey == "value_pending" then
-				print("Not a event server!!")
 				managers.system_menu:close("join_server")
 				managers.menu:show_failed_joining_dialog()
 
@@ -1069,10 +1044,6 @@ function NetworkMatchMakingSTEAM:set_attributes(settings)
 
 	if self._BUILD_SEARCH_INTEREST_KEY then
 		lobby_attributes[self._BUILD_SEARCH_INTEREST_KEY] = "true"
-	end
-
-	if Global.game_settings.search_event_lobbies_override then
-		lobby_attributes.event = "true"
 	end
 
 	managers.mutators:apply_matchmake_attributes(lobby_attributes)

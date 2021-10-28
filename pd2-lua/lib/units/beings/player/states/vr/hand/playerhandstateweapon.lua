@@ -33,9 +33,10 @@ function PlayerHandStateWeapon:_link_weapon(weapon_unit)
 
 		self._weapon_unit = weapon_unit
 
-		self._weapon_unit:base():on_enabled()
-		self._weapon_unit:base():set_visibility_state(true)
-		self._weapon_unit:set_position(self:hsm():position())
+		self._hand_unit:link(weapon_unit)
+		weapon_unit:base():on_enabled()
+		weapon_unit:base():set_visibility_state(true)
+		weapon_unit:set_position(self:hsm():position())
 
 		if weapon_unit:base().akimbo then
 			self:hsm():other_hand():set_default_state("akimbo")
@@ -47,6 +48,10 @@ function PlayerHandStateWeapon:_unlink_weapon()
 	if alive(self._weapon_unit) then
 		self._weapon_unit:base():set_visibility_state(false)
 		self._weapon_unit:base():on_disabled()
+
+		if self._weapon_unit:parent() then
+			self._weapon_unit:unlink()
+		end
 
 		self._weapon_unit = nil
 	end

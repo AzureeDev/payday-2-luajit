@@ -143,6 +143,7 @@ function BlackMarketTweakData:_init_gloves(tweak_data)
 		poolrepair = "heist_default",
 		traditional = "heist_default",
 		sneak_suit = "sneak",
+		classyske = "heist_default",
 		tux = "heist_default",
 		continental = "continental",
 		lowinttech = "heist_default",

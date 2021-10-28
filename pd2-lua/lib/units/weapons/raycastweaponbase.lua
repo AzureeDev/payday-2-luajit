@@ -1960,6 +1960,18 @@ function RaycastWeaponBase:apply_grip(apply)
 	end
 end
 
+function RaycastWeaponBase:_chk_has_charms(parts, setup)
+end
+
+function RaycastWeaponBase:charm_data()
+end
+
+function RaycastWeaponBase:set_charm_data(data, upd_state)
+end
+
+function RaycastWeaponBase:_chk_charm_upd_state()
+end
+
 InstantBulletBase = InstantBulletBase or class()
 InstantBulletBase.id = "instant"
 

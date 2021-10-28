@@ -18813,6 +18813,22 @@ function WeaponFactoryTweakData:create_charms(tweak_data)
 			stats = {
 				value = 1
 			}
+		},
+		wpn_fps_upg_charm_pumpkin = {
+			is_a_unlockable = true,
+			texture_bundle_folder = "trik",
+			third_unit = "units/pd2_dlc_trik/weapons/wpn_fps_upg_charm_pumpkin/wpn_third_upg_charm_pumpkin",
+			a_obj = "a_charm",
+			type = "charm",
+			desc_id = "bm_wp_upg_charm_pumpkin_desc",
+			dlc = "trik",
+			name_id = "bm_wp_upg_charm_pumpkin",
+			unit = "units/pd2_dlc_trik/weapons/wpn_fps_upg_charm_pumpkin/wpn_fps_upg_charm_pumpkin",
+			has_description = true,
+			pcs = {},
+			stats = {
+				value = 1
+			}
 		}
 	}
 	local weapon_exclude_list = {
@@ -33313,6 +33329,13 @@ function WeaponFactoryTweakData:_init_m590()
 			wpn_fps_upg_o_rx01 = {
 				a_obj = "a_of",
 				forbids = table.list_add(self.parts.wpn_fps_upg_o_rx01.forbids, {
+					"wpn_upg_o_marksmansight_rear_vanilla",
+					"wpn_upg_o_marksmansight_front"
+				})
+			},
+			wpn_fps_upg_o_rx30 = {
+				a_obj = "a_of",
+				forbids = table.list_add(self.parts.wpn_fps_upg_o_rx30.forbids, {
 					"wpn_upg_o_marksmansight_rear_vanilla",
 					"wpn_upg_o_marksmansight_front"
 				})

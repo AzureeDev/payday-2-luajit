@@ -24,34 +24,41 @@ function AkimboWeaponBase:update(unit, t, dt)
 end
 
 function AkimboWeaponBase:_create_second_gun(unit_name)
-	local factory_weapon = tweak_data.weapon.factory[self._factory_id]
+	local factory_id = self._factory_id
+	local factory_weapon = tweak_data.weapon.factory[factory_id]
 	local ids_unit_name = Idstring(factory_weapon.unit)
 	local new_unit = World:spawn_unit(ids_unit_name, Vector3(), Rotation())
 
-	new_unit:base():set_factory_data(self._factory_id)
+	new_unit:base():set_factory_data(factory_id)
 
 	if self._cosmetics then
 		new_unit:base():set_cosmetics_data(self._cosmetics)
 	end
 
-	local function remove_blueprint_charms(blueprint)
-		local new_blueprint = {}
+	local blueprint = self._blueprint
 
-		for i = 1, #blueprint do
-			if not blueprint[i]:find("charm") then
-				table.insert(new_blueprint, blueprint[i])
+	if blueprint then
+		local charm_parts = managers.weapon_factory:get_parts_from_weapon_by_type_or_perk("charm", factory_id, blueprint)
+
+		if next(charm_parts) then
+			local part_id = nil
+			local filtered_bp = {}
+			local t_cont = table.contains
+
+			for i = 1, #blueprint do
+				part_id = blueprint[i]
+
+				if not t_cont(charm_parts, part_id) then
+					filtered_bp[#filtered_bp + 1] = part_id
+				end
 			end
+
+			blueprint = filtered_bp
 		end
 
-		return new_blueprint
-	end
-
-	if self._blueprint then
-		local bp = remove_blueprint_charms(self._blueprint)
-
-		new_unit:base():assemble_from_blueprint(self._factory_id, bp)
+		new_unit:base():assemble_from_blueprint(factory_id, blueprint)
 	elseif not unit_name then
-		new_unit:base():assemble(self._factory_id)
+		new_unit:base():assemble(factory_id)
 	end
 
 	self._second_gun = new_unit

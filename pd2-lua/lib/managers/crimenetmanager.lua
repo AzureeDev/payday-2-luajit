@@ -97,7 +97,6 @@ function CrimeNetManager:_setup_vars()
 	self._refresh_server_t = 0
 	self._REFRESH_SERVERS_TIME = self._tweak_data.job_vars.refresh_servers_time
 	self._active_server_jobs = {}
-	self._sidebar_filter_excludes = {}
 end
 
 function CrimeNetManager:set_max_active_server_jobs(max_server_jobs)
@@ -1333,22 +1332,6 @@ end
 
 function CrimeNetManager:sidebar_collapsed()
 	return self._global.sidebar.collapsed
-end
-
-function CrimeNetManager:set_sidebar_exclude_filter(exclude_list)
-	self._sidebar_filter_excludes = exclude_list or {}
-end
-
-function CrimeNetManager:get_sidebar_filtered()
-	local sidebar_filtered = {}
-
-	for i, item in ipairs(tweak_data.gui.crime_net.sidebar) do
-		if not table.contains(self._sidebar_filter_excludes, item.name_id) then
-			table.insert(sidebar_filtered, item)
-		end
-	end
-
-	return sidebar_filtered
 end
 
 CrimeNetGui = CrimeNetGui or class()
